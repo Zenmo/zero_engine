@@ -7381,6 +7381,9 @@ double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh +
 
 v_totalSelfConsumedEnergy_MWh = v_totalEnergyUsed_MWh - (v_totalImportedEnergy_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 double v_totalSelfConsumedEnergyCheck_MWh = v_totalEnergyProduced_MWh - (v_totalExportedEnergy_MWh + max(0,v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes that this energy was self-produced, as opposed to imported! Putting negative delta-stored here assumes that this energy was exported, as opposed to self-consumed!
+// Cap selfConsumedEnergy to >=0
+v_totalSelfConsumedEnergy_MWh=max(0,v_totalSelfConsumedEnergy_MWh);
+v_totalSelfConsumedEnergyCheck_MWh=max(0,v_totalSelfConsumedEnergyCheck_MWh);
 traceln("Check self consumed energy based on import, export, consumption and production: " + (v_totalSelfConsumedEnergy_MWh - v_totalSelfConsumedEnergyCheck_MWh) );
 
 // Export and production-based selfconsumption
@@ -7599,8 +7602,11 @@ if (p_company_connection_id == null){
 			// Calc selfConsumedEnergy for summerweek
 			v_summerWeekSelfConsumedEnergy_MWh = v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 			double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
+			// Cap selfConsumedEnergy to >=0
+			v_summerWeekSelfConsumedEnergy_MWh=max(0,v_summerWeekSelfConsumedEnergy_MWh);
+			v_summerWeekSelfConsumedEnergyCheck_MWh=max(0,v_summerWeekSelfConsumedEnergyCheck_MWh);
 			traceln("Summerweek selfconsumed use/import based: %s, production/export based: %s", v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
-			
+			traceln("Summerweek energyUsed ");
 		}
 		
 	}
@@ -7685,6 +7691,9 @@ if (p_company_connection_id == null){
 			// Calc selfConsumedEnergy for winterweek
 			v_winterWeekSelfConsumedEnergy_MWh = v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 			double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
+			// Cap selfConsumedEnergy to >=0
+			v_winterWeekSelfConsumedEnergy_MWh=max(0,v_winterWeekSelfConsumedEnergy_MWh);
+			v_winterWeekSelfConsumedEnergyCheck_MWh=max(0,v_winterWeekSelfConsumedEnergyCheck_MWh);
 			traceln("winterweek selfconsumed use/import based: %s, production/export based: %s", v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
 			
 		}
@@ -18480,9 +18489,9 @@ if (energyModel.t_h == energyModel.p_startHourSummerWeek + 24*7) {
 	v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_summerWeekEnergyProduced_MWh;	
 	
 	// Calc selfConsumedEnergy for summerweek
-	v_summerWeekSelfConsumedEnergy_MWh = v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+	v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 	double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
-	traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
+	//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
 	
 }
 
@@ -18546,9 +18555,9 @@ if (energyModel.t_h == energyModel.p_startHourWinterWeek + 24*7) {
 	v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_winterWeekEnergyProduced_MWh;	
 	
 	// Calc selfConsumedEnergy for winterweek
-	v_winterWeekSelfConsumedEnergy_MWh = v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+	v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 	double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
-	traceln("Gridconnection %s winterweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
+	//traceln("Gridconnection %s winterweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
 	
 }
 
@@ -18580,8 +18589,8 @@ if (energyModel.t_h == 8760-energyModel.p_timeStep_h) {
 	}
 	v_totalEnergyUsed_MWh = totalEnergyUsed_MWh;
 	v_totalEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
-	v_totalSelfConsumedEnergy_MWh = v_totalEnergyUsed_MWh - v_totalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-	traceln("Gridconnection %s annual selfconsumed use/import based: %s MWh", p_agentID, v_winterWeekSelfConsumedEnergy_MWh);
+	v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+	//traceln("Gridconnection %s annual selfconsumed use/import based: %s MWh", p_agentID, v_winterWeekSelfConsumedEnergy_MWh);
 }
 ]]></Body>
 				</Function>
@@ -18904,7 +18913,10 @@ if (energyModel.b_addKpiVisuals) {
 	//pl_SOC.updateData();
 	pl_powerFlows.updateData();
 }
-]]></Body>
+
+//if (!Double.isFinite(v_currentPowerElectricity_kW)) {
+//	traceln("Gridconnection %s with connection_id %s has NaN or infinite v_currentPowerElectricity_kW at time %s!", p_agentID, p_company_connection_id, energyModel.t_h);
+//}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -18924,7 +18936,7 @@ for(J_EAProfile e : c_profileAssets) {
 	//if (p_company_connection_id == p_energyProfile.energyAssetName) {
 		e.f_updateAllFlows( energyModel.t_h );		
 		v_fixedConsumptionElectric_kW += e.electricityConsumption_kW;		
-		
+	
 		v_currentPowerElectricity_kW += e.electricityConsumption_kW - e.electricityProduction_kW;
 		v_currentPowerMethane_kW += e.methaneConsumption_kW - e.methaneProduction_kW;
 		v_currentPowerHydrogen_kW += e.hydrogenConsumption_kW - e.hydrogenProduction_kW;
@@ -42518,6 +42530,10 @@ public class J_EA implements Cloneable {
     public double getHeatCapacity_kW() {
     	return capacityHeat_kW;
     }
+    
+    public void setHeatCapacity_kW(double capacityHeat_kW) {
+    	this.capacityHeat_kW = capacityHeat_kW;
+    }
 
     public double getElectricCapacity_kW() {
     	return capacityElectric_kW;
@@ -42762,7 +42778,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	} else if  (energyCarrierConsumed == OL_EnergyCarrierType.DIESEL) {
     		this.dieselConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
     	}
-		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_electricityProfile_kWh.length);	
+		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_energyProfile_kWh.length);	
 		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW); // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
