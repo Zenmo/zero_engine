@@ -1092,7 +1092,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1661516161016</Id>
 					<Name><![CDATA[o_outputActorData]]></Name>
-					<X>-920</X><Y>680</Y>
+					<X>-840</X><Y>810</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1109,7 +1109,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1661529224106</Id>
 					<Name><![CDATA[o_outputExceptions]]></Name>
-					<X>-920</X><Y>700</Y>
+					<X>-840</X><Y>830</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1126,7 +1126,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1663238746791</Id>
 					<Name><![CDATA[o_outputSettings]]></Name>
-					<X>-920</X><Y>720</Y>
+					<X>-840</X><Y>850</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1143,7 +1143,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1663255244236</Id>
 					<Name><![CDATA[o_outputTrigger]]></Name>
-					<X>-920</X><Y>800</Y>
+					<X>-840</X><Y>930</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1163,7 +1163,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1666880542545</Id>
 					<Name><![CDATA[o_simulationResults]]></Name>
-					<X>-920</X><Y>740</Y>
+					<X>-840</X><Y>870</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1180,7 +1180,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1672910222316</Id>
 					<Name><![CDATA[o_hourlyCurvesData]]></Name>
-					<X>-920</X><Y>760</Y>
+					<X>-840</X><Y>890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1197,7 +1197,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1679503183018</Id>
 					<Name><![CDATA[o_contractData]]></Name>
-					<X>-920</X><Y>780</Y>
+					<X>-840</X><Y>910</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1357,7 +1357,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
-					<X>-560</X><Y>580</Y>
+					<X>-480</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1373,7 +1373,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
-					<X>-560</X><Y>600</Y>
+					<X>-480</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1389,7 +1389,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-560</X><Y>660</Y>
+					<X>-480</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1405,7 +1405,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-560</X><Y>680</Y>
+					<X>-480</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1421,7 +1421,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-560</X><Y>700</Y>
+					<X>-480</X><Y>660</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1437,7 +1437,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-560</X><Y>740</Y>
+					<X>-480</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1453,7 +1453,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-560</X><Y>760</Y>
+					<X>-480</X><Y>720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1469,7 +1469,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-560</X><Y>720</Y>
+					<X>-480</X><Y>680</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1481,7 +1481,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1666979598282</Id>
 					<Name><![CDATA[v_totalBatteryChargeAmount_MWh]]></Name>
-					<X>-560</X><Y>800</Y>
+					<X>-480</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1493,7 +1493,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1666979615893</Id>
 					<Name><![CDATA[v_totalBatteryDischargeAmount_MWh]]></Name>
-					<X>-560</X><Y>820</Y>
+					<X>-480</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1505,7 +1505,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1666979627442</Id>
 					<Name><![CDATA[v_totalBatteryInstalledCapacity_MWh]]></Name>
-					<X>-560</X><Y>840</Y>
+					<X>-480</X><Y>800</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1529,7 +1529,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668613097127</Id>
 					<Name><![CDATA[v_totalDieselImport_MWh]]></Name>
-					<X>-560</X><Y>780</Y>
+					<X>-480</X><Y>740</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1541,7 +1541,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1669026980656</Id>
 					<Name><![CDATA[v_totalBatteryEnergyUsed_MWh]]></Name>
-					<X>-560</X><Y>860</Y>
+					<X>-480</X><Y>820</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1623,7 +1623,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
-					<X>-560</X><Y>540</Y>
+					<X>-480</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1642,7 +1642,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
-					<X>-560</X><Y>560</Y>
+					<X>-480</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1654,7 +1654,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1676968233773</Id>
 					<Name><![CDATA[v_totalEnergyCurtailed_MWh]]></Name>
-					<X>-560</X><Y>880</Y>
+					<X>-480</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1666,7 +1666,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1678980412868</Id>
 					<Name><![CDATA[v_cumulativeGridCapacityMSLS_kW]]></Name>
-					<X>-560</X><Y>940</Y>
+					<X>-480</X><Y>900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1678,7 +1678,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1678980423977</Id>
 					<Name><![CDATA[v_cumulativeGridCapacityHSMS_kW]]></Name>
-					<X>-560</X><Y>960</Y>
+					<X>-480</X><Y>920</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1690,7 +1690,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1678980746805</Id>
 					<Name><![CDATA[v_netOverloadKPI_pct]]></Name>
-					<X>-560</X><Y>980</Y>
+					<X>-480</X><Y>940</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1803,85 +1803,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1690880921824</Id>
-					<Name><![CDATA[v_gridNodesJson]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>272</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1690881118425</Id>
-					<Name><![CDATA[v_gridConnectionsJson]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>292</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1690881147758</Id>
-					<Name><![CDATA[v_actorsJson]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>252</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1690964449063</Id>
-					<Name><![CDATA[v_templateAssetsJson]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>312</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1690977261064</Id>
-					<Name><![CDATA[v_buildingThermalPars]]></Name>
-					<X>-480</X><Y>332</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ObjectNode]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1692014323313</Id>
-					<Name><![CDATA[v_assetDepreciation]]></Name>
-					<X>-480</X><Y>352</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ObjectNode]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1695655479591</Id>
 					<Name><![CDATA[v_totalEnergyChargedOutsideModel_MWh]]></Name>
-					<X>-560</X><Y>900</Y>
+					<X>-480</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2608,7 +2532,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1696863807573</Id>
 					<Name><![CDATA[v_modelSelfSufficiency_fr]]></Name>
-					<X>-560</X><Y>1140</Y>
+					<X>-480</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2623,7 +2547,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1696863821721</Id>
 					<Name><![CDATA[v_modelSelfConsumption_fr]]></Name>
-					<X>-560</X><Y>1160</Y>
+					<X>-480</X><Y>1120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2666,7 +2590,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1698924487994</Id>
 					<Name><![CDATA[v_batteryStoredEnergyDeltaSinceStart_MWh]]></Name>
-					<X>-560</X><Y>920</Y>
+					<X>-480</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2681,7 +2605,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1698929539392</Id>
 					<Name><![CDATA[v_totalEnergyUsed_MWh]]></Name>
-					<X>-560</X><Y>1020</Y>
+					<X>-480</X><Y>980</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2696,7 +2620,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1698929546080</Id>
 					<Name><![CDATA[v_totalEnergyProduced_MWh]]></Name>
-					<X>-560</X><Y>1040</Y>
+					<X>-480</X><Y>1000</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3094,7 +3018,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700556115968</Id>
 					<Name><![CDATA[v_totalSelfConsumedEnergy_MWh]]></Name>
-					<X>-560</X><Y>1120</Y>
+					<X>-480</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3109,7 +3033,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700556144666</Id>
 					<Name><![CDATA[v_totalImportedEnergy_MWh]]></Name>
-					<X>-560</X><Y>1070</Y>
+					<X>-480</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3124,7 +3048,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700556155691</Id>
 					<Name><![CDATA[v_totalExportedEnergy_MWh]]></Name>
-					<X>-560</X><Y>1090</Y>
+					<X>-480</X><Y>1050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3299,7 +3223,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>-740</X><Y>90</Y>
+					<X>-421</X><Y>89</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3327,7 +3251,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-740</X><Y>190</Y>
+					<X>-421</X><Y>159</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3355,7 +3279,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-740</X><Y>110</Y>
+					<X>-421</X><Y>109</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3376,7 +3300,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1663239405341</Id>
 					<Name><![CDATA[j_dataOut]]></Name>
-					<X>-920</X><Y>600</Y>
+					<X>-840</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3397,7 +3321,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1663242364390</Id>
 					<Name><![CDATA[j_experimentSettingsData]]></Name>
-					<X>-900</X><Y>620</Y>
+					<X>-820</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3416,69 +3340,13 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1663318124014</Id>
-					<Name><![CDATA[p_importLocalConfigJsons]]></Name>
-					<Description><![CDATA[Vink dit aan als je experimenten wil doen met jsons op de schijf. Uitzetten voor gebruik in de cloud!
-
-@author: JorritvandenHouten
-@since: Sprint 7]]></Description>
-					<X>-740</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1663318124012</Id>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1663325373671</Id>
-					<Name><![CDATA[p_forceUncached]]></Name>
-					<Description><![CDATA[Niet gebruikt in model zelf, kan vrij gewijzigd worden om uncached cloud experiments te forceren
-
-@author: JorritvandenHouten
-@since: Sprint 7]]></Description>
-					<X>-740</X><Y>170</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1663325373669</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1663577621793</Id>
 					<Name><![CDATA[p_parallelize]]></Name>
 					<Description><![CDATA[Boolean om paralelle berekening van gridconnections aan te zetten.
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>-740</X><Y>130</Y>
+					<X>-421</X><Y>129</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3502,7 +3370,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1666880315951</Id>
 					<Name><![CDATA[j_simulationResults]]></Name>
-					<X>-900</X><Y>640</Y>
+					<X>-820</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3551,7 +3419,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1672910307060</Id>
 					<Name><![CDATA[j_hourlyCurvesData]]></Name>
-					<X>-900</X><Y>660</Y>
+					<X>-820</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3570,65 +3438,13 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1677659229529</Id>
-					<Name><![CDATA[p_forceBrownFieldNetload]]></Name>
-					<Description><![CDATA[Switch om HS en MS netload op 0 als output te geven wanneer er geen overbelasting plaats heeft gevonden. (workaround om geen greenfield kosten te hebben wanneer er geen overbelasting is!)
-
-@author: GillisHommen
-@since: 01/03/2023]]></Description>
-					<X>-750</X><Y>780</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1677659229527</Id>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1681379106589</Id>
-					<Name><![CDATA[p_printInputJsons]]></Name>
-					<X>-740</X><Y>210</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1681379106587</Id>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1682945119357</Id>
 					<Name><![CDATA[b_anylogicCostsForAllContracts]]></Name>
 					<Description><![CDATA[Switch om HS en MS netload op 0 als output te geven wanneer er geen overbelasting plaats heeft gevonden. (workaround om geen greenfield kosten te hebben wanneer er geen overbelasting is!)
 
 @author: GillisHommen
 @since: 01/03/2023]]></Description>
-					<X>-750</X><Y>680</Y>
+					<X>-840</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3656,7 +3472,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-740</X><Y>230</Y>
+					<X>-421</X><Y>179</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3671,103 +3487,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						<ParameterEditor>
 							<Id>1692704003997</Id>
 							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1696865272436</Id>
-					<Name><![CDATA[p_simulationYear]]></Name>
-					<Description><![CDATA[Niet gebruikt in model zelf, kan vrij gewijzigd worden om uncached cloud experiments te forceren
-
-@author: JorritvandenHouten
-@since: Sprint 7]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-740</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1696865272434</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1696926175869</Id>
-					<Name><![CDATA[p_centerLatitude]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-740</X><Y>300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1696926175867</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1696926175877</Id>
-					<Name><![CDATA[p_centerLongitude]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-740</X><Y>320</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1696926175875</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1696926273936</Id>
-					<Name><![CDATA[p_simulatedArea]]></Name>
-					<X>-740</X><Y>340</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[OL_AreaType]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[OL_AreaType.BUSINESS]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1696926273934</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -3846,62 +3565,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
-				<Variable Class="Parameter">
-					<Id>1700129272566</Id>
-					<Name><![CDATA[b_scaleElecMethaneConsumption]]></Name>
-					<Description><![CDATA[Schakelaar om optionele visualisatie-agent te creëren.
-
-@since: Sprint 6
-@author: Jorrit]]></Description>
-					<X>-740</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1700129272564</Id>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1700136363693</Id>
-					<Name><![CDATA[p_buurtcode]]></Name>
-					<Description><![CDATA[Niet gebruikt in model zelf, kan vrij gewijzigd worden om uncached cloud experiments te forceren
-
-@author: JorritvandenHouten
-@since: Sprint 7]]></Description>
-					<X>-740</X><Y>360</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA["BU06420701"]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1700136363691</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -3950,7 +3613,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1663312177330</Id>
 					<Name><![CDATA[c_gridConnections]]></Name>
-					<X>87</X><Y>242</Y>
+					<X>89</X><Y>244</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4010,7 +3673,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666884023719</Id>
 					<Name><![CDATA[c_globalElectricityImportProfile_MW]]></Name>
-					<X>-920</X><Y>820</Y>
+					<X>-840</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4025,7 +3688,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666884311850</Id>
 					<Name><![CDATA[c_globalElectricityExportProfile_MW]]></Name>
-					<X>-920</X><Y>840</Y>
+					<X>-840</X><Y>970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4055,7 +3718,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666981403077</Id>
 					<Name><![CDATA[c_totalBatteryChargeAmount_MWh]]></Name>
-					<X>-920</X><Y>920</Y>
+					<X>-840</X><Y>1050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4070,7 +3733,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666984250257</Id>
 					<Name><![CDATA[c_totalBatteryDischargeAmount_MWh]]></Name>
-					<X>-920</X><Y>940</Y>
+					<X>-840</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4085,7 +3748,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666984296429</Id>
 					<Name><![CDATA[c_totalBatteryInstalledCapacity_MWh]]></Name>
-					<X>-920</X><Y>960</Y>
+					<X>-840</X><Y>1090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4100,7 +3763,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1667300034779</Id>
 					<Name><![CDATA[c_totalBatteryUnitsInstalled]]></Name>
-					<X>-920</X><Y>980</Y>
+					<X>-840</X><Y>1110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4115,7 +3778,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1667553304068</Id>
 					<Name><![CDATA[c_timesOfNodePeakLoads_h]]></Name>
-					<X>-560</X><Y>620</Y>
+					<X>-480</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4130,7 +3793,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668007771830</Id>
 					<Name><![CDATA[c_globalEVChargingProfile_kW]]></Name>
-					<X>-920</X><Y>860</Y>
+					<X>-840</X><Y>990</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4145,7 +3808,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668007790848</Id>
 					<Name><![CDATA[c_globalEHGVChargingProfile_kW]]></Name>
-					<X>-920</X><Y>880</Y>
+					<X>-840</X><Y>1010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4160,7 +3823,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668007805687</Id>
 					<Name><![CDATA[c_globalBatteryChargingProfile_kW]]></Name>
-					<X>-920</X><Y>900</Y>
+					<X>-840</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4175,7 +3838,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1669725679330</Id>
 					<Name><![CDATA[c_gridConnectionOverload_fr]]></Name>
-					<X>-560</X><Y>640</Y>
+					<X>-480</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4318,165 +3981,6 @@ v_timeStepsElapsed ++;
 			</Events>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1658478826439</Id>
-					<Name><![CDATA[f_configureBackBone]]></Name>
-					<Description><![CDATA[Generieke functie die flexibele modelconfiguratie mogelijk maakt op basis van externe data. Expliciet gemodelleerd om profiling en volgorde van initialisatie te kunnen controleren.
-
-@param: none
-@return: none
-@since: Sprint 6
-@author: Jorrit]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>132</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[f_createActors();
-f_createGridNodes();
-f_createGridConnections();
-f_createGISBuildings();
-f_createAgentLinks();
-f_initializeForecasts();
-//f_instantiateTemplateEnergyAssets();
-
-// Change slider settings before starting simulation
-sl_EV.setValue(100, true);
-sl_rooftopPV.setValue(50, true);
-ra_chargingStrategy.setValue(2,true);
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1658494691805</Id>
-					<Name><![CDATA[f_readConfig]]></Name>
-					<Description><![CDATA[Functie om handmatig databases te updaten vanuit custom database connection objecten (niet aanwezig als het model is opgeslagen met Gillis' AnyLogic-versie). Gebruikt om mogelijk externe database-connecties (via URLs) te kunnen implementeren, en voor profiling doeleinden.
-
-@since: Sprint 6
-@author: Jorrit]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>92</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[
-if( p_importLocalConfigJsons ) { p_scenarioJSON = t_scenarioInput.readString(); }
-
-// Parse the Scenario JSON
-ObjectMapper mapper = new ObjectMapper();
-JsonNode root;
-try {
-	root = mapper.readTree(p_scenarioJSON);
-} catch (JsonProcessingException e) {
-	throw new RuntimeException(e);
-}
-
-//PRINTING HERE LEADS TO AN OUTOFBOUND EXCEPTION WHEN USING REPLACE ALL BELOW. BUT IT DOESNT IMPACT TEH MODEL
-//Seems like a very weird issue that its trying to read the string to the end, and then read it again but starting at the end, causing the error.
-if( p_printInputJsons) {
-	traceln("---------------------------------------------------------------------------------------------------");
-	traceln("------------------- GRIDNODES ---------------------------------------------------------------------");
-	traceln("---------------------------------------------------------------------------------------------------");
-	traceln(root.required("gridnodes").toPrettyString());
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln("------------------- POLICIES ---------------------------------------------------------------------");
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(root.required("policies").toPrettyString());
-	traceln("----------------------------------------------------------------------------------------------------");
-	traceln("------------------- GRIDCONNECTIONS ----------------------------------------------------------------");
-	traceln("----------------------------------------------------------------------------------------------------");
-	traceln(root.required("gridconnections").toPrettyString());
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln("------------------- ACTORS -----------------------------------------------------------------------");
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(root.required("actors").toPrettyString());
-}
-
-v_gridNodesJson = (ArrayNode) root.required("gridnodes");
-v_gridConnectionsJson = (ArrayNode) root.required("gridconnections");
-v_actorsJson = (ArrayNode) root.required("actors");
-
-p_templateAssetsJSON = t_templateAssets.readString();
-try {
-	root = mapper.readTree(p_templateAssetsJSON);
-} catch (JsonProcessingException e) {
-	throw new RuntimeException(e);
-}
-v_templateAssetsJson = (ArrayNode) root;
-if( p_printInputJsons) {
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln("------------------- TEMPLATEASSETS----------------------------------------------------------------");
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(root.toPrettyString());
-}
-
-p_buildingThermalPars = t_buildingThermalPars.readString();
-try {
-	root = mapper.readTree(p_buildingThermalPars);
-	traceln("readTree succeeded!");
-} catch (JsonProcessingException e) {
-	throw new RuntimeException(e);
-}
-v_buildingThermalPars = (ObjectNode) root;
-if( p_printInputJsons) {
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln("------------------- BuildingThermalParameters-----------------------------------------------------");
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(root.toPrettyString());
-}
-
-p_assetDepreciation = t_assetDepreciation.readString();
-try {
-	root = mapper.readTree(p_assetDepreciation);
-	//traceln("readTree succeeded!");
-} catch (JsonProcessingException e) {
-	throw new RuntimeException(e);
-}
-v_assetDepreciation = (ObjectNode) root;
-if( p_printInputJsons) {
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln("------------------- AssetDepreciation-------------------------------------------------------------");
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(root.toPrettyString());
-}
-
-/*
-// Test buildingpars
-double lossfactorTest_WpK = v_buildingThermalPars.path("TERRACED").path("A").path("lossFactor_WpK").doubleValue();
-traceln("Loss factor from json: %s", lossfactorTest_WpK);
-
-// Test asset depreciation
-double PV_depreciation_eurpkWpa = v_assetDepreciation.path("PHOTOVOLTAIC").path("Depreciation_eurpkWpa").doubleValue();
-traceln("Depreciation of solar panels is %s eur/kW/annum", PV_depreciation_eurpkWpa);
-*/
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1659111937777</Id>
-					<Name><![CDATA[f_loadParameters]]></Name>
-					<Description><![CDATA[Functie om parameterwaarden extern (data-agnost) in te laden bij model startup, expliciet gemodelleerd voor profiling-doeleinden.
-@param: none
-@return: none
-@since: Sprint 6
-@author: Jorrit]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>112</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Set backbone physical parameters
-p_undergroundTemperature_degC = (double) selectFrom(params)
-	.where(params.parameter.eq("p_undergroundTemperature_degC"))
-	.firstResult(params.value);]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1661328014569</Id>
@@ -4485,7 +3989,7 @@ p_undergroundTemperature_degC = (double) selectFrom(params)
 
 @author: JorritvandenHouten
 @since: Sprint 6]]></Description>
-					<X>-920</X><Y>580</Y>
+					<X>-840</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5063,7 +4567,7 @@ for (EnergySupplier e : pop_energySuppliers) {
 
 @author: Jorrit
 @since: 27-10-2022]]></Description>
-					<X>-740</X><Y>600</Y>
+					<X>-830</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5080,11 +4584,8 @@ v_cumulativeGridCapacityHSMS_kW = 0;
 
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
-	if ( p_forceBrownFieldNetload ) {
-		v_gridNodePeakLoadElectricityHSMS_kW += max(h.p_capacity_kW,abs(h.v_peakLoadFilteredElectricity_kW));
-	} else {
-		v_gridNodePeakLoadElectricityHSMS_kW += abs(h.v_peakLoadFilteredElectricity_kW);
-	}
+	v_gridNodePeakLoadElectricityHSMS_kW += abs(h.v_peakLoadFilteredElectricity_kW);
+	
 	v_totalElectricityImport_MWh += h.v_electricityDrawn_kWh / 1000.0;
 	v_totalElectricityExport_MWh += h.v_electricityDelivered_kWh / 1000.0;
 	c_timesOfNodePeakLoads_h.put(h.p_agentID, h.v_timeOfPeakLoadFiltered_h);
@@ -5096,11 +4597,8 @@ c_timesOfNodePeakLoads_h.clear();
 v_cumulativeGridCapacityMSLS_kW=0;
 
 for(GridNode m : c_gridNodesMSLS ) {
-	if ( p_forceBrownFieldNetload ) {
-		v_gridNodePeakLoadElectricityMSLS_kW += max(m.p_capacity_kW,abs(m.v_peakLoadFilteredElectricity_kW));
-	} else {
-		v_gridNodePeakLoadElectricityMSLS_kW += abs(m.v_peakLoadFilteredElectricity_kW);
-	}
+	v_gridNodePeakLoadElectricityMSLS_kW += abs(m.v_peakLoadFilteredElectricity_kW);
+	
 	v_MSLSnodePeakPositiveLoadElectricity_kW = max(v_MSLSnodePeakPositiveLoadElectricity_kW, m.v_peakPosLoadElectricity_kW);
 	v_MSLSnodePeakNegativeLoadElectricity_kW = max(v_MSLSnodePeakNegativeLoadElectricity_kW, -m.v_peakNegLoadElectricity_kW);
 	c_timesOfNodePeakLoads_h.put(m.p_agentID, m.v_timeOfPeakLoadFiltered_h);
@@ -5160,7 +4658,7 @@ else {
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-740</X><Y>620</Y>
+					<X>-830</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5202,7 +4700,7 @@ if (v_totalHydrogenImport_MWh > v_totalHydrogenExport_MWh) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1666978595555</Id>
 					<Name><![CDATA[f_sumBatteryUse]]></Name>
-					<X>-740</X><Y>640</Y>
+					<X>-830</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5296,287 +4794,6 @@ else {
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1669130265565</Id>
-					<Name><![CDATA[f_createActors]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>172</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for(JsonNode actorJson : v_actorsJson)
-{
-	OL_ActorType actorcategory = OL_ActorType.valueOf(actorJson.required("category").textValue());
-	
-	ArrayNode contractsJson = (ArrayNode) actorJson.get("contracts");
-	String actorId = actorJson.required("id").textValue();
-	String group = actorJson.path("group").textValue();	
-	
-		
-	J_ActorData j_ActorData = new J_ActorData(actorId, group);
-
-	Actor actor;
-	switch (actorcategory) {
-		case CONNECTIONOWNER:
-			var connectionOwner = add_pop_connectionOwners();
-			connectionOwner.set_p_actorContractList(contractsJson);
-			connectionOwner.j_ActorData = j_ActorData;
-			//connectionOwner.set_p_actorGroup(group);
-			c_connectionOwners.add(connectionOwner);
-
-			actor = connectionOwner;
-			break;
-		case SUPPLIERENERGY:
-			var energySupplier = add_pop_energySuppliers();
-			energySupplier.j_ActorData = j_ActorData;
-			actor = energySupplier;
-			break;
-		case COOPENERGY:
-			var energyCoop = add_pop_energyCoops();
-			energyCoop.set_p_actorContractList(contractsJson);
-			energyCoop.j_ActorData = j_ActorData;
-
-			String gridNodeId = actorJson.path("node").textValue();
-			energyCoop.set_p_gridNodeUnderResponsibility(gridNodeId);
-
-			actor = energyCoop;
-			break;
-		case OPERATORGRID:
-			var gridOperator = add_pop_gridOperators();
-			gridOperator.j_ActorData = j_ActorData;
-			actor = gridOperator;
-			break;
-		case GOV:
-			// This maps to actor type AdministrativeCoop but this currently doesn't have any behavior.
-			continue;
-		case GOVHOLON:
-			// This maps to actor type AdministrativeCoop but this currently doesn't have any behavior.
-			continue;
-		default:
-			throw new RuntimeException("Not implemented actor type " + actorcategory);
-	}
-
-	actor.set_p_actorID(actorId);
-	actor.set_p_actorType(actorcategory.name());
-	actor.set_p_actorGroup(group);
-}
-
-for (EnergyCoop a : pop_energyCoops) {
-	a.f_setContractValues();
-	a.f_connectToParentActor();
-	//a.f_initialize(); // This one is called in f_setActorPoliciers instead! Because at this point gridNodes have not been created yet.
-}
-
-for (ConnectionOwner a : pop_connectionOwners) {
-	a.f_setContractValues();
-	a.f_connectToParentActor();
-}
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1669130286710</Id>
-					<Name><![CDATA[f_createGridNodes]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>192</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[GridNode GN;
-String nodeID;
-OL_GridNodeType nodetype;
-OL_EnergyCarrierType energytype;
-String nodeparent;
-int nodecapacity;
-String nodeoperator;
-ArrayNode gridNodeEnergyAssets;
-
-for(JsonNode g : v_gridNodesJson)
-{
-   	nodeID = g.required("id").textValue();
-	nodetype = OL_GridNodeType.valueOf(g.required("type").textValue());
-	energytype = OL_EnergyCarrierType.valueOf(g.required("category").textValue());
-	nodeparent = g.path("parent").textValue();
-	nodecapacity = g.required("capacity_kw").intValue();
-	nodeoperator = g.required("owner_actor").textValue();
-	gridNodeEnergyAssets = (ArrayNode) g.required("assets");
-	//traceln("data "+"id= "+nodeID +", nodetype = "+nodetype +", energytype = "+ energytype+", nodeparent = "+ nodeparent+", capacity = "+ nodecapacity+ ", ownerOperator = "+ nodeoperator);
-	//traceln(data.toString());
-
-	GN = add_pop_gridNodes();
-	//GN = add_pop_gridNodes(nodeID, nodeparent, nodetype, energytype, nodecapacity, null, null, nodeoperator, null, false);
-	
-	//( nodeID, nodeparent, nodetype, energytype, nodecapacity, null, null, nodeoperator );
-	
-	GN.set_p_agentID( nodeID );
-	GN.set_p_nodeType( nodetype );
-	GN.set_p_energyType( energytype );
-	GN.set_p_parentNodeID( nodeparent );
-	GN.set_p_capacity_kW( nodecapacity );
-	GN.set_p_gridNodeOwnerID( nodeoperator );
-	GN.set_p_energyAssetList( gridNodeEnergyAssets );   //
-	
-	//traceln("agent "+nodeID+" added by JSON!");
-	switch( GN.p_nodeType ) {
-		case HSMS:
-			c_gridNodesHSMS.add(GN);
-		break;
-		case MSLS:
-			c_gridNodesMSLS.add(GN);
-		break;
-		case HT:
-			c_gridNodesHeat.add(GN);
-		break;
-		case MT:
-			c_gridNodesHeat.add(GN);
-		break;
-		case LT:
-			c_gridNodesHeat.add(GN);
-		break;
-		default:
-			traceln("Gridnode not added to collection!");
-		break;
-	}
-}
-
-// do this only after all GridNodes have been created! Or connections might be missed
-for( GridNode g : pop_gridNodes ) {
-	g.f_instantiateEnergyAssets();
-	g.f_connectToParentNode();
-}
-
-
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1669130296250</Id>
-					<Name><![CDATA[f_createGridConnections]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>212</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[ArrayNode gridConnectionEnergyAssets;
-GridConnection GC;
-
-for(JsonNode data : v_gridConnectionsJson) {
-    String gridConnectionID = data.required( "id" ).textValue();
-	String ownerActorID = data.required( "owner_actor" ).textValue();
-	OL_GridConnectionCategory gridConnectionCategory = OL_GridConnectionCategory.valueOf(data.required( "category" ).textValue());
-	gridConnectionEnergyAssets = (ArrayNode) data.required( "assets");
-    
-    OL_GridConnectionType gridConnectionType = data.hasNonNull( "type" ) ? OL_GridConnectionType.valueOf(data.required( "type" ).textValue()) : null;
-    String gridConnectionParentElectric = data.path( "parent_electric" ).textValue(); //
-    String gridConnectionParentHeat = data.path( "parent_heat" ).textValue(); //
-    Double gridConnectionCapacity = data.hasNonNull( "capacity_kw" ) ? data.required( "capacity_kw" ).doubleValue() : null; //
-    OL_ChargingAttitude gridConnectionChargingAttitude = data.hasNonNull( "charging_mode" )
-    	? OL_ChargingAttitude.valueOf(data.required("charging_mode").textValue())
-    	: OL_ChargingAttitude.SIMPLE;
-    OL_BatteryOperationMode gridConnectionBatteryMode = data.hasNonNull( "battery_mode" )
-    	? OL_BatteryOperationMode.valueOf(data.required("battery_mode").textValue())
-    	: OL_BatteryOperationMode.BALANCE ;
-    OL_ElektrolyserOperationMode gridConnectionElektrolyserMode = data.hasNonNull( "electrolyser_mode" )
-    	? OL_ElektrolyserOperationMode.valueOf(data.required("electrolyser_mode").textValue())
-    	: OL_ElektrolyserOperationMode.BALANCE;
-	OL_GridConnectionIsolationLabel gridConnectionIsolationLabel = data.hasNonNull( "insulation_label" )
-		? OL_GridConnectionIsolationLabel.valueOf(data.required( "insulation_label" ).textValue())
-		: null;
-	OL_GridConnectionHeatingType gridConnectionHeatingType = data.hasNonNull( "heating_type" )
-		? OL_GridConnectionHeatingType.valueOf(data.required( "heating_type" ).textValue())
-		: null;
-	boolean smartAssets = data.path("smart_assets").asBoolean();
-	double tempSetpointNight_degC = data.path( "tempSetpointNight_degC").doubleValue();
-	double tempSetpointNight_start_hr = data.path( "tempSetpointNight_start_hr").doubleValue();
-	double tempSetpointDay_degC = data.path( "tempSetpointDay_degC").doubleValue();
-	double tempSetpointDay_start_hr = data.path( "tempSetpointDay_start_hr").doubleValue();
-	double pricelevel_low_dif_from_avg_eurpkWh = data.path("pricelevel_low_dif_from_avg_eurpkWh").doubleValue();
-	double pricelevel_high_dif_from_avg_eurpkWh = data.path("pricelevel_high_dif_from_avg_eurpkWh").doubleValue();
-	//double irradianceRecievingSurface_m2 = data.path("irradiance_recieving_surface").doubleValue();
-	
-	//traceln("data: " + "id = " + gridConnectionID + ", category = " + gridConnectionCategory + ", connectionType = " + gridConnectionType + ", parentElectric" + gridConnectionParentElectric + ", parentHeat = " + gridConnectionParentHeat + ", capacity = " + gridConnectionCapacity + "owner_actor = "+ ownerActorID);
-	switch(gridConnectionCategory) {
-		case HOUSE:
-			GC = add_Houses();
-			
-			//THESE VALUES ARE HARDCODED TO CREATE HETEROGENEOUS BEHAVIOR AND BECAUSE THE DATAMODEL DOES NOT ALLOW THIS YET
-			pricelevel_low_dif_from_avg_eurpkWh =  uniform_discr(1,25) / 100.0; 
-			pricelevel_high_dif_from_avg_eurpkWh = 0.25 - pricelevel_low_dif_from_avg_eurpkWh;
-
-			gridConnectionBatteryMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
-			//double lowPassFilterHousehold = 0.03; // -->> deze moet uiteindelijk naar datamodel. Moet configureerbaar zijn.
-			//irradianceRecievingSurface_m2 = 10.0;
-			//GC.v_lowPassFactor_fr = lowPassFilterHousehold;			
-			((GCHouse)GC).set_p_energyLabel( gridConnectionIsolationLabel );
-
-			//double deltaStartTemp_degC = uniform_discr(-5, 5);			
-			//((J_EAStorageHeat)GC.p_BuildingThermalAsset.j_ea).updateStateOfCharge(deltaStartTemp_degC);
-			//THESE VALUES ARE HARDCODED TO CREATE HETEROGENEOUS BEHAVIOR AND BECAUSE THE DATAMODEL DOES NOT ALLOW THIS YET				
-	 	break;
- 		case INDUSTRY:
-	 		GC = add_Industries();
-	 	break;
-		/*case DISTRICTHEATING:
-	 		// GC = add_DistrictHeatingSystems(); // Temporarily disabled while transferring to class-based energy assets!
-		break;*/
-		case WINDFARM:
-	 		GC = add_Windfarms();
-	 	break;
-	 	case SOLARFARM:
-	 		GC = add_Solarfarms();
-	 	break;
-	 	case GRIDBATTERY:
-	 		GC = add_GridBatteries();
-	 	break;
-	 	default:
-	 		GC = null;
-	 		traceln("No subagent defined for this gridConnection type!" + gridConnectionCategory);
-	 	break;
- 	}
- 	//Set parameters
- 	GC.set_p_agentID( gridConnectionID );
-	GC.set_p_gridConnectionCategory( gridConnectionCategory );
-	GC.set_p_gridConnectionType( gridConnectionType );
-	GC.set_p_connectionCapacity_kW( gridConnectionCapacity );
-	GC.set_p_parentNodeElectricID( gridConnectionParentElectric );
-	GC.set_p_parentNodeHeatID( gridConnectionParentHeat );
-	GC.set_p_ownerID( ownerActorID );
-	GC.set_p_heatingType( gridConnectionHeatingType );
-	GC.set_p_energyAssetList( gridConnectionEnergyAssets );
-	GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
-	GC.set_p_elektrolyserOperationMode( gridConnectionElektrolyserMode );
-	GC.set_p_chargingAttitudeVehicles( gridConnectionChargingAttitude );
-	GC.set_p_smartHeatingEnabled( smartAssets );
-	GC.set_p_pricelevelHighDifFromAvg_eurpkWh( pricelevel_high_dif_from_avg_eurpkWh );
-	GC.set_p_pricelevelLowDifFromAvg_eurpkWh( pricelevel_low_dif_from_avg_eurpkWh );
-	//GC.set_p_irradianceRecievingSurface_m2( irradianceRecievingSurface_m2 );
-	GC.v_nightTempSetpoint_degC = tempSetpointNight_degC;
-	GC.v_heatingOff_time = tempSetpointNight_start_hr;
-	GC.v_dayTempSetpoint_degC = tempSetpointDay_degC;
-	GC.v_heatingOn_time = tempSetpointDay_start_hr;
-
-	//Initialize
-	GC.f_initialize();
-	c_gridConnections.add(GC);
-}
-
-for (GridConnection g: c_gridConnections) {
-	if(g.l_parentNodeHeat.getConnectedAgent() instanceof GridNode && g.l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-			ConnectionOwner o = (ConnectionOwner)g.l_ownerActor.getConnectedAgent();
-			//traceln("debug DHnetwork: "+ filter( g.l_parentNodeHeat.getConnectedAgent().subConnections.getConnections(), p -> p.p_gridConnectionCategory.equals(OL_GridConnectionCategory.RESIDUALHEAT) ) );
-			List<GridConnection> heatSuppliers = filter( g.l_parentNodeHeat.getConnectedAgent().subConnections.getConnections(), p -> p.p_gridConnectionCategory.equals(OL_GridConnectionCategory.RESIDUALHEAT) || p.p_gridConnectionCategory.equals(OL_GridConnectionCategory.DISTRICTHEATING));
-			//traceln("connection id: "+g.p_agentID+", heatEnergySupplier: "+heatSuppliers+ ", owneractor: "+heatSuppliers.get(0).p_ownerActor);
-			o.v_energySupplierDistrictHeat = heatSuppliers.get(0).l_ownerActor.getConnectedAgent();
-	}
-}]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671636439933</Id>
 					<Name><![CDATA[f_initializeForecasts]]></Name>
 					<X>810</X><Y>260</Y>
@@ -5597,83 +4814,9 @@ for (double ts_h = t_h; ts_h<t_h+p_forecastTime_h; ts_h += p_timeStep_h) {
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1681918405543</Id>
-					<Name><![CDATA[f_createAgentLinks]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>232</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (ConnectionOwner owner : pop_connectionOwners ) {
-	owner.c_actorContracts.stream()
-      .filter(contract -> contract.energyCarrier.equals(OL_EnergyCarrierType.HEAT))
-      .filter(contract -> contract.contractType.equals(OL_ContractType.CONNECTION))
-      .forEach(contract -> {
-          // do something with the filtered agents
-          GridOperator myHeatGridOperator = findFirst(pop_gridOperators, p->p.p_actorID.equals(contract.contractScope)) ;
-		  traceln("HeatGrid Operator = "+myHeatGridOperator);
-          GridNode myHeatGridNode = null;
-          for (Agent subConnection : myHeatGridOperator.subConnections.getConnections())
-          {
-    			traceln("Checking: "+ subConnection);
-    			if (subConnection instanceof GridNode) 
-    			{
-        			traceln("GridNode found! ");
-        			GridNode candidate = (GridNode) subConnection;
-        			if (candidate.p_energyType.equals(OL_EnergyCarrierType.HEAT)) 
-        			{
-            			myHeatGridNode = candidate;
-            			owner.v_ownedGridConnection.l_parentNodeHeat.connectTo( myHeatGridNode );	
-						owner.v_ownedGridConnection.p_parentNodeHeatID = myHeatGridNode.p_agentID;	
-						owner.v_ownedGridConnection.f_connectToParentNode();
-						traceln("Heat Grid Node found and linked! "+myHeatGridNode );
-			      	   		break;
-        			}
-    			}
-		  }	
-          //System.out.println(contract);
-      });
-   owner.f_setInitPriceBands();
-}
-
-
-// Energy Coops determine their relevant gridnodes based on their established members
-for( EnergyCoop EH : pop_energyCoops ) {
-	for( Agent member : EH.subConnectionsElectricity.getConnections() ) {
-		if( member instanceof EnergyCoop) {   // upper nested Coop looks at the higher level gridNode
-			EH.p_gridNodeUnderResponsibility = pop_gridNodes.findFirst(a -> a.p_nodeType.equals(OL_GridNodeType.HSMS)) != null? pop_gridNodes.findFirst(a -> a.p_nodeType.equals(OL_GridNodeType.HSMS)).p_agentID : null;
-			
-		}
-		else if( member instanceof ConnectionOwner ) {
-			//traceln("ConnectionOwner:" + (ConnectionOwner)member);
-			EH.p_gridNodeUnderResponsibility = ((ConnectionOwner)member).gridConnections.getConnectedAgent(0).p_parentNodeElectricID;
-		}
-		else {
-			traceln("Coop-member not an energyCoop or connectionowner -> No gridnode under responsibility!");
-		}
-	}
-	
-}
-
-for( EnergyCoop e : pop_energyCoops ) {
-	e.f_initialize(); // This function is called here because gridNodes need to be created before Coops can link to them.
-}
-
-for ( GridConnection GC : c_gridConnections) {// Temporary: add random GISbuilding to gridConnection (working with two inconsistent datasets, just testing functionality)
-	GIS_Building b = randomFrom(pop_GIS_Buildings);
-	GC.p_GISbuilding = b;
-	b.c_gridConnectionsInBuilding.add(GC);
-}
-//UI_energyAssets.f_initializeData();
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1682943799138</Id>
 					<Name><![CDATA[f_calculateContractCosts]]></Name>
-					<X>-750</X><Y>700</Y>
+					<X>-840</X><Y>660</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5986,7 +5129,7 @@ if (heatTaxContract != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1683018740227</Id>
 					<Name><![CDATA[f_contractCostsPerEnergyCarrier]]></Name>
-					<X>-750</X><Y>720</Y>
+					<X>-840</X><Y>680</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6248,826 +5391,6 @@ traceln("f_setEnergyPrice is awaiting new implementation after model merge! Curr
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1696925902737</Id>
-					<Name><![CDATA[f_startSimulationSettings]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>390</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Initalize - delete these lines when finished
-/*
-[load building GIS regions from QGIS]
-[create collection c_buildingGISRegions from building GIS regions]
-[load neighborhood GIS regions from QGIS using shapefiles and change shapefile to space markup]
-[create collection c_neighborhoodGISRegions from neighborhood GIS regions]
-[upload data in excel _buildings]
-[upload data in excel _companies]
-[upload data in excel _hvmv_transformers]
-[upload data in excel _mvlv_transformers]
-[upload data in excel _residence_objects]
-[upload data in excel _neighborhoods]
-[upload LV grid shapefiles in color steelblue]
-[upload MV grid shapefiles in color orchid]
-*/
-
-//default GIS regions
-//f_defaultGISRegionColors();
-
-//default values
-//dt_h = 1;
-v_isCostsPerHousehold = true;
-
-p_simulatedArea = OL_AreaType.BUSINESS;
-//p_centerLongitude = 4.62081213207812;
-//p_centerLatitude = 51.8066803651812;
-//p_centerLongitude = 4.1610000000000005;
-//p_centerLatitude = 51.6663333;
-
-//map.setCenterLongitude(p_centerLongitude);
-//map.setCenterLatitude(p_centerLatitude);
-//map.setMapScale(4e4);
-
-/*double[] testVlakjeCoords = new double[6];
-testVlakjeCoords[0] = p_centerLatitude;
-testVlakjeCoords[2] = p_centerLatitude+0.01;
-testVlakjeCoords[4] = p_centerLatitude;
-
-testVlakjeCoords[1] = p_centerLongitude;
-testVlakjeCoords[3] = p_centerLongitude;
-testVlakjeCoords[5] = p_centerLongitude+0.01;
-
-GISRegion testVlakje = new GISRegion(map,testVlakjeCoords);*/
-
-/*String buildingCoordsString = "MultiPolygon (((4.62313876 51.80601087, 4.62436639 51.80713517, 4.6252587 51.80676075, 4.62494846 51.80647662, 4.62523075 51.80635817, 4.62500506 51.80615147, 4.62495437 51.80617274, 4.62494348 51.80616276, 4.62482621 51.80621196, 4.62483679 51.80622166, 4.62472437 51.80626884, 4.62461809 51.8061735, 4.62438832 51.80596298, 4.62441943 51.80594993, 4.62433418 51.80587186, 4.62430328 51.80588482, 4.62403176 51.80563615, 4.62313876 51.80601087)))";
-
-buildingCoordsString = buildingCoordsString.replace("MultiPolygon (((","");
-buildingCoordsString = buildingCoordsString.replace(",","");
-buildingCoordsString = buildingCoordsString.replace(")))","");
-String delims = " ";
-String[] tokens = buildingCoordsString.split(delims);
-
-int nbCoords = tokens.length;
-
-traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
-double[] buildingCoords = new double[nbCoords];
-
-for (int i=0; i<nbCoords; i++) {
-	if (i % 2 == 0) { // latitudes
-		buildingCoords[i]=Double.parseDouble(tokens[i+1])+0.01;
-	} else { // longitudes
-		buildingCoords[i]=Double.parseDouble(tokens[i-1]);
-	}
-}
-
-GISRegion testVlakje = new GISRegion(map,buildingCoords);
-
-testVlakje.setFillColor(red);*/
-
-/*v_districtHeatingTemperature_string = "HT";
-v_householdEnergyLabel = "Huidig";
-v_electricBoilerChargingStrategy = Conventional;
-v_excelSheetNumber = 1;
-c_detailNeighborhoods.add("BU06420701");
-//c_detailNeighborhoods.add("[insert CBS Neighborhood name]");
-p_PVRatedPower_kWpPanel = 0.300;
-p_PVPanelSurfaceArea_m2 = 1.65;
-p_PVefficiency = p_PVRatedPower_kWpPanel / p_PVPanelSurfaceArea_m2;
-p_PVCapacityFactor = 0.85;
-p_simulationYear = p_startSimulationYear;
-	
-//Initialize agent populations
-f_initializeAgentPopulations();
-
-//set cost parameters from database
-f_setEnergyPrice();
-*/
-
-//update charts
-ch_energyLabels.updateData();
-//ch_heatSupplyMethods.updateData();
-
-
-//MAP
-v_clickedBuilding = randomWhere(pop_GIS_Buildings, x->x.c_gridConnectionsInBuilding.size() > 0);
-//v_clickedHousehold = randomFrom(v_clickedBuilding.c_householdsInBuilding);
-//v_timeInMillis = System.currentTimeMillis();
-
-//SETTING UI
-
-//select simulation type for right UI
-switch( p_simulatedArea ){
-	case BUSINESS :
-		gr_businessParkSettings.setVisible(true);
-		//gr_businessParkResultTabs.setVisible(true);
-		gr_businessParkDashboard.setVisible(true);
-		break;
-	case NEIGHBORHOOD:
-		gr_heatSettings.setVisible(false);
-		gr_neighborhoodResultsTabs.setVisible(true);
-		gr_neighborhoodDashboard.setVisible(true);
-		//gr_settingsMenu.setVisible(false);
-		break;
-	case HVTRANSFORMER:
-		gr_HVMVTrafoSettings.setVisible(true);
-		gr_settingsMenu.setVisible(false);
-		break;
-	
-}
-	
-	
-
-//gr_heatSettings.setX(-205);
-//gr_heatSettings.setY(380);
-//gr_electricitySettings.setX(-200);
-//gr_electricitySettings.setY(350);
-gr_electricitySettings.setVisible(true);
-
-gr_heatDemandLegenda.setX(-65);
-gr_heatDemandLegenda.setY(-190);
-gr_heatDemandLegenda.setVisible(true);
-
-gr_loadIconCosts.setX(1668);
-gr_loadIconCosts.setY(603);
-gr_simulateCostsScreen.setX(1665);
-gr_simulateCostsScreen.setY(603);
-
-gr_loadIconCostsSmall.setX(1668);
-gr_loadIconCostsSmall.setY(180);
-gr_simulateCostsScreenSmall.setX(1675);
-gr_simulateCostsScreenSmall.setY(220);
-
-gr_neighborhoodConnections.setX(-515);
-gr_neighborhoodConnections.setY(103);
-gr_neighborhoodCosts.setX(-515);
-gr_neighborhoodCosts.setY(80);
-
-
-gr_householdDashboard.setX(1885);
-gr_householdDashboard.setY(520);
-gr_clickOnBuildingGroup.setX(1670);
-gr_clickOnBuildingGroup.setY(505);
-
-gr_compareResults.setX(1100);
-gr_compareResults.setY(560);
-gr_compareResultsLoading.setY(-50);
-
-//f_intantiateResultsMatrix();
-
-gr_HVMVTrafoSettings.setX(196);
-gr_HVMVTrafoSettings.setY(220);
-
-gr_HSMSTrafoResults.setX(1645);
-gr_HSMSTrafoResults.setY(520);
-
-gr_businessParkSettings.setX(-260);
-gr_businessParkSettings.setY(340);
-
-gr_businessParkResultTabs.setX(1700);
-gr_businessParkResultTabs.setY(100);
-
-gr_businessParkDashboard.setX(2180);
-gr_businessParkDashboard.setY(500);
-
-gr_companyDashboard.setX(1665);
-gr_companyDashboard.setY(500);
-
-gr_businessParkLoad.setX(-515);
-gr_businessParkLoad.setY(103);
-
-gr_businessCollectiveDashboard.setX(2180);
-gr_businessCollectiveDashboard.setY(500);
-gr_businessCollectiveLoad.setX(-515);
-gr_businessCollectiveLoad.setY(103);]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697017019953</Id>
-					<Name><![CDATA[f_createGISBuildings]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-480</X><Y>152</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Draw neighborhood
-
-String regionCoordsString = "MultiPolygon (((4.65054507 51.81131591, 4.65054524 51.81131584, 4.65020007 51.81102882, 4.65011152 51.81095778, 4.64863148 51.80973831, 4.64807109 51.80927772, 4.64784749 51.80909394, 4.64731037 51.80865447, 4.64697564 51.80838757, 4.64674021 51.80820648, 4.64599848 51.80765533, 4.64568888 51.80744544, 4.64510797 51.8071035, 4.64481926 51.80694234, 4.64447431 51.80676515, 4.64420464 51.80663673, 4.64327128 51.80620824, 4.64309799 51.80636472, 4.64204452 51.80575972, 4.6419578 51.80570992, 4.64175312 51.80559237, 4.63993744 51.8046885, 4.63833041 51.80399345, 4.63682609 51.80346675, 4.63490739 51.80281451, 4.63217886 51.80213105, 4.63015904 51.80168807, 4.62788799 51.80131312, 4.62603712 51.80102218, 4.62329525 51.80075998, 4.62122158 51.80080368, 4.62098072 51.80084383, 4.62090934 51.80085572, 4.61878013 51.80121055, 4.6187664 51.80121316, 4.61732822 51.80148677, 4.61613468 51.80179326, 4.61590393 51.80184104, 4.61304628 51.80255009, 4.61158071 51.80289708, 4.61115435 51.80301289, 4.61050974 51.80318517, 4.61015205 51.8032827, 4.60992748 51.80334902, 4.60940707 51.80350169, 4.60865007 51.80372514, 4.60772399 51.80399012, 4.60703519 51.80418641, 4.60675683 51.80425847, 4.60595822 51.80446443, 4.60520025 51.80466127, 4.60455687 51.8048269, 4.60289773 51.80524767, 4.6007034 51.80574823, 4.59988345 51.80590551, 4.5990376 51.80610532, 4.59856512 51.80617748, 4.59777559 51.80629581, 4.59771773 51.80630448, 4.59687597 51.8064315, 4.59711052 51.80756856, 4.59716236 51.80788068, 4.59733253 51.80789065, 4.59759443 51.80791458, 4.59784417 51.80795174, 4.59878124 51.80816279, 4.5992409 51.80826566, 4.59989632 51.80842379, 4.60111711 51.80877641, 4.60239248 51.80914564, 4.60374498 51.80953755, 4.60402713 51.80963256, 4.60432796 51.80974988, 4.60459764 51.80987585, 4.60491419 51.81004944, 4.6053879 51.81037485, 4.60644416 51.81107519, 4.60704567 51.8114591, 4.60728649 51.81159966, 4.60750388 51.81171641, 4.60801255 51.81195335, 4.60821804 51.81206854, 4.608344 51.81223198, 4.60837643 51.81242019, 4.61083709 51.81242034, 4.61137582 51.81242036, 4.61489102 51.81244692, 4.61535045 51.8124053, 4.61555157 51.81238708, 4.61625686 51.81225996, 4.61759255 51.81192412, 4.61849123 51.81164284, 4.62013633 51.81105899, 4.62074419 51.81089067, 4.62175934 51.81080946, 4.6224192 51.81078842, 4.62263469 51.81077631, 4.62312094 51.81070853, 4.62361438 51.81053606, 4.62449889 51.81012289, 4.62544469 51.80962901, 4.62577604 51.80937271, 4.62595993 51.80913404, 4.62605342 51.80859916, 4.62606191 51.80825799, 4.62600383 51.80766301, 4.62606297 51.8070654, 4.62620798 51.80654606, 4.62641966 51.8061133, 4.62669791 51.80577219, 4.62715783 51.80548294, 4.62759917 51.805327, 4.62804515 51.8052184, 4.62897349 51.80510616, 4.62954514 51.80514026, 4.63039306 51.80527411, 4.63194548 51.80564392, 4.63268329 51.80584462, 4.63273439 51.80586167, 4.63355585 51.8061357, 4.63442016 51.8064318, 4.63545188 51.80682018, 4.63605914 51.8070082, 4.63704487 51.80725405, 4.63724775 51.80730465, 4.63822418 51.80757948, 4.64016337 51.80813408, 4.6405908 51.8082576, 4.64204014 51.80867643, 4.64286969 51.80893846, 4.64331844 51.80915752, 4.64401937 51.80961806, 4.64467577 51.81013574, 4.64510481 51.81056076, 4.64537293 51.8109468, 4.64549567 51.81115276, 4.64557373 51.81137793, 4.64558786 51.8116787, 4.64550745 51.81192819, 4.64529668 51.81231538, 4.64525823 51.81249927, 4.64531862 51.8128037, 4.64556219 51.81307383, 4.64580575 51.81334395, 4.65054507 51.81131591)))";
-
-regionCoordsString = regionCoordsString.replace("MultiPolygon (((","");
-regionCoordsString = regionCoordsString.replace(",","");
-regionCoordsString = regionCoordsString.replace(")))","");
-if (regionCoordsString.contains(")(")) {
-	regionCoordsString = regionCoordsString.split("\\)")[0];		
-}
-
-String delims = " ";
-String[] tokens = regionCoordsString.split(delims);
-	
-int nbCoords = tokens.length;
-	
-//traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
-double[] regionCoords = new double[nbCoords];
-	
-for (int i=0; i<nbCoords; i++) {
-	if (i % 2 == 0) { // latitudes
-		regionCoords[i]=Double.parseDouble(tokens[i+1]);
-	} else { // longitudes
-		regionCoords[i]=Double.parseDouble(tokens[i-1]);
-	}
-}
-	
-List<Tuple> rows = selectFrom(panden_polygons_oud_tonge_wgs)
-	//.where(buildings.aantal_ver.gt(0))
-	.list();
-
-
-for (int j=0; j < 500; j++) {
-	int rowIndex = uniform_discr(1, rows.size());
-	Tuple row = rows.get(rowIndex);
-	String p_GISRegion_coords = row.get(panden_polygons_oud_tonge_wgs.wkt);	
-	
-	//traceln("Adding GIS_building %s with coordinate-string: %s", b.p_id, b.p_GISRegion_coords);
-	if (p_GISRegion_coords.contains("),(")) {
-		p_GISRegion_coords = p_GISRegion_coords.split("\\)")[0];
-		//traceln("Removing second polygon for GIS_building " + b);
-	}
-	p_GISRegion_coords = p_GISRegion_coords.replace("POLYGON ((","");
-	p_GISRegion_coords = p_GISRegion_coords.replace(","," ");
-	p_GISRegion_coords = p_GISRegion_coords.replace("))","");
-
-	//b.p_GISRegion_coords = b.p_GISRegion_coords.replace(")("," ");
-	
-	
-	tokens = p_GISRegion_coords.split(delims);
-		
-	nbCoords = tokens.length;
-		
-	//traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
-	double[] buildingCoords = new double[nbCoords];
-		
-	for (int i=0; i<nbCoords; i++) {
-		if (i % 2 == 0) { // latitudes
-			buildingCoords[i]=Double.parseDouble(tokens[i+1]);
-		} else { // longitudes
-			buildingCoords[i]=Double.parseDouble(tokens[i-1]);
-		}
-	}
-		
-	GISRegion gisregion = new GISRegion(map,buildingCoords);
-	
-	gisregion.setVisible(true);	
-	gisregion.setLineColor( black );
-	gisregion.setLineStyle( LINE_STYLE_SOLID );
-	gisregion.setLineWidth( 0.3 );
-	//gisRegion.setFillColor( new Color(205, 133, 63, 90) );
-	gisregion.setFillColor( blue );	
-}
-
-
-/*
-// Get trip tuples from this household ID from database
-List<Tuple> rows = selectFrom(buildings_with_coordinates)
-	//.where(buildings.aantal_ver.gt(0))
-	.list();
-
-for (Tuple row : rows) {
-
-	GIS_Building b = add_pop_GIS_Buildings();
-	
-	b.p_id = row.get( buildings_with_coordinates.identifica );
-	
-	b.p_buildingYear = row.get( buildings_with_coordinates.bouwjaar );	
-	b.p_status = row.get( buildings_with_coordinates.status );
-	b.p_useType = row.get( buildings_with_coordinates.gebruiksdo );	
-	b.p_surfaceArea = row.get( buildings_with_coordinates.oppervlakt );
-	b.p_useType = row.get( buildings_with_coordinates.gebruiksdo );
-	b.p_floors = row.get( buildings_with_coordinates.aantal_ver );
-	//b.p_buildingType = OL_BuildingType.valueOf(OL_BuildingType, row.get( buildings.type ));
-	//b.p_householdsInBuilding = row.get( buildings.h_in_b );
-	
-	b.p_longitude = row.get( buildings_with_coordinates.longitude );
-	b.p_latitude = row.get( buildings_with_coordinates.latitude );
-	
-	b.setLatLon(b.p_latitude, b.p_longitude);		
-	//b.f_findGisRegion();
-	
-	b.p_GISRegion_coords = row.get(buildings_with_coordinates.geom_coord);	
-	
-	//traceln("Adding GIS_building %s with coordinate-string: %s", b.p_id, b.p_GISRegion_coords);
-	b.p_GISRegion_coords = b.p_GISRegion_coords.replace("MultiPolygon (((","");
-	b.p_GISRegion_coords = b.p_GISRegion_coords.replace(",","");
-	b.p_GISRegion_coords = b.p_GISRegion_coords.replace(")))","");
-	if (b.p_GISRegion_coords.contains(")(")) {
-		b.p_GISRegion_coords = b.p_GISRegion_coords.split("\\)")[0];
-		traceln("Removing second polygon for GIS_building " + b);
-	}
-	//b.p_GISRegion_coords = b.p_GISRegion_coords.replace(")("," ");
-	
-	
-	tokens = b.p_GISRegion_coords.split(delims);
-		
-	nbCoords = tokens.length;
-		
-	//traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
-	double[] buildingCoords = new double[nbCoords];
-		
-	for (int i=0; i<nbCoords; i++) {
-		if (i % 2 == 0) { // latitudes
-			buildingCoords[i]=Double.parseDouble(tokens[i+1]);
-		} else { // longitudes
-			buildingCoords[i]=Double.parseDouble(tokens[i-1]);
-		}
-	}
-		
-	GISRegion gisregion = new GISRegion(map,buildingCoords);
-	
-	gisregion.setVisible(true);	
-	gisregion.setLineColor( black );
-	gisregion.setLineStyle( LINE_STYLE_SOLID );
-	gisregion.setLineWidth( 0.3 );
-	//gisRegion.setFillColor( new Color(205, 133, 63, 90) );
-	gisregion.setFillColor( blue );
-	
-	b.gisRegion = gisregion;
-	//c_buildingGISRegions.add(gisregion);		
-	
-	b.f_listGridConnectionsInBuilding(); // need to do this after gridConnections are created!
-	
-}		*/
-
-//GISRegion gisregion = new GISRegion(map,regionCoords);
-//Bu06420701.setVisible(false);]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697095071210</Id>
-					<Name><![CDATA[f_generateGridConnections]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>430</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Enkele windfarm voor 'centrale' windmolens.
-GCWindfarm windFarm = add_Windfarms();
-windFarm.set_p_agentID( "windFarm0" );
-windFarm.set_p_gridConnectionCategory( OL_GridConnectionCategory.WINDFARM );
-windFarm.set_p_connectionCapacity_kW( 10000 );
-windFarm.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-windFarm.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
-windFarm.p_GISPoint = new GISPoint(map, 51.68889388325886, 4.1740289129395185);
-
-
-windFarm.p_GISPoint.setRadius(20);
-//windFarm.p_GISPoint
-c_GISPoints.add(windFarm.p_GISPoint);
-
-	//Initialize
-windFarm.f_initialize();
-c_gridConnections.add(windFarm);
-//windFarm.setLatLon(51.67633, 4.241);
-
-// Buurtbatterij
-GCGridBattery gridBattery = add_GridBatteries();
-gridBattery.set_p_agentID( "gridBattery0" );
-gridBattery.set_p_gridConnectionCategory( OL_GridConnectionCategory.GRIDBATTERY );
-gridBattery.set_p_connectionCapacity_kW( 10000 );
-gridBattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-gridBattery.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
-gridBattery.f_initialize();
-c_gridConnections.add(gridBattery);
-
-/*// Enkel logistiek centrum met trucks (trucks nog niet toegekend aan bedrijven)
-GCUtility logisticsConnection = add_UtilityConnections();
-logisticsConnection.set_p_agentID( "logistics0" );
-logisticsConnection.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
-logisticsConnection.set_p_gridConnectionType( OL_GridConnectionType.LOGISTICS );
-logisticsConnection.set_p_connectionCapacity_kW( 4000 );
-logisticsConnection.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
-	//GC.set_p_ownerID( ownerActorID );
-logisticsConnection.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-logisticsConnection.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
-logisticsConnection.f_initialize();
-c_gridConnections.add(logisticsConnection);*/
-
-// Enkele huishouden-agent met standaard 2500kWh jaarlijks verbruik * aantal huishoudens die het voorstelt
-double nbHouseholds = 70000*8760*0.3/2500;
-GCUtility households = add_UtilityConnections();
-households.set_p_agentID( "households" );
-households.set_p_gridConnectionCategory( OL_GridConnectionCategory.HOUSE );
-households.set_p_gridConnectionType( OL_GridConnectionType.TERRACED );
-households.set_p_connectionCapacity_kW( 17 * nbHouseholds );
-//GC.set_p_ownerID( ownerActorID );
-households.set_p_heatingType( OL_GridConnectionHeatingType.GASBURNER);	
-households.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
-households.f_initialize();
-c_gridConnections.add(households);
-
-
-// Bedrijven uit excel files
-List<Tuple> rows = selectFrom(residence_objects)
-	.where(residence_objects.gebruiksdo.ne("woonfunctie"))
-	.list();
-rows.clear();
-
-for (Tuple row : rows) {
-	GCUtility GC = add_UtilityConnections();
-
-	//Set parameters
- 	GC.set_p_agentID( row.get( residence_objects.identifica ) );
-	GC.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
-	//GC.set_p_gridConnectionType( gridConnectionType );
-	GC.set_p_connectionCapacity_kW( 17 );
-	//GC.set_p_ownerID( ownerActorID );
-	GC.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-	GC.set_p_longitude(row.get(residence_objects.longitude));
-	GC.set_p_latitude(row.get(residence_objects.latitude));
-	GC.set_p_openbareR(row.get(residence_objects.openbare_r));
-	GC.set_p_huisnummer(row.get(residence_objects.huisnummer));
-	//GC.set_p_company_connection_id(row.get(residence_objects.));
-	GC.set_p_floorSurfaceArea_m2(row.get( residence_objects.oppervlakt ));
-	
-	GC.setLatLon(GC.p_latitude, GC.p_longitude);
-	GC.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;
-	//GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
-	//traceln("Nearest MVLV transformer for GC " + GC.p_agentID + " is: " + nearestLVStation.p_agentID)	;
-	//Set nearest agent as trafo
-	//GC.p_parentNodeElectricID = nearestLVStation.p_agentID;	
-	//GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
-	//GC.set_p_elektrolyserOperationMode( gridConnectionElektrolyserMode );
-	//GC.set_p_chargingAttitudeVehicles( gridConnectionChargingAttitude );
-
-	//Initialize
-	GC.f_initialize();
-	c_gridConnections.add(GC);
-	
-	/*x.householdID = row.get( residence_objects.identifica );
-	x.p_energyLabel = row.get( residence_objects.energieklasse );
-	x.p_defaultEnergyLabel = row.get( residence_objects.energieklasse );
-	//h.energieIndex = row.get( residence_objects.energie_index );
-	//h.energieIndexEMG = row.get( residence_objects.energie_index_emg_forfaitair );
-	//h.buildingTypeEnergyLabel = row.get( residence_objects.gebouwtype ); 
-	//h.buildingSubTypeEnergyLabel = row.get( residence_objects.gebouwsubtype );
-	x.p_floorSurfaceArea = row.get( residence_objects.oppervlakt );
-	x.status = row.get( residence_objects.status );
-	x.gebruiksdo = row.get( residence_objects.gebruiksdo );
-	x.openbareR = row.get( residence_objects.openbare_r );
-	x.huisnummer = row.get( residence_objects.huisnummer );
-	x.huisletter = row.get( residence_objects.huisletter );
-	x.toevoeging = row.get( residence_objects.toevoeging );
-	x.postcode = row.get( residence_objects.postcode );
-	x.woonplaats = row.get( residence_objects.woonplaats );
-	x.bouwjaar = row.get( residence_objects.bouwjaar );
-	x.pandidenti = row.get( residence_objects.pandidenti );
-	x.pandstatus = row.get( residence_objects.pandstatus );
-	x.rdfSeeals = row.get( residence_objects.rdf_seeals );
-
-	x.setLatLon(x.p_latitude, x.p_longitude);
-	*/
-	
-	
-	//Connect utility object to company connection data
-	List<Tuple> companyConnectionList = selectFrom(comp_connections)
-		.where(comp_connections.street.eq(GC.p_openbareR))
-		.where(comp_connections.number.eq(GC.p_huisnummer))
-		.list();
-	
-	
-		
-	if (companyConnectionList != null){
-		
-		for (Tuple companyConnection : companyConnectionList){
-			
-			if (count(UtilityConnections, y->y.p_company_connection_id == companyConnection.get(comp_connections.company_connection_id)) > 0){
-				break;
-			}
-		
-			GC.p_company_connection_id = companyConnection.get(comp_connections.company_connection_id);
-			GC.p_company_name = companyConnection.get(comp_connections.name);
-			/*x.p_connection = companyConnection.get(comp_connections.aansluiting);
-			x.p_business = companyConnection.get(comp_connections.business);
-			x.p_numberOfConnections = companyConnection.get(comp_connections.number_of_connections);
-			x.p_hasQuarterlyData = companyConnection.get(comp_connections.kwartierwaardes);
-			x.p_PVInstalledCapacity_kW = companyConnection.get(comp_connections.pv_installed_capacity_k_w);
-			x.p_PVOrientation = companyConnection.get(comp_connections.pv_orientation);
-			x.p_PVInvestmentYear = companyConnection.get(comp_connections.pv_investment_year);
-			x.p_PVInvestmentkW = companyConnection.get(comp_connections.pv_investment_k_w);
-			x.p_PVInvestmentOrientation = companyConnection.get(comp_connections.pv_investment_orientation);
-			x.p_electricityProduction_kWhPerYear = companyConnection.get(comp_connections.electricity_production_k_wh_year);
-			x.p_electricityConsumption_kWhPerYear = companyConnection.get(comp_connections.electricity_consumption_k_wh_year);
-			x.p_gasConsumption_m3PerYear = companyConnection.get(comp_connections.gas_consumption_m3_year);
-			x.p_heatConsumption_GJPerYear = companyConnection.get(comp_connections.heat_consumption_gj);
-			x.p_chargePoints = companyConnection.get(comp_connections.charge_points_number);
-			x.p_chargePointPower_kW = companyConnection.get(comp_connections.charge_points_power);
-			x.p_chargePointsPlanned = companyConnection.get(comp_connections.charge_points_investment);
-			x.p_chargePointsPlannedPower_kW = companyConnection.get(comp_connections.charge_points_investment_power);
-			x.p_connectionCapacityDemand_kW = companyConnection.get(comp_connections.connection_capacity_demand);
-			x.p_connectionCapacityFeedIn_kW = companyConnection.get(comp_connections.connection_capacity_supply);
-			x.p_electricityDemandTrend = companyConnection.get(comp_connections.electricity_demand_trend);
-
-			x.v_rooftopPVInstalledCapacity_kW = x.p_PVInstalledCapacity_kW;
-			x.f_getElectricityDemandData();
-			traceln(x.getIndex() + " index of utility object with data");*/
-		}
-	}
-	/*
-	x.f_setEnergyLabelNumbers();
-	x.p_defaultEnergyLabelNumber = x.p_energyLabelNumber;
-	x.f_setBuildingTypeString();
-	x.f_setAnnualEnergyDemand();
-	*/	 	
-}	
-
-//traceln(count(UtilityConnections, x->x.p_company_connection_id != null) + " number of UO in collective");]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697096723758</Id>
-					<Name><![CDATA[f_configureBackBoneZero]]></Name>
-					<Description><![CDATA[Generieke functie die flexibele modelconfiguratie mogelijk maakt op basis van externe data. Expliciet gemodelleerd om profiling en volgorde van initialisatie te kunnen controleren.
-
-@param: none
-@return: none
-@since: Sprint 6
-@author: Jorrit]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-520</X><Y>370</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//f_createActors(); 
-//f_createGridNodes();
-f_generateGridNodes();
-f_generateGridConnections();
-f_instantiateEnergyAssets();
-f_createGISBuildings();
-//f_createAgentLinks();
-f_initializeForecasts();
-
-//f_instantiateTemplateEnergyAssets();
-
-// Sliders start values
-//sl_electricTrucks.setValue(100,true);
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697184779060</Id>
-					<Name><![CDATA[f_zinc_init]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>20</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[buurt]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[polygon]]></Name>
-						<Type><![CDATA[double[][]]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[bedrijventerreinID]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[SavedScenarioID]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Als buurt/bedrijventerrein is gekozen, vertaal naar een polygon
-
-// verzamel publieke data of lees bestaand scenario in
-
-// Maak GIS_Buildings en GIS_neighborhoods aan
-
-// Maak gridconnections aan (en link aan GIS_Building/GIS_neighborhood)
-GridConnection GC = new add_GC();
-
-// Maak bijbehorende actoren aan
-
-
-// Ken energy assets toe adhv allerlei databronnen/parameters/...
-// Consumptieprofielen
-for (GridConnection GC : c_gridConnections) {
-		J_EA newAsset = p_defaultConsumptionAsset.getClone();
-		c_energyAssets.add(newAsset);
-		GC.f_connectToJ_EA(newAsset);
-}
-
-// Voertuigen
-
-// verwarming
-
-// Gebouwtype + Isolatiegraad
-
-// Extra 'handmatige' assets uit een excel of andere input]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697186722600</Id>
-					<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>452</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[/*double klimaatmonitorElectricityDelivery_kWh = 70e6; // Groote Lindt data from klimaatmonitor.databank.nl
-double klimaatmonitorMethaneDelivery_kWh = 406e6; // No data for Groote Lindt, taken value from neighboring park.
-double totalBusinessParkElectricityDelivery_kWh = 0; // Groote Lindt data from klimaatmonitor.databank.nl
-double totalBusinessParkMethaneDelivery_kWh = 0; // No data for Groote Lindt, taken value from neighboring park.
-double profileMethaneDelivery_kWh = 0;
-double profileElectricityDelivery_kWh = 0;
-
-// Get number of vehicles on business park
-int nbVans = (int)selectFrom(voertuigdata_drechtsteden).where(voertuigdata_drechtsteden.buurtcode.eq(p_buurtcode)).firstResult(voertuigdata_drechtsteden.aantal_bestelautos);
-int nbTrucks = (int)selectFrom(voertuigdata_drechtsteden).where(voertuigdata_drechtsteden.buurtcode.eq(p_buurtcode)).firstResult(voertuigdata_drechtsteden.aantal_trucks);
-int nbCars = 0;
-//List<String> columns = selectFrom(voertuigdata_drechtsteden).getResults(voertuigdata_drechtsteden.getColumns());
-//String columns = voertuigdata_drechtsteden.getColumns().toString();
-
-traceln("Aantal bestelbusjes op bedrijventerrein: %s, aantal trucks: %s", nbVans, nbTrucks);
-// Add electricity consumption profiles to gridconnections
-
-for (GridConnection GC : UtilityConnections) {
-	// Add electricity consumption profiles
-	//newAsset.yearlyDemandElectricity_kWh=1;
-	if (GC.p_company_connection_id != null) {
-		J_EAProfile newAsset;
-		newAsset = (J_EAProfile)p_defaultProfile.clone();			
-		newAsset.parentAgent = GC;
-		newAsset.energyAssetName=GC.p_company_connection_id;
-		
-		List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + GC.p_company_connection_id + "_demand FROM comp_elec_consumption;");			
-		((J_EAProfile)newAsset).a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> d).toArray();
-		c_energyAssets.add(newAsset);
-		GC.f_connectToJ_EA(newAsset);
-		totalBusinessParkElectricityDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
-		profileElectricityDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
-	} else { // Add regular electricity and gas consumption profiles
-		// Electricity consumption
-		J_EAConsumption newAsset;
-		newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
-		newAsset.parentAgent = GC;
-		newAsset.energyAssetName="INDUSTRY_OTHER_ELECTRICITY_DEMAND";
-		newAsset.yearlyDemandElectricity_kWh = 100000*uniform(0.5,1.5); // Replace with yearly consumption from database!
-		c_energyAssets.add(newAsset);
-		GC.f_connectToJ_EA(newAsset);
-		totalBusinessParkElectricityDelivery_kWh += newAsset.yearlyDemandElectricity_kWh;
-	}	
-	
-	if ( GC.p_gridConnectionType==OL_GridConnectionType.LOGISTICS ) { // add dieseltrucks
-		double energyConsumption_kWhpkm = 3.0;//g.required( "energyConsumption_kWhpkm" ).doubleValue();
-		double vehicleScaling = 1.0;//g.hasNonNull("vehicleScaling")? g.required("vehicleScaling").doubleValue() : 1.0;		
-		for (int i=0; i<nbTrucks; i++) {
-			J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(GC, energyConsumption_kWhpkm, p_timeStep_h, vehicleScaling);	
-			dieselVehicle.energyAssetType = OL_EnergyAssetType.DIESEL_TRUCK;
-			GC.f_connectToJ_EA(dieselVehicle);		
-			c_energyAssets.add(dieselVehicle);			
-		}
-		for (int i=0; i<nbVans; i++) {
-			energyConsumption_kWhpkm = 1.0;
-			J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(GC, energyConsumption_kWhpkm, p_timeStep_h, vehicleScaling);	
-			dieselVehicle.energyAssetType = OL_EnergyAssetType.DIESEL_VAN;
-			GC.f_connectToJ_EA(dieselVehicle);		
-			c_energyAssets.add(dieselVehicle);	
-		}		
-	} else {
-		// Heatdemand
-		double[] a_energyProfile_kWh = {};
-		if (GC.p_company_connection_id != null) {
-			String columnName = GC.p_company_connection_id.toUpperCase() + "_DEMAND";
-			//List<String> table_columns = selectValues(String.class, "SELECT column_name FROM information_schema.columns WHERE table_name='COMP_GAS_CONSUMPTION';");// and column_name='" + GC.p_company_connection_id + "_demand';");
-			String table_columns = comp_gas_consumption.getColumns().toString();
-			if (table_columns.contains(columnName)) {
-				List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + GC.p_company_connection_id + "_demand FROM comp_gas_consumption;");			
-				a_energyProfile_kWh = hourlyGasDemand_kWh.stream().mapToDouble(d -> d*9.77).toArray();
-				traceln("Gas consumption array length: " + a_energyProfile_kWh.length + " for grid connection: " + GC);
-			}
-		}
-		
-		if ( a_energyProfile_kWh.length > 0) {
-			J_EAProfile newAsset = new J_EAProfile(GC, OL_EnergyCarrierType.HEAT, a_energyProfile_kWh, 1.0);
-			newAsset.energyAssetName=GC.p_company_connection_id;			
-			c_energyAssets.add(newAsset);
-			GC.f_connectToJ_EA(newAsset);
-			totalBusinessParkMethaneDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
-			profileMethaneDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
-			// Get peak heat demand from energyprofile
-		
-			double peakHeatDemand_kW = Arrays.stream(a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
-			J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, p_timeStep_h, 90);
-			c_energyAssets.add(gasBurner);
-			GC.f_connectToJ_EA(gasBurner);	
-		} else {
-			double yearlyHeatDemandPerFloorSurface_kWhpm2=90.9778*9.77;
-			J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
-			newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
-			newAsset.parentAgent = GC;
-			newAsset.energyAssetName="Building_heat_demand";
-			newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
-			c_energyAssets.add(newAsset);
-			GC.f_connectToJ_EA(newAsset);		
-			totalBusinessParkMethaneDelivery_kWh += newAsset.yearlyDemandHeat_kWh;
-			J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
-			c_energyAssets.add(gasBurner);
-			GC.f_connectToJ_EA(gasBurner);	
-		}
-		// Gas burner
-	
-	}		
-}
-
-if (b_scaleElecMethaneConsumption) {
-	traceln("totalBusinessParkElectricityDelivery_MWh: " + totalBusinessParkElectricityDelivery_kWh/1000 + " MWh, profile delivery: " + profileElectricityDelivery_kWh/1000);
-	traceln("totalBusinessParkMethaneDelivery_MWh: " + totalBusinessParkMethaneDelivery_kWh/1000);
-	
-	double methaneDeliveryCorrectionFactor_fr = (klimaatmonitorMethaneDelivery_kWh - profileMethaneDelivery_kWh) / (totalBusinessParkMethaneDelivery_kWh - profileMethaneDelivery_kWh);
-	double electricityDeliveryCorrectionFactor_fr = (klimaatmonitorElectricityDelivery_kWh - profileElectricityDelivery_kWh) / (totalBusinessParkElectricityDelivery_kWh - profileElectricityDelivery_kWh);
-	
-	traceln("methaneDeliveryCorrectionFactor_fr: " + methaneDeliveryCorrectionFactor_fr + ", klimaatmonitor gaslevering: " + klimaatmonitorMethaneDelivery_kWh );
-	traceln("electricityDeliveryCorrectionFactor_fr: " + electricityDeliveryCorrectionFactor_fr + ", klimaatmonitor elektriciteitslevering: " + klimaatmonitorElectricityDelivery_kWh );
-	
-	for (J_EA e : c_energyAssets) {
-		if ( e instanceof J_EAConsumption ) {
-			if ( ((J_EAConsumption)e).yearlyDemandElectricity_kWh > 0 ) { // correct electricity consumption for non-profile connections.
-				((J_EAConsumption)e).yearlyDemandElectricity_kWh = ((J_EAConsumption)e).yearlyDemandElectricity_kWh * electricityDeliveryCorrectionFactor_fr;
-			} else if ( ((J_EAConsumption)e).yearlyDemandHeat_kWh > 0 ) {
-				((J_EAConsumption)e).yearlyDemandHeat_kWh = ((J_EAConsumption)e).yearlyDemandHeat_kWh * methaneDeliveryCorrectionFactor_fr;
-				J_EAConversionGasBurner gasBurner = (J_EAConversionGasBurner)((GridConnection)e.parentAgent).p_primaryHeatingAsset;
-				gasBurner.capacityHeat_kW = gasBurner.capacityHeat_kW * methaneDeliveryCorrectionFactor_fr;		
-			}
-		}
-	}
-}*/
-
-double nbHouseholds = 500;//70000*3000/2500/2;
-
-for (GridConnection GC : Windfarms) {
-	// Add 0kW windturbine to windfarm
-	J_EAProduction windTurbine = new J_EAProduction(GC, OL_EnergyAssetType.WINDMILL, "Windmill onshore",500,0,0,0,p_timeStep_h,0);
-	c_energyAssets.add(windTurbine);
-	GC.f_connectToJ_EA(windTurbine);
-	J_EAProduction pvPark = new J_EAProduction(GC, OL_EnergyAssetType.PHOTOVOLTAIC, "PV park onshore",0,0,0,0,p_timeStep_h,0);
-	c_energyAssets.add(pvPark);
-	GC.f_connectToJ_EA(pvPark);
-}
-
-for (GridConnection GC : GridBatteries) {
-	//J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 25000.0, 25000.0, 1.0, p_timeStep_h);
-	J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 0.0, 0.0, 1.0, p_timeStep_h);
-	c_energyAssets.add(gridBattery);
-	c_storageAssets.add(gridBattery);
-	GC.f_connectToJ_EA(gridBattery);
-}
-
-// Model all households as one 'utlity' agent fow now (placeholder for L4L)
-GridConnection GC = UtilityConnections.get(0);
-	
-
-	// Electricity demand
-	//J_EAConsumption newAsset;
-	J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
-	newAsset.parentAgent = GC;
-	newAsset.energyAssetName="House_other_electricity";
-	newAsset.yearlyDemandElectricity_kWh = 2500 * nbHouseholds; // Replace with yearly consumption from database!
-	c_energyAssets.add(newAsset);
-	GC.f_connectToJ_EA(newAsset);
-	
-	// Heat/gas demand
-	/*double yearlyHeatDemand_kWh=1000*9.77*0.99*nbHouseholds;
-	newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
-	newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
-	newAsset.parentAgent = GC;
-	newAsset.energyAssetName="Building_heat_demand";
-	newAsset.yearlyDemandHeat_kWh = yearlyHeatDemand_kWh;
-	c_energyAssets.add(newAsset);
-	GC.f_connectToJ_EA(newAsset);		
-	//totalBusinessParkMethaneDelivery_kWh += newAsset.yearlyDemandHeat_kWh;
-	J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
-	c_energyAssets.add(gasBurner);
-	GC.f_connectToJ_EA(gasBurner);	*/
-	/*J_EAConversionHeatPump heatPump = new J_EAConversionHeatPump(GC, p_timeStep_h, newAsset.yearlyDemandHeat_kWh/8760*10 / 3, 0.5, v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
-	c_energyAssets.add(heatPump);
-	GC.f_connectToJ_EA(heatPump);
-	c_ambientAirDependentAssets.add(heatPump);*/
-	
-
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697556251375</Id>
 					<Name><![CDATA[f_getEnergyCosts]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -7206,100 +5529,13 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1698752016115</Id>
-					<Name><![CDATA[f_generateGridNodes]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>410</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// One 'hardcoded' HVMV gridNode
-GridNode GN_main = add_pop_gridNodes();
-GN_main.p_energyType = OL_EnergyCarrierType.ELECTRICITY;		
-GN_main.p_agentID = "HVMV1";
-GN_main.p_capacity_kW= 11500;
-//x.currentStatus = row.get( mvlv_transformers.currentsta );
-//x.validFrom = row.get( mvlv_transformers.validfrom );
-GN_main.p_nodeType = OL_GridNodeType.HSMS;
-c_gridNodesHSMS.add(GN_main);
-
-/*// Get trip tuples from this household ID from database
-List<Tuple> rows = selectFrom(mvlv_transformers)
-	//.where(mvlv_transformers.omschrijvi.eq("Netstation"))
-	//.where(mvlv_transformers.currentsta.eq("functional"))
-	//.where(mvlv_transformers.nominal_power.gt(0))
-	.list();
-
-for (Tuple row : rows) {
-	GridNode GN = add_pop_gridNodes();
-	GN.p_energyType = OL_EnergyCarrierType.ELECTRICITY;		
-	GN.p_agentID = row.get( mvlv_transformers.id);
-	GN.p_capacity_kW= row.get( mvlv_transformers.nominal_power);
-	//x.currentStatus = row.get( mvlv_transformers.currentsta );
-	//x.validFrom = row.get( mvlv_transformers.validfrom );
-	GN.p_nodeType = OL_GridNodeType.MSLS;
-	GN.p_longitude = row.get( mvlv_transformers.longitude );
-	GN.p_latitude = row.get( mvlv_transformers.latitude );
-	GN.setLatLon(GN.p_latitude, GN.p_longitude);
-	GN.p_parentNodeID="HVMV1";
-	GN.f_connectToParentNode();
-	c_gridNodesMSLS.add(GN);	
-}*/
-
-/*
-//connect HVMV-transformers to households
-f_connectHouseholdsToMVLVTransformers();
-f_connectUtilityObjectsToMVLVTransformers();
-
-//Set trafo power if data is missing
-if (sum(pop_EA_TransformersMVLV, x->x.ratedPower) < 1){
-	f_setMVLVTransformerRatedPower();
-}
-
-//Reset connections if they exceed rated power
-else{
-	f_resetIfConnectionsExceedRatedPower();
-}*/]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1698752016120</Id>
-					<Name><![CDATA[f_connectUtilityObjectsToMVLVTransformers]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-490</X><Y>470</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (GridConnection GC : c_gridConnections){
-	GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
-	
-	//Set nearest agent as trafo
-	nearestLVStation.c_electricityGridConnections.add(GC);
-	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;
-}
-/*
-
-for (EA_Building x : pop_EA_Buildings){
-	EA_TransformerMVLV nearestLVStation = x.getNearestAgent(pop_EA_TransformersMVLV);
-	
-	//Set nearest agent as trafo
-	nearestLVStation.c_connectedUtilityObjects.add(x);
-	x.p_connectedMVLVTransformer = nearestLVStation;
-}*/]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698922757486</Id>
 					<Name><![CDATA[f_calculateKPIs]]></Name>
 					<Description><![CDATA[Executed on simulation end to export data.
 
 @author: JorritvandenHouten
 @since: Sprint 6]]></Description>
-					<X>-750</X><Y>580</Y>
+					<X>-840</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7434,62 +5670,6 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1698933346068</Id>
-					<Name><![CDATA[f_getGasDemandData]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-490</X><Y>490</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if (p_hasGasData != null && p_hasGasData.equals("Yes")){
-	v_hasGasDemandProfile = true;
-	a_gasDemandProfile = new double [8760];
-	
-	traceln(this.getIndex() + " index of UO with gas demand data");
-		
-	//Set string for demand depending on number of connections
-	String idInputValue = "";
-	if ( p_numberOfConnections == 1){
-		idInputValue = p_company_connection_id + "_demand";
-	}
-	else{ 
-		idInputValue = p_company_connection_id + "a_demand";
-	}
-	
-	//Get list
-	List<Double> hourlyGasDemand = selectValues(double.class,
-		"SELECT " + idInputValue + " FROM comp_gas_consumption;");
-	
-	//Iterate over list
-	int iteratedHour = 0;
-	
-	//traceln(hourlyGasDemand.lastIndexOf());
-	for (Double demand : hourlyGasDemand){
-		a_gasDemandProfile[iteratedHour] = demand * main.p_energyDensityGas_kWhpm3;
-		iteratedHour++;
-		if (iteratedHour == 8760){
-			iteratedHour = 0;
-		}
-	}
-	
-	int maxHeatRequired = indexOfMax(a_gasDemandProfile);
-	v_requiredHeatPumpCapacity_kW = a_gasDemandProfile[maxHeatRequired] / 3;
-	traceln(v_requiredHeatPumpCapacity_kW + " required heat pump capacity at UO " + this.getIndex());
-	
-}
-else {
-	v_hasGasDemandProfile = false;
-}
-
-if (p_company_connection_id == null){
-	p_annualHeatingDemand_kWh = main.p_averageGasCompaniesPerM2 * main.p_energyDensityGas_kWhpm3 * p_floorSurfaceArea;
-	p_electricityConsumption_kWhPerYear = main.p_averageElectricityCompaniesPerM2 * p_floorSurfaceArea;
-}]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1699275323325</Id>
 					<Name><![CDATA[f_updateDatasets]]></Name>
 					<X>557</X><Y>234</Y>
@@ -7517,6 +5697,9 @@ if (p_company_connection_id == null){
 	data_businessParkSupply_kW.update();
 	data_businessParkNetLoad_kW.update();
 	
+	if (b_addKpiVisuals) {
+		UI_EnergyAsset.f_updateData();
+	}
 	//data_businessParkDemand_kW.update();
 	//data_businessParkSupply_kW.update();
 	//data_businessParkNetLoad_kW.update();
@@ -7531,7 +5714,7 @@ if (p_company_connection_id == null){
 		data_summerWeekNeighborhoodBatteryDemand_kW.add(t_h, sum(GridBatteries, x->max(0,x.v_batteryPowerElectric_kW)));
 		
 		data_summerWeekPVGeneration_kW.add(t_h, sum(c_gridConnections, x->x.v_pvProductionElectric_kW));
-		data_summerWeekWindGeneration_kW.add(t_h, sum(Windfarms, x->x.v_windProductionElectric_kW));
+		data_summerWeekWindGeneration_kW.add(t_h, sum(EnergyProductionSites, x->x.v_windProductionElectric_kW));
 		data_summerWeekNeighborhoodBatterySupply_kW.add(t_h, sum(GridBatteries, x->max(0,x.v_batteryPowerElectric_kW)));
 		data_summerWeekV2GSupply_kW.add(t_h, sum(c_gridConnections, x->-min(0,x.v_evChargingPowerElectric_kW)));
 		
@@ -7620,7 +5803,7 @@ if (p_company_connection_id == null){
 		data_winterWeekNeighborhoodBatteryDemand_kW.add(t_h, sum(GridBatteries, x->max(0,x.v_batteryPowerElectric_kW)));
 		
 		data_winterWeekPVGeneration_kW.add(t_h, sum(c_gridConnections, x->x.v_pvProductionElectric_kW));
-		data_winterWeekWindGeneration_kW.add(t_h, sum(Windfarms, x->x.v_windProductionElectric_kW));
+		data_winterWeekWindGeneration_kW.add(t_h, sum(EnergyProductionSites, x->x.v_windProductionElectric_kW));
 		data_winterWeekNeighborhoodBatterySupply_kW.add(t_h, sum(GridBatteries, x->-min(0,x.v_batteryPowerElectric_kW)));
 		data_winterWeekV2GSupply_kW.add(t_h, sum(c_gridConnections, x->-min(0,x.v_evChargingPowerElectric_kW)));
 		
@@ -7706,7 +5889,7 @@ if (p_company_connection_id == null){
 	v_dailyNeighborhoodBatteryDemand_kWh += sum(GridBatteries, x->max(0,x.v_batteryPowerElectric_kW));
 	
 	v_dailyPVGeneration_kWh += sum(c_gridConnections, x->x.v_pvProductionElectric_kW)*p_timeStep_h;
-	v_dailyWindGeneration_kWh += sum(Windfarms, x->x.v_windProductionElectric_kW)*p_timeStep_h;
+	v_dailyWindGeneration_kWh += sum(EnergyProductionSites, x->x.v_windProductionElectric_kW)*p_timeStep_h;
 	v_dailyNeighborhoodBatterySupply_kWh += sum(GridBatteries, x->-min(0,x.v_batteryPowerElectric_kW))*p_timeStep_h;
 	v_dailyV2GSupply_kWh += sum(c_gridConnections, x->-min(0,x.v_evChargingPowerElectric_kW))*p_timeStep_h;
 	
@@ -7782,7 +5965,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1700560766579</Id>
 					<Name><![CDATA[f_duurkrommes]]></Name>
-					<X>-740</X><Y>660</Y>
+					<X>-830</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7904,7 +6087,7 @@ v_timeStepsElapsed ++;
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-990</X><Y>150</Y>
+					<X>-671</X><Y>149</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7942,7 +6125,7 @@ v_timeStepsElapsed ++;
 @source: ETM-curves genormaliseerd met opgesteld vermogen
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-990</X><Y>90</Y>
+					<X>-671</X><Y>89</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7980,7 +6163,7 @@ v_timeStepsElapsed ++;
 @source: ETM-curves genormaliseerd met opgesteld vermogen
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-990</X><Y>110</Y>
+					<X>-671</X><Y>109</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8017,7 +6200,7 @@ v_timeStepsElapsed ++;
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-990</X><Y>130</Y>
+					<X>-671</X><Y>129</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8050,7 +6233,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1664529919197</Id>
 					<Name><![CDATA[tf_p_building_e_demand_other]]></Name>
-					<X>-990</X><Y>190</Y>
+					<X>-671</X><Y>189</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8083,7 +6266,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1664533224315</Id>
 					<Name><![CDATA[tf_p_house_h_demand_hot_water]]></Name>
-					<X>-990</X><Y>170</Y>
+					<X>-671</X><Y>169</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8116,7 +6299,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499046358</Id>
 					<Name><![CDATA[tf_p_building_h_demand]]></Name>
-					<X>-990</X><Y>210</Y>
+					<X>-671</X><Y>209</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8149,7 +6332,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499121634</Id>
 					<Name><![CDATA[tf_p_industry_steel_e_demand]]></Name>
-					<X>-990</X><Y>230</Y>
+					<X>-671</X><Y>229</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8182,7 +6365,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499133914</Id>
 					<Name><![CDATA[tf_p_industry_steel_h_demand]]></Name>
-					<X>-990</X><Y>250</Y>
+					<X>-671</X><Y>249</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8215,7 +6398,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499150900</Id>
 					<Name><![CDATA[tf_p_industry_other_e_demand]]></Name>
-					<X>-990</X><Y>270</Y>
+					<X>-671</X><Y>269</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8248,7 +6431,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499166838</Id>
 					<Name><![CDATA[tf_p_industry_other_h_demand]]></Name>
-					<X>-990</X><Y>290</Y>
+					<X>-671</X><Y>289</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8281,7 +6464,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1667396912514</Id>
 					<Name><![CDATA[tf_p_logistics_fleet_e_hgv]]></Name>
-					<X>-990</X><Y>310</Y>
+					<X>-671</X><Y>309</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10803,7 +8986,7 @@ v_timeStepsElapsed ++;
 				<ExcelFile>
 					<Id>1660141188744</Id>
 					<Name><![CDATA[inputHouseholdTrips]]></Name>
-					<X>-279.5</X><Y>129</Y>
+					<X>-419.5</X><Y>299</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10819,7 +9002,7 @@ v_timeStepsElapsed ++;
 				<ExcelFile>
 					<Id>1667758923284</Id>
 					<Name><![CDATA[inputTruckTrips]]></Name>
-					<X>-279.5</X><Y>109</Y>
+					<X>-419.5</X><Y>279</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10835,7 +9018,7 @@ v_timeStepsElapsed ++;
 				<ExcelFile>
 					<Id>1673445394784</Id>
 					<Name><![CDATA[inputCookingActivities]]></Name>
-					<X>-280</X><Y>90</Y>
+					<X>-420</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11170,7 +9353,7 @@ v_timeStepsElapsed ++;
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1658499722957</Id>
-					<Name><![CDATA[UI_energyAssets]]></Name>
+					<Name><![CDATA[UI_EnergyAsset]]></Name>
 					<X>296</X><Y>362</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -12252,7 +10435,7 @@ v_timeStepsElapsed ++;
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1663774461816</Id>
-					<Name><![CDATA[Windfarms]]></Name>
+					<Name><![CDATA[EnergyProductionSites]]></Name>
 					<X>90</X><Y>181</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -12260,12 +10443,12 @@ v_timeStepsElapsed ++;
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
-						<ClassName><![CDATA[GCWindfarm]]></ClassName>
+						<ClassName><![CDATA[GCEnergyProduction]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[GCWindfarm]]></ClassName>
+							<ClassName><![CDATA[GCEnergyProduction]]></ClassName>
 							<ItemName><![CDATA[1663773842877]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
@@ -13337,12 +11520,11 @@ v_timeStepsElapsed ++;
 				<Rectangle>
 					<Id>1665052211228</Id>
 					<Name><![CDATA[rectangle]]></Name>
-					<X>-1020</X><Y>0</Y>
+					<X>-700</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -13351,8 +11533,8 @@ v_timeStepsElapsed ++;
 					<LineColor>-16744448</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>930</Width>
-					<Height>480</Height>
+					<Width>540</Width>
+					<Height>340</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -13360,7 +11542,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1659709739366</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-1000</X><Y>56</Y>
+					<X>-681</X><Y>55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13381,7 +11563,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1659709765242</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>-760</X><Y>60</Y>
+					<X>-441</X><Y>59</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13402,12 +11584,11 @@ v_timeStepsElapsed ++;
 				<Rectangle>
 					<Id>1665052264314</Id>
 					<Name><![CDATA[rectangle1]]></Name>
-					<X>-960</X><Y>520</Y>
+					<X>-880</X><Y>480</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -13416,8 +11597,8 @@ v_timeStepsElapsed ++;
 					<LineColor>-3308225</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>660</Width>
-					<Height>480</Height>
+					<Width>720</Width>
+					<Height>660</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -13425,7 +11606,8 @@ v_timeStepsElapsed ++;
 				<Rectangle>
 					<Id>1665052603927</Id>
 					<Name><![CDATA[rectangle2]]></Name>
-					<X>-1019</X><Y>1</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-700</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13438,8 +11620,8 @@ v_timeStepsElapsed ++;
 					<LineColor>-16744448</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>169</Width>
-					<Height>40</Height>
+					<Width>359</Width>
+					<Height>39</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -13447,7 +11629,8 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1665052191319</Id>
 					<Name><![CDATA[text3]]></Name>
-					<X>-984</X><Y>8</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-665</X><Y>7</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13457,7 +11640,7 @@ v_timeStepsElapsed ++;
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16744448</Color>
-					<Text><![CDATA[Input]]></Text>
+					<Text><![CDATA[Parameters and generic profiles/data]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>18</Size>
@@ -13468,7 +11651,7 @@ v_timeStepsElapsed ++;
 				<Rectangle>
 					<Id>1665052678662</Id>
 					<Name><![CDATA[rectangle3]]></Name>
-					<X>-960</X><Y>520</Y>
+					<X>-880</X><Y>480</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13490,7 +11673,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1665052678664</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>-925</X><Y>527</Y>
+					<X>-845</X><Y>487</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13844,30 +12027,9 @@ v_timeStepsElapsed ++;
 					<Alignment>CENTER</Alignment>
 				</Text>
 				<Text>
-					<Id>1692704059566</Id>
-					<Name><![CDATA[text2]]></Name>
-					<X>-513</X><Y>61</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Model startup:]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
 					<Id>1692704078790</Id>
 					<Name><![CDATA[text12]]></Name>
-					<X>-300</X><Y>60</Y>
+					<X>-440</X><Y>230</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19757,7 +17919,7 @@ if (j_ea instanceof J_EAVehicle) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
 		//traceln("Adding buildingThermals to gridconnection");	
 		p_BuildingThermalAsset = (J_EABuilding)j_ea;
-			if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
+			/*if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
 				double lossFactor_WpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("lossFactor_WpK").doubleValue();
 				double heatCapacity_JpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("heatCapacity_JpK").doubleValue();
 				p_BuildingThermalAsset.lossFactor_WpK = lossFactor_WpK2;
@@ -19765,7 +17927,7 @@ if (j_ea instanceof J_EAVehicle) {
 				traceln("House thermal model updated!");
 				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_energyLabel);
 				traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
-			}
+			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
 		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
 		energyModel.c_ambientAirDependentAssets.add(p_BuildingThermalAsset);
 	} else if (j_ea instanceof J_EAStorageGas) {
@@ -33268,7 +31430,7 @@ ch_coopBalance.updateData();]]></Body>
 					<Body><![CDATA[// Sum depreciation costs of assets in own portfolio. 
 double depreciationCosts_eur=0;
 
-for (Agent a : subConnectionsElectricity.getConnections()) {
+/*for (Agent a : subConnectionsElectricity.getConnections()) {
 	if(a instanceof ConnectionOwner){
 		ConnectionOwner c = (ConnectionOwner)a;
 		if( c.p_actorGroup.equals("CoopProducer")) {
@@ -33284,9 +31446,7 @@ for (Agent a : subConnectionsElectricity.getConnections()) {
 		
 	}
 	
-}
-
-
+}*/ // Deprecated get depreciation per asset from input-json. Use other data-source!
 
 return depreciationCosts_eur;
 
@@ -38252,7 +36412,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1663773842879</Id>
-			<Name><![CDATA[GCWindfarm]]></Name>
+			<Name><![CDATA[GCEnergyProduction]]></Name>
 			<AdditionalClassCode><![CDATA[@Override
 public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
@@ -38730,6 +36890,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 		<ActiveObjectClass>
 			<Id>1663773857868</Id>
 			<Name><![CDATA[GCSolarfarm]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -41626,22 +39787,6 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1696864251210</Id>
-					<Name><![CDATA[c_utilityObjectsInBuilding]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>30</X><Y>290</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[GCUtility]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
 					<Id>1696866057758</Id>
 					<Name><![CDATA[c_gridConnectionsInBuilding]]></Name>
 					<X>30</X><Y>320</Y>
@@ -41724,20 +39869,6 @@ if (gisRegion == null ) {
 		}
 	}
 }]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697017422847</Id>
-					<Name><![CDATA[f_listUtilityObjectsInBuilding]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>180</X><Y>60</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln("f_listUtilityObjectsInBuilding is not functional!");
-]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -41901,24 +40032,6 @@ if (gisRegion == null ) {
 				</InputReference>
     		</RunConfigurationInput>
     		<RunConfigurationInput>
-				<Id>1690278258422</Id>
-				<Name><![CDATA[P import local config jsons]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[p_importLocalConfigJsons]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1663597142902</Id>
-				<Name><![CDATA[P force uncached]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[p_forceUncached]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
 				<Id>1663577689860</Id>
 				<Name><![CDATA[P parallelize]]></Name>
 				<InputReference>
@@ -42029,12 +40142,6 @@ if (gisRegion == null ) {
 					<ParameterName><![CDATA[j_experimentSettingsData]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[p_importLocalConfigJsons]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_forceUncached]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[p_parallelize]]></ParameterName>
 				</Parameter>
 				<Parameter>
@@ -42047,28 +40154,10 @@ if (gisRegion == null ) {
 					<ParameterName><![CDATA[j_hourlyCurvesData]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[p_forceBrownFieldNetload]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_printInputJsons]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[b_anylogicCostsForAllContracts]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[b_storeProfiles]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_simulationYear]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_centerLatitude]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_centerLongitude]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_simulatedArea]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_startHourWinterWeek]]></ParameterName>
@@ -42078,12 +40167,6 @@ if (gisRegion == null ) {
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_plotInterval_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_scaleElecMethaneConsumption]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_buurtcode]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
