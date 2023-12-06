@@ -4063,6 +4063,69 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1701855537716</Id>
+					<Name><![CDATA[p_truckTripsExcel]]></Name>
+					<X>-420</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[ExcelFile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1701855537714</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1701855572858</Id>
+					<Name><![CDATA[p_householdTripsExcel]]></Name>
+					<X>-420</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[ExcelFile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1701855572856</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1701855585052</Id>
+					<Name><![CDATA[p_cookingPatternExcel]]></Name>
+					<X>-420</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[ExcelFile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1701855585050</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -9580,56 +9643,6 @@ v_timeStepsElapsed ++;
 					<SamplesToKeep>35040</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
-			<Connectivity>
-				<ExcelFile>
-					<Id>1660141188744</Id>
-					<Name><![CDATA[inputHouseholdTrips]]></Name>
-					<X>-419.5</X><Y>299</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ResourceReference>
-						<PackageName><![CDATA[zero_engine]]></PackageName>
-						<ClassName><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></ClassName>
-					</ResourceReference>
-					<SaveInSnapshot>false</SaveInSnapshot>
-					<LoadOnStartup>true</LoadOnStartup>
-					<SaveOnDispose>true</SaveOnDispose>
-				</ExcelFile>
-				<ExcelFile>
-					<Id>1667758923284</Id>
-					<Name><![CDATA[inputTruckTrips]]></Name>
-					<X>-419.5</X><Y>279</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ResourceReference>
-						<PackageName><![CDATA[zero_engine]]></PackageName>
-						<ClassName><![CDATA[inputTruckTripPatterns.xlsx]]></ClassName>
-					</ResourceReference>
-					<SaveInSnapshot>false</SaveInSnapshot>
-					<LoadOnStartup>true</LoadOnStartup>
-					<SaveOnDispose>true</SaveOnDispose>
-				</ExcelFile>
-				<ExcelFile>
-					<Id>1673445394784</Id>
-					<Name><![CDATA[inputCookingActivities]]></Name>
-					<X>-420</X><Y>260</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ResourceReference>
-						<PackageName><![CDATA[zero_engine]]></PackageName>
-						<ClassName><![CDATA[inputECookerPatterns.xlsx]]></ClassName>
-					</ResourceReference>
-					<SaveInSnapshot>false</SaveInSnapshot>
-					<LoadOnStartup>true</LoadOnStartup>
-					<SaveOnDispose>true</SaveOnDispose>
-				</ExcelFile>
-			</Connectivity>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1658477103135</Id>
@@ -12123,6 +12136,7 @@ v_timeStepsElapsed ++;
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -12623,27 +12637,6 @@ v_timeStepsElapsed ++;
 						<Style>0</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
-				</Text>
-				<Text>
-					<Id>1692704078790</Id>
-					<Name><![CDATA[text12]]></Name>
-					<X>-440</X><Y>230</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Input files:]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
 				</Text>
 				<Line>
 					<Id>1693309354364</Id>
@@ -18747,13 +18740,13 @@ if (j_ea instanceof J_EAVehicle) {
 	J_ActivityTrackerTrips tripTracker;
 	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK) {
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-		tripTracker = new J_ActivityTrackerTrips(energyModel, rowIndex, energyModel.t_h*60, vehicle, OL_MobilityPatternType.TRUCK);
+		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN) {// No mobility pattern for business vans available yet!! Falling back to private-vehicle mobility pattern
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-		tripTracker = new J_ActivityTrackerTrips(energyModel, rowIndex, energyModel.t_h*60, vehicle, OL_MobilityPatternType.TRUCK);
+		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else {
 		int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
-		tripTracker = new J_ActivityTrackerTrips(energyModel, rowIndex, energyModel.t_h*60, vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
+		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	}
 	c_tripTrackers.add( tripTracker );
 	vehicle.tripTracker = tripTracker;	
@@ -18774,7 +18767,7 @@ if (j_ea instanceof J_EAVehicle) {
 		if (p_cookingTracker == null) {
 			//traceln("Adding cookingTracker to house" + this);
 			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel, rowIndex, time(MINUTE), (J_EAConversion)j_ea );			
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, time(MINUTE), (J_EAConversion)j_ea );			
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
@@ -40857,7 +40850,7 @@ if (gisRegion == null ) {
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["profiles"]]></ExternalTableName>
-				<AutoImport>true</AutoImport>
+				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
 		<ExportSettings>
@@ -41038,6 +41031,15 @@ if (gisRegion == null ) {
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_plotInterval_h]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_truckTripsExcel]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_householdTripsExcel]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_cookingPatternExcel]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
@@ -44181,18 +44183,18 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     public J_ActivityTrackerTrips() {
     }
     
-    public J_ActivityTrackerTrips(EnergyModel main, int rowIndex, double time_min, J_EAVehicle Vehicle, OL_MobilityPatternType mobilityPatternType) {
+    public J_ActivityTrackerTrips(EnergyModel main, ExcelFile tripsExcel, int rowIndex, double time_min, J_EAVehicle Vehicle) {
     	this.energyModel = main;
     	this.rowIndex = rowIndex;
     	this.Vehicle = Vehicle;
     	
-    	if (mobilityPatternType == OL_MobilityPatternType.PRIVATE_VEHICLE) {
-		    nbActivities = roundToInt(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 2));
+    	//if (mobilityPatternType == OL_MobilityPatternType.PRIVATE_VEHICLE) {
+		    nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
 	
 		    for (int i = 0; i < nbActivities; i++){
-		    	starttimes_min.add(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
-		    	endtimes_min.add(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-		    	distances_km.add(min(350,main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
+		    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
+		    	endtimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
+		    	distances_km.add(min(350,tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
 			    if (rowIndex == 55) {
 				    //Reducing trip lengths on rowIndex 55, they are too long for current-day EVs!
     		    	distances_km.set(i,distances_km.get(i)/2.0);
@@ -44200,7 +44202,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 
 		    }
 	
-    	} else if (mobilityPatternType == OL_MobilityPatternType.TRUCK) {
+    	/*} else if (mobilityPatternType == OL_MobilityPatternType.TRUCK) {
 		    nbActivities = roundToInt(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 2));
 	
 		    for (int i = 0; i < nbActivities; i++){
@@ -44211,7 +44213,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    }
     	} else {
     		traceln("Mobility pattern type not yet implemented! No trips loaded!");
-    	}
+    	}*/
 		    /*while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
 		    	starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
 		    	endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
@@ -44398,20 +44400,20 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     public J_ActivityTrackerCooking() {
     }
 
-    public J_ActivityTrackerCooking(EnergyModel main, int rowIndex, double time_min, J_EAConversion HOB) {
-    	this.energyModel = main;
+    public J_ActivityTrackerCooking(ExcelFile inputCookingActivities, int rowIndex, double time_min, J_EAConversion HOB) {
+    	//this.energyModel = main;
     	this.rowIndex = rowIndex;
     	this.HOB=HOB;
     	
     	//int rowIndex = uniform_discr(2, 300); 
-    	double v_cookingPatternIndex = main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 1);
-    	int nbOfCookingSessions = (int)(main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 2));
+    	double v_cookingPatternIndex = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 1);
+    	int nbOfCookingSessions = (int)(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 2));
 
     	for (int i = 0; i < nbOfCookingSessions; i++){
-    		starttimes_min.add(main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
-    		endtimes_min.add(main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
+    		starttimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
+    		endtimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
     		
-    		double ratio = main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getHeatCapacity_kW();
+    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getHeatCapacity_kW();
     		powerFractions_fr.add(ratio);
     	}
 
@@ -44511,17 +44513,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 		</Resource>
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[inputTruckTripPatterns.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[inputECookerPatterns.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<ReferencedFromUserCode>true</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
