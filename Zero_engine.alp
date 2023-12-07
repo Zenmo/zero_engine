@@ -5838,7 +5838,7 @@ for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 	
 	f_updateDatasets(t_h);
 }	
-
+traceln("HSMS overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
 f_calculateKPIs();
 traceln("---FINISHED YEAR MODEL RUN----");
 
@@ -5850,10 +5850,10 @@ for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
 for (GridNode GN : pop_gridNodes) {
-	GN.f_resetStates();
+	//GN.f_resetStates();
 }
 for (GridConnection GC : c_gridConnections) {
-	GC.f_resetStates();
+	//GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(time(MINUTE)));
 }
@@ -6125,6 +6125,7 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 f_sumGridNodeLoads();
 f_sumBatteryUse();
 f_duurkrommes();
+c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 //traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
 //traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
 //traceln("Electricity delta in batteries: "+ batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
@@ -6140,7 +6141,7 @@ double totalDistanceTrucks_km = 0;
 double deltaThermalEnergySinceStart_MWh = 0;
 double totalAmbientHeating_MWh = 0;
 
-//Total energy consumption and production
+//Total energy balance
 double electricityProduced_MWh = 0;
 v_totalEnergyCurtailed_MWh = 0;
 v_totalEnergyProduced_MWh = 0;
@@ -12683,29 +12684,6 @@ v_timeStepsElapsed ++;
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Image>
-					<Id>1696520897107</Id>
-					<Name><![CDATA[image11]]></Name>
-					<X>1085</X><Y>-70</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[getExperimentHost().openWebSite("https://www.tue.nl/en/research/research-groups/innovation-sciences/technology-innovation-society/projects/new-energy-outlook-for-the-netherlands/");]]></OnClickCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Width>115.802</Width>
-					<Height>60</Height>
-					<Rotation>0.0</Rotation>
-					<ImageFiles>
-						<ImageResourceReference>
-							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[logo_TUe_white.png]]></ClassName>
-						</ImageResourceReference>
-					</ImageFiles>
-					<OriginalSize>false</OriginalSize>
-				</Image>
 				<Text>
 					<Id>1696838439192</Id>
 					<Name><![CDATA[text31]]></Name>
@@ -13339,6 +13317,36 @@ geupdate vanuit
 					<Id>1696857656646</Id>
 					<Name><![CDATA[v_totalTimeOverloaded_h]]></Name>
 					<X>400</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1701945941397</Id>
+					<Name><![CDATA[v_totalExcessExport_kWh]]></Name>
+					<X>400</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1701945961810</Id>
+					<Name><![CDATA[v_totalExcessImport_kWh]]></Name>
+					<X>400</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14141,32 +14149,37 @@ if( p_energyAssetList != null) {
 // Low-pass filtered grid load
 //double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
 v_currentLoadElectricityLowPassed_kW += v_lowPassFactor_fr * ( v_currentLoadElectricity_kW - v_currentLoadElectricityLowPassed_kW );
-if (v_currentLoadElectricityLowPassed_kW > p_capacity_kW) {
-	v_totalTimeOverloaded_h	+= energyModel.p_timeStep_h;
-}
 
-v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
-
-if( abs( v_currentLoadElectricity_kW ) > abs(v_peakLoadAbsoluteElectricity_kW) ) { // store maximum absolute load, but retain sign!
-	v_peakLoadAbsoluteElectricity_kW = ( v_currentLoadElectricity_kW );
-	//v_timeOfPeakLoad_h = time(HOUR);
-}
-
-if( abs( v_currentLoadElectricityLowPassed_kW ) > abs(v_peakLoadFilteredElectricity_kW) ) { // store maximum absolute load, but retain sign!
-	v_peakLoadFilteredElectricity_kW = ( v_currentLoadElectricityLowPassed_kW );
-	v_timeOfPeakLoadFiltered_h = time(HOUR);
-}
-
-if( v_currentLoadElectricityLowPassed_kW < v_peakNegLoadElectricity_kW ) { // store peak negative load and time
-	v_peakNegLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
-	v_timeOfPeakNegLoadFiltered_h = time(HOUR);
-}
-
-if( v_currentLoadElectricityLowPassed_kW > v_peakPosLoadElectricity_kW ) { // store peak negative load and time
-	v_peakPosLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
-	v_timeOfPeakPosLoadFiltered_h = time(HOUR);
-}
-
+if (energyModel.v_isRapidRun) {
+	if (abs(v_currentLoadElectricityLowPassed_kW) > p_capacity_kW) {
+		//traceln("Overloaded gridNode %s! %s kW", p_agentID, abs(v_currentLoadElectricityLowPassed_kW));
+		v_totalTimeOverloaded_h	+= energyModel.p_timeStep_h;
+		v_totalExcessExport_kWh += max(0,-v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
+		v_totalExcessImport_kWh += max(0,v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
+	}
+	
+	v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
+	
+	if( abs( v_currentLoadElectricity_kW ) > abs(v_peakLoadAbsoluteElectricity_kW) ) { // store maximum absolute load, but retain sign!
+		v_peakLoadAbsoluteElectricity_kW = ( v_currentLoadElectricity_kW );
+		//v_timeOfPeakLoad_h = time(HOUR);
+	}
+	
+	if( abs( v_currentLoadElectricityLowPassed_kW ) > abs(v_peakLoadFilteredElectricity_kW) ) { // store maximum absolute load, but retain sign!
+		v_peakLoadFilteredElectricity_kW = ( v_currentLoadElectricityLowPassed_kW );
+		v_timeOfPeakLoadFiltered_h = time(HOUR);
+	}
+	
+	if( v_currentLoadElectricityLowPassed_kW < v_peakNegLoadElectricity_kW ) { // store peak negative load and time
+		v_peakNegLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
+		v_timeOfPeakNegLoadFiltered_h = time(HOUR);
+	}
+	
+	if( v_currentLoadElectricityLowPassed_kW > v_peakPosLoadElectricity_kW ) { // store peak negative load and time
+		v_peakPosLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
+		v_timeOfPeakPosLoadFiltered_h = time(HOUR);
+	}
+}	
 if (p_energyType.equals(OL_EnergyCarrierType.HEAT) & b_transportBufferValid ) { // Thermal load unbalance goes into transportBuffer
 //	double v_powerFraction_fr = Double.isNaN( -v_currentLoadHeat_kW / p_transportBuffer.getHeatCapacity_kW() )? 0 : -v_currentLoadHeat_kW / p_transportBuffer.getHeatCapacity_kW();
 	double v_powerFraction_fr = -v_currentLoadHeat_kW / p_transportBuffer.getHeatCapacity_kW();
@@ -14228,6 +14241,8 @@ v_peakNegLoadElectricity_kW = 0;
 v_peakLoadFilteredElectricity_kW = 0;
 v_timeOfPeakLoadFiltered_h = 0;
 v_totalTimeOverloaded_h = 0;
+v_totalExcessExport_kWh = 0;
+v_totalExcessImport_kWh = 0;
 
 // Energy flows
 v_electricityDrawn_kWh = 0;
@@ -17418,7 +17433,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660212665961</Id>
 					<Name><![CDATA[f_connectionMetering]]></Name>
-					<X>800</X><Y>520</Y>
+					<X>800</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17457,165 +17472,146 @@ v_xConvertedToElectricity_kWh += max(-v_conversionPowerElectric_kW, 0) * energyM
 v_electricityChargedByBattery_kWh += max(v_batteryPowerElectric_kW, 0) * energyModel.p_timeStep_h;
 v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * energyModel.p_timeStep_h;
 
-//Total use, production, import, export and self-use, for summer, winter and annual.
-if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
-	//f_sumMolecularEnergyFlows();
-	//f_sumGridNodeLoads();	
-	v_summerWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
-	v_summerWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
-	double totalEnergyProduced_MWh=0;
-	double totalEnergyUsed_MWh=0;
-	double totalEnergyCurtailed_MWh=0;
-	for (J_EA e : c_energyAssets) {
-		double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-		if (EnergyUsed_kWh > 0) {			
-			if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-			} else if( e instanceof J_EAConversionGasCHP ) {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
-			} else {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			}		
-			if ( e instanceof J_EABuilding ) {
-				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
-			}
-		} else {				
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-		}
-	}
-	v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
-	v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
-}
-if (energyModel.t_h == energyModel.p_startHourSummerWeek + 24*7) {
-	//f_sumMolecularEnergyFlows();
-	//f_sumGridNodeLoads();	
-	v_summerWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000-v_summerWeekTotalImport_MWh;
-	v_summerWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000-v_summerWeekTotalExport_MWh;
-	double totalEnergyProduced_MWh=0;
-	double totalEnergyUsed_MWh=0;
-	double totalEnergyCurtailed_MWh=0;
-	for (J_EA e : c_energyAssets) {
-		double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-		if (EnergyUsed_kWh > 0) {			
-			if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-			} else {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			}		
-			if ( e instanceof J_EABuilding ) {
-				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-				//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-			}
-		} else {				
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-		}
-	}
-	v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
-	v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_summerWeekEnergyProduced_MWh;	
+if (energyModel.v_isRapidRun){
+	v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
+	//Total use, production, import, export and self-use, for summer, winter and annual.
+	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
 	
-	// Calc selfConsumedEnergy for summerweek
-	v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-	double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
-	//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
-	
-}
-
-if (energyModel.t_h == energyModel.p_startHourWinterWeek) {
-	//f_sumMolecularEnergyFlows();
-	//f_sumGridNodeLoads();	
-	v_winterWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
-	v_winterWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
-	double totalEnergyProduced_MWh=0;
-	double totalEnergyUsed_MWh=0;
-	double totalEnergyCurtailed_MWh=0;
-	for (J_EA e : c_energyAssets) {
-		double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-		if (EnergyUsed_kWh > 0) {			
-			if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+		v_summerWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
+		v_summerWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else if( e instanceof J_EAConversionGasCHP ) {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
+				}
+			} else {				
 				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-			} else {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			}		
-			if ( e instanceof J_EABuilding ) {
-				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
 			}
-		} else {				
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
 		}
+		v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
+		v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh;		
 	}
-	v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
-	v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
-}
-if (energyModel.t_h == energyModel.p_startHourWinterWeek + 24*7) {
-	//f_sumMolecularEnergyFlows();
-	//f_sumGridNodeLoads();	
-	v_winterWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000-v_winterWeekTotalImport_MWh;
-	v_winterWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000-v_winterWeekTotalExport_MWh;
-	double totalEnergyProduced_MWh=0;
-	double totalEnergyUsed_MWh=0;
-	double totalEnergyCurtailed_MWh=0;
-	for (J_EA e : c_energyAssets) {
-		double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-		if (EnergyUsed_kWh > 0) {			
-			if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-			} else {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			}		
-			if ( e instanceof J_EABuilding ) {
-				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-				//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-			}
-		} else {				
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-		}
-	}
-	v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_winterWeekEnergyUsed_MWh;
-	v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_winterWeekEnergyProduced_MWh;	
+	if (energyModel.t_h == energyModel.p_startHourSummerWeek + 24*7) {
 	
-	// Calc selfConsumedEnergy for winterweek
-	v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-	double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
-	//traceln("Gridconnection %s winterweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
-	
-}
-
-if (energyModel.t_h == 8760-energyModel.p_timeStep_h) {
-	//f_sumMolecularEnergyFlows();
-	//f_sumGridNodeLoads();	
-	v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
-	v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
-	double totalEnergyProduced_MWh=0;
-	double totalEnergyUsed_MWh=0;
-	double totalEnergyCurtailed_MWh=0;
-	for (J_EA e : c_energyAssets) {
-		double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-		if (EnergyUsed_kWh > 0) {			
-			if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+		v_summerWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000-v_summerWeekTotalImport_MWh;
+		v_summerWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000-v_summerWeekTotalExport_MWh;
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				}
+			} else {				
 				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-			} else if( e instanceof J_EAConversionGasCHP ) {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
-			} else {
-				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			}		
-			if ( e instanceof J_EABuilding ) {
-				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
 			}
-		} else {				
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
 		}
+		v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
+		v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-v_summerWeekEnergyProduced_MWh;	
+		
+		// Calc selfConsumedEnergy for summerweek
+		v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+		double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
+		//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
+		
 	}
-	v_totalEnergyUsed_MWh = totalEnergyUsed_MWh;
-	v_totalEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
-	v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-	//traceln("Gridconnection %s annual selfconsumed use/import based: %s MWh", p_agentID, v_winterWeekSelfConsumedEnergy_MWh);
-}
-]]></Body>
+	
+	if (energyModel.t_h == energyModel.p_startHourWinterWeek) {
+		
+		v_winterWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
+		v_winterWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
+				}
+			} else {				
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			}
+		}
+		v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
+		v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh;		
+	}
+	if (energyModel.t_h == energyModel.p_startHourWinterWeek + 24*7) {
+		v_winterWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000-v_winterWeekTotalImport_MWh;
+		v_winterWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000-v_winterWeekTotalExport_MWh;
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				}
+			} else {				
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			}
+		}
+		v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_winterWeekEnergyUsed_MWh;
+		v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-v_winterWeekEnergyProduced_MWh;	
+		
+		// Calc selfConsumedEnergy for winterweek
+		v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+		double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
+		//traceln("Gridconnection %s winterweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
+	}
+	
+	double currentImport_MWh = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW))* energyModel.p_timeStep_h/1000;
+	double currentExport_KWh = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW))* energyModel.p_timeStep_h/1000;
+	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
+		v_daytimeTotalImport_MWh += currentImport_MWh;
+		v_daytimeTotalExport_MWh += currentExport_KWh;
+		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
+		v_daytimeEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
+	}
+	
+	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
+	if ((energyModel.t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+		v_weekdayTotalImport_MWh += currentImport_MWh;
+		v_weekdayTotalExport_MWh += currentExport_KWh;
+		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
+		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
+	}
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -17910,30 +17906,8 @@ f_operateFlexAssets();
 
 f_connectionMetering();
 
-v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
-
 v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
 - v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
-
-
-
-// Total Energy Use and Production -> Run at end of simulation, not every timestep!
-/*
-v_totalEnergyUsed_kWh = 0;
-v_totalEnergyProduced_kWh = 0;
-for (J_EA j_ea : c_energyAssets ) {
-	double energyUse_kWh=j_ea.getEnergyUsed_kWh();
-	if (j_ea instanceof J_EAConversionCurtailer) {
-		v_totalEnergyProduced_kWh -= max(0, energyUse_kWh);
-	} else {
-		v_totalEnergyUsed_kWh += max(0, energyUse_kWh);
-		v_totalEnergyProduced_kWh -= min(0, energyUse_kWh);
-	}
-}
-
-v_selfConsumption_fr = 1 - (v_electricityDeliveredToGrid_kWh + v_heatDelivered_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh + v_dieselDelivered_kWh ) / v_totalEnergyProduced_kWh; // Doesn't make sense to sum different energy carriers!
-v_selfSufficiency_fr = 1 - (v_electricityDrawnFromGrid_kWh + v_heatDrawn_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh) / v_totalEnergyUsed_kWh; // Need to account for energy in storages
-*/
 
 if (energyModel.b_addKpiVisuals) {
 	//pl_SOC.updateData();
@@ -18138,7 +18112,17 @@ v_methaneDelivered_kWh = 0;
 v_dieselDrawn_kWh = 0;
 v_dieselDelivered_kWh = 0;
 v_hydrogenDrawn_kWh = 0;
-v_hydrogenDelivered_kWh = 0;]]></Body>
+v_hydrogenDelivered_kWh = 0;
+
+v_weekdayTotalImport_MWh = 0;
+v_weekdayTotalExport_MWh = 0;
+v_weekdayEnergyProduced_MWh = 0;
+v_weekdayEnergyUsed_MWh = 0;
+
+v_daytimeTotalImport_MWh = 0;
+v_daytimeTotalExport_MWh = 0;
+v_daytimeEnergyProduced_MWh = 0;
+v_daytimeEnergyUsed_MWh = 0;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -18945,6 +18929,64 @@ traceln("f_setColorDetailedObjects not yet implemented!");]]></Body>
 					<Body><![CDATA[//f_instantiateEnergyAssets();
 f_connectToParentNode();
 f_setOperatingSwitches();]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1701956274181</Id>
+					<Name><![CDATA[f_calculateKPIs]]></Name>
+					<X>780</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
+v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
+double totalEnergyProduced_MWh=0;
+double totalEnergyUsed_MWh=0;
+double totalEnergyCurtailed_MWh=0;
+for (J_EA e : c_energyAssets) {
+	double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+	if (EnergyUsed_kWh > 0) {			
+		if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+		} else if( e instanceof J_EAConversionGasCHP ) {
+			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
+		} else {
+			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+		}		
+		if ( e instanceof J_EABuilding ) {
+			totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
+		}
+	} else {				
+		totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+	}
+}
+v_totalEnergyUsed_MWh = totalEnergyUsed_MWh;
+v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;		
+v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+
+// Daytime selfconsumption
+v_daytimeSelfConsumedEnergy_MWh = v_daytimeEnergyProduced_MWh - v_daytimeTotalExport_MWh;
+// Nighttime totals: yearly totays minus daytime totals
+v_nighttimeTotalExport_MWh = v_totalExport_MWh - v_daytimeTotalExport_MWh;
+v_nighttimeTotalImport_MWh = v_totalImport_MWh - v_daytimeTotalImport_MWh;
+v_nighttimeEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_daytimeEnergyUsed_MWh;
+v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
+v_nighttimeSelfConsumedEnergy_MWh = v_nighttimeEnergyProduced_MWh - v_nighttimeTotalExport_MWh;
+
+// Weekday selfconsumption
+v_weekdaySelfConsumedEnergy_MWh = v_weekdayEnergyProduced_MWh - v_weekdayTotalExport_MWh;
+// Weekend totals: yearly totals minus weekday totals
+v_weekendTotalExport_MWh = v_totalExport_MWh - v_weekdayTotalExport_MWh;
+v_weekendTotalImport_MWh = v_totalImport_MWh - v_weekdayTotalImport_MWh;
+v_weekendEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_weekdayEnergyUsed_MWh;
+v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
+v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
+
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -41462,6 +41504,7 @@ public class J_EA implements Cloneable {
     	if (parentAgent instanceof GridConnection ) {
     		if(this instanceof J_EAConversionCurtailer) {    			
 	    		((GridConnection)parentAgent).v_currentEnergyProduction_kW -= max(0,energyUse_kW);    			
+	    		((GridConnection)parentAgent).v_currentEnergyCurtailed_kW += max(0,energyUse_kW);    			
     		} else {
 	    		((GridConnection)parentAgent).v_currentEnergyConsumption_kW += max(0,energyUse_kW);
 	    		((GridConnection)parentAgent).v_currentEnergyProduction_kW += max(0,-energyUse_kW);
@@ -44514,11 +44557,6 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[logo_TUe_white.png]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
