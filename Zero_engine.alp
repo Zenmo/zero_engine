@@ -1092,6 +1092,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1661516161016</Id>
 					<Name><![CDATA[o_outputActorData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>810</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1109,6 +1110,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1661529224106</Id>
 					<Name><![CDATA[o_outputExceptions]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>830</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1126,6 +1128,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1663238746791</Id>
 					<Name><![CDATA[o_outputSettings]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>850</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1143,6 +1146,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1663255244236</Id>
 					<Name><![CDATA[o_outputTrigger]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>930</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1163,6 +1167,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1666880542545</Id>
 					<Name><![CDATA[o_simulationResults]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>870</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1180,6 +1185,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1672910222316</Id>
 					<Name><![CDATA[o_hourlyCurvesData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1197,6 +1203,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Output>
 					<Id>1679503183018</Id>
 					<Name><![CDATA[o_contractData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>910</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2605,7 +2612,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1698929539392</Id>
 					<Name><![CDATA[v_totalEnergyUsed_MWh]]></Name>
-					<X>-480</X><Y>980</Y>
+					<X>-480</X><Y>990</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2620,7 +2627,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1698929546080</Id>
 					<Name><![CDATA[v_totalEnergyProduced_MWh]]></Name>
-					<X>-480</X><Y>1000</Y>
+					<X>-480</X><Y>1010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3714,6 +3721,18 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1701965985318</Id>
+					<Name><![CDATA[v_netOverloadDuration_h]]></Name>
+					<X>-480</X><Y>960</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -3798,7 +3817,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1663239405341</Id>
 					<Name><![CDATA[j_dataOut]]></Name>
-					<X>-840</X><Y>730</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-820</X><Y>730</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3819,6 +3839,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1663242364390</Id>
 					<Name><![CDATA[j_experimentSettingsData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-820</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3868,6 +3889,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1666880315951</Id>
 					<Name><![CDATA[j_simulationResults]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-820</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3917,6 +3939,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1672910307060</Id>
 					<Name><![CDATA[j_hourlyCurvesData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-820</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3942,7 +3965,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @author: GillisHommen
 @since: 01/03/2023]]></Description>
-					<X>-840</X><Y>640</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-819</X><Y>669</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4234,6 +4258,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666884023719</Id>
 					<Name><![CDATA[c_globalElectricityImportProfile_MW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4249,6 +4274,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666884311850</Id>
 					<Name><![CDATA[c_globalElectricityExportProfile_MW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4279,6 +4305,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666981403077</Id>
 					<Name><![CDATA[c_totalBatteryChargeAmount_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>1050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4294,6 +4321,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666984250257</Id>
 					<Name><![CDATA[c_totalBatteryDischargeAmount_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4309,6 +4337,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1666984296429</Id>
 					<Name><![CDATA[c_totalBatteryInstalledCapacity_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>1090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4324,6 +4353,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1667300034779</Id>
 					<Name><![CDATA[c_totalBatteryUnitsInstalled]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>1110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4354,6 +4384,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668007771830</Id>
 					<Name><![CDATA[c_globalEVChargingProfile_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>990</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4369,6 +4400,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668007790848</Id>
 					<Name><![CDATA[c_globalEHGVChargingProfile_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>1010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4384,6 +4416,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668007805687</Id>
 					<Name><![CDATA[c_globalBatteryChargingProfile_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-840</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4550,7 +4583,8 @@ v_timeStepsElapsed ++;
 
 @author: JorritvandenHouten
 @since: Sprint 6]]></Description>
-					<X>-840</X><Y>710</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-840</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5040,7 +5074,7 @@ for(GridNode n : c_gridNodesHSMS) {
 	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
 }
 
-if (b_storeProfiles) {
+/*if (b_storeProfiles) {
 	// Write data to 'signal' objects
 	double p_signalResolution_h = 1.0; // For consistency of units, make signal resolution explicit!
 	
@@ -5087,7 +5121,7 @@ if (b_storeProfiles) {
 	double totalBatteryLoad_kW = currentBatteryLoad_kW;
 	c_globalBatteryChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalBatteryLoad_kW * p_timeStep_h / p_signalResolution_h );
 	c_globalBatteryChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalBatteryLoad_kW * p_timeStep_h / p_signalResolution_h );
-}]]></Body>
+}*/]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -5141,7 +5175,7 @@ v_totalElectricityImport_MWh = 0;
 v_totalElectricityExport_MWh = 0;
 c_timesOfNodePeakLoads_h.clear();
 v_cumulativeGridCapacityHSMS_kW = 0;
-
+v_netOverloadDuration_h = 0;
 
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
@@ -5151,6 +5185,8 @@ for(GridNode h : c_gridNodesHSMS ) {
 	v_totalElectricityExport_MWh += h.v_electricityDelivered_kWh / 1000.0;
 	c_timesOfNodePeakLoads_h.put(h.p_agentID, h.v_timeOfPeakLoadFiltered_h);
 	v_cumulativeGridCapacityHSMS_kW += h.p_capacity_kW;
+	
+	v_netOverloadDuration_h += h.v_totalTimeOverloaded_h;
 }
 
 v_gridNodePeakLoadElectricityMSLS_kW=0;
@@ -5400,7 +5436,8 @@ for (double ts_h = t_h; ts_h<t_h+p_forecastTime_h; ts_h += p_timeStep_h) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1682943799138</Id>
 					<Name><![CDATA[f_calculateContractCosts]]></Name>
-					<X>-840</X><Y>660</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-819</X><Y>689</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5713,7 +5750,8 @@ if (heatTaxContract != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1683018740227</Id>
 					<Name><![CDATA[f_contractCostsPerEnergyCarrier]]></Name>
-					<X>-840</X><Y>680</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-819</X><Y>709</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40948,69 +40986,6 @@ if (gisRegion == null ) {
     		</RunConfigurationInput>		
 		</Inputs>
 		<Outputs>
-    		<RunConfigurationOutput>
-				<Id>1663255524588</Id>
-				<Name><![CDATA[O output runSettings]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_outputSettings]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
-    		<RunConfigurationOutput>
-				<Id>1661517229694</Id>
-				<Name><![CDATA[O output actorData]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_outputActorData]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
-    		<RunConfigurationOutput>
-				<Id>1661529672978</Id>
-				<Name><![CDATA[O output exceptions]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_outputExceptions]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
-    		<RunConfigurationOutput>
-				<Id>1663340413770</Id>
-				<Name><![CDATA[O output trigger]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_outputTrigger]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
-    		<RunConfigurationOutput>
-				<Id>1668011807231</Id>
-				<Name><![CDATA[O simulation results]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_simulationResults]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
-    		<RunConfigurationOutput>
-				<Id>1672915061078</Id>
-				<Name><![CDATA[O hourly curves data]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_hourlyCurvesData]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
-    		<RunConfigurationOutput>
-				<Id>1679565197534</Id>
-				<Name><![CDATA[O contract data]]></Name>
-				<OutputReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[EnergyModel]]></ClassName>
-					<ItemName><![CDATA[o_contractData]]></ItemName>
-				</OutputReference>
-    		</RunConfigurationOutput>
 		</Outputs>
 	</RunConfiguration>
 	<Experiments>	
