@@ -3733,6 +3733,21 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1702377382300</Id>
+					<Name><![CDATA[v_deltaThermalEnergySinceStart_MWh]]></Name>
+					<X>430</X><Y>990</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -4228,6 +4243,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1664953351408</Id>
 					<Name><![CDATA[c_productionAssets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>299</X><Y>208</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -6209,7 +6225,7 @@ for (J_EA e : c_energyAssets) {
 		}		
 		if ( e instanceof J_EABuilding ) {
 			v_totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-			deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+			deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-18)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
 		}
 	} else {
 		if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
@@ -6392,6 +6408,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 		//v_summerWeekPeakElecImport_kW = max(v_summerWeekPeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_summerWeekPeakElecExport_kW = max(v_summerWeekPeakElecExport_kW,v_currentElectricityExport_kW);
 		if (t_h == p_startHourSummerWeek) {
+			v_deltaThermalEnergySinceStart_MWh=0;
 			f_sumMolecularEnergyFlows();
 			f_sumGridNodeLoads();	
 			v_summerWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh;
@@ -6399,6 +6416,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 			double totalEnergyProduced_MWh=0;
 			double totalEnergyUsed_MWh=0;
 			double totalEnergyCurtailed_MWh=0;
+			double deltaThermalEnergySinceStart_MWh=0;
 			for (J_EA e : c_energyAssets) {
 				double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
 				if (EnergyUsed_kWh > 0) {			
@@ -6411,7 +6429,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 					if ( e instanceof J_EABuilding ) {
 						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
 						//traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
-						//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+						v_deltaThermalEnergySinceStart_MWh -= ((J_EABuilding)e).getCurrentTemperature()*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
 					}
 				} else {				
 					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
@@ -6440,7 +6458,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 					if ( e instanceof J_EABuilding ) {
 						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
 						//traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
-						//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+						v_deltaThermalEnergySinceStart_MWh += ((J_EABuilding)e).getCurrentTemperature()*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9; 
 					}
 				} else {				
 					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
@@ -6450,8 +6468,9 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 			v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_summerWeekEnergyProduced_MWh;	
 			
 			// Calc selfConsumedEnergy for summerweek
-			v_summerWeekSelfConsumedEnergy_MWh = v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-			double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
+
+			v_summerWeekSelfConsumedEnergy_MWh = v_summerWeekEnergyUsed_MWh - (v_summerWeekTotalImport_MWh + max(0,-v_deltaThermalEnergySinceStart_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+			double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh -( v_summerWeekTotalExport_MWh + max(0,v_deltaThermalEnergySinceStart_MWh));
 			// Cap selfConsumedEnergy to >=0
 			v_summerWeekSelfConsumedEnergy_MWh=max(0,v_summerWeekSelfConsumedEnergy_MWh);
 			v_summerWeekSelfConsumedEnergyCheck_MWh=max(0,v_summerWeekSelfConsumedEnergyCheck_MWh);
@@ -6487,6 +6506,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 			double totalEnergyProduced_MWh=0;
 			double totalEnergyUsed_MWh=0;
 			double totalEnergyCurtailed_MWh=0;
+			double deltaThermalEnergySinceStart_MWh=0;
 			for (J_EA e : c_energyAssets) {
 				double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
 				if (EnergyUsed_kWh > 0) {			
@@ -6498,7 +6518,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 					}		
 					if ( e instanceof J_EABuilding ) {
 						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+						v_deltaThermalEnergySinceStart_MWh -= (((J_EABuilding)e).getCurrentTemperature())*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
 					}
 				} else {				
 					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
@@ -6526,7 +6546,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 					}		
 					if ( e instanceof J_EABuilding ) {
 						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+						v_deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature())*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
 					}
 				} else {				
 					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
@@ -6536,8 +6556,8 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 			v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_winterWeekEnergyProduced_MWh;	
 			
 			// Calc selfConsumedEnergy for winterweek
-			v_winterWeekSelfConsumedEnergy_MWh = v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-			double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
+			v_winterWeekSelfConsumedEnergy_MWh = v_winterWeekEnergyUsed_MWh - (v_winterWeekTotalImport_MWh + max(0,-v_deltaThermalEnergySinceStart_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+			double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - (v_winterWeekTotalExport_MWh + max(0,v_deltaThermalEnergySinceStart_MWh));
 			// Cap selfConsumedEnergy to >=0
 			v_winterWeekSelfConsumedEnergy_MWh=max(0,v_winterWeekSelfConsumedEnergy_MWh);
 			v_winterWeekSelfConsumedEnergyCheck_MWh=max(0,v_winterWeekSelfConsumedEnergyCheck_MWh);
@@ -17696,33 +17716,10 @@ v_currentEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
-//c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
-for( J_EA v : c_dieselVehicles ){
-//	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-//	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-//	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-//	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-//	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-	v.f_updateAllFlows(0);
-}
+c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
 
 f_operateFixedAssets();
-/*for( J_EAProduction v : c_productionAssets ){
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-}
-for( J_EAConsumption v : c_consumptionAssets ){
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-}*/ // EnergyAssets updates flows itself!
-
 f_operateFlexAssets();
-// flex assets cant be looped after the operatefunction to set the power consumption, as their behavior is interdependent and needs te be updated during the loop! 
 
 f_connectionMetering();
 
@@ -17753,16 +17750,9 @@ if (energyModel.b_addKpiVisuals) {
 
 //if (p_energyProfile != null & p_company_connection_id != null) {
 for(J_EAProfile e : c_profileAssets) {
-	//if (p_company_connection_id == p_energyProfile.energyAssetName) {
 		e.f_updateAllFlows( energyModel.t_h );		
 		v_fixedConsumptionElectric_kW += e.electricityConsumption_kW;		
-	
-		/*v_currentPowerElectricity_kW += e.electricityConsumption_kW - e.electricityProduction_kW;
-		v_currentPowerMethane_kW += e.methaneConsumption_kW - e.methaneProduction_kW;
-		v_currentPowerHydrogen_kW += e.hydrogenConsumption_kW - e.hydrogenProduction_kW;
-		v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
-		v_currentPowerDiesel_kW += e.dieselConsumption_kW;		*/
-	//}
+
 }
 
 for(J_EAProduction e : c_productionAssets) {
@@ -18113,7 +18103,9 @@ if ( p_BuildingThermalAsset == null ) {
 } else { // TODO: Implement thermostat functionality for thermal storage asset. Where to get temp setpoint?
 	traceln("No thermostat functionality available to manage p_BuildingThermalAsset!!");
 	p_primaryHeatingAsset.f_updateAllFlows(0);
+	v_conversionPowerElectric_kW += p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 	p_secondaryHeatingAsset.f_updateAllFlows(0);
+	v_conversionPowerElectric_kW += p_secondaryHeatingAsset.electricityConsumption_kW - p_secondaryHeatingAsset.electricityProduction_kW;
 	p_BuildingThermalAsset.f_updateAllFlows(0);
 }
 
@@ -18449,7 +18441,7 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.add((J_EAProduction)j_ea);
-	energyModel.c_productionAssets.add((J_EAProduction)j_ea);
+	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = true;}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
@@ -18710,7 +18702,8 @@ v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalEx
 						<Name><![CDATA[arr]]></Name>
 						<Type><![CDATA[double[]]]></Type>
 					</Parameter>
-					<Body><![CDATA[// {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
+					<Body><![CDATA[// This function is called from each energy asset when its method f_updateAllFlows() is called!
+// {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
 v_currentPowerElectricity_kW += arr[4] - arr[0];
 v_currentPowerMethane_kW += arr[5] - arr[1];
 v_currentPowerHydrogen_kW += arr[6] - arr[2];
@@ -35016,7 +35009,7 @@ f_manageHeatingAssets();
 
 /*for( J_EAConversion v : c_conversionAssets ) {	
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+	
 	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
 	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
 	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
