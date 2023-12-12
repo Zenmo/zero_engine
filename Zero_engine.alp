@@ -6410,7 +6410,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 					}		
 					if ( e instanceof J_EABuilding ) {
 						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
+						//traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
 						//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
 					}
 				} else {				
@@ -6439,7 +6439,7 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 					}		
 					if ( e instanceof J_EABuilding ) {
 						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
+						//traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
 						//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
 					}
 				} else {				
@@ -17438,7 +17438,7 @@ if (energyModel.v_isRapidRun){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664961435385</Id>
 					<Name><![CDATA[f_operateFlexAssets]]></Name>
-					<X>800</X><Y>220</Y>
+					<X>800</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17702,12 +17702,12 @@ for( J_EA v : c_dieselVehicles ){
 //	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
 //	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
 //	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+//	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
 	v.f_updateAllFlows(0);
 }
 
 f_operateFixedAssets();
-for( J_EAProduction v : c_productionAssets ){
+/*for( J_EAProduction v : c_productionAssets ){
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
 	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
@@ -17719,7 +17719,7 @@ for( J_EAConsumption v : c_consumptionAssets ){
 	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
 	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
 	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-}
+}*/ // EnergyAssets updates flows itself!
 
 f_operateFlexAssets();
 // flex assets cant be looped after the operatefunction to set the power consumption, as their behavior is interdependent and needs te be updated during the loop! 
@@ -17743,7 +17743,7 @@ if (energyModel.b_addKpiVisuals) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528300576</Id>
 					<Name><![CDATA[f_operateFixedAssets]]></Name>
-					<X>800</X><Y>200</Y>
+					<X>800</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17757,11 +17757,11 @@ for(J_EAProfile e : c_profileAssets) {
 		e.f_updateAllFlows( energyModel.t_h );		
 		v_fixedConsumptionElectric_kW += e.electricityConsumption_kW;		
 	
-		v_currentPowerElectricity_kW += e.electricityConsumption_kW - e.electricityProduction_kW;
+		/*v_currentPowerElectricity_kW += e.electricityConsumption_kW - e.electricityProduction_kW;
 		v_currentPowerMethane_kW += e.methaneConsumption_kW - e.methaneProduction_kW;
 		v_currentPowerHydrogen_kW += e.hydrogenConsumption_kW - e.hydrogenProduction_kW;
 		v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
-		v_currentPowerDiesel_kW += e.dieselConsumption_kW;		
+		v_currentPowerDiesel_kW += e.dieselConsumption_kW;		*/
 	//}
 }
 
@@ -18694,6 +18694,28 @@ v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduce
 v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
 
 
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1702373771433</Id>
+					<Name><![CDATA[f_addFlows]]></Name>
+					<X>800</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[arr]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Body><![CDATA[// {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
+v_currentPowerElectricity_kW += arr[4] - arr[0];
+v_currentPowerMethane_kW += arr[5] - arr[1];
+v_currentPowerHydrogen_kW += arr[6] - arr[2];
+v_currentPowerHeat_kW += arr[7] - arr[3];
+v_currentPowerDiesel_kW += arr[8];
 ]]></Body>
 				</Function>
 			</Functions>
@@ -34990,37 +35012,28 @@ if (l_ownerActor.getConnectedAgent()!=null){
 v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 //v_currentPriceLevel = f_getPriceLevel( v_currentElectricityPriceConsumption_eurpkWh );
 
-
-if (p_householdEV != null ){
-	//f_determineChargingDemandOfEV(); //we do this here because with smart assets the heatpumps will need information of the SOC of the EV
-}
-
 f_manageHeatingAssets();
 
-for( J_EAConversion v : c_conversionAssets ) {	
+/*for( J_EAConversion v : c_conversionAssets ) {	
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
 	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
 	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
 	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-}
+}*/
 
 
-for ( J_EAStorage e : c_storageAssets ) {
+/*for ( J_EAStorage e : c_storageAssets ) {
 	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
-	/*if ( e instanceof J_EABuilding ) {
-		traceln("Building asset temp: %s, current power heat: %s", e.getCurrentTemperature(), e.heatConsumption_kW - e.heatProduction_kW);
-		//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-	}*/
-}
+}*/
 
 if( p_householdEV != null){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 	double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
 	f_manageCharging();
-	v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
+	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 }
 
 if( p_batteryAsset != null){
@@ -35035,7 +35048,7 @@ if( p_batteryAsset != null){
 		break;
 	}
 	v_batteryPowerElectric_kW =  p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
+	//v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
 
@@ -36604,22 +36617,22 @@ if( b_validLocalBuffer ) {
 //traceln("District heating " + p_parentNodeHeatID + " storage temperature " + storageTemp_degC + " degC" + ", district heating network temperature " + p_parentNodeHeat.p_transportBuffer.getCurrentTemperature() + " deg C" );
 
 for( J_EAConversion v : c_conversionAssets ) {	
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+	//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+	//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
+	//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
+	//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
+	//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
 }
 
 
 for( J_EA e : c_productionAssets ){
 	e.f_updateAllFlows( e.v_powerFraction_fr );
-	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
+	//v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
 }
 
 
-v_currentPowerHeat_kW += p_BuildingThermalAsset.heatConsumption_kW - p_BuildingThermalAsset.heatProduction_kW;
+//v_currentPowerHeat_kW += p_BuildingThermalAsset.heatConsumption_kW - p_BuildingThermalAsset.heatProduction_kW;
 
 ]]></Body>
 				</Function>
@@ -37501,19 +37514,19 @@ public void f_operateFlexAssets(){
 	}
 	if (v instanceof J_EAConversionCurtailer) {
 		// Must go last! 
-	} else {		
+	} /*else {		
 		v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 		v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 		v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
 		v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
 		v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
 		v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-	}
+	} */
 }
 
 // Determine EV charging
 f_manageCharging();
-v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
+//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 
 // Operate battery
 if (p_batteryAsset != null){
@@ -37525,7 +37538,7 @@ if (p_batteryAsset != null){
 		f_batteryManagementPrice( v_batterySOC_fr );
 	}
 	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 	v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
 }
 
@@ -37533,7 +37546,7 @@ if (p_batteryAsset != null){
 
 if (p_curtailer != null){
 	f_manageCurtailer(p_curtailer);
-	v_currentPowerElectricity_kW += p_curtailer.electricityConsumption_kW;
+	//v_currentPowerElectricity_kW += p_curtailer.electricityConsumption_kW;
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -38356,13 +38369,13 @@ if (EA.j_ea instanceof J_EAConsumption) {
 					<Body><![CDATA[if(p_gridConnectionType == OL_GridConnectionType.AGRO_ENERGYHUB) {
 	f_operateFlexAssets_agroenergyhub();
 	for( J_EAStorage v : c_storageAssets ) {	
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-}
+		//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+		v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+		//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
+		//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
+		//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
+		//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+	}
 	
 	//traceln("Agroenergyhub logic!");
 } else {
@@ -38373,12 +38386,12 @@ if (EA.j_ea instanceof J_EAConsumption) {
 }
 
 for( J_EAConversion v : c_conversionAssets ) {	
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+	//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+	//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
+	//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
+	//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
+	//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
 }
 
 v_previousPowerMethane_kW = v_currentPowerMethane_kW;
@@ -38968,7 +38981,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-		v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
+		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
 	}
 }]]></Body>
 				</Function>
@@ -39812,23 +39825,23 @@ public void f_operateFlexAssets(){
 					<Body><![CDATA[f_manageHeatingAssets();
 
 for( J_EAConversion v : c_conversionAssets ) {	
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+	//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+	//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
+	//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
+	//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
+	//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
 }
 
 
-for ( J_EAStorage e : c_storageAssets ) {
+/*for ( J_EAStorage e : c_storageAssets ) {
 	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
-}
+}*/
 
 f_manageCharging();
-for( J_EAVehicle v: c_vehicleAssets) {
+/*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-}
+}*/
 
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
 
@@ -41274,7 +41287,11 @@ public class J_EA implements Cloneable {
 
     public void f_updateAllFlows(double powerFraction_fr) {
     	resetFlows();
-    	operateBounded(powerFraction_fr);
+    	double[] arr=operateBounded(powerFraction_fr);
+    	//return arr;
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(arr);
+    	}
     }
     
     public void resetFlows() {
@@ -41566,8 +41583,12 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 
     @Override
     public void f_updateAllFlows(double time_h) {
-    	resetFlows();
-    	operate(time_h);
+    	resetFlows();    	
+    	double[] arr=operate(time_h);
+    	//return arr;    	
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(arr);
+    	}
     }
     
     @Override
@@ -43398,8 +43419,12 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     @Override
     public void f_updateAllFlows(double powerFraction_fr) {
     	//operateBounded(powerFraction_fr);
-    	returnEnergyFlows();
+    	double[] arr=returnEnergyFlows();    	
     	resetFlows();
+    	//return arr;
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(arr);
+    	}
     }
     
     /*public double[] operate(double ratioOfChargeCapacity_r) {
