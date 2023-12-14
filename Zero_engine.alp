@@ -3742,7 +3742,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -3757,7 +3757,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -3769,7 +3769,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -3784,7 +3784,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -5251,7 +5251,7 @@ v_cumulativeGridCapacityHSMS_kW = 0;
 v_netOverloadDuration_h = 0;
 
 v_totalElectricityConsumed_MWh = 0;
-v_totalElectricityProduced_MWh = 0; 
+v_totalElectricityProduced_MWh = 0;
 
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
@@ -5920,7 +5920,7 @@ double startTime = System.currentTimeMillis();
 
 // Store and reset model states...
 
-for (J_EA EA : c_energyAssets) {	
+for (J_EA EA : c_energyAssets) {
 	EA.storeStatesAndReset();		
 }
 
@@ -6685,7 +6685,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		//v_dailyBusinessParkNetLoad_kWh = 0;
 	}
 	data_annualBusinessParkNetLoad_kW.add(t_h,sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
-	
+
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -6792,7 +6792,7 @@ for(int i=0; i<arraySize ; i++) {
 		netLoadArrayNight_kW[i_night]=-data_annualBusinessParkNetLoad_kW.getY(i);
 		i_night++;
 	}
-	
+
 	//data_netbelastingshistogram_kW.add(data_annualBusinessParkNetLoad_kW.getY(i));
 }
 //Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
@@ -6838,7 +6838,7 @@ for(int i=0; i< arraySize; i++) {
 data_nighttimeNetbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
 	data_nighttimeNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayNight_kW[i]);
-} 
+}
 // Only calculate here, update graphs elsewhere!
 /*
 pl_belastingsduurkromme.removeAll();
@@ -12164,6 +12164,15 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_GISRegion_coords]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_buildingAdress]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_buildingName]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_detailedCompany]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12236,6 +12245,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_AreaType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISRegionAreacoords]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -16216,7 +16228,7 @@ import java.io.*;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -16231,7 +16243,7 @@ import java.io.*;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -16246,7 +16258,7 @@ import java.io.*;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -17468,7 +17480,7 @@ v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * ener
 if (energyModel.v_isRapidRun){
 	v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 	data_annualElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
-	
+
 	//Total use, production, import, export and self-use, for summer, winter and annual.
 	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
 	
@@ -17605,7 +17617,7 @@ if (energyModel.v_isRapidRun){
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
 	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
-	
+
 	
 	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
 	if ((energyModel.t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
@@ -17621,7 +17633,7 @@ if (energyModel.v_isRapidRun){
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
 	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
-	
+
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -26901,6 +26913,7 @@ ea 2
 				<Variable Class="PlainVariable">
 					<Id>1661179464769</Id>
 					<Name><![CDATA[v_ownedGridConnection]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>61</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -27784,7 +27797,7 @@ ea 2
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[gridConnections.connectTo(ConnectingChildNode);
-v_ownedGridConnection = ConnectingChildNode;
+//v_ownedGridConnection = ConnectingChildNode;
 //traceln("f_connectToChild in connectionOwner agent, connection contract type: " + v_contractConnection.connectionContractType);
 /*if (v_contractConnection.connectionContractType.equals(OL_ConnectionContractType.NFATO)) {
 	ConnectingChildNode.v_enable_nfATO_b = true;
@@ -27830,7 +27843,7 @@ if (mySupplier != null) {
 	mySupplier = findFirst(energyModel.pop_energyCoops, p->p.p_actorID.equals(v_contractDelivery.contractScope)) ;
 	if (mySupplier != null) {
 		traceln("Coop1 found!");
-		((EnergyCoop)mySupplier).f_connectToChild(this,OL_EnergyCarrierType.ELECTRICITY);	
+		((EnergyCoop)mySupplier).f_connectToChild(this,OL_EnergyCarrierType.ELECTRICITY);
 		p_CoopParent = (EnergyCoop)mySupplier;
 	}
 }
@@ -28034,7 +28047,7 @@ v_totalDieselUsed_kWh += v_dieselVolume_kWh;]]></Body>
 	}
 }*/	
 
-//f_setElectricityPriceBands();	
+//f_setElectricityPriceBands();
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -28086,7 +28099,7 @@ double heatVAT_pct = 0.0;
 if( p_actorContractList == null) {
 	traceln( "No contract data for connectionOwner " + p_actorID );
 	traceln( "Creating default contracts!");
-	
+
 	String defaultSupplier = "defaultSupplier";
 	String defaultGridOperator = "defaultGridOperator";
 	String defaultGovernmentLayer = "defaultGovernmentLayer";
@@ -28101,20 +28114,20 @@ if( p_actorContractList == null) {
 	double taxDelivery_eurpkWh = 0.13;
 	double taxFeedin_eurpkWh = 0.0;
 	double proportionalTax_pct = 0.21;
-	
+
 	/*if (p_actorID.equals("logistics0owner")){
-		v_contractDelivery = new J_DeliveryContract("coop1", OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);	
+		v_contractDelivery = new J_DeliveryContract("coop1", OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 	} else {
-		v_contractDelivery = new J_DeliveryContract(defaultSupplier, OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);	
+		v_contractDelivery = new J_DeliveryContract(defaultSupplier, OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 	}*/
-	v_contractDelivery = new J_DeliveryContract(defaultSupplier, OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);	
-	
-	v_contractTransport = new J_TransportContract(defaultGridOperator, OL_TransportContractType.DEFAULT , OL_EnergyCarrierType.ELECTRICITY, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);			
-	
+	v_contractDelivery = new J_DeliveryContract(defaultSupplier, OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
+
+	v_contractTransport = new J_TransportContract(defaultGridOperator, OL_TransportContractType.DEFAULT , OL_EnergyCarrierType.ELECTRICITY, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);
+
 	v_contractConnection = new J_ConnectionContract(defaultGridOperator, OL_ConnectionContractType.DEFAULT, OL_EnergyCarrierType.ELECTRICITY, nfATOstart_h, nfATOend_h, nfATOcapacity_kW, annualFee_eur);
-	
+
 	v_contractTax = new J_TaxContract(defaultGovernmentLayer, OL_EnergyCarrierType.ELECTRICITY, taxDelivery_eurpkWh, taxFeedin_eurpkWh, proportionalTax_pct, annualFee_eur);
-	
+
 	c_actorContracts.add(v_contractDelivery);
 	c_actorContracts.add(v_contractTransport);
 	c_actorContracts.add(v_contractConnection);
@@ -28239,7 +28252,7 @@ if( p_actorContractList == null) {
 			default:
 				traceln("Unrecognized contract type!");
 			break;	
-			}	
+			}
 		}
 	}
 }
@@ -28391,7 +28404,7 @@ if( currentPowerDrawn_kW >= 0 ){
 		price += v_priceBandsDelivery.ceilingEntry( currentPowerDrawn_kW ).getValue();
 	}*/
 	price_eurpkWh += v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh;
-	
+
 	//Transport
 	/*if( v_priceBandsTransport.ceilingKey(currentPowerDrawn_kW) == currentPowerDrawn_kW ){
 		price += v_priceBandsTransport.higherEntry( currentPowerDrawn_kW ).getValue();
@@ -28399,7 +28412,7 @@ if( currentPowerDrawn_kW >= 0 ){
 	else{
 		price += v_priceBandsTransport.ceilingEntry( currentPowerDrawn_kW ).getValue();
 	}*/
-	
+
 	price_eurpkWh += v_currentNodalPrice_eurpkWh;
 	//Tax
 	/*if( v_priceBandsTax.ceilingKey(currentPowerDrawn_kW) == currentPowerDrawn_kW ){
@@ -28407,8 +28420,8 @@ if( currentPowerDrawn_kW >= 0 ){
 	}
 	else{
 		price += v_priceBandsTax.ceilingEntry( currentPowerDrawn_kW ).getValue();
-	}*/	
-	
+	}*/
+
 	price_eurpkWh += v_contractTax.deliveryTax_eurpkWh + v_contractTax.proportionalTax_pct;// * (v_contractTax.deliveryTax_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh)
 	price_eurpkWh = price_eurpkWh * (1+v_contractTax.proportionalTax_pct);
 }
@@ -28420,7 +28433,7 @@ else {
 	else{
 		price += v_priceBandsDelivery.floorEntry( currentPowerDrawn_kW ).getValue();
 	}*/
-	
+
 	price_eurpkWh += v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh;
 	//Transport
 	/*if( v_priceBandsTransport.ceilingKey(currentPowerDrawn_kW) == currentPowerDrawn_kW ){
@@ -28436,7 +28449,7 @@ else {
 	}
 	else{
 		price += v_priceBandsTax.floorEntry( currentPowerDrawn_kW ).getValue();
-	}*/	
+	}*/
 	price_eurpkWh += v_contractTax.feedinTax_eurpkWh + v_contractTax.proportionalTax_pct;// * (v_contractTax.deliveryTax_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh)
 	price_eurpkWh = price_eurpkWh * (1+v_contractTax.proportionalTax_pct);
 }
@@ -31088,7 +31101,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31100,7 +31113,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31112,7 +31125,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -31127,7 +31140,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -31142,7 +31155,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31154,7 +31167,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31166,7 +31179,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31178,7 +31191,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31190,7 +31203,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31202,7 +31215,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31214,7 +31227,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31226,7 +31239,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31238,7 +31251,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31250,7 +31263,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31262,7 +31275,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -31277,7 +31290,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31289,7 +31302,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31301,7 +31314,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31313,7 +31326,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31325,7 +31338,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31337,7 +31350,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31349,7 +31362,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31361,7 +31374,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31373,7 +31386,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31385,7 +31398,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31397,7 +31410,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31409,7 +31422,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31421,7 +31434,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31433,7 +31446,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31445,7 +31458,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31457,7 +31470,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31469,7 +31482,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31481,7 +31494,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31493,7 +31506,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31505,7 +31518,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31517,7 +31530,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31529,7 +31542,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31541,7 +31554,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -31553,7 +31566,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -32075,7 +32088,7 @@ double transactionCostDelivery_eur = 0;
 //transactionCost_eur = 0;//((EnergySupplier)p_energySupplier).f_doEnergyTransaction(v_methaneVolume_kWh, v_methaneContractType);
 //v_balanceMethane_eur -= transactionCost_eur;
 
-// 
+//
 if (v_electricityVolume_kWh >= 0) {
 	//transactionCostDelivery_eur = v_priceBandsDelivery.ceilingEntry( currentPowerDrawn_kW ).getValue() * v_electricityVolume_kWh;
 	if (v_contractDelivery!=null){
@@ -32085,8 +32098,8 @@ if (v_electricityVolume_kWh >= 0) {
 	}
 	v_balanceElectricityDelivery_eur -= transactionCostDelivery_eur;
 	v_balanceElectricity_eur -= transactionCostDelivery_eur;
-	
-	if (v_contractTax!=null){	
+
+	if (v_contractTax!=null){
 		transactionCostTax_eur = v_contractTax.deliveryTax_eurpkWh * v_electricityVolume_kWh;
 		//transactionCostTax_eur = v_electricityVolume_kWh * v_contractTax.feedinTax_eurpkWh + v_contractTax.proportionalTax_pct*(v_electricityVolume_kWh * v_contractTax.feedinTax_eurpkWh + transactionCostDelivery_eur + transactionCostTransport_eur);
 		v_balanceElectricityTax_eur -= transactionCostTax_eur;
@@ -32100,8 +32113,8 @@ if (v_electricityVolume_kWh >= 0) {
 	}
 	v_balanceElectricityDelivery_eur -= transactionCostDelivery_eur;
 	v_balanceElectricity_eur -= transactionCostDelivery_eur;
-	
-	if (v_contractTax!=null){	
+
+	if (v_contractTax!=null){
 		transactionCostTax_eur = v_contractTax.feedinTax_eurpkWh * v_electricityVolume_kWh;
 		//transactionCostTax_eur = v_electricityVolume_kWh * v_contractTax.feedinTax_eurpkWh + v_contractTax.proportionalTax_pct*(v_electricityVolume_kWh * v_contractTax.feedinTax_eurpkWh + transactionCostDelivery_eur + transactionCostTransport_eur);
 		v_balanceElectricityTax_eur -= transactionCostTax_eur;
@@ -32112,7 +32125,7 @@ if (v_electricityVolume_kWh >= 0) {
 transactionCostTransport_eur = v_currentNodalPrice_eurpkWh * v_electricityVolume_kWh;
 v_balanceElectricityTransport_eur -= transactionCostTransport_eur;
 v_balanceElectricity_eur -= transactionCostTransport_eur;
-	
+
 
 // TODO: Also needs to include congestion tariffs! So Coop needs to know to which GridNode it's connected! How should that work?]]></Body>
 				</Function>
@@ -32216,7 +32229,7 @@ v_methaneVolume_kWh = 0;
 v_hydrogenVolume_kWh = 0;
 v_dieselVolume_kWh = 0;
 
-// 
+//
 v_currentEnergyConsumption_kW = 0;
 v_currentEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
@@ -32325,50 +32338,50 @@ if (energyModel.v_isRapidRun){
 
 	//Total use, production, import, export and self-use, for summer, winter and annual.
 	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
-	
+
 		v_summerWeekTotalImport_MWh=(v_electricityImported_kWh + max(0,v_methaneImported_kWh-v_methaneExported_kWh) + max(0,v_hydrogenImported_kWh-v_hydrogenExported_kWh) + v_dieselImported_kWh)/1000;
 		v_summerWeekTotalExport_MWh=(v_electricityExported_kWh + max(0,v_methaneExported_kWh-v_methaneImported_kWh) + max(0,v_hydrogenExported_kWh-v_hydrogenImported_kWh))/1000;
 
 		v_summerWeekEnergyUsed_MWh = v_totalEnergyUsed_MWh;
-		v_summerWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh;		
+		v_summerWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh;
 	}
 	if (energyModel.t_h == energyModel.p_startHourSummerWeek + 24*7) {
-	
+
 		v_summerWeekTotalImport_MWh=(v_electricityImported_kWh + max(0,v_methaneImported_kWh-v_methaneExported_kWh) + max(0,v_hydrogenImported_kWh-v_hydrogenExported_kWh) + v_dieselImported_kWh)/1000-v_summerWeekTotalImport_MWh;
 		v_summerWeekTotalExport_MWh=(v_electricityExported_kWh + max(0,v_methaneExported_kWh-v_methaneImported_kWh) + max(0,v_hydrogenExported_kWh-v_hydrogenImported_kWh))/1000-v_summerWeekTotalExport_MWh;
-		
+
 		v_summerWeekEnergyUsed_MWh = v_totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
-		v_summerWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh-v_summerWeekEnergyProduced_MWh;	
-		
+		v_summerWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh-v_summerWeekEnergyProduced_MWh;
+
 		// Calc selfConsumedEnergy for summerweek
-		v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+		v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 		double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
-		//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);		
+		//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
 	}
-	
+
 	if (energyModel.t_h == energyModel.p_startHourWinterWeek) {
-		
+
 		v_winterWeekTotalImport_MWh=(v_electricityImported_kWh + max(0,v_methaneImported_kWh-v_methaneExported_kWh) + max(0,v_hydrogenImported_kWh-v_hydrogenExported_kWh) + v_dieselImported_kWh)/1000;
 		v_winterWeekTotalExport_MWh=(v_electricityExported_kWh + max(0,v_methaneExported_kWh-v_methaneImported_kWh) + max(0,v_hydrogenExported_kWh-v_hydrogenImported_kWh))/1000;
-	
+
 		v_winterWeekEnergyUsed_MWh = v_totalEnergyUsed_MWh;
-		v_winterWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh;		
+		v_winterWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh;
 	}
 	if (energyModel.t_h == energyModel.p_startHourWinterWeek + 24*7) {
 		v_winterWeekTotalImport_MWh=(v_electricityImported_kWh + max(0,v_methaneImported_kWh-v_methaneExported_kWh) + max(0,v_hydrogenImported_kWh-v_hydrogenExported_kWh) + v_dieselImported_kWh)/1000-v_winterWeekTotalImport_MWh;
 		v_winterWeekTotalExport_MWh=(v_electricityExported_kWh + max(0,v_methaneExported_kWh-v_methaneImported_kWh) + max(0,v_hydrogenExported_kWh-v_hydrogenImported_kWh))/1000-v_winterWeekTotalExport_MWh;
 		v_winterWeekEnergyUsed_MWh = v_totalEnergyUsed_MWh-v_winterWeekEnergyUsed_MWh;
-		v_winterWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh-v_winterWeekEnergyProduced_MWh;	
-		
+		v_winterWeekEnergyProduced_MWh = v_totalEnergyProduced_MWh-v_winterWeekEnergyProduced_MWh;
+
 		// Calc selfConsumedEnergy for winterweek
-		v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+		v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 		double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
 		//traceln("Gridconnection %s winterweek selfconsumed use/import based: %s, production/export based: %s", p_agentID, v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
 	}
-	
+
 	double currentImport_MWh = (max(0,v_electricityVolume_kWh) + max(0,v_heatVolume_kWh) + max(0,v_methaneVolume_kWh) + max(0,v_hydrogenVolume_kWh) + max(0,v_dieselVolume_kWh))/1000;
 	double currentExport_MWh = (max(0,-v_electricityVolume_kWh) + max(0,-v_heatVolume_kWh) + max(0,-v_methaneVolume_kWh) + max(0,-v_hydrogenVolume_kWh) + max(0,-v_dieselVolume_kWh))/1000;
-	
+
 	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
 		v_daytimeTotalImport_MWh += currentImport_MWh;
 		v_daytimeTotalExport_MWh += currentExport_MWh;
@@ -32382,8 +32395,8 @@ if (energyModel.v_isRapidRun){
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
 	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
-	
-	
+
+
 	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
 	if ((energyModel.t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayTotalImport_MWh += currentImport_MWh;
@@ -32398,14 +32411,14 @@ if (energyModel.v_isRapidRun){
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
 	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
-} 
+}
 
 /*
 if (energyModel.v_isRapidRun){ // Collecting data from members for coop-totals (production, consumption, import, export, selfconsumption)
 	for(Agent a :  subConnectionsElectricity.getConnections() ) {
 		if (a instaneof ConnectionOwner) {
 			for(GridConnection GC : ((ConnectionOwner)a).grid) {
-			
+
 			}
 		}
 	}
@@ -33007,7 +33020,7 @@ data_annualCoopElectricityBalance_kW.reset();
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_totalImport_MWh = (v_electricityImported_kWh + v_methaneImported_kWh + v_heatImported_kWh + v_hydrogenImported_kWh + v_dieselImported_kWh)/1000;
 v_totalExport_MWh = (v_electricityExported_kWh + v_methaneExported_kWh + v_heatExported_kWh + v_hydrogenExported_kWh)/1000;
-v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 double totalSelfConsumedEnergyCheck_MWh = max (0, v_totalEnergyProduced_MWh - v_totalExport_MWh);
 traceln("Check energyCoop consistency of v_totalSelfConsumedEnergy_MWh (should be zero): %s", v_totalSelfConsumedEnergy_MWh - totalSelfConsumedEnergyCheck_MWh);
 // Daytime selfconsumption
@@ -35627,7 +35640,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -35639,7 +35652,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -35651,7 +35664,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[19]]></Code>
 						</InitialValue>
@@ -35666,7 +35679,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[20]]></Code>
 						</InitialValue>
@@ -35681,7 +35694,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -35693,7 +35706,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -35705,7 +35718,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -35717,7 +35730,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -36031,8 +36044,8 @@ if (p_BuildingThermalAsset!=null && p_primaryHeatingAsset != null) {
 	p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
 	v_conversionPowerElectric_kW += p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 	p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
-	
-	
+
+
 	//traceln("p_primaryHeatingAsset heat production: %s", p_primaryHeatingAsset.heatProduction_kW);
 	//traceln("p_BuildingThermalAsset heat consumption: %s", p_BuildingThermalAsset.heatConsumption_kW);
 
@@ -36591,11 +36604,11 @@ if ( p_smartHeatingEnabled ) {
 
 //heat the buffer if it requires heat
 if ( p_heatBuffer != null ){
-	if ( p_heatBuffer.requiresHeat ){ 
+	if ( p_heatBuffer.requiresHeat ){
 		powerFraction_heatPump_fr = 1;
 		powerFraction_heatBuffer_fr = hp.getHeatCapacity_kW() / p_heatBuffer.getHeatCapacity_kW() ;
 		//traceln(getName() + " heat buffer cus of need");
-	} else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh 
+	} else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		//also heat the buffer if the price is cheap, the buffer has some room and the vehicle does not need charging
 		&& p_heatBuffer.getCurrentStateOfCharge() < 0.7)
 	{
@@ -36618,7 +36631,7 @@ if( powerFraction_heatPump_fr == 0 ){ // Why this check?
 		powerFraction_heatPump_fr = 1; 
 		//traceln("heat house cus of need");
 		p_BuildingThermalAsset.v_powerFraction_fr = hp.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
-	} else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh 
+	} else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		&& v_currentIndoorTemp_degC < v_tempSetpoint_degC + 1) {
 		//also heat the house if the price is cheap, the the house is colder than desired + 1 and the vehicle does not need charging
 		if( p_householdEV == null ){
@@ -40089,8 +40102,8 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		
 		//double currentPricePowerBandPos_kW = ownerActor.v_priceBandsDelivery.ceilingKey(100.0); // Up to what power does this price hold?
-		//double currentPricePowerBandNeg_kW = ownerActor.v_priceBandsDelivery.floorKey(100.0); // Down to what power does this price hold?		
-		
+		//double currentPricePowerBandNeg_kW = ownerActor.v_priceBandsDelivery.floorKey(100.0); // Down to what power does this price hold?
+
 //		double SOC_setp_fr = 0.6 + 0.3 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 //		double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge; // How far away from desired SOC? SOC too LOW is a POSITIVE deficit		
 		double SOC_setp_fr = 0.5;			
@@ -40497,7 +40510,7 @@ if (energyModel.b_addKpiVisuals) {
 				<Variable Class="Parameter">
 					<Id>1697009799975</Id>
 					<Name><![CDATA[gisRegion]]></Name>
-					<X>50</X><Y>48</Y>
+					<X>50</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40518,7 +40531,7 @@ if (energyModel.b_addKpiVisuals) {
 				<Variable Class="Parameter">
 					<Id>1697009799980</Id>
 					<Name><![CDATA[p_longitude]]></Name>
-					<X>49</X><Y>87</Y>
+					<X>50</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40539,7 +40552,7 @@ if (energyModel.b_addKpiVisuals) {
 				<Variable Class="Parameter">
 					<Id>1697009799984</Id>
 					<Name><![CDATA[p_latitude]]></Name>
-					<X>49</X><Y>107</Y>
+					<X>50</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40579,12 +40592,33 @@ if (energyModel.b_addKpiVisuals) {
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
+					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1702547667207</Id>
+					<Name><![CDATA[p_GISRegionAreacoords]]></Name>
+					<X>50</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1702547667205</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
 					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1697009799967</Id>
 					<Name><![CDATA[c_buildingsInArea]]></Name>
-					<X>40</X><Y>280</Y>
+					<X>50</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41613,6 +41647,71 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1702460377737</Id>
+					<Name><![CDATA[p_buildingAdress]]></Name>
+					<X>580</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1702460377735</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1702460377745</Id>
+					<Name><![CDATA[p_buildingName]]></Name>
+					<X>580</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1702460377743</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1702460377748</Id>
+					<Name><![CDATA[p_detailedCompany]]></Name>
+					<Description><![CDATA[Is het een bedrijf dat in detail gemodeleerd gaat worden? ja, nee, misschien]]></Description>
+					<X>580</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1702460377746</Id>
+							<Label><![CDATA[p_detailedCompany]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1696866057758</Id>
 					<Name><![CDATA[c_gridConnectionsInBuilding]]></Name>
@@ -41749,6 +41848,29 @@ if (gisRegion == null ) {
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
+			<Presentation>
+				<Text>
+					<Id>1702460377734</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>570</X><Y>140</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Toegevoegd_door_Ate]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Presentation>
 
 				</Level>
 			</Presentation>
@@ -42351,7 +42473,7 @@ public class J_EA implements Cloneable {
     	energyUse_kW = 0;
     }
 
-  /*  public double[] operateBounded(double ratioOfCapacity) { // There should not be an option to bypass this! 
+  /*  public double[] operateBounded(double ratioOfCapacity) { // There should not be an option to bypass this!
     	double limitedRatioOfCapacity = min(1,max(-1, ratioOfCapacity));
     	double[] arr = operate(limitedRatioOfCapacity);
     	return arr;
@@ -43866,7 +43988,7 @@ public class DataOut implements Serializable {
 	public ArrayList simulationResults = new ArrayList(2);
 	public ArrayList hourlyCurvesData = new ArrayList();
 	public ArrayList contractData = new ArrayList();
-	//public DataSet dataSet = new DataSet(8760); // Test to make dataobject with simulation results per agent, universal for different agenttypes, such as model-wide, gridconnection (building), gridconnection (neighbourhood) 
+	//public DataSet dataSet = new DataSet(8760); // Test to make dataobject with simulation results per agent, universal for different agenttypes, such as model-wide, gridconnection (building), gridconnection (neighbourhood)
 
 	public void clearData() {
 		actorData.clear();
@@ -45211,7 +45333,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				//}
 				v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
 				EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
-				/*if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {    					
+				/*if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {
 					traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
 					traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
 				} */
