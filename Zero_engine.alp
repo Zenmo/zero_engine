@@ -944,19 +944,22 @@
 		</OptionList>
 		<OptionList>
 			<Id>1675025163072</Id>
-			<Name><![CDATA[OL_SimulatedArea]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[OL_ConnectionOwnerType]]></Name>
 			<Option>
 				<Id>1675025163073</Id>
-				<Name><![CDATA[BUSINESSPARK]]></Name>
+				<Name><![CDATA[COMPANY]]></Name>
 			</Option>
 			<Option>
 				<Id>1675025163074</Id>
-				<Name><![CDATA[NEIGHBORHOOD]]></Name>
+				<Name><![CDATA[HOUSEHOLD]]></Name>
 			</Option>
 			<Option>
 				<Id>1675025163075</Id>
-				<Name><![CDATA[HVTRANSFORMER]]></Name>
+				<Name><![CDATA[SUBTENANT]]></Name>
+			</Option>
+			<Option>
+				<Id>1702915272457</Id>
+				<Name><![CDATA[OTHER]]></Name>
 			</Option>
 		</OptionList>
 	</OptionLists>
@@ -3799,7 +3802,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -10433,10 +10436,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_heatSupplier]]></Name>
 						</Parameter>
 						<Parameter>
+							<Name><![CDATA[p_actorSubgroup]]></Name>
+						</Parameter>
+						<Parameter>
 							<Name><![CDATA[p_actorGroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorSubgroup]]></Name>
+							<Name><![CDATA[p_connectionOwnerType]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10532,10 +10538,10 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_salderenActive]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorGroup]]></Name>
+							<Name><![CDATA[p_actorSubgroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorSubgroup]]></Name>
+							<Name><![CDATA[p_actorGroup]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10637,13 +10643,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_yearlyOperationalCosts_eur]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorGroup]]></Name>
+							<Name><![CDATA[p_applyKostprijsPlus]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_actorSubgroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_applyKostprijsPlus]]></Name>
+							<Name><![CDATA[p_actorGroup]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10730,10 +10736,10 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_hasCongestionPricing]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorGroup]]></Name>
+							<Name><![CDATA[p_actorSubgroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorSubgroup]]></Name>
+							<Name><![CDATA[p_actorGroup]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10802,10 +10808,10 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_actorType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorGroup]]></Name>
+							<Name><![CDATA[p_actorSubgroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorSubgroup]]></Name>
+							<Name><![CDATA[p_actorGroup]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -10879,10 +10885,10 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_actorType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorGroup]]></Name>
+							<Name><![CDATA[p_actorSubgroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorSubgroup]]></Name>
+							<Name><![CDATA[p_actorGroup]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15502,7 +15508,7 @@ import java.io.*;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double]]></Type>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -22087,13 +22093,13 @@ f_checkModelConsistency();
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[p_actorType]]></Name>
+							<Name><![CDATA[p_actorID]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_parentID]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_actorID]]></Name>
+							<Name><![CDATA[p_actorType]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -26622,10 +26628,13 @@ ea 2
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
 				<Parameter>
+					<Name><![CDATA[p_actorSubgroup]]></Name>
+				</Parameter>
+				<Parameter>
 					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_connectionOwnerType]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -27764,6 +27773,28 @@ ea 2
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
 					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1702915036278</Id>
+					<Name><![CDATA[p_connectionOwnerType]]></Name>
+					<X>170</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_ConnectionOwnerType]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<UnitOfValue Class="LengthUnits"><![CDATA[METER]]></UnitOfValue>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1702915036276</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1679502158516</Id>
@@ -30091,10 +30122,10 @@ Supplier]]></Text>
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorGroup]]></Name>
+					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -30261,10 +30292,10 @@ Supplier]]></Text>
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorGroup]]></Name>
+					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -33358,10 +33389,10 @@ v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalEx
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorGroup]]></Name>
+					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -34390,10 +34421,10 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorGroup]]></Name>
+					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -35065,10 +35096,10 @@ else {
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorGroup]]></Name>
+					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
