@@ -6203,6 +6203,7 @@ f_sumGridNodeLoads();
 f_sumBatteryUse();
 f_duurkrommes();
 c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
+pop_energyCoops.forEach(ec -> ec.f_calculateKPIs());
 //traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
 //traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
 //traceln("Electricity delta in batteries: "+ batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
@@ -17512,14 +17513,14 @@ if (energyModel.v_isRapidRun){
 		v_daytimeTotalExport_MWh += currentExport_MWh;
 		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_daytimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
-	} else { // Nighttime
+	} /* else { // Nighttime
 		v_nighttimeTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
 		v_nighttimeTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
 		v_nighttimeEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
 		v_nighttimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
-	}
+	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
 	
 	
 	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
@@ -17528,14 +17529,14 @@ if (energyModel.v_isRapidRun){
 		v_weekdayTotalExport_MWh += currentExport_MWh;
 		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
-	} else { // Nighttime
+	} /*else { // Weekend
 		v_weekendTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
 		v_weekendTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
 		v_weekendEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
 		v_weekendEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
-	}
+	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
 	
 }]]></Body>
 				</Function>
@@ -27669,7 +27670,7 @@ v_ownedGridConnection = ConnectingChildNode;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[f_setContractValues();
+					<Body><![CDATA[//f_setContractValues();
 //f_setInitPriceBands();
 // Connect to energy supplier (can be a Coop!)
 //traceln(p_actorID + " is looking for its supplier");
@@ -27926,7 +27927,7 @@ if (v_contractTax.proportionalTax_pct != 0.0 && (v_contractDelivery.deliveryCont
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669036739539</Id>
 					<Name><![CDATA[f_setContractValues]]></Name>
-					<X>670</X><Y>110</Y>
+					<X>660</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27960,11 +27961,12 @@ if( p_actorContractList == null) {
 	double taxFeedin_eurpkWh = 0.0;
 	double proportionalTax_pct = 0.21;
 	
-	if (p_actorID.equals("logistics0owner")){
+	/*if (p_actorID.equals("logistics0owner")){
 		v_contractDelivery = new J_DeliveryContract("coop1", OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);	
 	} else {
 		v_contractDelivery = new J_DeliveryContract(defaultSupplier, OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);	
-	}
+	}*/
+	v_contractDelivery = new J_DeliveryContract(defaultSupplier, OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);	
 	
 	v_contractTransport = new J_TransportContract(defaultGridOperator, OL_TransportContractType.DEFAULT , OL_EnergyCarrierType.ELECTRICITY, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);			
 	
@@ -28465,7 +28467,7 @@ return v_hydrogenPrice_eurpkWh;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1704371830113</Id>
 					<Name><![CDATA[f_resetStates]]></Name>
-					<X>660</X><Y>50</Y>
+					<X>660</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30963,7 +30965,7 @@ Supplier]]></Text>
 				<Variable Class="PlainVariable">
 					<Id>1704291311937</Id>
 					<Name><![CDATA[v_totalSelfConsumedEnergy_MWh]]></Name>
-					<X>60</X><Y>1100</Y>
+					<X>60</X><Y>1120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31393,6 +31395,18 @@ Supplier]]></Text>
 					<Id>1704291413594</Id>
 					<Name><![CDATA[v_currentEnergyCurtailed_kW]]></Name>
 					<X>60</X><Y>1190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1704453547475</Id>
+					<Name><![CDATA[v_totalEnergyCurtailed_MWh]]></Name>
+					<X>60</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32078,9 +32092,9 @@ for(Agent a :  subConnectionsElectricity.getConnections() ) {
 				v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
 			}
 		}
-		//v_heatVolume_kWh += n.v_heatVolume_kWh;
-		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
-		//v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
+		v_heatVolume_kWh += n.v_heatVolume_kWh;
+		v_methaneVolume_kWh += n.v_methaneVolume_kWh;
+		v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
 		v_dieselVolume_kWh += n.v_dieselVolume_kWh;
 	} else if (a instanceof EnergyCoop) {
 		EnergyCoop n = (EnergyCoop)a;
@@ -32093,11 +32107,11 @@ for(Agent a :  subConnectionsElectricity.getConnections() ) {
 }
 v_totalEnergyUsed_MWh += (v_currentEnergyConsumption_kW * energyModel.p_timeStep_h)/1000;
 v_totalEnergyProduced_MWh += (v_currentEnergyProduction_kW * energyModel.p_timeStep_h)/1000;
-//v_totalEnergyCurt += (v_currentEnergyProduction_kW * energyModel.p_timeStep_h)/1000;
+v_totalEnergyCurtailed_MWh += (v_currentEnergyCurtailed_kW * energyModel.p_timeStep_h)/1000;
 
 v_electricitySurplus_kW = -v_electricityVolume_kWh / energyModel.p_timeStep_h;
 
-
+/*
 // gather methane flows
 for(Agent a :  subConnectionsMethane.getConnections() ) {
 	if(a instanceof ConnectionOwner){
@@ -32153,7 +32167,8 @@ for(Agent a :  subConnectionsHeat.getConnections() ) {
 		//v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
 		//v_dieselVolume_kWh += n.v_dieselVolume_kWh;
 	}
-}
+}*/
+
 v_electricityImported_kWh += max(0,v_electricityVolume_kWh);
 v_electricityExported_kWh += -min(0,v_electricityVolume_kWh);
 v_methaneImported_kWh += max(0,v_methaneVolume_kWh);
@@ -32166,8 +32181,6 @@ v_dieselImported_kWh += v_dieselVolume_kWh;
 
 if (energyModel.v_isRapidRun){
 	data_annualCoopElectricityBalance_kW.add(energyModel.t_h, v_electricitySurplus_kW);
-	v_totalImport_MWh = (v_electricityImported_kWh + v_methaneImported_kWh + v_heatImported_kWh + v_hydrogenImported_kWh + v_dieselImported_kWh)/1000;
-	v_totalExport_MWh = (v_electricityExported_kWh + v_methaneExported_kWh + v_heatExported_kWh + v_hydrogenExported_kWh);
 
 	//Total use, production, import, export and self-use, for summer, winter and annual.
 	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
@@ -32215,35 +32228,19 @@ if (energyModel.v_isRapidRun){
 	double currentImport_MWh = (max(0,v_electricityVolume_kWh) + max(0,v_heatVolume_kWh) + max(0,v_methaneVolume_kWh) + max(0,v_hydrogenVolume_kWh) + max(0,v_dieselVolume_kWh))/1000;
 	double currentExport_MWh = (max(0,-v_electricityVolume_kWh) + max(0,-v_heatVolume_kWh) + max(0,-v_methaneVolume_kWh) + max(0,-v_hydrogenVolume_kWh) + max(0,-v_dieselVolume_kWh))/1000;
 	
-	/*if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
-		v_daytimeTotalImport_MWh += currentImport_MWh;
-		v_daytimeTotalExport_MWh += currentExport_KWh;
-		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
-		v_daytimeEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
-	}
-	
-	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
-	if ((energyModel.t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		v_weekdayTotalImport_MWh += currentImport_MWh;
-		v_weekdayTotalExport_MWh += currentExport_KWh;
-		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
-		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
-	}*/
-	
-	
 	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
 		v_daytimeTotalImport_MWh += currentImport_MWh;
 		v_daytimeTotalExport_MWh += currentExport_MWh;
 		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_daytimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
-	} else { // Nighttime
+	} /*else { // Nighttime
 		v_nighttimeTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
 		v_nighttimeTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
 		v_nighttimeEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
 		v_nighttimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
-	}
+	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
 	
 	
 	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
@@ -32252,15 +32249,15 @@ if (energyModel.v_isRapidRun){
 		v_weekdayTotalExport_MWh += currentExport_MWh;
 		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
-	} else { // Nighttime
+	} /*else { // Nighttime
 		v_weekendTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
 		v_weekendTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
 		v_weekendEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
 		v_weekendEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
 		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
-	}
-}
+	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
+} 
 
 /*
 if (energyModel.v_isRapidRun){ // Collecting data from members for coop-totals (production, consumption, import, export, selfconsumption)
@@ -32855,6 +32852,42 @@ v_daytimeEnergyProduced_MWh = 0;
 v_daytimeEnergyUsed_MWh = 0;
 
 data_annualCoopElectricityBalance_kW.reset();
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1704453927781</Id>
+					<Name><![CDATA[f_calculateKPIs]]></Name>
+					<X>660</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_totalImport_MWh = (v_electricityImported_kWh + v_methaneImported_kWh + v_heatImported_kWh + v_hydrogenImported_kWh + v_dieselImported_kWh)/1000;
+v_totalExport_MWh = (v_electricityExported_kWh + v_methaneExported_kWh + v_heatExported_kWh + v_hydrogenExported_kWh)/1000;
+v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+double totalSelfConsumedEnergyCheck_MWh = max (0, v_totalEnergyProduced_MWh - v_totalExport_MWh);
+traceln("Check energyCoop consistency of v_totalSelfConsumedEnergy_MWh (should be zero): %s", v_totalSelfConsumedEnergy_MWh - totalSelfConsumedEnergyCheck_MWh);
+// Daytime selfconsumption
+v_daytimeSelfConsumedEnergy_MWh = v_daytimeEnergyProduced_MWh - v_daytimeTotalExport_MWh;
+// Nighttime totals: yearly totays minus daytime totals
+v_nighttimeTotalExport_MWh = v_totalExport_MWh - v_daytimeTotalExport_MWh;
+v_nighttimeTotalImport_MWh = v_totalImport_MWh - v_daytimeTotalImport_MWh;
+v_nighttimeEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_daytimeEnergyUsed_MWh;
+v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
+v_nighttimeSelfConsumedEnergy_MWh = v_nighttimeEnergyProduced_MWh - v_nighttimeTotalExport_MWh;
+
+// Weekday selfconsumption
+v_weekdaySelfConsumedEnergy_MWh = v_weekdayEnergyProduced_MWh - v_weekdayTotalExport_MWh;
+// Weekend totals: yearly totals minus weekday totals
+v_weekendTotalExport_MWh = v_totalExport_MWh - v_weekdayTotalExport_MWh;
+v_weekendTotalImport_MWh = v_totalImport_MWh - v_weekdayTotalImport_MWh;
+v_weekendEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_weekdayEnergyUsed_MWh;
+v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
+v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
+
+
 ]]></Body>
 				</Function>
 			</Functions>
