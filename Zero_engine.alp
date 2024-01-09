@@ -1272,7 +1272,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1663238634515</Id>
 					<Name><![CDATA[v_timeStepsElapsed]]></Name>
-					<X>557</X><Y>262</Y>
+					<X>557</X><Y>282</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1782,7 +1782,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1690290329895</Id>
 					<Name><![CDATA[hourOfYearPerMonth]]></Name>
-					<X>556</X><Y>282</Y>
+					<X>556</X><Y>302</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1797,7 +1797,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1690290329902</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
-					<X>556</X><Y>303</Y>
+					<X>556</X><Y>323</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3760,6 +3760,36 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1704795167515</Id>
+					<Name><![CDATA[v_totalElectricityConsumed_MWh]]></Name>
+					<X>-480</X><Y>1180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1704795167517</Id>
+					<Name><![CDATA[v_totalElectricityProduced_MWh]]></Name>
+					<X>-480</X><Y>1200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -5205,6 +5235,9 @@ c_timesOfNodePeakLoads_h.clear();
 v_cumulativeGridCapacityHSMS_kW = 0;
 v_netOverloadDuration_h = 0;
 
+v_totalElectricityConsumed_MWh = 0;
+v_totalElectricityProduced_MWh = 0; 
+
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
 	v_gridNodePeakLoadElectricityHSMS_kW += abs(h.v_peakLoadFilteredElectricity_kW);
@@ -5242,6 +5275,8 @@ for(GridNode m : c_gridNodesMSLS ) {
 
 for(GridConnection g: c_gridConnections){
     c_gridConnectionOverload_fr.put(g.p_agentID, g.v_maxConnectionLoad_fr);
+    v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
+    v_totalElectricityProduced_MWh += g.v_totalElectricityProduced_MWh;
 }
 
 // If the energy system only has LS nodes, determine KPI on LS level, otherwise on HS
@@ -5865,6 +5900,7 @@ traceln(" ");
 double startTime = System.currentTimeMillis();
 
 // Store and reset model states...
+
 for (J_EA EA : c_energyAssets) {	
 	EA.storeStatesAndReset();		
 }
@@ -6323,23 +6359,7 @@ traceln( "export electricity: " + v_totalElectricityExport_MWh + " MWh");
 traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + " MWh");
 traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 
-
-//traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);
-
-// This should be implemented in 'main', not 'energyModel!'
-/*//pie_selfsufficiency.updateData();
-//bar_energyUseAndProduction.updateData();
-pie_selfconsumption.updateData();
-pie_overloadedTransformers.updateData();
-pie_selfconsumption.setVisible(true);
-//pie_selfsufficiency.setVisible(true);
-pl_consumptionStack.updateData();
-pl_productionStack.updateData();
-pl_consumptionStack.setFixedScale(max(v_totalEnergyProduced_MWh, v_totalEnergyUsed_MWh)/1000);
-pl_productionStack.setFixedScale(max(v_totalEnergyProduced_MWh, v_totalEnergyUsed_MWh)/1000);
-gr_scopeRadioButtons.setVisible(true);
-pl_productionStack.setVisible(true);
-pl_consumptionStack.setVisible(true);*/]]></Body>
+//traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6646,8 +6666,6 @@ pl_consumptionStack.setVisible(true);*/]]></Body>
 		//v_dailyBusinessParkNetLoad_kWh = 0;
 	}
 	data_annualBusinessParkNetLoad_kW.add(t_h,sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
-	
-	
 	
 }]]></Body>
 				</Function>
@@ -16170,6 +16188,36 @@ import java.io.*;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1704797243486</Id>
+					<Name><![CDATA[v_totalElectricityConsumed_MWh]]></Name>
+					<X>150</X><Y>1693</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1704797243488</Id>
+					<Name><![CDATA[v_totalElectricityProduced_MWh]]></Name>
+					<X>150</X><Y>1713</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -17385,6 +17433,8 @@ v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * ener
 
 if (energyModel.v_isRapidRun){
 	v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
+	data_annualElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
+	
 	//Total use, production, import, export and self-use, for summer, winter and annual.
 	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
 	
@@ -18019,7 +18069,10 @@ v_weekdayEnergyUsed_MWh = 0;
 v_daytimeTotalImport_MWh = 0;
 v_daytimeTotalExport_MWh = 0;
 v_daytimeEnergyProduced_MWh = 0;
-v_daytimeEnergyUsed_MWh = 0;]]></Body>
+v_daytimeEnergyUsed_MWh = 0;
+
+v_totalElectricityConsumed_MWh = 0;
+v_totalElectricityProduced_MWh = 0;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -18801,9 +18854,60 @@ v_currentPowerMethane_kW += arr[5] - arr[1];
 v_currentPowerHydrogen_kW += arr[6] - arr[2];
 v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
+
+if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and production in energyModel!
+	v_totalElectricityConsumed_MWh += arr[4] * energyModel.p_timeStep_h / 1000;
+	v_totalElectricityProduced_MWh += arr[0] * energyModel.p_timeStep_h / 1000;
+}
 ]]></Body>
 				</Function>
 			</Functions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1704787879732</Id>
+					<Name><![CDATA[data_ElectricBalanceDuurkromme_kW]]></Name>
+					<X>820</X><Y>1380</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1704787879881</Id>
+					<Name><![CDATA[data_annualElectricityBalance_kW]]></Name>
+					<X>820</X><Y>1360</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1658499438198</Id>
