@@ -3233,7 +3233,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701699259425</Id>
 					<Name><![CDATA[v_currentEnergyImport_kW]]></Name>
-					<X>81</X><Y>1068</Y>
+					<X>80</X><Y>1091</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3245,7 +3245,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701699273727</Id>
 					<Name><![CDATA[v_currentEnergyExport_kW]]></Name>
-					<X>81</X><Y>1088</Y>
+					<X>80</X><Y>1111</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3497,7 +3497,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701782531465</Id>
 					<Name><![CDATA[v_peakElecImport_kW]]></Name>
-					<X>80</X><Y>1170</Y>
+					<X>80</X><Y>1180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3512,7 +3512,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701782538616</Id>
 					<Name><![CDATA[v_peakElecExport_kW]]></Name>
-					<X>80</X><Y>1190</Y>
+					<X>80</X><Y>1200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3647,7 +3647,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701786316417</Id>
 					<Name><![CDATA[v_currentElectricityImport_kW]]></Name>
-					<X>80</X><Y>1120</Y>
+					<X>80</X><Y>1130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3659,7 +3659,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701786316419</Id>
 					<Name><![CDATA[v_currentElectricityExport_kW]]></Name>
-					<X>80</X><Y>1140</Y>
+					<X>80</X><Y>1150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3749,7 +3749,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -3764,7 +3764,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -3776,7 +3776,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -3791,7 +3791,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -3806,10 +3806,37 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1705337817926</Id>
+					<Name><![CDATA[v_totalHeatProduced_MWh]]></Name>
+					<X>-480</X><Y>1240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1705422009185</Id>
+					<Name><![CDATA[v_currentEnergyProductionHeat_kW]]></Name>
+					<X>80</X><Y>1060</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -5274,6 +5301,7 @@ v_netOverloadDuration_h = 0;
 
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
+v_totalHeatProduced_MWh = 0;
 
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
@@ -5314,6 +5342,7 @@ for(GridConnection g: c_gridConnections){
     c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
     v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
     v_totalElectricityProduced_MWh += g.v_totalElectricityProduced_MWh;
+    v_totalHeatProduced_MWh += g.v_totalHeatProduced_MWh;
 }
 
 // Electricity self consumption
@@ -5485,6 +5514,7 @@ traceln("Electricity delta in batteries: "+ v_batteryStoredEnergyDeltaSinceStart
 v_currentEnergyConsumption_kW = 0;
 v_currentEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
+v_currentEnergyProductionHeat_kW = 0;
 
 if (p_parallelize) {
 	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance());
@@ -5496,6 +5526,7 @@ if (p_parallelize) {
 		v_currentEnergyConsumption_kW += gc.v_currentEnergyConsumption_kW;
 		v_currentEnergyProduction_kW += gc.v_currentEnergyProduction_kW;
 		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
+		v_currentEnergyProductionHeat_kW += gc.v_currentEnergyProductionHeat_kW;
 	}
 } 
 else {
@@ -6304,7 +6335,7 @@ v_totalEnergyUsed_MWh = 0;
 
 v_totalImportedEnergy_MWh = 0;
 v_totalExportedEnergy_MWh = 0;
-
+v_totalHeatProduced_MWh = 0;
 for (J_EA e : c_energyAssets) {
 	double EnergyUsed_kWh = e.getEnergyUsed_kWh();
 	double electricityProduced_kWh = 0;
@@ -6336,9 +6367,13 @@ for (J_EA e : c_energyAssets) {
 	}
 	if (e instanceof J_EABuilding) {
 		totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+		v_totalHeatProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
 	}
 	if (e instanceof J_EAEV) {
 		v_totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
+	}
+	if (e instanceof J_EAConversionHeatPump) {
+		v_totalHeatProduced_MWh -= EnergyUsed_kWh/1000;						
 	}
 }
 
@@ -6662,7 +6697,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	data_annualBusinessParkDemand_kW.add(t_h,v_dailyBaseloadElectricityDemand_kW+v_dailyHeatPumpElectricityDemand_kW+v_dailyElectricTrucksDemand_kW+v_dailyNeighborhoodBatteryDemand_kW); // Not robust when adding other types of assets!!
 	
 	double v_dailyPVGeneration_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
-	double v_dailyWindGeneration_kW = sum(EnergyProductionSites, x->x.v_windProductionElectric_kW);
+	double v_dailyWindGeneration_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
 	double v_dailyNeighborhoodBatterySupply_kW = sum(GridBatteries, x->max(0,-x.v_batteryPowerElectric_kW));
 	double v_dailyV2GSupply_kWh = sum(c_gridConnections, x->-min(0,x.v_evChargingPowerElectric_kW));
 	v_dailyPVGeneration_kWh += v_dailyPVGeneration_kW * p_timeStep_h;
@@ -9986,6 +10021,7 @@ v_timeStepsElapsed ++;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<PresentationId>1705489115501</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
 						<ClassName><![CDATA[GridNode]]></ClassName>
@@ -12290,7 +12326,6 @@ v_timeStepsElapsed ++;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<PresentationId>1676382645155</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
 						<ClassName><![CDATA[GIS_Building]]></ClassName>
@@ -12924,25 +12959,6 @@ v_timeStepsElapsed ++;
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
-				<EmbeddedObjectPresentation>
-					<Id>1676382645155</Id>
-					<Name><![CDATA[pop_GIS_Buildings_presentation]]></Name>
-					<X>0</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
-					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-					<Latitude>0.0</Latitude>
-					<Longitude>0.0</Longitude>
-				</EmbeddedObjectPresentation>
 				<Line>
 					<Id>1690205003572</Id>
 					<Name><![CDATA[line8]]></Name>
@@ -13098,6 +13114,25 @@ v_timeStepsElapsed ++;
 						<LabelText><![CDATA[Run Rapid Simulation]]></LabelText>
 					</ExtendedProperties>
 				</Control>
+				<EmbeddedObjectPresentation>
+					<Id>1705489115501</Id>
+					<Name><![CDATA[pop_gridNodes_presentation]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>0.0</Latitude>
+					<Longitude>0.0</Longitude>
+				</EmbeddedObjectPresentation>
 			</Presentation>
 
 				</Level>
@@ -15674,7 +15709,7 @@ import java.io.*;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -16394,13 +16429,13 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704797243486</Id>
 					<Name><![CDATA[v_totalElectricityConsumed_MWh]]></Name>
-					<X>150</X><Y>1693</Y>
+					<X>150</X><Y>1703</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -16409,13 +16444,13 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704797243488</Id>
 					<Name><![CDATA[v_totalElectricityProduced_MWh]]></Name>
-					<X>150</X><Y>1713</Y>
+					<X>150</X><Y>1723</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -16424,16 +16459,43 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1704815198376</Id>
 					<Name><![CDATA[v_totalElectricitySelfConsumed_MWh]]></Name>
-					<X>150</X><Y>1732</Y>
+					<X>150</X><Y>1742</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1705337871083</Id>
+					<Name><![CDATA[v_totalHeatProduced_MWh]]></Name>
+					<X>150</X><Y>1760</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1705421898378</Id>
+					<Name><![CDATA[v_currentEnergyProductionHeat_kW]]></Name>
+					<X>150</X><Y>1680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -17207,7 +17269,7 @@ import java.io.*;]]></Import>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004315356</Id>
@@ -17228,7 +17290,7 @@ import java.io.*;]]></Import>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004325816</Id>
@@ -17249,7 +17311,7 @@ import java.io.*;]]></Import>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004335815</Id>
@@ -17270,7 +17332,7 @@ import java.io.*;]]></Import>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004381440</Id>
@@ -17291,7 +17353,7 @@ import java.io.*;]]></Import>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004464006</Id>
@@ -18356,6 +18418,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 					<Body><![CDATA[v_maxConnectionLoad_fr = 0;
 v_totalEnergyProduced_MWh = 0;
 v_totalEnergyUsed_MWh = 0;
+v_totalHeatProduced_MWh = 0;
 v_previousPowerElectricity_kW = 0;
 v_electricityPriceLowPassed_eurpkWh = 0;
 v_batterySOC_fr = (p_batteryAsset == null) ? 0 : p_batteryAsset.getCurrentStateOfCharge();
@@ -19113,6 +19176,7 @@ v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_k
 double totalEnergyProduced_MWh=0;
 double totalEnergyUsed_MWh=0;
 double totalEnergyCurtailed_MWh=0;
+double totalHeatProduced_MWh=0;
 for (J_EA e : c_energyAssets) {
 	double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
 	if (EnergyUsed_kWh > 0) {			
@@ -19126,14 +19190,19 @@ for (J_EA e : c_energyAssets) {
 		}		
 		if ( e instanceof J_EABuilding ) {
 			totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
+			totalHeatProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
 		}
 	} else {				
 		totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-	}
+		if (e instanceof J_EAConversionHeatPump) {
+			totalHeatProduced_MWh -= EnergyUsed_kWh/1000;						
+		}
+	}	
 }
 v_totalEnergyUsed_MWh = totalEnergyUsed_MWh;
 v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;		
 v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+v_totalHeatProduced_MWh = totalHeatProduced_MWh;
 
 // Electricity self consumption
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_electricityDrawnFromGrid_kWh/1000);
@@ -19173,6 +19242,10 @@ v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalEx
 						<Name><![CDATA[arr]]></Name>
 						<Type><![CDATA[double[]]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[caller]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
 					<Body><![CDATA[// This function is called from each energy asset when its method f_updateAllFlows() is called!
 // {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
 v_currentPowerElectricity_kW += arr[4] - arr[0];
@@ -19184,6 +19257,12 @@ v_currentPowerDiesel_kW += arr[8];
 if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and production in energyModel!
 	v_totalElectricityConsumed_MWh += arr[4] * energyModel.p_timeStep_h / 1000;
 	v_totalElectricityProduced_MWh += arr[0] * energyModel.p_timeStep_h / 1000;
+	//if ( arr[4] > 0 && arr[3] > arr[4]) {
+	if ( caller instanceof J_EAConversionHeatPump ) {
+		//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
+		v_currentEnergyProductionHeat_kW = -caller.energyUse_kW;
+		v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
+	}
 }
 ]]></Body>
 				</Function>
@@ -21367,7 +21446,7 @@ p_parentAgent = j_ea.parentAgent;
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1704210595511</Id>
@@ -21388,7 +21467,7 @@ p_parentAgent = j_ea.parentAgent;
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1704210595519</Id>
@@ -21409,7 +21488,7 @@ p_parentAgent = j_ea.parentAgent;
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1704210595523</Id>
@@ -21430,7 +21509,7 @@ p_parentAgent = j_ea.parentAgent;
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1704210595527</Id>
@@ -21451,7 +21530,7 @@ p_parentAgent = j_ea.parentAgent;
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1704210595531</Id>
@@ -21472,7 +21551,7 @@ p_parentAgent = j_ea.parentAgent;
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1704210595534</Id>
@@ -26813,7 +26892,7 @@ ea 2
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1679502158516</Id>
@@ -29251,7 +29330,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29263,7 +29342,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29275,7 +29354,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -29290,7 +29369,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -29305,7 +29384,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29317,7 +29396,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29329,7 +29408,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29341,7 +29420,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29353,7 +29432,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29365,7 +29444,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29377,7 +29456,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29389,7 +29468,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29401,7 +29480,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29413,7 +29492,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29425,7 +29504,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
@@ -29440,7 +29519,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29452,7 +29531,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29464,7 +29543,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29476,7 +29555,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29488,7 +29567,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29500,7 +29579,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29512,7 +29591,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29524,7 +29603,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29536,7 +29615,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29548,7 +29627,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29560,7 +29639,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29572,7 +29651,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29584,7 +29663,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29596,7 +29675,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29608,7 +29687,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29620,7 +29699,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29632,7 +29711,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29644,7 +29723,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29656,7 +29735,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29668,7 +29747,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29680,7 +29759,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29692,7 +29771,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29704,7 +29783,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -29716,7 +29795,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -33805,7 +33884,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -33817,7 +33896,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -33829,7 +33908,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[19]]></Code>
 						</InitialValue>
@@ -33844,7 +33923,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[20]]></Code>
 						</InitialValue>
@@ -33859,7 +33938,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -33871,7 +33950,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -33883,7 +33962,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -33895,7 +33974,7 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -38831,7 +38910,7 @@ if (energyModel.b_addKpiVisuals) {
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1702547667207</Id>
@@ -39941,7 +40020,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1702460377745</Id>
@@ -39962,7 +40041,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1702460377748</Id>
@@ -39985,7 +40064,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
-					</Properties>
+					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1696866057758</Id>
@@ -40730,7 +40809,7 @@ public class J_EA implements Cloneable {
     	//double[] arr=operateBounded(powerFraction_fr);
     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr);
+    		((GridConnection)parentAgent).f_addFlows(arr, this);
     	}
     }
     
@@ -41027,7 +41106,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	double[] arr=operate(time_h);
     	//return arr;    	
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr);
+    		((GridConnection)parentAgent).f_addFlows(arr, this);
     	}
     }
     
@@ -42865,7 +42944,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     	resetFlows();
     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr);
+    		((GridConnection)parentAgent).f_addFlows(arr, this);
     	}
     }
     
