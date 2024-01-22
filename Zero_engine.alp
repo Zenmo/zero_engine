@@ -11611,7 +11611,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1663774484695</Id>
 					<Name><![CDATA[z_extra]]></Name>
-					<X>300</X><Y>480</Y>
+					<X>297</X><Y>432</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12615,7 +12615,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1668602188368</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>80</X><Y>40</Y>
+					<X>80</X><Y>45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12660,7 +12660,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1668602207232</Id>
 					<Name><![CDATA[text6]]></Name>
-					<X>340</X><Y>40</Y>
+					<X>340</X><Y>45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12909,7 +12909,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1690205003577</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>767</X><Y>42</Y>
+					<X>765</X><Y>45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14761,7 +14761,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line]]></Name>
 					<X>10</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -14785,7 +14785,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[text]]></Name>
 					<X>40</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -14827,7 +14827,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line4]]></Name>
 					<X>770</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -14851,7 +14851,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[text5]]></Name>
 					<X>840</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -14872,7 +14872,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line5]]></Name>
 					<X>820</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -14896,7 +14896,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[text6]]></Name>
 					<X>652</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -14917,7 +14917,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line6]]></Name>
 					<X>640</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -14941,7 +14941,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line7]]></Name>
 					<X>400</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -14965,7 +14965,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[text7]]></Name>
 					<X>450</X><Y>450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -14986,7 +14986,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line1]]></Name>
 					<X>300</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -15010,7 +15010,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[text1]]></Name>
 					<X>350</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -15031,7 +15031,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[line2]]></Name>
 					<X>60</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -15055,7 +15055,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[text2]]></Name>
 					<X>90</X><Y>370</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -15174,7 +15174,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<Name><![CDATA[oval]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -40281,6 +40281,7 @@ if (gisRegion == null ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697017421161</Id>
 					<Name><![CDATA[f_listGridConnectionsInBuilding]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>550</X><Y>57</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
