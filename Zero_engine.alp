@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -3846,7 +3846,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>-421</X><Y>89</Y>
+					<X>-421</X><Y>79</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3874,7 +3874,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-421</X><Y>159</Y>
+					<X>-421</X><Y>149</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3902,7 +3902,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-421</X><Y>109</Y>
+					<X>-421</X><Y>99</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3971,7 +3971,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>-421</X><Y>129</Y>
+					<X>-421</X><Y>119</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4100,7 +4100,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-421</X><Y>179</Y>
+					<X>-421</X><Y>169</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4196,7 +4196,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1701855537716</Id>
 					<Name><![CDATA[p_truckTripsExcel]]></Name>
-					<X>-420</X><Y>220</Y>
+					<X>-420</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4217,7 +4217,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1701855572858</Id>
 					<Name><![CDATA[p_householdTripsExcel]]></Name>
-					<X>-420</X><Y>240</Y>
+					<X>-420</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4238,7 +4238,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1701855585052</Id>
 					<Name><![CDATA[p_cookingPatternExcel]]></Name>
-					<X>-420</X><Y>260</Y>
+					<X>-420</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5165,7 +5165,7 @@ for( J_EA e : c_ambientAirDependentAssets ) {
 // Update weather forecast
 v_SolarYieldForecast_fr += (tf_p_solar_e_normalized(t_h+p_forecastTime_h)-v_currentSolarPowerNormalized_r)/(p_forecastTime_h/p_timeStep_h);
 v_WindYieldForecast_fr += (tf_p_wind_e_normalized(t_h+p_forecastTime_h)-v_currentWindPowerNormalized_r)/(p_forecastTime_h/p_timeStep_h);
-v_epexForecast_eurpkWh += (nationalEnergyMarket.tf_dayAheadElectricityPricing_eurpMWh(t_h+p_forecastTime_h)-nationalEnergyMarket.tf_dayAheadElectricityPricing_eurpMWh(t_h))/(p_forecastTime_h/p_timeStep_h)/1000;]]></Body>
+v_epexForecast_eurpkWh += (tf_dayAheadElectricityPricing_eurpMWh(t_h+p_forecastTime_h)-tf_dayAheadElectricityPricing_eurpMWh(t_h))/(p_forecastTime_h/p_timeStep_h)/1000;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6963,30 +6963,22 @@ v_timeStepsElapsed ++;
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-671</X><Y>149</Y>
+					<X>-671</X><Y>139</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<InterpolationMethod>LINEAR</InterpolationMethod>
-					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
+					<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
-							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[profiles]]></ClassName>
 						</TableReference>
 							<ArgumentColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[t_h]]></ItemName>
 							</ArgumentColumnReference>
 							<ValueColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[house_e_demand_other]]></ItemName>
 							</ValueColumnReference>
 					</ValuesQuery>
 // arguments and values
@@ -7001,7 +6993,7 @@ v_timeStepsElapsed ++;
 @source: ETM-curves genormaliseerd met opgesteld vermogen
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-671</X><Y>89</Y>
+					<X>-671</X><Y>79</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7010,21 +7002,13 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
-							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[profiles]]></ClassName>
 						</TableReference>
 							<ArgumentColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[t_h]]></ItemName>
 							</ArgumentColumnReference>
 							<ValueColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[wind_e_prod_normalized]]></ItemName>
 							</ValueColumnReference>
 					</ValuesQuery>
 // arguments and values
@@ -7039,7 +7023,7 @@ v_timeStepsElapsed ++;
 @source: ETM-curves genormaliseerd met opgesteld vermogen
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-671</X><Y>109</Y>
+					<X>-671</X><Y>99</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7048,21 +7032,13 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
-							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[profiles]]></ClassName>
 						</TableReference>
 							<ArgumentColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[t_h]]></ItemName>
 							</ArgumentColumnReference>
 							<ValueColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[solar_e_prod_normalized]]></ItemName>
 							</ValueColumnReference>
 					</ValuesQuery>
 // arguments and values
@@ -7076,7 +7052,7 @@ v_timeStepsElapsed ++;
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-671</X><Y>129</Y>
+					<X>-671</X><Y>119</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7085,21 +7061,13 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
-							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[profiles]]></ClassName>
 						</TableReference>
 							<ArgumentColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[t_h]]></ItemName>
 							</ArgumentColumnReference>
 							<ValueColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[ambienttemperature_degc]]></ItemName>
 							</ValueColumnReference>
 					</ValuesQuery>
 // arguments and values
@@ -7109,7 +7077,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1664529919197</Id>
 					<Name><![CDATA[tf_p_building_e_demand_other]]></Name>
-					<X>-671</X><Y>189</Y>
+					<X>-671</X><Y>179</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7118,7 +7086,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7142,7 +7110,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1664533224315</Id>
 					<Name><![CDATA[tf_p_house_h_demand_hot_water]]></Name>
-					<X>-671</X><Y>169</Y>
+					<X>-671</X><Y>159</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7151,7 +7119,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7175,7 +7143,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499046358</Id>
 					<Name><![CDATA[tf_p_building_h_demand]]></Name>
-					<X>-671</X><Y>209</Y>
+					<X>-671</X><Y>199</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7184,7 +7152,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7208,7 +7176,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499121634</Id>
 					<Name><![CDATA[tf_p_industry_steel_e_demand]]></Name>
-					<X>-671</X><Y>229</Y>
+					<X>-671</X><Y>219</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7217,7 +7185,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7241,7 +7209,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499133914</Id>
 					<Name><![CDATA[tf_p_industry_steel_h_demand]]></Name>
-					<X>-671</X><Y>249</Y>
+					<X>-671</X><Y>239</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7250,7 +7218,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7274,7 +7242,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499150900</Id>
 					<Name><![CDATA[tf_p_industry_other_e_demand]]></Name>
-					<X>-671</X><Y>269</Y>
+					<X>-671</X><Y>259</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7283,7 +7251,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7307,7 +7275,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499166838</Id>
 					<Name><![CDATA[tf_p_industry_other_h_demand]]></Name>
-					<X>-671</X><Y>289</Y>
+					<X>-671</X><Y>279</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7316,7 +7284,7 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7340,7 +7308,7 @@ v_timeStepsElapsed ++;
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1667396912514</Id>
 					<Name><![CDATA[tf_p_logistics_fleet_e_hgv]]></Name>
-					<X>-671</X><Y>309</Y>
+					<X>-671</X><Y>299</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7349,7 +7317,32 @@ v_timeStepsElapsed ++;
 					<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
 					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
 					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
+					<ValuesQuery>
+						<TableReference>
+						</TableReference>
+							<ArgumentColumnReference>
+							</ArgumentColumnReference>
+							<ValueColumnReference>
+							</ValueColumnReference>
+					</ValuesQuery>
+// arguments and values
+					<Argument><![CDATA[0.0]]></Argument>
+					<Value><![CDATA[0.0]]></Value>
+				</TableFunction>
+				<TableFunction AccessType="public" StaticFunction="false">
+					<Id>1706010064113</Id>
+					<Name><![CDATA[tf_dayAheadElectricityPricing_eurpMWh]]></Name>
+					<X>-670</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>LINEAR</InterpolationMethod>
+					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
+					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
+					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
 					<ValuesQuery>
 						<TableReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -7363,7 +7356,7 @@ v_timeStepsElapsed ++;
 							<ValueColumnReference>
 								<PackageName><![CDATA[zero_engine]]></PackageName>
 								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[logistics_fleet_e_hgv]]></ItemName>
+								<ItemName><![CDATA[day_ahead_price_eur_mwh]]></ItemName>
 							</ValueColumnReference>
 					</ValuesQuery>
 // arguments and values
@@ -10021,7 +10014,6 @@ v_timeStepsElapsed ++;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<PresentationId>1705489115501</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
 						<ClassName><![CDATA[GridNode]]></ClassName>
@@ -12470,7 +12462,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1659709739366</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-681</X><Y>55</Y>
+					<X>-681</X><Y>45</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12491,7 +12483,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1659709765242</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>-441</X><Y>59</Y>
+					<X>-441</X><Y>49</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13045,25 +13037,6 @@ v_timeStepsElapsed ++;
 						<LabelText><![CDATA[Run Rapid Simulation]]></LabelText>
 					</ExtendedProperties>
 				</Control>
-				<EmbeddedObjectPresentation>
-					<Id>1705489115501</Id>
-					<Name><![CDATA[pop_gridNodes_presentation]]></Name>
-					<X>0</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
-					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-					<Latitude>0.0</Latitude>
-					<Longitude>0.0</Longitude>
-				</EmbeddedObjectPresentation>
 			</Presentation>
 
 				</Level>
@@ -33570,45 +33543,10 @@ else {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if( energyModel.v_timeStepsElapsed % (1 / energyModel.p_timeStep_h) == 0){
-	v_currentVariableElectricityPrice_eurpMWh = tf_dayAheadElectricityPricing_eurpMWh( time(HOUR) );
+	v_currentVariableElectricityPrice_eurpMWh = energyModel.tf_dayAheadElectricityPricing_eurpMWh( time(HOUR) );
 }]]></Body>
 				</Function>
 			</Functions>
-			<TableFunctions>
-				<TableFunction AccessType="public" StaticFunction="false">
-					<Id>1660752214584</Id>
-					<Name><![CDATA[tf_dayAheadElectricityPricing_eurpMWh]]></Name>
-					<X>60</X><Y>140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<InterpolationMethod>LINEAR</InterpolationMethod>
-					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
-					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
-					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
-					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
-					<ValuesQuery>
-						<TableReference>
-							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[profiles]]></ClassName>
-						</TableReference>
-							<ArgumentColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[t_h]]></ItemName>
-							</ArgumentColumnReference>
-							<ValueColumnReference>
-								<PackageName><![CDATA[zero_engine]]></PackageName>
-								<ClassName><![CDATA[profiles]]></ClassName>
-								<ItemName><![CDATA[day_ahead_price_eur_mwh]]></ItemName>
-							</ValueColumnReference>
-					</ValuesQuery>
-// arguments and values
-					<Argument><![CDATA[0.0]]></Argument>
-					<Value><![CDATA[0.0]]></Value>
-				</TableFunction>
-			</TableFunctions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1660731384410</Id>
@@ -40505,36 +40443,6 @@ if (gisRegion == null ) {
 		<AutoExport>false</AutoExport>
 		<ShutdownCompact>false</ShutdownCompact>
 		<ImportSettings>
-			<ExternalConnection>
-				<Id>1659337777421</Id>
-				<Name><![CDATA[database]]></Name>
-				<X>0</X><Y>0</Y>
-				<Label><X>10</X><Y>0</Y></Label>
-				<PublicFlag>false</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>true</ShowLabel>
-				<DatabaseType>EXCEL_ACCESS</DatabaseType>
-				<ConnectionURL><![CDATA[]]></ConnectionURL>
-				<ConnectOnStartup>true</ConnectOnStartup>
-				<DatabaseName><![CDATA[]]></DatabaseName>
-				<ResourceReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[db_profiles.xlsx]]></ClassName>
-				</ResourceReference>
-				<Host><![CDATA[localhost]]></Host>
-				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
-				<Login><![CDATA[]]></Login>
-				<Password><![CDATA[]]></Password>
-			</ExternalConnection>
-			<TableImportSettings>
-				<TableReference>
-					<PackageName><![CDATA[zero_engine]]></PackageName>
-					<ClassName><![CDATA[profiles]]></ClassName>
-				</TableReference>
-				<ConnectionIndex>0</ConnectionIndex>
-				<ExternalTableName><![CDATA["profiles"]]></ExternalTableName>
-				<AutoImport>false</AutoImport>
-			</TableImportSettings>
 		</ImportSettings>
 		<ExportSettings>
 		</ExportSettings>
@@ -44123,11 +44031,6 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 		</Resource>
 		<Resource>
 			<Path><![CDATA[solarfarm.png]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[db_profiles.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
