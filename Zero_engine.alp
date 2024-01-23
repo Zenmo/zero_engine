@@ -19315,8 +19315,14 @@ v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
 
 if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and production in energyModel!
-	v_totalElectricityConsumed_MWh += arr[4] * energyModel.p_timeStep_h / 1000;
-	v_totalElectricityProduced_MWh += arr[0] * energyModel.p_timeStep_h / 1000;
+	if (caller instanceof J_EAStorageElectric || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
+		//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
+		v_totalElectricityConsumed_MWh += arr[4] * energyModel.p_timeStep_h / 1000;
+		v_totalElectricityConsumed_MWh -= arr[0] * energyModel.p_timeStep_h / 1000;
+	} else { // For other assets, 
+		v_totalElectricityConsumed_MWh += arr[4] * energyModel.p_timeStep_h / 1000;
+		v_totalElectricityProduced_MWh += arr[0] * energyModel.p_timeStep_h / 1000;
+	}
 	//if ( arr[4] > 0 && arr[3] > arr[4]) {
 	if ( caller instanceof J_EAConversionHeatPump ) {
 		//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
