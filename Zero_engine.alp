@@ -7446,6 +7446,13 @@ data_annualBusinessParkSupply_kW.reset();
 //data_annualBusinessParkNetLoad_kWh.reset();
 data_annualBusinessParkNetLoad_kW.reset();
 
+v_totalElectricityExport_MWh = 0;
+v_totalElectricityImport_MWh = 0;
+v_totalElectricityConsumed_MWh = 0;
+v_totalElectricityProduced_MWh = 0;
+v_totalElectricitySelfConsumed_MWh = 0;
+v_totalHeatProduced_MWh = 0;
+
 v_daytimeTotalImport_MWh = 0;
 v_daytimeTotalExport_MWh = 0;
 v_daytimeSelfConsumedEnergy_MWh = 0;
