@@ -7102,7 +7102,7 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
 
-
+//traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIs());
 
 f_sumMolecularEnergyFlows();
@@ -7773,6 +7773,9 @@ v_daytimeEnergyProduced_MWh = 0;
 v_daytimeElectricityConsumed_MWh = 0;
 v_daytimeElectricityExport_MWh = 0;
 v_daytimeElectricityImport_MWh = 0;
+v_daytimeMethaneImport_MWh = 0;
+v_daytimeHydrogenImport_MWh = 0;
+v_daytimeDieselImport_MWh = 0;
 v_daytimePeakElecExport_kW = 0;
 v_daytimePeakElecImport_kW = 0;
 
@@ -7795,6 +7798,9 @@ v_weekdayEnergyProduced_MWh = 0;
 v_weekdayElectricityConsumed_MWh = 0;
 v_weekdayElectricityExport_MWh = 0;
 v_weekdayElectricityImport_MWh = 0;
+v_weekdayMethaneImport_MWh = 0;
+v_weekdayHydrogenImport_MWh = 0;
+v_weekdayDieselImport_MWh = 0;
 v_weekdayPeakElecExport_kW = 0;
 v_weekdayPeakElecImport_kW = 0;
 
@@ -16617,7 +16623,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212770046</Id>
 					<Name><![CDATA[v_electricityDrawnFromGrid_kWh]]></Name>
-					<X>150</X><Y>1510</Y>
+					<X>820</X><Y>1170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16629,7 +16635,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212770048</Id>
 					<Name><![CDATA[v_methaneDrawn_kWh]]></Name>
-					<X>460</X><Y>1390</Y>
+					<X>820</X><Y>1210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16653,7 +16659,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212770052</Id>
 					<Name><![CDATA[v_hydrogenDrawn_kWh]]></Name>
-					<X>460</X><Y>1430</Y>
+					<X>820</X><Y>1230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16886,7 +16892,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668605338517</Id>
 					<Name><![CDATA[v_dieselDrawn_kWh]]></Name>
-					<X>460</X><Y>1410</Y>
+					<X>820</X><Y>1250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17067,7 +17073,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028344848</Id>
 					<Name><![CDATA[v_electricityDeliveredToGrid_kWh]]></Name>
-					<X>150</X><Y>1530</Y>
+					<X>820</X><Y>1190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17783,7 +17789,6 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706548049113</Id>
 					<Name><![CDATA[v_daytimeElectricityConsumed_MWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1610</X><Y>1108</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -17799,7 +17804,6 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706548049115</Id>
 					<Name><![CDATA[v_nighttimeElectricityConsumed_MWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1900</X><Y>1108</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -17815,8 +17819,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706549154276</Id>
 					<Name><![CDATA[v_weekdayElectricityConsumed_MWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>2170</X><Y>1100</Y>
+					<X>2170</X><Y>1107</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17831,8 +17834,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706549154278</Id>
 					<Name><![CDATA[v_weekendElectricityConsumed_MWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>2460</X><Y>1100</Y>
+					<X>2460</X><Y>1106</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18235,6 +18237,366 @@ import java.io.*;]]></Import>
 					<Id>1706952468041</Id>
 					<Name><![CDATA[v_winterWeekDieselImport_MWh]]></Name>
 					<X>1350</X><Y>1248</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081723</Id>
+					<Name><![CDATA[v_daytimeElectricityProduced_MWh]]></Name>
+					<X>1610</X><Y>1127</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081725</Id>
+					<Name><![CDATA[v_daytimeElectricitySelfConsumed_MWh]]></Name>
+					<X>1610</X><Y>1147</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081727</Id>
+					<Name><![CDATA[v_daytimeElectricityImport_MWh]]></Name>
+					<X>1610</X><Y>1167</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081729</Id>
+					<Name><![CDATA[v_daytimeElectricityExport_MWh]]></Name>
+					<X>1610</X><Y>1187</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081731</Id>
+					<Name><![CDATA[v_nighttimeElectricityProduced_MWh]]></Name>
+					<X>1900</X><Y>1127</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081733</Id>
+					<Name><![CDATA[v_nighttimeElectricitySelfConsumed_MWh]]></Name>
+					<X>1900</X><Y>1147</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081735</Id>
+					<Name><![CDATA[v_nighttimeElectricityImport_MWh]]></Name>
+					<X>1900</X><Y>1167</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081737</Id>
+					<Name><![CDATA[v_nighttimeElectricityExport_MWh]]></Name>
+					<X>1900</X><Y>1187</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081739</Id>
+					<Name><![CDATA[v_daytimeMethaneImport_MWh]]></Name>
+					<X>1610</X><Y>1207</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081741</Id>
+					<Name><![CDATA[v_daytimeHydrogenImport_MWh]]></Name>
+					<X>1610</X><Y>1226</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081743</Id>
+					<Name><![CDATA[v_daytimeDieselImport_MWh]]></Name>
+					<X>1610</X><Y>1245</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081745</Id>
+					<Name><![CDATA[v_nighttimeMethaneImport_MWh]]></Name>
+					<X>1900</X><Y>1207</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081747</Id>
+					<Name><![CDATA[v_nighttimeHydrogenImport_MWh]]></Name>
+					<X>1900</X><Y>1226</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123081749</Id>
+					<Name><![CDATA[v_nighttimeDieselImport_MWh]]></Name>
+					<X>1900</X><Y>1245</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091557</Id>
+					<Name><![CDATA[v_weekdayElectricityProduced_MWh]]></Name>
+					<X>2170</X><Y>1127</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091559</Id>
+					<Name><![CDATA[v_weekdayElectricitySelfConsumed_MWh]]></Name>
+					<X>2170</X><Y>1147</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091561</Id>
+					<Name><![CDATA[v_weekdayElectricityImport_MWh]]></Name>
+					<X>2170</X><Y>1167</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091563</Id>
+					<Name><![CDATA[v_weekdayElectricityExport_MWh]]></Name>
+					<X>2170</X><Y>1187</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091565</Id>
+					<Name><![CDATA[v_weekendElectricityProduced_MWh]]></Name>
+					<X>2460</X><Y>1127</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091567</Id>
+					<Name><![CDATA[v_weekendElectricitySelfConsumed_MWh]]></Name>
+					<X>2460</X><Y>1147</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091569</Id>
+					<Name><![CDATA[v_weekendElectricityImport_MWh]]></Name>
+					<X>2460</X><Y>1167</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091571</Id>
+					<Name><![CDATA[v_weekendElectricityExport_MWh]]></Name>
+					<X>2460</X><Y>1187</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091573</Id>
+					<Name><![CDATA[v_weekdayMethaneImport_MWh]]></Name>
+					<X>2170</X><Y>1207</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091575</Id>
+					<Name><![CDATA[v_weekdayHydrogenImport_MWh]]></Name>
+					<X>2170</X><Y>1226</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091577</Id>
+					<Name><![CDATA[v_weekdayDieselImport_MWh]]></Name>
+					<X>2170</X><Y>1245</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091579</Id>
+					<Name><![CDATA[v_weekendMethaneImport_MWh]]></Name>
+					<X>2460</X><Y>1207</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091581</Id>
+					<Name><![CDATA[v_weekendHydrogenImport_MWh]]></Name>
+					<X>2460</X><Y>1226</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707123091583</Id>
+					<Name><![CDATA[v_weekendDieselImport_MWh]]></Name>
+					<X>2460</X><Y>1245</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19563,23 +19925,7 @@ else {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// This sub-totals are still used by summer/winter energy balance calcs, can only be disabled once these calcs are moved to calcKPIs function.
-/*v_electricityDrawnFromGrid_kWh += max(v_currentPowerElectricity_kW, 0) * energyModel.p_timeStep_h;
-v_electricityDeliveredToGrid_kWh += max(-v_currentPowerElectricity_kW, 0) * energyModel.p_timeStep_h;
-
-v_methaneDrawn_kWh += max(v_currentPowerMethane_kW, 0) * energyModel.p_timeStep_h;
-v_methaneDelivered_kWh += max(-v_currentPowerMethane_kW, 0) * energyModel.p_timeStep_h;
-
-v_hydrogenDrawn_kWh += max(v_currentPowerHydrogen_kW, 0) * energyModel.p_timeStep_h;
-v_hydrogenDelivered_kWh += max(-v_currentPowerHydrogen_kW, 0) * energyModel.p_timeStep_h;
-
-v_heatDrawn_kWh += max(v_currentPowerHeat_kW, 0) * energyModel.p_timeStep_h;
-v_heatDelivered_kWh += max(-v_currentPowerHeat_kW, 0) * energyModel.p_timeStep_h;
-
-v_dieselDrawn_kWh += max(v_currentPowerDiesel_kW, 0) * energyModel.p_timeStep_h;
-v_dieselDelivered_kWh += max(-v_currentPowerDiesel_kW, 0) * energyModel.p_timeStep_h;*/
-
-if ( abs(v_currentPowerHeat_kW) > 0.1 ) {
+					<Body><![CDATA[if ( abs(v_currentPowerHeat_kW) > 0.1 ) {
 	traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
 	pauseSimulation();
 }
@@ -19608,6 +19954,11 @@ if (energyModel.v_isRapidRun){
 		v_daytimeTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_daytimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
+		v_daytimeElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
+		v_daytimeElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;
+		v_daytimeMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
+		v_daytimeHydrogenImport_MWh += v_currentPowerHydrogen_kW / 1000 * energyModel.p_timeStep_h;
+		v_daytimeDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
 	}  /*else { // Nighttime
 		v_nighttimeTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
 		v_nighttimeTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
@@ -19623,6 +19974,11 @@ if (energyModel.v_isRapidRun){
 		v_weekdayTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
+		v_weekdayElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
+		v_weekdayElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;
+		v_weekdayMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
+		v_weekdayHydrogenImport_MWh += v_currentPowerHydrogen_kW / 1000 * energyModel.p_timeStep_h;
+		v_weekdayDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
 	} /*else { // Weekend
 		v_weekendTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
 		v_weekendTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
@@ -19648,133 +20004,6 @@ if (energyModel.v_isRapidRun){
 	a_annualElectricityProduction_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityProduction_kW;
 	a_annualElectricityConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
 	a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
-	
-	/*
-	// 'old' accounting; summing of totals and calculation of intermediate KPIs during modelrun...
-	v_totalElectricityProduced_MWh += v_currentElectricityProduction_kW * energyModel.p_timeStep_h / 1000;
-	v_totalElectricityConsumed_MWh += v_currentElectricityConsumption_kW * energyModel.p_timeStep_h / 1000;
-
-	//Total use, production, import, export and self-use, for summer, winter and annual.
-	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
-	
-		v_summerWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
-		v_summerWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
-		double totalEnergyProduced_MWh=0;
-		double totalEnergyUsed_MWh=0;
-		double totalEnergyCurtailed_MWh=0;
-		for (J_EA e : c_energyAssets) {
-			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-			if (EnergyUsed_kWh > 0) {			
-				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-				} else if( e instanceof J_EAConversionGasCHP ) {
-					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
-				} else {
-					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-				}		
-				if ( e instanceof J_EABuilding ) {
-					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
-				}
-			} else {				
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-			}
-		}
-		v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
-		v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh;		
-	}
-	if (energyModel.t_h == energyModel.p_startHourSummerWeek + 24*7) {
-	
-		v_summerWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000-v_summerWeekTotalImport_MWh;
-		v_summerWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000-v_summerWeekTotalExport_MWh;
-		double totalEnergyProduced_MWh=0;
-		double totalEnergyUsed_MWh=0;
-		double totalEnergyCurtailed_MWh=0;
-		for (J_EA e : c_energyAssets) {
-			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-			if (EnergyUsed_kWh > 0) {			
-				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-				} else {
-					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-				}		
-				if ( e instanceof J_EABuilding ) {
-					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-				}
-			} else {				
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-			}
-		}
-		v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
-		v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-v_summerWeekEnergyProduced_MWh;	
-		
-		// Calc selfConsumedEnergy for summerweek
-		v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-		double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
-		//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_gridConnectionID, v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
-		
-	}
-	
-	if (energyModel.t_h == energyModel.p_startHourWinterWeek) {
-		
-		v_winterWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000;
-		v_winterWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000;
-		double totalEnergyProduced_MWh=0;
-		double totalEnergyUsed_MWh=0;
-		double totalEnergyCurtailed_MWh=0;
-		for (J_EA e : c_energyAssets) {
-			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-			if (EnergyUsed_kWh > 0) {			
-				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-				} else {
-					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-				}		
-				if ( e instanceof J_EABuilding ) {
-					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
-				}
-			} else {				
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-			}
-		}
-		v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
-		v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh;		
-	}
-	if (energyModel.t_h == energyModel.p_startHourWinterWeek + 24*7) {
-		v_winterWeekTotalImport_MWh=(v_electricityDrawnFromGrid_kWh + max(0,v_methaneDrawn_kWh-v_methaneDelivered_kWh) + max(0,v_hydrogenDrawn_kWh-v_hydrogenDelivered_kWh) + v_dieselDrawn_kWh)/1000-v_winterWeekTotalImport_MWh;
-		v_winterWeekTotalExport_MWh=(v_electricityDeliveredToGrid_kWh + max(0,v_methaneDelivered_kWh-v_methaneDrawn_kWh) + max(0,v_hydrogenDelivered_kWh-v_hydrogenDrawn_kWh))/1000-v_winterWeekTotalExport_MWh;
-		double totalEnergyProduced_MWh=0;
-		double totalEnergyUsed_MWh=0;
-		double totalEnergyCurtailed_MWh=0;
-		for (J_EA e : c_energyAssets) {
-			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-			if (EnergyUsed_kWh > 0) {			
-				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-				} else {
-					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-				}		
-				if ( e instanceof J_EABuilding ) {
-					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-				}
-			} else {				
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-			}
-		}
-		v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_winterWeekEnergyUsed_MWh;
-		v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-v_winterWeekEnergyProduced_MWh;	
-		
-		// Calc selfConsumedEnergy for winterweek
-		v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-		double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
-		//traceln("Gridconnection %s winterweek selfconsumed use/import based: %s, production/export based: %s", p_gridConnectionID, v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
-	}
-	*/
 } else {
 	data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
 }]]></Body>
@@ -20998,7 +21227,8 @@ f_setOperatingSwitches();]]></Body>
 
 // Get import/export from balance arrays. This is apparently quite costly to calculate with the .filter operator! Minimize use!
 v_electricityDrawnFromGrid_kWh = Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
-v_electricityDeliveredToGrid_kWh = -Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
+v_electricityDeliveredToGrid_kWh = -(Arrays.stream(a_annualElectricityBalance_kW).sum() * energyModel.p_timeStep_h - v_electricityDrawnFromGrid_kWh);
+//v_electricityDeliveredToGrid_kWh = -Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
 
 v_methaneDrawn_kWh = Arrays.stream(a_annualMethaneBalance_kW).sum() * energyModel.p_timeStep_h;
 v_methaneDelivered_kWh = 0;
@@ -21028,7 +21258,7 @@ v_heatDelivered_kWh = -Arrays.stream(a_annualHeatBalance_kW).filter(m -> m < 0).
 //traceln("Sum of e balance: %s", a_annualElectricityBalance_kW.sum());
 
 //// Winter/summer week totals
-// Calc selfConsumedEnergy for summerweek
+// Calcs summerweek
 int startIdx = roundToInt(energyModel.p_startHourSummerWeek/energyModel.p_timeStep_h);
 int endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
 v_summerWeekTotalImport_MWh = Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
@@ -21040,20 +21270,18 @@ v_summerWeekSelfConsumedEnergy_MWh = max(0,v_summerWeekEnergyUsed_MWh - v_summer
 double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
 //v_summerWeekEnergyCurtailed_MWh=Arrays.copyOfRange(a_annualEnergyCurtailed_kW, energyModel.p_startHourSummerWeek,roundToInt(24*7/energyModel.p_timeStep_h))*energyModel.p_timeStep_h / 1000;
 
-v_summerWeekMethaneImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualMethaneBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekDieselImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualDieselBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekHydrogenImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualHydrogenBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-
+v_summerWeekMethaneImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualMethaneBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekDieselImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualDieselBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekHydrogenImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualHydrogenBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
 // Electricity selfconsumed
 v_summerWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
 v_summerWeekElectricityExport_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityConsumption_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityProduction_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityConsumption_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityProduction_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
 
 v_summerWeekElectricitySelfConsumed_MWh = max(0,v_summerWeekElectricityConsumed_MWh - v_summerWeekElectricityImport_MWh);
 
-
-
+// Calcs winterweek
 startIdx = roundToInt(energyModel.p_startHourWinterWeek/energyModel.p_timeStep_h);
 endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
 v_winterWeekTotalImport_MWh = Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
@@ -21065,43 +21293,58 @@ v_winterWeekEnergyProduced_MWh = Arrays.stream( Arrays.copyOfRange(a_annualEnerg
 v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
 
-v_winterWeekMethaneImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualMethaneBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekDieselImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualDieselBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekHydrogenImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualHydrogenBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekMethaneImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualMethaneBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekDieselImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualDieselBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekHydrogenImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualHydrogenBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
 
 // Electricity selfconsumed
 v_winterWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekElectricityExport_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityConsumption_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityProduction_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityConsumption_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityProduction_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
 
 v_winterWeekElectricitySelfConsumed_MWh = max(0,v_winterWeekElectricityConsumed_MWh - v_winterWeekElectricityImport_MWh);
 
-/*double totalEnergyProduced_MWh=0;
-double totalEnergyUsed_MWh=0;
-double totalEnergyCurtailed_MWh=0;
-for (J_EA e : c_energyAssets) {
-	double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-	if (EnergyUsed_kWh > 0) {			
-		if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-			totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-		} else {
-			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-		}		
-		if ( e instanceof J_EABuilding ) {
-			totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-			//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-		}
-	} else {				
-		totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-	}
-}
-v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
-v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-v_summerWeekEnergyProduced_MWh;	*/
+// Daytime selfconsumption
+v_daytimeSelfConsumedEnergy_MWh = v_daytimeEnergyProduced_MWh - v_daytimeTotalExport_MWh;
+v_daytimeElectricitySelfConsumed_MWh = max(0,v_daytimeElectricityConsumed_MWh - v_daytimeElectricityImport_MWh);
+// Nighttime totals: yearly totays minus daytime totals
+v_nighttimeTotalExport_MWh = v_totalExport_MWh - v_daytimeTotalExport_MWh;
+v_nighttimeTotalImport_MWh = v_totalImport_MWh - v_daytimeTotalImport_MWh;
+v_nighttimeEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_daytimeEnergyUsed_MWh;
+v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
 
+v_nighttimeElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_daytimeElectricityConsumed_MWh;
+v_nighttimeElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_daytimeElectricityProduced_MWh;
+v_nighttimeElectricityImport_MWh = v_electricityDrawnFromGrid_kWh/1000 - v_daytimeElectricityImport_MWh;
+v_nighttimeElectricityExport_MWh = v_electricityDeliveredToGrid_kWh/1000 - v_daytimeElectricityExport_MWh;
+v_nighttimeMethaneImport_MWh = v_methaneDrawn_kWh/1000 - v_daytimeMethaneImport_MWh;
+v_nighttimeHydrogenImport_MWh = v_hydrogenDrawn_kWh/1000 - v_daytimeHydrogenImport_MWh;
+v_nighttimeDieselImport_MWh = v_dieselDrawn_kWh/1000 - v_daytimeDieselImport_MWh;
 
-//traceln("Gridconnection %s summerweek selfconsumed use/import based: %s, production/export based: %s", p_gridConnect*/
+v_nighttimeSelfConsumedEnergy_MWh = v_nighttimeEnergyProduced_MWh - v_nighttimeTotalExport_MWh;
+v_nighttimeElectricitySelfConsumed_MWh = max(0,v_nighttimeElectricityConsumed_MWh - v_nighttimeElectricityImport_MWh);
+
+// Weekday selfconsumption
+v_weekdaySelfConsumedEnergy_MWh = v_weekdayEnergyProduced_MWh - v_weekdayTotalExport_MWh;
+v_weekdayElectricitySelfConsumed_MWh = max(0,v_weekdayElectricityConsumed_MWh - v_weekdayElectricityImport_MWh);
+// Weekend totals: yearly totals minus weekday totals
+v_weekendTotalExport_MWh = v_totalExport_MWh - v_weekdayTotalExport_MWh;
+v_weekendTotalImport_MWh = v_totalImport_MWh - v_weekdayTotalImport_MWh;
+v_weekendEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_weekdayEnergyUsed_MWh;
+v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
+v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
+
+v_weekendElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_weekdayElectricityConsumed_MWh;
+v_weekendElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_weekdayElectricityProduced_MWh;
+v_weekendElectricityImport_MWh = v_electricityDrawnFromGrid_kWh/1000 - v_weekdayElectricityImport_MWh;
+v_weekendElectricityExport_MWh = v_electricityDeliveredToGrid_kWh/1000 - v_weekdayElectricityExport_MWh;
+v_weekendMethaneImport_MWh = v_methaneDrawn_kWh/1000 - v_weekdayMethaneImport_MWh;
+v_weekendHydrogenImport_MWh = v_hydrogenDrawn_kWh/1000 - v_weekdayHydrogenImport_MWh;
+v_weekendDieselImport_MWh = v_dieselDrawn_kWh/1000 - v_weekdayDieselImport_MWh;
+
+v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
+v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
 
 
 v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh)/1000;
@@ -21140,23 +21383,6 @@ v_totalHeatProduced_MWh = totalHeatProduced_MWh;
 // Electricity self consumption
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_electricityDrawnFromGrid_kWh/1000);
 
-// Daytime selfconsumption
-v_daytimeSelfConsumedEnergy_MWh = v_daytimeEnergyProduced_MWh - v_daytimeTotalExport_MWh;
-// Nighttime totals: yearly totays minus daytime totals
-v_nighttimeTotalExport_MWh = v_totalExport_MWh - v_daytimeTotalExport_MWh;
-v_nighttimeTotalImport_MWh = v_totalImport_MWh - v_daytimeTotalImport_MWh;
-v_nighttimeEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_daytimeEnergyUsed_MWh;
-v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
-v_nighttimeSelfConsumedEnergy_MWh = v_nighttimeEnergyProduced_MWh - v_nighttimeTotalExport_MWh;
-
-// Weekday selfconsumption
-v_weekdaySelfConsumedEnergy_MWh = v_weekdayEnergyProduced_MWh - v_weekdayTotalExport_MWh;
-// Weekend totals: yearly totals minus weekday totals
-v_weekendTotalExport_MWh = v_totalExport_MWh - v_weekdayTotalExport_MWh;
-v_weekendTotalImport_MWh = v_totalImport_MWh - v_weekdayTotalImport_MWh;
-v_weekendEnergyUsed_MWh = v_totalEnergyUsed_MWh - v_weekdayEnergyUsed_MWh;
-v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
-v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
