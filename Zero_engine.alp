@@ -2730,6 +2730,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1699278542872</Id>
 					<Name><![CDATA[v_dailyElectricCarsDemand_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>82</X><Y>2596</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3137,7 +3138,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700670131980</Id>
 					<Name><![CDATA[v_winterWeekTotalImport_MWh]]></Name>
-					<X>430</X><Y>2340</Y>
+					<X>430</X><Y>2280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3149,7 +3150,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700670131982</Id>
 					<Name><![CDATA[v_winterWeekTotalExport_MWh]]></Name>
-					<X>430</X><Y>2360</Y>
+					<X>430</X><Y>2300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3161,7 +3162,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700670131984</Id>
 					<Name><![CDATA[v_winterWeekEnergyUsed_MWh]]></Name>
-					<X>430</X><Y>2380</Y>
+					<X>430</X><Y>2320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3173,7 +3174,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700670131986</Id>
 					<Name><![CDATA[v_winterWeekEnergyProduced_MWh]]></Name>
-					<X>430</X><Y>2400</Y>
+					<X>430</X><Y>2340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3185,7 +3186,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1700670131988</Id>
 					<Name><![CDATA[v_winterWeekSelfConsumedEnergy_MWh]]></Name>
-					<X>430</X><Y>2420</Y>
+					<X>430</X><Y>2360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3587,7 +3588,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701786186276</Id>
 					<Name><![CDATA[v_winterWeekPeakElecImport_kW]]></Name>
-					<X>750</X><Y>2340</Y>
+					<X>750</X><Y>2280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3602,7 +3603,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1701786186278</Id>
 					<Name><![CDATA[v_winterWeekPeakElecExport_kW]]></Name>
-					<X>750</X><Y>2360</Y>
+					<X>750</X><Y>2300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3902,7 +3903,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706540954264</Id>
 					<Name><![CDATA[v_winterWeekElectricityImport_MWh]]></Name>
-					<X>750</X><Y>2380</Y>
+					<X>750</X><Y>2320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3914,7 +3915,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706540954266</Id>
 					<Name><![CDATA[v_winterWeekElectricityExport_MWh]]></Name>
-					<X>750</X><Y>2400</Y>
+					<X>750</X><Y>2340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3926,7 +3927,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706540954268</Id>
 					<Name><![CDATA[v_winterWeekMethaneImport_MWh]]></Name>
-					<X>750</X><Y>2420</Y>
+					<X>750</X><Y>2360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3938,7 +3939,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706540954270</Id>
 					<Name><![CDATA[v_winterWeekHydrogenImport_MWh]]></Name>
-					<X>750</X><Y>2440</Y>
+					<X>750</X><Y>2380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3950,7 +3951,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706540954272</Id>
 					<Name><![CDATA[v_winterWeekDieselImport_MWh]]></Name>
-					<X>750</X><Y>2460</Y>
+					<X>750</X><Y>2400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4298,7 +4299,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706602819866</Id>
 					<Name><![CDATA[v_winterWeekElectricityConsumed_MWh]]></Name>
-					<X>430</X><Y>2440</Y>
+					<X>430</X><Y>2380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4310,7 +4311,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1706602819868</Id>
 					<Name><![CDATA[v_winterWeekSelfConsumedElectricity_MWh]]></Name>
-					<X>430</X><Y>2460</Y>
+					<X>430</X><Y>2400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4611,6 +4612,36 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707209593324</Id>
+					<Name><![CDATA[a_annualNetLoad_kW]]></Name>
+					<X>370</X><Y>1260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[roundToInt(8760/p_timeStep_h)]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707233056349</Id>
+					<Name><![CDATA[v_individualSelfSufficiency_fr]]></Name>
+					<X>-480</X><Y>1140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -4872,6 +4903,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-421</X><Y>169</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -6110,7 +6142,7 @@ for(GridNode m : c_gridNodesMSLS ) {
 	//traceln("MSLS peak negative load filtered: " + roundToDecimal(m.v_peakNegLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakNegLoadFiltered_h + " h");
 }
 
-for(GridConnection g: c_gridConnections){
+for(GridConnection g: c_gridConnections){ // What is this doing here??
     c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
     //v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
     //v_totalElectricityProduced_MWh += g.v_totalElectricityProduced_MWh;
@@ -6808,11 +6840,11 @@ for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 	// Update elektriciteitsprijzen
 	f_updatePricesForNextTimestep(t_h);
 	
-	f_updateDatasets(t_h);
+	f_updateArrays(t_h);
 	
 	v_timeStepsElapsed++;
 }	
-traceln("HSMS overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
+traceln("HVMV overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
 f_calculateKPIs();
 traceln("---FINISHED YEAR MODEL RUN----");
 
@@ -7102,6 +7134,7 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
 
+
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIs());
 
@@ -7114,14 +7147,15 @@ v_totalImportedEnergy_MWh = v_totalElectricityImport_MWh + max(0,v_totalMethaneI
 v_totalExportedEnergy_MWh = v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh);
 v_totalEnergyUsed_MWh = Arrays.stream( a_annualEnergyConsumption_kW ).sum() * p_timeStep_h / 1000;
 v_totalEnergyProduced_MWh= Arrays.stream( a_annualEnergyProduction_kW ).sum() * p_timeStep_h / 1000;
+v_individualSelfSufficiency_fr = sum(c_gridConnections, gc -> gc.v_totalSelfConsumedEnergy_MWh) / v_totalEnergyUsed_MWh;
 
 traceln("");
 traceln("__--** Totals **--__");
 traceln("Energy consumed: "+ v_totalEnergyUsed_MWh + " MWh");
 
 // Peak model-wide electricity grid loads
-v_peakElecExport_kW=-data_annualBusinessParkNetLoad_kW.getYMin();
-v_peakElecImport_kW=data_annualBusinessParkNetLoad_kW.getYMax();
+v_peakElecExport_kW=Arrays.stream(a_annualNetLoad_kW).min().orElse(-1);
+v_peakElecImport_kW=Arrays.stream(a_annualNetLoad_kW).max().orElse(-1);
 v_summerWeekPeakElecImport_kW=data_summerWeekBusinessParkNetLoad_kW.getYMax();
 v_summerWeekPeakElecExport_kW=-data_summerWeekBusinessParkNetLoad_kW.getYMin();
 v_winterWeekPeakElecImport_kW=data_winterWeekBusinessParkNetLoad_kW.getYMax();
@@ -7213,6 +7247,7 @@ v_weekendSelfConsumedElectricity_MWh = v_weekendElectricityConsumed_MWh - v_week
 
 //v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
 //v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
+
 
 // *** Total energy balance ***
 //double electricityProduced_MWh = 0;
@@ -7317,7 +7352,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1699275323325</Id>
-					<Name><![CDATA[f_updateDatasets]]></Name>
+					<Name><![CDATA[f_updateArrays]]></Name>
 					<X>557</X><Y>234</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -7343,7 +7378,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	a_annualElectricityProduction_kW[v_timeStepsElapsed] = v_currentElectricityProduction_kW;
 	a_annualElectricityConsumption_kW[v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
 	a_annualHeatProduction_kW[v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
-	
+	a_annualNetLoad_kW[v_timeStepsElapsed] = sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW);
 
 	//v_peakElecImport_kW = max(v_peakElecImport_kW,v_currentElectricityImport_kW);
 	//v_peakElecExport_kW = max(v_peakElecExport_kW,v_currentElectricityExport_kW);
@@ -7364,7 +7399,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_daytimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * p_timeStep_h;
 		v_daytimePeakElecImport_kW = max(v_daytimePeakElecImport_kW,v_currentElectricityImport_kW);
 		v_daytimePeakElecExport_kW = max(v_daytimePeakElecExport_kW,v_currentElectricityExport_kW);
-	} /*else { // Nighttime
+	} /*else { // Nighttime totals calculated after simulation as annualtotals - daytime_totals
 		v_nighttimeTotalImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
 		v_nighttimeTotalExport_MWh += v_currentEnergyExport_kW / 1000 * p_timeStep_h;
 		v_nighttimeElectricityImport_MWh += max(0,v_totalElectricPower_kW) / 1000 * p_timeStep_h;
@@ -7397,7 +7432,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_weekdayEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * p_timeStep_h;
 		v_weekdayPeakElecImport_kW = max(v_weekdayPeakElecImport_kW,v_currentElectricityImport_kW);
 		v_weekdayPeakElecExport_kW = max(v_weekdayPeakElecExport_kW,v_currentElectricityExport_kW);
-	} /*else { // Weekend
+	} /*else { // Weekend totals calculated after simulation as annualtotals - daytime_totals
 		v_weekendTotalImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
 		v_weekendTotalExport_MWh += v_currentEnergyExport_kW / 1000 * p_timeStep_h;
 		v_weekendElectricityImport_MWh += max(0,v_totalElectricPower_kW) / 1000 * p_timeStep_h;
@@ -7432,94 +7467,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		data_summerWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
 		v_summerWeekHour++;
 		//v_summerWeekPeakElecImport_kW = max(v_summerWeekPeakElecImport_kW,v_currentElectricityImport_kW);
-		//v_summerWeekPeakElecExport_kW = max(v_summerWeekPeakElecExport_kW,v_currentElectricityExport_kW);
-		/*if (t_h == p_startHourSummerWeek) {
-			v_deltaThermalEnergySinceStart_MWh=0;
-			f_sumMolecularEnergyFlows();
-			f_sumGridNodeLoads();	
-			v_summerWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh;
-			v_summerWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh);
-			v_summerWeekElectricityImport_MWh = v_totalElectricityImport_MWh;
-			v_summerWeekElectricityExport_MWh = v_totalElectricityExport_MWh;
-			v_summerWeekElectricityConsumed_MWh = v_totalElectricityConsumed_MWh;
-			
-			v_summerWeekMethaneImport_MWh=max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh);
-			v_summerWeekHydrogenImport_MWh=max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh);
-			v_summerWeekDieselImport_MWh=v_totalDieselImport_MWh;
-			
-			double totalEnergyProduced_MWh=0;
-			double totalEnergyUsed_MWh=0;
-			double totalEnergyCurtailed_MWh=0;
-			double deltaThermalEnergySinceStart_MWh=0;
-			for (J_EA e : c_energyAssets) {
-				double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-				if (EnergyUsed_kWh > 0) {			
-					if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-						totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-						totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-					} else {
-						totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-					}		
-					if ( e instanceof J_EABuilding ) {
-						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						//traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
-						v_deltaThermalEnergySinceStart_MWh -= ((J_EABuilding)e).getCurrentTemperature()*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-					}
-				} else {				
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				}
-			}
-			v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
-			v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
-		}
-		if (t_h == p_startHourSummerWeek + 24*7) {
-			f_sumMolecularEnergyFlows();
-			f_sumGridNodeLoads();	
-			v_summerWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh-v_summerWeekTotalImport_MWh;
-			v_summerWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh) - v_summerWeekTotalExport_MWh;
-			v_summerWeekElectricityImport_MWh = v_totalElectricityImport_MWh-v_summerWeekElectricityImport_MWh;
-			v_summerWeekElectricityExport_MWh = v_totalElectricityExport_MWh-v_summerWeekElectricityExport_MWh;
-			v_summerWeekElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_summerWeekElectricityConsumed_MWh;
-			
-			v_summerWeekMethaneImport_MWh=max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh)-v_summerWeekMethaneImport_MWh;
-			v_summerWeekHydrogenImport_MWh=max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh)-v_summerWeekHydrogenImport_MWh;
-			v_summerWeekDieselImport_MWh=v_totalDieselImport_MWh-v_summerWeekDieselImport_MWh;
-			double totalEnergyProduced_MWh=0;
-			double totalEnergyUsed_MWh=0;
-			double totalEnergyCurtailed_MWh=0;
-			for (J_EA e : c_energyAssets) {
-				double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-				if (EnergyUsed_kWh > 0) {			
-					if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-						totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-						totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-					} else {
-						totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-					}		
-					if ( e instanceof J_EABuilding ) {
-						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						//traceln("Building asset temp: %s, energyUsed_kWh: %s, energyAbsorbed_kWh: %s: ",((J_EABuilding)e).getCurrentTemperature(), ((J_EABuilding)e).getEnergyUsed_kWh(), ((J_EABuilding)e).energyAbsorbed_kWh );
-						v_deltaThermalEnergySinceStart_MWh += ((J_EABuilding)e).getCurrentTemperature()*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9; 
-					}
-				} else {				
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				}
-			}
-			v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
-			v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_summerWeekEnergyProduced_MWh;	
-			
-			// Calc selfConsumedEnergy for summerweek
-
-			v_summerWeekSelfConsumedEnergy_MWh = v_summerWeekEnergyUsed_MWh - (v_summerWeekTotalImport_MWh + max(0,-v_deltaThermalEnergySinceStart_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-			double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh -( v_summerWeekTotalExport_MWh + max(0,v_deltaThermalEnergySinceStart_MWh));
-			// Calc selfConsumedElectricity for winterweek
-			v_summerWeekSelfConsumedElectricity_MWh = max(0,v_summerWeekElectricityConsumed_MWh - v_summerWeekElectricityImport_MWh);
-			// Cap selfConsumedEnergy to >=0
-			v_summerWeekSelfConsumedEnergy_MWh=max(0,v_summerWeekSelfConsumedEnergy_MWh);
-			v_summerWeekSelfConsumedEnergyCheck_MWh=max(0,v_summerWeekSelfConsumedEnergyCheck_MWh);
-			traceln("Summerweek selfconsumed use/import based: %s, production/export based: %s", v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
-		}*/
-		
+		//v_summerWeekPeakElecExport_kW = max(v_summerWeekPeakElecExport_kW,v_currentElectricityExport_kW);	
 	}
 	
 	//Winter week
@@ -7541,89 +7489,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_winterWeekHour++;
 		//v_winterWeekPeakElecImport_kW = max(v_winterWeekPeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_winterWeekPeakElecExport_kW = max(v_winterWeekPeakElecExport_kW,v_currentElectricityExport_kW);
-		/*if (t_h == p_startHourWinterWeek) {
-			f_sumMolecularEnergyFlows();
-			f_sumGridNodeLoads();	
-			v_winterWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh;
-			v_winterWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh);
-			v_winterWeekElectricityImport_MWh = v_totalElectricityImport_MWh;
-			v_winterWeekElectricityExport_MWh = v_totalElectricityExport_MWh;
-			v_winterWeekElectricityConsumed_MWh = v_totalElectricityConsumed_MWh;
-			
-			v_winterWeekMethaneImport_MWh=max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh);
-			v_winterWeekHydrogenImport_MWh=max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh);
-			v_winterWeekDieselImport_MWh=v_totalDieselImport_MWh;
-			double totalEnergyProduced_MWh=0;
-			double totalEnergyUsed_MWh=0;
-			double totalEnergyCurtailed_MWh=0;
-			double deltaThermalEnergySinceStart_MWh=0;
-			for (J_EA e : c_energyAssets) {
-				double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-				if (EnergyUsed_kWh > 0) {			
-					if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-						totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-						totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-					} else {
-						totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-					}		
-					if ( e instanceof J_EABuilding ) {
-						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						v_deltaThermalEnergySinceStart_MWh -= (((J_EABuilding)e).getCurrentTemperature())*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-					}
-				} else {				
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				}
-			}
-			v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
-			v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
 		}
-		if (t_h == p_startHourWinterWeek + 24*7) {
-			f_sumMolecularEnergyFlows();
-			f_sumGridNodeLoads();	
-			v_winterWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh-v_winterWeekTotalImport_MWh;
-			v_winterWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh) - v_winterWeekTotalExport_MWh;
-			v_winterWeekElectricityImport_MWh = v_totalElectricityImport_MWh-v_winterWeekElectricityImport_MWh;
-			v_winterWeekElectricityExport_MWh = v_totalElectricityExport_MWh-v_winterWeekElectricityExport_MWh;
-			v_winterWeekElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_winterWeekElectricityConsumed_MWh;
-			
-			v_winterWeekMethaneImport_MWh=max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh)-v_winterWeekMethaneImport_MWh;
-			v_winterWeekHydrogenImport_MWh=max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh)-v_winterWeekHydrogenImport_MWh;
-			v_winterWeekDieselImport_MWh=v_totalDieselImport_MWh-v_winterWeekDieselImport_MWh;
-			double totalEnergyProduced_MWh=0;
-			double totalEnergyUsed_MWh=0;
-			double totalEnergyCurtailed_MWh=0;
-			for (J_EA e : c_energyAssets) {
-				double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
-				if (EnergyUsed_kWh > 0) {			
-					if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-						totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-						totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-					} else {
-						totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-					}		
-					if ( e instanceof J_EABuilding ) {
-						totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-						v_deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature())*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
-					}
-				} else {				
-					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				}
-			}
-			v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_winterWeekEnergyUsed_MWh;
-			v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_winterWeekEnergyProduced_MWh;	
-			
-			// Calc selfConsumedEnergy for winterweek
-			v_winterWeekSelfConsumedEnergy_MWh = v_winterWeekEnergyUsed_MWh - (v_winterWeekTotalImport_MWh + max(0,-v_deltaThermalEnergySinceStart_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-			double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - (v_winterWeekTotalExport_MWh + max(0,v_deltaThermalEnergySinceStart_MWh));
-			// Calc selfConsumedElectricity for winterweek
-			v_winterWeekSelfConsumedElectricity_MWh = max(0,v_winterWeekElectricityConsumed_MWh - v_winterWeekElectricityImport_MWh);
-			// Cap selfConsumedEnergy to >=0
-			v_winterWeekSelfConsumedEnergy_MWh=max(0,v_winterWeekSelfConsumedEnergy_MWh);
-			v_winterWeekSelfConsumedEnergyCheck_MWh=max(0,v_winterWeekSelfConsumedEnergyCheck_MWh);
-			traceln("winterweek selfconsumed use/import based: %s, production/export based: %s", v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
-			
-		}*/
-	}
 	
 	double v_currentBaseloadElectricityDemand_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
 	double v_currentHeatPumpElectricityDemand_kW = sum(c_gridConnections, x->x.v_conversionPowerElectric_kW);
@@ -7635,7 +7501,8 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	double v_currentNeighborhoodBatterySupply_kW = sum(GridBatteries, x->max(0,-x.v_batteryPowerElectric_kW));
 	double v_currentV2GSupply_kWh = sum(c_gridConnections, x->-min(0,x.v_evChargingPowerElectric_kW));
 	
-	data_annualBusinessParkDemand_kW.add(t_h,v_currentBaseloadElectricityDemand_kW+v_currentHeatPumpElectricityDemand_kW+v_currentElectricTrucksDemand_kW+v_currentNeighborhoodBatteryDemand_kW); // Not robust when adding other types of assets!!
+	// Replace with arrays!! Or discard fully? 
+	/*data_annualBusinessParkDemand_kW.add(t_h,v_currentBaseloadElectricityDemand_kW+v_currentHeatPumpElectricityDemand_kW+v_currentElectricTrucksDemand_kW+v_currentNeighborhoodBatteryDemand_kW); // Not robust when adding other types of assets!!
 	data_annualBusinessParkSupply_kW.add(t_h,v_currentPVGeneration_kW+v_currentWindGeneration_kW+v_currentNeighborhoodBatterySupply_kW+v_currentV2GSupply_kWh); // Not robust when adding other types of assets!!
 	data_annualBusinessParkNetLoad_kW.add(t_h,sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
 	
@@ -7649,7 +7516,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	data_annualWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
 	data_annualNeighborhoodBatterySupply_kW.add(t_h, v_currentNeighborhoodBatterySupply_kW);
 	data_annualV2GSupply_kW.add(t_h, v_currentV2GSupply_kWh);
-
+	*/
 	
 	v_dailyBusinessParkDemand_kWh += v_currentElectricityConsumption_kW*p_timeStep_h; // Not only electricity! Also other energy carriers!!
 	v_dailyBusinessParkSupply_kWh += v_currentElectricityProduction_kW*p_timeStep_h; // Not only electricity! Also other energy carriers!!
@@ -7669,7 +7536,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	if (t_h % 24 == 23){
 		data_annualBaseloadElectricityDemand_MWh.add(t_h, v_dailyBaseloadElectricityDemand_kWh/1000);
 		data_annualHeatPumpElectricityDemand_MWh.add(t_h, v_dailyHeatPumpElectricityDemand_kWh/1000);
-		data_annualElectricCarsDemand_MWh.add(t_h, v_dailyElectricCarsDemand_kWh/1000);
+		//data_annualElectricCarsDemand_MWh.add(t_h, v_dailyElectricCarsDemand_kWh/1000);
 		data_annualElectricTrucksDemand_MWh.add(t_h, v_dailyElectricTrucksDemand_kWh/1000);
 		data_annualNeighborhoodBatteryDemand_MWh.add(t_h, v_dailyNeighborhoodBatteryDemand_kWh/1000);
 		
@@ -7678,13 +7545,13 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		data_annualNeighborhoodBatterySupply_MWh.add(t_h, v_dailyNeighborhoodBatterySupply_kWh/1000);
 		data_annualV2GSupply_MWh.add(t_h, v_dailyV2GSupply_kWh/1000);
 		
-		data_annualBusinessParkDemand_MWh.add(t_h, v_dailyBusinessParkDemand_kWh/1000);
-		data_annualBusinessParkSupply_MWh.add(t_h, v_dailyBusinessParkSupply_kWh/1000); 
+		data_annualElectricityDemand_MWh.add(t_h, v_dailyBusinessParkDemand_kWh/1000);
+		data_annualElectricitySupply_MWh.add(t_h, v_dailyBusinessParkSupply_kWh/1000); 
 		//data_annualBusinessParkNetLoad_kWh.add(t_h, v_dailyBusinessParkNetLoad_kWh);
 			
 		v_dailyBaseloadElectricityDemand_kWh = 0;
 		v_dailyHeatPumpElectricityDemand_kWh = 0;
-		v_dailyElectricCarsDemand_kWh = 0;
+		//v_dailyElectricCarsDemand_kWh = 0;
 		v_dailyElectricTrucksDemand_kWh = 0;
 		v_dailyNeighborhoodBatteryDemand_kWh = 0;
 		
@@ -7728,7 +7595,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[data_annualBaseloadElectricityDemand_kW.reset();
+					<Body><![CDATA[/*data_annualBaseloadElectricityDemand_kW.reset();
 data_annualHeatPumpElectricityDemand_kW.reset();
 data_annualElectricCarsDemand_kW.reset();
 data_annualElectricTrucksDemand_kW.reset();
@@ -7741,12 +7608,13 @@ data_annualV2GSupply_kW.reset();
 
 data_annualBusinessParkDemand_kW.reset();
 data_annualBusinessParkSupply_kW.reset();
-//data_annualBusinessParkNetLoad_kWh.reset();
 data_annualBusinessParkNetLoad_kW.reset();
+*/
+//data_annualBusinessParkNetLoad_kWh.reset();
 
 data_annualBaseloadElectricityDemand_MWh.reset();
 data_annualHeatPumpElectricityDemand_MWh.reset();
-data_annualElectricCarsDemand_MWh.reset();
+//data_annualElectricCarsDemand_MWh.reset();
 data_annualElectricTrucksDemand_MWh.reset();
 data_annualNeighborhoodBatteryDemand_MWh.reset();
 
@@ -7754,9 +7622,6 @@ data_annualPVGeneration_MWh.reset();
 data_annualWindGeneration_MWh.reset();
 data_annualNeighborhoodBatterySupply_MWh.reset();
 data_annualV2GSupply_MWh.reset();
-
-data_annualBusinessParkDemand_kW.reset();
-data_annualBusinessParkSupply_kW.reset();
 
 v_totalElectricityExport_MWh = 0;
 v_totalElectricityImport_MWh = 0;
@@ -7833,9 +7698,10 @@ v_peakElecImport_kW = 0;
 data_netbelastingDuurkrommeVorige_kW.reset();
 //data_netbelastingshistogram_kW.reset();
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
-int arraySize = data_annualBusinessParkNetLoad_kW.size();
+//int arraySize = data_annualBusinessParkNetLoad_kW.size();
+int arraySize = a_annualNetLoad_kW.length;
 
-double[] netLoadArray_kW = new double[arraySize];
+//double[] netLoadArray_kW = new double[arraySize];
 double[] netLoadArrayWinter_kW = new double[data_winterWeekBusinessParkNetLoad_kW.size()];
 double[] netLoadArraySummer_kW = new double[data_winterWeekBusinessParkNetLoad_kW.size()];
 double[] netLoadArrayDay_kW = new double[arraySize/2];
@@ -7848,25 +7714,25 @@ int i_night=0;
 int i_weekday=0;
 int i_weekend=0;
 for(int i=0; i<arraySize ; i++) {
-	netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
+	//netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
 	if (notFirstRun) {
 		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
 	}
 	// summer/winter
 	if (i*p_timeStep_h > p_startHourSummerWeek && i*p_timeStep_h<= p_startHourSummerWeek+24*7) {
-		netLoadArraySummer_kW[i_summer]=-data_annualBusinessParkNetLoad_kW.getY(i);
+		netLoadArraySummer_kW[i_summer]=-a_annualNetLoad_kW[i];
 		i_summer++;
 	}
 	if (i*p_timeStep_h > p_startHourWinterWeek && i*p_timeStep_h<= p_startHourWinterWeek+24*7) {
-		netLoadArrayWinter_kW[i_winter]=-data_annualBusinessParkNetLoad_kW.getY(i);
+		netLoadArrayWinter_kW[i_winter]=-a_annualNetLoad_kW[i];
 		i_winter++;
 	}
 	// day/night
 	if (i*p_timeStep_h % 24 > 6 && i*p_timeStep_h % 24 <= 18) { //daytime
-		netLoadArrayDay_kW[i_day]=-data_annualBusinessParkNetLoad_kW.getY(i);
+		netLoadArrayDay_kW[i_day]=-a_annualNetLoad_kW[i];
 		i_day++;
 	} else {
-		netLoadArrayNight_kW[i_night]=-data_annualBusinessParkNetLoad_kW.getY(i);
+		netLoadArrayNight_kW[i_night]=-a_annualNetLoad_kW[i];
 		i_night++;
 	}
 
@@ -7874,7 +7740,7 @@ for(int i=0; i<arraySize ; i++) {
 }
 //Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
 // Sort all arrays
-Arrays.parallelSort(netLoadArray_kW);
+Arrays.parallelSort(a_annualNetLoad_kW); // Is this array used elsewhere?? Because now it's no longer a time-series!
 Arrays.parallelSort(netLoadArraySummer_kW);
 Arrays.parallelSort(netLoadArrayWinter_kW);
 Arrays.parallelSort(netLoadArrayDay_kW);
@@ -7883,7 +7749,7 @@ Arrays.parallelSort(netLoadArrayNight_kW);
 // Write results to datasets
 data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
-	data_netbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArray_kW[i]);
+	data_netbelastingDuurkromme_kW.add(i*p_timeStep_h, a_annualNetLoad_kW[arraySize-i-1]);
 }
 data_HSMScapacity_kW.add(0, c_gridNodesHSMS.get(0).p_capacity_kW);
 data_HSMScapacity_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), c_gridNodesHSMS.get(0).p_capacity_kW);
@@ -7969,7 +7835,7 @@ startTime = System.currentTimeMillis();
 f_updatePricesForNextTimestep(t_h);
 v_incentivesRuntime_ms += (System.currentTimeMillis()-startTime);
 
-f_updateDatasets(t_h);
+f_updateArrays(t_h);
 
 v_timeStepsElapsed ++;
 ]]></Body>
@@ -8388,7 +8254,6 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048264</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>1250</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8406,13 +8271,13 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<VerticalAxisExpression><![CDATA[naturalGasDemand]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentPowerMethane_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>168</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1699275048281</Id>
 					<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1290</Y>
+					<X>80</X><Y>1310</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8532,7 +8397,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048354</Id>
 					<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1270</Y>
+					<X>80</X><Y>1290</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8579,9 +8444,8 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1699275048383</Id>
-					<Name><![CDATA[data_electricCarsDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>1310</Y>
+					<Name><![CDATA[data_dieselDemand_kW]]></Name>
+					<X>80</X><Y>1269</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8599,7 +8463,7 @@ v_timeStepsElapsed ++;
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_electricCarsDemand_kW)]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentPowerDiesel_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>168</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -9253,6 +9117,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048795</Id>
 					<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2170</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9275,6 +9140,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048809</Id>
 					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2290</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9319,6 +9185,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048837</Id>
 					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2270</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9341,6 +9208,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048850</Id>
 					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2230</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9363,6 +9231,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048864</Id>
 					<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9384,7 +9253,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1699275048878</Id>
-					<Name><![CDATA[data_annualBusinessParkDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualElectricityDemand_MWh]]></Name>
 					<X>80</X><Y>2370</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9407,6 +9276,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048891</Id>
 					<Name><![CDATA[data_annualElectricCarsDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2190</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9429,6 +9299,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048905</Id>
 					<Name><![CDATA[data_annualElectricTrucksDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2210</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9451,6 +9322,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048918</Id>
 					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2310</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9472,7 +9344,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1699275048932</Id>
-					<Name><![CDATA[data_annualBusinessParkSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualElectricitySupply_MWh]]></Name>
 					<X>80</X><Y>2390</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -10694,6 +10566,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699524082116</Id>
 					<Name><![CDATA[data_annualBusinessParkNetLoad_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2470</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -10826,6 +10699,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1700579037693</Id>
 					<Name><![CDATA[data_annualBusinessParkDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2430</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -10850,6 +10724,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1700579040385</Id>
 					<Name><![CDATA[data_annualBusinessParkSupply_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>2450</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -11118,6 +10993,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1706645225394</Id>
 					<Name><![CDATA[data_annualElectricCarsDemand_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>410</X><Y>2590</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21242,6 +21118,8 @@ v_dieselDelivered_kWh = 0;
 v_heatDrawn_kWh = Arrays.stream(a_annualHeatBalance_kW).sum() * energyModel.p_timeStep_h;
 v_heatDelivered_kWh = 0;
 
+v_totalImport_MWh = (v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh + v_heatDrawn_kWh)/1000;
+v_totalExport_MWh = (v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh+ v_hydrogenDelivered_kWh + v_dieselDelivered_kWh + v_heatDelivered_kWh)/1000;
 /*v_methaneDrawn_kWh = Arrays.stream(a_annualMethaneBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
 v_methaneDelivered_kWh = -Arrays.stream(a_annualMethaneBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
 
@@ -21345,7 +21223,6 @@ v_weekendDieselImport_MWh = v_dieselDrawn_kWh/1000 - v_weekdayDieselImport_MWh;
 
 v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
-
 
 v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh)/1000;
 v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh)/1000;
@@ -32248,6 +32125,21 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1707141890843</Id>
+					<Name><![CDATA[a_annualElectricityBalance_kW]]></Name>
+					<X>60</X><Y>1370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1669037234222</Id>
 					<Name><![CDATA[p_actorContractList]]></Name>
@@ -33013,7 +32905,8 @@ v_hydrogenExported_kWh += -min(0,v_hydrogenVolume_kWh);
 v_dieselImported_kWh += v_dieselVolume_kWh;
 
 if (energyModel.v_isRapidRun){
-	data_annualCoopElectricityBalance_kW.add(energyModel.t_h, v_electricitySurplus_kW);
+	//data_annualCoopElectricityBalance_kW.add(energyModel.t_h, v_electricitySurplus_kW);
+	a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = -v_electricitySurplus_kW;
 
 	//Total use, production, import, export and self-use, for summer, winter and annual.
 	if (energyModel.t_h == energyModel.p_startHourSummerWeek) {
@@ -33684,7 +33577,7 @@ v_daytimeTotalExport_MWh = 0;
 v_daytimeEnergyProduced_MWh = 0;
 v_daytimeEnergyUsed_MWh = 0;
 
-data_annualCoopElectricityBalance_kW.reset();
+//data_annualCoopElectricityBalance_kW.reset();
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -33750,6 +33643,7 @@ v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalEx
     			<DataSet>
 					<Id>1704365180754</Id>
 					<Name><![CDATA[data_annualCoopElectricityBalance_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>60</X><Y>1400</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
