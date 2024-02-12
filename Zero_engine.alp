@@ -67,6 +67,7 @@
 		<OptionList>
 			<Id>1659118262286</Id>
 			<Name><![CDATA[OL_GridConnectionCategory]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659118262287</Id>
 				<Name><![CDATA[HOUSE]]></Name>
@@ -103,6 +104,7 @@
 		<OptionList>
 			<Id>1659118272924</Id>
 			<Name><![CDATA[OL_GridConnectionType]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659118284642</Id>
 				<Name><![CDATA[DETACHED]]></Name>
@@ -18498,6 +18500,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>250</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18520,6 +18523,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1658500076242</Id>
 					<Name><![CDATA[p_gridConnectionType]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>250</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20448,7 +20452,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	if (!c_vehicleAssets.isEmpty()) {
 		SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-	} else if (p_gridConnectionCategory == OL_GridConnectionCategory.WINDFARM) { // Look at weather forecast to charge/discharge battery
+	} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { // Look at weather forecast to charge/discharge battery
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	}
@@ -20501,7 +20505,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
 			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		} else if (p_gridConnectionCategory == OL_GridConnectionCategory.WINDFARM) {
+		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { 
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 		}
@@ -21096,6 +21100,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697034280311</Id>
 					<Name><![CDATA[f_setColorDetailedObjects]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>330</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -37468,7 +37473,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
 			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		} else if (p_gridConnectionCategory == OL_GridConnectionCategory.WINDFARM) {
+		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) {
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 		}
@@ -39985,7 +39990,7 @@ if (EA.j_ea instanceof J_EAConsumption) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if(p_gridConnectionType == OL_GridConnectionType.AGRO_ENERGYHUB) {
+					<Body><![CDATA[if(p_gridConnectionID.contains("agrohub")) {
 	f_operateFlexAssets_agroenergyhub();
 	for( J_EAStorage v : c_storageAssets ) {	
 		//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -40178,7 +40183,7 @@ if (CurtailerAsset.j_ea.getElectricCapacity_kW()>0) {
 					<Body><![CDATA[
 if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
-	if(p_gridConnectionType == OL_GridConnectionType.AGRO_ENERGYHUB) {
+	if(p_gridConnectionID.contains("agrohub")) {
 	
 		if (j_ea instanceof J_EAConversionGasBurner || j_ea instanceof J_EAConversionHydrogenBurner) {
 			if (p_primaryHeatingAsset == null) {
