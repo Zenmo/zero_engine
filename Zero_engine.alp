@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140435" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -99,6 +99,10 @@
 			<Option>
 				<Id>1697095873493</Id>
 				<Name><![CDATA[UTILITY]]></Name>
+			</Option>
+			<Option>
+				<Id>1707145198921</Id>
+				<Name><![CDATA[ELECTROLYSER]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -5110,7 +5114,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1663312177330</Id>
 					<Name><![CDATA[c_gridConnections]]></Name>
-					<X>90</X><Y>230</Y>
+					<X>90</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11178,6 +11182,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_description]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_realCapacityAvailable]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11222,7 +11229,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1658477403184</Id>
 					<Name><![CDATA[pop_gridConnections]]></Name>
-					<X>90</X><Y>73</Y>
+					<X>90</X><Y>75</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12720,24 +12727,174 @@ v_timeStepsElapsed ++;
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1663774484695</Id>
-					<Name><![CDATA[z_extra]]></Name>
-					<X>300</X><Y>480</Y>
+					<Name><![CDATA[EnergyConversionSites]]></Name>
+					<X>90</X><Y>215</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
-						<ClassName><![CDATA[Z_extra]]></ClassName>
+						<ClassName><![CDATA[GCEnergyConversion]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[Z_extra]]></ClassName>
+							<ClassName><![CDATA[GCEnergyConversion]]></ClassName>
 							<ItemName><![CDATA[1663773857866]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
 					<Parameters>
+						<Parameter>
+							<Name><![CDATA[p_gridConnectionCategory]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_gridConnectionType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_parentNodeElectricID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_gridConnectionID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_parentNodeHeatID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_BuildingThermalAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_primaryHeatingAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_ownerID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_heatingType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyAssetList]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_batteryOperationMode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_batteryAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoStart_h]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_elektrolyserOperationMode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_heatBuffer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_gasBuffer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_cookingTracker]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyLabel]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISPoint]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_woonplaats]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisletter]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_toevoeging]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_postcode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pandIdentiteit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_owner]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_conversionEfficiency]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_powerNominal_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_outputPressure_Bar]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTime_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -15072,6 +15229,28 @@ geupdate vanuit
 						<ParameterEditor>
 							<Id>1705586150311</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707680312891</Id>
+					<Name><![CDATA[p_realCapacityAvailable]]></Name>
+					<Description><![CDATA[This value is set at 'true' if the provided input file of the trafos has a postitive value. If the real world capacity is unknown, the excel input should denote -1. And p_capacity_kW is set at a default value provided bij de excel list.]]></Description>
+					<X>50</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707680312889</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -39452,8 +39631,163 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1663773857868</Id>
-			<Name><![CDATA[Z_extra]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[GCEnergyConversion]]></Name>
+			<ExtendsReference>
+				<PackageName><![CDATA[zero_engine]]></PackageName>
+				<ClassName><![CDATA[GridConnection]]></ClassName>
+			</ExtendsReference>
+			<Parameters>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionCategory]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentNodeElectricID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentNodeHeatID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_BuildingThermalAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_primaryHeatingAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_ownerID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatingType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyAssetList]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_batteryOperationMode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_batteryAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoStart_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_elektrolyserOperationMode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatBuffer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gasBuffer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_cookingTracker]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyLabel]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISPoint]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_woonplaats]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisletter]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_toevoeging]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_postcode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pandIdentiteit]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_owner]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_conversionEfficiency]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_powerNominal_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_outputPressure_Bar]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTime_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+				</Parameter>
+			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1663773857866</Id>
@@ -39545,6 +39879,399 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 			</ScaleRuler>
 			<CurrentLevel>1663773857867</CurrentLevel>
 			<ConnectionsId>1663773857863</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1707149728754</Id>
+					<Name><![CDATA[v_hydrogenProductionDeficit_kWh]]></Name>
+					<X>1610</X><Y>610</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860525999</Id>
+					<Name><![CDATA[p_conversionEfficiency]]></Name>
+					<X>1610</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860525997</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860642684</Id>
+					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+					<X>1610</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860642682</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860684023</Id>
+					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+					<X>1610</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860684021</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860740201</Id>
+					<Name><![CDATA[p_powerNominal_kW]]></Name>
+					<X>1610</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860740199</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860794938</Id>
+					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+					<X>1610</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860794936</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860850973</Id>
+					<Name><![CDATA[p_outputPressure_Bar]]></Name>
+					<X>1610</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860850971</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860914174</Id>
+					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+					<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
+					<X>1610</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860914172</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707861041492</Id>
+					<Name><![CDATA[p_startUpTime_s]]></Name>
+					<X>1610</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707861041490</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707861119929</Id>
+					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+					<Description><![CDATA[https://www.enapter.com/kb_post/what-is-the-energy-content-of-hydrogen 
+
+LHV = 3.00 kWh/Nm3
+HHV = 3.54 kWh/Nm3]]></Description>
+					<X>1610</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[3.00]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1707861119927</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+			</Variables>
+			<Functions>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1707149702398</Id>
+					<Name><![CDATA[f_manageElektrolyser]]></Name>
+					<X>1610</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[ElektrolyserAsset]]></Name>
+						<Type><![CDATA[J_EAConversionElektrolyser]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
+	
+	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
+	double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
+	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	double eta_r = ElektrolyserAsset.getEta_r();
+	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	double ProductionSetpoint_kW = ElektrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
+	double elektrolyserSetpointElectric_kW = 0;
+	
+	if (p_elektrolyserOperationMode==OL_ElektrolyserOperationMode.BALANCE) {
+		double FeedbackGain_kWpkWh = 1.0/24; // Try to recover deficit in 24 hours
+		elektrolyserSetpointElectric_kW = ProductionSetpoint_kW/eta_r + v_hydrogenProductionDeficit_kWh * FeedbackGain_kWpkWh /eta_r ;
+	
+		//traceln("Elektrolyser electric power setpoint: " + elektrolyserSetpointElectric_kW + " kW");
+		//traceln("Elektrolyser power fraction: " + elektrolyserSetpointElectric_kW/ElektrolyserAsset.j_ea.getElectricCapacity_kW());
+	} else if (p_elektrolyserOperationMode==OL_ElektrolyserOperationMode.PRICE) {
+		//if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
+		//double currentElectricityPriceCharge_eurpkWh = ownerActor.v_priceBandsDelivery.ceilingEntry(100.0).getValue(); // query price at 1kW
+		double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
+		//traceln("Current electricity price for electrolyser: " + currentElectricityPriceCharge_eurpkWh);
+		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
+		double deficitGain_eurpkWh = 1.0/1000000; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
+		double priceGain_peur = 5; // How strongly to ramp up power with price-delta's	
+		double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + deficitGain_eurpkWh * v_hydrogenProductionDeficit_kWh;
+		elektrolyserSetpointElectric_kW = max(0,ElektrolyserAsset.getElectricCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_peur)  ;
+		//traceln("WTP hydrogen production is " + roundToDecimal(WTP_eurpkWh,3) + " eurpkWh is higher than electricity price " + roundToDecimal(currentElectricityPriceCharge_eurpkWh,3) + " eurpkWh, so produce! Setpoint power: " + round(elektrolyserSetpointElectric_kW) + " kW");
+	}	
+	
+	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
+	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
+	
+	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
+	
+	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElektrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1707149769851</Id>
+					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
+					<X>1610</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for( J_EA v : c_conversionAssets ){
+	if (v instanceof J_EAConversionElektrolyser) {
+		f_manageElektrolyser((J_EAConversionElektrolyser)v);
+	}
+	if (v instanceof J_EAConversionCurtailer) {
+		// Must go last! 
+	} /*else {		
+		v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+		v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+		v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
+		v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
+		v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
+		v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+	} */
+}
+
+// Determine EV charging
+f_manageCharging();
+//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
+
+// Operate battery
+if (p_batteryAsset != null){
+	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
+	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
+		f_batteryManagementBalanceCoop( v_batterySOC_fr );
+	}
+	else {
+		f_batteryManagementPrice( v_batterySOC_fr );
+	}
+	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+	v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
+}
+
+// Operate curtailer. Must be the last asset to run!!
+
+if (p_curtailer != null){
+	f_manageCurtailer(p_curtailer);
+	//v_currentPowerElectricity_kW += p_curtailer.electricityConsumption_kW;
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1707149801187</Id>
+					<Name><![CDATA[f_batteryManagementBalanceCoop]]></Name>
+					<Description><![CDATA[Regeling voor balancering van Coop-load.
+
+@author: Gillis Hommen
+@since: 28-12-2022]]></Description>
+					<X>1610</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[batterySOC]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
+	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+		if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_CoopParent instanceof EnergyCoop ) {
+			//traceln("Hello?");
+//			v_previousPowerElectricity_kW = p_batteryAsset.v_powerFraction_fr * p_batteryAsset.j_ea.getElectricCapacity_kW();
+			v_previousPowerElectricity_kW = p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
+			//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
+			double currentCoopElectricitySurplus_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW;
+			//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentCoopElectricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
+			
+			double CoopConnectionCapacity_kW = 0.9*((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_CoopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+			double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
+			double SOC_setp_fr = 0.5;			
+			if (energyModel.v_totalInstalledWindPower_kW > 10000) {
+				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
+				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+			} else {
+				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+			}
+			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
+			double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+			double chargeSetpoint_kW = 0;
+			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+			//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+		}
+	}
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1707149873038</Id>
+					<Name><![CDATA[f_manageCurtailer]]></Name>
+					<X>1610</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[CurtailerAsset]]></Name>
+						<Type><![CDATA[J_EAConversionCurtailer]]></Type>
+					</Parameter>
+					<Body><![CDATA[//traceln("Hello! " + CurtailerAsset.j_ea.getElectricCapacity_kW());
+if (CurtailerAsset.getElectricCapacity_kW()>0) {
+	double curtailerSetpointElectric_kW = -min(0,v_currentPowerElectricity_kW + p_connectionCapacity_kW);
+	CurtailerAsset.f_updateAllFlows(curtailerSetpointElectric_kW/CurtailerAsset.getElectricCapacity_kW());
+	
+	/*if ( curtailerSetpointElectric_kW > 0 ) {
+		traceln("Windfarm is curtailing " + curtailerSetpointElectric_kW + " kW!");
+	}*/
+}]]></Body>
+				</Function>
+			</Functions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1663773857863</Id>
@@ -39597,6 +40324,52 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
+			<Presentation>
+				<Rectangle>
+					<Id>1707149618071</Id>
+					<Name><![CDATA[rectangle4]]></Name>
+					<X>1580</X><Y>20</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-14774017</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>280</Width>
+					<Height>610</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1707149572159</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>1590</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[H2 electrolyser functionality]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Presentation>
 
 				</Level>
 			</Presentation>
