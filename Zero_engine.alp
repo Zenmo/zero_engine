@@ -12672,6 +12672,33 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_conversionEfficiency]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_powerNominal_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_outputPressure_Bar]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTime_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -38489,6 +38516,33 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_conversionEfficiency]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_powerNominal_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_outputPressure_Bar]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTime_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -38585,7 +38639,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="PlainVariable">
 					<Id>1707149728754</Id>
 					<Name><![CDATA[v_hydrogenProductionDeficit_kWh]]></Name>
-					<X>1620</X><Y>290</Y>
+					<X>1610</X><Y>610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38597,6 +38651,203 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860525999</Id>
+					<Name><![CDATA[p_conversionEfficiency]]></Name>
+					<X>1610</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860525997</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860642684</Id>
+					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+					<X>1610</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860642682</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860684023</Id>
+					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+					<X>1610</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860684021</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860740201</Id>
+					<Name><![CDATA[p_powerNominal_kW]]></Name>
+					<X>1610</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860740199</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860794938</Id>
+					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+					<X>1610</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860794936</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860850973</Id>
+					<Name><![CDATA[p_outputPressure_Bar]]></Name>
+					<X>1610</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860850971</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707860914174</Id>
+					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+					<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
+					<X>1610</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707860914172</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707861041492</Id>
+					<Name><![CDATA[p_startUpTime_s]]></Name>
+					<X>1610</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707861041490</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707861119929</Id>
+					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+					<Description><![CDATA[https://www.enapter.com/kb_post/what-is-the-energy-content-of-hydrogen 
+
+LHV = 3.00 kWh/Nm3
+HHV = 3.54 kWh/Nm3]]></Description>
+					<X>1610</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[3.00]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1707861119927</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -38604,7 +38855,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1707149702398</Id>
 					<Name><![CDATA[f_manageElektrolyser]]></Name>
-					<X>1620</X><Y>70</Y>
+					<X>1610</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38656,7 +38907,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1707149769851</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>1620</X><Y>130</Y>
+					<X>1610</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38711,7 +38962,7 @@ if (p_curtailer != null){
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-					<X>1620</X><Y>180</Y>
+					<X>1610</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38757,7 +39008,7 @@ if (p_curtailer != null){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1707149873038</Id>
 					<Name><![CDATA[f_manageCurtailer]]></Name>
-					<X>1620</X><Y>210</Y>
+					<X>1610</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38848,7 +39099,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>280</Width>
-					<Height>290</Height>
+					<Height>610</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
