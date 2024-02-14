@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140435" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -12881,7 +12881,7 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_powerNominal_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+							<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_outputPressure_Bar]]></Name>
@@ -12890,10 +12890,16 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_startUpTime_s]]></Name>
+							<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -39761,31 +39767,10 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_conversionEfficiency]]></Name>
+					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_powerNominal_kW]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_outputPressure_Bar]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_startUpTime_s]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -39981,7 +39966,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1707860794938</Id>
-					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
+					<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
 					<X>1610</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -40045,8 +40030,8 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1707861041492</Id>
-					<Name><![CDATA[p_startUpTime_s]]></Name>
-					<X>1610</X><Y>300</Y>
+					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
+					<X>1610</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40085,6 +40070,48 @@ HHV = 3.54 kWh/Nm3]]></Description>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1707861119927</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707928251445</Id>
+					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
+					<X>1610</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707928251443</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1707928254043</Id>
+					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
+					<X>1610</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1707928254041</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
