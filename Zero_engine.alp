@@ -39766,12 +39766,6 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -39883,7 +39877,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860525999</Id>
 					<Name><![CDATA[p_conversionEfficiency]]></Name>
-					<X>1610</X><Y>160</Y>
+					<X>1610</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39904,7 +39898,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860642684</Id>
 					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
-					<X>1610</X><Y>180</Y>
+					<X>1610</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39925,7 +39919,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860684023</Id>
 					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
-					<X>1610</X><Y>200</Y>
+					<X>1610</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39946,7 +39940,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860740201</Id>
 					<Name><![CDATA[p_powerNominal_kW]]></Name>
-					<X>1610</X><Y>220</Y>
+					<X>1610</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39967,7 +39961,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860794938</Id>
 					<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
-					<X>1610</X><Y>240</Y>
+					<X>1610</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39988,7 +39982,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860850973</Id>
 					<Name><![CDATA[p_outputPressure_Bar]]></Name>
-					<X>1610</X><Y>260</Y>
+					<X>1610</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40010,7 +40004,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Id>1707860914174</Id>
 					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
 					<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
-					<X>1610</X><Y>280</Y>
+					<X>1610</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40031,7 +40025,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707861041492</Id>
 					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
-					<X>1610</X><Y>320</Y>
+					<X>1610</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40080,7 +40074,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707928251445</Id>
 					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
-					<X>1610</X><Y>340</Y>
+					<X>1610</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40101,7 +40095,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707928254043</Id>
 					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
-					<X>1610</X><Y>300</Y>
+					<X>1610</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47128,6 +47122,151 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 
 }
 ]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1707991094535</Id>
+			<Name><![CDATA[J_EAConversionElectrolyserAte]]></Name>
+			<Text><![CDATA[/**
+ * J_EAConversionElektrolyserAte
+ */
+public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion implements Serializable {
+
+	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
+	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
+    /**
+	/**
+     * Default constructor
+     */
+    public J_EAConversionElectrolyserAte() {
+    }
+
+    /**
+     * Constructor initializing the fields
+     */
+    public J_EAConversionElectrolyserAte(Agent parentAgent, double capacityElectric_kW, double efficiency_r, double  timestep_h, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
+	    this.parentAgent = parentAgent;
+	    this.capacityElectric_kW = capacityElectric_kW;
+	    this.eta_r = efficiency_r;
+	    this.timestep_h = timestep_h;
+	    
+	    //toegevoegd door Ate
+	    double loadChangeTime_h = loadChangeTime_s/3600;
+	    double startUpTimeShutdown_h = startUpTimeShutdown_s/3600;
+	    double startUpTimeStandby_h = startUpTimeStandby_s/3600;
+	    double startUpTimeIdle_h = startUpTimeIdle_s/3600;
+	}
+
+    @Override
+    public double[] operate(double ratioOfCapacity) {
+    	
+
+	    
+		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
+    	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
+		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+    	this.hydrogenProduction_kW = electricityConsumption_kW * eta_r;
+    	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
+		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses! Optionally, this could also be a waste-heat source
+    	//return arr;
+		return returnEnergyFlows();
+    }
+
+	public double getEnergyUsed_kWh() {
+		return energyUsed_kWh;
+	}
+
+	public double getEta_r() {
+		return this.eta_r;
+	}
+	
+	@Override
+	public String toString() {
+		return
+			"parentAgent = " + parentAgent +" " +
+			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
+			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			"eta_r = " + this.eta_r+" ";
+	}
+
+	public String getOwnerAgent() {
+		return parentAgent.agentInfo();
+	}
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */
+	private static final long serialVersionUID = 1L;
+
+}                         ]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1707992650964</Id>
+			<Name><![CDATA[J_EAConversionFuelCellAte]]></Name>
+			<Text><![CDATA[/**
+ * J_EAConversionFuelCell
+ */
+public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implements Serializable {
+
+	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.ELECTRICITY;
+	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HYDROGEN;
+    /**
+	/**
+     * Default constructor
+     */
+    public J_EAConversionFuelCellAte() {
+    }
+
+    /**
+     * Constructor initializing the fields
+     */
+    public J_EAConversionFuelCellAte(Agent parentAgent, double capacityElectric_kW, double efficiency_r, double  timestep_h) {
+	    this.parentAgent = parentAgent;
+	    this.capacityElectric_kW = capacityElectric_kW;
+	    this.eta_r = efficiency_r;
+	    this.timestep_h = timestep_h;
+	}
+
+    @Override
+    public double[] operate(double ratioOfCapacity) {
+		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
+    	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
+		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+    	this.hydrogenProduction_kW = electricityConsumption_kW * eta_r;
+    	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
+		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses! Optionally, this could also be a waste-heat source
+    	//return arr;
+		return returnEnergyFlows();
+    }
+
+	public double getEnergyUsed_kWh() {
+		return energyUsed_kWh;
+	}
+
+	public double getEta_r() {
+		return this.eta_r;
+	}
+	
+	@Override
+	public String toString() {
+		return
+			"parentAgent = " + parentAgent +" " +
+			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
+			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			"eta_r = " + this.eta_r+" ";
+	}
+
+	public String getOwnerAgent() {
+		return parentAgent.agentInfo();
+	}
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */
+	private static final long serialVersionUID = 1L;
+
+}                         ]]></Text>
 		</JavaClass>
 	</JavaClasses>
 	<ModelResources>
