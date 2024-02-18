@@ -12895,6 +12895,18 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -21273,27 +21285,6 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 }
 
 ]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697034280311</Id>
-					<Name><![CDATA[f_setColorDetailedObjects]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>330</X><Y>470</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[/* if(p_company_connection_id != null){
-	if (p_GISbuilding == null){
-		traceln("Utility obect with ID " + p_company_connection_id + " and index " + this.getIndex() + " has no connected building");
-	}
-	else{
-		p_GISbuilding.gisRegion.setFillColor(main.v_highlightParticipantsColor);
-	}
-}*/
-traceln("f_setColorDetailedObjects not yet implemented!");]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -39761,31 +39752,16 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_conversionEfficiency]]></Name>
+					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+					<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_powerNominal_kW]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_EnergieConsumptionNominal_kWh_Nm3]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_outputPressure_Bar]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_startUpTime_s]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -40085,6 +40061,90 @@ HHV = 3.54 kWh/Nm3]]></Description>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1707861119927</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1708252774069</Id>
+					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
+					<X>1610</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1708252774067</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1708252791154</Id>
+					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
+					<X>1610</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1708252791152</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1708252803694</Id>
+					<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
+					<X>1610</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1708252803692</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1708252827862</Id>
+					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
+					<X>1610</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1708252827860</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -42799,7 +42859,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="PlainVariable">
 					<Id>1696856781368</Id>
 					<Name><![CDATA[ar_countEnergyLabels]]></Name>
-					<X>180</X><Y>80</Y>
+					<X>180</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42811,7 +42871,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="PlainVariable">
 					<Id>1696856781371</Id>
 					<Name><![CDATA[ar_countHeatSystems]]></Name>
-					<X>180</X><Y>60</Y>
+					<X>180</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42821,9 +42881,9 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1697018028202</Id>
-					<Name><![CDATA[v_currentColor]]></Name>
-					<X>180</X><Y>40</Y>
+					<Id>1708282867309</Id>
+					<Name><![CDATA[v_currentLineColor]]></Name>
+					<X>180</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43301,7 +43361,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 					<Id>1696856781363</Id>
 					<Name><![CDATA[f_findGisRegion]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>550</X><Y>80</Y>
+					<X>740</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43347,6 +43407,7 @@ if (gisRegion == null ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697017421161</Id>
 					<Name><![CDATA[f_listGridConnectionsInBuilding]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>550</X><Y>57</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -43361,6 +43422,28 @@ if (gisRegion == null ) {
 		}
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1708282822196</Id>
+					<Name><![CDATA[f_setLineStyle]]></Name>
+					<X>550</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[color]]></Name>
+						<Type><![CDATA[Color]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[width]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[gisRegion.setLineColor( color );
+v_currentLineColor = color ;
+gisRegion.setLineWidth( width );]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
