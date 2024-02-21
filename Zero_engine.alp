@@ -7575,6 +7575,9 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		//v_dailyBusinessParkNetLoad_kWh = 0;
 	}
 } else {
+	data_naturalGasDemand_kW.update();
+	data_dieselDemand_kW.update();
+	data_hydrogenDemand_kW.update();
 	data_baseloadElectricityDemand_kW.update();
 	data_heatPumpElectricityDemand_kW.update();
 	//data_electricCarsDemand_kW.update();
@@ -7586,9 +7589,9 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	data_neighborhoodBatterySupply_kW.update();	
 	data_V2GSupply_kW.update();
 	
-	data_businessParkDemand_kW.update();
-	data_businessParkSupply_kW.update();
-	data_businessParkNetLoad_kW.update();
+	data_totalDemand_kW.update();
+	data_totalSupply_kW.update();
+	data_totalNetLoad_kW.update();
 		
 	if (b_addKpiVisuals) {
 		UI_EnergyAsset.f_updateData();
@@ -8296,13 +8299,14 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentPowerMethane_kW)]]></VerticalAxisExpression>
-					<SamplesToKeep>168</SamplesToKeep>
+					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1699275048281</Id>
 					<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1310</Y>
+					<X>80</X><Y>1330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8326,7 +8330,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048295</Id>
 					<Name><![CDATA[data_windGeneration_kW]]></Name>
-					<X>80</X><Y>1400</Y>
+					<X>80</X><Y>1410</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8350,7 +8354,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048309</Id>
 					<Name><![CDATA[data_V2GSupply_kW]]></Name>
-					<X>80</X><Y>1440</Y>
+					<X>80</X><Y>1450</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8374,7 +8378,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048324</Id>
 					<Name><![CDATA[data_PVGeneration_kW]]></Name>
-					<X>80</X><Y>1380</Y>
+					<X>80</X><Y>1390</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8398,7 +8402,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048339</Id>
 					<Name><![CDATA[data_neighborhoodBatteryDemand_kW]]></Name>
-					<X>80</X><Y>1350</Y>
+					<X>80</X><Y>1370</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8422,7 +8426,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048354</Id>
 					<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1290</Y>
+					<X>80</X><Y>1310</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8445,7 +8449,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1699275048369</Id>
-					<Name><![CDATA[data_businessParkDemand_kW]]></Name>
+					<Name><![CDATA[data_totalDemand_kW]]></Name>
 					<X>80</X><Y>1470</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8489,12 +8493,12 @@ v_timeStepsElapsed ++;
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentPowerDiesel_kW)]]></VerticalAxisExpression>
-					<SamplesToKeep>168</SamplesToKeep>
+					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1699275048398</Id>
 					<Name><![CDATA[data_electricTrucksDemand_kW]]></Name>
-					<X>80</X><Y>1330</Y>
+					<X>80</X><Y>1350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8518,7 +8522,7 @@ v_timeStepsElapsed ++;
     			<DataSet>
 					<Id>1699275048412</Id>
 					<Name><![CDATA[data_neighborhoodBatterySupply_kW]]></Name>
-					<X>80</X><Y>1420</Y>
+					<X>80</X><Y>1430</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8541,7 +8545,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1699275048425</Id>
-					<Name><![CDATA[data_businessParkSupply_kW]]></Name>
+					<Name><![CDATA[data_totalSupply_kW]]></Name>
 					<X>80</X><Y>1490</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8565,7 +8569,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1699275048440</Id>
-					<Name><![CDATA[data_businessParkNetLoad_kW]]></Name>
+					<Name><![CDATA[data_totalNetLoad_kW]]></Name>
 					<X>80</X><Y>1510</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8586,30 +8590,6 @@ v_timeStepsElapsed ++;
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048453</Id>
-					<Name><![CDATA[data_naturalGasDemand_kW1]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>1540</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<VerticalAxisExpression><![CDATA[naturalGasDemand]]></VerticalAxisExpression>
-					<SamplesToKeep>168</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1699275048467</Id>
@@ -11079,6 +11059,30 @@ v_timeStepsElapsed ++;
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708507900127</Id>
+					<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
+					<X>80</X><Y>1290</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentPowerHydrogen_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
@@ -20028,6 +20032,8 @@ if (energyModel.v_isRapidRun){
 	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
 		v_daytimeTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 		v_daytimeTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
+		v_daytimeElectricityImport_MWh += max(0,v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
+		v_daytimeElectricityExport_MWh += max(0,-v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
 		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_daytimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
 		v_daytimeElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
@@ -20048,6 +20054,8 @@ if (energyModel.v_isRapidRun){
 	if ((energyModel.t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 		v_weekdayTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
+		v_weekdayElectricityImport_MWh += max(0,v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
+		v_weekdayElectricityExport_MWh += max(0,-v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
 		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
 		v_weekdayElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
@@ -20082,6 +20090,24 @@ if (energyModel.v_isRapidRun){
 	a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
 } else {
 	data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
+	
+	data_naturalGasDemand_kW.update();
+	data_dieselDemand_kW.update();
+	data_hydrogenDemand_kW.update();
+	data_baseloadElectricityDemand_kW.update();
+	data_heatPumpElectricityDemand_kW.update();
+	//data_electricCarsDemand_kW.update();
+	data_electricTrucksDemand_kW.update();
+	data_neighborhoodBatteryDemand_kW.update();	
+	
+	data_PVGeneration_kW.update();	
+	data_windGeneration_kW.update();	
+	data_neighborhoodBatterySupply_kW.update();	
+	data_V2GSupply_kW.update();
+	
+	data_totalDemand_kW.update();
+	data_totalSupply_kW.update();
+	//data_totalNetLoad_kW.update();
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -21496,7 +21522,6 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
 - v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
 
-
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -21551,13 +21576,144 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
 }
 ]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1708520215192</Id>
+					<Name><![CDATA[f_duurkrommes]]></Name>
+					<X>800</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Sorting netload values for belastingsduurkromme
+//data_netbelastingDuurkrommeVorige_kW.reset();
+//data_netbelastingshistogram_kW.reset();
+boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
+//int arraySize = data_annualBusinessParkNetLoad_kW.size();
+int arraySize = a_annualElectricityBalance_kW.length;
+
+//double[] netLoadArray_kW = new double[arraySize];
+double[] netLoadArrayWinter_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
+double[] netLoadArraySummer_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
+double[] netLoadArrayDay_kW = new double[arraySize/2];
+double[] netLoadArrayNight_kW = new double[arraySize/2];
+double[] netLoadArrayWeekday_kW = new double[arraySize];
+double[] netLoadArrayWeekend_kW = new double[arraySize];
+
+int i_winter=0;
+int i_summer=0;
+int i_day=0;
+int i_night=0;
+int i_weekday=0;
+int i_weekend=0;
+for(int i=0; i<arraySize ; i++) {
+	//netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
+	/*if (notFirstRun) {
+		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+	}*/
+	// summer/winter
+	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+		netLoadArraySummer_kW[i_summer]=-a_annualElectricityBalance_kW[i];
+		i_summer++;
+	}
+	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+		netLoadArrayWinter_kW[i_winter]=-a_annualElectricityBalance_kW[i];
+		i_winter++;
+	}
+	// day/night
+	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
+		netLoadArrayDay_kW[i_day]=-a_annualElectricityBalance_kW[i];
+		i_day++;
+	} else {
+		netLoadArrayNight_kW[i_night]=-a_annualElectricityBalance_kW[i];
+		i_night++;
+	}	
+	//Weekday/weekend
+	if ((i*energyModel.p_timeStep_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+		netLoadArrayWeekday_kW[i_weekday]=-a_annualElectricityBalance_kW[i];
+		i_weekday++;
+	} else {
+		netLoadArrayWeekend_kW[i_weekend]=-a_annualElectricityBalance_kW[i];
+		i_weekend++;
+	}
+	//data_netbelastingshistogram_kW.add(data_annualBusinessParkNetLoad_kW.getY(i));
+}
+//traceln("i_weekday: %s", i_weekday);
+//traceln("i_weekend: %s", i_weekend);
+netLoadArrayWeekday_kW = Arrays.copyOfRange(netLoadArrayWeekday_kW, 0, i_weekday);
+netLoadArrayWeekend_kW = Arrays.copyOfRange(netLoadArrayWeekend_kW, 0, i_weekend);
+//Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
+// Sort all arrays
+Arrays.parallelSort(a_annualElectricityBalance_kW); // Is this array used elsewhere?? Because now it's no longer a time-series!
+Arrays.parallelSort(netLoadArraySummer_kW);
+Arrays.parallelSort(netLoadArrayWinter_kW);
+Arrays.parallelSort(netLoadArrayDay_kW);
+Arrays.parallelSort(netLoadArrayNight_kW);
+Arrays.parallelSort(netLoadArrayWeekday_kW);
+Arrays.parallelSort(netLoadArrayWeekend_kW);
+// Write results to datasets
+data_netbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, a_annualElectricityBalance_kW[arraySize-i-1]);
+}
+
+/*
+data_HSMScapacity_kW.add(0, c_gridNodesHSMS.get(0).p_capacity_kW);
+data_HSMScapacity_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), p_connectionCapacity_kW);
+data_HSMScapacitySupply_kW.add(0, -c_gridNodesHSMS.get(0).p_capacity_kW);
+data_HSMScapacitySupply_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), -p_connectionCapacity_kW);
+*/
+
+/*
+//Netbelastingduurkromme winter
+data_winterWeekBusinessParkNetbelastingDuurkromme_kW.reset();
+arraySize = data_winterWeekBusinessParkNetLoad_kW.size();
+for(int i=0; i< arraySize; i++) {
+	data_winterWeekBusinessParkNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWinter_kW[i]);
+}
+
+//Netbelastingduurkromme summer
+arraySize = data_summerWeekBusinessParkNetLoad_kW.size();
+data_summerWeekBusinessParkNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_summerWeekBusinessParkNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArraySummer_kW[i]);
+}
+
+//Netbelastingduurkromme dag
+arraySize = roundToInt(8760/2/p_timeStep_h);
+data_daytimeNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_daytimeNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayDay_kW[i]);
+}
+
+//Netbelastingduurkromme nacht
+data_nighttimeNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_nighttimeNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayNight_kW[i]);
+}
+
+//Netbelastingduurkromme weekday
+arraySize = netLoadArrayWeekday_kW.length;
+data_weekdayNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_weekdayNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekday_kW[i]);
+}
+
+//Netbelastingduurkromme weekend
+arraySize = netLoadArrayWeekend_kW.length;
+data_weekendNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_weekendNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekend_kW[i]);
+}
+*/]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
 					<Id>1704787879732</Id>
-					<Name><![CDATA[data_ElectricBalanceDuurkromme_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>800</X><Y>1760</Y>
+					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+					<X>151</X><Y>2040</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21602,7 +21758,7 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
     			<DataSet>
 					<Id>1705918625852</Id>
 					<Name><![CDATA[data_liveElectricityBalance_kW]]></Name>
-					<X>820</X><Y>960</Y>
+					<X>150</X><Y>2020</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21850,6 +22006,318 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013814</Id>
+					<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
+					<X>150</X><Y>1760</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,v_currentPowerMethane_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013830</Id>
+					<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
+					<X>150</X><Y>1840</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,v_conversionPowerElectric_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013840</Id>
+					<Name><![CDATA[data_windGeneration_kW]]></Name>
+					<X>150</X><Y>1920</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_windProductionElectric_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013851</Id>
+					<Name><![CDATA[data_V2GSupply_kW]]></Name>
+					<X>150</X><Y>1960</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,-v_evChargingPowerElectric_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013861</Id>
+					<Name><![CDATA[data_PVGeneration_kW]]></Name>
+					<X>150</X><Y>1900</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_pvProductionElectric_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013871</Id>
+					<Name><![CDATA[data_neighborhoodBatteryDemand_kW]]></Name>
+					<X>150</X><Y>1880</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013882</Id>
+					<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
+					<X>150</X><Y>1820</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_fixedConsumptionElectric_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013892</Id>
+					<Name><![CDATA[data_totalDemand_kW]]></Name>
+					<X>150</X><Y>1980</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentEnergyConsumption_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013902</Id>
+					<Name><![CDATA[data_dieselDemand_kW]]></Name>
+					<X>150</X><Y>1779</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,v_currentPowerDiesel_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013912</Id>
+					<Name><![CDATA[data_electricTrucksDemand_kW]]></Name>
+					<X>150</X><Y>1860</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,v_evChargingPowerElectric_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013922</Id>
+					<Name><![CDATA[data_neighborhoodBatterySupply_kW]]></Name>
+					<X>150</X><Y>1940</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[min(0,v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508013931</Id>
+					<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
+					<X>150</X><Y>1800</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,v_currentPowerHydrogen_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1708508354305</Id>
+					<Name><![CDATA[data_totalSupply_kW]]></Name>
+					<X>150</X><Y>2000</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentEnergyProduction_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
