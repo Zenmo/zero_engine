@@ -11659,6 +11659,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_connectionOwnerType]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_connectionOwnerIndexNr]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -20804,7 +20807,7 @@ if ( p_BuildingThermalAsset == null ) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;
-//if(p_nfatoLvl_kW == 0 && p_nfatoStart_HR == 0 && p_nfatoEnd_HR == 0){
+//if(p_nfatoLvl_kW == 0 && p_nfatoStart_h == 0 && p_nfatoEnd_h == 0){
 if(!v_enable_nfATO_b){
 	e_startNonFirmATO.reset();
 	e_endNonFirmATO.reset();			
@@ -20813,7 +20816,8 @@ else {
 	e_startNonFirmATO.restartTo(p_nfatoStart_h, HOUR);
 	e_endNonFirmATO.restartTo(p_nfatoEnd_h, HOUR);
 	if(p_nfatoLvl_kW == 0.0) { p_nfatoLvl_kW = p_connectionCapacity_kW; }
-}]]></Body>
+}
+//}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -28289,6 +28293,9 @@ ea 2
 				<Parameter>
 					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionOwnerIndexNr]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -29429,6 +29436,30 @@ ea 2
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1702915036276</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1708595094989</Id>
+					<Name><![CDATA[p_connectionOwnerIndexNr]]></Name>
+					<Description><![CDATA[Used to give every actor an index number, which can be used in buttons to go to the correct company/connection UI.
+
+@author: Ate]]></Description>
+					<X>60</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1708595094987</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -39617,6 +39648,10 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 		<ActiveObjectClass>
 			<Id>1663773857868</Id>
 			<Name><![CDATA[GCEnergyConversion]]></Name>
+			<AdditionalClassCode><![CDATA[@Override
+public void f_operateFlexAssets(){
+	f_operateFlexAssets_overwrite();
+}]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -39853,10 +39888,44 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1708448002658</Id>
+					<Name><![CDATA[v_electrolyserRegime]]></Name>
+					<Description><![CDATA[Variable that contains the electrolyser regime at the current timestep.
+
+Shutdown.
+Standby.
+Idle.
+Functional. ]]></Description>
+					<X>1610</X><Y>420</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[String]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA["Idle"]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1708448456203</Id>
+					<Name><![CDATA[v_producedOxygen_Nm3]]></Name>
+					<Description><![CDATA[value of the produced oxygen at the current time step. ]]></Description>
+					<X>1610</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1707860525999</Id>
 					<Name><![CDATA[p_conversionEfficiency]]></Name>
-					<X>1610</X><Y>190</Y>
+					<X>1610</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39877,7 +39946,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860642684</Id>
 					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
-					<X>1610</X><Y>210</Y>
+					<X>1610</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39898,7 +39967,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860684023</Id>
 					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
-					<X>1610</X><Y>230</Y>
+					<X>1610</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39919,7 +39988,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860740201</Id>
 					<Name><![CDATA[p_powerNominal_kW]]></Name>
-					<X>1610</X><Y>250</Y>
+					<X>1610</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39940,7 +40009,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860794938</Id>
 					<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
-					<X>1610</X><Y>270</Y>
+					<X>1610</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39961,7 +40030,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707860850973</Id>
 					<Name><![CDATA[p_outputPressure_Bar]]></Name>
-					<X>1610</X><Y>290</Y>
+					<X>1610</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39983,7 +40052,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Id>1707860914174</Id>
 					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
 					<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
-					<X>1610</X><Y>310</Y>
+					<X>1610</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40004,7 +40073,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Variable Class="Parameter">
 					<Id>1707861041492</Id>
 					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
-					<X>1610</X><Y>350</Y>
+					<X>1610</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40053,7 +40122,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707928251445</Id>
 					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
-					<X>1610</X><Y>370</Y>
+					<X>1610</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40074,7 +40143,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707928254043</Id>
 					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
-					<X>1610</X><Y>330</Y>
+					<X>1610</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40287,16 +40356,28 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 						<Name><![CDATA[ElektrolyserAsset]]></Name>
 						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
-	
+					<Body><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;
+
+if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
-	double availableElectricPower_kW = 1000;//v_allowedCapacity_kW - v_currentPowerElectricity_kW;
-	double excessElectricPower_kW = 1000;//-(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
+	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
 	double eta_r = ElektrolyserAsset.getEta_r();
 	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double ProductionSetpoint_kW = ElektrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double elektrolyserSetpointElectric_kW = 0;
 	
+	
+	//Electrolyser output based on current/future regime
+	elektrolyserSetpointElectric_kW = f_electrolyserRegime(elektrolyserSetpointElectric_kW);
+	
+	
+	
+	
+	
+	
+	
+	/*
 	if (p_elektrolyserOperationMode==OL_ElektrolyserOperationMode.BALANCE) {
 		double FeedbackGain_kWpkWh = 1.0/24; // Try to recover deficit in 24 hours
 		elektrolyserSetpointElectric_kW = ProductionSetpoint_kW/eta_r + v_hydrogenProductionDeficit_kWh * FeedbackGain_kWpkWh /eta_r ;
@@ -40314,8 +40395,10 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 		double priceGain_peur = 5; // How strongly to ramp up power with price-delta's	
 		double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + deficitGain_eurpkWh * v_hydrogenProductionDeficit_kWh;
 		elektrolyserSetpointElectric_kW = max(0,ElektrolyserAsset.getElectricCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_peur)  ;
+		elektrolyserSetpointElectric_kW = random()*ElektrolyserAsset.getElectricCapacity_kW();
 		//traceln("WTP hydrogen production is " + roundToDecimal(WTP_eurpkWh,3) + " eurpkWh is higher than electricity price " + roundToDecimal(currentElectricityPriceCharge_eurpkWh,3) + " eurpkWh, so produce! Setpoint power: " + round(elektrolyserSetpointElectric_kW) + " kW");
 	}	
+	*/
 	
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
 	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
@@ -40323,6 +40406,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
 	
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElektrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit
+	
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -40336,7 +40420,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for( J_EA v : c_conversionAssets ){
-	if (v instanceof J_EAConversionElektrolyser) {
+	if (v instanceof J_EAConversionElectrolyserAte) {
 		f_manageElektrolyser((J_EAConversionElectrolyserAte)v);
 	}
 	if (v instanceof J_EAConversionCurtailer) {
@@ -40375,6 +40459,79 @@ if (p_curtailer != null){
 	f_manageCurtailer(p_curtailer);
 	//v_currentPowerElectricity_kW += p_curtailer.electricityConsumption_kW;
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1708447959640</Id>
+					<Name><![CDATA[f_electrolyserRegime]]></Name>
+					<X>1610</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[elektrolyserSetpointElectric_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[f_electrolyserRegimeControl();
+
+switch (v_electrolyserRegime){
+
+case "Shutdown":
+elektrolyserSetpointElectric_kW = 0;
+break;
+
+case "Standby": 
+elektrolyserSetpointElectric_kW = 0;
+break;
+
+case "Idle": 
+elektrolyserSetpointElectric_kW = 500;
+break;
+
+case "Functional":
+elektrolyserSetpointElectric_kW = 1000;
+break;
+}
+
+return elektrolyserSetpointElectric_kW;
+
+
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1708448673879</Id>
+					<Name><![CDATA[f_electrolyserRegimeControl]]></Name>
+					<Description><![CDATA[Function that defines the regime of the hydrogen plant of the next timestep. ]]></Description>
+					<X>1630</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[switch (v_electrolyserRegime){
+
+case "Shutdown":
+v_electrolyserRegime = "Shutdown";
+
+break;
+
+case "Standby": 
+v_electrolyserRegime = "Standby";
+break;
+
+case "Idle": 
+v_electrolyserRegime = "Idle";
+break;
+
+case "Functional":
+v_electrolyserRegime = "Functional";
+break;
+}
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
