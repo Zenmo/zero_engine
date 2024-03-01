@@ -40757,7 +40757,7 @@ if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
 	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
 	
-	double[] flowsArray = ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
+	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
 	
 	v_conversionPowerElectric_kW += flowsArray[4];
 	
