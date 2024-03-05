@@ -20090,6 +20090,9 @@ if (energyModel.v_isRapidRun){
 	a_annualElectricityConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
 	a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
 } else {
+	data_laadProfiel_kW.add(energyModel.t_h, v_evChargingPowerElectric_kW);
+	data_consumptieProfiel_kW.add(energyModel.t_h, v_currentPowerElectricity_kW + v_pvProductionElectric_kW + v_windProductionElectric_kW - v_evChargingPowerElectric_kW);
+	data_opwekProfiel_kW.add(energyModel.t_h, v_pvProductionElectric_kW + v_windProductionElectric_kW);	
 	data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
 }]]></Body>
 				</Function>
@@ -21837,6 +21840,72 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1709648406878</Id>
+					<Name><![CDATA[data_opwekProfiel_kW]]></Name>
+					<X>820</X><Y>930</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1709648462233</Id>
+					<Name><![CDATA[data_consumptieProfiel_kW]]></Name>
+					<X>820</X><Y>900</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1709712000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1709650120284</Id>
+					<Name><![CDATA[data_laadProfiel_kW]]></Name>
+					<X>820</X><Y>870</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1709712000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
@@ -43432,6 +43501,23 @@ if (gisRegion == null ) {
 					<Body><![CDATA[gisRegion.setLineColor( color );
 v_currentLineColor = color ;
 gisRegion.setLineWidth( width );]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1709653005703</Id>
+					<Name><![CDATA[f_setFillColor]]></Name>
+					<X>550</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[color]]></Name>
+						<Type><![CDATA[Color]]></Type>
+					</Parameter>
+					<Body><![CDATA[gisRegion.setFillColor( color );
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
