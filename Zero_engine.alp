@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -45959,7 +45959,6 @@ if (gisRegion == null ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697017421161</Id>
 					<Name><![CDATA[f_listGridConnectionsInBuilding]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>550</X><Y>57</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
