@@ -1839,721 +1839,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1696836844463</Id>
-					<Name><![CDATA[v_isCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439196</Id>
-					<Name><![CDATA[v_insulationLCOE]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1342</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439199</Id>
-					<Name><![CDATA[v_insulationAnnualCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1362</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439202</Id>
-					<Name><![CDATA[v_insulationAnnualEnergySavings]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1382</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439206</Id>
-					<Name><![CDATA[v_insulationLifetimeCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1402</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439208</Id>
-					<Name><![CDATA[v_electricityLCOE]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1512</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439211</Id>
-					<Name><![CDATA[v_electricityAnnualCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1532</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439213</Id>
-					<Name><![CDATA[v_electricityAnnualEnergyConsumption]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1552</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439216</Id>
-					<Name><![CDATA[v_electricityLifetimeCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1572</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439218</Id>
-					<Name><![CDATA[v_totalLCOE]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1167</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439221</Id>
-					<Name><![CDATA[v_totalAnnualCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1187</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439223</Id>
-					<Name><![CDATA[v_totalAnnualEnergyConsumption]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1207</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439226</Id>
-					<Name><![CDATA[v_totalLifetimeCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1227</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439229</Id>
-					<Name><![CDATA[v_heatingSystemLCOE]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1257</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439231</Id>
-					<Name><![CDATA[v_heatingSystemAnnualCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1277</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439234</Id>
-					<Name><![CDATA[v_heatingSystemAnnualEnergyConsumption]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1297</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439237</Id>
-					<Name><![CDATA[v_heatingSystemLifetimeCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1317</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439239</Id>
-					<Name><![CDATA[v_electricityInvestmentCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1590</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439242</Id>
-					<Name><![CDATA[v_electricityOperationalCostsFixed]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1610</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439254</Id>
-					<Name><![CDATA[v_electricityOperationalCostsVariable]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1630</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439257</Id>
-					<Name><![CDATA[v_insulationInvestmentCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1430</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439259</Id>
-					<Name><![CDATA[v_insulationOperationalCostsFixed]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1450</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439262</Id>
-					<Name><![CDATA[v_insulationOperationalCostsVariable]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1751</X><Y>1470</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439264</Id>
-					<Name><![CDATA[v_insulationLCOEPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1850</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439267</Id>
-					<Name><![CDATA[v_insulationAnnualCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1870</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439269</Id>
-					<Name><![CDATA[v_insulationAnnualEnergySavingsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1890</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439272</Id>
-					<Name><![CDATA[v_insulationLifetimeCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1910</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439274</Id>
-					<Name><![CDATA[v_electricityLCOEPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2030</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439277</Id>
-					<Name><![CDATA[v_electricityAnnualCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2050</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439280</Id>
-					<Name><![CDATA[v_electricityAnnualEnergyConsumptionPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2070</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439282</Id>
-					<Name><![CDATA[v_electricityLifetimeCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2090</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439285</Id>
-					<Name><![CDATA[v_totalLCOEPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1675</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439287</Id>
-					<Name><![CDATA[v_totalAnnualCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1695</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439289</Id>
-					<Name><![CDATA[v_totalAnnualEnergyConsumptionPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1715</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439291</Id>
-					<Name><![CDATA[v_totalLifetimeCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1735</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439294</Id>
-					<Name><![CDATA[v_heatingSystemLCOEPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1765</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439297</Id>
-					<Name><![CDATA[v_heatingSystemAnnualCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1785</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439299</Id>
-					<Name><![CDATA[v_heatingSystemAnnualEnergyConsumptionPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1805</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439301</Id>
-					<Name><![CDATA[v_heatingSystemLifetimeCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1825</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439304</Id>
-					<Name><![CDATA[v_electricityInvestmentCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439306</Id>
-					<Name><![CDATA[v_electricityOperationalCostsFixedPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2130</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439308</Id>
-					<Name><![CDATA[v_electricityOperationalCostsVariablePerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439311</Id>
-					<Name><![CDATA[v_insulationInvestmentCostsPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1940</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439313</Id>
-					<Name><![CDATA[v_insulationOperationalCostsFixedPerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1960</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439316</Id>
-					<Name><![CDATA[v_insulationOperationalCostsVariablePerHousehold]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1980</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439318</Id>
-					<Name><![CDATA[v_elecHPCapex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439321</Id>
-					<Name><![CDATA[v_MTCapex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2220</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439323</Id>
-					<Name><![CDATA[v_LTCapex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2180</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439325</Id>
-					<Name><![CDATA[v_greenGasHRCapex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2360</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439328</Id>
-					<Name><![CDATA[v_hybridHPCapex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2320</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439330</Id>
-					<Name><![CDATA[v_elecHPFixedOpex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439332</Id>
-					<Name><![CDATA[v_hybridHPFixedOpex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2340</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439335</Id>
-					<Name><![CDATA[v_greenGasHRFixedOpex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2380</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439337</Id>
-					<Name><![CDATA[v_MTDistrictHeatingFixedOpex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696838439340</Id>
-					<Name><![CDATA[v_LTDistrictHeatingFixedOpex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1696863807573</Id>
 					<Name><![CDATA[v_modelSelfSufficiency_fr]]></Name>
 					<X>-480</X><Y>1190</Y>
@@ -2581,19 +1866,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696868488028</Id>
-					<Name><![CDATA[v_costsUnknown]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2540</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -3012,32 +2284,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1699524291319</Id>
-					<Name><![CDATA[a_annualBusinessParkNetLoad_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2850</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1699524331159</Id>
-					<Name><![CDATA[a_t_h]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2830</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -6924,244 +6170,6 @@ traceln("*** headless run duration: "+ duration/1000 + " s ***");
 t_h = time(HOUR);
 f_initializeForecasts();
 ]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1696865756419</Id>
-					<Name><![CDATA[f_setEnergyPrice]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>2480</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[/*
-//Electricity
-List< Tuple > electricityPrices = selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("electricity") ) 
-	.list();
-	
-
-for (Tuple tup : electricityPrices){
-	double p_elecNetbeheerkosten = tup.get(energy_costs.netbeheerkosten_eur_jaar);
-	double p_elecVasteLeveringskosten = tup.get(energy_costs.vaste_leveringskosten_eur_jaar);
-	double p_elecBelastingvermindering = tup.get(energy_costs.belastingvermindering);
-	double p_elecVariabeleLeveringskosten = tup.get(energy_costs.variabele_leveringskosten);
-	double p_elecEnergiebelasting = tup.get(energy_costs.energiebelasting);
-	double p_elecODE = tup.get(energy_costs.ode);
-	p_electricityVariableCosts_EurPerkWh = p_elecVariabeleLeveringskosten + p_elecEnergiebelasting + p_elecODE;
-	p_electricityFixedCosts_EurPerYear = p_elecNetbeheerkosten + p_elecVasteLeveringskosten;
-	p_CO2EmissionsGridElectricity_kgperkWh = tup.get(energy_costs.co2_emissiefactor_kg_k_wh);
-}
-
-
-//Natural Gas
-List< Tuple > NaturalGasPrices = selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("natural gas") ) 
-	.list();
-for (Tuple tup : NaturalGasPrices){
-	double p_naturalGasNetbeheerkosten = tup.get(energy_costs.netbeheerkosten_eur_jaar);
-	double p_naturalGasVasteLeveringskosten = tup.get(energy_costs.vaste_leveringskosten_eur_jaar);
-	double p_naturalGasVariabeleLeveringskosten = tup.get(energy_costs.variabele_leveringskosten);
-	double p_naturalGasEnergiebelasting = tup.get(energy_costs.energiebelasting);
-	double p_naturalGasODE = tup.get(energy_costs.ode);
-	p_naturalGasVariableCosts_EurPerM3 = (p_naturalGasVariabeleLeveringskosten + p_naturalGasEnergiebelasting + p_naturalGasODE) ;
-	p_naturalGasVariableCosts_EurPerkWh = p_naturalGasVariableCosts_EurPerM3 / p_energyDensityGas_kWhpm3;
-	p_naturalGasFixedCosts_EurPerYear = p_naturalGasNetbeheerkosten + p_naturalGasVasteLeveringskosten ;	
-	p_CO2EmissionsNaturalGas_kgperkWh = tup.get(energy_costs.co2_emissiefactor_kg_k_wh); 
-}
-
-
-//Green Gas
-List< Tuple > GreenGasPrices = selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("green gas") ) 
-	.list();
-
-for (Tuple tup : GreenGasPrices){
-	double p_greenGasNetbeheerkosten = tup.get(energy_costs.netbeheerkosten_eur_jaar);
-	double p_greenGasVasteLeveringskosten = tup.get(energy_costs.vaste_leveringskosten_eur_jaar);
-	double p_greenGasVariabeleLeveringskosten = tup.get(energy_costs.variabele_leveringskosten);
-	double p_greenGasEnergiebelasting = tup.get(energy_costs.energiebelasting);
-	double p_greenGasODE = tup.get(energy_costs.ode);
-	p_greenGasVariableCosts_EurPerM3 = (p_greenGasVariabeleLeveringskosten + p_greenGasEnergiebelasting + p_greenGasODE) ;
-	p_greenGasVariableCosts_EurPerkWh = p_greenGasVariableCosts_EurPerM3 / p_energyDensityGas_kWhpm3;
-	p_greenGasFixedCosts_EurPerYear = p_greenGasNetbeheerkosten + p_greenGasVasteLeveringskosten ;
-	p_CO2EmissionsGreenGas_kgperkWh = tup.get(energy_costs.co2_emissiefactor_kg_k_wh); 
-}
-
-//HTHeat
-
-p_CO2EmissionsHighTempHeat_kgperkWh = selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("HT-warmte")) 
-	.firstResult(energy_costs.co2_emissiefactor_kg_k_wh);
-		
-//MTHeat
-p_CO2EmissionsMediumTempHeat_kgperkWh = selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("MT-warmte")) 
-	.firstResult(energy_costs.co2_emissiefactor_kg_k_wh);		
-	
-//LTHeat
-p_CO2EmissionsLowTempHeat_kgperkWh =  selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("LT-warmte")) 
-	.firstResult(energy_costs.co2_emissiefactor_kg_k_wh);
-
-//Benzine
-p_CO2EmissionsICE_kgperkm=  selectFrom( energy_costs )
-	.where( energy_costs.jaar.eq(p_simulationYear))
-	.where( energy_costs.energiedrager.eq("Benzine autokilometer")) 
-	.firstResult(energy_costs.co2_emissiefactor);
-*/
-
-traceln("f_setEnergyPrice is awaiting new implementation after model merge! Currently not functional");
-
-
-
-]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1697556251375</Id>
-					<Name><![CDATA[f_getEnergyCosts]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1750</X><Y>1140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_elecHPCapex = 0;
-v_greenGasHRCapex = 0;
-v_hybridHPCapex = 0;
-v_LTCapex = 0;
-v_MTCapex = 0;
-	
-v_elecHPFixedOpex = 0;
-v_greenGasHRFixedOpex = 0;
-v_hybridHPFixedOpex = 0;
-v_LTDistrictHeatingFixedOpex = 0;
-v_MTDistrictHeatingFixedOpex = 0;
-
-for (EA_Household h : pop_EA_Households){
-	h.f_heatSystemCosts();
-	h.f_LCOEHeat();
-	h.f_LCOEElectricity();
-	h.f_LCOEInsulation();
-	h.f_totalCosts();
-}
-
-f_DistrictHeatingLCOE();
-
-
-//-----NEIGHBORHOOD TOTALS------
-
-
-double totalNonDHEnergyConsumption = sumWhere(pop_EA_Households, x->x.v_heatingSystemAnnualEnergyConsumption, x->x.p_householdHeatSupplyMethod != MTDistrictHeating && x.p_householdHeatSupplyMethod != LTDistrictHeating && x.p_householdHeatSupplyMethod != HTDistrictHeating); 
-double totalNonDHNPVOfCosts = sumWhere(pop_EA_Households, x->x.v_NPVOfCostsOverLifetime, x->x.p_householdHeatSupplyMethod != MTDistrictHeating && x.p_householdHeatSupplyMethod != LTDistrictHeating && x.p_householdHeatSupplyMethod != HTDistrictHeating); 
-double totalNonDHNPVOfEnergy = sumWhere(pop_EA_Households, x->x.v_NPVOfEnergyOverLifetime, x->x.p_householdHeatSupplyMethod != MTDistrictHeating && x.p_householdHeatSupplyMethod != LTDistrictHeating && x.p_householdHeatSupplyMethod != HTDistrictHeating); 
-
-double totalNPVOfCosts = v_DHNPVOfCostsOverLifetime + totalNonDHNPVOfCosts;
-double totalNPVOfEnergy = v_DHNPVOfEnergyOverLifetime + totalNonDHNPVOfEnergy;
-
-v_heatingSystemLCOE = totalNPVOfCosts / totalNPVOfEnergy;
-v_heatingSystemAnnualCosts = v_heatingSystemLCOE * v_annualHeatDemand_kWh;
-v_heatingSystemAnnualEnergyConsumption = v_annualHeatDemand_kWh;
-v_heatingSystemLifetimeCosts = sum(pop_EA_Households, x->x.v_heatingSystemLifetimeCosts) + v_districtHeatingSystemLifetimeCosts;
-//v_heatingSystemAnnualCosts = 
-/*
-//Heating system
-//v_heatingSystemLCOE = average(pop_EA_Households, x->x.v_heatingSystemLCOE);
-v_heatingSystemAnnualCosts = sum(pop_EA_Households, x->x.v_heatingSystemAnnualCosts);
-v_heatingSystemAnnualEnergyConsumption = sum(pop_EA_Households, x->x.v_heatingSystemAnnualEnergyConsumption);
-v_heatingSystemLifetimeCosts = sum(pop_EA_Households, x->x.v_heatingSystemLifetimeCosts);
-v_heatingSystemInvestmentCosts = sum(pop_EA_Households, x->x.v_heatingSystemInvestmentCosts);
-v_heatingSystemOperationalCostsFixed = sum(pop_EA_Households, x->x.v_heatingSystemOperationalCostsFixed);
-v_heatingSystemOperationalCostsVariable = sum(pop_EA_Households, x->x.v_heatingSystemOperationalCostsVariable);
-*/
-//Insulation
-v_insulationLCOE = average(pop_EA_Households, x->x.v_insulationLCOE);
-v_insulationAnnualCosts = sum(pop_EA_Households, x->x.v_insulationAnnualCosts);
-v_insulationAnnualEnergySavings = sum(pop_EA_Households, x->x.v_insulationAnnualEnergySavings);
-v_insulationLifetimeCosts = sum(pop_EA_Households, x->x.v_insulationLifetimeCosts);
-v_insulationInvestmentCosts = sum(pop_EA_Households, x->x.v_insulationInvestmentCosts);
-v_insulationOperationalCostsFixed = sum(pop_EA_Households, x->x.v_insulationOperationalCostsFixed);
-v_insulationOperationalCostsVariable = sum(pop_EA_Households, x->x.v_insulationOperationalCostsVariable);
-
-//Electricity
-v_electricityLCOE = average(pop_EA_Households, x->x.v_electricityLCOE);
-v_electricityAnnualCosts = sum(pop_EA_Households, x->x.v_electricityAnnualCosts);
-v_electricityAnnualEnergyConsumption = sum(pop_EA_Households, x->x.v_electricityAnnualEnergyConsumption);
-v_electricityLifetimeCosts = sum(pop_EA_Households, x->x.v_electricityLifetimeCosts);
-v_electricityInvestmentCosts = sum(pop_EA_Households, x->x.v_electricityInvestmentCosts);
-v_electricityOperationalCostsFixed = sum(pop_EA_Households, x->x.v_electricityOperationalCostsFixed);
-v_electricityOperationalCostsVariable = sum(pop_EA_Households, x->x.v_electricityOperationalCostsVariable);
-
-//Total
-v_totalLCOE = (v_electricityLCOE * v_annualHouseholdElectricityDemand_kWh + v_heatingSystemLCOE * v_annualHeatDemand_kWh) / (v_annualHouseholdElectricityDemand_kWh + v_annualHeatDemand_kWh);
-v_totalAnnualCosts = v_electricityAnnualCosts + v_insulationAnnualCosts + v_heatingSystemAnnualCosts;
-v_totalAnnualEnergyConsumption = v_heatingSystemAnnualEnergyConsumption + v_electricityAnnualEnergyConsumption;
-v_totalLifetimeCosts = v_electricityLifetimeCosts + v_insulationLifetimeCosts + v_heatingSystemLifetimeCosts;
-
-/*
-v_totalInvestmentCosts = sum(pop_EA_Households, x->x.v_totalInvestmentCosts);
-v_totalOperationalCostsFixed = sum(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
-v_totalOperationalCostsVariable = sum(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
-*/
-
-//----PER HOUSEHOLD AVERAGES------
-
-//ElectricityGeneration
-v_annualPVGeneration_kWhAveragePerHousehold = average(pop_EA_Households, x->x.v_annualPVGeneration_kWh);
-
-//Mobility
-v_annualEVPrivateCharging_kWhAveragePerCar = v_annualEVPrivateCharging_kWh / sumWhere(pop_EA_Households, x->x.v_EVs, x->x.v_hasHomeCharger == true);
-v_annualEVPublicCharging_kWhAveragePerCar = v_annualEVPublicCharging_kWh / sumWhere(pop_EA_Households, x->x.v_EVs, x->x.v_hasHomeCharger == false);
-
-//Heating system
-v_heatingSystemLCOEPerHousehold = v_heatingSystemLCOE / pop_EA_Households.size();
-v_heatingSystemAnnualCostsPerHousehold = v_heatingSystemAnnualCosts / pop_EA_Households.size();
-v_heatingSystemAnnualEnergyConsumptionPerHousehold = v_heatingSystemAnnualEnergyConsumption / pop_EA_Households.size();
-v_heatingSystemLifetimeCostsPerHousehold = v_heatingSystemLifetimeCosts / pop_EA_Households.size();
-/*
-v_heatingSystemInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_heatingSystemInvestmentCosts);
-v_heatingSystemOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_heatingSystemOperationalCostsFixed);
-v_heatingSystemOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_heatingSystemOperationalCostsVariable);
-*/
-//Insulation
-v_insulationLCOEPerHousehold = average(pop_EA_Households, x->x.v_insulationLCOE);
-v_insulationAnnualCostsPerHousehold = average(pop_EA_Households, x->x.v_insulationAnnualCosts);
-v_insulationAnnualEnergySavingsPerHousehold = average(pop_EA_Households, x->x.v_insulationAnnualEnergySavings);
-v_insulationLifetimeCostsPerHousehold = average(pop_EA_Households, x->x.v_insulationLifetimeCosts);
-v_insulationInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_insulationInvestmentCosts);
-v_insulationOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_insulationOperationalCostsFixed);
-v_insulationOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_insulationOperationalCostsVariable);
-
-//Electricity
-v_electricityLCOEPerHousehold = average(pop_EA_Households, x->x.v_electricityLCOE);
-v_electricityAnnualCostsPerHousehold = average(pop_EA_Households, x->x.v_electricityAnnualCosts);
-v_electricityAnnualEnergyConsumptionPerHousehold = average(pop_EA_Households, x->x.v_electricityAnnualEnergyConsumption);
-v_electricityLifetimeCostsPerHousehold = average(pop_EA_Households, x->x.v_electricityLifetimeCosts);
-v_electricityInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_electricityInvestmentCosts);
-v_electricityOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_electricityOperationalCostsFixed);
-v_electricityOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_electricityOperationalCostsVariable);
-
-//Total
-v_totalLCOEPerHousehold = v_totalLCOE;
-v_totalAnnualCostsPerHousehold = v_totalAnnualCosts / pop_EA_Households.size();
-v_totalAnnualEnergyConsumptionPerHousehold = v_totalAnnualEnergyConsumption / pop_EA_Households.size();
-v_totalLifetimeCostsPerHousehold = v_totalLifetimeCosts / pop_EA_Households.size();
-
-/*
-v_totalInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_totalInvestmentCosts);
-v_totalOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
-v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
-*/]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -14334,50 +13342,6 @@ v_timeStepsElapsed ++;
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Text>
-					<Id>1696838439192</Id>
-					<Name><![CDATA[text31]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1740</X><Y>1100</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Energy costs]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>18</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1696865756414</Id>
-					<Name><![CDATA[text56]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1740</X><Y>2440</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Costs and totals]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>18</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Control Type="Button">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1697557019965</Id>
@@ -15731,9 +14695,10 @@ v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteEl
 if (energyModel.v_isRapidRun){
 	//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 	//data_annualElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW); // replace with array!
+	a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentLoadElectricity_kW;
 } else {
 	//data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW);
-	a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentLoadElectricity_kW;
+
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -20592,6 +19557,11 @@ for(J_EAConsumption e : c_consumptionAssets) {
 			case "Building_heat_demand":
 				e.f_updateAllFlows( energyModel.v_currentBuildingHeatDemand_fr );
 			break;
+			// Ugly hack for 'removing' energy consumption when using residual heat; just don't run the heatdemand!
+			case "Residual_heat_consumption":
+				e.f_updateAllFlows(0);
+			break;
+			
 			default:
 				traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 				throw new IllegalStateException("HEAT_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
@@ -21254,7 +20224,9 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	}		
+	} else if (j_ea instanceof J_EAConversionCurtailer) {
+		p_curtailer = (J_EAConversionCurtailer)j_ea;
+	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
@@ -43394,6 +42366,14 @@ if (EA.j_ea instanceof J_EAConsumption) {
 	
 }
 
+f_manageCharging();
+/*for( J_EAVehicle v: c_vehicleAssets) {
+	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+}*/
+
+v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
+
+
 for( J_EAConversion v : c_conversionAssets ) {	
 	//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -44011,6 +42991,11 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
 	}
+}
+
+if (p_curtailer != null){
+	f_manageCurtailer(p_curtailer);
+	//v_currentPowerElectricity_kW += p_curtailer.electricityConsumption_kW;
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -44216,6 +43201,14 @@ v_currentPowerMethane_kW = 0;
 v_currentPowerHydrogen_kW = 0;
 v_currentPowerHeat_kW = 0;
 v_currentPowerDiesel_kW = 0;
+
+v_currentElectricityConsumption_kW = 0;
+v_currentElectricityProduction_kW = 0;
+v_currentEnergyConsumption_kW = 0;
+v_currentEnergyProduction_kW = 0;
+v_currentEnergyCurtailed_kW = 0;
+
+// Categorical power flows
 v_fixedConsumptionElectric_kW = 0;
 v_electricHobConsumption_kW = 0;
 v_evChargingPowerElectric_kW = 0;
@@ -44224,6 +43217,8 @@ v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
 
+
+f_operateFixedAssets();
 f_operateFlexAssets();
 f_connectionMetering();
 
@@ -44253,6 +43248,30 @@ if (energyModel.b_addKpiVisuals) {
 	pl_powerFlows.updateData();
 }
 ]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1709827456110</Id>
+					<Name><![CDATA[f_manageCurtailer]]></Name>
+					<X>800</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[CurtailerAsset]]></Name>
+						<Type><![CDATA[J_EAConversionCurtailer]]></Type>
+					</Parameter>
+					<Body><![CDATA[//traceln("Hello! " + CurtailerAsset.j_ea.getElectricCapacity_kW());
+if (CurtailerAsset.getElectricCapacity_kW()>0) {
+	double curtailerSetpointElectric_kW = -min(0,v_currentPowerElectricity_kW + p_connectionCapacity_kW);
+	double[] flowsArray = CurtailerAsset.f_updateAllFlows(curtailerSetpointElectric_kW/CurtailerAsset.getElectricCapacity_kW());
+	v_conversionPowerElectric_kW = flowsArray[4] - flowsArray[0];
+	/*if ( curtailerSetpointElectric_kW > 0 ) {
+		traceln("Windfarm is curtailing " + curtailerSetpointElectric_kW + " kW!");
+	}*/
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -48540,6 +47559,9 @@ public class J_EAConversionCurtailer extends J_EAConversion implements Serializa
 		return energyUsed_kWh;
 	}
 
+	public void setCapacityElectric_kW(double capacityElectric_kW) {
+		this.capacityElectric_kW = capacityElectric_kW;
+	}
 	@Override
 	public String toString() {
 		return super.toString();
