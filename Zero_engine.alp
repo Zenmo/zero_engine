@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -12937,7 +12937,7 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_powerNominal_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
+							<Name><![CDATA[p_energyConsumptionNominal_kWh_Nm3]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_outputPressure_Bar]]></Name>
@@ -12949,7 +12949,7 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+							<Name><![CDATA[p_hydrogenEnergyDensity_kWh_Nm3]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
@@ -12973,7 +12973,7 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_powerNominalFC_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_EnergyProductionNominalFC_kWh_Nm3]]></Name>
+							<Name><![CDATA[p_energyProductionNominalFC_kWh_Nm3]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_inputPressureFC_Bar]]></Name>
@@ -12989,6 +12989,21 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electricityPriceMinForProfitFC_eurpkWh]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_powerMinProduction_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_oxygenProduction_kgO2_per_kgH2]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_hydrogenEnergyDensity_kWh_kg]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -41786,8 +41801,9 @@ public void f_operateFlexAssets(){
 Shutdown.
 Standby.
 Idle.
-Functional. ]]></Description>
-					<X>1610</X><Y>430</Y>
+Functional. 
+FullCapacity.]]></Description>
+					<X>1610</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41801,9 +41817,9 @@ Functional. ]]></Description>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1708448456203</Id>
-					<Name><![CDATA[v_producedOxygen_Nm3]]></Name>
+					<Name><![CDATA[v_producedOxygen_kg]]></Name>
 					<Description><![CDATA[value of the produced oxygen at the current time step. ]]></Description>
-					<X>1610</X><Y>460</Y>
+					<X>1610</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41815,7 +41831,7 @@ Functional. ]]></Description>
 				<Variable Class="PlainVariable">
 					<Id>1708949135932</Id>
 					<Name><![CDATA[v_totalDownTimeElectrolyser_hr]]></Name>
-					<X>1610</X><Y>480</Y>
+					<X>1610</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41830,7 +41846,7 @@ Functional. ]]></Description>
 				<Variable Class="PlainVariable">
 					<Id>1708949154946</Id>
 					<Name><![CDATA[v_totalEnergyLossIdle_kWh]]></Name>
-					<X>1610</X><Y>500</Y>
+					<X>1610</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41845,7 +41861,7 @@ Functional. ]]></Description>
 				<Variable Class="PlainVariable">
 					<Id>1709045630640</Id>
 					<Name><![CDATA[v_fuelcellRegime]]></Name>
-					<X>2010</X><Y>430</Y>
+					<X>2010</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41857,7 +41873,7 @@ Functional. ]]></Description>
 				<Variable Class="PlainVariable">
 					<Id>1709045655596</Id>
 					<Name><![CDATA[v_totalDownTimeFC_hr]]></Name>
-					<X>2010</X><Y>470</Y>
+					<X>2010</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41869,7 +41885,7 @@ Functional. ]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707860525999</Id>
 					<Name><![CDATA[p_conversionEfficiency]]></Name>
-					<X>1610</X><Y>190</Y>
+					<X>1610</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41890,7 +41906,7 @@ Functional. ]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707860642684</Id>
 					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
-					<X>1610</X><Y>210</Y>
+					<X>1610</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41911,7 +41927,7 @@ Functional. ]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707860684023</Id>
 					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
-					<X>1610</X><Y>230</Y>
+					<X>1610</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41932,7 +41948,7 @@ Functional. ]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707860740201</Id>
 					<Name><![CDATA[p_powerNominal_kW]]></Name>
-					<X>1610</X><Y>250</Y>
+					<X>1610</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41952,7 +41968,7 @@ Functional. ]]></Description>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1707860794938</Id>
-					<Name><![CDATA[p_EnergyConsumptionNominal_kWh_Nm3]]></Name>
+					<Name><![CDATA[p_energyConsumptionNominal_kWh_Nm3]]></Name>
 					<X>1610</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -41996,7 +42012,7 @@ Functional. ]]></Description>
 					<Id>1707860914174</Id>
 					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
 					<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
-					<X>1610</X><Y>310</Y>
+					<X>1610</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42017,7 +42033,7 @@ Functional. ]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707861041492</Id>
 					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
-					<X>1610</X><Y>350</Y>
+					<X>1610</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42037,12 +42053,12 @@ Functional. ]]></Description>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1707861119929</Id>
-					<Name><![CDATA[p_HydrogenEnergyDensity_kWh_Nm3]]></Name>
+					<Name><![CDATA[p_hydrogenEnergyDensity_kWh_Nm3]]></Name>
 					<Description><![CDATA[https://www.enapter.com/kb_post/what-is-the-energy-content-of-hydrogen 
 
 LHV = 3.00 kWh/Nm3
 HHV = 3.54 kWh/Nm3]]></Description>
-					<X>1610</X><Y>560</Y>
+					<X>1600</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42066,7 +42082,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707928251445</Id>
 					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
-					<X>1610</X><Y>370</Y>
+					<X>1610</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42087,7 +42103,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1707928254043</Id>
 					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
-					<X>1610</X><Y>330</Y>
+					<X>1610</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42108,7 +42124,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1708963988843</Id>
 					<Name><![CDATA[p_electricityPriceMaxForProfit_eurpkWh]]></Name>
-					<X>1610</X><Y>400</Y>
+					<X>1610</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42132,7 +42148,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216547</Id>
 					<Name><![CDATA[p_conversionEfficiencyFC]]></Name>
-					<X>2010</X><Y>190</Y>
+					<X>2010</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42154,7 +42170,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216581</Id>
 					<Name><![CDATA[p_productionNominalFC_Nm3]]></Name>
-					<X>2010</X><Y>210</Y>
+					<X>2010</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42176,7 +42192,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216603</Id>
 					<Name><![CDATA[p_productionMinimumFC_Nm3]]></Name>
-					<X>2010</X><Y>230</Y>
+					<X>2010</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42198,7 +42214,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216633</Id>
 					<Name><![CDATA[p_powerNominalFC_kW]]></Name>
-					<X>2010</X><Y>250</Y>
+					<X>2010</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42219,8 +42235,8 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1709045216658</Id>
-					<Name><![CDATA[p_EnergyProductionNominalFC_kWh_Nm3]]></Name>
-					<X>2010</X><Y>270</Y>
+					<Name><![CDATA[p_energyProductionNominalFC_kWh_Nm3]]></Name>
+					<X>2010</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42242,7 +42258,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216687</Id>
 					<Name><![CDATA[p_inputPressureFC_Bar]]></Name>
-					<X>2010</X><Y>290</Y>
+					<X>2010</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42265,7 +42281,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 					<Id>1709045216711</Id>
 					<Name><![CDATA[p_loadChangeTimeMinMaxFC_s]]></Name>
 					<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
-					<X>2010</X><Y>310</Y>
+					<X>2010</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42287,7 +42303,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216759</Id>
 					<Name><![CDATA[p_startUpTimeIdleFC_s]]></Name>
-					<X>2010</X><Y>350</Y>
+					<X>2010</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42309,7 +42325,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216780</Id>
 					<Name><![CDATA[p_startUpTimeShutdownFC_s]]></Name>
-					<X>2010</X><Y>330</Y>
+					<X>2010</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42331,7 +42347,7 @@ HHV = 3.54 kWh/Nm3]]></Description>
 				<Variable Class="Parameter">
 					<Id>1709045216801</Id>
 					<Name><![CDATA[p_electricityPriceMinForProfitFC_eurpkWh]]></Name>
-					<X>2010</X><Y>400</Y>
+					<X>2010</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42346,6 +42362,133 @@ HHV = 3.54 kWh/Nm3]]></Description>
 						<ParameterEditor>
 							<Id>1709045216799</Id>
 							<Label><![CDATA[p_electricityPriceMinForProfitFC_eurpkWh]]></Label>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1709733732105</Id>
+					<Name><![CDATA[p_powerMinProduction_kW]]></Name>
+					<X>1610</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1709733732103</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1709734479420</Id>
+					<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
+					<Description><![CDATA[https://keengas.com/gases/hydrogen/]]></Description>
+					<X>1600</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.08988]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1709734479418</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1709734581988</Id>
+					<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
+					<Description><![CDATA[http://www.uigi.com/o2_conv.html]]></Description>
+					<X>1600</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[1.4291]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1709734581986</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1709734608586</Id>
+					<Name><![CDATA[p_oxygenProduction_kgO2_per_kgH2]]></Name>
+					<Description><![CDATA[H20 = 2H + O
+MM H = 1.008 g/mol
+MM O = 16 g/mol
+--> 1.008*2/16 = 0.126.
+0.126 g waterstof per g water conversie.
+1-0.126 = 0.874 g zuurstof per gram water conversie.
+
+--> 1/0.126 =7.9365 gram zuurstof productie per gram waterstof productie.]]></Description>
+					<X>1600</X><Y>800</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[7.9365]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1709734608584</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1709738142642</Id>
+					<Name><![CDATA[p_hydrogenEnergyDensity_kWh_kg]]></Name>
+					<X>1600</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[33.33]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1709738142640</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -42592,12 +42735,14 @@ if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
 	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
 	
+	
+	
+	//Output
 	double[] flowsArray = ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
 	
 	v_conversionPowerElectric_kW += flowsArray[4];
 	
-	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElektrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit
-	
+	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElektrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit	
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -42693,7 +42838,20 @@ case "Idle":
 break;
 
 case "Functional":
+	switch (p_elektrolyserOperationMode){
+	
+	case PRICE:
+	elektrolyserSetpointElectric_kW = p_powerNominal_kW*p_powerMinProduction_kW;
+	
+	break;
+	case BALANCE:
+	elektrolyserSetpointElectric_kW = p_powerNominal_kW*p_powerMinProduction_kW;
+	
+	break;
+	}
+break;
 
+case "FullCapacity":
 	switch (p_elektrolyserOperationMode){
 	
 	case PRICE:
@@ -42705,10 +42863,8 @@ case "Functional":
 	
 	break;
 	}
-	
 break;
 }
-	
 
 
 return elektrolyserSetpointElectric_kW;]]></Body>
@@ -42800,10 +42956,29 @@ switch (p_elektrolyserOperationMode){
 	
 		case PRICE:
 			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
-				v_electrolyserRegime = "Functional";
+				v_electrolyserRegime = "FullCapacity";
 			}
 			else{
 				v_electrolyserRegime = "Idle";
+			}
+		break;
+		case BALANCE:
+		
+			v_electrolyserRegime = "Idle";
+		
+		break;
+	}
+break;
+
+case "FullCapacity":
+
+switch (p_elektrolyserOperationMode){
+		case PRICE:
+			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
+				v_electrolyserRegime = "FullCapacity";
+			}
+			else{
+				v_electrolyserRegime = "Functional";
 			}
 		break;
 		case BALANCE:
@@ -42974,6 +43149,49 @@ break;
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[H2 FuelCell functionality]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1709734528040</Id>
+					<Name><![CDATA[rectangle6]]></Name>
+					<X>1580</X><Y>650</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16711681</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>280</Width>
+					<Height>200</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1709734543251</Id>
+					<Name><![CDATA[text19]]></Name>
+					<X>1590</X><Y>660</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Hydrogen constants]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -49789,7 +50007,22 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
 		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+		
+		//String mode = parentAgent.v_electrolyserRegime;
+		String mode = "Idle";
+		if (electricityConsumption_kW<capacityElectric_kW*0.2) {
+			mode = "Idle";
+		}
+		else {
+			mode = "Functional";
+		}
+		if (mode.equals("Functional") || mode.equals("FullCapacity")) {
     	this.hydrogenProduction_kW = electricityConsumption_kW * eta_r;
+		}
+		else {
+		this.hydrogenProduction_kW = 0;
+		}
+    	
     	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses! Optionally, this could also be a waste-heat source
     	//return arr;
