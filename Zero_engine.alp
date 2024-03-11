@@ -6177,12 +6177,16 @@ for(GridNode m : c_gridNodesMSLS ) {
 	}
 	
 	double maxLoad_fr = max(m.v_peakPosLoadElectricity_kW, m.v_peakNegLoadElectricity_kW)/m.p_capacity_kW;
+
 	if (maxLoad_fr > 1) {
 		m.gisRegion.setFillColor(red);
-	} if (maxLoad_fr > 1) {
+		m.gisRegion.setLineColor( red.brighter() );
+	} if (maxLoad_fr > 0.7) {
 		m.gisRegion.setFillColor(orange);
+		m.gisRegion.setLineColor( orange.brighter() );
 	} else {
 		m.gisRegion.setFillColor(green);
+		m.gisRegion.setLineColor( green.brighter() );
 	}
 	
 	//traceln("MSLS node peak load unfiltered: " + m.v_peakLoadAbsoluteElectricity_kW + " kW");
@@ -13556,6 +13560,18 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_batteryCapacity_kWh]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_batteryPower_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_minConnectionCapacity_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -30034,7 +30050,7 @@ ea 2
 				<Variable Class="Parameter">
 					<Id>1708595094989</Id>
 					<Name><![CDATA[p_connectionOwnerIndexNr]]></Name>
-					<Description><![CDATA[Used to give every actor an index number, which can be used in buttons to go to the correct company/connection UI.
+					<Description><![CDATA[Used to give every actor an index number, which can be used in buttons to go to the correct private company/connection UI.
 
 @author: Ate]]></Description>
 					<X>60</X><Y>500</Y>
@@ -44066,6 +44082,18 @@ public void f_calculateEnergyBalance(){
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_batteryCapacity_kWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_batteryPower_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_minConnectionCapacity_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -44158,6 +44186,92 @@ public void f_calculateEnergyBalance(){
 			</ScaleRuler>
 			<CurrentLevel>1666956363818</CurrentLevel>
 			<ConnectionsId>1666956363814</ConnectionsId>
+			<Variables>
+				<Variable Class="Parameter">
+					<Id>1710159993617</Id>
+					<Name><![CDATA[p_batteryCapacity_kWh]]></Name>
+					<X>1660</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1710159993615</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1710160021983</Id>
+					<Name><![CDATA[p_batteryPower_kW]]></Name>
+					<X>1660</X><Y>140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1710160021981</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1710160037822</Id>
+					<Name><![CDATA[p_minConnectionCapacity_kW]]></Name>
+					<X>1660</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1710160037820</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1710160060873</Id>
+					<Name><![CDATA[p_maxConnectionCapacity_kW]]></Name>
+					<X>1660</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1710160060871</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -44286,7 +44400,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-					<X>800</X><Y>299</Y>
+					<X>800</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -44619,6 +44733,50 @@ if (energyModel.b_addKpiVisuals) {
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
+				<Rectangle>
+					<Id>1710159921447</Id>
+					<Name><![CDATA[rectangle4]]></Name>
+					<X>1600</X><Y>60</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>260</Width>
+					<Height>400</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1710159935354</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>1640</X><Y>80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Battery specific parameters]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
