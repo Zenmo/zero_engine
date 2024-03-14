@@ -19636,7 +19636,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 
 v_previousPowerElectricity_kW = 0;
 v_electricityPriceLowPassed_eurpkWh = 0;
-v_batterySOC_fr = (p_batteryAsset == null) ? 0 : p_batteryAsset.getCurrentStateOfCharge();
+v_batterySOC_fr = 0;//(p_batteryAsset == null) ? 0 : p_batteryAsset.getCurrentStateOfCharge();
 v_currentElectricityPriceConsumption_eurpkWh  = 0;
 v_currentLoadLowPassed_kW = 0;
 //v_currentIndoorTemp_degC = (p_BuildingThermalAsset == null) ? 0 : p_BuildingThermalAsset.getCurrentTemperature();
@@ -20615,18 +20615,18 @@ v_currentPowerDiesel_kW += arr[8];
 if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and production in energyModel!
 	if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
 		//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
-		v_currentElectricityConsumption_kW += arr[4];
-		v_currentElectricityConsumption_kW -= arr[0];
+		//v_currentElectricityConsumption_kW += arr[4];
+		//v_currentElectricityConsumption_kW -= arr[0];
 		v_currentEnergyConsumption_kW += max(0,arr[9]);
-	} else { // For other assets, 
-		v_currentElectricityConsumption_kW += arr[4];
-		v_currentElectricityProduction_kW += arr[0];
-		
+	} else { // For other assets, 		
 		if (caller instanceof J_EAConversionCurtailer) {
 			v_currentEnergyProduction_kW -= max(0,arr[9]);
+			v_currentElectricityProduction_kW -= arr[4];
 		} else {
 			v_currentEnergyProduction_kW += max(0,-arr[9]);
 			v_currentEnergyConsumption_kW += max(0,arr[9]);		
+			v_currentElectricityConsumption_kW += arr[4];
+			v_currentElectricityProduction_kW += arr[0];
 		}
 	}
 	//if ( arr[4] > 0 && arr[3] > arr[4]) {
@@ -45785,6 +45785,7 @@ public class J_EA implements Cloneable {
     	heatConsumption_kW = 0;
     	dieselConsumption_kW = 0;
     	energyUse_kW = 0;
+    	v_powerFraction_fr = 0;
     }
 
   /*  public double[] operateBounded(double ratioOfCapacity) { // There should not be an option to bypass this!
@@ -46157,7 +46158,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	@Override
 	public void calculateLoss() {
-		//no loss for electric batteries modeled.
+		//no loss for electric batteries modeled yet.
 		energyUse_kW = 0;
 		energyUsed_kWh += energyUse_kW * timestep_h;
 	}

@@ -1,0 +1,6 @@
+site_name: Zenmo Zero Model Documentation
+site_url: https://example.com/
+nav:
+  - Home: index.md
+  - About: about.md
+theme: readthedocs

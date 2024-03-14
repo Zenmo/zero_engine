@@ -1,0 +1,5 @@
+site_name: Zenmo Zero Model Documentation
+nav:
+  - Home: index.md
+  - About: about.md
+theme: readthedocs
