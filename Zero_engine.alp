@@ -44082,18 +44082,6 @@ public void f_calculateEnergyBalance(){
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_batteryCapacity_kWh]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_batteryPower_kW]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_minConnectionCapacity_kW]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_maxConnectionCapacity_kW]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
