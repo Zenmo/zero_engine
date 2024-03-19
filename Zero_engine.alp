@@ -329,6 +329,10 @@
 				<Id>1700138621293</Id>
 				<Name><![CDATA[DIESEL_VAN]]></Name>
 			</Option>
+			<Option>
+				<Id>1710866465365</Id>
+				<Name><![CDATA[ELECTRIC_VAN]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659525715752</Id>
@@ -20209,7 +20213,7 @@ if (j_ea instanceof J_EAVehicle) {
 	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK) {
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN) {// No mobility pattern for business vans available yet!! Falling back to private-vehicle mobility pattern
+	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else {

@@ -1,6 +1,14 @@
 site_name: Zenmo Zero Model Documentation
 nav:
   - Home: index.md
+  - Modelstructuur: modelstructuur.md
   - Modeling conventions: modeling_conventions.md
+  - Rekenregels: rekenregels.md
+  - Energy assets: energy_assets.md
+  - Prijzen en geldstromen: prijzen_en_geldstromen.md
+  - KPI berekeningen: KPI_berekeningen.md
+  - Datasets: datasets.md
+  - Interfaces: interfaces.md
+  - Results_ui: results_ui.md
   
 theme: readthedocs
