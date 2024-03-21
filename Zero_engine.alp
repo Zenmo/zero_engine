@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -5583,7 +5583,7 @@ for(J_EAStorage es : c_storageAssets ) {
 }
 for(J_EAEV ev : c_EVs ) {
 
-	//	J_EAStorageElectric e = (J_EAStorageElectric)es;
+	//J_EAStorageElectric e = (J_EAStorageElectric)es;
 	//traceln("triggered!!"+e.j_ea.toString());
 
 	/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
@@ -5597,20 +5597,20 @@ for(J_EAEV ev : c_EVs ) {
 	c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
 	*/
 	
-	//v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
-	//v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
-	//v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
-	//v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
+	v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
+	v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
+	v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
+	v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
 	//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
 
 }
 
 
-double v_batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
+v_batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
 if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
 	v_batteryStoredEnergyDeltaSinceStart_MWh = 0;
 }
-traceln("Electricity delta in batteries: "+ v_batteryStoredEnergyDeltaSinceStart_MWh + " MWh");]]></Body>
+traceln("Electricity delta in batteries (including EVs): "+ v_batteryStoredEnergyDeltaSinceStart_MWh + " MWh");]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -20455,6 +20455,9 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//f_instantiateEnergyAssets();
 f_connectToParentNode();
+if (!l_parentNodeElectric.isConnected()) {
+	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
+}
 f_setOperatingSwitches();]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -47349,8 +47352,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
 				traceln("EV from asset " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
-				energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
-				stateOfCharge_r = 0;
+				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
+				//stateOfCharge_r = 0;
 			}
 			available = true;
 			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
@@ -47402,6 +47405,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	availableStored = available;
     	available = true;
     	mileage_km = 0;
+    	charged_kWh = 0;
+    	discharged_kWh = 0;
     	resetFlows();    	
     }
     
@@ -47411,6 +47416,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	energyUsed_kWh = energyUsedStored_kWh;    	
     	stateOfCharge_r = stateOfChargeStored_r;
     	available = availableStored;
+    	charged_kWh = 0;
+    	discharged_kWh = 0;
     }
 	
 	@Override
