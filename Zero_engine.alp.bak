@@ -247,7 +247,7 @@
 			</Option>
 			<Option>
 				<Id>1666950754271</Id>
-				<Name><![CDATA[ELECTRIC_TRUCK]]></Name>
+				<Name><![CDATA[ELECTRIC_HEAVY_GOODS_VEHICLE]]></Name>
 			</Option>
 			<Option>
 				<Id>1668602156278</Id>
@@ -332,18 +332,6 @@
 			<Option>
 				<Id>1710866465365</Id>
 				<Name><![CDATA[ELECTRIC_VAN]]></Name>
-			</Option>
-			<Option>
-				<Id>1711010112248</Id>
-				<Name><![CDATA[HYDROGEN_VEHICLE]]></Name>
-			</Option>
-			<Option>
-				<Id>1711010123129</Id>
-				<Name><![CDATA[HYDROGEN_VAN]]></Name>
-			</Option>
-			<Option>
-				<Id>1711010139283</Id>
-				<Name><![CDATA[HYDROGEN_TRUCK]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -18082,7 +18070,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668695364192</Id>
 					<Name><![CDATA[p_batteryAsset]]></Name>
-					<X>510</X><Y>380</Y>
+					<X>510</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18222,7 +18210,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1676449763319</Id>
 					<Name><![CDATA[p_heatBuffer]]></Name>
-					<X>510</X><Y>360</Y>
+					<X>510</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18243,7 +18231,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1684919785784</Id>
 					<Name><![CDATA[p_gasBuffer]]></Name>
-					<X>510</X><Y>400</Y>
+					<X>510</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18828,21 +18816,6 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GIS_Building]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1711012701187</Id>
-					<Name><![CDATA[c_hydrogenVehicles]]></Name>
-					<X>530</X><Y>341</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[J_EAHydrogenVehicle]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -19482,7 +19455,6 @@ v_conversionPowerElectric_kW = 0;
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
 c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
-c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -20229,18 +20201,19 @@ c_energyAssets.add(j_ea);
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
 	if (vehicle instanceof J_EADieselVehicle) {
-		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );		
-	} else if (vehicle instanceof J_EAHydrogenVehicle) {
-		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
+		//c_vehicleAssets.add( EA );
+		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );
+		//c_consumptionAssets.add((J_EADieselVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
+		//c_storageAssets.add((J_EAEV)vehicle);
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker;
-	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK) {
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else {
@@ -47909,29 +47882,29 @@ public class J_HourlyCurvesData implements Serializable {
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
 			<Id>1668600448637</Id>
-			<Name><![CDATA[J_EAHydrogenVehicle]]></Name>
+			<Name><![CDATA[J_EADieselVehicle]]></Name>
 			<Text><![CDATA[/**
- * J_EAConversionHydrogenVehicle
+ * J_EAConversionDieselVehicle
  */
-public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
+public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 
-	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HYDROGEN;
+	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.DIESEL;
 
 	/**
      * Default constructor
      */
-    public J_EAHydrogenVehicle() {
+    public J_EADieselVehicle() {
     }
 
     /**
      * Constructor initializing the fields
      */
-    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling) {
+    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = OL_EnergyAssetType.HYDROGEN_VEHICLE;
+	    this.energyAssetType = OL_EnergyAssetType.DIESEL_VEHICLE;
 	}
     
     @Override
@@ -47956,7 +47929,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 		if (available) {
 			available = false;
 			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
-			//traceln("Hydrogen vehicle starting trip!");
+			//traceln("Diesel vehicle starting trip!");
 			return true;
 		} else {
 			traceln("Trip not started because vehicle not available!");
@@ -47972,13 +47945,13 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 			return false;
 		} else {
 			mileage_km += tripDist_km;
-			//traceln( "J_EAHydrogenVehicle comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);// + ", timestep: " + timestep_h);
+			//traceln( "J_EADieselVehicle comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);// + ", timestep: " + timestep_h);
 	    	double energyUsedForTrip_kWh = tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 	    	energyUsed_kWh += energyUsedForTrip_kWh;
-	    	hydrogenConsumption_kW = energyUsedForTrip_kWh / timestep_h;
-	    	energyUse_kW = hydrogenConsumption_kW;
+	    	dieselConsumption_kW = energyUsedForTrip_kWh / timestep_h;
+	    	energyUse_kW = dieselConsumption_kW;
 	    	available = true;
-	    	//traceln("Hydrogen vehicle finished trip!");
+	    	//traceln("Diesel vehicle finished trip!");
 	    	return true;
 
 		}
@@ -49013,128 +48986,6 @@ public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implem
 	private static final long serialVersionUID = 1L;
 
 }                         ]]></Text>
-		</JavaClass>
-		<!--   =========   Java Class   ========  -->
-		<JavaClass>
-			<Id>1711009967838</Id>
-			<Name><![CDATA[J_EADieselVehicle]]></Name>
-			<Text><![CDATA[/**
- * J_EAConversionDieselVehicle
- */
-public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
-
-	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.DIESEL;
-
-	/**
-     * Default constructor
-     */
-    public J_EADieselVehicle() {
-    }
-
-    /**
-     * Constructor initializing the fields
-     */
-    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling) {
-	    this.parentAgent = ownerAssetAgent;
-	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
-	    this.timestep_h = timestep_h;
-	    this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = OL_EnergyAssetType.DIESEL_VEHICLE;
-	}
-    
-    @Override
-    public double[] f_updateAllFlows(double powerFraction_fr) {
-    	//operateBounded(powerFraction_fr);
-    	double[] arr=returnEnergyFlows();    	
-    	
-    	//return arr;
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr, this);
-    	}
-    	resetFlows();
-    	return arr;
-    }
-    
-    /*public double[] operate(double ratioOfChargeCapacity_r) {
-    	return returnEnergyFlows();
-    }*/
-    
-	@Override
-	public boolean startTrip() {
-		if (available) {
-			available = false;
-			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
-			//traceln("Diesel vehicle starting trip!");
-			return true;
-		} else {
-			traceln("Trip not started because vehicle not available!");
-			return false; // Trip not started because vehicle not available!
-		}
-	}	
-
-	@Override
-    public boolean endTrip(double tripDist_km) {
-		
-		if(available) {
-			traceln("Trip not ended because EV never left!");
-			return false;
-		} else {
-			mileage_km += tripDist_km;
-			//traceln( "J_EADieselVehicle1 comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);// + ", timestep: " + timestep_h);
-	    	double energyUsedForTrip_kWh = tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
-	    	energyUsed_kWh += energyUsedForTrip_kWh;
-	    	dieselConsumption_kW = energyUsedForTrip_kWh / timestep_h;
-	    	energyUse_kW = dieselConsumption_kW;
-	    	available = true;
-	    	//traceln("Diesel vehicle finished trip!");
-	    	return true;
-
-		}
-    	//traceln("Current milage: " + mileage + ", energy consumption per km: " + energyConsumption_kWhpkm);
-    }
-
-	public double getEnergyUsed_kWh() {
-		return energyUsed_kWh;
-	}
-	
-	public boolean getAvailability() {
-		return available;
-	}
-
-	@Override
-    public void storeStatesAndReset() {
-    	// Each energy asset that has some states should overwrite this function!
-    	energyUsedStored_kWh = energyUsed_kWh;
-    	energyUsed_kWh = 0.0;
-    	availableStored = available;
-    	available = true;
-    	mileage_km = 0;
-    	resetFlows();    	
-    }
-    
-	@Override
-    public void restoreStates() {
-    	// Each energy asset that has some states should overwrite this function!
-    	energyUsed_kWh = energyUsedStored_kWh;    	
-    	available = availableStored;
-    }
-	
-	
-	@Override
-	public String toString() {
-		return
-			"parentAgent = " + parentAgent +" " +
-			"energyConsumption_kWhpkm =" + energyConsumption_kWhpkm +" " +
-			"vehicleScaling = " + vehicleScaling;
-	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
-
-}]]></Text>
 		</JavaClass>
 	</JavaClasses>
 	<ModelResources>
