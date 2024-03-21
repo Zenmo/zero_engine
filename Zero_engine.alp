@@ -66,43 +66,26 @@
 		</OptionList>
 		<OptionList>
 			<Id>1659118262286</Id>
-			<Name><![CDATA[OL_GridConnectionCategory]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[OL_ElectrolyserState]]></Name>
 			<Option>
 				<Id>1659118262287</Id>
-				<Name><![CDATA[HOUSE]]></Name>
+				<Name><![CDATA[SHUTDOWN]]></Name>
 			</Option>
 			<Option>
 				<Id>1659118262289</Id>
-				<Name><![CDATA[WINDFARM]]></Name>
+				<Name><![CDATA[STANDBY]]></Name>
 			</Option>
 			<Option>
 				<Id>1659118262290</Id>
-				<Name><![CDATA[SOLARFARM]]></Name>
+				<Name><![CDATA[IDLE]]></Name>
 			</Option>
 			<Option>
 				<Id>1660052337329</Id>
-				<Name><![CDATA[DISTRICTHEATING]]></Name>
+				<Name><![CDATA[FUNCTIONAL]]></Name>
 			</Option>
 			<Option>
 				<Id>1665480199198</Id>
-				<Name><![CDATA[INDUSTRY]]></Name>
-			</Option>
-			<Option>
-				<Id>1666957097189</Id>
-				<Name><![CDATA[GRIDBATTERY]]></Name>
-			</Option>
-			<Option>
-				<Id>1676382460059</Id>
-				<Name><![CDATA[RESIDUALHEAT]]></Name>
-			</Option>
-			<Option>
-				<Id>1697095873493</Id>
-				<Name><![CDATA[UTILITY]]></Name>
-			</Option>
-			<Option>
-				<Id>1707145198921</Id>
-				<Name><![CDATA[ELECTROLYSER]]></Name>
+				<Name><![CDATA[FULLCAPACITY]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -918,7 +901,7 @@
 		</OptionList>
 		<OptionList>
 			<Id>1668693527447</Id>
-			<Name><![CDATA[OL_ElektrolyserOperationMode]]></Name>
+			<Name><![CDATA[OL_ElectrolyserOperationMode]]></Name>
 			<Option>
 				<Id>1668693549847</Id>
 				<Name><![CDATA[BALANCE]]></Name>
@@ -13561,18 +13544,6 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_batteryCapacity_kWh]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_batteryPower_kW]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_minConnectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_maxConnectionCapacity_kW]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -19244,11 +19215,11 @@ import java.io.*;]]></Import>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[OL_ElektrolyserOperationMode]]></Type>
+						<Type><![CDATA[OL_ElectrolyserOperationMode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[OL_ElektrolyserOperationMode.BALANCE]]></Code>
+							<Code><![CDATA[OL_ElectrolyserOperationMode.BALANCE]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1671459091952</Id>
@@ -41430,13 +41401,13 @@ if (p_curtailer != null){
 	double ProductionSetpoint_kW = ElektrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double elektrolyserSetpointElectric_kW = 0;
 	
-	if (p_elektrolyserOperationMode==OL_ElektrolyserOperationMode.BALANCE) {
+	if (p_elektrolyserOperationMode==OL_ElectrolyserOperationMode.BALANCE) {
 		double FeedbackGain_kWpkWh = 1.0/24; // Try to recover deficit in 24 hours
 		elektrolyserSetpointElectric_kW = ProductionSetpoint_kW/eta_r + v_hydrogenProductionDeficit_kWh * FeedbackGain_kWpkWh /eta_r ;
 	
 		//traceln("Elektrolyser electric power setpoint: " + elektrolyserSetpointElectric_kW + " kW");
 		//traceln("Elektrolyser power fraction: " + elektrolyserSetpointElectric_kW/ElektrolyserAsset.j_ea.getElectricCapacity_kW());
-	} else if (p_elektrolyserOperationMode==OL_ElektrolyserOperationMode.PRICE) {
+	} else if (p_elektrolyserOperationMode==OL_ElectrolyserOperationMode.PRICE) {
 		//if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 		//double currentElectricityPriceCharge_eurpkWh = ownerActor.v_priceBandsDelivery.ceilingEntry(100.0).getValue(); // query price at 1kW
@@ -41850,9 +41821,9 @@ FullCapacity.]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[String]]></Type>        
+						<Type><![CDATA[OL_ElectrolyserState]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA["Idle"]]></Code>
+							<Code><![CDATA[OL_ElectrolyserState.SHUTDOWN]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -42723,30 +42694,30 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1708089250229</Id>
-					<Name><![CDATA[f_manageElektrolyser]]></Name>
+					<Name><![CDATA[f_manageElectrolyser]]></Name>
 					<X>1610</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[ElektrolyserAsset]]></Name>
+						<Name><![CDATA[ElectrolyserAsset]]></Name>
 						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
 					</Parameter>
 					<Body><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;
 
-if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
+if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
 	double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
 	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
-	double eta_r = ElektrolyserAsset.getEta_r();
+	double eta_r = ElectrolyserAsset.getEta_r();
 	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-	double ProductionSetpoint_kW = ElektrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
-	double elektrolyserSetpointElectric_kW = 0;
+	double ProductionSetpoint_kW = ElectrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
+	double electrolyserSetpointElectric_kW = 0;
 	
 	
 	//Electrolyser output based on current/future regime
-	elektrolyserSetpointElectric_kW = f_electrolyserRegime(elektrolyserSetpointElectric_kW,excessElectricPower_kW);
+	electrolyserSetpointElectric_kW = f_electrolyserRegime(electrolyserSetpointElectric_kW, excessElectricPower_kW, ElectrolyserAsset);
 	
 	
 		
@@ -42774,16 +42745,16 @@ if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 	*/
 	
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
-	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
+	electrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(electrolyserSetpointElectric_kW,excessElectricPower_kW));
 	
 	
 	
 	//Output
-	double[] flowsArray = ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
+	double[] flowsArray = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
 	
 	v_conversionPowerElectric_kW += flowsArray[4];
 	
-	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElektrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit	
+	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElectrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit	
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -42798,7 +42769,7 @@ if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElectrolyserAte) {
-		f_manageElektrolyser((J_EAConversionElectrolyserAte)v);
+		f_manageElectrolyser((J_EAConversionElectrolyserAte)v);
 	}
 	if (v instanceof J_EAConversionCurtailer) {
 		// Must go last! 
@@ -42855,30 +42826,34 @@ if (p_curtailer != null){
 						<Name><![CDATA[excessElectricPower_kW]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[f_electrolyserRegimeControl(excessElectricPower_kW);
+					<Parameter>
+						<Name><![CDATA[ElectrolyserAsset]]></Name>
+						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+					</Parameter>
+					<Body><![CDATA[f_electrolyserRegimeControl(excessElectricPower_kW, ElectrolyserAsset);
 
 
 switch (v_electrolyserRegime){
 
-case "Shutdown":
+case SHUTDOWN:
 	elektrolyserSetpointElectric_kW = 0;
 	v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
 	
 break;
 
-case "Standby": 
+case STANDBY: 
 	elektrolyserSetpointElectric_kW = 0;
 	v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
 	
 break;
 
-case "Idle": 
+case IDLE: 
 	elektrolyserSetpointElectric_kW = 0.025*p_powerNominal_kW; // 1 - 5 percent of nominal load to keep it warm!
 	v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
 	v_totalEnergyLossIdle_kWh = v_totalEnergyLossIdle_kWh + elektrolyserSetpointElectric_kW*0.25;
 break;
 
-case "Functional":
+case FUNCTIONAL:
 	switch (p_elektrolyserOperationMode){
 	
 	case PRICE:
@@ -42892,7 +42867,7 @@ case "Functional":
 	}
 break;
 
-case "FullCapacity":
+case FULLCAPACITY:
 	switch (p_elektrolyserOperationMode){
 	
 	case PRICE:
@@ -42925,111 +42900,118 @@ return elektrolyserSetpointElectric_kW;]]></Body>
 						<Name><![CDATA[excessElectricPower_kW]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
+					<Parameter>
+						<Name><![CDATA[ElectrolyserAsset]]></Name>
+						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+					</Parameter>
 					<Body><![CDATA[ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
 double currentElectricityPriceEPEX_eurpkWh = energyModel.v_epexForecast_eurpkWh;
 
 switch (v_electrolyserRegime){
 
-case "Shutdown":
+case SHUTDOWN:
 
 	switch (p_elektrolyserOperationMode){
 	
 		case PRICE:
 			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
-				v_electrolyserRegime = "Functional";
+				v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
 			}
 			else{
-				v_electrolyserRegime = "Shutdown";
+				v_electrolyserRegime = OL_ElectrolyserState.SHUTDOWN;
 			}
 		break;
 		case BALANCE:
 		
-			v_electrolyserRegime = "Shutdown";
+			v_electrolyserRegime = OL_ElectrolyserState.SHUTDOWN;
 		
 		break;
 	}
 
 break;
 
-case "Standby": 
+case STANDBY: 
 	switch (p_elektrolyserOperationMode){
 	
 		case PRICE:
 			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
-				v_electrolyserRegime = "Functional";
+				v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
 			}
 			else{
-				v_electrolyserRegime = "Standby";
+				v_electrolyserRegime = OL_ElectrolyserState.STANDBY;
 			}
 		break;
 		case BALANCE:
 		
-			v_electrolyserRegime = "Standby";
+			v_electrolyserRegime = OL_ElectrolyserState.STANDBY;
 		
 		break;
 	}
 
 break;
 
-case "Idle": 
+case IDLE: 
 	switch (p_elektrolyserOperationMode){
 	
 		case PRICE:
 			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
-				v_electrolyserRegime = "Functional";
+				v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
 			}
 			else{
-				v_electrolyserRegime = "Idle";
+				v_electrolyserRegime = OL_ElectrolyserState.IDLE;
 			}
 		break;
 		case BALANCE:
 		
-			v_electrolyserRegime = "Idle";
+			v_electrolyserRegime = OL_ElectrolyserState.IDLE;
 		
 		break;
 	}
 break;
 
-case "Functional":
+case FUNCTIONAL:
 
 switch (p_elektrolyserOperationMode){
 	
 		case PRICE:
 			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
-				v_electrolyserRegime = "FullCapacity";
+				v_electrolyserRegime = OL_ElectrolyserState.FULLCAPACITY;
 			}
 			else{
-				v_electrolyserRegime = "Idle";
+				v_electrolyserRegime = OL_ElectrolyserState.IDLE;
 			}
 		break;
 		case BALANCE:
 		
-			v_electrolyserRegime = "Idle";
+			v_electrolyserRegime = OL_ElectrolyserState.IDLE;
 		
 		break;
 	}
 break;
 
-case "FullCapacity":
+case FULLCAPACITY:
 
 switch (p_elektrolyserOperationMode){
 		case PRICE:
 			if (currentElectricityPriceEPEX_eurpkWh < p_electricityPriceMaxForProfit_eurpkWh){
-				v_electrolyserRegime = "FullCapacity";
+				v_electrolyserRegime = OL_ElectrolyserState.FULLCAPACITY;
 			}
 			else{
-				v_electrolyserRegime = "Functional";
+				v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
 			}
 		break;
 		case BALANCE:
 		
-			v_electrolyserRegime = "Idle";
+			v_electrolyserRegime = OL_ElectrolyserState.IDLE;
 		
 		break;
 	}
 break;
 }
+
+ElectrolyserAsset.setState(v_electrolyserRegime);
+
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -44174,92 +44156,6 @@ public void f_calculateEnergyBalance(){
 			</ScaleRuler>
 			<CurrentLevel>1666956363818</CurrentLevel>
 			<ConnectionsId>1666956363814</ConnectionsId>
-			<Variables>
-				<Variable Class="Parameter">
-					<Id>1710159993617</Id>
-					<Name><![CDATA[p_batteryCapacity_kWh]]></Name>
-					<X>1660</X><Y>120</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1710159993615</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1710160021983</Id>
-					<Name><![CDATA[p_batteryPower_kW]]></Name>
-					<X>1660</X><Y>140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1710160021981</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1710160037822</Id>
-					<Name><![CDATA[p_minConnectionCapacity_kW]]></Name>
-					<X>1660</X><Y>160</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1710160037820</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1710160060873</Id>
-					<Name><![CDATA[p_maxConnectionCapacity_kW]]></Name>
-					<X>1660</X><Y>180</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1710160060871</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -44721,50 +44617,6 @@ if (energyModel.b_addKpiVisuals) {
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
-				<Rectangle>
-					<Id>1710159921447</Id>
-					<Name><![CDATA[rectangle4]]></Name>
-					<X>1600</X><Y>60</Y>
-					<Label><X>10</X><Y>10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Lock>true</Lock>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>3</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<Width>260</Width>
-					<Height>400</Height>
-					<Rotation>0.0</Rotation>
-					<FillColor>-1</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Rectangle>
-				<Text>
-					<Id>1710159935354</Id>
-					<Name><![CDATA[text3]]></Name>
-					<X>1640</X><Y>80</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Battery specific parameters]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>14</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 			</Presentation>
 
 				</Level>
@@ -50164,7 +50016,8 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
-    /**
+    private OL_ElectrolyserState state = OL_ElectrolyserState.SHUTDOWN;
+	/**
 	/**
      * Default constructor
      */
@@ -50186,7 +50039,11 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	    double startUpTimeStandby_h = startUpTimeStandby_s/3600;
 	    double startUpTimeIdle_h = startUpTimeIdle_s/3600;
 	}
-
+    
+    public void setState(OL_ElectrolyserState state) {
+    	this.state = state;
+    }
+    
     @Override
     public double[] operate(double ratioOfCapacity) {
     	
@@ -50196,19 +50053,11 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
     	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
 		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
 		
-		//String mode = parentAgent.v_electrolyserRegime;
-		String mode = "Idle";
-		if (electricityConsumption_kW<capacityElectric_kW*0.2) {
-			mode = "Idle";
-		}
-		else {
-			mode = "Functional";
-		}
-		if (mode.equals("Functional") || mode.equals("FullCapacity")) {
-    	this.hydrogenProduction_kW = electricityConsumption_kW * eta_r;
-		}
-		else {
+		if (state == OL_ElectrolyserState.IDLE) {
 		this.hydrogenProduction_kW = 0;
+		}
+		else {
+	    this.hydrogenProduction_kW = electricityConsumption_kW * eta_r;
 		}
     	
     	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
