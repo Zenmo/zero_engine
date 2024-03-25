@@ -822,6 +822,18 @@
 				<Id>1678457573856</Id>
 				<Name><![CDATA[DISTRICT_EBOILER_CHP]]></Name>
 			</Option>
+			<Option>
+				<Id>1711395468389</Id>
+				<Name><![CDATA[ELECTRIC_HEATPUMP]]></Name>
+			</Option>
+			<Option>
+				<Id>1711395634190</Id>
+				<Name><![CDATA[HYBRID_HEATPUMP]]></Name>
+			</Option>
+			<Option>
+				<Id>1711395650860</Id>
+				<Name><![CDATA[OTHER]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1665487983362</Id>
@@ -10447,6 +10459,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -10615,6 +10630,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_postcode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_connectedGridConnection]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11400,6 +11418,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11586,6 +11607,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11768,6 +11792,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12033,6 +12060,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_hydrogenEnergyDensity_kWh_kg]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12215,6 +12245,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12399,6 +12432,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12581,6 +12617,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -18694,6 +18733,32 @@ import java.io.*;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1711390344929</Id>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+					<Description><![CDATA[Requested future connection capacity = current connection capacity + additional requested capacity
+--> to be used in future scenario analysis]]></Description>
+					<X>270</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1711390344927</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626903</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
@@ -18847,7 +18912,7 @@ import java.io.*;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1704895219414</Id>
 					<Name><![CDATA[c_connectedBuildings]]></Name>
-					<X>250</X><Y>350</Y>
+					<X>270</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18870,6 +18935,21 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[J_EAHydrogenVehicle]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1711395426618</Id>
+					<Name><![CDATA[c_heatingTypes]]></Name>
+					<X>270</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[OL_GridConnectionHeatingType]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -23580,7 +23660,7 @@ p_parentAgent = j_ea.parentAgent;
 				<Variable Class="Parameter">
 					<Id>1703256699222</Id>
 					<Name><![CDATA[p_mainTenantID]]></Name>
-					<X>60</X><Y>310</Y>
+					<X>60</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23724,25 +23804,31 @@ p_parentAgent = j_ea.parentAgent;
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1703256699219</Id>
-					<Name><![CDATA[c_GISBuildings]]></Name>
-					<X>60</X><Y>340</Y>
+				<Variable Class="Parameter">
+					<Id>1711030779035</Id>
+					<Name><![CDATA[p_connectedGridConnection]]></Name>
+					<X>60</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[Object]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[GridConnection]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1711030779033</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1704214715400</Id>
-					<Name><![CDATA[c_connectedGridConnection]]></Name>
-					<X>60</X><Y>370</Y>
+					<Id>1703256699219</Id>
+					<Name><![CDATA[c_GISBuildings]]></Name>
+					<X>60</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37202,6 +37288,9 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -39058,6 +39147,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -40242,6 +40334,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -40723,6 +40818,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -42397,6 +42495,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -43098,6 +43199,9 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -44173,6 +44277,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
