@@ -18718,7 +18718,7 @@ import java.io.*;]]></Import>
 					<X>50</X><Y>175</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 						<Type><![CDATA[ConnectionOwner]]></Type>
@@ -47381,7 +47381,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling ) {
+    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType) {
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectricity_kW * vehicleScaling; // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh * vehicleScaling;
@@ -47390,7 +47390,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		this.timestep_h = timestep_h;
 		this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 		this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_VEHICLE;
+	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.ELECTRIC_VEHICLE; // AANPASSING ATE: VRAGEN AAN GILLIS: asset type meegeven in functie J_EAV, want scheelt switch statement in iEA functie.
     }
 
 	@Override 
@@ -49411,12 +49411,12 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling) {
+    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType ) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = OL_EnergyAssetType.DIESEL_VEHICLE;
+	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.DIESEL_VEHICLE; // AANPASSING ATE, scheelt code in interface
 	}
     
     @Override
