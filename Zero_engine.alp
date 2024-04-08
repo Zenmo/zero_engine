@@ -15105,7 +15105,6 @@ v_heatDelivered_kWh = 0;
     			<DataSet>
 					<Id>1705919330576</Id>
 					<Name><![CDATA[data_liveElectricityBalance_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>40</X><Y>870</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15123,6 +15122,8 @@ v_heatDelivered_kWh = 0;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentLoadElectricity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
