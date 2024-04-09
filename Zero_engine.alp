@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -6240,6 +6240,9 @@ v_collectiveSelfConsumption_fr = v_totalElectricitySelfConsumed_MWh / v_totalEle
 traceln("");
 traceln("__--** Totals **--__");
 traceln("Energy consumed: "+ v_totalEnergyUsed_MWh + " MWh");
+traceln("Energy produced: "+ v_totalEnergyProduced_MWh + " MWh");
+traceln("Energy import: "+ v_totalImportedEnergy_MWh + " MWh");
+traceln("Energy export: "+ v_totalExportedEnergy_MWh + " MWh");
 
 // Peak model-wide electricity grid loads
 v_peakElecExport_kW=Arrays.stream(a_annualNetLoad_kW).min().orElse(-1);
@@ -6364,8 +6367,7 @@ for (J_EA e : c_energyAssets) {
 			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
 			//electricityProduced_kWh = ((J_EAConversionGasCHP)e).getElectricityProduced_kWh();
 			//electricityProduced_MWh += electricityProduced_kWh/1000;
-		}
-		else {
+		} else {
 			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
 		}		
 		if ( e instanceof J_EABuilding ) {
@@ -20352,8 +20354,11 @@ if (j_ea instanceof J_EAVehicle) {
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else {
 		//traceln("Adding passenger vehicle to gridconnection %s", this);
-		int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
+		int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+		//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
+		//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+		//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
 	}
 	c_tripTrackers.add( tripTracker );
 	vehicle.tripTracker = tripTracker;	
@@ -20776,6 +20781,12 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
 		v_currentEnergyProductionHeat_kW = -arr[9];
 		v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
 	}
+	
+	/*if ( caller instanceof J_EAEV) {
+		if (arr[9]>0) {
+			traceln("EnergyUse_kW %s from J_EAEV being added to gridConnection %s", arr[9], this);
+		}
+	}*/
 	
 }
 ]]></Body>
@@ -47394,6 +47405,12 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 		this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.ELECTRIC_VEHICLE; // AANPASSING ATE: VRAGEN AAN GILLIS: asset type meegeven in functie J_EAV, want scheelt switch statement in iEA functie.
+	    
+	    // Validation checks
+	    if (capacityElectric_kW == 0 || storageCapacity_kWh == 0 || timestep_h == 0 || energyConsumption_kWhpkm == 0) {
+	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
+	    	
+	    }
     }
 
 	@Override 
@@ -47454,7 +47471,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			stateOfCharge_r -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / storageCapacity_kWh;
 			//traceln("storage capacity: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
-			energyUse_kW = tripDist_km * vehicleScaling * energyConsumption_kWhpkm / timestep_h;
+			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / timestep_h;
+			//traceln("EV energy use at end of trip: %s kWh", tripDist_km * vehicleScaling * energyConsumption_kWhpkm );
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
@@ -48348,7 +48366,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	    	double energyUsedForTrip_kWh = tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 	    	energyUsed_kWh += energyUsedForTrip_kWh;
 	    	hydrogenConsumption_kW = energyUsedForTrip_kWh / timestep_h;
-	    	energyUse_kW = hydrogenConsumption_kW;
+	    	energyUse_kW += hydrogenConsumption_kW;
 	    	available = true;
 	    	//traceln("Hydrogen vehicle finished trip!");
 	    	return true;
@@ -48934,21 +48952,26 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	this.energyModel = main;
     	this.rowIndex = rowIndex;
     	this.Vehicle = Vehicle;
-    	
-    	//if (mobilityPatternType == OL_MobilityPatternType.PRIVATE_VEHICLE) {
-		    nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
-	
-		    for (int i = 0; i < nbActivities; i++){
-		    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
-		    	endtimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-		    	distances_km.add(min(350,tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
-			    if (rowIndex == 55) {
-				    //Reducing trip lengths on rowIndex 55, they are too long for current-day EVs!
-    		    	distances_km.set(i,distances_km.get(i)/2.0);
-    		    }
+    	 		
+		nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
 
-		    }
+		//traceln("tripPatternID for row 12: %s", tripsExcel.getCellNumericValue("sheet1", 10 + 2, 1));
+	    for (int i = 0; i < nbActivities; i++){
+	    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
+	    	endtimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
+	    	//distances_km.add(min(350,tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
+	    	//distances_km.add(min(100,tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
+	    	distances_km.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));
+		    /*if (rowIndex == 55) {
+			    //Reducing trip lengths on rowIndex 55, they are too long for current-day EVs!
+		    	distances_km.set(i,distances_km.get(i)/2.0);
+		    }*/
+		    
+	    }
 	
+	    
+    	
+    	
     	/*} else if (mobilityPatternType == OL_MobilityPatternType.TRUCK) {
 		    nbActivities = roundToInt(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 2));
 	
@@ -49468,7 +49491,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	    	double energyUsedForTrip_kWh = tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 	    	energyUsed_kWh += energyUsedForTrip_kWh;
 	    	dieselConsumption_kW = energyUsedForTrip_kWh / timestep_h;
-	    	energyUse_kW = dieselConsumption_kW;
+	    	energyUse_kW += dieselConsumption_kW;
 	    	available = true;
 	    	//traceln("Diesel vehicle finished trip!");
 	    	return true;
