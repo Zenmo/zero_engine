@@ -3,6 +3,7 @@
 ## Objecten op het canvas
 Alle opjecten op het canvas dienen als eerste letters van hun naam een type-aanduiding te hebben gevolgd door een underscore en een beschrijving van hun functie/inhoud.
 De type aanduidingen zijn:
+
 * p_ voor parameter (eventueel met uitzondering b_ voor boolean parameters)
 * v_ voor variabele (eventueel met uitzondering b_ voor boolean variabelen)
 * f_ voor functie
