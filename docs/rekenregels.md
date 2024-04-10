@@ -26,3 +26,5 @@ Wanneer deze twee berekeningen niet op hetzelfde zelfverbruik uitkomen, geeft da
 ## van vermogen [kW] naar energie [kWh]: p_timestep_h
 Numerieke integratie van vermogens per tijdstap: optellen van vermogen[kW]*tijdstap[h] = energie [kWh].
 De 'solver' hierbij is het zero-order-hold princiepe: we benaderen vermogens als constant gedurende een tijdstap. 
+
+## Nieuwe paragraaf
