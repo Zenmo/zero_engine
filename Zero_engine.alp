@@ -1019,7 +1019,9 @@ import java.io.File;
 import java.io.IOException;
 //import java.util.Date;  
 import java.text.SimpleDateFormat;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import java.time.DayOfWeek;
+import java.time.LocalDate;]]></Import>
 			<StartupCode><![CDATA[v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
 //j_dataOut = new DataOut();
@@ -1027,8 +1029,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 //j_simulationResults = new J_SimulationResults();
 //j_hourlyCurvesData = new J_HourlyCurvesData();
 
-
-]]></StartupCode>
+LocalDate localDate = LocalDate.of(p_year, 1, 1); 
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -3943,6 +3946,18 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1712842800772</Id>
+					<Name><![CDATA[v_dayOfWeek1jan]]></Name>
+					<X>560</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -4354,6 +4369,30 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1701855585050</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1712844009289</Id>
+					<Name><![CDATA[p_year]]></Name>
+					<X>560</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[2019]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1712844009287</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -6425,7 +6464,9 @@ traceln("Energy selfsufficiency (via export calc): %s %%", totalSelfSufficiency_
 traceln( "import electricity: " + v_totalElectricityImport_MWh + " MWh");
 traceln( "export electricity: " + v_totalElectricityExport_MWh + " MWh");
 traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + " MWh");
+traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + " MWh");
 traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
+
 
 //traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);]]></Body>
 				</Function>
@@ -6498,7 +6539,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	}*/
 	
 	// Weekday
-	if ((t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if ((t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayTotalImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
 		v_weekdayTotalExport_MWh += v_currentEnergyExport_kW / 1000 * p_timeStep_h;
 		v_weekdayElectricityImport_MWh += max(0,v_totalElectricPower_kW) / 1000 * p_timeStep_h;
@@ -45774,6 +45815,9 @@ gisRegion.setLineWidth( width );]]></Body>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_cookingPatternExcel]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_year]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
