@@ -5570,22 +5570,28 @@ v_totalBatteryChargeAmount_MWh = 0;
 v_totalBatteryInstalledCapacity_MWh = 0;
 v_totalBatteryEnergyUsed_MWh = 0;
 
+for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs and c_storageAssets
+	if( ea instanceof J_EAStorageElectric ) {
+		J_EAStorageElectric e = (J_EAStorageElectric)ea;
+		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
+	}
+	
+	if( ea instanceof J_EAEV ) {
+		J_EAEV e = (J_EAEV)ea;
+		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
+	}
+}
+
+/*
 for(J_EAStorage es : c_storageAssets ) {
 	if( es instanceof J_EAStorageElectric ) {
 		J_EAStorageElectric e = (J_EAStorageElectric)es;
-		//traceln("triggered!!"+e.j_ea.toString());
-
-		/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
-		c_totalBatteryUnitsInstalled.computeIfAbsent( e.energyAssetName, k -> 1.0 );
-
-		c_totalBatteryChargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalChargeAmount_kWh() / 1000, 2 ));
-		c_totalBatteryChargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalChargeAmount_kWh() / 1000 );
-		c_totalBatteryDischargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalDischargeAmount_kWh() / 1000, 2 ));
-		c_totalBatteryDischargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalDischargeAmount_kWh() / 1000 );
-		c_totalBatteryInstalledCapacity_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getStorageCapacity_kWh() / 1000, 2 ));
-		c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
-		*/
-		
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
 		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
@@ -5594,29 +5600,13 @@ for(J_EAStorage es : c_storageAssets ) {
 	}
 }
 for(J_EAEV ev : c_EVs ) {
-
-	//J_EAStorageElectric e = (J_EAStorageElectric)es;
-	//traceln("triggered!!"+e.j_ea.toString());
-
-	/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
-	c_totalBatteryUnitsInstalled.computeIfAbsent( e.energyAssetName, k -> 1.0 );
-
-	c_totalBatteryChargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalChargeAmount_kWh() / 1000, 2 ));
-	c_totalBatteryChargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalChargeAmount_kWh() / 1000 );
-	c_totalBatteryDischargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalDischargeAmount_kWh() / 1000, 2 ));
-	c_totalBatteryDischargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalDischargeAmount_kWh() / 1000 );
-	c_totalBatteryInstalledCapacity_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getStorageCapacity_kWh() / 1000, 2 ));
-	c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
-	*/
-	
 	v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
 	v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
 	v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
 	v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
 	//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
-
 }
-
+*/
 
 v_batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
 if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
