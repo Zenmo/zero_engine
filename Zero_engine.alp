@@ -49002,6 +49002,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	public double v_tripDist_km;
 	public double v_energyNeedForNextTrip_kWh;
 	public double v_nextEventStartTime_min;
+	public double distanceScaling_fr = 1.0;
 	
     /**
      * Default constructor
@@ -49113,7 +49114,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			
 		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
 			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
-			v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
+			v_tripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex ); // Update upcoming trip distance
 		
 			
 			if (Vehicle instanceof J_EAEV) {
@@ -49128,7 +49129,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 					nextTripDist_km = 0;//distances_km.get( 0 );
 					nextTripStartTime_min = endtimes_min.get(v_eventIndex);
 				} else {		
-					nextTripDist_km = distances_km.get( v_eventIndex+1 );
+					nextTripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex+1 );
 					nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
 				}
 				double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
