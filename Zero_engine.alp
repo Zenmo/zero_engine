@@ -20795,7 +20795,8 @@ f_setOperatingSwitches();]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//double nettElectricityImport_kW = Arrays.stream( a_annualElectricityBalance_kW ).sum() * energyModel.p_timeStep_h;
+					<Body><![CDATA[f_duurkrommes();
+//double nettElectricityImport_kW = Arrays.stream( a_annualElectricityBalance_kW ).sum() * energyModel.p_timeStep_h;
 
 // Get import/export from balance arrays. This is apparently quite costly to calculate with the .filter operator! Minimize use!
 v_electricityDrawnFromGrid_kWh = Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
@@ -21047,6 +21048,7 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
 //int arraySize = data_annualBusinessParkNetLoad_kW.size();
 int arraySize = a_annualElectricityBalance_kW.length;
+double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
 
 //double[] netLoadArray_kW = new double[arraySize];
 double[] netLoadArrayWinter_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
@@ -21100,7 +21102,7 @@ netLoadArrayWeekday_kW = Arrays.copyOfRange(netLoadArrayWeekday_kW, 0, i_weekday
 netLoadArrayWeekend_kW = Arrays.copyOfRange(netLoadArrayWeekend_kW, 0, i_weekend);
 //Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
 // Sort all arrays
-Arrays.parallelSort(a_annualElectricityBalance_kW); // Is this array used elsewhere?? Because now it's no longer a time-series!
+Arrays.parallelSort(netLoadArrayAnnual_kW);
 Arrays.parallelSort(netLoadArraySummer_kW);
 Arrays.parallelSort(netLoadArrayWinter_kW);
 Arrays.parallelSort(netLoadArrayDay_kW);
@@ -21110,7 +21112,7 @@ Arrays.parallelSort(netLoadArrayWeekend_kW);
 // Write results to datasets
 data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
-	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, a_annualElectricityBalance_kW[arraySize-i-1]);
+	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
 
 /*
