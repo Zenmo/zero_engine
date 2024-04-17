@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1015,7 +1015,9 @@ import java.io.File;
 import java.io.IOException;
 //import java.util.Date;  
 import java.text.SimpleDateFormat;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import java.time.DayOfWeek;
+import java.time.LocalDate;]]></Import>
 			<StartupCode><![CDATA[v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
 //j_dataOut = new DataOut();
@@ -1023,8 +1025,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 //j_simulationResults = new J_SimulationResults();
 //j_hourlyCurvesData = new J_HourlyCurvesData();
 
-
-]]></StartupCode>
+LocalDate localDate = LocalDate.of(p_year, 1, 1); 
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -3939,6 +3942,18 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1712842800772</Id>
+					<Name><![CDATA[v_dayOfWeek1jan]]></Name>
+					<X>560</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -4350,6 +4365,30 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1701855585050</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1712844009289</Id>
+					<Name><![CDATA[p_year]]></Name>
+					<X>560</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[2019]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1712844009287</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -5566,22 +5605,28 @@ v_totalBatteryChargeAmount_MWh = 0;
 v_totalBatteryInstalledCapacity_MWh = 0;
 v_totalBatteryEnergyUsed_MWh = 0;
 
+for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs and c_storageAssets
+	if( ea instanceof J_EAStorageElectric ) {
+		J_EAStorageElectric e = (J_EAStorageElectric)ea;
+		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
+	}
+	
+	if( ea instanceof J_EAEV ) {
+		J_EAEV e = (J_EAEV)ea;
+		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
+	}
+}
+
+/*
 for(J_EAStorage es : c_storageAssets ) {
 	if( es instanceof J_EAStorageElectric ) {
 		J_EAStorageElectric e = (J_EAStorageElectric)es;
-		//traceln("triggered!!"+e.j_ea.toString());
-
-		/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
-		c_totalBatteryUnitsInstalled.computeIfAbsent( e.energyAssetName, k -> 1.0 );
-
-		c_totalBatteryChargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalChargeAmount_kWh() / 1000, 2 ));
-		c_totalBatteryChargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalChargeAmount_kWh() / 1000 );
-		c_totalBatteryDischargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalDischargeAmount_kWh() / 1000, 2 ));
-		c_totalBatteryDischargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalDischargeAmount_kWh() / 1000 );
-		c_totalBatteryInstalledCapacity_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getStorageCapacity_kWh() / 1000, 2 ));
-		c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
-		*/
-		
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
 		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
@@ -5590,29 +5635,13 @@ for(J_EAStorage es : c_storageAssets ) {
 	}
 }
 for(J_EAEV ev : c_EVs ) {
-
-	//J_EAStorageElectric e = (J_EAStorageElectric)es;
-	//traceln("triggered!!"+e.j_ea.toString());
-
-	/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
-	c_totalBatteryUnitsInstalled.computeIfAbsent( e.energyAssetName, k -> 1.0 );
-
-	c_totalBatteryChargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalChargeAmount_kWh() / 1000, 2 ));
-	c_totalBatteryChargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalChargeAmount_kWh() / 1000 );
-	c_totalBatteryDischargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalDischargeAmount_kWh() / 1000, 2 ));
-	c_totalBatteryDischargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalDischargeAmount_kWh() / 1000 );
-	c_totalBatteryInstalledCapacity_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getStorageCapacity_kWh() / 1000, 2 ));
-	c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
-	*/
-	
 	v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
 	v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
 	v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
 	v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
 	//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
-
 }
-
+*/
 
 v_batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
 if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
@@ -6215,6 +6244,7 @@ f_initializeForecasts();
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
+pop_gridNodes.forEach(gn -> gn.f_calculateKPIs());
 
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIs());
@@ -6432,7 +6462,9 @@ traceln("Energy selfsufficiency (via export calc): %s %%", totalSelfSufficiency_
 traceln( "import electricity: " + v_totalElectricityImport_MWh + " MWh");
 traceln( "export electricity: " + v_totalElectricityExport_MWh + " MWh");
 traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + " MWh");
+traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + " MWh");
 traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
+
 
 //traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);]]></Body>
 				</Function>
@@ -6505,7 +6537,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	}*/
 	
 	// Weekday
-	if ((t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if ((t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayTotalImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
 		v_weekdayTotalExport_MWh += v_currentEnergyExport_kW / 1000 * p_timeStep_h;
 		v_weekdayElectricityImport_MWh += max(0,v_totalElectricPower_kW) / 1000 * p_timeStep_h;
@@ -18667,6 +18699,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1697034280316</Id>
 					<Name><![CDATA[p_company_name]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-210</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18730,7 +18763,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1697034280340</Id>
 					<Name><![CDATA[p_company_connection_id]]></Name>
-					<X>-210</X><Y>480</Y>
+					<X>50</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18902,6 +18935,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1703004464006</Id>
 					<Name><![CDATA[p_pandIdentiteit]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-210</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20564,7 +20598,6 @@ if (j_ea instanceof J_EAVehicle) {
 		//traceln("Adding passenger vehicle to gridconnection %s", this);
 		int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-		
 		//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 		//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 		//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
@@ -20764,7 +20797,8 @@ f_setOperatingSwitches();]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//double nettElectricityImport_kW = Arrays.stream( a_annualElectricityBalance_kW ).sum() * energyModel.p_timeStep_h;
+					<Body><![CDATA[f_duurkrommes();
+//double nettElectricityImport_kW = Arrays.stream( a_annualElectricityBalance_kW ).sum() * energyModel.p_timeStep_h;
 
 // Get import/export from balance arrays. This is apparently quite costly to calculate with the .filter operator! Minimize use!
 v_electricityDrawnFromGrid_kWh = Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
@@ -21016,6 +21050,7 @@ if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and 
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
 //int arraySize = data_annualBusinessParkNetLoad_kW.size();
 int arraySize = a_annualElectricityBalance_kW.length;
+double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
 
 //double[] netLoadArray_kW = new double[arraySize];
 double[] netLoadArrayWinter_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
@@ -21069,7 +21104,7 @@ netLoadArrayWeekday_kW = Arrays.copyOfRange(netLoadArrayWeekday_kW, 0, i_weekday
 netLoadArrayWeekend_kW = Arrays.copyOfRange(netLoadArrayWeekend_kW, 0, i_weekend);
 //Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
 // Sort all arrays
-Arrays.parallelSort(a_annualElectricityBalance_kW); // Is this array used elsewhere?? Because now it's no longer a time-series!
+Arrays.parallelSort(netLoadArrayAnnual_kW);
 Arrays.parallelSort(netLoadArraySummer_kW);
 Arrays.parallelSort(netLoadArrayWinter_kW);
 Arrays.parallelSort(netLoadArrayDay_kW);
@@ -21079,7 +21114,7 @@ Arrays.parallelSort(netLoadArrayWeekend_kW);
 // Write results to datasets
 data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
-	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, a_annualElectricityBalance_kW[arraySize-i-1]);
+	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
 
 /*
@@ -45717,7 +45752,7 @@ if (gisRegion != null) {
 			//x.buildingTypeGIS = p_buildingType;
 		} else */  if (p_id == GC.p_gridConnectionID) {
 			c_gridConnectionsInBuilding.add(GC);
-			GC.p_GISbuilding = this;
+			//GC.p_GISbuilding = this;
 			GC.c_connectedBuildings.add(this);
 			GC.p_floorSurfaceArea_m2 = remainingSurfaceArea_m2;
 			remainingSurfaceArea_m2 -= GC.p_floorSurfaceArea_m2;	
@@ -45954,95 +45989,6 @@ gisRegion.setLineWidth( width );]]></Body>
 		<Outputs>
 		</Outputs>
 	</RunConfiguration>
-	<Experiments>	
-		<!--   =========   Simulation Experiment   ========  -->
-		<SimulationExperiment ActiveObjectClassId="1658477103140">
-			<Id>1658477103156</Id>
-			<Name><![CDATA[Simulation]]></Name>
-			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
-			<MaximumMemory>4096</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
-			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<SeedValue>1</SeedValue>
-			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
-			<VmArgs><![CDATA[]]></VmArgs>
-			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
-
-
-			<Parameters>			
-				<Parameter>
-					<ParameterName><![CDATA[p_timeStep_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_addKpiVisuals]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_undergroundTemperature_degC]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[10]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_dataOut]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_experimentSettingsData]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_parallelize]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_simulationResults]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_forecastTime_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_hourlyCurvesData]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_anylogicCostsForAllContracts]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_storeProfiles]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_startHourWinterWeek]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_startHourSummerWeek]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_plotInterval_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_truckTripsExcel]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_householdTripsExcel]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_cookingPatternExcel]]></ParameterName>
-				</Parameter>
-			</Parameters>			
-			<PresentationProperties>
-				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[MainModel : Simulation]]></Title>	
-				<EnableDeveloperPanel>true</EnableDeveloperPanel>
-				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
-				<RealTimeScale>25.0</RealTimeScale>
-			</PresentationProperties>
-			<ModelTimeProperties>
-				<StopOption><![CDATA[Stop at specified time]]></StopOption>
-				<InitialDate><![CDATA[1640995200000]]></InitialDate>	
-				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1672531200000]]></FinalDate>	
-				<FinalTime><![CDATA[8760.0]]></FinalTime>	
-			</ModelTimeProperties>
-			<BypassInitialScreen>true</BypassInitialScreen>
-		</SimulationExperiment>	
-	</Experiments>
 	<JavaClasses>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
