@@ -6244,6 +6244,7 @@ f_initializeForecasts();
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
+pop_gridNodes.forEach(gn -> gn.f_calculateKPIs());
 
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIs());
@@ -45984,98 +45985,6 @@ gisRegion.setLineWidth( width );]]></Body>
 		<Outputs>
 		</Outputs>
 	</RunConfiguration>
-	<Experiments>	
-		<!--   =========   Simulation Experiment   ========  -->
-		<SimulationExperiment ActiveObjectClassId="1658477103140">
-			<Id>1658477103156</Id>
-			<Name><![CDATA[Simulation]]></Name>
-			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
-			<MaximumMemory>4096</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
-			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<SeedValue>1</SeedValue>
-			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
-			<VmArgs><![CDATA[]]></VmArgs>
-			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
-
-
-			<Parameters>			
-				<Parameter>
-					<ParameterName><![CDATA[p_timeStep_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_addKpiVisuals]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_undergroundTemperature_degC]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[10]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_dataOut]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_experimentSettingsData]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_parallelize]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_simulationResults]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_forecastTime_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[j_hourlyCurvesData]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_anylogicCostsForAllContracts]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[b_storeProfiles]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_startHourWinterWeek]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_startHourSummerWeek]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_plotInterval_h]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_truckTripsExcel]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_householdTripsExcel]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_cookingPatternExcel]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_year]]></ParameterName>
-				</Parameter>
-			</Parameters>			
-			<PresentationProperties>
-				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
-				<Title><![CDATA[MainModel : Simulation]]></Title>	
-				<EnableDeveloperPanel>true</EnableDeveloperPanel>
-				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
-				<RealTimeScale>25.0</RealTimeScale>
-			</PresentationProperties>
-			<ModelTimeProperties>
-				<StopOption><![CDATA[Stop at specified time]]></StopOption>
-				<InitialDate><![CDATA[1640995200000]]></InitialDate>	
-				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1672531200000]]></FinalDate>	
-				<FinalTime><![CDATA[8760.0]]></FinalTime>	
-			</ModelTimeProperties>
-			<BypassInitialScreen>true</BypassInitialScreen>
-		</SimulationExperiment>	
-	</Experiments>
 	<JavaClasses>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
