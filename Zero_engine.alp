@@ -6218,6 +6218,7 @@ f_initializeForecasts();
 
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIs());
+//pop_gridNodes.foreach(gn -> gn.f_calculateKPIs());
 
 f_sumMolecularEnergyFlows();
 f_sumGridNodeLoads();
@@ -13966,7 +13967,7 @@ geupdate vanuit
 					<Id>1688375257135</Id>
 					<Name><![CDATA[v_electricLoadRatioExclBattery]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>50</X><Y>830</Y>
+					<X>50</X><Y>800</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14059,6 +14060,36 @@ geupdate vanuit
 						<Type><![CDATA[double[]]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1713272859203</Id>
+					<Name><![CDATA[v_annualElectricityDrawn_kWh]]></Name>
+					<X>400</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1713272862480</Id>
+					<Name><![CDATA[v_annualElectricityDelivered_kWh]]></Name>
+					<X>400</X><Y>830</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -14793,9 +14824,10 @@ if (energyModel.v_isRapidRun){
 	//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 	//data_annualElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW); // replace with array!
 	a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentLoadElectricity_kW;
+	v_annualElectricityDrawn_kWh += max(v_currentLoadElectricity_kW, 0)*energyModel.p_timeStep_h;;
+	v_annualElectricityDelivered_kWh += max(-v_currentLoadElectricity_kW, 0)*energyModel.p_timeStep_h;
 } else {
 	//data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW);
-
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -14953,8 +14985,8 @@ if (energyModel.v_isRapidRun) {
 	if (abs(v_currentLoadElectricityLowPassed_kW) > p_capacity_kW) {
 		//traceln("Overloaded gridNode %s! %s kW", p_gridNodeID, abs(v_currentLoadElectricityLowPassed_kW));
 		v_totalTimeOverloaded_h	+= energyModel.p_timeStep_h;
-		v_totalExcessExport_kWh += max(0,-v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
-		v_totalExcessImport_kWh += max(0,v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
+		v_totalExcessExport_kWh += energyModel.p_timeStep_h*max(0,-v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
+		v_totalExcessImport_kWh += energyModel.p_timeStep_h*max(0,v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
 	}
 	
 	v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
@@ -14978,7 +15010,12 @@ if (energyModel.v_isRapidRun) {
 		v_peakPosLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
 		v_timeOfPeakPosLoadFiltered_h = time(HOUR);
 	}
-}	
+}
+else {
+	data_liveElectricityLoad_kW.update();
+	data_gridCapacityDemand_kW.update();
+	data_gridCapacitySupply_kW.update();
+}
 if (p_energyType.equals(OL_EnergyCarrierType.HEAT) & b_transportBufferValid ) { // Thermal load unbalance goes into transportBuffer
 //	double v_powerFraction_fr = Double.isNaN( -v_currentLoadHeat_kW / p_transportBuffer.getHeatCapacity_kW() )? 0 : -v_currentLoadHeat_kW / p_transportBuffer.getHeatCapacity_kW();
 	double v_powerFraction_fr = -v_currentLoadHeat_kW / p_transportBuffer.getHeatCapacity_kW();
@@ -14991,7 +15028,8 @@ if (p_energyType.equals(OL_EnergyCarrierType.HEAT) & b_transportBufferValid ) { 
 }
 
 //traceln("GridNode " + p_gridNodeID + " update at time " + time(HOUR));
-f_nodeMetering();]]></Body>
+f_nodeMetering();
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -15052,8 +15090,59 @@ v_hydrogenDrawn_kWh = 0;
 v_hydrogenDelivered_kWh = 0;
 v_heatDrawn_kWh = 0;
 v_heatDelivered_kWh = 0;
-
+v_annualElectricityDrawn_kWh = 0;
+v_annualElectricityDelivered_kWh = 0;
 ]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1713180380782</Id>
+					<Name><![CDATA[f_duurkrommes]]></Name>
+					<X>800</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Sorting netload values for belastingsduurkromme
+
+data_netbelastingDuurkrommeVorige_kW.reset();
+
+boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
+traceln("bool: " + notFirstRun);
+int arraySize = a_annualElectricityBalance_kW.length;
+
+// First we make sure to store our previous Load Curve
+for(int i=0; i<arraySize ; i++) {
+	if (notFirstRun) {
+		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+	}
+}
+
+// We copy our array to preserve it as a time-series
+double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
+
+// Sort all arrays
+Arrays.parallelSort(netLoadArrayAnnual_kW);
+
+// Write results to datasets
+data_netbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1713181018774</Id>
+					<Name><![CDATA[f_calculateKPIs]]></Name>
+					<X>780</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[f_duurkrommes();]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -15105,9 +15194,8 @@ v_heatDelivered_kWh = 0;
 				</DataSet>
     			<DataSet>
 					<Id>1705919330576</Id>
-					<Name><![CDATA[data_liveElectricityBalance_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>40</X><Y>870</Y>
+					<Name><![CDATA[data_liveElectricityLoad_kW]]></Name>
+					<X>40</X><Y>840</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15124,7 +15212,126 @@ v_heatDelivered_kWh = 0;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentLoadElectricity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1712656330845</Id>
+					<Name><![CDATA[data_liveElectricityNegLoad_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>40</X><Y>860</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1712736000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,-v_currentLoadElectricity_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1712668669449</Id>
+					<Name><![CDATA[data_gridCapacityDemand_kW]]></Name>
+					<X>40</X><Y>880</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1712736000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[p_capacity_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1712673776914</Id>
+					<Name><![CDATA[data_gridCapacitySupply_kW]]></Name>
+					<X>340</X><Y>880</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1712736000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[-p_capacity_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1713184991233</Id>
+					<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+					<X>40</X><Y>960</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1713254400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1713185071483</Id>
+					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>940</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1713254400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
@@ -19298,6 +19505,8 @@ if (energyModel.v_isRapidRun){
 	a_annualElectricityProduction_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityProduction_kW;
 	a_annualElectricityConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
 	a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
+	
+	
 } else {
 	data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
 	
@@ -48971,6 +49180,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	public double v_tripDist_km;
 	public double v_energyNeedForNextTrip_kWh;
 	public double v_nextEventStartTime_min;
+	public double distanceScaling_fr = 1.0;
 	
     /**
      * Default constructor
@@ -49087,7 +49297,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			
 		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
 			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
-			v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
+			v_tripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex ); // Update upcoming trip distance
 		
 			
 			if (Vehicle instanceof J_EAEV) {
@@ -49102,7 +49312,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 					nextTripDist_km = 0;//distances_km.get( 0 );
 					nextTripStartTime_min = endtimes_min.get(v_eventIndex);
 				} else {		
-					nextTripDist_km = distances_km.get( v_eventIndex+1 );
+					nextTripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex+1 );
 					nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
 				}
 				double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
