@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -451,6 +451,10 @@
 			<Option>
 				<Id>1697466302695</Id>
 				<Name><![CDATA[HVTRANSFORMER]]></Name>
+			</Option>
+			<Option>
+				<Id>1713426522585</Id>
+				<Name><![CDATA[PARCEL]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -15141,7 +15145,6 @@ v_annualElectricityDelivered_kWh = 0;
 data_netbelastingDuurkrommeVorige_kW.reset();
 
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
-traceln("bool: " + notFirstRun);
 int arraySize = a_annualElectricityBalance_kW.length;
 
 // First we make sure to store our previous Load Curve
@@ -44235,7 +44238,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<X>50</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 						<Type><![CDATA[GISRegion]]></Type>
@@ -46027,6 +46030,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
 		this.capacityElectric_kW = capacityElectric_kW;
+	}
+	
+	public double getCapacityElectric_kW() {
+		return this.capacityElectric_kW;
 	}
 
 	@Override
