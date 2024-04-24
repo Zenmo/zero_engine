@@ -33699,7 +33699,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		//if (energyModel.v_isRapidRun){		
 		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
 			v_currentEnergyProduction_kW += GC.v_currentEnergyProduction_kW;
-			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;*/			
+			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;			
 			v_currentElectricityConsumption_kW += GC.v_currentElectricityConsumption_kW;
 			v_currentElectricityProduction_kW += GC.v_currentElectricityProduction_kW; 
 			
@@ -34758,11 +34758,13 @@ double totalOwnElectricityProduced_MWh = Arrays.stream(a_annualOwnElectricityPro
 //double totalSelfConsumedElec_MWh = totalGenerationElec_MWh - energyModel.v_totalElectricityExport_MWh; // What about effect of PV on members' roofs? Should do this per timestep, based on coop production... But acceptable approx. for now.
 double totalDeliveredElec_MWh = v_totalElectricitySelfConsumed_MWh + v_electricityImported_kWh/1000; // v_totalElectricitySelfConsumed_MWh includes feed-in from customers that is re-delivered. However, it's only delivery, not feed-in! (Niet gesaldeerd)
 double totalFeedin_MWh = v_electricityExported_kWh/1000 + totalDeliveredElec_MWh - totalOwnElectricityProduced_MWh - v_electricityImported_kWh/1000; // This should include all the energy that is received from customers!
+double nettDeliveredElec_MWh = totalDeliveredElec_MWh - totalFeedin_MWh;
 traceln("Total Coop Assets production: %s MWh", totalOwnElectricityProduced_MWh); // Includes feed-in from customers! Also need production from own assets only!
 traceln("Total delivered electricity to customers, including feed-in from customers not sold on EPEX: %s MWh", roundToDecimal(totalDeliveredElec_MWh,2));
 traceln("Total feedin from customers, both sold on EPEX and re-deliverd to other customers: %s MWh", totalFeedin_MWh);
 
 if (p_actorID.equals("coopHeibloem")) {
+	totalDeliveredElec_MWh = nettDeliveredElec_MWh; // Assume that nettDelivered is what counts for finances, such that feed-in tarrif is accounted for!
 	double consumerPrice_eurpMWh = ((assetAvgLCOE_eurpMWh + bufferCost_eurpMWh) * totalOwnElectricityProduced_MWh - EPEXbalance_eur - SDEincome_eur)/totalDeliveredElec_MWh;
 	double totalIncomeCoop_eur = totalDeliveredElec_MWh * consumerPrice_eurpMWh + SDEincome_eur + EPEXincome_eur;
 	double totalCostCoop_eur = EPEXcosts_eur + (assetAvgLCOE_eurpMWh + bufferCost_eurpMWh)*totalOwnElectricityProduced_MWh; 
