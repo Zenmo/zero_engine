@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140457" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -6708,7 +6708,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	data_totalNetLoad_kW.update();
 		
 	if (b_addKpiVisuals) {
-		UI_EnergyAsset.f_updateData();
+		pop_UI_EnergyAsset.forEach(agent -> agent.f_updateData());
 	}
 } ]]></Body>
 				</Function>
@@ -10539,7 +10539,7 @@ v_timeStepsElapsed ++;
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1658499722957</Id>
-					<Name><![CDATA[UI_EnergyAsset]]></Name>
+					<Name><![CDATA[pop_UI_EnergyAsset]]></Name>
 					<X>297</X><Y>362</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -10570,9 +10570,9 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_assetName]]></Name>
 						</Parameter>
 					</Parameters>
-					<ReplicationFlag>false</ReplicationFlag>
+					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
+						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
@@ -10600,7 +10600,7 @@ v_timeStepsElapsed ++;
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
-					<InitializationType>EMPTY</InitializationType>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
 					<InitializationDatabaseTableQuery>
 						<TableReference>
 						</TableReference>
@@ -23293,12 +23293,32 @@ for(int i=0; i< arraySize; i++) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int assetNr = ed_assetNr.getIntValue();
-j_ea = energyModel.c_energyAssets.get(assetNr);
+					<Parameter>
+						<Name><![CDATA[EA]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[j_ea = EA;
 p_energyAssetType = j_ea.energyAssetType;
 p_assetName = j_ea.energyAssetName;
 p_parentAgent = j_ea.parentAgent;
 ]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1713876926099</Id>
+					<Name><![CDATA[f_showPlot]]></Name>
+					<X>970</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[showPlot]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[//plot.setPos(1500,500);
+plot.setVisible(showPlot);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -30665,24 +30685,137 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1660572036696</Id>
-			<Name><![CDATA[UI_OUD]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[GCPreZero]]></Name>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
-				<ClassName><![CDATA[Actor]]></ClassName>
+				<ClassName><![CDATA[GridConnection]]></ClassName>
 			</ExtendsReference>
 			<Parameters>
 				<Parameter>
-					<Name><![CDATA[p_actorGroup]]></Name>
+					<Name><![CDATA[p_gridConnectionCategory]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorSubgroup]]></Name>
+					<Name><![CDATA[p_gridConnectionType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorID]]></Name>
+					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_actorType]]></Name>
+					<Name><![CDATA[p_parentNodeElectricID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentNodeHeatID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_BuildingThermalAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_primaryHeatingAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_ownerID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatingType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyAssetList]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_batteryOperationMode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_batteryAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoStart_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_elektrolyserOperationMode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatBuffer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gasBuffer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_cookingTracker]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyLabel]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISPoint]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_woonplaats]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisletter]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_toevoeging]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_postcode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pandIdentiteit]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_owner]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_requestedConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -30776,48 +30909,11 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 			</ScaleRuler>
 			<CurrentLevel>1660572036695</CurrentLevel>
 			<ConnectionsId>1660572036691</ConnectionsId>
-			<Variables>
-				<Variable Class="Parameter">
-					<Id>1703255242678</Id>
-					<Name><![CDATA[p_mainTenantID]]></Name>
-					<X>60</X><Y>140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1703255242676</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1703255275617</Id>
-					<Name><![CDATA[c_GISBuildings]]></Name>
-					<X>60</X><Y>170</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[Object]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-			</Variables>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1660572036691</Id>
 					<Name><![CDATA[connections]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>50</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -30832,30 +30928,6 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<LineWidth>1</LineWidth>
 					<LineColor>-16777216</LineColor>
 					<LineZOrder>ABOVE_AGENTS</LineZOrder>
-					<LineArrow>NONE</LineArrow>
-					<LineArrowPosition>END</LineArrowPosition>
-				</AgentLink>
-				<AgentLink>
-					<Id>1703255147006</Id>
-					<Name><![CDATA[mainTenant]]></Name>
-					<Description><![CDATA[Link naar onderliggende actor of netConnection. Gebruikt om actoren te linken aan netConnection objecten, of actoren aan actoren te linken (bijv. leden van de Coop)
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-					<X>50</X><Y>-20</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<HandleReceiveInConnections>false</HandleReceiveInConnections>
-					<AgentLinkType>SINGLE_LINK</AgentLinkType>
-					<AgentReferenceId>1660224852394</AgentReferenceId>
-					<AgentLinkBidirectional>false</AgentLinkBidirectional>
-					<MessageType><![CDATA[Object]]></MessageType>
-					<LineStyle>SOLID</LineStyle>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineZOrder>UNDER_AGENTS</LineZOrder>
 					<LineArrow>NONE</LineArrow>
 					<LineArrowPosition>END</LineArrowPosition>
 				</AgentLink>
@@ -30875,6 +30947,54 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
+			<Presentation>
+				<Text>
+					<Id>1713857741092</Id>
+					<Name><![CDATA[t_PreZero]]></Name>
+					<X>1720</X><Y>20</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[PreZero
+]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Line>
+					<Id>1713857759601</Id>
+					<Name><![CDATA[line10]]></Name>
+					<X>1675</X><Y>45</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>140</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+			</Presentation>
 
 				</Level>
 			</Presentation>
@@ -49735,16 +49855,6 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 		</JavaClass>
 	</JavaClasses>
 	<ModelResources>
-		<Resource>
-			<Path><![CDATA[windmill-svgrepo-com.png]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[solarfarm.png]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
