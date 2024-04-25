@@ -5478,6 +5478,7 @@ for(GridNode m : c_gridNodesMSLS ) {
 	
 	double maxLoad_fr = max(m.v_peakPosLoadElectricity_kW, m.v_peakNegLoadElectricity_kW)/m.p_capacity_kW;
 
+/*
 	if (maxLoad_fr > 1) {
 		m.gisRegion.setFillColor(red);
 		m.gisRegion.setLineColor( red.brighter() );
@@ -5488,7 +5489,7 @@ for(GridNode m : c_gridNodesMSLS ) {
 		m.gisRegion.setFillColor(green);
 		m.gisRegion.setLineColor( green.brighter() );
 	}
-	
+*/
 	//traceln("MSLS node peak load unfiltered: " + m.v_peakLoadAbsoluteElectricity_kW + " kW");
 	//traceln("Grid node " + m.p_gridNodeID);
 	//traceln("MSLS peak positive load filtered: " + roundToDecimal(m.v_peakPosLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakPosLoadFiltered_h + " h");
@@ -14829,7 +14830,9 @@ for( Agent a : subConnections.getConnections() )
 
 /*if( p_energyType == OL_EnergyCarrierType.ELECTRICITY ){
 	v_electricLoadRatioExclBattery = v_currentLoadElectricity_kW / p_capacity_kW;
-}*/]]></Body>
+}*/
+
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23659,7 +23662,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					</Labels>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<TimeWindowUnits>HOUR</TimeWindowUnits>
 					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
 					<VerScaleType>AUTO</VerScaleType>
@@ -23695,8 +23698,8 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>192</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[96]]></TimeWindowExpression>
+					<SamplesToKeep>96</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[24]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
@@ -25342,6 +25345,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 		<ActiveObjectClass>
 			<Id>1658764971887</Id>
 			<Name><![CDATA[UI_GridConnection]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_loader]]></PackageName>
 				<ClassName><![CDATA[Project_data]]></ClassName>
@@ -47100,12 +47104,6 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[com.anylogic.libraries.modules.markup_descriptors]]></LibraryName>
 		<VersionMajor>1</VersionMajor>
-		<VersionMinor>0</VersionMinor>
-		<VersionBuild>0</VersionBuild>
-    </RequiredLibraryReference>
-    <RequiredLibraryReference>
-		<LibraryName><![CDATA[zero_loader]]></LibraryName>
-		<VersionMajor>0</VersionMajor>
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
