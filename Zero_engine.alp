@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.6.202312140503" AlpVersion="8.8.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1009,6 +1009,7 @@ import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.FileOutputStream;
 import java.util.stream.Stream;
+import java.util.stream.IntStream;
 import java.util.Dictionary.*;
 import java.util.Hashtable.*;
 import java.util.*;
@@ -3958,6 +3959,36 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714216338618</Id>
+					<Name><![CDATA[a_annualDaytimeIdxs]]></Name>
+					<X>580</X><Y>1000</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[roundToInt(8760/p_timeStep_h)]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1714216362817</Id>
+					<Name><![CDATA[a_annualNighttimeIdxs]]></Name>
+					<X>580</X><Y>1020</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[roundToInt(8760/p_timeStep_h)]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -6244,7 +6275,12 @@ f_initializeForecasts();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Totals from arrays:
+					<Body><![CDATA[/*// intStream.parallel experiment works to extract daytime consumption! Now benchmark performance...
+double daytimeEnergyUsed_MWh = IntStream.range(0, a_annualDaytimeIdxs.length).parallel().mapToDouble(idx -> a_annualEnergyConsumption_kW[idx]*a_annualDaytimeIdxs[idx]).sum()*p_timeStep_h/1000;
+traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnergyUsed_MWh, daytimeEnergyUsed_MWh);
+*/
+
+// Totals from arrays:
 v_totalEnergyUsed_MWh = Arrays.stream( a_annualEnergyConsumption_kW ).sum() * p_timeStep_h / 1000;
 v_totalEnergyProduced_MWh= Arrays.stream( a_annualEnergyProduction_kW ).sum() * p_timeStep_h / 1000;
 v_totalElectricityProduced_MWh = Arrays.stream( a_annualElectricityProduction_kW ).sum() * p_timeStep_h / 1000;
@@ -6256,7 +6292,7 @@ if (p_parallelize) {
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
-pop_gridNodes.forEach(gn -> gn.f_calculateKPIs());
+pop_gridNodes.forEach(gn -> gn.f_calculateKPIs()); // This concerns a relatively small collection, so no need for parallelStream.
 
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 
@@ -6532,7 +6568,11 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_daytimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * p_timeStep_h;
 		v_daytimePeakElecImport_kW = max(v_daytimePeakElecImport_kW,v_currentElectricityImport_kW);
 		v_daytimePeakElecExport_kW = max(v_daytimePeakElecExport_kW,v_currentElectricityExport_kW);
-	} /*else { // Nighttime totals calculated after simulation as annualtotals - daytime_totals
+		a_annualDaytimeIdxs[v_timeStepsElapsed] = 1;
+	} else { 
+		a_annualDaytimeIdxs[v_timeStepsElapsed] = 0;
+	}
+	/*else { // Nighttime totals calculated after simulation as annualtotals - daytime_totals
 		v_nighttimeTotalImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
 		v_nighttimeTotalExport_MWh += v_currentEnergyExport_kW / 1000 * p_timeStep_h;
 		v_nighttimeElectricityImport_MWh += max(0,v_totalElectricPower_kW) / 1000 * p_timeStep_h;
@@ -20285,10 +20325,7 @@ if ( p_BuildingThermalAsset == null ) {
 	flowsArray = p_secondaryHeatingAsset.f_updateAllFlows(0);
 	v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 	p_BuildingThermalAsset.f_updateAllFlows(0);
-}
-
-
-]]></Body>
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -20428,7 +20465,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
 					<Body><![CDATA[double totalElectricVehiclesCharging = sum( c_vehiclesAvailableForCharging, x -> x.vehicleScaling);
-double maxChargingSpeed = availableCapacityForCharging / totalElectricVehiclesCharging;
+double chargeSetpoint_kW = availableCapacityForCharging / totalElectricVehiclesCharging;
 ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
@@ -20441,7 +20478,18 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	}
 	else {
 		if (ev.vehicleScaling != 0) {
-			double chargingSpeed = min (maxChargingSpeed, ev.capacityElectric_kW / ev.vehicleScaling );
+			double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+			//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - time( MINUTE );
+			double maxChargingPower_kW = ev.getElectricCapacity_kW();
+			//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
+			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+			
+			if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+			//traceln("Urgency charging! May exceed connection capacity!");
+				chargeSetpoint_kW = maxChargingPower_kW ;	
+			}
+			
+			double chargingSpeed = min (chargeSetpoint_kW, ev.capacityElectric_kW / ev.vehicleScaling );
 			double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
 			/*if ( ev.getChargingTimeToFull_MIN() > EA.nextEventStartTime_min - energyModel.p_timeStep_h * 60 ){
 				ratio = 1;
@@ -25323,6 +25371,75 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 			<Id>1658764971887</Id>
 			<Name><![CDATA[UI_GridConnection]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<ExtendsReference>
+				<PackageName><![CDATA[zero_bedrijventerrein_drechtsteden]]></PackageName>
+				<ClassName><![CDATA[Project_data]]></ClassName>
+			</ExtendsReference>
+			<Parameters>
+				<Parameter>
+					<Name><![CDATA[project_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[project_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[neighbourhood_ef]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[building_data_ef]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[residence_objects_ef]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[trafos_ef]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[survey_data_ef]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[consumption_data_ef]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[h2_electrolyser_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[nbh_battery_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[map_centre_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[map_centre_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[solar_park_1_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[solar_park_2_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[charge_centre_1_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[charge_centre_2_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[wind_farm_1_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[wind_farm_2_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[grid_operator]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[energy_coop]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[energy_supplier]]></Name>
+				</Parameter>
+			</Parameters>
 			<StartupCode><![CDATA[f_setNetConnectionVisual();
 pl_powerFlows.setVisible(false);]]></StartupCode>
 			<Generic>false</Generic>
