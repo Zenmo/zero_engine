@@ -25439,6 +25439,18 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 				<Parameter>
 					<Name><![CDATA[energy_supplier]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionCategory]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnectionType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridConnection]]></Name>
+				</Parameter>
 			</Parameters>
 			<StartupCode><![CDATA[f_setNetConnectionVisual();
 pl_powerFlows.setVisible(false);]]></StartupCode>
@@ -25536,7 +25548,7 @@ pl_powerFlows.setVisible(false);]]></StartupCode>
 			<Variables>
 				<Variable Class="Parameter">
 					<Id>1658922494420</Id>
-					<Name><![CDATA[p_netConnectionID]]></Name>
+					<Name><![CDATA[p_gridConnectionID]]></Name>
 					<X>80</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25557,7 +25569,7 @@ pl_powerFlows.setVisible(false);]]></StartupCode>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658922517357</Id>
-					<Name><![CDATA[p_netConnectionCategory]]></Name>
+					<Name><![CDATA[p_gridConnectionCategory]]></Name>
 					<X>80</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25578,7 +25590,7 @@ pl_powerFlows.setVisible(false);]]></StartupCode>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658935468891</Id>
-					<Name><![CDATA[p_netConnectionType]]></Name>
+					<Name><![CDATA[p_gridConnectionType]]></Name>
 					<X>80</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
