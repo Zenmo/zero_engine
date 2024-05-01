@@ -4131,7 +4131,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1663577621791</Id>
@@ -12827,12 +12827,6 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_buildingAdress]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_buildingName]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_detailedCompany]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_huisnummer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12849,12 +12843,6 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_postcode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_ownerID]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_owner]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
@@ -42498,53 +42486,9 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1702460377745</Id>
-					<Name><![CDATA[p_buildingName]]></Name>
-					<X>40</X><Y>390</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1702460377743</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1702460377748</Id>
-					<Name><![CDATA[p_detailedCompany]]></Name>
-					<Description><![CDATA[Is het een bedrijf dat in detail gemodeleerd gaat worden? ja, nee, misschien]]></Description>
-					<X>40</X><Y>410</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1702460377746</Id>
-							<Label><![CDATA[p_detailedCompany]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1704894398523</Id>
 					<Name><![CDATA[p_huisnummer]]></Name>
-					<X>40</X><Y>450</Y>
+					<X>40</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42565,7 +42509,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398526</Id>
 					<Name><![CDATA[p_openbareR]]></Name>
-					<X>40</X><Y>430</Y>
+					<X>40</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42586,7 +42530,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398534</Id>
 					<Name><![CDATA[p_woonplaats]]></Name>
-					<X>40</X><Y>530</Y>
+					<X>40</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42607,7 +42551,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398537</Id>
 					<Name><![CDATA[p_huisletter]]></Name>
-					<X>40</X><Y>470</Y>
+					<X>40</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42628,7 +42572,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398540</Id>
 					<Name><![CDATA[p_toevoeging]]></Name>
-					<X>40</X><Y>490</Y>
+					<X>40</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42649,7 +42593,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398543</Id>
 					<Name><![CDATA[p_postcode]]></Name>
-					<X>40</X><Y>510</Y>
+					<X>40</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42660,48 +42604,6 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1704894398541</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1704894709233</Id>
-					<Name><![CDATA[p_ownerID]]></Name>
-					<X>40</X><Y>80</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704894709231</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1712920094710</Id>
-					<Name><![CDATA[p_owner]]></Name>
-					<X>40</X><Y>60</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[ConnectionOwner]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1712920094708</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -43869,6 +43771,12 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    //this.energyAssetType = OL_EnergyAssetType.GAS_BURNER;
+	    
+	    // Validation checks
+	    if (capacityHeat_kW == 0) {
+	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
+	    	
+	    }
 	}
 
     @Override
