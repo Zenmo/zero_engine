@@ -1030,7 +1030,13 @@ import java.time.LocalDate;]]></Import>
 //j_simulationResults = new J_SimulationResults();
 //j_hourlyCurvesData = new J_HourlyCurvesData();
 
-LocalDate localDate = LocalDate.of(p_year, 1, 1); 
+LocalDate localDate = LocalDate.of(p_year, 1, 1);
+Date startDate = date();
+startDate.setYear(p_year-1900);
+traceln("p_year is: %s", p_year);
+//startDate.set
+getExperiment().getEngine().setStartDate(startDate); 
+
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
 			<Generic>false</Generic>
