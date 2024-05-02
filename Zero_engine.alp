@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -4420,7 +4420,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2019]]></Code>
+							<Code><![CDATA[2023]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1712844009287</Id>
@@ -19406,7 +19406,7 @@ v_currentLoadLowPassed_kW = v_currentPowerElectricity_kW;]]></Action>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1658500398176</Id>
 					<Name><![CDATA[f_connectToParentNode]]></Name>
-					<X>801</X><Y>113</Y>
+					<X>801</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20662,7 +20662,7 @@ return level;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1677512714652</Id>
 					<Name><![CDATA[f_setOperatingSwitches]]></Name>
-					<X>800</X><Y>133</Y>
+					<X>800</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21278,6 +21278,97 @@ for(int i=0; i< arraySize; i++) {
 	data_weekendNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekend_kW[i]);
 }
 */]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1714646521271</Id>
+					<Name><![CDATA[f_removeTheJ_EA]]></Name>
+					<X>800</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[j_ea]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[f_removeTheJ_EA_default(j_ea);
+// Abstract method to be used call GC-subtype specific functions]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1714646913998</Id>
+					<Name><![CDATA[f_removeTheJ_EA_default]]></Name>
+					<X>970</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[j_ea]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_energyAssets.remove(j_ea);
+energyModel.c_energyAssets.add(j_ea);
+
+if (j_ea instanceof J_EAVehicle) {
+	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
+	if (vehicle instanceof J_EADieselVehicle) {
+		c_dieselVehicles.remove( (J_EADieselVehicle)vehicle );		
+	} else if (vehicle instanceof J_EAHydrogenVehicle) {
+		c_hydrogenVehicles.remove((J_EAHydrogenVehicle)vehicle);		
+	} else if (vehicle instanceof J_EAEV) {
+		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
+		energyModel.c_EVs.remove((J_EAEV)vehicle);
+	}
+	c_vehicleAssets.remove(vehicle);
+	J_ActivityTrackerTrips tripTracker;
+	tripTracker = vehicle.tripTracker;
+	c_tripTrackers.remove( tripTracker );
+	vehicle.tripTracker = null;
+	v_vehicleIndex --;
+} else if (j_ea instanceof J_EAConsumption) {
+	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+		p_DHWAsset = null;	
+	}
+} else if (j_ea instanceof J_EAProduction) {
+	c_productionAssets.remove((J_EAProduction)j_ea);
+	//energyModel.c_productionAssets.remove((J_EAProduction)j_ea);
+	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = true;}
+} else if (j_ea instanceof J_EAConversion) {
+	c_conversionAssets.remove((J_EAConversion)j_ea);
+	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+		p_cookingTracker = null;
+	} else if (j_ea instanceof J_EAConversionCurtailer) {
+		p_curtailer = null;
+	} else if (j_ea instanceof J_EAConversionGasBurner) {
+		p_primaryHeatingAsset = null;
+	} else if (j_ea instanceof J_EAConversionHeatPump) {
+		p_primaryHeatingAsset = null;
+	} else if (j_ea instanceof J_EAConversionCurtailer) {
+		p_curtailer = null;
+	}
+} else if  (j_ea instanceof J_EAStorage) {
+	c_storageAssets.remove((J_EAStorage)j_ea);
+	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
+	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+		energyModel.c_ambientAirDependentAssets.remove(j_ea);
+		p_BuildingThermalAsset = null;
+	} else if (j_ea instanceof J_EAStorageGas) {
+		p_gasBuffer = null;
+	} else if (j_ea instanceof J_EAStorageElectric) {
+		p_batteryAsset = null;
+	}
+} else if  (j_ea instanceof J_EAProfile) {
+	//p_energyProfile = null;
+	c_profileAssets.remove((J_EAProfile)j_ea);
+} else {
+	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+}
+]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -23034,6 +23125,8 @@ for(int i=0; i< arraySize; i++) {
 //if( assetCategory == PRODUCTION){
 //	main.c_productionAssets.add(this);
 //}
+
+f_setCoordinatesUIElements();
 ]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -23413,7 +23506,7 @@ p_assetName = j_ea.energyAssetName;
 p_parentAgent = j_ea.parentAgent;
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713969761331</Id>
@@ -23436,6 +23529,36 @@ v_currentConsumptionHydrogen_kW = arr[6];
 v_currentProductionHeat_kW = arr[3];
 v_currentConsumptionHeat_kW = arr[7];
 v_currentConsumptionDiesel_kW = arr[8];]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1714653114094</Id>
+					<Name><![CDATA[f_setCoordinatesUIElements]]></Name>
+					<X>730</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//plot.setX(0);
+//plot.setY(0);
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1714654478601</Id>
+					<Name><![CDATA[f_setVisibilities]]></Name>
+					<X>730</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[isVisible]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[plot.setVisible(isVisible);]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -23497,7 +23620,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>710</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -23522,7 +23645,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>760</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -23544,7 +23667,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>700</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -23569,7 +23692,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>680</X><Y>234</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -23591,7 +23714,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>700</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -23616,7 +23739,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>680</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -23637,7 +23760,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Name><![CDATA[line]]></Name>
 					<X>80</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -23661,7 +23784,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Name><![CDATA[text1]]></Name>
 					<X>110</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -23682,7 +23805,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Name><![CDATA[line1]]></Name>
 					<X>80</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -23706,7 +23829,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Name><![CDATA[text2]]></Name>
 					<X>110</X><Y>220</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -23727,11 +23850,11 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Name><![CDATA[plot]]></Name>
 					<X>430</X><Y>300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
+					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>false</AutoUpdate>
+					<AutoUpdate>true</AutoUpdate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1668499200000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -23804,8 +23927,8 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>96</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[24]]></TimeWindowExpression>
+					<SamplesToKeep>768</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[168]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
@@ -23814,7 +23937,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Name><![CDATA[text3]]></Name>
 					<X>560</X><Y>300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -23943,7 +24066,7 @@ p_parentAgent = j_ea.parentAgent;
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>360</X><Y>30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -43282,9 +43405,9 @@ gisRegion.setLineWidth( width );]]></Body>
 		<MaximumMemory>4096</MaximumMemory>
 		<ModelTimeProperties>
 			<StopOption><![CDATA[Stop at specified date]]></StopOption>
-			<InitialDate><![CDATA[1640995200000]]></InitialDate>	
+			<InitialDate><![CDATA[1672531200000]]></InitialDate>	
 			<InitialTime><![CDATA[0.0]]></InitialTime>	
-			<FinalDate><![CDATA[1672531200000]]></FinalDate>	
+			<FinalDate><![CDATA[1704067200000]]></FinalDate>	
 			<FinalTime><![CDATA[8760.0]]></FinalTime>	
 		</ModelTimeProperties>
 		<AnimationProperties>
