@@ -6297,8 +6297,6 @@ pop_gridNodes.forEach(gn -> gn.f_calculateKPIs()); // This concerns a relatively
 
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
 
-//pop_gridNodes.foreach(gn -> gn.f_calculateKPIs());
-
 f_sumMolecularEnergyFlows();
 f_sumGridNodeLoads();
 f_sumBatteryUse();
@@ -10046,7 +10044,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225379</Id>
@@ -10068,7 +10066,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225382</Id>
@@ -10090,7 +10088,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225385</Id>
@@ -10112,7 +10110,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225388</Id>
@@ -10134,7 +10132,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225391</Id>
@@ -10156,7 +10154,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225394</Id>
@@ -10179,7 +10177,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225397</Id>
@@ -10201,7 +10199,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1706645225400</Id>
@@ -10223,7 +10221,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
+					<SamplesToKeep>366</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1708507900127</Id>
@@ -14133,31 +14131,31 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1701945941397</Id>
-					<Name><![CDATA[v_totalExcessExport_kWh]]></Name>
-					<X>400</X><Y>730</Y>
+					<Name><![CDATA[a_totalExcessExport_kW]]></Name>
+					<X>400</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double[]]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
+							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1701945961810</Id>
-					<Name><![CDATA[v_totalExcessImport_kWh]]></Name>
+					<Name><![CDATA[a_totalExcessImport_kW]]></Name>
 					<X>400</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[double[]]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
+							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -14178,8 +14176,8 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1713272859203</Id>
-					<Name><![CDATA[v_annualElectricityDrawn_kWh]]></Name>
-					<X>400</X><Y>810</Y>
+					<Name><![CDATA[v_annualElectricityDrawn_MWh]]></Name>
+					<X>670</X><Y>790</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14193,8 +14191,398 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1713272862480</Id>
-					<Name><![CDATA[v_annualElectricityDelivered_kWh]]></Name>
-					<X>400</X><Y>830</Y>
+					<Name><![CDATA[v_annualElectricityDelivered_MWh]]></Name>
+					<X>670</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715007701783</Id>
+					<Name><![CDATA[v_annualElectricityImport_MWh]]></Name>
+					<X>670</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715007721718</Id>
+					<Name><![CDATA[v_annualElectricityExport_MWh]]></Name>
+					<X>670</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016274483</Id>
+					<Name><![CDATA[v_summerWeekElectricityDrawn_MWh]]></Name>
+					<X>990</X><Y>790</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016274485</Id>
+					<Name><![CDATA[v_summerWeekElectricityDelivered_MWh]]></Name>
+					<X>990</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016274487</Id>
+					<Name><![CDATA[v_summerWeekElectricityImport_MWh]]></Name>
+					<X>990</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016274489</Id>
+					<Name><![CDATA[v_summerWeekElectricityExport_MWh]]></Name>
+					<X>990</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016405650</Id>
+					<Name><![CDATA[v_winterWeekElectricityDrawn_MWh]]></Name>
+					<X>990</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016405652</Id>
+					<Name><![CDATA[v_winterWeekElectricityDelivered_MWh]]></Name>
+					<X>990</X><Y>900</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016405654</Id>
+					<Name><![CDATA[v_winterWeekElectricityImport_MWh]]></Name>
+					<X>990</X><Y>840</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715016405656</Id>
+					<Name><![CDATA[v_winterWeekElectricityExport_MWh]]></Name>
+					<X>990</X><Y>860</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563202</Id>
+					<Name><![CDATA[v_daytimeElectricityDrawn_MWh]]></Name>
+					<X>1330</X><Y>790</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563204</Id>
+					<Name><![CDATA[v_daytimeElectricityDelivered_MWh]]></Name>
+					<X>1330</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563206</Id>
+					<Name><![CDATA[v_daytimeElectricityImport_MWh]]></Name>
+					<X>1330</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563208</Id>
+					<Name><![CDATA[v_daytimeElectricityExport_MWh]]></Name>
+					<X>1330</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563210</Id>
+					<Name><![CDATA[v_nighttimeElectricityDrawn_MWh]]></Name>
+					<X>1330</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563212</Id>
+					<Name><![CDATA[v_nighttimeElectricityDelivered_MWh]]></Name>
+					<X>1330</X><Y>900</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563214</Id>
+					<Name><![CDATA[v_nighttimeElectricityImport_MWh]]></Name>
+					<X>1330</X><Y>840</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066563216</Id>
+					<Name><![CDATA[v_nighttimeElectricityExport_MWh]]></Name>
+					<X>1330</X><Y>860</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576717</Id>
+					<Name><![CDATA[v_weekdayElectricityDrawn_MWh]]></Name>
+					<X>1640</X><Y>790</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576719</Id>
+					<Name><![CDATA[v_weekdayElectricityDelivered_MWh]]></Name>
+					<X>1640</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576721</Id>
+					<Name><![CDATA[v_weekdayElectricityImport_MWh]]></Name>
+					<X>1640</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576723</Id>
+					<Name><![CDATA[v_weekdayElectricityExport_MWh]]></Name>
+					<X>1640</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576725</Id>
+					<Name><![CDATA[v_weekendElectricityDrawn_MWh]]></Name>
+					<X>1640</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576727</Id>
+					<Name><![CDATA[v_weekendElectricityDelivered_MWh]]></Name>
+					<X>1640</X><Y>900</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576729</Id>
+					<Name><![CDATA[v_weekendElectricityImport_MWh]]></Name>
+					<X>1640</X><Y>840</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715066576731</Id>
+					<Name><![CDATA[v_weekendElectricityExport_MWh]]></Name>
+					<X>1640</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14939,8 +15327,26 @@ if (energyModel.v_isRapidRun){
 	//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 	//data_annualElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW); // replace with array!
 	a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentLoadElectricity_kW;
-	v_annualElectricityDrawn_kWh += max(v_currentLoadElectricity_kW, 0)*energyModel.p_timeStep_h;;
-	v_annualElectricityDelivered_kWh += max(-v_currentLoadElectricity_kW, 0)*energyModel.p_timeStep_h;
+	v_annualElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
+	v_annualElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
+	a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] = max(0,v_currentLoadElectricity_kW-p_capacity_kW);
+	a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] = max(0,-v_currentLoadElectricity_kW-p_capacity_kW);
+
+
+	// Daytime
+	if (energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) {
+		v_daytimeElectricityExport_MWh += a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_daytimeElectricityImport_MWh += a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_daytimeElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
+		v_daytimeElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
+	}
+	// Weekdays
+	if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan-1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+		v_weekdayElectricityExport_MWh += a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_weekdayElectricityImport_MWh += a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_weekdayElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
+		v_weekdayElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
+	}
 } else {
 	//data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW);
 }]]></Body>
@@ -15100,8 +15506,6 @@ if (energyModel.v_isRapidRun) {
 	if (abs(v_currentLoadElectricityLowPassed_kW) > p_capacity_kW) {
 		//traceln("Overloaded gridNode %s! %s kW", p_gridNodeID, abs(v_currentLoadElectricityLowPassed_kW));
 		v_totalTimeOverloaded_h	+= energyModel.p_timeStep_h;
-		v_totalExcessExport_kWh += energyModel.p_timeStep_h*max(0,-v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
-		v_totalExcessImport_kWh += energyModel.p_timeStep_h*max(0,v_currentLoadElectricityLowPassed_kW-p_capacity_kW);
 	}
 	
 	v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
@@ -15193,9 +15597,20 @@ v_peakNegLoadElectricity_kW = 0;
 v_peakLoadFilteredElectricity_kW = 0;
 v_timeOfPeakLoadFiltered_h = 0;
 v_totalTimeOverloaded_h = 0;
-v_totalExcessExport_kWh = 0;
-v_totalExcessImport_kWh = 0;
-
+v_annualElectricityExport_MWh = 0;
+v_annualElectricityImport_MWh = 0;
+v_summerWeekElectricityExport_MWh = 0;
+v_summerWeekElectricityImport_MWh = 0;
+v_winterWeekElectricityExport_MWh = 0;
+v_winterWeekElectricityImport_MWh = 0;
+v_daytimeElectricityExport_MWh = 0;
+v_daytimeElectricityImport_MWh = 0;
+v_nighttimeElectricityExport_MWh = 0;
+v_nighttimeElectricityImport_MWh = 0;
+v_weekdayElectricityExport_MWh = 0;
+v_weekdayElectricityImport_MWh = 0;
+v_weekendElectricityExport_MWh = 0;
+v_weekendElectricityImport_MWh = 0;
 // Energy flows
 v_electricityDrawn_kWh = 0;
 v_electricityDelivered_kWh = 0;
@@ -15205,9 +15620,20 @@ v_hydrogenDrawn_kWh = 0;
 v_hydrogenDelivered_kWh = 0;
 v_heatDrawn_kWh = 0;
 v_heatDelivered_kWh = 0;
-v_annualElectricityDrawn_kWh = 0;
-v_annualElectricityDelivered_kWh = 0;
-]]></Body>
+v_annualElectricityDrawn_MWh = 0;
+v_annualElectricityDelivered_MWh = 0;
+v_summerWeekElectricityDrawn_MWh = 0;
+v_summerWeekElectricityDelivered_MWh = 0;
+v_winterWeekElectricityDrawn_MWh = 0;
+v_winterWeekElectricityDelivered_MWh = 0;
+v_daytimeElectricityDrawn_MWh = 0;
+v_daytimeElectricityDelivered_MWh = 0;
+v_nighttimeElectricityDrawn_MWh = 0;
+v_nighttimeElectricityDelivered_MWh = 0;
+v_weekdayElectricityDrawn_MWh = 0;
+v_weekdayElectricityDelivered_MWh = 0;
+v_weekendElectricityDrawn_MWh = 0;
+v_weekendElectricityDelivered_MWh = 0;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -15219,32 +15645,117 @@ v_annualElectricityDelivered_kWh = 0;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Sorting netload values for belastingsduurkromme
+					<Body><![CDATA[data_netbelastingDuurkrommeVorige_kW.reset();
 
-data_netbelastingDuurkrommeVorige_kW.reset();
-
-boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
+boolean notFirstRun = data_netbelastingDuurkromme_kW.size() > 0 ? true : false;
 int arraySize = a_annualElectricityBalance_kW.length;
 
-// First we make sure to store our previous Load Curve
+// We copy our annual array to preserve it as a time-series and make new arrays for the others
+double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
+double[] netLoadArraySummerweek_kW = new double[(int) Math.round(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayWinterweek_kW= new double[(int) Math.round(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayDaytime_kW = new double[arraySize/2];
+double[] netLoadArrayNighttime_kW = new double[arraySize/2];
+// For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
+ArrayList<Double> listNetLoadArrayWeekday_kW = new ArrayList<>(); 
+ArrayList<Double> listNetLoadArrayWeekend_kW = new ArrayList<>();
+
+int i_winter=0;
+int i_summer=0;
+int i_day=0;
+int i_night=0;
+int i_weekday=0;
+int i_weekend=0;
 for(int i=0; i<arraySize ; i++) {
 	if (notFirstRun) {
+		// First we make sure to store our previous Load Curve
 		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+		// summer/winter
+		if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+			netLoadArraySummerweek_kW[i_summer]=-a_annualElectricityBalance_kW[i];
+			i_summer++;
+		}
+		if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+			netLoadArrayWinterweek_kW[i_winter]=-a_annualElectricityBalance_kW[i];
+			i_winter++;
+		}
+		// day/night
+		if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
+			netLoadArrayDaytime_kW[i_day]=-a_annualElectricityBalance_kW[i];
+			i_day++;
+		} else {
+			netLoadArrayNighttime_kW[i_night]=-a_annualElectricityBalance_kW[i];
+			i_night++;
+		}	
+		//Weekday/weekend
+		if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+			listNetLoadArrayWeekday_kW.add(-a_annualElectricityBalance_kW[i]);
+			i_weekday++;
+		} else {
+			listNetLoadArrayWeekend_kW.add(-a_annualElectricityBalance_kW[i]);
+			i_weekend++;
+		}
 	}
 }
 
-// We copy our array to preserve it as a time-series
-double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
+// Now we have the size of the weekday & weekend arrays.
+double[] netLoadArrayWeekday_kW = new double[listNetLoadArrayWeekday_kW.size()];
+double[] netLoadArrayWeekend_kW = new double[listNetLoadArrayWeekend_kW.size()];
+for (int i = 0; i < listNetLoadArrayWeekday_kW.size(); i++) {
+	netLoadArrayWeekday_kW[i] = listNetLoadArrayWeekday_kW.get(i);
+}
+for (int i = 0; i < listNetLoadArrayWeekend_kW.size(); i++) {
+	netLoadArrayWeekend_kW[i] = listNetLoadArrayWeekend_kW.get(i);
+}
 
 // Sort all arrays
 Arrays.parallelSort(netLoadArrayAnnual_kW);
+Arrays.parallelSort(netLoadArraySummerweek_kW);
+Arrays.parallelSort(netLoadArrayWinterweek_kW);
+Arrays.parallelSort(netLoadArrayDaytime_kW);
+Arrays.parallelSort(netLoadArrayNighttime_kW);
+Arrays.parallelSort(netLoadArrayWeekday_kW);
+Arrays.parallelSort(netLoadArrayWeekend_kW);
 
 // Write results to datasets
+// Netbelastingduurkromme year
 data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
 	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
-]]></Body>
+// Netbelastingduurkromme summer / winter
+data_summerWeekNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArraySummerweek_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_summerWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArraySummerweek_kW[i]);
+}
+data_winterWeekNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayWinterweek_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_winterWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWinterweek_kW[i]);
+}
+// Netbelastingduurkromme day / night
+data_daytimeNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayDaytime_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_daytimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayDaytime_kW[i]);
+}
+data_nighttimeNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayNighttime_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_nighttimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayNighttime_kW[i]);
+}
+// Netbelastingduurkromme weekday / weekend
+data_weekdayNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayWeekday_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_weekdayNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekday_kW[i]);
+}
+data_weekendNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayWeekend_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_weekendNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -15256,7 +15767,43 @@ for(int i=0; i< arraySize; i++) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[f_duurkrommes();]]></Body>
+					<Body><![CDATA[f_duurkrommes();
+
+// AnnualElectricityDrawn and Delivered was done during the year simulation as it would otherwise require a filter here
+v_annualElectricityImport_MWh = Arrays.stream(a_totalExcessImport_kW).sum() * energyModel.p_timeStep_h / 1000;
+v_annualElectricityExport_MWh = Arrays.stream(a_totalExcessExport_kW).sum() * energyModel.p_timeStep_h / 1000;
+
+// Winter/summer week totals
+// Calcs summerweek
+int startIdx = roundToInt(energyModel.p_startHourSummerWeek/energyModel.p_timeStep_h);
+int endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
+
+v_summerWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessImport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekElectricityExport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessExport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekElectricityDrawn_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekElectricityDelivered_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
+
+// Calcs winterweek
+startIdx = roundToInt(energyModel.p_startHourWinterWeek/energyModel.p_timeStep_h);
+endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
+
+v_winterWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessImport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekElectricityExport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessExport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekElectricityDrawn_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekElectricityDelivered_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
+
+
+// Calcs nighttime
+v_nighttimeElectricityImport_MWh = v_annualElectricityImport_MWh - v_daytimeElectricityImport_MWh;
+v_nighttimeElectricityExport_MWh = v_annualElectricityExport_MWh - v_daytimeElectricityExport_MWh;
+v_nighttimeElectricityDrawn_MWh = v_annualElectricityDrawn_MWh - v_daytimeElectricityDrawn_MWh;
+v_nighttimeElectricityDelivered_MWh = v_annualElectricityDelivered_MWh - v_daytimeElectricityDelivered_MWh;
+
+// Calcs weekend
+v_weekendElectricityImport_MWh = v_annualElectricityImport_MWh - v_weekdayElectricityImport_MWh;
+v_weekendElectricityExport_MWh = v_annualElectricityExport_MWh - v_weekdayElectricityExport_MWh;
+v_weekendElectricityDrawn_MWh = v_annualElectricityDrawn_MWh - v_weekdayElectricityDrawn_MWh;
+v_weekendElectricityDelivered_MWh = v_annualElectricityDelivered_MWh - v_weekdayElectricityDelivered_MWh;]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -15436,6 +15983,138 @@ for(int i=0; i< arraySize; i++) {
 					<AutoUpdate>false</AutoUpdate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1713254400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715070370156</Id>
+					<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>1010</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715070450785</Id>
+					<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>1030</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715070554866</Id>
+					<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>1070</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>17520</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715070557065</Id>
+					<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>1050</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>17520</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715070560648</Id>
+					<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>1090</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715070562711</Id>
+					<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
+					<X>40</X><Y>1110</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
@@ -18154,6 +18833,141 @@ import java.io.*;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685641</Id>
+					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kWh]]></Name>
+					<X>740</X><Y>2110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685643</Id>
+					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kWh]]></Name>
+					<X>740</X><Y>2130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685645</Id>
+					<Name><![CDATA[v_dailyElectricCarsDemand_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>740</X><Y>2150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685647</Id>
+					<Name><![CDATA[v_dailyElectricTrucksDemand_kWh]]></Name>
+					<X>740</X><Y>2170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685649</Id>
+					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kWh]]></Name>
+					<X>740</X><Y>2190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685651</Id>
+					<Name><![CDATA[v_dailyPVGeneration_kWh]]></Name>
+					<X>740</X><Y>2220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685653</Id>
+					<Name><![CDATA[v_dailyWindGeneration_kWh]]></Name>
+					<X>740</X><Y>2240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685655</Id>
+					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kWh]]></Name>
+					<X>740</X><Y>2260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086685657</Id>
+					<Name><![CDATA[v_dailyV2GSupply_kWh]]></Name>
+					<X>740</X><Y>2280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086756834</Id>
+					<Name><![CDATA[v_dailyElectricitySupply_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>740</X><Y>2090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715086759851</Id>
+					<Name><![CDATA[v_dailyElectricityDemand_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>740</X><Y>2070</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -19579,6 +20393,7 @@ if (energyModel.v_isRapidRun){
 
 	double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW));
 	double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW));
+	
 	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
 		v_daytimeTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 		v_daytimeTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
@@ -19603,7 +20418,7 @@ if (energyModel.v_isRapidRun){
 	}  */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
 
 	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
-	if ((energyModel.t_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 		v_weekdayTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 		
@@ -19627,6 +20442,76 @@ if (energyModel.v_isRapidRun){
 	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Summer week
+	if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
+		data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
+		data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_conversionPowerElectric_kW);
+		//data_summerWeekElectricCarsDemand_kW.add(energyModel.t_h, v_electricCarsDemand_kW);
+		data_summerWeekElectricTrucksDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
+		data_summerWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+		
+		data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
+		data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
+		data_summerWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
+		data_summerWeekV2GSupply_kW.add(energyModel.t_h, -min(0,v_evChargingPowerElectric_kW));
+	}
+	
+	//Winter week
+	if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
+		data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
+		data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_conversionPowerElectric_kW);
+		//data_winterWeekElectricCarsDemand_kW.add(energyModel.t_h, v_electricCarsDemand_kW);
+		data_winterWeekElectricTrucksDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
+		data_winterWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+		
+		data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
+		data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
+		data_winterWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
+		data_winterWeekV2GSupply_kW.add(energyModel.t_h, -min(0, v_evChargingPowerElectric_kW));
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// Daily Totals used in year profile.
+	//v_dailyElectricityDemand_kWh += v_currentElectricityConsumption_kW*energyModel.p_timeStep_h;
+	//v_dailyElectricitySupply_kWh += v_currentElectricityProduction_kW*energyModel.p_timeStep_h; 
+	// Demand
+	v_dailyBaseloadElectricityDemand_kWh += v_fixedConsumptionElectric_kW * energyModel.p_timeStep_h;
+	v_dailyHeatPumpElectricityDemand_kWh += v_conversionPowerElectric_kW * energyModel.p_timeStep_h;
+	v_dailyElectricTrucksDemand_kWh += max(0,v_evChargingPowerElectric_kW) * energyModel.p_timeStep_h;
+	v_dailyNeighborhoodBatteryDemand_kWh += max(0,v_batteryPowerElectric_kW) * energyModel.p_timeStep_h;
+	// Supply
+	v_dailyPVGeneration_kWh += v_pvProductionElectric_kW * energyModel.p_timeStep_h;
+	v_dailyWindGeneration_kWh += v_windProductionElectric_kW * energyModel.p_timeStep_h;
+	v_dailyNeighborhoodBatterySupply_kWh += max(0,-v_batteryPowerElectric_kW) * energyModel.p_timeStep_h;
+	v_dailyV2GSupply_kWh += -min(0,v_evChargingPowerElectric_kW) * energyModel.p_timeStep_h;
+	if (energyModel.t_h % 24 == 23) {
+		//data_annualElectricityDemand_MWh.add(energyModel.t_h, v_dailyElectricityDemand_kWh/1000);
+		//data_annualElectricitySupply_MWh.add(energyModel.t_h, v_dailyElectricitySupply_kWh/1000); 
+		// Demand
+		data_annualBaseloadElectricityDemand_MWh.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kWh/1000);
+		data_annualHeatPumpElectricityDemand_MWh.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kWh/1000);
+		data_annualElectricTrucksDemand_MWh.add(energyModel.t_h, v_dailyElectricTrucksDemand_kWh/1000);
+		data_annualNeighborhoodBatteryDemand_MWh.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kWh/1000);
+		// Supply
+		data_annualPVGeneration_MWh.add(energyModel.t_h, v_dailyPVGeneration_kWh/1000);
+		data_annualWindGeneration_MWh.add(energyModel.t_h, v_dailyWindGeneration_kWh/1000);
+		data_annualNeighborhoodBatterySupply_MWh.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kWh/1000);
+		data_annualV2GSupply_MWh.add(energyModel.t_h, v_dailyV2GSupply_kWh/1000);
+		// Resetting the daily values
+		//v_dailyElectricityDemand_kWh = 0;
+		//v_dailyElectricitySupply_kWh = 0;
+		v_dailyBaseloadElectricityDemand_kWh = 0;
+		v_dailyHeatPumpElectricityDemand_kWh = 0;
+		v_dailyElectricTrucksDemand_kWh = 0;
+		v_dailyNeighborhoodBatteryDemand_kWh = 0;
+		v_dailyPVGeneration_kWh = 0;
+		v_dailyWindGeneration_kWh = 0;
+		v_dailyNeighborhoodBatterySupply_kWh = 0;
+		v_dailyV2GSupply_kWh = 0;
+
+	}
+	
 	// Store time series in arrays
 	a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerElectricity_kW;
 	a_annualMethaneBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerMethane_kW;
@@ -20133,21 +21018,35 @@ v_totalEnergyUsed_MWh = 0;
 v_totalHeatProduced_MWh = 0;
 v_totalImport_MWh = 0;
 v_totalExport_MWh = 0;
+v_totalEnergyUsed_MWh = 0;
 
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
 
-v_weekdayTotalImport_MWh = 0;
-v_weekdayTotalExport_MWh = 0;
-v_weekdayEnergyUsed_MWh = 0;
-v_weekdayEnergyProduced_MWh = 0;
-v_weekdayElectricityConsumed_MWh = 0;
-v_weekdayElectricityProduced_MWh = 0;
-v_weekdayMethaneImport_MWh = 0;
-v_weekdayHydrogenImport_MWh = 0;
-v_weekdayDieselImport_MWh = 0;
-v_weekdayElectricityImport_MWh = 0;
-v_weekdayElectricityExport_MWh = 0;
+
+v_summerWeekTotalImport_MWh = 0;
+v_summerWeekTotalExport_MWh = 0;
+v_summerWeekEnergyUsed_MWh = 0;
+v_summerWeekEnergyProduced_MWh = 0;
+v_summerWeekElectricityConsumed_MWh = 0;
+v_summerWeekElectricityProduced_MWh = 0;
+v_summerWeekMethaneImport_MWh = 0;
+v_summerWeekHydrogenImport_MWh = 0;
+v_summerWeekDieselImport_MWh = 0;
+v_summerWeekElectricityImport_MWh = 0;
+v_summerWeekElectricityExport_MWh = 0;
+
+v_winterWeekTotalImport_MWh = 0;
+v_winterWeekTotalExport_MWh = 0;
+v_winterWeekEnergyUsed_MWh = 0;
+v_winterWeekEnergyProduced_MWh = 0;
+v_winterWeekElectricityConsumed_MWh = 0;
+v_winterWeekElectricityProduced_MWh = 0;
+v_winterWeekMethaneImport_MWh = 0;
+v_winterWeekHydrogenImport_MWh = 0;
+v_winterWeekDieselImport_MWh = 0;
+v_winterWeekElectricityImport_MWh = 0;
+v_winterWeekElectricityExport_MWh = 0;
 
 v_daytimeTotalImport_MWh = 0;
 v_daytimeTotalExport_MWh = 0;
@@ -20161,6 +21060,82 @@ v_daytimeDieselImport_MWh = 0;
 v_daytimeElectricityImport_MWh = 0;
 v_daytimeElectricityExport_MWh = 0;
 
+
+v_nighttimeTotalImport_MWh = 0;
+v_nighttimeTotalExport_MWh = 0;
+v_nighttimeEnergyUsed_MWh = 0;
+v_nighttimeEnergyProduced_MWh = 0;
+v_nighttimeElectricityConsumed_MWh = 0;
+v_nighttimeElectricityProduced_MWh = 0;
+v_nighttimeMethaneImport_MWh = 0;
+v_nighttimeHydrogenImport_MWh = 0;
+v_nighttimeDieselImport_MWh = 0;
+v_nighttimeElectricityImport_MWh = 0;
+v_nighttimeElectricityExport_MWh = 0;
+
+v_weekdayTotalImport_MWh = 0;
+v_weekdayTotalExport_MWh = 0;
+v_weekdayEnergyUsed_MWh = 0;
+v_weekdayEnergyProduced_MWh = 0;
+v_weekdayElectricityConsumed_MWh = 0;
+v_weekdayElectricityProduced_MWh = 0;
+v_weekdayMethaneImport_MWh = 0;
+v_weekdayHydrogenImport_MWh = 0;
+v_weekdayDieselImport_MWh = 0;
+v_weekdayElectricityImport_MWh = 0;
+v_weekdayElectricityExport_MWh = 0;
+
+v_weekendTotalImport_MWh = 0;
+v_weekendTotalExport_MWh = 0;
+v_weekendEnergyUsed_MWh = 0;
+v_weekendEnergyProduced_MWh = 0;
+v_weekendElectricityConsumed_MWh = 0;
+v_weekendElectricityProduced_MWh = 0;
+v_weekendMethaneImport_MWh = 0;
+v_weekendHydrogenImport_MWh = 0;
+v_weekendDieselImport_MWh = 0;
+v_weekendElectricityImport_MWh = 0;
+v_weekendElectricityExport_MWh = 0;
+
+
+// Daily totals
+v_dailyBaseloadElectricityDemand_kWh = 0;
+v_dailyHeatPumpElectricityDemand_kWh = 0;
+v_dailyElectricTrucksDemand_kWh = 0;
+v_dailyNeighborhoodBatteryDemand_kWh = 0;
+v_dailyPVGeneration_kWh = 0;
+v_dailyWindGeneration_kWh = 0;
+v_dailyNeighborhoodBatterySupply_kWh = 0;
+v_dailyV2GSupply_kWh = 0;
+
+data_annualBaseloadElectricityDemand_MWh.reset();
+data_annualHeatPumpElectricityDemand_MWh.reset();
+data_annualElectricTrucksDemand_MWh.reset();
+data_annualNeighborhoodBatteryDemand_MWh.reset();
+data_annualPVGeneration_MWh.reset();
+data_annualWindGeneration_MWh.reset();
+data_annualNeighborhoodBatterySupply_MWh.reset();
+data_annualV2GSupply_MWh.reset();
+
+// Summer / Winterweek profile data
+/*
+data_summerWeekBaseloadElectricityDemand_kW.reset();
+data_summerWeekHeatPumpElectricityDemand_kW.reset();
+data_summerWeekElectricTrucksDemand_kW.reset();
+data_summerWeekNeighborhoodBatteryDemand_kW.reset();
+data_summerWeekPVGeneration_kW.reset();
+data_summerWeekWindGeneration_kW.reset();
+data_summerWeekNeighborhoodBatterySupply_kW.reset();
+data_summerWeekV2GSupply_kW.reset();
+data_winterWeekBaseloadElectricityDemand_kW.reset();
+data_winterWeekHeatPumpElectricityDemand_kW.reset();
+data_winterWeekElectricTrucksDemand_kW.reset();
+data_winterWeekNeighborhoodBatteryDemand_kW.reset();
+data_winterWeekPVGeneration_kW.reset();
+data_winterWeekWindGeneration_kW.reset();
+data_winterWeekNeighborhoodBatterySupply_kW.reset();
+data_winterWeekV2GSupply_kW.reset();
+*/
 //Reset gridconnections flows:
 v_electricityDrawnFromGrid_kWh = 0;
 v_electricityDeliveredToGrid_kWh = 0;
@@ -21156,7 +22131,124 @@ v_currentPowerDiesel_kW += arr[8];
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Sorting netload values for belastingsduurkromme
+					<Body><![CDATA[data_netbelastingDuurkrommeVorige_kW.reset();
+
+boolean notFirstRun = data_netbelastingDuurkromme_kW.size() > 0 ? true : false;
+int arraySize = a_annualElectricityBalance_kW.length;
+
+// We copy our annual array to preserve it as a time-series and make new arrays for the others
+double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
+double[] netLoadArraySummerweek_kW = new double[(int) Math.round(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayWinterweek_kW= new double[(int) Math.round(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayDaytime_kW = new double[arraySize/2];
+double[] netLoadArrayNighttime_kW = new double[arraySize/2];
+// For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
+ArrayList<Double> listNetLoadArrayWeekday_kW = new ArrayList<>(); 
+ArrayList<Double> listNetLoadArrayWeekend_kW = new ArrayList<>();
+
+int i_winter=0;
+int i_summer=0;
+int i_day=0;
+int i_night=0;
+int i_weekday=0;
+int i_weekend=0;
+for(int i=0; i<arraySize ; i++) {
+	if (notFirstRun) {
+		// First we make sure to store our previous Load Curve
+		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+		// summer/winter
+		if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+			netLoadArraySummerweek_kW[i_summer]=-a_annualElectricityBalance_kW[i];
+			i_summer++;
+		}
+		if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+			netLoadArrayWinterweek_kW[i_winter]=-a_annualElectricityBalance_kW[i];
+			i_winter++;
+		}
+		// day/night
+		if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
+			netLoadArrayDaytime_kW[i_day]=-a_annualElectricityBalance_kW[i];
+			i_day++;
+		} else {
+			netLoadArrayNighttime_kW[i_night]=-a_annualElectricityBalance_kW[i];
+			i_night++;
+		}	
+		//Weekday/weekend
+		if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+			listNetLoadArrayWeekday_kW.add(-a_annualElectricityBalance_kW[i]);
+			i_weekday++;
+		} else {
+			listNetLoadArrayWeekend_kW.add(-a_annualElectricityBalance_kW[i]);
+			i_weekend++;
+		}
+	}
+}
+
+// Now we have the size of the weekday & weekend arrays.
+double[] netLoadArrayWeekday_kW = new double[listNetLoadArrayWeekday_kW.size()];
+double[] netLoadArrayWeekend_kW = new double[listNetLoadArrayWeekend_kW.size()];
+for (int i = 0; i < listNetLoadArrayWeekday_kW.size(); i++) {
+	netLoadArrayWeekday_kW[i] = listNetLoadArrayWeekday_kW.get(i);
+}
+for (int i = 0; i < listNetLoadArrayWeekend_kW.size(); i++) {
+	netLoadArrayWeekend_kW[i] = listNetLoadArrayWeekend_kW.get(i);
+}
+
+// Sort all arrays
+Arrays.parallelSort(netLoadArrayAnnual_kW);
+Arrays.parallelSort(netLoadArraySummerweek_kW);
+Arrays.parallelSort(netLoadArrayWinterweek_kW);
+Arrays.parallelSort(netLoadArrayDaytime_kW);
+Arrays.parallelSort(netLoadArrayNighttime_kW);
+Arrays.parallelSort(netLoadArrayWeekday_kW);
+Arrays.parallelSort(netLoadArrayWeekend_kW);
+
+// Write results to datasets
+// Netbelastingduurkromme year
+data_netbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
+}
+// Netbelastingduurkromme summer / winter
+data_summerWeekNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArraySummerweek_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_summerWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArraySummerweek_kW[i]);
+}
+data_winterWeekNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayWinterweek_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_winterWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWinterweek_kW[i]);
+}
+// Netbelastingduurkromme day / night
+data_daytimeNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayDaytime_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_daytimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayDaytime_kW[i]);
+}
+data_nighttimeNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayNighttime_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_nighttimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayNighttime_kW[i]);
+}
+// Netbelastingduurkromme weekday / weekend
+data_weekdayNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayWeekday_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_weekdayNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekday_kW[i]);
+}
+data_weekendNetbelastingDuurkromme_kW.reset();
+arraySize = netLoadArrayWeekend_kW.length;
+for(int i=0; i< arraySize; i++) {
+	data_weekendNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
+}
+
+
+
+// OLD CODE:
+
+/*
+// Sorting netload values for belastingsduurkromme
 //data_netbelastingDuurkrommeVorige_kW.reset();
 //data_netbelastingshistogram_kW.reset();
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
@@ -21180,9 +22272,9 @@ int i_weekday=0;
 int i_weekend=0;
 for(int i=0; i<arraySize ; i++) {
 	//netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
-	/*if (notFirstRun) {
+	if (notFirstRun) {
 		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
-	}*/
+	} 
 	// summer/winter
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummer_kW[i_summer]=-a_annualElectricityBalance_kW[i];
@@ -21323,7 +22415,7 @@ if (j_ea instanceof J_EAVehicle) {
 		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
 	}
-	c_vehicleAssets.remove(vehicle);
+	c_vehicleAssets.remove(j_ea);
 	J_ActivityTrackerTrips tripTracker;
 	tripTracker = vehicle.tripTracker;
 	c_tripTrackers.remove( tripTracker );
@@ -21337,7 +22429,7 @@ if (j_ea instanceof J_EAVehicle) {
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.remove((J_EAProduction)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = true;}
+	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = false;}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
@@ -21979,6 +23071,803 @@ if (j_ea instanceof J_EAVehicle) {
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentEnergyProduction_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075328326</Id>
+					<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+					<X>150</X><Y>2060</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075355793</Id>
+					<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
+					<X>150</X><Y>2080</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075355803</Id>
+					<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
+					<X>150</X><Y>2100</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075355808</Id>
+					<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
+					<X>150</X><Y>2140</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>17520</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075355812</Id>
+					<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
+					<X>150</X><Y>2120</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>17520</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075355818</Id>
+					<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
+					<X>150</X><Y>2160</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715075355823</Id>
+					<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
+					<X>150</X><Y>2180</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040026</Id>
+					<Name><![CDATA[data_annualHeatPumpElectricityDemand_MWh]]></Name>
+					<X>1070</X><Y>2130</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040034</Id>
+					<Name><![CDATA[data_annualWindGeneration_MWh]]></Name>
+					<X>1070</X><Y>2250</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040041</Id>
+					<Name><![CDATA[data_annualV2GSupply_MWh]]></Name>
+					<X>1070</X><Y>2290</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040046</Id>
+					<Name><![CDATA[data_annualPVGeneration_MWh]]></Name>
+					<X>1070</X><Y>2230</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040051</Id>
+					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_MWh]]></Name>
+					<X>1070</X><Y>2190</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040056</Id>
+					<Name><![CDATA[data_annualBaseloadElectricityDemand_MWh]]></Name>
+					<X>1070</X><Y>2110</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040063</Id>
+					<Name><![CDATA[data_annualElectricCarsDemand_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1070</X><Y>2150</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040068</Id>
+					<Name><![CDATA[data_annualElectricTrucksDemand_MWh]]></Name>
+					<X>1070</X><Y>2170</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086040072</Id>
+					<Name><![CDATA[data_annualNeighborhoodBatterySupply_MWh]]></Name>
+					<X>1070</X><Y>2270</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086750378</Id>
+					<Name><![CDATA[data_annualElectricitySupply_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1070</X><Y>2090</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715086752844</Id>
+					<Name><![CDATA[data_annualElectricityDemand_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1070</X><Y>2070</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1715155200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>366</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549909</Id>
+					<Name><![CDATA[data_summerWeekHeatPumpElectricityDemand_kW]]></Name>
+					<X>1490</X><Y>2020</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549918</Id>
+					<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
+					<X>1490</X><Y>2130</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549924</Id>
+					<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
+					<X>1490</X><Y>2170</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549928</Id>
+					<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
+					<X>1490</X><Y>2110</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549933</Id>
+					<Name><![CDATA[data_summerWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<X>1490</X><Y>2080</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549939</Id>
+					<Name><![CDATA[data_summerWeekBaseloadElectricityDemand_kW]]></Name>
+					<X>1490</X><Y>2000</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549948</Id>
+					<Name><![CDATA[data_summerWeekElectricCarsDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1490</X><Y>2040</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549953</Id>
+					<Name><![CDATA[data_summerWeekElectricTrucksDemand_kW]]></Name>
+					<X>1490</X><Y>2060</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549958</Id>
+					<Name><![CDATA[data_summerWeekNeighborhoodBatterySupply_kW]]></Name>
+					<X>1490</X><Y>2150</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549974</Id>
+					<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
+					<X>1490</X><Y>2230</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549978</Id>
+					<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
+					<X>1490</X><Y>2350</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549983</Id>
+					<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
+					<X>1490</X><Y>2390</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549988</Id>
+					<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
+					<X>1490</X><Y>2330</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549993</Id>
+					<Name><![CDATA[data_winterWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<X>1490</X><Y>2290</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088549998</Id>
+					<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
+					<X>1490</X><Y>2210</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088550008</Id>
+					<Name><![CDATA[data_winterWeekElectricCarsDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1490</X><Y>2250</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088550013</Id>
+					<Name><![CDATA[data_winterWeekElectricTrucksDemand_kW]]></Name>
+					<X>1490</X><Y>2270</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715088550019</Id>
+					<Name><![CDATA[data_winterWeekNeighborhoodBatterySupply_kW]]></Name>
+					<X>1490</X><Y>2370</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -23930,7 +25819,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<SamplesToKeep>768</SamplesToKeep>
 					<TimeWindowExpression><![CDATA[168]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
-					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+					<LabelFormat>dd_MM</LabelFormat>
     			</TimePlot>
 				<Text>
 					<Id>1668420196225</Id>
@@ -27608,8 +29497,8 @@ return availablePower_kW;]]></Body>
 						<Name><![CDATA[requestedPower_kW]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[double price_eurph = 0; 
-double availablePower_kW = 0; 
+					<Body><![CDATA[double price_eurph = 0;
+double availablePower_kW = 0;
 double addedPrice_eurpkWh;
 double addedPower_kW;
 double currentPowerRequestLevel_kW;
