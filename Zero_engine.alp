@@ -3995,6 +3995,21 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1715074195578</Id>
+					<Name><![CDATA[v_kpiCalcsRuntime_ms]]></Name>
+					<X>557</X><Y>472</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -4137,7 +4152,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1663577621791</Id>
@@ -5487,7 +5502,7 @@ c_timesOfNodePeakLoads_h.clear();
 v_cumulativeGridCapacityHSMS_kW = 0;
 v_netOverloadDuration_h = 0;
 
-v_totalHeatProduced_MWh = 0;
+//v_totalHeatProduced_MWh = 0;
 
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
@@ -5536,13 +5551,6 @@ for(GridNode m : c_gridNodesMSLS ) {
 	//traceln("Grid node " + m.p_gridNodeID);
 	//traceln("MSLS peak positive load filtered: " + roundToDecimal(m.v_peakPosLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakPosLoadFiltered_h + " h");
 	//traceln("MSLS peak negative load filtered: " + roundToDecimal(m.v_peakNegLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakNegLoadFiltered_h + " h");
-}
-
-for(GridConnection g: c_gridConnections){ // What is this doing here??
-    c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
-    //v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
-    //v_totalElectricityProduced_MWh += g.v_totalElectricityProduced_MWh;
-    v_totalHeatProduced_MWh += g.v_totalHeatProduced_MWh;
 }
 
 // If the energy system only has LS nodes, determine KPI on LS level, otherwise on HS
@@ -6178,7 +6186,7 @@ traceln(" ");
 traceln("*** Running headless simulation *** ");
 traceln(" ");
 
-double startTime = System.currentTimeMillis();
+double startTime1 = System.currentTimeMillis();
 
 // Store and reset model states...
 
@@ -6218,6 +6226,32 @@ f_resetAnnualValues();
 //Run energy calculations loop
 for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 	// Update time-series for model-wide variables (such as temps, wind, etc.)
+	double startTime = System.currentTimeMillis();
+	f_updateTimeseries(t_h);
+	v_timeSeriesRuntime_ms += (System.currentTimeMillis()-startTime);
+	
+	// Operate assets on each gridConnection
+	startTime = System.currentTimeMillis();
+	f_calculateGridConnectionFlows(t_h);
+	v_gridConnectionsRuntime_ms += (System.currentTimeMillis()-startTime);
+	
+	// Calculate grid node flows
+	startTime = System.currentTimeMillis();
+	f_calculateGridnodeFlows(t_h);
+	v_gridNodesRuntime_ms += (System.currentTimeMillis()-startTime);
+	
+	// Financial accounting of energy flows
+	startTime = System.currentTimeMillis();
+	f_calculateFinancialFlows(t_h);
+	v_financialsRuntime_ms += (System.currentTimeMillis()-startTime);
+	
+	// Update elektriciteitsprijzen
+	startTime = System.currentTimeMillis();
+	f_updatePricesForNextTimestep(t_h);
+	v_incentivesRuntime_ms += (System.currentTimeMillis()-startTime);
+
+
+	/*// Update time-series for model-wide variables (such as temps, wind, etc.)
 	f_updateTimeseries(t_h);
 	
 	// Operate assets on each gridConnection
@@ -6231,13 +6265,15 @@ for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 	
 	// Update elektriciteitsprijzen
 	f_updatePricesForNextTimestep(t_h);
-	
+	*/
 	f_updateArrays(t_h);
 	
 	v_timeStepsElapsed++;
 }	
-traceln("HVMV overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
+//traceln("HVMV overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
+double startTime = System.currentTimeMillis();
 f_calculateKPIs();
+v_kpiCalcsRuntime_ms = (System.currentTimeMillis()-startTime);
 traceln("---FINISHED YEAR MODEL RUN----");
 
 //numberOfRuns++;
@@ -6260,7 +6296,7 @@ for (GridConnection GC : c_gridConnections) {
 v_isRapidRun = false;
 b_addKpiVisuals = true;
 
-double duration = System.currentTimeMillis() - startTime;
+double duration = System.currentTimeMillis() - startTime1;
 
 traceln("*** headless run duration: "+ duration/1000 + " s ***");
 
@@ -6299,6 +6335,13 @@ if (p_parallelize) {
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
+for(GridConnection g: c_gridConnections){ // What is this doing here??
+	    c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
+	    //v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
+	    //v_totalElectricityProduced_MWh += g.v_totalElectricityProduced_MWh;
+	    v_totalHeatProduced_MWh += g.v_totalHeatProduced_MWh;
+}	
+
 pop_gridNodes.forEach(gn -> gn.f_calculateKPIs()); // This concerns a relatively small collection, so no need for parallelStream.
 
 //traceln("Check methane import from array: %s MWh", Arrays.stream(a_annualMethaneBalance_kW).sum()* p_timeStep_h / 1000);
@@ -6669,7 +6712,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_winterWeekHour++;
 		//v_winterWeekPeakElecImport_kW = max(v_winterWeekPeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_winterWeekPeakElecExport_kW = max(v_winterWeekPeakElecExport_kW,v_currentElectricityExport_kW);
-		}
+	}
 	
 	double v_currentBaseloadElectricityDemand_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
 	double v_currentHeatPumpElectricityDemand_kW = sum(c_gridConnections, x->x.v_conversionPowerElectric_kW);
@@ -7009,29 +7052,19 @@ for(int i=0; i< arraySize; i++) {
 					<Body><![CDATA[// Update tijdreeksen in leesbare variabelen
 t_h = (v_timeStepsElapsed * p_timeStep_h + v_hourOfYearStart);// % 8760;
 
-double startTime = System.currentTimeMillis();
 f_updateTimeseries(t_h);
-v_timeSeriesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Operate assets on each gridConnection
-startTime = System.currentTimeMillis();
 f_calculateGridConnectionFlows(t_h);
-v_gridConnectionsRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Calculate grid node flows
-startTime = System.currentTimeMillis();
 f_calculateGridnodeFlows(t_h);
-v_gridNodesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Financial accounting of energy flows
-startTime = System.currentTimeMillis();
 f_calculateFinancialFlows(t_h);
-v_financialsRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Update elektriciteitsprijzen
-startTime = System.currentTimeMillis();
 f_updatePricesForNextTimestep(t_h);
-v_incentivesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 f_updateArrays(t_h);
 
@@ -16544,6 +16577,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028145282</Id>
 					<Name><![CDATA[v_electricityProducedPV_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16556,6 +16590,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028164395</Id>
 					<Name><![CDATA[v_electricityProducedWind_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16568,6 +16603,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028183310</Id>
 					<Name><![CDATA[v_electricityConsumedFixedProfile_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16580,6 +16616,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028204660</Id>
 					<Name><![CDATA[v_electricityConvertedToX_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16592,6 +16629,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028232758</Id>
 					<Name><![CDATA[v_electricityChargedByEVs_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16604,6 +16642,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028253782</Id>
 					<Name><![CDATA[v_electricityDischargedByEVs_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16629,6 +16668,7 @@ import java.io.*;]]></Import>
 					<Id>1671028416277</Id>
 					<Name><![CDATA[v_xConvertedToElectricity_kWh]]></Name>
 					<Description><![CDATA[This is the amount of kWh produced. So not the amount of kWh that goes in!]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16641,6 +16681,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028484635</Id>
 					<Name><![CDATA[v_electricityChargedByBattery_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16653,6 +16694,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028484651</Id>
 					<Name><![CDATA[v_electricityDischargedByBattery_kWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16730,6 +16772,7 @@ import java.io.*;]]></Import>
 					<Id>1677495410857</Id>
 					<Name><![CDATA[v_electricityTotalsCheck_kWh]]></Name>
 					<Description><![CDATA[Should always be zero]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19917,7 +19960,7 @@ v_currentElectricityProduction_kW = 0;
 v_currentEnergyConsumption_kW = 0;
 v_currentEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
-
+v_currentEnergyProductionHeat_kW = 0;
 
 // Categorical power flows
 v_fixedConsumptionElectric_kW = 0;
@@ -20167,7 +20210,7 @@ v_hydrogenDelivered_kWh = 0;
 v_heatDrawn_kWh = 0;
 v_heatDelivered_kWh = 0;
 
-// Not sure these are still used...
+/*// Not sure these are still used...
 v_electricityConsumedFixedProfile_kWh = 0;
 v_electricityProducedPV_kWh = 0;
 v_electricityProducedWind_kWh = 0;
@@ -20177,7 +20220,7 @@ v_electricityChargedByEVs_kWh = 0;
 v_electricityDischargedByEVs_kWh = 0;
 v_electricityChargedByBattery_kWh = 0;
 v_electricityDischargedByBattery_kWh = 0;
-
+*/
 
 /*// Reset datasets (is this really needed?)
 data_annualElectricityBalance_kW.reset();
@@ -21075,8 +21118,8 @@ for (J_EA e : c_energyAssets) {
 v_totalEnergyUsed_MWh = totalEnergyUsed_MWh;
 v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/		
 
-v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
-- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
+//v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
+//- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
 
 ]]></Body>
 				</Function>
@@ -21106,38 +21149,34 @@ v_currentPowerHydrogen_kW += arr[6] - arr[2];
 v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
 
-//if (energyModel.v_isRapidRun) { // Collecting total electricity consumption and production in energyModel!
-
-	if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
-		//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
-		//v_currentElectricityConsumption_kW += arr[4];
-		//v_currentElectricityConsumption_kW -= arr[0];
-		v_currentEnergyConsumption_kW += max(0,arr[9]);
-	} else { // For other assets, 		
-		if (caller instanceof J_EAConversionCurtailer) {
-			v_currentEnergyProduction_kW -= max(0,arr[9]);
-			v_currentElectricityProduction_kW -= arr[4];
-		} else {
-			v_currentEnergyProduction_kW += max(0,-arr[9]);
-			v_currentEnergyConsumption_kW += max(0,arr[9]);		
-			v_currentElectricityConsumption_kW += arr[4];
-			v_currentElectricityProduction_kW += arr[0];
-		}
+if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
+	//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
+	//v_currentElectricityConsumption_kW += arr[4];
+	//v_currentElectricityConsumption_kW -= arr[0];
+	v_currentEnergyConsumption_kW += max(0,arr[9]);
+} else { // For other assets, 		
+	if (caller instanceof J_EAConversionCurtailer) {
+		v_currentEnergyProduction_kW -= max(0,arr[9]);
+		v_currentElectricityProduction_kW -= arr[4];
+	} else {
+		v_currentEnergyProduction_kW += max(0,-arr[9]);
+		v_currentEnergyConsumption_kW += max(0,arr[9]);		
+		v_currentElectricityConsumption_kW += arr[4];
+		v_currentElectricityProduction_kW += arr[0];
 	}
-	//if ( arr[4] > 0 && arr[3] > arr[4]) {
-	if ( caller instanceof J_EAConversionHeatPump ) {
-		//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
-		v_currentEnergyProductionHeat_kW = -arr[9];
-		//v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
+}
+//if ( arr[4] > 0 && arr[3] > arr[4]) {
+if ( caller instanceof J_EAConversionHeatPump ) {
+	//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
+	v_currentEnergyProductionHeat_kW = -arr[9];
+	//v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
+}
+	
+/*if ( caller instanceof J_EAEV) {
+	if (arr[9]>0) {
+		traceln("EnergyUse_kW %s from J_EAEV being added to gridConnection %s", arr[9], this);
 	}
-	
-	/*if ( caller instanceof J_EAEV) {
-		if (arr[9]>0) {
-			traceln("EnergyUse_kW %s from J_EAEV being added to gridConnection %s", arr[9], this);
-		}
-	}*/
-	
-//}
+}*/
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -31566,7 +31605,7 @@ v_weekendElectricityImport_MWh = v_electricityImported_kWh/1000 - v_weekdayElect
 v_weekendElectricityExport_MWh = v_electricityExported_kWh/1000 - v_weekdayElectricityExport_MWh;
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityProduced_MWh - v_weekendElectricityExport_MWh);
 
-f_financesL4L();
+f_financesL4L_v2();
 f_duurkrommes();
 
 
@@ -31894,6 +31933,92 @@ for(int i=0; i< arraySize; i++) {
 	data_weekendNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekend_kW[i]);
 }
 */]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1715089652853</Id>
+					<Name><![CDATA[f_financesL4L_v2]]></Name>
+					<Description><![CDATA[Executed on simulation end to export data.
+
+@author: JorritvandenHouten
+@since: Sprint 6]]></Description>
+					<X>660</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[double assetAvgLCOE_eurpMWh = 100; // 10.4ct/kWh, best duur! (dit is voor zonnepark 
+double bufferCost_eurpMWh = 20; // 2ct/kWh additional costs, retail, financing, etc.
+double SDEincome_eur = 0; // SDE++ subsidie meerekenen? Dwz. invoersubsidie wanneer marktprijs lager is dan ...ct/kWh. 
+double EPEXcosts_eur = 0;
+double EPEXincome_eur = 0;
+double selfConsumptionCoopAssets_MWh = 0; // The part of the 'owned' production that is delivered to customers (as opposed to sold on market)
+
+int arrayLength = a_annualElectricityBalance_kW.length;
+for (int i=0; i<arrayLength; i++) { // Loop over all timesteps for the relevant arrays.
+	// Loop through coop nett power to calculate yearly money to EPEX
+	EPEXcosts_eur += max(0,a_annualElectricityBalance_kW[i])/1000 * energyModel.p_timeStep_h * energyModel.tf_dayAheadElectricityPricing_eurpMWh(energyModel.p_timeStep_h*i);	
+	EPEXincome_eur += max(0,-a_annualElectricityBalance_kW[i])/1000 * energyModel.p_timeStep_h * energyModel.tf_dayAheadElectricityPricing_eurpMWh(energyModel.p_timeStep_h*i);	
+	
+	// SDE subsidie voor alle stroom van eigen opwekassets: (exclusief opwek bij klanten)
+	SDEincome_eur += a_annualOwnElectricityProduction_kW[i]/1000 * energyModel.p_timeStep_h * max(0,assetAvgLCOE_eurpMWh-energyModel.tf_dayAheadElectricityPricing_eurpMWh(energyModel.p_timeStep_h*i));
+	
+	// Opwek van eigen productie assets die geleverd wordt aan klanten:
+	selfConsumptionCoopAssets_MWh += max(0,a_annualOwnElectricityProduction_kW[i] - max(0,-a_annualElectricityBalance_kW[i]))*energyModel.p_timeStep_h/1000;
+}
+
+double EPEXbalance_eur = EPEXincome_eur - EPEXcosts_eur; // positive balance means nett-income!
+
+traceln("Gelijktijdige opwek en verbruik (incl zelfverbruik teruglevering van leden): %s MWh", v_totalElectricitySelfConsumed_MWh);
+traceln("Gelijktijdige opwek en verbruik (excl zelfverbruik teruglevering van leden): %s MWh", selfConsumptionCoopAssets_MWh);
+traceln("Total EPEX costs Eur: %s", EPEXcosts_eur);
+traceln("Total EPEX income Eur: %s", EPEXincome_eur);
+traceln("Average EPEX-price of electricity bought: %s eur/MWh", EPEXcosts_eur/(v_electricityImported_kWh/1000));
+traceln("Average EPEX-price of electricity sold: %s eur/MWh", EPEXincome_eur/(v_electricityExported_kWh/1000));
+traceln("SDE++ income: %s €", SDEincome_eur);
+
+double totalOwnElectricityProduced_MWh = Arrays.stream(a_annualOwnElectricityProduction_kW).sum()  * energyModel.p_timeStep_h / 1000;
+double totalDeliveredElec_MWh = v_totalElectricitySelfConsumed_MWh + v_electricityImported_kWh/1000; // v_totalElectricitySelfConsumed_MWh includes feed-in from customers that is re-delivered. However, it's only delivery, not feed-in! (Niet gesaldeerd)
+double customerFeedIn_MWh = v_electricityExported_kWh/1000 + totalDeliveredElec_MWh - totalOwnElectricityProduced_MWh - v_electricityImported_kWh/1000; // This should include all the energy that is received from customers!
+double nettDeliveredElec_MWh = totalDeliveredElec_MWh - customerFeedIn_MWh; // 
+traceln("Total Coop Assets production: %s MWh", totalOwnElectricityProduced_MWh); // Also need production from own assets only!
+traceln("Total delivered electricity to customers, including feed-in from customers not sold on EPEX: %s MWh", roundToDecimal(totalDeliveredElec_MWh,2));
+traceln("Total feedin from customers, both sold on EPEX and re-deliverd to other customers: %s MWh", customerFeedIn_MWh);
+traceln("Coop gelijktijdigheid: fractie van eigen opwek geleverd aan leden: %s", selfConsumptionCoopAssets_MWh/totalOwnElectricityProduced_MWh);
+//traceln("Coop gelijktijdigheid: eigen opwek minus export, gedeeld door eigen opwek: %s", 1-energyModel.v_totalElectricityExport_MWh/totalOwnElectricityProduced_MWh); // Kan negatief worden!
+traceln("Coop gelijktijdigheid: eigen opwek minus export, gedeeld door eigen opwek: %s", 1-v_electricityExported_kWh/1000/totalOwnElectricityProduced_MWh); // Kan negatief worden!
+
+
+// Kostprijs+ tarief en leveranciersprijs
+// Kostprijs+
+double kostprijs_eurpMWh = assetAvgLCOE_eurpMWh - SDEincome_eur / totalOwnElectricityProduced_MWh; // Neem aan dat de cooperatie dit bedrag ook krijgt voor niet-gelijktijdig geleverde stroom!
+traceln("Kostprijs+ met SDE verrekend: %s €/MWh", roundToInt(kostprijs_eurpMWh + bufferCost_eurpMWh));
+
+// Leveranciersprijs
+//double EDVcosts_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * (totalOwnElectricityProduced_MWh + customerFeedIn_MWh ) + EPEXcosts_eur ; 
+double EDVcosts_eur = kostprijs_eurpMWh * ( totalOwnElectricityProduced_MWh + customerFeedIn_MWh ) + EPEXcosts_eur + totalDeliveredElec_MWh * bufferCost_eurpMWh; 
+double leveranciersprijs_eurpMWh = (EDVcosts_eur - EPEXincome_eur - (kostprijs_eurpMWh + bufferCost_eurpMWh) * selfConsumptionCoopAssets_MWh )/(totalDeliveredElec_MWh - selfConsumptionCoopAssets_MWh); // Zorg dat EDV break-even draait
+traceln("Leveranciersprijs ongelijktijdige stroom: %s €/MWh", roundToInt(leveranciersprijs_eurpMWh) );
+
+// Gemiddelde leveringsprijs
+double gemiddeldeLeveringsprijs_eurpMWh = ( (kostprijs_eurpMWh + bufferCost_eurpMWh) * selfConsumptionCoopAssets_MWh + leveranciersprijs_eurpMWh * (totalDeliveredElec_MWh - selfConsumptionCoopAssets_MWh) ) / totalDeliveredElec_MWh;
+traceln("Gemiddelde leveringsprijs: %s €/MWh", roundToInt( gemiddeldeLeveringsprijs_eurpMWh ));
+//double leveranciersprijs_eurpMWh = 
+double EDVincome_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * selfConsumptionCoopAssets_MWh + EPEXincome_eur + (totalDeliveredElec_MWh - selfConsumptionCoopAssets_MWh) * leveranciersprijs_eurpMWh;
+//totalDeliveredElec_MWh = nettDeliveredElec_MWh; // Assume that nettDelivered is what counts for finances, such that feed-in tarrif is accounted for!
+
+traceln("EDV total income: %s €", roundToInt(EDVcosts_eur));
+traceln("EDV total costs: %s €", roundToInt(EDVincome_eur));
+
+if (abs(EDVcosts_eur-EDVincome_eur) > 1) {
+	traceln("Coop not running break-even!!");
+	traceln("Coop total income: %s €", EDVcosts_eur);
+	traceln("Coop total costs: %s €", EDVincome_eur);
+}
+
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -40928,8 +41053,8 @@ f_operateFixedAssets();
 f_operateFlexAssets();
 f_connectionMetering();
 
-v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
-- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh + v_electricityChargedByBattery_kWh - v_electricityDischargedByBattery_kWh;
+//v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
+//- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh + v_electricityChargedByBattery_kWh - v_electricityDischargedByBattery_kWh;
 
 /*
 // Total Energy Use and Production
