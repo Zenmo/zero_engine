@@ -6640,7 +6640,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_daytimeElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * p_timeStep_h;
 		
 		v_daytimeMethaneImport_MWh += v_totalMethanePower_kW / 1000 * p_timeStep_h;
-		v_daytimeHydrogenImport_MWh += -v_totalHydrogenPower_kW / 1000 * p_timeStep_h;
+		v_daytimeHydrogenImport_MWh += v_totalHydrogenPower_kW / 1000 * p_timeStep_h;
 		v_daytimeDieselImport_MWh += v_totalDieselPower_kW / 1000 * p_timeStep_h;
 				
 		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * p_timeStep_h;
@@ -6677,7 +6677,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		v_weekdayElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * p_timeStep_h;
 		
 		v_weekdayMethaneImport_MWh += v_totalMethanePower_kW / 1000 * p_timeStep_h;
-		v_weekdayHydrogenImport_MWh += -v_totalHydrogenPower_kW / 1000 * p_timeStep_h;
+		v_weekdayHydrogenImport_MWh += v_totalHydrogenPower_kW / 1000 * p_timeStep_h;
 		v_weekdayDieselImport_MWh += v_totalDieselPower_kW / 1000 * p_timeStep_h;
 		
 		v_weekdayEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * p_timeStep_h;
@@ -6710,7 +6710,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		data_summerWeekNeighborhoodBatteryDemand_kW.add(t_h, v_currentNeighborhoodBatteryDemand_kW);
 		data_summerWeekNaturalGasDemand_kW.add(t_h, v_currentNaturalGasDemand_kW);
 		data_summerWeekDieselDemand_kW.add(t_h, v_currentDieselDemand_kW);
-		data_summerWeekHydrogenDemand_kW.add(t_h, -v_currentHydrogenDemand_kW);
+		data_summerWeekHydrogenDemand_kW.add(t_h, v_currentHydrogenDemand_kW);
 		
 		data_summerWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 		data_summerWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -6735,7 +6735,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 		data_winterWeekNeighborhoodBatteryDemand_kW.add(t_h, v_currentNeighborhoodBatteryDemand_kW);
 		data_winterWeekNaturalGasDemand_kW.add(t_h, v_currentNaturalGasDemand_kW);
 		data_winterWeekDieselDemand_kW.add(t_h, v_currentDieselDemand_kW);
-		data_winterWeekHydrogenDemand_kW.add(t_h, -v_currentHydrogenDemand_kW);
+		data_winterWeekHydrogenDemand_kW.add(t_h, v_currentHydrogenDemand_kW);
 		
 		data_winterWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 		data_winterWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -6780,7 +6780,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	v_dailyNeighborhoodBatteryDemand_kWh += v_currentNeighborhoodBatteryDemand_kW * p_timeStep_h;
 	v_dailyNaturalGasDemand_kWh += v_currentNaturalGasDemand_kW * p_timeStep_h;
 	v_dailyDieselDemand_kWh += v_currentDieselDemand_kW * p_timeStep_h;
-	v_dailyHydrogenDemand_kWh += -v_currentHydrogenDemand_kW * p_timeStep_h;
+	v_dailyHydrogenDemand_kWh += v_currentHydrogenDemand_kW * p_timeStep_h;
 	
 	v_dailyPVGeneration_kWh += v_currentPVGeneration_kW * p_timeStep_h;
 	v_dailyWindGeneration_kWh += v_currentWindGeneration_kW * p_timeStep_h;
@@ -20800,7 +20800,8 @@ if (energyModel.v_isRapidRun){
 	double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW));
 	double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW));
 	
-	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
+	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { 
+	// Daytime totals. Use overal-total minus daytime total to get nighttime totals.
 		v_daytimeTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 		v_daytimeTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 		
@@ -45683,6 +45684,15 @@ gisRegion.setLineWidth( width );]]></Body>
 		<ActiveObjectClass>
 			<Id>1660572036696</Id>
 			<Name><![CDATA[GCPreZero]]></Name>
+			<AdditionalClassCode><![CDATA[@Override
+public void f_operateFixedAssets(){
+	f_operateFixedAssets_overwrite();
+}
+@Override
+public void f_operateFlexAssets(){
+	f_operateFlexAssets_overwrite();
+}
+]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -45909,6 +45919,175 @@ gisRegion.setLineWidth( width );]]></Body>
 			</ScaleRuler>
 			<CurrentLevel>1660572036695</CurrentLevel>
 			<ConnectionsId>1660572036691</ConnectionsId>
+			<Functions>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1715329401635</Id>
+					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
+					<X>840</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1715329448425</Id>
+					<Name><![CDATA[f_operateFixedAssets_overwrite]]></Name>
+					<X>840</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//v_heatRecievingFromSun_kW = p_irradianceRecievingSurface_m2 * main.v_currentSolarPowerNormalized_r * main.p_solarAbsorptionCoefficient;
+//v_totalHeatRecievedSun_kWh += v_heatRecievingFromSun_kW;
+
+//if (p_energyProfile != null & p_company_connection_id != null) {
+for(J_EAProfile e : c_profileAssets) {
+		double[] flowsArray = e.f_updateAllFlows( energyModel.t_h );		
+		v_fixedConsumptionElectric_kW += flowsArray[4];
+		if (e.energyAssetName.contains("wind")) { // Specific for WindUnie windprofiles!! Should find a better solution for this!
+			v_windProductionElectric_kW += flowsArray[0]; 
+		}
+}
+
+for(J_EAProduction e : c_productionAssets) {
+	if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentSolarPowerNormalized_r );
+		v_pvProductionElectric_kW += flowsArray[0];	
+	}
+	else if(e.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentWindPowerNormalized_r );
+		v_windProductionElectric_kW += flowsArray[0];	
+	}
+	else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATHT ) {
+		e.v_powerFraction_fr = 1;
+		e.f_updateAllFlows( e.v_powerFraction_fr );
+	}
+	else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATLT ) {
+		//e.v_powerFraction_fr = 0;
+		e.f_updateAllFlows( 0 );
+	}
+	else if( e.energyAssetType == OL_EnergyAssetType.LIVESTOCK ) {
+		e.v_powerFraction_fr = 1.0/8760;
+		e.f_updateAllFlows( e.v_powerFraction_fr );
+		//traceln("Methane production of livestock: " + e.v_currentProductionMethane_kW);
+	}
+	else {
+		traceln("ProductionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+		e.v_powerFraction_fr = 0;
+		throw new IllegalStateException("ProductionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+	}
+}
+
+for(J_EAConsumption e : c_consumptionAssets) {
+	if( e.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) { // TODO: Replace with more descriptive EnergyAssetType, don't switch based on GridConnectionCategory!
+		double[] flowsArray;
+		//if (this instanceof GCHouse){
+		//	double randomizer = 0.7 + uniform(0.0, 0.6);
+		//	flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
+		//} else {
+			switch(e.energyAssetName) {
+				case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
+				break;
+				case "Industry_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
+				break;
+				case "LOGISTICS_FLEET_HGV_E" :
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentLogisticsFleetEDemand_fr );
+				break;
+				case "INDUSTRY_STEEL_ELECTRICITY_DEMAND" :
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustrySteelElectricityDemand_fr );
+				break;
+				case "House_other_electricity":
+					//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
+					double randomizer = 0.7 + uniform(0.0, 0.6);
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
+				break;
+				case "Office_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+				break;
+				case "Store_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+				break;				
+				default:
+					traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
+					// Try if the energyAssetName matches with one of the names in comp_elec_consumption
+			}
+		//}
+		v_fixedConsumptionElectric_kW += flowsArray[4];
+			
+	} 
+	else if( e.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION ){	
+		e.f_updateAllFlows( energyModel.v_currentHouseHoldHotWaterDemand_fr );
+		//v_currentPowerHeat_kW += e.v_currentConsumptionHeat_kW - e.v_currentProductionHeat_kW; // PowerFlows van consumption assets worden al in f_calculateEnergyBalance opgeteld, dus dit is dubbel!
+	}
+	else if( e.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND ) {
+		//traceln("Heat demand asset ID: " + e.getName());
+		switch(e.energyAssetName) {
+			case "INDUSTRY_OTHER_HEAT_DEMAND":
+				e.f_updateAllFlows( energyModel.v_currentIndustryOtherHeatDemand_fr );
+				//e.v_powerFraction_fr = 1.0/8760;
+				//e.f_updateAllFlows( e.v_powerFraction_fr );	
+			break;
+			case "Industry_steel_heat":
+				e.f_updateAllFlows( energyModel.v_currentIndustrySteelHeatDemand_fr );
+			break;
+			case "Building_heat_demand":
+				e.f_updateAllFlows( energyModel.v_currentBuildingHeatDemand_fr );
+			break;
+			// Ugly hack for 'removing' energy consumption when using residual heat; just don't run the heatdemand!
+			case "Residual_heat_consumption":
+				e.f_updateAllFlows(0);
+			break;
+			
+			default:
+				traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+				throw new IllegalStateException("HEAT_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
+		}
+		//v_currentPowerHeat_kW += e.v_currentConsumptionHeat_kW - e.v_currentProductionHeat_kW;
+	} 
+	/*	else if( e.p_energyAssetType == OL_EnergyAssetType.HEAT_DEMAND ) { // TODO: Re-introduce steel??
+		e.f_updateAllFlows( main.v_currentIndustrySteelHeatDemand_fr );
+	}*/
+	else if( e.energyAssetType == OL_EnergyAssetType.HYDROGEN_DEMAND ) {
+		switch(e.energyAssetName) {
+			case "INDUSTRY_OTHER_HYDROGEN_DEMAND":
+				e.f_updateAllFlows( energyModel.v_currentIndustryOtherHeatDemand_fr ); // TODO: Get actual hydrogen-demand curve from ETM!
+			break;
+			default:
+				traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+				throw new IllegalStateException("HEAT_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
+		}
+		//v_currentPowerHydrogen_kW += e.v_currentConsumptionHydrogen_kW - e.v_currentProductionHydrogen_kW;
+	} 
+	else if( e.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE ) {
+		e.f_updateAllFlows(0);		
+	}
+	else if( e.energyAssetType == OL_EnergyAssetType.DIESEL_DEMAND ) {
+		e.v_powerFraction_fr = 1.0/8760;
+		e.f_updateAllFlows( e.v_powerFraction_fr );	
+	}	
+	else if( e.energyAssetType == OL_EnergyAssetType.METHANE_DEMAND ) {
+		e.v_powerFraction_fr = 1.0/8760;
+		e.f_updateAllFlows( e.v_powerFraction_fr );	
+	}	
+	else {
+		traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+		e.v_powerFraction_fr = 0;
+		throw new IllegalStateException("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+	} 
+}
+
+
+
+]]></Body>
+				</Function>
+			</Functions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1660572036691</Id>
