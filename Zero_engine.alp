@@ -10852,6 +10852,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_detailedCompany]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[b_hasPrivateUI]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -15494,7 +15497,7 @@ if (energyModel.v_isRapidRun) {
 		v_timeOfPeakNegLoadFiltered_h = time(HOUR);
 	}
 	
-	if( v_currentLoadElectricityLowPassed_kW > v_peakPosLoadElectricity_kW ) { // store peak negative load and time
+	if( v_currentLoadElectricityLowPassed_kW > v_peakPosLoadElectricity_kW ) { // store peak positive load and time
 		v_peakPosLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
 		v_timeOfPeakPosLoadFiltered_h = time(HOUR);
 	}
@@ -28613,6 +28616,30 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 							<Id>1709048918240</Id>
 							<Label><![CDATA[p_detailedCompany]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1715715075104</Id>
+					<Name><![CDATA[b_hasPrivateUI]]></Name>
+					<X>60</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1715715075102</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -46820,7 +46847,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				traceln("EV from asset " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
 				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
 				//stateOfCharge_r = 0;
 			}
