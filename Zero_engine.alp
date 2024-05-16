@@ -21094,24 +21094,19 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[DataSet]]></ReturnType>
 					<Id>1708520215192</Id>
-					<Name><![CDATA[f_duurkrommes]]></Name>
+					<Name><![CDATA[f_getDuurkromme]]></Name>
 					<X>800</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Sorting netload values for belastingsduurkromme
-//data_netbelastingDuurkrommeVorige_kW.reset();
-//data_netbelastingshistogram_kW.reset();
-boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
-//int arraySize = data_annualBusinessParkNetLoad_kW.size();
-
-double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
+					<Body><![CDATA[double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
 int arraySize = netLoadArrayAnnual_kW.length;
 //double[] netLoadArray_kW = new double[arraySize];
+/*
 double[] netLoadArrayWinter_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
 double[] netLoadArraySummer_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
 double[] netLoadArrayDay_kW = new double[arraySize/2];
@@ -21127,9 +21122,6 @@ int i_weekday=0;
 int i_weekend=0;
 for(int i=0; i<arraySize ; i++) {
 	//netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
-	/*if (notFirstRun) {
-		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
-	}*/
 	// summer/winter
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummer_kW[i_summer]=-netLoadArrayAnnual_kW[i];
@@ -21156,25 +21148,30 @@ for(int i=0; i<arraySize ; i++) {
 		i_weekend++;
 	}
 	//data_netbelastingshistogram_kW.add(data_annualBusinessParkNetLoad_kW.getY(i));
-}
-//traceln("i_weekday: %s", i_weekday);
-//traceln("i_weekend: %s", i_weekend);
-netLoadArrayWeekday_kW = Arrays.copyOfRange(netLoadArrayWeekday_kW, 0, i_weekday);
-netLoadArrayWeekend_kW = Arrays.copyOfRange(netLoadArrayWeekend_kW, 0, i_weekend);
+}*/
+
+
+//netLoadArrayWeekday_kW = Arrays.copyOfRange(netLoadArrayWeekday_kW, 0, i_weekday);
+//netLoadArrayWeekend_kW = Arrays.copyOfRange(netLoadArrayWeekend_kW, 0, i_weekend);
 //Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
 // Sort all arrays
 Arrays.parallelSort(netLoadArrayAnnual_kW);
-Arrays.parallelSort(netLoadArraySummer_kW);
+/*Arrays.parallelSort(netLoadArraySummer_kW);
 Arrays.parallelSort(netLoadArrayWinter_kW);
 Arrays.parallelSort(netLoadArrayDay_kW);
 Arrays.parallelSort(netLoadArrayNight_kW);
 Arrays.parallelSort(netLoadArrayWeekday_kW);
-Arrays.parallelSort(netLoadArrayWeekend_kW);
+Arrays.parallelSort(netLoadArrayWeekend_kW);*/
 // Write results to datasets
-data_netbelastingDuurkromme_kW.reset();
+
+//data_netbelastingDuurkromme_kW.reset();
+DataSet data_netbelastingDuurkromme_kW = new DataSet(arraySize);
+
 for(int i=0; i< arraySize; i++) {
 	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
+
+return data_netbelastingDuurkromme_kW;
 
 /*
 data_HSMScapacity_kW.add(0, c_gridNodesHSMS.get(0).p_capacity_kW);
@@ -21231,6 +21228,7 @@ for(int i=0; i< arraySize; i++) {
     			<DataSet>
 					<Id>1704787879732</Id>
 					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>151</X><Y>2040</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -31749,19 +31747,17 @@ double customerFeedIn_MWh = v_electricityExported_kWh/1000 + totalDeliveredElec_
 double nettDeliveredElec_MWh = totalDeliveredElec_MWh - customerFeedIn_MWh; // 
 
 double kostprijs_eurpMWh = assetAvgLCOE_eurpMWh - SDEincome_eur / totalOwnElectricityProduced_MWh; // Neem aan dat de cooperatie dit bedrag ook krijgt voor niet-gelijktijdig geleverde stroom!
-double EPEXbalance_eur = EPEXincome_eur - EPEXcosts_eur; // positive balance means nett-income!
-
-
+//double EPEXbalance_eur = EPEXincome_eur - EPEXcosts_eur; // positive balance means nett-income!
 
 // Leveranciersprijs
 //double EDVcosts_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * (totalOwnElectricityProduced_MWh + customerFeedIn_MWh ) + EPEXcosts_eur ; 
 double EDVcosts_eur = kostprijs_eurpMWh * ( totalOwnElectricityProduced_MWh + customerFeedIn_MWh ) + EPEXcosts_eur + totalDeliveredElec_MWh * bufferCost_eurpMWh; 
-double leveranciersprijs_eurpMWh = (EDVcosts_eur - EPEXincome_eur - (kostprijs_eurpMWh + bufferCost_eurpMWh) * selfConsumptionCoopAssets_MWh )/(totalDeliveredElec_MWh - selfConsumptionCoopAssets_MWh); // Zorg dat EDV break-even draait
+double leveranciersprijs_eurpMWh = (EDVcosts_eur - EPEXincome_eur - (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectricitySelfConsumed_MWh )/(totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh); // Zorg dat EDV break-even draait
 
 // Gemiddelde leveringsprijs
-double gemiddeldeLeveringsprijs_eurpMWh = ( (kostprijs_eurpMWh + bufferCost_eurpMWh) * selfConsumptionCoopAssets_MWh + leveranciersprijs_eurpMWh * (totalDeliveredElec_MWh - selfConsumptionCoopAssets_MWh) ) / totalDeliveredElec_MWh;
+double gemiddeldeLeveringsprijs_eurpMWh = ( (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectricitySelfConsumed_MWh + leveranciersprijs_eurpMWh * (totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh) ) / totalDeliveredElec_MWh;
 //double leveranciersprijs_eurpMWh = 
-double EDVincome_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * selfConsumptionCoopAssets_MWh + EPEXincome_eur + (totalDeliveredElec_MWh - selfConsumptionCoopAssets_MWh) * leveranciersprijs_eurpMWh;
+double EDVincome_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectricitySelfConsumed_MWh + EPEXincome_eur + (totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh) * leveranciersprijs_eurpMWh;
 //totalDeliveredElec_MWh = nettDeliveredElec_MWh; // Assume that nettDelivered is what counts for finances, such that feed-in tarrif is accounted for!
 
 traceln("Totale opwek Coöperatie Assets: %s MWh, tarief: %s €/MWh, waarde: %s €", totalOwnElectricityProduced_MWh, kostprijs_eurpMWh, totalOwnElectricityProduced_MWh*kostprijs_eurpMWh); // Also need production from own assets only!
