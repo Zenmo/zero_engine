@@ -7,8 +7,10 @@ public class ZeroAccumulator {
     public boolean hasTimeSeries = false;
     private double[] timeSeries;
     private double duration_h;
-    public double signalResolution_h = 0.25;
-    public int arraySize;
+    private double signalResolution_h = 0.25;
+    private double timeStep_h = 0.25;
+    private double sampleWeight = timeStep_h / signalResolution_h;
+    private int arraySize;
 
     private double sum = 0;
     private double posSum = 0;
@@ -26,12 +28,18 @@ public class ZeroAccumulator {
     public ZeroAccumulator(boolean hasTimeSeries, double signalResolution_h, double duration_h) {
         this.hasTimeSeries = hasTimeSeries;
         this.signalResolution_h = signalResolution_h;
+        sampleWeight = timeStep_h / signalResolution_h;
         this.duration_h = duration_h;
         this.arraySize = (int) Math.round(duration_h / signalResolution_h);
         if (hasTimeSeries) { // Allocate memory for timeSeries, only when timeSeries is used.
             timeSeries = new double[(int) Math.round(duration_h / signalResolution_h)];
         }
 
+    }
+
+    public void setTimeStep_h(double timeStep_h) {
+        this.timeStep_h = timeStep_h;
+        sampleWeight = timeStep_h / signalResolution_h;
     }
 
     public void reset() {
@@ -45,7 +53,16 @@ public class ZeroAccumulator {
 
     public void addStep(double t_h, double value) {
         if (hasTimeSeries) {
-            timeSeries[(int) Math.round(t_h / signalResolution_h)] = value;
+            timeSeries[(int) Math.floor(t_h / signalResolution_h)] += value; // averages
+                                                                             // multiple
+                                                                             // timesteps
+                                                                             // when
+                                                                             // timeSeries
+                                                                             // has
+                                                                             // longer
+                                                                             // resolution
+                                                                             // than
+                                                                             // timestep.
         } else {
             sum += value;
             posSum += Math.max(0.0, value);
@@ -60,11 +77,11 @@ public class ZeroAccumulator {
         return sum;
     }
 
-    public double getIntegral() {
+    public double getIntegral() { // For getting total energy when addSteps was called with power as value
         if (hasTimeSeries) {
             sum = ZeroMath.arraySum(timeSeries);
         }
-        return sum * signalResolution_h;
+        return sum * signalResolution_h * sampleWeight;
     }
 
     public double getSumPos() {
