@@ -2,6 +2,7 @@ package zeroPackage;
 
 import zeroPackage.ZeroMath;
 import java.lang.Math;
+import java.util.Arrays;
 
 public class ZeroAccumulator {
     public boolean hasTimeSeries = false;
@@ -100,11 +101,33 @@ public class ZeroAccumulator {
 
     public double[] getTimeSeries() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
-            timeSeries = new double[arraySize];
-            for (int i = 0; i < arraySize; i++) {
-                timeSeries[i] = sum / arraySize;
-            }
+            double[] timeSeriesTemp = new double[arraySize];
+            double avgValue = sum / arraySize;
+            Arrays.fill(timeSeriesTemp, avgValue);
+            /*
+             * for (int i = 0; i < arraySize; i++) {
+             * timeSeries[i] = avgValue;
+             * }
+             */
+            return timeSeriesTemp;
+        } else {
+            return timeSeries.clone();
         }
-        return timeSeries;
+    }
+
+    public double[] getTimeSeriesIntegral() {
+        if (!hasTimeSeries) { // Fill timeseries with constant value
+            double[] timeSeriesTemp = new double[arraySize];
+            double avgValue = sum / arraySize * sampleWeight;
+            Arrays.fill(timeSeriesTemp, avgValue);
+            /*
+             * for (int i = 0; i < arraySize; i++) {
+             * timeSeries[i] = avgValue;
+             * }
+             */
+            return timeSeriesTemp;
+        } else {
+            return ZeroMath.arrayMultiply(timeSeries.clone(), sampleWeight);
+        }
     }
 }

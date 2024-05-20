@@ -4456,6 +4456,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1715937230798</Id>
 					<Name><![CDATA[acc_annualDailyElectricityDemand_MWh]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>340</X><Y>2385</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4471,6 +4472,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1715938739550</Id>
 					<Name><![CDATA[acc_annualElectricityBalanceDownsampled_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>644</X><Y>960</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -7133,7 +7135,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 
 	// Store time series in arrays
 	acc_annualElectricityBalance_kW.addStep(t_h,v_totalElectricPower_kW);
-	acc_annualElectricityBalanceDownsampled_kW.addStep(t_h,v_totalElectricPower_kW);
+	//acc_annualElectricityBalanceDownsampled_kW.addStep(t_h,v_totalElectricPower_kW);
 	acc_annualMethaneBalance_kW.addStep(t_h,v_totalMethanePower_kW);
 	acc_annualHydrogenBalance_kW.addStep(t_h,v_totalHydrogenPower_kW);
 	acc_annualDieselBalance_kW.addStep(t_h,v_totalDieselPower_kW);
@@ -7336,7 +7338,7 @@ traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 	v_dailyNeighborhoodBatterySupply_kWh += v_currentNeighborhoodBatterySupply_kW * p_timeStep_h;
 	v_dailyV2GSupply_kWh += v_currentV2GSupply_kWh * p_timeStep_h;
 	
-	acc_annualDailyElectricityDemand_MWh.addStep(t_h, v_currentElectricityConsumption_kW/1000 * p_timeStep_h);
+	//acc_annualDailyElectricityDemand_MWh.addStep(t_h, v_currentElectricityConsumption_kW/1000 * p_timeStep_h);
 	
 	if (t_h % 24 == (24-p_timeStep_h)){
 		data_annualBaseloadElectricityDemand_MWh.add(t_h, v_dailyBaseloadElectricityDemand_kWh/1000);
@@ -19874,7 +19876,7 @@ f_connectionMetering();
 
 if (energyModel.b_addKpiVisuals) {
 	//pl_SOC.updateData();
-	pl_powerFlows.updateData();
+	//pl_powerFlows.updateData();
 }
 
 //if (!Double.isFinite(v_currentPowerElectricity_kW)) {
@@ -22419,13 +22421,14 @@ for(int i=0; i< arraySize; i++) {
     			<TimePlot>
 					<Id>1668439095469</Id>
 					<Name><![CDATA[pl_powerFlows]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>0</X><Y>570</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>false</AutoUpdate>
+					<AutoUpdate>true</AutoUpdate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1668499200000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -22558,7 +22561,7 @@ for(int i=0; i< arraySize; i++) {
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>1000</SamplesToKeep>
+					<SamplesToKeep>672</SamplesToKeep>
 					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>HH_mm</LabelFormat>
@@ -40971,7 +40974,7 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 */
 if (energyModel.b_addKpiVisuals) {
 	//pl_SOC.updateData();
-	pl_powerFlows.updateData();
+	//pl_powerFlows.updateData();
 }
 ]]></Body>
 				</Function>

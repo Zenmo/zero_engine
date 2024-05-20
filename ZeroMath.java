@@ -27,4 +27,13 @@ public class ZeroMath {
         return negSum;
     }
 
+    public static double[] arrayMultiply(double[] array, double multiplier) { // Void because original array is
+                                                                              // modified!
+        // Test if this works properly!
+        for (int i = 0; i < array.length; i++) {
+            array[i] = array[i] * multiplier;
+        }
+        return array;
+    }
+
 }
