@@ -21185,7 +21185,7 @@ if (energyModel.v_isRapidRun){
 					<Id>1668181559833</Id>
 					<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>801</X><Y>73</Y>
+					<X>750</X><Y>-40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
