@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -18133,9 +18133,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18148,9 +18145,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18163,9 +18157,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18178,9 +18169,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18193,9 +18181,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18208,9 +18193,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18223,9 +18205,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18238,9 +18217,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18253,9 +18229,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18268,9 +18241,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18283,9 +18253,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18298,9 +18265,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -18313,9 +18277,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -19141,391 +19102,313 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715861182010</Id>
 					<Name><![CDATA[acc_summerElectricityBalance_kW]]></Name>
-					<X>1110</X><Y>1340</Y>
+					<X>1150</X><Y>1340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182012</Id>
 					<Name><![CDATA[acc_summerMethaneBalance_kW]]></Name>
-					<X>1110</X><Y>1360</Y>
+					<X>1150</X><Y>1360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182014</Id>
 					<Name><![CDATA[acc_summerHydrogenBalance_kW]]></Name>
-					<X>1110</X><Y>1380</Y>
+					<X>1150</X><Y>1380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182016</Id>
 					<Name><![CDATA[acc_summerDieselBalance_kW]]></Name>
-					<X>1110</X><Y>1400</Y>
+					<X>1150</X><Y>1400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182018</Id>
 					<Name><![CDATA[acc_summerHeatBalance_kW]]></Name>
-					<X>1110</X><Y>1420</Y>
+					<X>1150</X><Y>1420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182020</Id>
 					<Name><![CDATA[acc_summerEnergyProduction_kW]]></Name>
-					<X>1110</X><Y>1480</Y>
+					<X>1150</X><Y>1480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182022</Id>
 					<Name><![CDATA[acc_summerEnergyConsumption_kW]]></Name>
-					<X>1110</X><Y>1500</Y>
+					<X>1150</X><Y>1500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182024</Id>
 					<Name><![CDATA[acc_summerEnergyCurtailed_kW]]></Name>
-					<X>1110</X><Y>1520</Y>
+					<X>1150</X><Y>1520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182026</Id>
 					<Name><![CDATA[acc_summerElectricityProduction_kW]]></Name>
-					<X>1110</X><Y>1540</Y>
+					<X>1150</X><Y>1540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182028</Id>
 					<Name><![CDATA[acc_summerElectricityConsumption_kW]]></Name>
-					<X>1110</X><Y>1560</Y>
+					<X>1150</X><Y>1560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182030</Id>
 					<Name><![CDATA[acc_summerHeatProduction_kW]]></Name>
-					<X>1110</X><Y>1580</Y>
+					<X>1150</X><Y>1580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182032</Id>
 					<Name><![CDATA[acc_summerTotalImport_kW]]></Name>
-					<X>1110</X><Y>1440</Y>
+					<X>1150</X><Y>1440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715861182034</Id>
 					<Name><![CDATA[acc_summerTotalExport_kW]]></Name>
-					<X>1110</X><Y>1460</Y>
+					<X>1150</X><Y>1460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862972988</Id>
 					<Name><![CDATA[acc_winterElectricityBalance_kW]]></Name>
-					<X>1420</X><Y>1340</Y>
+					<X>1490</X><Y>1340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862972990</Id>
 					<Name><![CDATA[acc_winterMethaneBalance_kW]]></Name>
-					<X>1420</X><Y>1360</Y>
+					<X>1490</X><Y>1360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862972992</Id>
 					<Name><![CDATA[acc_winterHydrogenBalance_kW]]></Name>
-					<X>1420</X><Y>1380</Y>
+					<X>1490</X><Y>1380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862972994</Id>
 					<Name><![CDATA[acc_winterDieselBalance_kW]]></Name>
-					<X>1420</X><Y>1400</Y>
+					<X>1490</X><Y>1400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862972996</Id>
 					<Name><![CDATA[acc_winterHeatBalance_kW]]></Name>
-					<X>1420</X><Y>1420</Y>
+					<X>1490</X><Y>1420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862972998</Id>
 					<Name><![CDATA[acc_winterEnergyProduction_kW]]></Name>
-					<X>1420</X><Y>1480</Y>
+					<X>1490</X><Y>1480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973000</Id>
 					<Name><![CDATA[acc_winterEnergyConsumption_kW]]></Name>
-					<X>1420</X><Y>1500</Y>
+					<X>1490</X><Y>1500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973002</Id>
 					<Name><![CDATA[acc_winterEnergyCurtailed_kW]]></Name>
-					<X>1420</X><Y>1520</Y>
+					<X>1490</X><Y>1520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973004</Id>
 					<Name><![CDATA[acc_winterElectricityProduction_kW]]></Name>
-					<X>1420</X><Y>1540</Y>
+					<X>1490</X><Y>1540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973006</Id>
 					<Name><![CDATA[acc_winterElectricityConsumption_kW]]></Name>
-					<X>1420</X><Y>1560</Y>
+					<X>1490</X><Y>1560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973008</Id>
 					<Name><![CDATA[acc_winterHeatProduction_kW]]></Name>
-					<X>1420</X><Y>1580</Y>
+					<X>1490</X><Y>1580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973010</Id>
 					<Name><![CDATA[acc_winterTotalImport_kW]]></Name>
-					<X>1420</X><Y>1440</Y>
+					<X>1490</X><Y>1440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715862973012</Id>
 					<Name><![CDATA[acc_winterTotalExport_kW]]></Name>
-					<X>1420</X><Y>1460</Y>
+					<X>1490</X><Y>1460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -22535,7 +22418,8 @@ f_connectToParentNode();
 if (!l_parentNodeElectric.isConnected()) {
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
 }
-f_setOperatingSwitches();]]></Body>
+f_setOperatingSwitches();
+f_initializeAccumulators();]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23150,6 +23034,56 @@ if (j_ea instanceof J_EAVehicle) {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
 ]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1716282675260</Id>
+					<Name><![CDATA[f_initializeAccumulators]]></Name>
+					<X>800</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[acc_annualElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
+acc_annualMethaneBalance_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualHydrogenBalance_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualDieselBalance_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualHeatBalance_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualTotalImport_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualTotalExport_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualEnergyProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualEnergyConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h,8760);
+acc_annualEnergyCurtailed_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualElectricityProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualElectricityConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualHeatProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_summerElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerHydrogenBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerHeatBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerTotalImport_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerTotalExport_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerDieselBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerEnergyProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerEnergyConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterHydrogenBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterDieselBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterHeatBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterTotalImport_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterTotalExport_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterEnergyProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterEnergyConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
