@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -21012,6 +21012,7 @@ if (energyModel.v_isRapidRun){
 		acc_winterElectricityProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityProduction_kW);
 		acc_winterElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityConsumption_kW);
 		acc_winterHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyProductionHeat_kW);	
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Summer week
 	if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
@@ -22587,7 +22588,7 @@ v_heatDelivered_kWh = -Arrays.stream(a_annualHeatBalance_kW).filter(m -> m < 0).
 
 // Yeartotals from arrays
 v_totalEnergyProduced_MWh = acc_annualEnergyProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_totalEnergyUsed_MWh = acc_annualEnergyConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
+v_totalEnergyConsumed_MWh = acc_annualEnergyConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
 
 v_totalSelfConsumedEnergy_MWh = max(0, v_totalEnergyConsumed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 
@@ -22604,7 +22605,7 @@ v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_e
 //int endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
 v_summerWeekTotalImport_MWh = acc_summerTotalImport_kW.getIntegral()/1000; // Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 v_summerWeekTotalExport_MWh = acc_summerTotalExport_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualTotalExport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekEnergyUsed_MWh = acc_summerEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekEnergyConsumed_MWh = acc_summerEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 v_summerWeekEnergyProduced_MWh = acc_summerEnergyProduction_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyProduction_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 
 v_summerWeekSelfConsumedEnergy_MWh = max(0, v_summerWeekEnergyConsumed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
@@ -22650,10 +22651,10 @@ v_winterWeekElectricitySelfConsumed_MWh = max(0,v_winterWeekElectricityConsumed_
 
 v_winterWeekTotalImport_MWh = acc_winterTotalImport_kW.getIntegral()/1000; // Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekTotalExport_MWh = acc_winterTotalExport_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualTotalExport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergyUsed_MWh = acc_winterEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekEnergyConsumed_MWh = acc_winterEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekEnergyProduced_MWh = acc_winterEnergyProduction_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyProduction_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 
-v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyConsumed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
 double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
 //v_winterWeekEnergyCurtailed_MWh=Arrays.copyOfRange(a_annualEnergyCurtailed_kW, energyModel.p_startHourSummerWeek,roundToInt(24*7/energyModel.p_timeStep_h))*energyModel.p_timeStep_h / 1000;
 
@@ -22815,8 +22816,8 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[data_netbelastingDuurkrommeVorige_kW.reset();
 
-boolean notFirstRun = data_netbelastingDuurkromme_kW.size() > 0 ? true : false;
-int arraySize = a_annualElectricityBalance_kW.length;
+//boolean notFirstRun = data_netbelastingDuurkromme_kW.size() > 0 ? true : false;
+int arraySize = acc_annualElectricityBalance_kW.getTimeSeries().length;
 
 // We copy our annual array to preserve it as a time-series and make new arrays for the others
 double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
@@ -22835,34 +22836,34 @@ int i_night=0;
 int i_weekday=0;
 int i_weekend=0;
 for(int i=0; i<arraySize ; i++) {
-	if (notFirstRun) {
+	/*if (notFirstRun) {
 		// First we make sure to store our previous Load Curve
-		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
-		// summer/winter
-		if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
-			netLoadArraySummerweek_kW[i_summer]=-a_annualElectricityBalance_kW[i];
-			i_summer++;
-		}
-		if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
-			netLoadArrayWinterweek_kW[i_winter]=-a_annualElectricityBalance_kW[i];
-			i_winter++;
-		}
-		// day/night
-		if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
-			netLoadArrayDaytime_kW[i_day]=-a_annualElectricityBalance_kW[i];
-			i_day++;
-		} else {
-			netLoadArrayNighttime_kW[i_night]=-a_annualElectricityBalance_kW[i];
-			i_night++;
-		}	
-		//Weekday/weekend
-		if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-			listNetLoadArrayWeekday_kW.add(-a_annualElectricityBalance_kW[i]);
-			i_weekday++;
-		} else {
-			listNetLoadArrayWeekend_kW.add(-a_annualElectricityBalance_kW[i]);
-			i_weekend++;
-		}
+		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
+	}*/
+	// summer/winter
+	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+		netLoadArraySummerweek_kW[i_summer]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		i_summer++;
+	}
+	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+		netLoadArrayWinterweek_kW[i_winter]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		i_winter++;
+	}
+	// day/night
+	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
+		netLoadArrayDaytime_kW[i_day]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		i_day++;
+	} else {
+		netLoadArrayNighttime_kW[i_night]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		i_night++;
+	}	
+	//Weekday/weekend
+	if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+		listNetLoadArrayWeekday_kW.add(-acc_annualElectricityBalance_kW.getTimeSeries()[i]);
+		i_weekday++;
+	} else {
+		listNetLoadArrayWeekend_kW.add(-acc_annualElectricityBalance_kW.getTimeSeries()[i]);
+		i_weekend++;
 	}
 }
 
@@ -23155,8 +23156,7 @@ if (j_ea instanceof J_EAVehicle) {
     			<DataSet>
 					<Id>1704787879732</Id>
 					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>151</X><Y>2040</Y>
+					<X>151</X><Y>2060</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
