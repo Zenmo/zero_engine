@@ -14729,7 +14729,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715007701783</Id>
-					<Name><![CDATA[v_annualElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_annualExcessImport_MWh]]></Name>
 					<X>670</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14744,7 +14744,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715007721718</Id>
-					<Name><![CDATA[v_annualElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_annualExcessExport_MWh]]></Name>
 					<X>670</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14789,7 +14789,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715016274487</Id>
-					<Name><![CDATA[v_summerWeekElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_summerWeekExcessImport_MWh]]></Name>
 					<X>990</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14804,7 +14804,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715016274489</Id>
-					<Name><![CDATA[v_summerWeekElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_summerWeekExcessExport_MWh]]></Name>
 					<X>990</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14849,7 +14849,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715016405654</Id>
-					<Name><![CDATA[v_winterWeekElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_winterWeekExcessImport_MWh]]></Name>
 					<X>990</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14864,7 +14864,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715016405656</Id>
-					<Name><![CDATA[v_winterWeekElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_winterWeekExcessExport_MWh]]></Name>
 					<X>990</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14909,7 +14909,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066563206</Id>
-					<Name><![CDATA[v_daytimeElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_daytimeExcessImport_MWh]]></Name>
 					<X>1330</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14924,7 +14924,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066563208</Id>
-					<Name><![CDATA[v_daytimeElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_daytimeExcessExport_MWh]]></Name>
 					<X>1330</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14969,7 +14969,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066563214</Id>
-					<Name><![CDATA[v_nighttimeElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_nighttimeExcessImport_MWh]]></Name>
 					<X>1330</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14984,7 +14984,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066563216</Id>
-					<Name><![CDATA[v_nighttimeElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_nighttimeExcessExport_MWh]]></Name>
 					<X>1330</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15029,7 +15029,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066576721</Id>
-					<Name><![CDATA[v_weekdayElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_weekdayExcessImport_MWh]]></Name>
 					<X>1640</X><Y>750</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15044,7 +15044,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066576723</Id>
-					<Name><![CDATA[v_weekdayElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_weekdayExcessExport_MWh]]></Name>
 					<X>1640</X><Y>770</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15089,7 +15089,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066576729</Id>
-					<Name><![CDATA[v_weekendElectricityImport_MWh]]></Name>
+					<Name><![CDATA[v_weekendExcessImport_MWh]]></Name>
 					<X>1640</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15104,7 +15104,7 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715066576731</Id>
-					<Name><![CDATA[v_weekendElectricityExport_MWh]]></Name>
+					<Name><![CDATA[v_weekendExcessExport_MWh]]></Name>
 					<X>1640</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15858,15 +15858,15 @@ if (energyModel.v_isRapidRun){
 
 	// Daytime
 	if (energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) {
-		v_daytimeElectricityExport_MWh += a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
-		v_daytimeElectricityImport_MWh += a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_daytimeExcessExport_MWh += a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_daytimeExcessImport_MWh += a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
 		v_daytimeElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
 		v_daytimeElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
 	}
 	// Weekdays
 	if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan-1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		v_weekdayElectricityExport_MWh += a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
-		v_weekdayElectricityImport_MWh += a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_weekdayExcessExport_MWh += a_totalExcessExport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
+		v_weekdayExcessImport_MWh += a_totalExcessImport_kW[energyModel.v_timeStepsElapsed] / 1000 * energyModel.p_timeStep_h;
 		v_weekdayElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
 		v_weekdayElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000;
 	}
@@ -16135,20 +16135,20 @@ v_peakNegLoadElectricity_kW = 0;
 v_peakLoadFilteredElectricity_kW = 0;
 v_timeOfPeakLoadFiltered_h = 0;
 v_totalTimeOverloaded_h = 0;
-v_annualElectricityExport_MWh = 0;
-v_annualElectricityImport_MWh = 0;
-v_summerWeekElectricityExport_MWh = 0;
-v_summerWeekElectricityImport_MWh = 0;
-v_winterWeekElectricityExport_MWh = 0;
-v_winterWeekElectricityImport_MWh = 0;
-v_daytimeElectricityExport_MWh = 0;
-v_daytimeElectricityImport_MWh = 0;
-v_nighttimeElectricityExport_MWh = 0;
-v_nighttimeElectricityImport_MWh = 0;
-v_weekdayElectricityExport_MWh = 0;
-v_weekdayElectricityImport_MWh = 0;
-v_weekendElectricityExport_MWh = 0;
-v_weekendElectricityImport_MWh = 0;
+v_annualExcessExport_MWh = 0;
+v_annualExcessImport_MWh = 0;
+v_summerWeekExcessExport_MWh = 0;
+v_summerWeekExcessImport_MWh = 0;
+v_winterWeekExcessExport_MWh = 0;
+v_winterWeekExcessImport_MWh = 0;
+v_daytimeExcessExport_MWh = 0;
+v_daytimeExcessImport_MWh = 0;
+v_nighttimeExcessExport_MWh = 0;
+v_nighttimeExcessImport_MWh = 0;
+v_weekdayExcessExport_MWh = 0;
+v_weekdayExcessImport_MWh = 0;
+v_weekendExcessExport_MWh = 0;
+v_weekendExcessImport_MWh = 0;
 // Energy flows
 v_electricityDrawn_kWh = 0;
 v_electricityDelivered_kWh = 0;
@@ -16310,16 +16310,16 @@ for(int i=0; i< arraySize; i++) {
 
 
 // AnnualElectricityDrawn and Delivered was done during the year simulation as it would otherwise require a filter here
-v_annualElectricityImport_MWh = Arrays.stream(a_totalExcessImport_kW).sum() * energyModel.p_timeStep_h / 1000;
-v_annualElectricityExport_MWh = Arrays.stream(a_totalExcessExport_kW).sum() * energyModel.p_timeStep_h / 1000;
+v_annualExcessImport_MWh = Arrays.stream(a_totalExcessImport_kW).sum() * energyModel.p_timeStep_h / 1000;
+v_annualExcessExport_MWh = Arrays.stream(a_totalExcessExport_kW).sum() * energyModel.p_timeStep_h / 1000;
 
 // Winter/summer week totals
 // Calcs summerweek
 int startIdx = roundToInt(energyModel.p_startHourSummerWeek/energyModel.p_timeStep_h);
 int endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
 
-v_summerWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessImport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityExport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessExport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekExcessImport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessImport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_summerWeekExcessExport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessExport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
 v_summerWeekElectricityDrawn_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
 v_summerWeekElectricityDelivered_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
 
@@ -16327,21 +16327,21 @@ v_summerWeekElectricityDelivered_MWh = -Arrays.stream(Arrays.copyOfRange(a_annua
 startIdx = roundToInt(energyModel.p_startHourWinterWeek/energyModel.p_timeStep_h);
 endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
 
-v_winterWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessImport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityExport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessExport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekExcessImport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessImport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
+v_winterWeekExcessExport_MWh = Arrays.stream(Arrays.copyOfRange(a_totalExcessExport_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekElectricityDrawn_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekElectricityDelivered_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
 
 
 // Calcs nighttime
-v_nighttimeElectricityImport_MWh = v_annualElectricityImport_MWh - v_daytimeElectricityImport_MWh;
-v_nighttimeElectricityExport_MWh = v_annualElectricityExport_MWh - v_daytimeElectricityExport_MWh;
+v_nighttimeExcessImport_MWh = v_annualExcessImport_MWh - v_daytimeExcessImport_MWh;
+v_nighttimeExcessExport_MWh = v_annualExcessExport_MWh - v_daytimeExcessExport_MWh;
 v_nighttimeElectricityDrawn_MWh = v_annualElectricityDrawn_MWh - v_daytimeElectricityDrawn_MWh;
 v_nighttimeElectricityDelivered_MWh = v_annualElectricityDelivered_MWh - v_daytimeElectricityDelivered_MWh;
 
 // Calcs weekend
-v_weekendElectricityImport_MWh = v_annualElectricityImport_MWh - v_weekdayElectricityImport_MWh;
-v_weekendElectricityExport_MWh = v_annualElectricityExport_MWh - v_weekdayElectricityExport_MWh;
+v_weekendExcessImport_MWh = v_annualExcessImport_MWh - v_weekdayExcessImport_MWh;
+v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh;
 v_weekendElectricityDrawn_MWh = v_annualElectricityDrawn_MWh - v_weekdayElectricityDrawn_MWh;
 v_weekendElectricityDelivered_MWh = v_annualElectricityDelivered_MWh - v_weekdayElectricityDelivered_MWh;]]></Body>
 				</Function>
@@ -26371,7 +26371,61 @@ f_setCoordinatesUIElements();
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1715953134119</Id>
+					<Name><![CDATA[c_EAs]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>310</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
+			<Events>
+				<Event>
+					<Id>1716200767637</Id>
+					<Name><![CDATA[e_calculateEnergyBalance]]></Name>
+					<Description><![CDATA[Trigger voor energieberekeningen in de model backbone. Volgorde is belangrijk voor consistente resultaten.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>310</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1/p_timeStep_h]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1658563200000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[0.25]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[f_updateStackChartData();]]></Action>
+				</Event>
+			</Events>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -26398,7 +26452,8 @@ f_setCoordinatesUIElements();
 	v_powerFraction_fr = j_ea.v_powerFraction_fr;
 	*/
 	plot.updateData();
-}]]></Body>
+}
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -26474,7 +26529,79 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					</Parameter>
 					<Body><![CDATA[plot.setVisible(isVisible);]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1715953163186</Id>
+					<Name><![CDATA[f_updateStackChartData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>90</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[double totalElectricityProduction_kW = 0;
+double totalElectricityConsumption_kW = 0;
+
+for (J_EA ea : c_EAs) {
+	totalElectricityProduction_kW += ea.electricityProduction_kW;
+	totalElectricityConsumption_kW += ea.electricityConsumption_kW;
+	traceln("ea consumption: " + ea.electricityConsumption_kW);
+}
+
+data_currentProductionElectricity_kW.add(totalElectricityProduction_kW);
+data_currentConsumptionElectricity_kW.add(totalElectricityConsumption_kW);
+]]></Body>
+				</Function>
 			</Functions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1715953048233</Id>
+					<Name><![CDATA[data_currentProductionElectricity_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>90</X><Y>800</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1716019200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1715953093443</Id>
+					<Name><![CDATA[data_currentConsumptionElectricity_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>90</X><Y>830</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1716019200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1658499506315</Id>
@@ -26950,7 +27077,7 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					<Id>1693296357894</Id>
 					<Name><![CDATA[ed_assetNr]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>360</X><Y>50</Y>
+					<X>460</X><Y>50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26978,7 +27105,7 @@ p_parentAgent = j_ea.parentAgent;
 					<Id>1693296387281</Id>
 					<Name><![CDATA[text7]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>360</X><Y>30</Y>
+					<X>450</X><Y>30</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26996,6 +27123,76 @@ p_parentAgent = j_ea.parentAgent;
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+    			<TimeStackChart>
+					<Id>1715953590721</Id>
+					<Name><![CDATA[chart]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>930</X><Y>280</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1716019200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>500</Width>
+					<Height>280</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>420</Width>
+						<Height>190</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<DatasetExpression>
+					<Id>1715953592765</Id>
+					<Expression><![CDATA[data_currentConsumptionElectricity_kW]]></Expression>
+					<Color>-40121</Color>
+					<Expression2><![CDATA[0]]></Expression2>
+					<Expression2Flag>false</Expression2Flag>
+							<Title><![CDATA[Consumption]]></Title>
+					</DatasetExpression>
+					<DatasetExpression>
+					<Id>1715953622911</Id>
+					<Expression><![CDATA[data_currentProductionElectricity_kW]]></Expression>
+					<Color>-16744448</Color>
+					<Expression2><![CDATA[0]]></Expression2>
+					<Expression2Flag>false</Expression2Flag>
+							<Title><![CDATA[Production]]></Title>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimeStackChart>
 			</Presentation>
 
 				</Level>
