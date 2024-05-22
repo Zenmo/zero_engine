@@ -7585,9 +7585,9 @@ traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenEx
 	data_totalSupply_kW.update();
 	data_totalNetLoad_kW.update();
 		
-	if (b_addKpiVisuals) {
-		pop_UI_EnergyAsset.forEach(agent -> agent.f_updateData());
-	}
+	//if (b_addKpiVisuals) {
+	//	pop_UI_EnergyAsset.forEach(agent -> agent.f_updateData());
+	//}
 } ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -22719,6 +22719,9 @@ int i_day=0;
 int i_night=0;
 int i_weekday=0;
 int i_weekend=0;
+
+double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
+
 for(int i=0; i<arraySize ; i++) {
 	/*if (notFirstRun) {
 		// First we make sure to store our previous Load Curve
@@ -22726,29 +22729,30 @@ for(int i=0; i<arraySize ; i++) {
 	}*/
 	// summer/winter
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
-		netLoadArraySummerweek_kW[i_summer]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		netLoadArraySummerweek_kW[i_summer]=-annualElectricityBalanceTimeSeries_kW[i];
 		i_summer++;
 	}
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
-		netLoadArrayWinterweek_kW[i_winter]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		netLoadArrayWinterweek_kW[i_winter]=-annualElectricityBalanceTimeSeries_kW[i];
 		i_winter++;
 	}
 	// day/night
 	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
-		netLoadArrayDaytime_kW[i_day]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		netLoadArrayDaytime_kW[i_day]=-annualElectricityBalanceTimeSeries_kW[i];
 		i_day++;
 	} else {
-		netLoadArrayNighttime_kW[i_night]=-acc_annualElectricityBalance_kW.getTimeSeries()[i];
+		netLoadArrayNighttime_kW[i_night]=-annualElectricityBalanceTimeSeries_kW[i];
 		i_night++;
-	}	
+	}
 	//Weekday/weekend
 	if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		listNetLoadArrayWeekday_kW.add(-acc_annualElectricityBalance_kW.getTimeSeries()[i]);
+		listNetLoadArrayWeekday_kW.add(-annualElectricityBalanceTimeSeries_kW[i]);
 		i_weekday++;
 	} else {
-		listNetLoadArrayWeekend_kW.add(-acc_annualElectricityBalance_kW.getTimeSeries()[i]);
+		listNetLoadArrayWeekend_kW.add(-annualElectricityBalanceTimeSeries_kW[i]);
 		i_weekend++;
 	}
+	
 }
 
 // Now we have the size of the weekday & weekend arrays.
@@ -22760,6 +22764,7 @@ for (int i = 0; i < listNetLoadArrayWeekday_kW.size(); i++) {
 for (int i = 0; i < listNetLoadArrayWeekend_kW.size(); i++) {
 	netLoadArrayWeekend_kW[i] = listNetLoadArrayWeekend_kW.get(i);
 }
+
 
 // Sort all arrays
 Arrays.parallelSort(netLoadArrayAnnual_kW);
@@ -22810,139 +22815,7 @@ for(int i=0; i< arraySize; i++) {
 	data_weekendNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
 }
 
-
-
-// OLD CODE:
-
-/*
-// Sorting netload values for belastingsduurkromme
-//data_netbelastingDuurkrommeVorige_kW.reset();
-//data_netbelastingshistogram_kW.reset();
-boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
-//int arraySize = data_annualBusinessParkNetLoad_kW.size();
-int arraySize = a_annualElectricityBalance_kW.length;
-double[] netLoadArrayAnnual_kW = a_annualElectricityBalance_kW.clone();
-
-//double[] netLoadArray_kW = new double[arraySize];
-/*
-double[] netLoadArrayWinter_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
-double[] netLoadArraySummer_kW = new double[energyModel.data_winterWeekBusinessParkNetLoad_kW.size()];
-double[] netLoadArrayDay_kW = new double[arraySize/2];
-double[] netLoadArrayNight_kW = new double[arraySize/2];
-double[] netLoadArrayWeekday_kW = new double[arraySize];
-double[] netLoadArrayWeekend_kW = new double[arraySize];
-
-int i_winter=0;
-int i_summer=0;
-int i_day=0;
-int i_night=0;
-int i_weekday=0;
-int i_weekend=0;
-for(int i=0; i<arraySize ; i++) {
-	//netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
-	if (notFirstRun) {
-		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
-	} 
-	// summer/winter
-	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
-		netLoadArraySummer_kW[i_summer]=-netLoadArrayAnnual_kW[i];
-		i_summer++;
-	}
-	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
-		netLoadArrayWinter_kW[i_winter]=-netLoadArrayAnnual_kW[i];
-		i_winter++;
-	}
-	// day/night
-	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
-		netLoadArrayDay_kW[i_day]=-netLoadArrayAnnual_kW[i];
-		i_day++;
-	} else {
-		netLoadArrayNight_kW[i_night]=-netLoadArrayAnnual_kW[i];
-		i_night++;
-	}	
-	//Weekday/weekend
-	if ((i*energyModel.p_timeStep_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		netLoadArrayWeekday_kW[i_weekday]=-netLoadArrayAnnual_kW[i];
-		i_weekday++;
-	} else {
-		netLoadArrayWeekend_kW[i_weekend]=-netLoadArrayAnnual_kW[i];
-		i_weekend++;
-	}
-	//data_netbelastingshistogram_kW.add(data_annualBusinessParkNetLoad_kW.getY(i));
-}*/
-
-
-//netLoadArrayWeekday_kW = Arrays.copyOfRange(netLoadArrayWeekday_kW, 0, i_weekday);
-//netLoadArrayWeekend_kW = Arrays.copyOfRange(netLoadArrayWeekend_kW, 0, i_weekend);
-//Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
-// Sort all arrays
-Arrays.parallelSort(netLoadArrayAnnual_kW);
-/*Arrays.parallelSort(netLoadArraySummer_kW);
-Arrays.parallelSort(netLoadArrayWinter_kW);
-Arrays.parallelSort(netLoadArrayDay_kW);
-Arrays.parallelSort(netLoadArrayNight_kW);
-Arrays.parallelSort(netLoadArrayWeekday_kW);
-Arrays.parallelSort(netLoadArrayWeekend_kW);*/
-// Write results to datasets
-
-//data_netbelastingDuurkromme_kW.reset();
-DataSet data_netbelastingDuurkromme_kW = new DataSet(arraySize);
-
-for(int i=0; i< arraySize; i++) {
-	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
-}
-
-return data_netbelastingDuurkromme_kW;
-
-/*
-data_HSMScapacity_kW.add(0, c_gridNodesHSMS.get(0).p_capacity_kW);
-data_HSMScapacity_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), p_connectionCapacity_kW);
-data_HSMScapacitySupply_kW.add(0, -c_gridNodesHSMS.get(0).p_capacity_kW);
-data_HSMScapacitySupply_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), -p_connectionCapacity_kW);
-*/
-
-/*
-//Netbelastingduurkromme winter
-data_winterWeekBusinessParkNetbelastingDuurkromme_kW.reset();
-arraySize = data_winterWeekBusinessParkNetLoad_kW.size();
-for(int i=0; i< arraySize; i++) {
-	data_winterWeekBusinessParkNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWinter_kW[i]);
-}
-
-//Netbelastingduurkromme summer
-arraySize = data_summerWeekBusinessParkNetLoad_kW.size();
-data_summerWeekBusinessParkNetbelastingDuurkromme_kW.reset();
-for(int i=0; i< arraySize; i++) {
-	data_summerWeekBusinessParkNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArraySummer_kW[i]);
-}
-
-//Netbelastingduurkromme dag
-arraySize = roundToInt(8760/2/p_timeStep_h);
-data_daytimeNetbelastingDuurkromme_kW.reset();
-for(int i=0; i< arraySize; i++) {
-	data_daytimeNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayDay_kW[i]);
-}
-
-//Netbelastingduurkromme nacht
-data_nighttimeNetbelastingDuurkromme_kW.reset();
-for(int i=0; i< arraySize; i++) {
-	data_nighttimeNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayNight_kW[i]);
-}
-
-//Netbelastingduurkromme weekday
-arraySize = netLoadArrayWeekday_kW.length;
-data_weekdayNetbelastingDuurkromme_kW.reset();
-for(int i=0; i< arraySize; i++) {
-	data_weekdayNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekday_kW[i]);
-}
-
-//Netbelastingduurkromme weekend
-arraySize = netLoadArrayWeekend_kW.length;
-data_weekendNetbelastingDuurkromme_kW.reset();
-for(int i=0; i< arraySize; i++) {
-	data_weekendNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekend_kW[i]);
-}
-*/]]></Body>
+return data_netbelastingDuurkromme_kW;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -26325,7 +26198,6 @@ f_setCoordinatesUIElements();
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>310</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -26352,7 +26224,7 @@ f_setCoordinatesUIElements();
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[f_updateStackChartData();]]></Action>
+					<Action><![CDATA[f_updateData();]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -26381,6 +26253,8 @@ f_setCoordinatesUIElements();
 	v_powerFraction_fr = j_ea.v_powerFraction_fr;
 	*/
 	plot.updateData();
+	data_currentConsumptionElectricity_kW.update();
+	data_currentProductionElectricity_kW.update();
 }
 ]]></Body>
 				</Function>
@@ -26458,36 +26332,11 @@ v_currentConsumptionDiesel_kW = arr[8];]]></Body>
 					</Parameter>
 					<Body><![CDATA[plot.setVisible(isVisible);]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1715953163186</Id>
-					<Name><![CDATA[f_updateStackChartData]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>90</X><Y>730</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double totalElectricityProduction_kW = 0;
-double totalElectricityConsumption_kW = 0;
-
-for (J_EA ea : c_EAs) {
-	totalElectricityProduction_kW += ea.electricityProduction_kW;
-	totalElectricityConsumption_kW += ea.electricityConsumption_kW;
-	traceln("ea consumption: " + ea.electricityConsumption_kW);
-}
-
-data_currentProductionElectricity_kW.add(totalElectricityProduction_kW);
-data_currentConsumptionElectricity_kW.add(totalElectricityConsumption_kW);
-]]></Body>
-				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
 					<Id>1715953048233</Id>
 					<Name><![CDATA[data_currentProductionElectricity_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>90</X><Y>800</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -26505,12 +26354,12 @@ data_currentConsumptionElectricity_kW.add(totalElectricityConsumption_kW);
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>true</FreezeXAxis>
+					<VerticalAxisExpression><![CDATA[v_currentProductionElectricity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715953093443</Id>
 					<Name><![CDATA[data_currentConsumptionElectricity_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>90</X><Y>830</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -26528,6 +26377,7 @@ data_currentConsumptionElectricity_kW.add(totalElectricityConsumption_kW);
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>true</FreezeXAxis>
+					<VerticalAxisExpression><![CDATA[v_currentConsumptionElectricity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -27052,76 +26902,6 @@ p_parentAgent = j_ea.parentAgent;
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-    			<TimeStackChart>
-					<Id>1715953590721</Id>
-					<Name><![CDATA[chart]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>280</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>true</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1716019200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>500</Width>
-					<Height>280</Height>
-					<BackgroundColor/>
-					<BorderColor/>
-					<ChartArea>
-						<XOffset>50</XOffset>
-						<YOffset>30</YOffset>
-						<Width>420</Width>
-						<Height>190</Height>
-						<BackgroundColor>-1</BackgroundColor>
-						<BorderColor>-16777216</BorderColor>
-						<GridColor>-12566464</GridColor>
-					</ChartArea>
-					<Legend>
-						<Place>SOUTH</Place>
-						<TextColor>-16777216</TextColor>
-						<Size>30</Size>
-					</Legend>
-					<Labels>
-						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
-						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
-						<TextColor>-12566464</TextColor>
-					</Labels>
-					<ShowLegend>true</ShowLegend>
-					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
-					<DatasetExpression>
-					<Id>1715953592765</Id>
-					<Expression><![CDATA[data_currentConsumptionElectricity_kW]]></Expression>
-					<Color>-40121</Color>
-					<Expression2><![CDATA[0]]></Expression2>
-					<Expression2Flag>false</Expression2Flag>
-							<Title><![CDATA[Consumption]]></Title>
-					</DatasetExpression>
-					<DatasetExpression>
-					<Id>1715953622911</Id>
-					<Expression><![CDATA[data_currentProductionElectricity_kW]]></Expression>
-					<Color>-16744448</Color>
-					<Expression2><![CDATA[0]]></Expression2>
-					<Expression2Flag>false</Expression2Flag>
-							<Title><![CDATA[Production]]></Title>
-					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
-					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
-    			</TimeStackChart>
 			</Presentation>
 
 				</Level>
