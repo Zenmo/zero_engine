@@ -1043,12 +1043,11 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
 Date startDate = date();
 startDate.setYear(p_year-1900);
-traceln("p_year is: %s", p_year);
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
 
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
+//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -5088,7 +5087,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
-					<X>90</X><Y>450</Y>
+					<X>90</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5413,7 +5412,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1703256089183</Id>
 					<Name><![CDATA[c_actors]]></Name>
-					<X>91</X><Y>468</Y>
+					<X>91</X><Y>498</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5421,6 +5420,22 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[Actor]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1716453161218</Id>
+					<Name><![CDATA[c_subGridConnections]]></Name>
+					<Description><![CDATA[A subGridConnections are a subset of (children of) of GridConnections that are "part" of another GC and thus are not counted towards the totals.]]></Description>
+					<X>90</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -6389,6 +6404,10 @@ else {
 	}
 }
 
+for (GridConnection gc : c_subGridConnections) {
+	gc.f_calculateEnergyBalance();
+}
+
 //v_totalElectricityConsumed_MWh += v_currentElectricityConsumption_kW * p_timeStep_h / 1000; // Totals shall be calculated at end of simulation from arrays!
 //v_totalElectricityProduced_MWh += v_currentElectricityProduction_kW * p_timeStep_h / 1000; // Totals shall be calculated at end of simulation from arrays!
 v_currentEnergyImport_kW = max(0,v_totalElectricPower_kW) + max(0, v_totalMethanePower_kW) + max(0,v_totalHydrogenPower_kW) + v_totalDieselPower_kW; // Heat excluded as it is assumes it will not be imported/exported! Total heatbalance should be 0.
@@ -6831,7 +6850,9 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(0));
-	
+}
+for (GridConnection GC : c_subGridConnections) {
+	GC.f_resetStates();
 }
 
 for (GridNode GN : pop_gridNodes) {
@@ -6988,6 +7009,9 @@ if (p_parallelize) {
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
+c_subGridConnections.forEach(gc -> gc.f_calculateKPIs());
+
+
 for(GridConnection g: c_gridConnections){ // 
 	    c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
 	    //v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
@@ -10697,7 +10721,7 @@ v_timeStepsElapsed ++;
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>90</X><Y>400</Y>
+					<X>90</X><Y>430</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10794,7 +10818,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660730126216</Id>
 					<Name><![CDATA[pop_connectionOwners]]></Name>
-					<X>90</X><Y>300</Y>
+					<X>90</X><Y>330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10923,7 +10947,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731786332</Id>
 					<Name><![CDATA[pop_energySuppliers]]></Name>
-					<X>90</X><Y>320</Y>
+					<X>90</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11022,7 +11046,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731820965</Id>
 					<Name><![CDATA[pop_energyCoops]]></Name>
-					<X>90</X><Y>340</Y>
+					<X>90</X><Y>370</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11130,7 +11154,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731850501</Id>
 					<Name><![CDATA[pop_gridOperators]]></Name>
-					<X>90</X><Y>380</Y>
+					<X>90</X><Y>410</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11220,7 +11244,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731876775</Id>
 					<Name><![CDATA[nationalEnergyMarket]]></Name>
-					<X>90</X><Y>540</Y>
+					<X>90</X><Y>570</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11297,7 +11321,7 @@ v_timeStepsElapsed ++;
 					<Id>1660731999276</Id>
 					<Name><![CDATA[pop_governmentLayer]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>90</X><Y>360</Y>
+					<X>90</X><Y>390</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13262,7 +13286,7 @@ v_timeStepsElapsed ++;
 				<Line>
 					<Id>1668602284894</Id>
 					<Name><![CDATA[line4]]></Name>
-					<X>60</X><Y>280</Y>
+					<X>60</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13286,7 +13310,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1668602284900</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>130</X><Y>260</Y>
+					<X>130</X><Y>290</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13307,7 +13331,7 @@ v_timeStepsElapsed ++;
 				<Line>
 					<Id>1668602384222</Id>
 					<Name><![CDATA[line5]]></Name>
-					<X>60</X><Y>510</Y>
+					<X>60</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13331,7 +13355,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1668602384225</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>150</X><Y>490</Y>
+					<X>150</X><Y>520</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46716,6 +46740,8 @@ public class J_EA implements Cloneable {
 	 public double heatConsumption_kW = 0.0;
 	 public double dieselConsumption_kW = 0.0;
 	 
+	 public double[] lastFlowsArray = new double[10];
+	 
 	 // debugging purposes!
 	 protected double heatProduced_kWh = 0.0;
 	 protected double heatConsumed_kWh = 0.0;
@@ -46748,7 +46774,9 @@ public class J_EA implements Cloneable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_addFlows(arr);
     	}
+    	
     	resetFlows();
+    	this.lastFlowsArray = arr;
     	return arr;
     }
     
@@ -46857,6 +46885,10 @@ public class J_EA implements Cloneable {
     
     public void setUI_EnergyAsset(UI_EnergyAsset ui_energyAsset) {
     	this.ui_energyAsset = ui_energyAsset;
+    }
+    
+    public double[] getLastFlows() {
+    	return lastFlowsArray;
     }
     
 //    public double getOutputTemperature_degC() {
@@ -47062,6 +47094,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_addFlows(arr);
     	}
+    	this.lastFlowsArray = arr;
     	return arr;
     }
     
