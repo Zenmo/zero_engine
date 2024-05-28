@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1978,7 +1978,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1699277193134</Id>
 					<Name><![CDATA[t_h]]></Name>
-					<X>557</X><Y>112</Y>
+					<X>557</X><Y>122</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5102,8 +5102,8 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663251681035</Id>
-					<Name><![CDATA[c_gridNodesHSMS]]></Name>
-					<X>299</X><Y>108</Y>
+					<Name><![CDATA[c_gridNodesTopLevel]]></Name>
+					<X>299</X><Y>138</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5117,8 +5117,8 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663252052482</Id>
-					<Name><![CDATA[c_gridNodesMSLS]]></Name>
-					<X>299</X><Y>128</Y>
+					<Name><![CDATA[c_gridNodesNotTopLevel]]></Name>
+					<X>299</X><Y>158</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5138,7 +5138,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5148,7 +5148,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1663336485480</Id>
 					<Name><![CDATA[c_gridNodesHeat]]></Name>
-					<X>299</X><Y>148</Y>
+					<X>299</X><Y>178</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5164,7 +5164,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<Id>1664953351408</Id>
 					<Name><![CDATA[c_productionAssets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>299</X><Y>208</Y>
+					<X>299</X><Y>238</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5179,7 +5179,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1665492426842</Id>
 					<Name><![CDATA[c_ambientAirDependentAssets]]></Name>
-					<X>299</X><Y>248</Y>
+					<X>299</X><Y>278</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5226,7 +5226,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1666978650654</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
-					<X>299</X><Y>186</Y>
+					<X>299</X><Y>216</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5383,7 +5383,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1692799535493</Id>
 					<Name><![CDATA[c_storageAssets]]></Name>
-					<X>299</X><Y>228</Y>
+					<X>299</X><Y>258</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5398,7 +5398,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1692871551713</Id>
 					<Name><![CDATA[c_EVs]]></Name>
-					<X>299</X><Y>268</Y>
+					<X>299</X><Y>298</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5425,6 +5425,21 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1716885030303</Id>
+					<Name><![CDATA[c_gridNodeExecutionList]]></Name>
+					<X>300</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridNode]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -5435,7 +5450,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 @since: Sprint 6
 @author: Jorrit]]></Description>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>557</X><Y>82</Y>
+					<X>550</X><Y>-80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5910,7 +5925,7 @@ return 1;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664894248130</Id>
 					<Name><![CDATA[f_updatePricesForNextTimestep]]></Name>
-					<X>557</X><Y>212</Y>
+					<X>557</X><Y>222</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5952,7 +5967,7 @@ for (EnergyCoop e : pop_energyCoops) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664952601107</Id>
 					<Name><![CDATA[f_updateTimeseries]]></Name>
-					<X>557</X><Y>132</Y>
+					<X>557</X><Y>142</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6001,7 +6016,7 @@ v_epexForecast_eurpkWh += (tf_dayAheadElectricityPricing_eurpMWh(t_h+p_forecastT
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051878402</Id>
 					<Name><![CDATA[f_calculateGridnodeFlows]]></Name>
-					<X>557</X><Y>172</Y>
+					<X>557</X><Y>182</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6013,7 +6028,7 @@ v_epexForecast_eurpkWh += (tf_dayAheadElectricityPricing_eurpMWh(t_h+p_forecastT
 					<Body><![CDATA[v_currentElectricityImport_kW = 0;
 v_currentElectricityExport_kW = 0;
 
-for(GridNode n : c_gridNodesHeat) {
+/*for(GridNode n : c_gridNodesHeat) {
 	n.f_calculateEnergyBalance();
 }
 for(GridNode n : c_gridNodesMSLS) {
@@ -6023,70 +6038,23 @@ for(GridNode n : c_gridNodesHSMS) {
 	n.f_calculateEnergyBalance();
 	v_currentElectricityImport_kW += max(0, n.v_currentLoadElectricity_kW );
 	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
+}*/
+
+for(GridNode n : c_gridNodeExecutionList) {
+	n.f_calculateEnergyBalance();
 }
 
-// This is taken care of by f_sumGridNodeLoads at the end of the yearrun, right??
-//v_totalElectricityImport_MWh += v_currentElectricityImport_kW * p_timeStep_h / 1000;
-//v_totalElectricityExport_MWh += v_currentElectricityExport_kW * p_timeStep_h / 1000;
-
-
-
-
-/*if (b_storeProfiles) {
-	// Write data to 'signal' objects
-	double p_signalResolution_h = 1.0; // For consistency of units, make signal resolution explicit!
-	
-	double currentImport_MW = v_currentElectricityImport_kW / 1000;
-	double currentExport_MW = v_currentElectricityExport_kW / 1000;
-	int timeIndex = (int)floor( time(HOUR) );
-	
-	c_globalElectricityImportProfile_MW.computeIfPresent( timeIndex, (key, val) -> val + currentImport_MW * p_timeStep_h / p_signalResolution_h);
-	c_globalElectricityImportProfile_MW.computeIfAbsent( timeIndex, k -> currentImport_MW * p_timeStep_h / p_signalResolution_h );
-	c_globalElectricityExportProfile_MW.computeIfPresent( timeIndex, (key, val) -> val + currentExport_MW * p_timeStep_h / p_signalResolution_h);
-	c_globalElectricityExportProfile_MW.computeIfAbsent( timeIndex, k -> currentExport_MW * p_timeStep_h / p_signalResolution_h );
-	
-	// Average EV load over one hour
-	
-	double currentEVLoad_kW = 0;
-	double currentEHGVLoad_kW = 0;
-	for(J_EA e : c_energyAssets) {
-		if( e.energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ! e.energyAssetName.equals("EHGV") ) {
-			//traceln("EV power queried!!!");
-			currentEVLoad_kW += (e.electricityProduction_kW - e.electricityConsumption_kW);
-		}
-		if( e.energyAssetName.equals("EHGV") ) {
-			//traceln("EHGV power queried!!!");
-			currentEHGVLoad_kW += (e.electricityProduction_kW - e.electricityConsumption_kW);
-		}
-	}
-	double totalEVLoad_kW = currentEVLoad_kW;
-	double totalEHGVLoad_kW = currentEHGVLoad_kW;
-	//traceln("f_calculateGridNodeFlows check: totalEVLoad_kWhph "+totalEVLoad_kWhph);
-	c_globalEVChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalEVLoad_kW * p_timeStep_h / p_signalResolution_h );
-	c_globalEVChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalEVLoad_kW * p_timeStep_h / p_signalResolution_h );
-	
-	c_globalEHGVChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalEHGVLoad_kW * p_timeStep_h / p_signalResolution_h );
-	c_globalEHGVChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalEHGVLoad_kW * p_timeStep_h / p_signalResolution_h);
-	
-	// Average battery load over one hour
-	double currentBatteryLoad_kW = 0;
-	for( J_EAStorage e : c_storageAssets ) {
-		if(e.getClass().equals(J_EAStorageElectric.class)) {
-			currentBatteryLoad_kW += e.electricityProduction_kW - e.electricityConsumption_kW;
-		}
-	}
-	
-	double totalBatteryLoad_kW = currentBatteryLoad_kW;
-	c_globalBatteryChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalBatteryLoad_kW * p_timeStep_h / p_signalResolution_h );
-	c_globalBatteryChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalBatteryLoad_kW * p_timeStep_h / p_signalResolution_h );
-}*/]]></Body>
+for(GridNode n : c_gridNodesTopLevel) {
+	v_currentElectricityImport_kW += max(0, n.v_currentLoadElectricity_kW );
+	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051962956</Id>
 					<Name><![CDATA[f_calculateFinancialFlows]]></Name>
-					<X>557</X><Y>192</Y>
+					<X>557</X><Y>202</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6137,7 +6105,7 @@ v_netOverloadDuration_h = 0;
 
 //v_totalHeatProduced_MWh = 0;
 
-for(GridNode h : c_gridNodesHSMS ) {
+for(GridNode h : c_gridNodesTopLevel ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
 	v_gridNodePeakLoadElectricityHSMS_kW += abs(h.v_peakLoadFilteredElectricity_kW);
 	
@@ -6148,6 +6116,11 @@ for(GridNode h : c_gridNodesHSMS ) {
 	
 	v_netOverloadDuration_h += h.v_totalTimeOverloaded_h;
 }
+
+
+
+//////// Obsolete gridload KPIs from Holon!
+/*
 
 v_gridNodePeakLoadElectricityMSLS_kW=0;
 c_timesOfNodePeakLoads_h.clear();
@@ -6168,7 +6141,7 @@ for(GridNode m : c_gridNodesMSLS ) {
 	
 	double maxLoad_fr = max(m.v_peakPosLoadElectricity_kW, m.v_peakNegLoadElectricity_kW)/m.p_capacity_kW;
 
-/*
+
 	if (maxLoad_fr > 1) {
 		m.gisRegion.setFillColor(red);
 		m.gisRegion.setLineColor( red.brighter() );
@@ -6179,12 +6152,13 @@ for(GridNode m : c_gridNodesMSLS ) {
 		m.gisRegion.setFillColor(green);
 		m.gisRegion.setLineColor( green.brighter() );
 	}
-*/
+
 	//traceln("MSLS node peak load unfiltered: " + m.v_peakLoadAbsoluteElectricity_kW + " kW");
 	//traceln("Grid node " + m.p_gridNodeID);
 	//traceln("MSLS peak positive load filtered: " + roundToDecimal(m.v_peakPosLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakPosLoadFiltered_h + " h");
 	//traceln("MSLS peak negative load filtered: " + roundToDecimal(m.v_peakNegLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakNegLoadFiltered_h + " h");
 }
+
 
 // If the energy system only has LS nodes, determine KPI on LS level, otherwise on HS
 if (c_gridNodesHSMS.size() == 0){
@@ -6216,7 +6190,8 @@ else {
 }
 
 v_avgNetLoad_fr = c_gridNodesHSMS.get(0).v_averageAbsoluteLoadElectricity_kW/c_gridNodesHSMS.get(0).p_capacity_kW;
-//traceln("Average load on HSMS node: %s %", v_avgNetLoad_fr*100);]]></Body>
+//traceln("Average load on HSMS node: %s %", v_avgNetLoad_fr*100);
+*/]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6338,7 +6313,7 @@ traceln("Electricity delta in batteries (including EVs): "+ v_batteryStoredEnerg
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528129020</Id>
 					<Name><![CDATA[f_calculateGridConnectionFlows]]></Name>
-					<X>557</X><Y>152</Y>
+					<X>557</X><Y>162</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7266,7 +7241,7 @@ traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenEx
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1699275323325</Id>
 					<Name><![CDATA[f_updateArrays]]></Name>
-					<X>557</X><Y>234</Y>
+					<X>557</X><Y>244</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7438,7 +7413,7 @@ traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenEx
 		
 		data_summerWeekBusinessParkDemand_kW.add(t_h, sum(c_energyAssets, x->x.electricityConsumption_kW));
 		data_summerWeekBusinessParkSupply_kW.add(t_h, -sum(c_energyAssets, x->x.electricityProduction_kW)); 
-		data_summerWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
+		data_summerWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel, x->x.v_currentLoadElectricity_kW));
 		//v_summerWeekHour++;
 		//v_summerWeekPeakElecImport_kW = max(v_summerWeekPeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_summerWeekPeakElecExport_kW = max(v_summerWeekPeakElecExport_kW,v_currentElectricityExport_kW);	
@@ -7479,7 +7454,7 @@ traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenEx
 		
 		data_winterWeekBusinessParkDemand_kW.add(t_h, sum(c_energyAssets, x->x.electricityConsumption_kW));
 		data_winterWeekBusinessParkSupply_kW.add(t_h, -sum(c_energyAssets, x->x.electricityProduction_kW)); 
-		data_winterWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
+		data_winterWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel, x->x.v_currentLoadElectricity_kW));
 		//v_winterWeekHour++;
 		//v_winterWeekPeakElecImport_kW = max(v_winterWeekPeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_winterWeekPeakElecExport_kW = max(v_winterWeekPeakElecExport_kW,v_currentElectricityExport_kW);
@@ -7827,10 +7802,10 @@ data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
 	data_netbelastingDuurkromme_kW.add(i*p_timeStep_h, a_annualNetLoad_kW[arraySize-i-1]);
 }
-data_HSMScapacity_kW.add(0, c_gridNodesHSMS.get(0).p_capacity_kW);
-data_HSMScapacity_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), c_gridNodesHSMS.get(0).p_capacity_kW);
-data_HSMScapacitySupply_kW.add(0, -c_gridNodesHSMS.get(0).p_capacity_kW);
-data_HSMScapacitySupply_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), -c_gridNodesHSMS.get(0).p_capacity_kW);
+data_HSMScapacity_kW.add(0, c_gridNodesTopLevel.get(0).p_capacity_kW);
+data_HSMScapacity_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), c_gridNodesTopLevel.get(0).p_capacity_kW);
+data_HSMScapacitySupply_kW.add(0, -c_gridNodesTopLevel.get(0).p_capacity_kW);
+data_HSMScapacitySupply_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), -c_gridNodesTopLevel.get(0).p_capacity_kW);
 
 //Netbelastingduurkromme winter
 data_winterWeekBusinessParkNetbelastingDuurkromme_kW.reset();
@@ -7905,6 +7880,74 @@ f_updateArrays(t_h);
 
 v_timeStepsElapsed ++;
 ]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1716884712799</Id>
+					<Name><![CDATA[f_buildGridNodeTree]]></Name>
+					<X>560</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// First make all links between GridNodes
+for( GridNode GN : pop_gridNodes ) {
+	GN.f_connectToParentNode();
+}
+
+// Then build execution order list
+for( GridNode GN : pop_gridNodes ) {
+	GridNode parentNode = findFirst(pop_gridNodes, p->p.p_gridNodeID.equals(GN.p_parentNodeID));
+	if (GN.p_parentNodeID == null) {
+		f_gridNodeRecursiveAdd(GN);
+		c_gridNodesTopLevel.add(GN);
+	} else {
+		//GridNode parentNode = findFirst(pop_gridNodes, p->p.p_gridNodeID.equals(GN.p_parentNodeID));
+		if (parentNode == null) {
+			f_gridNodeRecursiveAdd(GN);
+			c_gridNodesTopLevel.add(GN);
+		} else {
+			c_gridNodesNotTopLevel.add(GN);
+		}
+	}
+}
+Collections.reverse(c_gridNodeExecutionList);
+
+traceln("Grid Node execution list: %s", c_gridNodeExecutionList );]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1716886716306</Id>
+					<Name><![CDATA[f_gridNodeRecursiveAdd]]></Name>
+					<X>580</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[GN]]></Name>
+						<Type><![CDATA[GridNode]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_gridNodeExecutionList.add(GN);
+for (GridNode GNchild : GN.c_connectedGridNodes) {
+	f_gridNodeRecursiveAdd(GNchild);
+}
+
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<GridConnection>]]></ReturnType>
+					<Id>1716890117265</Id>
+					<Name><![CDATA[f_getGridConnections]]></Name>
+					<X>1280</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return c_gridConnections;]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -8626,7 +8669,7 @@ v_timeStepsElapsed ++;
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW)]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridNodesTopLevel, x->x.v_currentLoadElectricity_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -13550,6 +13593,51 @@ v_timeStepsElapsed ++;
 						<LabelText><![CDATA[Run Rapid Simulation]]></LabelText>
 					</ExtendedProperties>
 				</Control>
+				<Line>
+					<Id>1716890105093</Id>
+					<Name><![CDATA[line10]]></Name>
+					<X>1260</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>190</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Text>
+					<Id>1716890105095</Id>
+					<Name><![CDATA[text12]]></Name>
+					<X>1350</X><Y>480</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Getters]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>11</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -15086,8 +15174,8 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1666560357503</Id>
-					<Name><![CDATA[c_electricityGridConnections]]></Name>
-					<X>290</X><Y>180</Y>
+					<Name><![CDATA[c_connectedGridConnections]]></Name>
+					<X>540</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15102,7 +15190,7 @@ geupdate vanuit
 				<Variable Class="CollectionVariable">
 					<Id>1676567375230</Id>
 					<Name><![CDATA[c_energyCoops]]></Name>
-					<X>290</X><Y>160</Y>
+					<X>540</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15110,6 +15198,21 @@ geupdate vanuit
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[EnergyCoop]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1716885463799</Id>
+					<Name><![CDATA[c_connectedGridNodes]]></Name>
+					<X>540</X><Y>60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridNode]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -15128,14 +15231,14 @@ geupdate vanuit
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[GridNode myParentNode = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_parentNodeID));
 if( myParentNode instanceof GridNode ) {
-	superConnection.connectTo(myParentNode);
+	//superConnection.connectTo(myParentNode);
 	myParentNode.f_connectToChild(this);
 }
 
 GridOperator myParentGridOperator = findFirst(energyModel.pop_gridOperators, p->p.p_actorID.equals(p_gridNodeOwnerID)) ;
 if( myParentGridOperator instanceof GridOperator) {
 	p_ownerGridOperator = myParentGridOperator;
-//superConnection.connectTo(myParentGridOperator);
+	//superConnection.connectTo(myParentGridOperator);
 	myParentGridOperator.f_connectToChild(this, p_energyType);
 }
 ]]></Body>
@@ -15154,10 +15257,14 @@ if( myParentGridOperator instanceof GridOperator) {
 						<Name><![CDATA[ConnectingChildNode]]></Name>
 						<Type><![CDATA[Agent]]></Type>
 					</Parameter>
-					<Body><![CDATA[subConnections.connectTo(ConnectingChildNode);
+					<Body><![CDATA[//subConnections.connectTo(ConnectingChildNode);
+
+if ( ConnectingChildNode instanceof GridNode) {
+	 c_connectedGridNodes.add( (GridNode)ConnectingChildNode );
+}
 
 if ( ConnectingChildNode instanceof GridConnection) {
-	 c_electricityGridConnections.add( (GridConnection)ConnectingChildNode );
+	 c_connectedGridConnections.add( (GridConnection)ConnectingChildNode );
 }
 
 if ( ConnectingChildNode instanceof EnergyCoop) {
@@ -15248,49 +15355,47 @@ v_currentLoadHeat_kW = 0;
 
 // determine the net energy flows from all subconnections by nodetype
 
-for( Agent a : subConnections.getConnections() )
-{
-	if( a instanceof GridNode ) {
-		switch(p_energyType) {
-			case ELECTRICITY:
-				v_currentLoadElectricity_kW += ((GridNode) a).v_currentLoadElectricity_kW;
-			break;
-			case METHANE:
-				v_currentLoadMethane_kW += ((GridNode) a).v_currentLoadMethane_kW;
-			break;
-			case HYDROGEN:
-				v_currentLoadHydrogen_kW += ((GridNode) a).v_currentLoadHydrogen_kW;
-			break;
-			case HEAT:
-				v_currentLoadHeat_kW += ((GridNode) a).v_currentLoadHeat_kW;
-			break;
-			default:
-				//
-			break;
-		}
-	}
-
-	if( a instanceof GridConnection ) {
-		switch(p_energyType) {
-			case ELECTRICITY:
-				//if (((GridConnection) a).p_gridConnectionCategory != OL_GridConnectionCategory.GRIDBATTERY){
-					v_currentLoadElectricity_kW += ((GridConnection) a).v_currentPowerElectricity_kW;
-				//}
-			break;
-			case METHANE:
-				v_currentLoadMethane_kW += ((GridConnection) a).v_currentPowerMethane_kW;
-			break;
-			case HYDROGEN:
-				v_currentLoadHydrogen_kW += ((GridConnection) a).v_currentPowerHydrogen_kW;
-			break;
-			case HEAT:
-				v_currentLoadHeat_kW += ((GridConnection) a).v_currentPowerHeat_kW;
-			break;
-			default:
-			break;
-		}
+for( GridNode GN : c_connectedGridNodes ) {
+	switch(p_energyType) {
+		case ELECTRICITY:
+			v_currentLoadElectricity_kW += GN.v_currentLoadElectricity_kW;
+		break;
+		case METHANE:
+			v_currentLoadMethane_kW += GN.v_currentLoadMethane_kW;
+		break;
+		case HYDROGEN:
+			v_currentLoadHydrogen_kW += GN.v_currentLoadHydrogen_kW;
+		break;
+		case HEAT:
+			v_currentLoadHeat_kW += GN.v_currentLoadHeat_kW;
+		break;
+		default:
+			//
+		break;
 	}
 }
+
+for( GridConnection GC : c_connectedGridConnections) {
+	switch(p_energyType) {
+		case ELECTRICITY:
+			//if (((GridConnection) a).p_gridConnectionCategory != OL_GridConnectionCategory.GRIDBATTERY){
+				v_currentLoadElectricity_kW += GC.v_currentPowerElectricity_kW;
+			//}
+		break;
+		case METHANE:
+			v_currentLoadMethane_kW += GC.v_currentPowerMethane_kW;
+		break;
+		case HYDROGEN:
+			v_currentLoadHydrogen_kW += GC.v_currentPowerHydrogen_kW;
+		break;
+		case HEAT:
+			v_currentLoadHeat_kW += GC.v_currentPowerHeat_kW;
+		break;
+		default:
+		break;
+	}
+}
+
 
 /*if( p_energyType == OL_EnergyCarrierType.ELECTRICITY ){
 	v_electricLoadRatioExclBattery = v_currentLoadElectricity_kW / p_capacity_kW;
@@ -15379,7 +15484,7 @@ if (energyModel.v_isRapidRun){
 						<Name><![CDATA[price_eurpkWh]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[for (GridConnection gc: c_electricityGridConnections){
+					<Body><![CDATA[for (GridConnection gc: c_connectedGridConnections){
 	//traceln("Gc "+ gc.toString() + ", price "+ price_eurpkWh + ", allowance "+ allowance_kW +".");
 	ConnectionOwner owner = ((ConnectionOwner)gc.l_ownerActor.getConnectedAgent());
 	owner.v_currentNodalPrice_eurpkWh = price_eurpkWh;
@@ -15430,7 +15535,7 @@ for (EnergyCoop e: c_energyCoops){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (GridConnection gc: c_electricityGridConnections){
+					<Body><![CDATA[for (GridConnection gc: c_connectedGridConnections){
 	ConnectionOwner owner = ((ConnectionOwner)gc.l_ownerActor.getConnectedAgent());
 	owner.v_currentNodalPrice_eurpkWh = 0;
 }
@@ -16143,6 +16248,7 @@ v_weekendElectricityDelivered_MWh = v_annualElectricityDelivered_MWh - v_weekday
 				<AgentLink>
 					<Id>1658477288303</Id>
 					<Name><![CDATA[connections]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>50</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16164,6 +16270,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 				<AgentLink>
 					<Id>1658495297995</Id>
 					<Name><![CDATA[superConnection]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>200</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -16184,6 +16291,7 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 				<AgentLink>
 					<Id>1658495597148</Id>
 					<Name><![CDATA[subConnections]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>200</X><Y>-20</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -22414,6 +22522,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//f_instantiateEnergyAssets();
+energyModel.c_gridConnections.add(this);
 f_connectToParentNode();
 if (!l_parentNodeElectric.isConnected()) {
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
@@ -22699,14 +22808,13 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[data_netbelastingDuurkrommeVorige_kW.reset();
-
 //boolean notFirstRun = data_netbelastingDuurkromme_kW.size() > 0 ? true : false;
-int arraySize = acc_annualElectricityBalance_kW.getTimeSeries().length;
 
 // We copy our annual array to preserve it as a time-series and make new arrays for the others
-double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
-double[] netLoadArraySummerweek_kW = new double[(int) Math.round(168 / energyModel.p_timeStep_h)];
-double[] netLoadArrayWinterweek_kW= new double[(int) Math.round(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries();//.clone(); Is already a clone
+int arraySize = netLoadArrayAnnual_kW.length;
+double[] netLoadArraySummerweek_kW = new double[roundToInt(168 / energyModel.p_timeStep_h)];
+double[] netLoadArrayWinterweek_kW= new double[roundToInt(168 / energyModel.p_timeStep_h)];
 double[] netLoadArrayDaytime_kW = new double[arraySize/2];
 double[] netLoadArrayNighttime_kW = new double[arraySize/2];
 // For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
@@ -22720,7 +22828,7 @@ int i_night=0;
 int i_weekday=0;
 int i_weekend=0;
 
-double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
+//double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
 
 for(int i=0; i<arraySize ; i++) {
 	/*if (notFirstRun) {
@@ -22729,27 +22837,27 @@ for(int i=0; i<arraySize ; i++) {
 	}*/
 	// summer/winter
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
-		netLoadArraySummerweek_kW[i_summer]=-annualElectricityBalanceTimeSeries_kW[i];
+		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 		i_summer++;
 	}
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
-		netLoadArrayWinterweek_kW[i_winter]=-annualElectricityBalanceTimeSeries_kW[i];
+		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 		i_winter++;
 	}
 	// day/night
 	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
-		netLoadArrayDaytime_kW[i_day]=-annualElectricityBalanceTimeSeries_kW[i];
+		netLoadArrayDaytime_kW[i_day]=-netLoadArrayAnnual_kW[i];
 		i_day++;
 	} else {
-		netLoadArrayNighttime_kW[i_night]=-annualElectricityBalanceTimeSeries_kW[i];
+		netLoadArrayNighttime_kW[i_night]=-netLoadArrayAnnual_kW[i];
 		i_night++;
 	}
 	//Weekday/weekend
 	if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		listNetLoadArrayWeekday_kW.add(-annualElectricityBalanceTimeSeries_kW[i]);
+		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
 		i_weekday++;
 	} else {
-		listNetLoadArrayWeekend_kW.add(-annualElectricityBalanceTimeSeries_kW[i]);
+		listNetLoadArrayWeekend_kW.add(-netLoadArrayAnnual_kW[i]);
 		i_weekend++;
 	}
 	
@@ -34783,15 +34891,16 @@ double customerFeedIn_MWh = v_electricityExported_kWh/1000 + totalDeliveredElec_
 double nettDeliveredElec_MWh = totalDeliveredElec_MWh - customerFeedIn_MWh; // 
 
 double kostprijs_eurpMWh = assetAvgLCOE_eurpMWh - SDEincome_eur / totalOwnElectricityProduced_MWh; // Neem aan dat de cooperatie dit bedrag ook krijgt voor niet-gelijktijdig geleverde stroom!
+double kostprijsPlus_eurpMWh = kostprijs_eurpMWh + bufferCost_eurpMWh;
 //double EPEXbalance_eur = EPEXincome_eur - EPEXcosts_eur; // positive balance means nett-income!
 
 // Leveranciersprijs
 //double EDVcosts_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * (totalOwnElectricityProduced_MWh + customerFeedIn_MWh ) + EPEXcosts_eur ; 
 double EDVcosts_eur = kostprijs_eurpMWh * ( totalOwnElectricityProduced_MWh + customerFeedIn_MWh ) + EPEXcosts_eur + totalDeliveredElec_MWh * bufferCost_eurpMWh; 
-double leveranciersprijs_eurpMWh = (EDVcosts_eur - EPEXincome_eur - (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectricitySelfConsumed_MWh )/(totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh); // Zorg dat EDV break-even draait
+double leveranciersprijs_eurpMWh = (EDVcosts_eur - EPEXincome_eur - kostprijsPlus_eurpMWh * v_totalElectricitySelfConsumed_MWh )/(totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh); // Zorg dat EDV break-even draait
 
 // Gemiddelde leveringsprijs
-double gemiddeldeLeveringsprijs_eurpMWh = ( (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectricitySelfConsumed_MWh + leveranciersprijs_eurpMWh * (totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh) ) / totalDeliveredElec_MWh;
+double gemiddeldeLeveringsprijs_eurpMWh = ( kostprijsPlus_eurpMWh * v_totalElectricitySelfConsumed_MWh + leveranciersprijs_eurpMWh * (totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh) ) / totalDeliveredElec_MWh;
 //double leveranciersprijs_eurpMWh = 
 double EDVincome_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectricitySelfConsumed_MWh + EPEXincome_eur + (totalDeliveredElec_MWh - v_totalElectricitySelfConsumed_MWh) * leveranciersprijs_eurpMWh;
 //totalDeliveredElec_MWh = nettDeliveredElec_MWh; // Assume that nettDelivered is what counts for finances, such that feed-in tarrif is accounted for!
@@ -34799,6 +34908,7 @@ double EDVincome_eur = (kostprijs_eurpMWh + bufferCost_eurpMWh) * v_totalElectri
 traceln("Totale opwek Coöperatie Assets: %s MWh, tarief: %s €/MWh, waarde: %s €", totalOwnElectricityProduced_MWh, kostprijs_eurpMWh, totalOwnElectricityProduced_MWh*kostprijs_eurpMWh); // Also need production from own assets only!
 traceln("Gelijktijdige opwek en verbruik (incl zelfverbruik teruglevering van leden): %s MWh", v_totalElectricitySelfConsumed_MWh);
 traceln("Gelijktijdige opwek en verbruik (excl zelfverbruik teruglevering van leden): %s MWh, tarief: %s €/MWh, waarde: %s €", selfConsumptionCoopAssets_MWh, kostprijs_eurpMWh+bufferCost_eurpMWh, selfConsumptionCoopAssets_MWh * (kostprijs_eurpMWh+bufferCost_eurpMWh));
+traceln("Ongelijktijdige levering: %s MWh, tarief: %s €/MWh, waarde: %s €", totalDeliveredElec_MWh-v_totalElectricitySelfConsumed_MWh, leveranciersprijs_eurpMWh, leveranciersprijs_eurpMWh*(totalDeliveredElec_MWh-v_totalElectricitySelfConsumed_MWh));
 traceln("Totale inkoop op EPEX: %s MWh, tarief: %s €/MWh, value: %s €", v_electricityImported_kWh/1000, EPEXcosts_eur/(v_electricityImported_kWh/1000), EPEXcosts_eur);
 traceln("Totale verkoop op EPEX: %s MWh, tarief: %s €/MWh, value: %s €", v_electricityExported_kWh/1000, EPEXincome_eur/(v_electricityExported_kWh/1000), EPEXincome_eur);
 
@@ -42275,7 +42385,7 @@ if (p_curtailer != null){
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
 						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
 					</Parameter>
-					<Body><![CDATA[double currentHSMSGridNodePowerFlow_kW = energyModel.c_gridNodesHSMS.get(0).v_currentLoadElectricity_kW;
+					<Body><![CDATA[double currentHSMSGridNodePowerFlow_kW = energyModel.c_gridNodesTopLevel.get(0).v_currentLoadElectricity_kW;
 
 switch (p_electrolyserOperationMode){
 
