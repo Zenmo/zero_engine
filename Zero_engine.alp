@@ -950,6 +950,10 @@
 				<Id>1668693554313</Id>
 				<Name><![CDATA[PRICE]]></Name>
 			</Option>
+			<Option>
+				<Id>1716889870295</Id>
+				<Name><![CDATA[OFF]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1674403295460</Id>
@@ -9396,7 +9400,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336413</Id>
@@ -9418,7 +9422,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336419</Id>
@@ -9440,7 +9444,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336425</Id>
@@ -9462,7 +9466,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336432</Id>
@@ -9484,7 +9488,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336438</Id>
@@ -9506,7 +9510,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336445</Id>
@@ -9528,7 +9532,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336451</Id>
@@ -9550,7 +9554,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336473</Id>
@@ -9594,7 +9598,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336486</Id>
@@ -9617,7 +9621,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336493</Id>
@@ -9639,7 +9643,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336499</Id>
@@ -9662,7 +9666,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336506</Id>
@@ -9684,7 +9688,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246378181</Id>
@@ -10234,7 +10238,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715671280183</Id>
@@ -23767,7 +23771,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040034</Id>
@@ -23789,7 +23793,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040041</Id>
@@ -23811,7 +23815,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040046</Id>
@@ -23833,7 +23837,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040051</Id>
@@ -23855,7 +23859,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040056</Id>
@@ -23877,7 +23881,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040068</Id>
@@ -23899,7 +23903,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040072</Id>
@@ -23921,7 +23925,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086750378</Id>
@@ -23944,7 +23948,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086752844</Id>
@@ -23967,7 +23971,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715088549909</Id>
@@ -24187,7 +24191,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242544164</Id>
@@ -24210,7 +24214,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242546547</Id>
@@ -24232,7 +24236,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242548516</Id>
@@ -24255,7 +24259,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242681124</Id>
@@ -24277,7 +24281,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715244201229</Id>
@@ -24651,7 +24655,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715673624817</Id>
@@ -42177,8 +42181,12 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 
 if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
-	double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
-	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+
+	double availableElectricPower_kW = max(0,v_allowedCapacity_kW - v_currentPowerElectricity_kW);
+	double excessElectricPower_kW = max(0, v_currentPowerElectricity_kW - v_allowedCapacity_kW);	
+	//double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
+	//double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	
 	double eta_r = ElectrolyserAsset.getEta_r();
 	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double ProductionSetpoint_kW = ElectrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
@@ -42308,6 +42316,9 @@ switch (p_electrolyserOperationMode){
 	break;
 	case BALANCE:
 		f_electrolyserRegimeControl_Balance(currentHSMSGridNodePowerFlow_kW, ElectrolyserAsset);
+	break;
+	case OFF:
+		v_electrolyserRegime = SHUTDOWN;
 	break;
 }
 
@@ -42481,13 +42492,14 @@ ElectrolyserAsset.setState(v_electrolyserRegime);
 
 	case SHUTDOWN:
 		if ( currentHSMSGridNodePowerFlow_kW < v_gridNodeCongestionLimit_kW ){
-			v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
+ 			v_electrolyserRegime = OL_ElectrolyserState.IDLE;
 		}
 		else{
 			v_electrolyserRegime = OL_ElectrolyserState.SHUTDOWN;
 		}
 	break;
-
+	
+	/*
 	case STANDBY: 
 		if ( currentHSMSGridNodePowerFlow_kW < v_gridNodeCongestionLimit_kW ){
 			v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
@@ -42496,13 +42508,14 @@ ElectrolyserAsset.setState(v_electrolyserRegime);
 			v_electrolyserRegime = OL_ElectrolyserState.STANDBY;
 		}
 	break;
-
+	*/
+	
 	case IDLE: 
 		if ( currentHSMSGridNodePowerFlow_kW < v_gridNodeCongestionLimit_kW ){
 			v_electrolyserRegime = OL_ElectrolyserState.FUNCTIONAL;
 		}
 		else{
-			v_electrolyserRegime = OL_ElectrolyserState.IDLE;
+			v_electrolyserRegime = OL_ElectrolyserState.SHUTDOWN;
 		}
 	break;
 
@@ -46891,6 +46904,11 @@ public class J_EA implements Cloneable {
     	return lastFlowsArray;
     }
     
+	 public OL_EnergyAssetType getEAType() {
+		 return energyAssetType;
+	 }
+
+    
 //    public double getOutputTemperature_degC() {
 //   	return 0;
 //    }
@@ -49069,7 +49087,9 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
-	}
+		this.energyAssetType = OL_EnergyAssetType.ELECTROLYSER;
+
+    }
 
     @Override
     public double[] operate(double ratioOfCapacity) {
@@ -49902,6 +49922,7 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
     private OL_ElectrolyserState state = OL_ElectrolyserState.SHUTDOWN;
+
 	/**
 	/**
      * Default constructor
@@ -49917,6 +49938,8 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
+	    
+		this.energyAssetType = OL_EnergyAssetType.ELECTROLYSER;
 	    
 	    //toegevoegd door Ate
 	    double loadChangeTime_h = loadChangeTime_s/3600;
@@ -49962,6 +49985,7 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	public double getEta_r() {
 		return this.eta_r;
 	}
+	
 	
 	@Override
 	public String toString() {
@@ -50181,7 +50205,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
  * J_AVGC_data
  */	
 public class J_AVGC_data implements Serializable {
-
+	
 	public double p_avgHouseGasConsumption_m3_yr;
 	public double p_avgHouseElectricityConsumption_kWh_yr;
 	public double p_avgEVMaxChargePowerVan_kW;
