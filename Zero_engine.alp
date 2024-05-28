@@ -7,7 +7,7 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
-	<Name><![CDATA[Zero_engine]]></Name>
+	<Name><![CDATA[Zero_engine_new]]></Name>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[zero_engine]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
@@ -5421,6 +5421,21 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[Actor]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1716898285469</Id>
+					<Name><![CDATA[c_GISBuildingClusters]]></Name>
+					<X>300</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GIS_Building]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -12856,6 +12871,15 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_trafoID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pandcluster_nr]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_uniek_pand]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pand_nr]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -27149,6 +27173,30 @@ p_parentAgent = j_ea.parentAgent;
 				<Parameter>
 					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_mainTenantID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_woonplaats]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisletter]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_toevoeging]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_postcode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectedGridConnection]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -28631,6 +28679,63 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_actorGroup]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_coopParent]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_actorContractList]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacityTariffApplicable]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacityPrice_eur]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacityLevel_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_congestionTariffApplicable]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_electricitySupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoStart_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridOperator]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_methaneSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionOwnerType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionOwnerIndexNr]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_detailedCompany]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[b_hasPrivateUI]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -31255,6 +31360,42 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_actorGroup]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_actorContractList]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridNodeUnderResponsibility]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActorID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_electricitySupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_CoopParent]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridOperator]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_methaneSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_yearlyOperationalCosts_eur]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_applyKostprijsPlus]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -35740,6 +35881,33 @@ if (abs(EDVcosts_eur-EDVincome_eur) > 1) {
 				<Parameter>
 					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActorID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedElectricityPrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedHeatPrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedMethanePrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedHydrogenPrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_variableElectricityPriceOverNational_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedFeedinTariff_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_salderenActive]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -36771,6 +36939,24 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_actorGroup]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActorID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacitypricing_households_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacitypricing_households_eur]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hasCapacityPricing]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hasCongestionPricing]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -37813,6 +37999,33 @@ public void f_simpleCharging(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_householdEV]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_minChargingPower_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hasElectricHob]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_smartHeatingEnabled]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pricelevelLowDifFromAvg_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pricelevelHighDifFromAvg_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -39682,6 +39895,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_residualHeatLTSource]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -41353,6 +41569,84 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_conversionEfficiency]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionNominal_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_powerNominal_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyConsumptionNominal_kWh_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_outputPressure_Bar]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenEnergyDensity_kWh_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_conversionEfficiencyFC]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionNominalFC_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_productionMinimumFC_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_powerNominalFC_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProductionNominalFC_kWh_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_inputPressureFC_Bar]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_loadChangeTimeMinMaxFC_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTimeIdleFC_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_startUpTimeShutdownFC_s]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_electricityPriceMinForProfitFC_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_minProductionRatio]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_oxygenProduction_kgO2_per_kgH2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenEnergyDensity_kWh_kg]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -45894,6 +46188,69 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1715847529653</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1716898390947</Id>
+					<Name><![CDATA[p_pandcluster_nr]]></Name>
+					<X>40</X><Y>530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1716898390945</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1716898460038</Id>
+					<Name><![CDATA[p_uniek_pand]]></Name>
+					<X>40</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1716898460036</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1716898471373</Id>
+					<Name><![CDATA[p_pand_nr]]></Name>
+					<X>40</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1716898471371</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
