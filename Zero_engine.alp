@@ -1324,7 +1324,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1663238634515</Id>
 					<Name><![CDATA[v_timeStepsElapsed]]></Name>
-					<X>557</X><Y>282</Y>
+					<X>557</X><Y>372</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1774,7 +1774,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1683718894234</Id>
 					<Name><![CDATA[v_timeSeriesRuntime_ms]]></Name>
-					<X>557</X><Y>372</Y>
+					<X>557</X><Y>462</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1786,7 +1786,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1683718916458</Id>
 					<Name><![CDATA[v_gridNodesRuntime_ms]]></Name>
-					<X>557</X><Y>412</Y>
+					<X>557</X><Y>502</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1798,7 +1798,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1683718921466</Id>
 					<Name><![CDATA[v_gridConnectionsRuntime_ms]]></Name>
-					<X>557</X><Y>392</Y>
+					<X>557</X><Y>482</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1810,7 +1810,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1683718924632</Id>
 					<Name><![CDATA[v_incentivesRuntime_ms]]></Name>
-					<X>557</X><Y>452</Y>
+					<X>557</X><Y>542</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1822,7 +1822,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1683718924634</Id>
 					<Name><![CDATA[v_financialsRuntime_ms]]></Name>
-					<X>557</X><Y>432</Y>
+					<X>557</X><Y>522</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1834,7 +1834,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1690290329895</Id>
 					<Name><![CDATA[hourOfYearPerMonth]]></Name>
-					<X>556</X><Y>302</Y>
+					<X>556</X><Y>392</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1849,7 +1849,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1690290329902</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
-					<X>556</X><Y>323</Y>
+					<X>556</X><Y>413</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1978,7 +1978,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1699277193134</Id>
 					<Name><![CDATA[t_h]]></Name>
-					<X>557</X><Y>122</Y>
+					<X>557</X><Y>212</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3728,7 +3728,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="PlainVariable">
 					<Id>1715074195578</Id>
 					<Name><![CDATA[v_kpiCalcsRuntime_ms]]></Name>
-					<X>557</X><Y>472</Y>
+					<X>557</X><Y>562</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4622,6 +4622,21 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1716899850820</Id>
+					<Name><![CDATA[v_topLevelGridCapacity_kW]]></Name>
+					<X>1116</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -5093,7 +5108,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[ConnectionOwner]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5108,7 +5123,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridNode]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5123,7 +5138,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridNode]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5418,7 +5433,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[Actor]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5433,7 +5448,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridNode]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5920,12 +5935,12 @@ try {
 return 1;
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664894248130</Id>
 					<Name><![CDATA[f_updatePricesForNextTimestep]]></Name>
-					<X>557</X><Y>222</Y>
+					<X>557</X><Y>312</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5962,12 +5977,12 @@ for (EnergyCoop e : pop_energyCoops) {
 	}
 //}]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664952601107</Id>
 					<Name><![CDATA[f_updateTimeseries]]></Name>
-					<X>557</X><Y>142</Y>
+					<X>557</X><Y>232</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6011,12 +6026,12 @@ v_SolarYieldForecast_fr += (tf_p_solar_e_normalized(t_h+p_forecastTime_h)-v_curr
 v_WindYieldForecast_fr += (tf_p_wind_e_normalized(t_h+p_forecastTime_h)-v_currentWindPowerNormalized_r)/(p_forecastTime_h/p_timeStep_h);
 v_epexForecast_eurpkWh += (tf_dayAheadElectricityPricing_eurpMWh(t_h+p_forecastTime_h)-tf_dayAheadElectricityPricing_eurpMWh(t_h))/(p_forecastTime_h/p_timeStep_h)/1000;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051878402</Id>
 					<Name><![CDATA[f_calculateGridnodeFlows]]></Name>
-					<X>557</X><Y>182</Y>
+					<X>557</X><Y>272</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6049,12 +6064,12 @@ for(GridNode n : c_gridNodesTopLevel) {
 	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051962956</Id>
 					<Name><![CDATA[f_calculateFinancialFlows]]></Name>
-					<X>557</X><Y>202</Y>
+					<X>557</X><Y>292</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6308,12 +6323,12 @@ if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
 }
 traceln("Electricity delta in batteries (including EVs): "+ v_batteryStoredEnergyDeltaSinceStart_MWh + " MWh");]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528129020</Id>
 					<Name><![CDATA[f_calculateGridConnectionFlows]]></Name>
-					<X>557</X><Y>162</Y>
+					<X>557</X><Y>252</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6373,12 +6388,12 @@ v_currentEnergyExport_kW = max(0,-v_totalElectricPower_kW) + max(0, -v_totalMeth
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="private" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671636439933</Id>
 					<Name><![CDATA[f_initializeForecasts]]></Name>
-					<X>810</X><Y>260</Y>
+					<X>590</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7236,12 +7251,12 @@ traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenEx
 
 //traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1699275323325</Id>
 					<Name><![CDATA[f_updateArrays]]></Name>
-					<X>557</X><Y>244</Y>
+					<X>557</X><Y>334</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7881,47 +7896,45 @@ f_updateArrays(t_h);
 v_timeStepsElapsed ++;
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="private" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1716884712799</Id>
 					<Name><![CDATA[f_buildGridNodeTree]]></Name>
-					<X>560</X><Y>80</Y>
+					<X>590</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// First make all links between GridNodes
+v_topLevelGridCapacity_kW = 0;
+
 for( GridNode GN : pop_gridNodes ) {
 	GN.f_connectToParentNode();
 }
 
 // Then build execution order list
 for( GridNode GN : pop_gridNodes ) {
-	GridNode parentNode = findFirst(pop_gridNodes, p->p.p_gridNodeID.equals(GN.p_parentNodeID));
-	if (GN.p_parentNodeID == null) {
+	GridNode parentNode = findFirst(pop_gridNodes, p->p.p_gridNodeID.equals(GN.p_parentNodeID)); // Works as long as p_gridNodeID is not null. p_parentNodeID can be null no problemo.
+	//if (GN.p_parentNodeID == null) {
+	if (parentNode == null) {
 		f_gridNodeRecursiveAdd(GN);
 		c_gridNodesTopLevel.add(GN);
-	} else {
-		//GridNode parentNode = findFirst(pop_gridNodes, p->p.p_gridNodeID.equals(GN.p_parentNodeID));
-		if (parentNode == null) {
-			f_gridNodeRecursiveAdd(GN);
-			c_gridNodesTopLevel.add(GN);
-		} else {
-			c_gridNodesNotTopLevel.add(GN);
-		}
+		v_topLevelGridCapacity_kW+=GN.p_capacity_kW;
+	} else {		
+		c_gridNodesNotTopLevel.add(GN);	
 	}
 }
 Collections.reverse(c_gridNodeExecutionList);
 
-traceln("Grid Node execution list: %s", c_gridNodeExecutionList );]]></Body>
+//traceln("Grid Node execution list: %s", c_gridNodeExecutionList );]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1716886716306</Id>
 					<Name><![CDATA[f_gridNodeRecursiveAdd]]></Name>
-					<X>580</X><Y>100</Y>
+					<X>610</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7948,6 +7961,51 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[return c_gridConnections;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1716893898501</Id>
+					<Name><![CDATA[f_initializeEngine]]></Name>
+					<X>560</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// What if this function is accidently called twice? Need to start with a clean sheet?
+
+// Initialize all agents in the correct order
+pop_connectionOwners.forEach(CO -> CO.f_initialize());
+// pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
+
+f_buildGridNodeTree();
+c_gridConnections.forEach(GC -> GC.f_initialize());
+
+f_initializeForecasts();]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<ConnectionOwner>]]></ReturnType>
+					<Id>1716897568717</Id>
+					<Name><![CDATA[f_getConnectionOwners]]></Name>
+					<X>1280</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return c_connectionOwners;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1716899946694</Id>
+					<Name><![CDATA[f_getTopLevelGridCapacity_kW]]></Name>
+					<X>1280</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return v_topLevelGridCapacity_kW;]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -10922,6 +10980,12 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_hasPrivateUI]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energySupplierID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyCoopID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15219,7 +15283,7 @@ geupdate vanuit
 				</Variable>
 			</Variables>
 			<Functions>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1658495336616</Id>
@@ -15243,7 +15307,7 @@ if( myParentGridOperator instanceof GridOperator) {
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1658495630251</Id>
@@ -15338,7 +15402,7 @@ for( Agent a : subConnections.getConnections() )
 
 //traceln( "total load: "+v_currentPower_kW );]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660122738707</Id>
@@ -15403,7 +15467,7 @@ for( GridConnection GC : c_connectedGridConnections) {
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660216693598</Id>
@@ -15470,7 +15534,7 @@ if (energyModel.v_isRapidRun){
 	//data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW);
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1666556555538</Id>
@@ -15524,7 +15588,7 @@ for (EnergyCoop e: c_energyCoops){
 	//}
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1666560316436</Id>
@@ -15606,7 +15670,7 @@ if( p_energyAssetList != null) {
 //traceln("GridConnection "+this.p_gridNodeID+" has finished initializing its energyAssets!");
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1688370981599</Id>
@@ -15689,7 +15753,7 @@ for( Agent a : subConnections.getConnections() ) {
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698919552330</Id>
@@ -15755,7 +15819,7 @@ v_weekdayElectricityDelivered_MWh = 0;
 v_weekendElectricityDrawn_MWh = 0;
 v_weekendElectricityDelivered_MWh = 0;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1713180380782</Id>
@@ -16831,6 +16895,7 @@ import java.io.*;
 
 import zeroPackage.ZeroMath;
 import zeroPackage.ZeroAccumulator;]]></Import>
+			<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658499438201</Id>
@@ -20742,11 +20807,11 @@ v_currentLoadLowPassed_kW = v_currentPowerElectricity_kW;]]></Action>
 				</Event>
 			</Events>
 			<Functions>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1658500398176</Id>
-					<Name><![CDATA[f_connectToParentNode]]></Name>
+					<Name><![CDATA[f_connectToParents]]></Name>
 					<X>801</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20886,7 +20951,7 @@ else {
 	traceln( "TEST");
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660212665961</Id>
@@ -21158,7 +21223,7 @@ if (energyModel.v_isRapidRun){
 	//data_totalNetLoad_kW.update();
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664961435385</Id>
@@ -21393,7 +21458,7 @@ if( p_energyAssetList != null) {
 //traceln("GridConnection "+this.p_gridConnectionID+" has finished initializing its energyAssets!");
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528273163</Id>
@@ -21444,7 +21509,7 @@ if (energyModel.b_addKpiVisuals) {
 //	traceln("Gridconnection %s with connection_id %s has NaN or infinite v_currentPowerElectricity_kW at time %s!", p_gridConnectionID, p_company_connection_id, energyModel.t_h);
 //}]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528300576</Id>
@@ -21600,7 +21665,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668983912731</Id>
@@ -21828,7 +21893,7 @@ data_annualHeatProduction_kW.reset();*/
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669022552777</Id>
@@ -21870,7 +21935,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669022552780</Id>
@@ -21945,7 +22010,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	}
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669025846794</Id>
@@ -22031,7 +22096,7 @@ else {
 }
 //}]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995172</Id>
@@ -22068,7 +22133,7 @@ switch (p_chargingAttitudeVehicles) {
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995175</Id>
@@ -22100,7 +22165,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995177</Id>
@@ -22129,7 +22194,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	}
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995179</Id>
@@ -22181,7 +22246,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	}
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995181</Id>
@@ -22287,7 +22352,7 @@ else {
 
 return level;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1677512714652</Id>
@@ -22315,7 +22380,7 @@ return level;]]></Body>
 						<Name><![CDATA[j_ea]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[//main.c_energyAssets.add(j_ea);
+					<Body><![CDATA[energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
@@ -22326,6 +22391,7 @@ if (j_ea instanceof J_EAVehicle) {
 		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
+		energyModel.c_EVs.add((J_EAEV)vehicle);		
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker;
@@ -22377,6 +22443,7 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
+	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
 		//traceln("Adding buildingThermals to gridconnection");	
 		p_BuildingThermalAsset = (J_EABuilding)j_ea;
@@ -22422,7 +22489,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<Body><![CDATA[f_connectToJ_EA_default(j_ea);
 // Abstract method to be used call GC-subtype specific functions]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1695822607494</Id>
@@ -22511,7 +22578,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698854861644</Id>
@@ -22521,16 +22588,37 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//f_instantiateEnergyAssets();
-energyModel.c_gridConnections.add(this);
-f_connectToParentNode();
+					<Body><![CDATA[//
+if ( c_connectedBuildings.size()>0) { // can this go into initialisation function?
+	//p_floorSurfaceArea_m2 = totalSurfaceAreaGC_m2;
+	p_longitude = c_connectedBuildings.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
+	p_latitude = c_connectedBuildings.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
+	setLatLon(p_latitude, p_longitude);  
+			
+	//If GC has no assigned trafo_id --> Assign to nearest trafo
+	if (p_parentNodeElectricID == null){
+		//Set nearest agent as trafo
+		GridNode nearestLVStation = getNearestAgent(energyModel.c_gridNodesNotTopLevel);
+		//nearestLVStation.c_electricityGridConnections.add(companyGC); // this should be taken care of in GC.f_initialize()!
+		if (nearestLVStation!=null) {
+			p_parentNodeElectricID = nearestLVStation.p_gridNodeID;
+		}
+	}		
+} 
+
+if (p_parentNodeElectricID == null) {
+	p_parentNodeElectricID = findFirst(energyModel.pop_gridNodes, GN->GN.p_energyType.equals(OL_EnergyCarrierType.ELECTRICITY)).p_gridNodeID;
+	traceln("GridConnection %s wasn't assigned a GridNodeElectric! Using first gridNode Electric in pop_gridNodes", this);
+}
+
+f_connectToParents();
 if (!l_parentNodeElectric.isConnected()) {
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
 }
 f_setOperatingSwitches();
 f_initializeAccumulators();]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1701956274181</Id>
@@ -22741,7 +22829,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1702373771433</Id>
@@ -22957,7 +23045,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
 					<Body><![CDATA[c_energyAssets.remove(j_ea);
-energyModel.c_energyAssets.add(j_ea);
+energyModel.c_energyAssets.remove(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
@@ -23016,7 +23104,7 @@ if (j_ea instanceof J_EAVehicle) {
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1716282675260</Id>
@@ -27038,6 +27126,7 @@ p_parentAgent = j_ea.parentAgent;
 					<Name><![CDATA[p_actorSubgroup]]></Name>
 				</Parameter>
 			</Parameters>
+			<StartupCode><![CDATA[energyModel.c_actors.add(this);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658752695709</Id>
@@ -28521,6 +28610,8 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
+			<StartupCode><![CDATA[energyModel.c_actors.add(this);
+energyModel.c_connectionOwners.add(this);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1660224852392</Id>
@@ -29243,7 +29334,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 					<Id>1666976143102</Id>
 					<Name><![CDATA[p_coopParent]]></Name>
 					<Description><![CDATA[This 'link' is used for battery management functions that use collective (Coop) load balancing!]]></Description>
-					<X>60</X><Y>270</Y>
+					<X>210</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29455,7 +29546,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>60</X><Y>160</Y>
+					<X>210</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29552,7 +29643,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 				<Variable Class="Parameter">
 					<Id>1676537396743</Id>
 					<Name><![CDATA[p_gridOperator]]></Name>
-					<X>60</X><Y>250</Y>
+					<X>210</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29577,7 +29668,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>60</X><Y>180</Y>
+					<X>210</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29602,7 +29693,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>60</X><Y>200</Y>
+					<X>210</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29627,7 +29718,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>60</X><Y>220</Y>
+					<X>210</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29738,6 +29829,50 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1716901949775</Id>
+					<Name><![CDATA[p_energySupplierID]]></Name>
+					<Description><![CDATA[This 'link' is used for battery management functions that use collective (Coop) load balancing!]]></Description>
+					<X>60</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1716901949773</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1716901977342</Id>
+					<Name><![CDATA[p_energyCoopID]]></Name>
+					<Description><![CDATA[This 'link' is used for battery management functions that use collective (Coop) load balancing!]]></Description>
+					<X>60</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1716901977340</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1679502158516</Id>
 					<Name><![CDATA[c_actorContracts]]></Name>
@@ -29761,7 +29896,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -29800,7 +29935,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 				</Variable>
 			</Variables>
 			<Functions>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660230297342</Id>
@@ -29815,6 +29950,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 						<Type><![CDATA[GridConnection]]></Type>
 					</Parameter>
 					<Body><![CDATA[gridConnections.connectTo(ConnectingChildNode);
+c_ownedGridConnections.add(ConnectingChildNode);
 //v_ownedGridConnection = ConnectingChildNode;
 //traceln("f_connectToChild in connectionOwner agent, connection contract type: " + v_contractConnection.connectionContractType);
 /*if (v_contractConnection.connectionContractType.equals(OL_ConnectionContractType.NFATO)) {
@@ -29826,7 +29962,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 }*/
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660230784171</Id>
@@ -29837,7 +29973,7 @@ for(UI_GridNode n : kpiVisuals.uI_GridNodes){
 @return: none
 @since: Sprint 6
 @author: HOUJ]]></Description>
-					<X>660</X><Y>90</Y>
+					<X>670</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29905,7 +30041,7 @@ if (myGridoperator != null) {
 //traceln(p_actorID + " finished looking for supplier");
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660742520265</Id>
@@ -30005,7 +30141,7 @@ else if( v_energySupplierDistrictHeat instanceof EnergyCoop ) {
 v_balanceDiesel_eur += v_dieselVolume_kWh * .196; // TODO: UGLY HACK
 */]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660743030872</Id>
@@ -30037,7 +30173,7 @@ v_totalMethaneUsed_kWh += v_methaneVolume_kWh;
 v_totalHydrogenUsed_kWh += v_hydrogenVolume_kWh;
 v_totalDieselUsed_kWh += v_dieselVolume_kWh;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1663237679579</Id>
@@ -30093,12 +30229,12 @@ if (v_contractTax.proportionalTax_pct != 0.0 && (v_contractDelivery.deliveryCont
 }
 	]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669036739539</Id>
 					<Name><![CDATA[f_setContractValues]]></Name>
-					<X>660</X><Y>70</Y>
+					<X>670</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30118,6 +30254,9 @@ if( p_actorContractList == null) {
 	//traceln( "Creating default contracts!");
 
 	String defaultSupplier = "defaultSupplier";
+	if (p_energyCoopID != null){
+		defaultSupplier = p_energyCoopID;
+	}
 	String defaultGridOperator = "defaultGridOperator";
 	String defaultGovernmentLayer = "defaultGovernmentLayer";
 	double annualFee_eur = 0;
@@ -30397,7 +30536,7 @@ if( p_congestionTariffApplicable ){
 }
 */]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1675011274392</Id>
@@ -30473,7 +30612,7 @@ else {
 //traceln(price_eurpkWh);
 return price_eurpkWh;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1675012472432</Id>
@@ -30541,7 +30680,7 @@ if( currentPowerDrawn_kW >= 0 ){ // Only check if current power is positive or n
 //traceln("Still using treemaps in f_getAvailablePowerAtPrice!");
 return availablePower_kW;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1675068408612</Id>
@@ -30603,7 +30742,7 @@ return price_eurph / requestedPower_kW;
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679478105441</Id>
@@ -30618,7 +30757,7 @@ return price_eurph / requestedPower_kW;
 }
 return v_methanePrice_eurpkWh;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1679478116012</Id>
@@ -30648,6 +30787,19 @@ v_totalElectricityUsed_kWh = v_totalHeatUsed_kWh = v_totalMethaneUsed_kWh = v_to
 // Reset finances
 v_balanceElectricity_eur = v_balanceElectricityDelivery_eur = v_balanceElectricityTransport_eur = v_balanceElectricityTax_eur = 0;
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1716897235822</Id>
+					<Name><![CDATA[f_initialize]]></Name>
+					<X>660</X><Y>60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[f_setContractValues();
+f_connectToParentActor();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -33516,7 +33668,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 				</Event>
 			</Events>
 			<Functions>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660736326703</Id>
@@ -33579,7 +33731,7 @@ if ( v_contractEnergySupplier.equals("VARIABLE")) {
 }
 */]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660806150226</Id>
@@ -33679,7 +33831,7 @@ v_energyPassedThrough_kWh += transactionVolume_kWh;
 
 return transactionCostClient_eur;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660825257472</Id>
@@ -33690,7 +33842,7 @@ return transactionCostClient_eur;]]></Body>
 @return: none
 @since: Sprint 6
 @author: HOUJ]]></Description>
-					<X>660</X><Y>70</Y>
+					<X>670</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33729,7 +33881,7 @@ if (myGridoperator != null) {
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1667983361355</Id>
@@ -33831,7 +33983,7 @@ v_electricitySurplus_kW = -v_electricityVolume_kWh / energyModel.p_timeStep_h;
 
 f_updateArrays();]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1667983361357</Id>
@@ -33936,12 +34088,12 @@ traceln("Coop selfsufficiency: " + totalSelfSufficiency_fr + "%, doublecheck " +
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669037224999</Id>
 					<Name><![CDATA[f_setContractValues]]></Name>
-					<X>660</X><Y>90</Y>
+					<X>670</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -34162,17 +34314,21 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669042410671</Id>
 					<Name><![CDATA[f_initialize]]></Name>
-					<X>660</X><Y>110</Y>
+					<X>660</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[
+					<Body><![CDATA[if ( p_actorContractList != null) {
+	f_setContractValues();	
+}
+f_connectToParentActor();
+
 if (p_gridNodeUnderResponsibility != null){
 	GridNode myParentNodeElectric = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_gridNodeUnderResponsibility)) ;
 	if( myParentNodeElectric instanceof GridNode ) {
@@ -34201,7 +34357,7 @@ else {
 
 //f_setInitPriceBands();]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1676553303568</Id>
@@ -34290,7 +34446,7 @@ if( p_congestionTariffApplicable ){
 }
 */]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1692111928489</Id>
@@ -34717,7 +34873,7 @@ traceln("Coop gelijktijdigheid: eigen opwek minus export, gedeeld door eigen opw
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709637039066</Id>
@@ -34850,7 +35006,7 @@ for(int i=0; i< arraySize; i++) {
 }
 */]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715089652853</Id>
@@ -34937,7 +35093,7 @@ if (abs(EDVcosts_eur-EDVincome_eur) > 1) {
 
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715857260657</Id>
@@ -36663,6 +36819,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Name><![CDATA[p_actorGroup]]></Name>
 				</Parameter>
 			</Parameters>
+			<StartupCode><![CDATA[energyModel.c_actors.add(this);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1660731380913</Id>
