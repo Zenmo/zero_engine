@@ -6132,7 +6132,7 @@ for(GridNode h : c_gridNodesTopLevel ) {
 	v_netOverloadDuration_h += h.v_totalTimeOverloaded_h;
 }
 
-
+v_avgNetLoad_fr = sum(c_gridNodesTopLevel, GN->GN.v_averageAbsoluteLoadElectricity_kW)/v_cumulativeGridCapacityHSMS_kW;
 
 //////// Obsolete gridload KPIs from Holon!
 /*
@@ -22406,23 +22406,26 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.c_EVs.add((J_EAEV)vehicle);		
 	}
 	c_vehicleAssets.add(vehicle);		
-	J_ActivityTrackerTrips tripTracker;
-	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
-		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
-		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-	} else {
-		//traceln("Adding passenger vehicle to gridconnection %s", this);
-		int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
-		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-		//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
-		//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-		//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
+	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
+	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
+		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+		} else {
+			//traceln("Adding passenger vehicle to gridconnection %s", this);
+			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
+			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
+		}
+		
+		vehicle.tripTracker = tripTracker;	
 	}
 	c_tripTrackers.add( tripTracker );
-	vehicle.tripTracker = tripTracker;	
 	v_vehicleIndex ++;
 } else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.add((J_EAConsumption)j_ea);	
@@ -23070,8 +23073,8 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
 	}
 	c_vehicleAssets.remove(j_ea);
-	J_ActivityTrackerTrips tripTracker;
-	tripTracker = vehicle.tripTracker;
+		
+	J_ActivityTrackerTrips tripTracker = vehicle.tripTracker;
 	c_tripTrackers.remove( tripTracker );
 	vehicle.tripTracker = null;
 	v_vehicleIndex --;
@@ -30018,12 +30021,12 @@ if (mySupplier != null) {
 	p_electricitySupplier = mySupplier;
 	//energySupplier.f_connectToChild(this);	
 } else { 
-	traceln(
+	/*traceln(
 		"Connection owner %s --> f_connectToParentActor --> no parent actor found, this should not be happening. contract holder: %s, parent: %s",
 		this,
 		v_contractDelivery.contractHolder,
 		v_contractDelivery.contractScope
-	);
+	);*/
 }
 
 // Connect to grid operator (can be a Coop!)
@@ -30043,11 +30046,11 @@ if (myGridoperator == null) {
 if (myGridoperator != null) {
 	p_gridOperator = myGridoperator;	
 } else { 
-	traceln(
+	/*traceln(
 	    "Connection owner --> f_connectToParentActor --> no grid operator found, this should not be happening. contract holder: %s, operator: %s",
 	    v_contractTransport.contractHolder,
 	    v_contractTransport.contractScope
-	);
+	);*/
 }
 
 //traceln(p_actorID + " finished looking for supplier");
@@ -48294,7 +48297,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType) {
+    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectricity_kW * vehicleScaling; // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh * vehicleScaling;
@@ -48304,7 +48307,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 		this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.ELECTRIC_VEHICLE; // AANPASSING ATE: VRAGEN AAN GILLIS: asset type meegeven in functie J_EAV, want scheelt switch statement in iEA functie.
-	    
+	    this.tripTracker = tripTracker;
 	    // Validation checks
 	    if (capacityElectric_kW == 0 || storageCapacity_kWh == 0 || timestep_h == 0 || energyConsumption_kWhpkm == 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
@@ -49226,12 +49229,13 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType) {
+    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
+	    this.tripTracker = tripTracker;
 		registerEnergyAsset();
 	}
     
@@ -50027,7 +50031,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 public class J_EAVehicle extends J_EA implements Serializable {
 	public boolean available = true;
 	protected boolean availableStored = true;
-	public double energyConsumption_kWhpkm;
+	protected double energyConsumption_kWhpkm;
 	//private MobilityTracker mobilityTracker = null;
 	public double vehicleScaling;
 	public double mileage_km = 0;
@@ -50363,12 +50367,16 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType ) {
+    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker ) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
+	    /*if (energyAssetType == OL_EnergyAssetType.DIESEL_VAN) {
+	    	traceln("DieselVan energyconsumption: %s", energyConsumption_kWhpkm);
+	    }*/
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.DIESEL_VEHICLE; // AANPASSING ATE, scheelt code in interface
+	    this.tripTracker = tripTracker;
 		registerEnergyAsset();
 	}
     
