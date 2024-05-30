@@ -5246,7 +5246,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[J_EA]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -8006,6 +8006,18 @@ f_initializeForecasts();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[return v_topLevelGridCapacity_kW;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<J_EA>]]></ReturnType>
+					<Id>1717058801652</Id>
+					<Name><![CDATA[f_getEnergyAssets]]></Name>
+					<X>1280</X><Y>580</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return c_energyAssets;]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -22366,7 +22378,7 @@ return level;]]></Body>
 	((GCDistrictHeating)this).f_setConfigurationBooleans();
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1692799608559</Id>
@@ -22472,7 +22484,7 @@ if (j_ea instanceof J_EAVehicle) {
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1693307881182</Id>
@@ -23013,7 +23025,7 @@ for(int i=0; i< arraySize; i++) {
 
 return data_netbelastingDuurkromme_kW;]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714646521271</Id>
@@ -23030,7 +23042,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 					<Body><![CDATA[f_removeTheJ_EA_default(j_ea);
 // Abstract method to be used call GC-subtype specific functions]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714646913998</Id>
@@ -46667,6 +46679,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 //	    traceln("I am instantiated! "+this+" owned by "+ownerAsset);
+		registerEnergyAsset();
 	}
 	
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
@@ -46760,6 +46773,7 @@ public class J_EAStorage extends J_EA implements Serializable {
 		this.lossFactor_r = lossFactor;
 		this.timestep_h = timestep_h;
 		this.ambientTempType = ambientTempType;
+		registerEnergyAsset();
     }
 
     public void calculateLoss() {
@@ -46773,7 +46787,7 @@ public class J_EAStorage extends J_EA implements Serializable {
     	return returnEnergyFlows();
     }
 
-    public void updateStateOfCharge( double flow_kW ) {
+    protected void updateStateOfCharge( double flow_kW ) {
 		stateOfCharge_r = ( (stateOfCharge_r * storageCapacity_kWh) - flow_kW * timestep_h ) / storageCapacity_kWh;
 	}
 	
@@ -46853,6 +46867,7 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
 	}
 
 	@Override
@@ -46913,6 +46928,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		this.yearlyDemandMethane_kWh = yearlyDemandMethane_kWh;
 		this.yearlyDemandDiesel_kWh = yearlyDemandDiesel_kWh;
 		this.timestep_h = timestep_h;
+		registerEnergyAsset();
     }
 
 	@Override
@@ -46958,7 +46974,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
  */
 public class J_EA implements Cloneable {
 
-	 public Agent parentAgent;
+	 protected Agent parentAgent;
 	 public OL_EnergyAssetType energyAssetType;
 	 public String energyAssetName;
 	 public double v_powerFraction_fr = 0;
@@ -47001,6 +47017,24 @@ public class J_EA implements Cloneable {
 		this.capacityElectric_kW = capacityElectric_kW;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.capacityGas_kW = capacityGas_kW;
+		registerEnergyAsset();
+    }
+    
+    protected void registerEnergyAsset() {    	
+    	if ( parentAgent instanceof GridConnection) {
+    		((GridConnection)parentAgent).f_connectToJ_EA(this);
+    	} else {    		
+    		traceln("Energy asset %s doesn't have a valid parent agent! Will not be operated!", this);
+    	}
+    }
+    
+    public void removeEnergyAsset() {
+    	if ( parentAgent instanceof GridConnection) {
+    		((GridConnection)parentAgent).f_removeTheJ_EA(this);
+    	} else {    		
+    		traceln("Energy asset %s doesn't have a valid parent agent! Energy Asset not removed!", this);
+    	}
+    	
     }
 
     public double[] f_updateAllFlows(double powerFraction_fr) {
@@ -47122,6 +47156,10 @@ public class J_EA implements Cloneable {
     	return 0;
     }
     
+    public Agent getParentAgent() {
+    	return parentAgent;
+    }
+    
     public void setUI_EnergyAsset(UI_EnergyAsset ui_energyAsset) {
     	this.ui_energyAsset = ui_energyAsset;
     }
@@ -47181,6 +47219,7 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
 	    	
 	    }
+		registerEnergyAsset();
 	}
 
     @Override
@@ -47253,6 +47292,7 @@ public class J_EAConversionBiogasMethane extends zero_engine.J_EAConversion impl
 	    this.capacityMethane_kW = capacityMethane_kW;
 	    this.eta_r = efficiency;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
 	}
 
     @Override
@@ -47316,6 +47356,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    this.energyCarrierConsumed = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
 	}
 
     @Override
@@ -47413,6 +47454,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
+		registerEnergyAsset();
     }
 
 	@Override
@@ -47459,7 +47501,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	}
 
 	@Override
-	public void updateStateOfCharge( double discharge_kW ) {
+	protected void updateStateOfCharge( double discharge_kW ) {
 		stateOfCharge_r -= ( discharge_kW * timestep_h ) / storageCapacity_kWh;
 	}
 
@@ -47538,6 +47580,7 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
+		registerEnergyAsset();
     }
 
 	@Override
@@ -47583,7 +47626,7 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	}
 
 	@Override
-	public void updateStateOfCharge( double discharge_kW ) {
+	protected void updateStateOfCharge( double discharge_kW ) {
 		stateOfCharge_r -= ( discharge_kW * timestep_h ) / storageCapacity_kWh;
 	}
 
@@ -47671,6 +47714,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.ambientTempType = ambientTempType;
 		this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.stateOfCharge_r = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
+		registerEnergyAsset();
     }
 
 	@Override
@@ -47746,7 +47790,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	}
 
 	@Override
-	public void updateStateOfCharge( double tempDelta_degC ) {
+	protected void updateStateOfCharge( double tempDelta_degC ) {
 		temperature_degC += tempDelta_degC;
 		stateOfCharge_r = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 		if (temperature_degC < setTemperature_degC) {
@@ -47871,6 +47915,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
 		this.energyAssetType = OL_EnergyAssetType.BUILDINGTHERMALS;
+		registerEnergyAsset();
     }
 
 	@Override
@@ -47944,7 +47989,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 
 	@Override
-	public void updateStateOfCharge( double tempDelta_degC ) {
+	protected void updateStateOfCharge( double tempDelta_degC ) {
 		temperature_degC += tempDelta_degC;
 		stateOfCharge_r = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 		/*if (temperature_degC < setTemperature_degC) {
@@ -48081,6 +48126,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.ambientTempType = ambientTempType;
 	    this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
 	    this.belowZeroHeatpumpEtaReductionFactor = belowZeroHeatpumpEtaReductionFactor;
+		registerEnergyAsset();
 	}
 
 	public void updateParameters(double baseTemperature_degC, double outputTemperature_degC) {
@@ -48264,6 +48310,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
 	    	
 	    }
+		registerEnergyAsset();
     }
 
 	@Override 
@@ -48441,6 +48488,7 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    this.eta_r = efficiency;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
 	}
 
     @Override
@@ -48760,6 +48808,7 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    //this.energyAssetType = OL_EnergyAssetType.HYDROGEN_FURNACE;
+		registerEnergyAsset();
 	}
 
     @Override
@@ -48827,6 +48876,7 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	    this.capacityHeat_kW = this.capacityElectric_kW * this.eta_r;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
+		registerEnergyAsset();
     }
 
     @Override
@@ -48890,6 +48940,7 @@ public class J_EAConversionCurtailer extends J_EAConversion implements Serializa
 	    this.eta_r = efficiency;
 	    this.capacityHeat_kW = this.capacityElectric_kW * this.eta_r;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
     }
 
     @Override
@@ -49181,6 +49232,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
+		registerEnergyAsset();
 	}
     
     @Override
@@ -49303,6 +49355,7 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
 	}
 
     @Override
@@ -49373,6 +49426,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	    this.capacityHeat_kW = capacityHeat_kW; 
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
+		registerEnergyAsset();
 	}
 
 	@Override
@@ -49444,6 +49498,7 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
+		registerEnergyAsset();
     }
 
     @Override 
@@ -49687,6 +49742,7 @@ public class J_EAConversionCurtailerHeat extends J_EAConversion implements Seria
 	    this.eta_r = efficiency;
 //	    this.capacityHeat_kW = this.capacityHeat_kW * this.eta_r;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
     }
 
     @Override
@@ -50157,6 +50213,7 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	    double startUpTimeShutdown_h = startUpTimeShutdown_s/3600;
 	    double startUpTimeStandby_h = startUpTimeStandby_s/3600;
 	    double startUpTimeIdle_h = startUpTimeIdle_s/3600;
+		registerEnergyAsset();
 	}
     
     public void setState(OL_ElectrolyserState state) { // Used for regime control
@@ -50243,6 +50300,7 @@ public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implem
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
+		registerEnergyAsset();
 	}
 
     @Override
@@ -50311,6 +50369,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.DIESEL_VEHICLE; // AANPASSING ATE, scheelt code in interface
+		registerEnergyAsset();
 	}
     
     @Override
