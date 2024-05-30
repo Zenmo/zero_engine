@@ -1051,12 +1051,11 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
 Date startDate = date();
 startDate.setYear(p_year-1900);
-traceln("p_year is: %s", p_year);
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
 
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
+//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -5096,7 +5095,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
-					<X>90</X><Y>450</Y>
+					<X>90</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5421,7 +5420,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 				<Variable Class="CollectionVariable">
 					<Id>1703256089183</Id>
 					<Name><![CDATA[c_actors]]></Name>
-					<X>91</X><Y>468</Y>
+					<X>91</X><Y>498</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5429,6 +5428,22 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[Actor]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1716453161218</Id>
+					<Name><![CDATA[c_subGridConnections]]></Name>
+					<Description><![CDATA[A subGridConnections are a subset of (children of) of GridConnections that are "part" of another GC and thus are not counted towards the totals.]]></Description>
+					<X>90</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -6397,6 +6412,10 @@ else {
 	}
 }
 
+for (GridConnection gc : c_subGridConnections) {
+	gc.f_calculateEnergyBalance();
+}
+
 //v_totalElectricityConsumed_MWh += v_currentElectricityConsumption_kW * p_timeStep_h / 1000; // Totals shall be calculated at end of simulation from arrays!
 //v_totalElectricityProduced_MWh += v_currentElectricityProduction_kW * p_timeStep_h / 1000; // Totals shall be calculated at end of simulation from arrays!
 v_currentEnergyImport_kW = max(0,v_totalElectricPower_kW) + max(0, v_totalMethanePower_kW) + max(0,v_totalHydrogenPower_kW) + v_totalDieselPower_kW; // Heat excluded as it is assumes it will not be imported/exported! Total heatbalance should be 0.
@@ -6839,7 +6858,9 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(0));
-	
+}
+for (GridConnection GC : c_subGridConnections) {
+	GC.f_resetStates();
 }
 
 for (GridNode GN : pop_gridNodes) {
@@ -6997,6 +7018,9 @@ if (p_parallelize) {
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
+c_subGridConnections.forEach(gc -> gc.f_calculateKPIs());
+
+
 for(GridConnection g: c_gridConnections){ // 
 	    c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
 	    //v_totalElectricityConsumed_MWh += g.v_totalElectricityConsumed_MWh;
@@ -9381,7 +9405,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336413</Id>
@@ -9403,7 +9427,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336419</Id>
@@ -9425,7 +9449,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336425</Id>
@@ -9447,7 +9471,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336432</Id>
@@ -9469,7 +9493,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336438</Id>
@@ -9491,7 +9515,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336445</Id>
@@ -9513,7 +9537,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336451</Id>
@@ -9535,7 +9559,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336473</Id>
@@ -9579,7 +9603,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336486</Id>
@@ -9602,7 +9626,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336493</Id>
@@ -9624,7 +9648,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336499</Id>
@@ -9647,7 +9671,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336506</Id>
@@ -9669,7 +9693,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246378181</Id>
@@ -10219,7 +10243,7 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715671280183</Id>
@@ -10706,7 +10730,7 @@ v_timeStepsElapsed ++;
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>90</X><Y>400</Y>
+					<X>90</X><Y>430</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10803,7 +10827,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660730126216</Id>
 					<Name><![CDATA[pop_connectionOwners]]></Name>
-					<X>90</X><Y>300</Y>
+					<X>90</X><Y>330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10932,7 +10956,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731786332</Id>
 					<Name><![CDATA[pop_energySuppliers]]></Name>
-					<X>90</X><Y>320</Y>
+					<X>90</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11031,7 +11055,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731820965</Id>
 					<Name><![CDATA[pop_energyCoops]]></Name>
-					<X>90</X><Y>340</Y>
+					<X>90</X><Y>370</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11139,7 +11163,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731850501</Id>
 					<Name><![CDATA[pop_gridOperators]]></Name>
-					<X>90</X><Y>380</Y>
+					<X>90</X><Y>410</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11229,7 +11253,7 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1660731876775</Id>
 					<Name><![CDATA[nationalEnergyMarket]]></Name>
-					<X>90</X><Y>540</Y>
+					<X>90</X><Y>570</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11306,7 +11330,7 @@ v_timeStepsElapsed ++;
 					<Id>1660731999276</Id>
 					<Name><![CDATA[pop_governmentLayer]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>90</X><Y>360</Y>
+					<X>90</X><Y>390</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13229,7 +13253,7 @@ v_timeStepsElapsed ++;
 				<Line>
 					<Id>1668602284894</Id>
 					<Name><![CDATA[line4]]></Name>
-					<X>60</X><Y>280</Y>
+					<X>60</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13253,7 +13277,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1668602284900</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>130</X><Y>260</Y>
+					<X>130</X><Y>290</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13274,7 +13298,7 @@ v_timeStepsElapsed ++;
 				<Line>
 					<Id>1668602384222</Id>
 					<Name><![CDATA[line5]]></Name>
-					<X>60</X><Y>510</Y>
+					<X>60</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13298,7 +13322,7 @@ v_timeStepsElapsed ++;
 				<Text>
 					<Id>1668602384225</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>150</X><Y>490</Y>
+					<X>150</X><Y>520</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23537,7 +23561,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040034</Id>
@@ -23559,7 +23583,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040041</Id>
@@ -23581,7 +23605,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040046</Id>
@@ -23603,7 +23627,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040051</Id>
@@ -23625,7 +23649,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040056</Id>
@@ -23647,7 +23671,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040068</Id>
@@ -23669,7 +23693,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086040072</Id>
@@ -23691,7 +23715,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086750378</Id>
@@ -23714,7 +23738,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715086752844</Id>
@@ -23737,7 +23761,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715088549909</Id>
@@ -23957,7 +23981,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242544164</Id>
@@ -23980,7 +24004,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242546547</Id>
@@ -24002,7 +24026,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242548516</Id>
@@ -24025,7 +24049,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715242681124</Id>
@@ -24047,7 +24071,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715244201229</Id>
@@ -24421,7 +24445,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715673624817</Id>
@@ -41647,8 +41671,12 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 
 if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
-	double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
-	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+
+	double availableElectricPower_kW = max(0,v_allowedCapacity_kW - v_currentPowerElectricity_kW);
+	double excessElectricPower_kW = max(0, v_currentPowerElectricity_kW - v_allowedCapacity_kW);	
+	//double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
+	//double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	
 	double eta_r = ElectrolyserAsset.getEta_r();
 	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double ProductionSetpoint_kW = ElectrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
@@ -41786,6 +41814,9 @@ switch (p_electrolyserOperationMode){
 	break;
 	case BALANCE:
 		f_electrolyserRegimeControl_Balance(currentGridNodePowerFlow_kW, forecast_time_h, ElectrolyserAsset);
+	break;
+	case OFF:
+		v_electrolyserRegime = SHUTDOWN;
 	break;
 }
 
@@ -46474,9 +46505,14 @@ public class J_EA implements Cloneable {
     	this.ui_energyAsset = ui_energyAsset;
     }
     
-    public double[] getLastFlows( ) {
+    public double[] getLastFlows() {
     	return lastFlowsArray;
     }
+    
+	 public OL_EnergyAssetType getEAType() {
+		 return energyAssetType;
+	 }
+
     
 //    public double getOutputTemperature_degC() {
 //   	return 0;
@@ -46681,6 +46717,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_addFlows(arr);
     	}
+    	this.lastFlowsArray = arr;
     	return arr;
     }
     
@@ -48655,7 +48692,9 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
-	}
+		this.energyAssetType = OL_EnergyAssetType.ELECTROLYSER;
+
+    }
 
     @Override
     public double[] operate(double ratioOfCapacity) {
@@ -49508,6 +49547,8 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	    this.state = state;
 	    this.startUpTimeStandby_h = startUpTimeStandby_s/3600;
 	    
+		this.energyAssetType = OL_EnergyAssetType.ELECTROLYSER;
+	    
 	    //toegevoegd door Ate
 	    double loadChangeTime_h = loadChangeTime_s/3600;
 	    double startUpTimeShutdown_h = startUpTimeShutdown_s/3600;
@@ -49794,7 +49835,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
  * J_AVGC_data
  */	
 public class J_AVGC_data implements Serializable {
-
+	
 	public double p_avgHouseGasConsumption_m3_yr;
 	public double p_avgHouseElectricityConsumption_kWh_yr;
 	public double p_avgEVMaxChargePowerVan_kW;
