@@ -40962,9 +40962,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -41814,9 +41811,6 @@ switch (p_electrolyserOperationMode){
 	break;
 	case BALANCE:
 		f_electrolyserRegimeControl_Balance(currentGridNodePowerFlow_kW, forecast_time_h, ElectrolyserAsset);
-	break;
-	case OFF:
-		v_electrolyserRegime = SHUTDOWN;
 	break;
 }
 
