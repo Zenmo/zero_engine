@@ -22877,7 +22877,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
 					<Body><![CDATA[c_energyAssets.remove(j_ea);
-energyModel.c_energyAssets.add(j_ea);
+energyModel.c_energyAssets.remove(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
@@ -46787,7 +46787,6 @@ public class J_EA implements Cloneable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_addFlows(arr);
     	}
-    	
     	resetFlows();
     	this.lastFlowsArray = arr;
     	return arr;
