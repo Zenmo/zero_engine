@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -49383,6 +49383,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	public double v_energyNeedForNextTrip_kWh;
 	public double v_nextEventStartTime_min;
 	public double distanceScaling_fr = 1.0;
+	public double currentTripDuration;
 	
     /**
      * Default constructor
@@ -49393,52 +49394,17 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     public J_ActivityTrackerTrips(EnergyModel main, ExcelFile tripsExcel, int rowIndex, double time_min, J_EAVehicle Vehicle) {
     	this.energyModel = main;
     	this.rowIndex = rowIndex;
-    	this.Vehicle = Vehicle;
-    	 		
-		nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
+    	this.Vehicle = Vehicle;		
+		this.nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
 
-		//traceln("tripPatternID for row 12: %s", tripsExcel.getCellNumericValue("sheet1", 10 + 2, 1));
 	    for (int i = 0; i < nbActivities; i++){
 	    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
 	    	endtimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-	    	//distances_km.add(min(350,tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
-	    	//distances_km.add(min(100,tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
-	    	distances_km.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));
-		    /*if (rowIndex == 55) {
-			    //Reducing trip lengths on rowIndex 55, they are too long for current-day EVs!
-		    	distances_km.set(i,distances_km.get(i)/2.0);
-		    }*/
-		    
+	    	distances_km.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));		    
 	    }
-	
 	    
-    	
-    	
-    	/*} else if (mobilityPatternType == OL_MobilityPatternType.TRUCK) {
-		    nbActivities = roundToInt(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 2));
-	
-		    for (int i = 0; i < nbActivities; i++){
-		    	starttimes_min.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
-		    	endtimes_min.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-		    	distances_km.add(min(350,main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
-
-		    }
-    	} else {
-    		traceln("Mobility pattern type not yet implemented! No trips loaded!");
-    	}*/
-		    /*while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
-		    	starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
-		    	endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
-		    	v_eventIndex++;
-		    	if ( v_eventIndex > nbActivities - 1 ) {
-		    		v_eventIndex = 0;
-		    	}
-	    }
-	    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);*/
-	    // Duplicate activities until the end of the year
-    	
-	    if (endtimes_min.get(nbActivities-1) < 10080) {
-	    	//traceln("Duplicate trips until the end of the year");
+	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
+    	if (endtimes_min.get(nbActivities-1) < 10080) {
 		    for (int weeks = 1; weeks < 52; weeks++) {
 		    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
 		    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
@@ -49447,7 +49413,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    	}
 		    }
 	    }
-	    //traceln("This vehicle has %s trips in a year that total %s km.", starttimes_min.size(), distances_km.stream().mapToDouble(f -> f).sum() );
+    	
 	    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
 	    while ( starttimes_min.get(v_eventIndex) < time_min ) {		    	
 	    	v_eventIndex++;		    	
@@ -49459,49 +49425,46 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     }
     
 	   public void manageActivities(double time_min) {
-	    	//traceln("TripTracker vehicle: " + Vehicle);
-	    	if (Vehicle.available) { // at start of timestep! check for multiple 'events' in timestep!
-	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is a trip starting this timestep?
+	    	if (Vehicle.available) { // at start of timestep! check for multiple 'events' in t bimestep!
+	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h * 60) ) { // is a trip starting this timestep?
+	    			currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
 	    			Vehicle.startTrip();
 	    			//main.v_activeTrips.incrementAndGet();
 	    		}
 	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the trip also ending this timestep?
-	    			//traceln("Vehicle trip ended in the same timestep as it started!");
 	    			Vehicle.endTrip(v_tripDist_km);
 	    			v_eventIndex++;
 	    			//main.v_activeTrips.decrementAndGet();
 	    			prepareNextActivity(time_min);
 	    		}
 	    	} else {
+	    		if (Vehicle instanceof J_EADieselVehicle) {
+	    			J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)Vehicle;
+	    			dieselVehicle.progressTrip(v_tripDist_km / currentTripDuration);
+	    		}
 	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*energyModel.p_timeStep_h)) * 60*energyModel.p_timeStep_h ) { // is a trip ending this timestep?
 	    			Vehicle.endTrip(v_tripDist_km);
 	    			v_eventIndex++;
 	    			//main.v_activeTrips.decrementAndGet();
-	    			prepareNextActivity(time_min);
-	    			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-	    			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
+	    			prepareNextActivity(time_min);			
 	    		}  
 	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
+	    			currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
 	    			Vehicle.startTrip();
 	    			//main.v_activeTrips.incrementAndGet();
-	    			//traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
 	    		}
 	    	}
 	    }
 	    
 	    public void prepareNextActivity(double time_min) {
-		    //starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
-			//endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
-			
 			if ( v_eventIndex >= starttimes_min.size()  ) {
 				v_eventIndex = 0;
 			}
 			
 		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
 			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
-			v_tripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex ); // Update upcoming trip distance
+			v_tripDist_km = distanceScaling_fr * distances_km.get( v_eventIndex ); // Update upcoming trip distance
 		
-			
 			if (Vehicle instanceof J_EAEV) {
 				J_EAEV EV = (J_EAEV)Vehicle;
 				v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
@@ -49962,20 +49925,26 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 			traceln("Trip not ended because EV never left!");
 			return false;
 		} else {
-			mileage_km += tripDist_km;
-			//traceln( "J_EADieselVehicle1 comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);// + ", timestep: " + timestep_h);
-	    	double energyUsedForTrip_kWh = tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
-	    	energyUsed_kWh += energyUsedForTrip_kWh;
-	    	dieselConsumption_kW = energyUsedForTrip_kWh / timestep_h;
-	    	energyUse_kW += dieselConsumption_kW;
 	    	available = true;
-	    	//traceln("Diesel vehicle finished trip!");
 	    	return true;
-
 		}
-    	//traceln("Current milage: " + mileage + ", energy consumption per km: " + energyConsumption_kWhpkm);
     }
 
+	public boolean progressTrip(double marginalTripDist_km) {
+		if( available) {
+			traceln("Trip not ended because EV never left!");
+			return false;
+		}
+		else {
+			mileage_km += marginalTripDist_km;
+	    	double energyUsedThisTimestep_kWh = marginalTripDist_km * vehicleScaling * energyConsumption_kWhpkm;
+	    	energyUsed_kWh += energyUsedThisTimestep_kWh;
+	    	dieselConsumption_kW = energyUsedThisTimestep_kWh / timestep_h;
+	    	energyUse_kW += dieselConsumption_kW;
+			return true;
+		}
+	}
+	
 	public double getEnergyUsed_kWh() {
 		return energyUsed_kWh;
 	}
