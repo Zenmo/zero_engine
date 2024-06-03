@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -11557,6 +11557,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_bouwjaar]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nageisoleerd]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -37842,7 +37845,7 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_bouwjaar]]></Name>
+					<Name><![CDATA[p_nageisoleerd]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -38365,6 +38368,27 @@ public void f_simpleCharging(){
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1717323052484</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1717417303620</Id>
+					<Name><![CDATA[p_nageisoleerd]]></Name>
+					<X>250</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1717417303618</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
