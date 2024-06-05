@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -21638,8 +21638,7 @@ switch (p_chargingAttitudeVehicles) {
 		f_simpleCharging();
 	break;
 	case MAX_SPREAD:
-		traceln("***Warning*** MAX_SPREAD charging mode deprecated!!");
-		//f_maxSpreadCharging();
+		f_maxSpreadCharging();
 	break;
 	case MAX_POWER:
 		f_maxPowerCharging( max(0, availableChargingCapacity));
@@ -21671,11 +21670,9 @@ switch (p_chargingAttitudeVehicles) {
 					<Body><![CDATA[ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
 		ev.f_updateAllFlows( 0.0 );
-		//ev.operateBounded(0);
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
@@ -21694,27 +21691,41 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995177</Id>
 					<Name><![CDATA[f_maxSpreadCharging]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>830</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[ArrayList<EnergyAsset> copiedVehicleList = new ArrayList<EnergyAsset>(c_vehiclesAvailableForCharging);
+					<Body><![CDATA[ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	EnergyAsset EA = copiedVehicleList.get(i);
-	J_EAEV ev = (J_EAEV)EA.j_ea;
-	if(!ev.getAvailability() ){
-		EA.f_updateElectricityFlows( 0 );
+	J_EAEV ev = copiedVehicleList.get(i);
+	if(!ev.getAvailability() || ev.getCurrentStateOfCharge() == 1){
+		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
-	if( ev.getCurrentStateOfCharge() < 1 ) {
-		v_evChargingPowerElectric_kW += EA.f_updateElectricityFlows( ev.getMaxSpreadChargingRatio() );
-		//traceln( "charging ratio " + ev.getMaxSpreadChargingRatio());
-		//traceln( "charging speed " + ev.getElectricCapacity_kW() * ev.getMaxSpreadChargingRatio());
+	else if( ev.vehicleScaling != 0 ) {
+		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+		double maxChargingPower_kW = ev.getElectricCapacity_kW();
+		double emptyKWhInBattery = ev.getStorageCapacity_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge();
+		double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+		double chargingPower_kW;
+		double timeToNextTrip = ev.tripTracker.v_nextEventStartTime_min / 60 - energyModel.t_h;
+	
+		if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+			//traceln("Urgency charging! May exceed connection capacity!");
+			chargingPower_kW = maxChargingPower_kW / 2 ;	// delen door 2 als quickfix doordat HAVI trucks anders mega pieken veroorzaken in de middag waardoor 'slim' laden beetje nutteloos lijkt
+		}
+		else {
+			chargingPower_kW = emptyKWhInBattery / timeToNextTrip;
+		}
+		
+		double chargingSpeed = min (chargingPower_kW, ev.capacityElectric_kW / ev.vehicleScaling );
+		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
+		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
+		v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 	}
 }]]></Body>
 				</Function>
@@ -21741,7 +21752,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
-		ev.f_updateAllFlows( 0 );
+		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
@@ -21919,7 +21930,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker;
 	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
-		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+		int rowIndex = uniform_discr(1, 21);//getIndex() % 200;
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
@@ -49818,7 +49829,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     public boolean endTrip(double tripDist_km) {
 		
 		if(available) {
-			traceln("Trip not ended because vehicle never left!");
+			//traceln("Trip not ended because vehicle never left!");
 			return false;
 		} else {
 	    	available = true;
