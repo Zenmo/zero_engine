@@ -42066,8 +42066,8 @@ switch (ElectrolyserAsset.getState()){
 		}
 		else{
 			boolean power_down = true;
-			for(int i = 0; i < c_forecast_RES_kW.size() - 2; i++){
-				if (c_forecast_RES_kW.get(i) < v_gridNodeCongestionLimit_kW){
+			for(int i = 0; i < c_forecast_gridNodePowerFlow_kW.size() - 2; i++){
+				if (c_forecast_gridNodePowerFlow_kW.get(i) < v_gridNodeCongestionLimit_kW){
 					power_down = false;
 				}
 			}
@@ -49336,6 +49336,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+	
+	public double getDistanceScaling_fr( ) {
+		return this.distanceScaling_fr;
 	}
 
 	/**
