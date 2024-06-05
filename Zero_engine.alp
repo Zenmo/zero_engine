@@ -44664,6 +44664,8 @@ f_manageCharging();
 
 if (p_batteryAsset != null){ // TEST CODE
 	f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	//traceln("flows:" + Arrays.toString(arr));
 }
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -50173,11 +50175,6 @@ public class J_AVGC_data implements Serializable {
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[ZeroMath.jar]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
