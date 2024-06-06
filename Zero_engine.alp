@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -19284,6 +19284,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1717666056845</Id>
+					<Name><![CDATA[v_totalHydrogenUsed_MWh]]></Name>
+					<X>1110</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -21193,7 +21208,13 @@ v_currentLoadLowPassed_kW = 0;
 //v_currentIndoorTemp_degC = (p_BuildingThermalAsset == null) ? 0 : p_BuildingThermalAsset.getCurrentTemperature();
 
 // Reset energytotals
-v_hydrogenInStorage_kWh = 0;
+if (b_useHydrogenLocally) {
+	v_hydrogenInStorage_kWh = 1000000;
+}
+else {
+	v_hydrogenInStorage_kWh = 0;
+}
+v_totalHydrogenUsed_MWh = 0;
 
 v_totalEnergyProduced_MWh = 0;
 v_totalEnergyConsumed_MWh = 0;
@@ -22692,7 +22713,9 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Reset dataset after rapid run
 
-
+if (p_ownerID.equals("Post NL / Valid Express") || p_ownerID.equals("HAVI logistics BV") ) {
+	traceln("Hydrogen left in GC " + p_ownerID + " = " + v_hydrogenInStorage_kWh);
+}
 v_hydrogenInStorage_kWh = 0;
 
 //Reset specificGC states after rapid run
@@ -22725,21 +22748,23 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
-if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
+if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
 	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL)	;
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
 	else {
-		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
+		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
-		double ratioOfCapacity = powerNeeded_kW / (1000*0.50);
+		double efficiency = 0.5;
+		double ratioOfCapacity = powerNeeded_kW / (1000*efficiency);
 		double[] arr = fuelCellAsset.operate(ratioOfCapacity);
 		/*if (this.p_gridConnectionID.equals("9.0")) {
 			traceln("fuel cell operated: " + Arrays.toString(arr));
 		}*/
 		f_addFlows(arr, fuelCellAsset);
-		v_hydrogenInStorage_kWh -= arr[6];
+		v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
+		v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
 	}
 }]]></Body>
 				</Function>
@@ -41731,13 +41756,25 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElectrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit	
 	
+	
 	if (b_useHydrogenLocally) {
 		List<GridConnection> receivingGCs = findAll(energyModel.c_gridConnections, gc -> gc.b_useHydrogenLocally && gc != this);
 		//traceln("hydrogen reveicing gcs: %s", receivingGCs);
 		for (GridConnection gc : receivingGCs) {
+			
 			gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] / receivingGCs.size();
+			
+			/*
+			if (gc.p_ownerID.equals("Post NL / Valid Express")) {
+				gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] * (2/3);
+			}
+			else if (gc.p_ownerID.equals("HAVI logistics BV")) {
+				gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] * (1/3);
+			}
+			*/
 		}
 	}
+
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
