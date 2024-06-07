@@ -2007,7 +2007,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1699278542893</Id>
-					<Name><![CDATA[v_dailyBusinessParkDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyBusinessParkDemand_kW]]></Name>
 					<X>90</X><Y>2560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2019,7 +2019,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1699278542896</Id>
-					<Name><![CDATA[v_dailyBusinessParkSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyBusinessParkSupply_kW]]></Name>
 					<X>90</X><Y>2580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2031,7 +2031,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1699278542898</Id>
-					<Name><![CDATA[v_dailyBusinessParkNetLoad_kWh]]></Name>
+					<Name><![CDATA[v_dailyBusinessParkNetLoad_kW]]></Name>
 					<X>90</X><Y>2600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4357,7 +4357,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315931</Id>
-					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kW]]></Name>
 					<X>20</X><Y>2830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4381,7 +4381,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315933</Id>
-					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kW]]></Name>
 					<X>20</X><Y>2850</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4409,7 +4409,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315935</Id>
-					<Name><![CDATA[v_dailyElectricTrucksDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyElectricTrucksDemand_kW]]></Name>
 					<X>20</X><Y>2870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4421,7 +4421,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315937</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kW]]></Name>
 					<X>20</X><Y>2890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4433,7 +4433,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315939</Id>
-					<Name><![CDATA[v_dailyPVGeneration_kWh]]></Name>
+					<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
 					<X>20</X><Y>3010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4445,7 +4445,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315941</Id>
-					<Name><![CDATA[v_dailyWindGeneration_kWh]]></Name>
+					<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
 					<X>20</X><Y>3030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4457,7 +4457,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315943</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kW]]></Name>
 					<X>20</X><Y>3050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4469,7 +4469,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315945</Id>
-					<Name><![CDATA[v_dailyV2GSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
 					<X>20</X><Y>3070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4481,7 +4481,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315951</Id>
-					<Name><![CDATA[v_dailyDieselDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyDieselDemand_kW]]></Name>
 					<X>20</X><Y>2930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4493,7 +4493,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315953</Id>
-					<Name><![CDATA[v_dailyHydrogenDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyHydrogenDemand_kW]]></Name>
 					<X>20</X><Y>2950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4505,7 +4505,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315955</Id>
-					<Name><![CDATA[v_dailyNaturalGasDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyNaturalGasDemand_kW]]></Name>
 					<X>20</X><Y>2910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4543,7 +4543,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315961</Id>
-					<Name><![CDATA[v_dailyNaturalGasSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 					<X>20</X><Y>3090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4603,7 +4603,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715671218524</Id>
-					<Name><![CDATA[v_dailyHydrogenSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 					<X>20</X><Y>3110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -7546,66 +7546,66 @@ traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenEx
 	data_annualV2GSupply_kW.add(t_h, v_currentV2GSupply_kWh);
 	*/
 	
-	v_dailyBusinessParkDemand_kWh += v_currentElectricityConsumption_kW*p_timeStep_h; // Not only electricity! Also other energy carriers!!
-	v_dailyBusinessParkSupply_kWh += v_currentElectricityProduction_kW*p_timeStep_h; // Not only electricity! Also other energy carriers!!
+	v_dailyBusinessParkDemand_kW += v_currentElectricityConsumption_kW; // Not only electricity! Also other energy carriers!!
+	v_dailyBusinessParkSupply_kW += v_currentElectricityProduction_kW; // Not only electricity! Also other energy carriers!!
 	//v_currentBusinessParkNetLoad_kWh += sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW)*p_timeStep_h;
 	
-	v_dailyBaseloadElectricityDemand_kWh += v_currentBaseloadElectricityDemand_kW * p_timeStep_h;
-	v_dailyHeatPumpElectricityDemand_kWh += v_currentHeatPumpElectricityDemand_kW * p_timeStep_h;
+	v_dailyBaseloadElectricityDemand_kW += v_currentBaseloadElectricityDemand_kW;
+	v_dailyHeatPumpElectricityDemand_kW += v_currentHeatPumpElectricityDemand_kW;
 	//v_dailyElectricCarsDemand_kWh += sum(c_gridConnections, x->x.v_electricCarsDemand_kW)*p_timeStep_h;
-	v_dailyElectricTrucksDemand_kWh += v_currentElectricTrucksDemand_kW * p_timeStep_h;
-	v_dailyNeighborhoodBatteryDemand_kWh += v_currentNeighborhoodBatteryDemand_kW * p_timeStep_h;
-	v_dailyNaturalGasDemand_kWh += v_currentNaturalGasDemand_kW * p_timeStep_h;
-	v_dailyDieselDemand_kWh += v_currentDieselDemand_kW * p_timeStep_h;
-	v_dailyHydrogenDemand_kWh += v_currentHydrogenDemand_kW * p_timeStep_h;
+	v_dailyElectricTrucksDemand_kW += v_currentElectricTrucksDemand_kW;
+	v_dailyNeighborhoodBatteryDemand_kW += v_currentNeighborhoodBatteryDemand_kW;
+	v_dailyNaturalGasDemand_kW += v_currentNaturalGasDemand_kW;
+	v_dailyDieselDemand_kW += v_currentDieselDemand_kW;
+	v_dailyHydrogenDemand_kW += v_currentHydrogenDemand_kW;
 	
-	v_dailyPVGeneration_kWh += v_currentPVGeneration_kW * p_timeStep_h;
-	v_dailyWindGeneration_kWh += v_currentWindGeneration_kW * p_timeStep_h;
-	v_dailyNeighborhoodBatterySupply_kWh += v_currentNeighborhoodBatterySupply_kW * p_timeStep_h;
-	v_dailyV2GSupply_kWh += v_currentV2GSupply_kW * p_timeStep_h;
-	v_dailyNaturalGasSupply_kWh += v_currentNaturalGasSupply_kWh * p_timeStep_h;
-	v_dailyHydrogenSupply_kWh += v_currentHydrogenSupply_kW * p_timeStep_h;
+	v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
+	v_dailyWindGeneration_kW += v_currentWindGeneration_kW;
+	v_dailyNeighborhoodBatterySupply_kW += v_currentNeighborhoodBatterySupply_kW;
+	v_dailyV2GSupply_kW += v_currentV2GSupply_kW;
+	v_dailyNaturalGasSupply_kW += v_currentNaturalGasSupply_kWh;
+	v_dailyHydrogenSupply_kW += v_currentHydrogenSupply_kW;
 	
 	//acc_annualDailyElectricityDemand_MWh.addStep(t_h, v_currentElectricityConsumption_kW/1000 * p_timeStep_h);
 	
 	if (t_h % 24 == (24-p_timeStep_h)){
-		data_annualBaseloadElectricityDemand_MWh.add(t_h, v_dailyBaseloadElectricityDemand_kWh/1000);
-		data_annualHeatPumpElectricityDemand_MWh.add(t_h, v_dailyHeatPumpElectricityDemand_kWh/1000);
-		//data_annualElectricCarsDemand_MWh.add(t_h, v_dailyElectricCarsDemand_kWh/1000);
-		data_annualElectricTrucksDemand_MWh.add(t_h, v_dailyElectricTrucksDemand_kWh/1000);
-		data_annualNeighborhoodBatteryDemand_MWh.add(t_h, v_dailyNeighborhoodBatteryDemand_kWh/1000);
-		data_annualNaturalGasDemand_MWh.add(t_h, v_dailyNaturalGasDemand_kWh/1000);
-		data_annualDieselDemand_MWh.add(t_h, v_dailyDieselDemand_kWh/1000);
-		data_annualHydrogenDemand_MWh.add(t_h, v_dailyHydrogenDemand_kWh/1000);
-		data_annualPVGeneration_MWh.add(t_h, v_dailyPVGeneration_kWh/1000);
-		data_annualWindGeneration_MWh.add(t_h, v_dailyWindGeneration_kWh/1000);
-		data_annualNeighborhoodBatterySupply_MWh.add(t_h, v_dailyNeighborhoodBatterySupply_kWh/1000);
-		data_annualV2GSupply_MWh.add(t_h, v_dailyV2GSupply_kWh/1000);
-		data_annualNaturalGasSupply_MWh.add(t_h, v_dailyNaturalGasSupply_kWh/1000);
-		data_annualHydrogenSupply_MWh.add(t_h, v_dailyHydrogenSupply_kWh/1000);
+		data_annualBaseloadElectricityDemand_kW.add(t_h, v_dailyBaseloadElectricityDemand_kW/(24 / p_timeStep_h));
+		data_annualHeatPumpElectricityDemand_kW.add(t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / p_timeStep_h));
+		//data_annualElectricCarsDemand_MWh.add(t_h, v_dailyElectricCarsDemand_kWh/(24 / p_timeStep_h));
+		data_annualElectricTrucksDemand_kW.add(t_h, v_dailyElectricTrucksDemand_kW/(24 / p_timeStep_h));
+		data_annualNeighborhoodBatteryDemand_kW.add(t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / p_timeStep_h));
+		data_annualNaturalGasDemand_kW.add(t_h, v_dailyNaturalGasDemand_kW/(24 / p_timeStep_h));
+		data_annualDieselDemand_kW.add(t_h, v_dailyDieselDemand_kW/(24 / p_timeStep_h));
+		data_annualHydrogenDemand_kW.add(t_h, v_dailyHydrogenDemand_kW/(24 / p_timeStep_h));
+		data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW/(24 / p_timeStep_h));
+		data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW/(24 / p_timeStep_h));
+		data_annualNeighborhoodBatterySupply_kW.add(t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / p_timeStep_h));
+		data_annualV2GSupply_kW.add(t_h, v_dailyV2GSupply_kW/(24 / p_timeStep_h));
+		data_annualNaturalGasSupply_kW.add(t_h, v_dailyNaturalGasSupply_kW/(24 / p_timeStep_h));
+		data_annualHydrogenSupply_kW.add(t_h, v_dailyHydrogenSupply_kW/(24 / p_timeStep_h));
 		
-		data_annualElectricityDemand_MWh.add(t_h, v_dailyBusinessParkDemand_kWh/1000);
-		data_annualElectricitySupply_MWh.add(t_h, v_dailyBusinessParkSupply_kWh/1000); 
+		data_annualElectricityDemand_kW.add(t_h, v_dailyBusinessParkDemand_kW/(24 / p_timeStep_h));
+		data_annualElectricitySupply_kW.add(t_h, v_dailyBusinessParkSupply_kW/(24 / p_timeStep_h)); 
 		//data_annualBusinessParkNetLoad_kWh.add(t_h, v_dailyBusinessParkNetLoad_kWh);
 			
-		v_dailyBaseloadElectricityDemand_kWh = 0;
-		v_dailyHeatPumpElectricityDemand_kWh = 0;
+		v_dailyBaseloadElectricityDemand_kW = 0;
+		v_dailyHeatPumpElectricityDemand_kW = 0;
 		//v_dailyElectricCarsDemand_kWh = 0;
-		v_dailyElectricTrucksDemand_kWh = 0;
-		v_dailyNeighborhoodBatteryDemand_kWh = 0;
-		v_dailyNaturalGasDemand_kWh = 0;
-		v_dailyDieselDemand_kWh = 0;
-		v_dailyHydrogenDemand_kWh = 0;
+		v_dailyElectricTrucksDemand_kW = 0;
+		v_dailyNeighborhoodBatteryDemand_kW = 0;
+		v_dailyNaturalGasDemand_kW = 0;
+		v_dailyDieselDemand_kW = 0;
+		v_dailyHydrogenDemand_kW = 0;
 		
-		v_dailyPVGeneration_kWh = 0;
-		v_dailyWindGeneration_kWh = 0;
-		v_dailyNeighborhoodBatterySupply_kWh = 0;
-		v_dailyV2GSupply_kWh = 0;
-		v_dailyNaturalGasSupply_kWh = 0;
-		v_dailyHydrogenSupply_kWh = 0;
+		v_dailyPVGeneration_kW = 0;
+		v_dailyWindGeneration_kW = 0;
+		v_dailyNeighborhoodBatterySupply_kW = 0;
+		v_dailyV2GSupply_kW = 0;
+		v_dailyNaturalGasSupply_kW = 0;
+		v_dailyHydrogenSupply_kW = 0;
 		
-		v_dailyBusinessParkDemand_kWh = 0;
-		v_dailyBusinessParkSupply_kWh = 0;
+		v_dailyBusinessParkDemand_kW = 0;
+		v_dailyBusinessParkSupply_kW = 0;
 		//v_dailyBusinessParkNetLoad_kWh = 0;
 	}
 } else {
@@ -7661,16 +7661,16 @@ data_annualBusinessParkNetLoad_kW.reset();
 */
 //data_annualBusinessParkNetLoad_kWh.reset();
 
-data_annualBaseloadElectricityDemand_MWh.reset();
-data_annualHeatPumpElectricityDemand_MWh.reset();
+data_annualBaseloadElectricityDemand_kW.reset();
+data_annualHeatPumpElectricityDemand_kW.reset();
 //data_annualElectricCarsDemand_MWh.reset();
-data_annualElectricTrucksDemand_MWh.reset();
-data_annualNeighborhoodBatteryDemand_MWh.reset();
+data_annualElectricTrucksDemand_kW.reset();
+data_annualNeighborhoodBatteryDemand_kW.reset();
 
-data_annualPVGeneration_MWh.reset();
-data_annualWindGeneration_MWh.reset();
-data_annualNeighborhoodBatterySupply_MWh.reset();
-data_annualV2GSupply_MWh.reset();
+data_annualPVGeneration_kW.reset();
+data_annualWindGeneration_kW.reset();
+data_annualNeighborhoodBatterySupply_kW.reset();
+data_annualV2GSupply_kW.reset();
 
 v_totalElectricityExport_MWh = 0;
 v_totalElectricityImport_MWh = 0;
@@ -7804,6 +7804,7 @@ data_netbelastingDuurkrommeVorige_kW.reset();
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
 //int arraySize = data_annualBusinessParkNetLoad_kW.size();
 double[] a_annualNetLoad_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
+
 int arraySize = a_annualNetLoad_kW.length;
 
 //double[] netLoadArray_kW = new double[arraySize];
@@ -8806,147 +8807,9 @@ v_timeStepsElapsed ++;
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
-					<Id>1699275048795</Id>
-					<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2170</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048809</Id>
-					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2290</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048823</Id>
-					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2330</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048837</Id>
-					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2270</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048850</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2230</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048864</Id>
-					<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2150</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
 					<Id>1699275048878</Id>
-					<Name><![CDATA[data_annualElectricityDemand_MWh]]></Name>
-					<X>80</X><Y>2370</Y>
+					<Name><![CDATA[data_annualElectricityDemand_kW]]></Name>
+					<X>80</X><Y>2330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8966,78 +8829,9 @@ v_timeStepsElapsed ++;
 					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
-					<Id>1699275048891</Id>
-					<Name><![CDATA[data_annualElectricCarsDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2190</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048905</Id>
-					<Name><![CDATA[data_annualElectricTrucksDemand_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2210</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1699275048918</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>80</X><Y>2310</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>false</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1687075200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>35040</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
 					<Id>1699275048932</Id>
-					<Name><![CDATA[data_annualElectricitySupply_MWh]]></Name>
-					<X>80</X><Y>2390</Y>
+					<Name><![CDATA[data_annualElectricitySupply_kW]]></Name>
+					<X>80</X><Y>2350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9398,7 +9192,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336405</Id>
-					<Name><![CDATA[data_annualHeatPumpElectricityDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
 					<X>390</X><Y>2850</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9420,7 +9214,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336413</Id>
-					<Name><![CDATA[data_annualWindGeneration_MWh]]></Name>
+					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
 					<X>390</X><Y>3030</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9442,7 +9236,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336419</Id>
-					<Name><![CDATA[data_annualV2GSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
 					<X>390</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9464,7 +9258,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336425</Id>
-					<Name><![CDATA[data_annualPVGeneration_MWh]]></Name>
+					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
 					<X>390</X><Y>3010</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9486,7 +9280,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336432</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
 					<X>390</X><Y>2890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9508,7 +9302,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336438</Id>
-					<Name><![CDATA[data_annualBaseloadElectricityDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
 					<X>390</X><Y>2830</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9530,7 +9324,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336445</Id>
-					<Name><![CDATA[data_annualElectricTrucksDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualElectricTrucksDemand_kW]]></Name>
 					<X>390</X><Y>2870</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9552,7 +9346,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336451</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatterySupply_MWh]]></Name>
+					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
 					<X>390</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9574,7 +9368,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336473</Id>
-					<Name><![CDATA[data_annualDieselDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualDieselDemand_kW]]></Name>
 					<X>390</X><Y>2930</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9592,11 +9386,11 @@ v_timeStepsElapsed ++;
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<SamplesToKeep>366</SamplesToKeep>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1715246336480</Id>
-					<Name><![CDATA[data_annualHydrogenDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualHydrogenDemand_kW]]></Name>
 					<X>390</X><Y>2950</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9641,7 +9435,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336493</Id>
-					<Name><![CDATA[data_annualNaturalGasSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 					<X>390</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9686,7 +9480,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715246336506</Id>
-					<Name><![CDATA[data_annualNaturalGasDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualNaturalGasDemand_kW]]></Name>
 					<X>390</X><Y>2910</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -10236,7 +10030,7 @@ v_timeStepsElapsed ++;
 				</DataSet>
     			<DataSet>
 					<Id>1715671189730</Id>
-					<Name><![CDATA[data_annualHydrogenSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 					<X>390</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18873,7 +18667,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685641</Id>
-					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kW]]></Name>
 					<X>740</X><Y>2110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18885,7 +18679,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685643</Id>
-					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kW]]></Name>
 					<X>740</X><Y>2130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18897,7 +18691,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685647</Id>
-					<Name><![CDATA[v_dailyElectricTrucksDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyElectricTrucksDemand_kW]]></Name>
 					<X>740</X><Y>2150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18909,7 +18703,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685649</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kW]]></Name>
 					<X>740</X><Y>2170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18921,7 +18715,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685651</Id>
-					<Name><![CDATA[v_dailyPVGeneration_kWh]]></Name>
+					<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
 					<X>740</X><Y>2290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18933,7 +18727,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685653</Id>
-					<Name><![CDATA[v_dailyWindGeneration_kWh]]></Name>
+					<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
 					<X>740</X><Y>2310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18945,7 +18739,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685655</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kW]]></Name>
 					<X>740</X><Y>2330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18957,7 +18751,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685657</Id>
-					<Name><![CDATA[v_dailyV2GSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
 					<X>740</X><Y>2350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -18995,7 +18789,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715241326356</Id>
-					<Name><![CDATA[v_dailyDieselDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyDieselDemand_kW]]></Name>
 					<X>740</X><Y>2210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19007,7 +18801,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715241380139</Id>
-					<Name><![CDATA[v_dailyHydrogenDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyHydrogenDemand_kW]]></Name>
 					<X>740</X><Y>2230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19019,7 +18813,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715241396934</Id>
-					<Name><![CDATA[v_dailyNaturalGasDemand_kWh]]></Name>
+					<Name><![CDATA[v_dailyNaturalGasDemand_kW]]></Name>
 					<X>740</X><Y>2190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19057,7 +18851,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715241757962</Id>
-					<Name><![CDATA[v_dailyNaturalGasSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 					<X>740</X><Y>2370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19069,7 +18863,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715673589196</Id>
-					<Name><![CDATA[v_dailyHydrogenSupply_kWh]]></Name>
+					<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 					<X>740</X><Y>2390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19488,6 +19282,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1717666056845</Id>
+					<Name><![CDATA[v_totalHydrogenUsed_MWh]]></Name>
+					<X>1110</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -21040,62 +20849,62 @@ if (energyModel.v_isRapidRun){
 	//v_dailyElectricityDemand_kWh += v_currentElectricityConsumption_kW*energyModel.p_timeStep_h;
 	//v_dailyElectricitySupply_kWh += v_currentElectricityProduction_kW*energyModel.p_timeStep_h; 
 	// Demand
-	v_dailyBaseloadElectricityDemand_kWh += v_fixedConsumptionElectric_kW * energyModel.p_timeStep_h;
-	v_dailyHeatPumpElectricityDemand_kWh += v_heatPumpElectricityConsumption_kW * energyModel.p_timeStep_h;
-	v_dailyElectricTrucksDemand_kWh += max(0,v_evChargingPowerElectric_kW) * energyModel.p_timeStep_h;
-	v_dailyNeighborhoodBatteryDemand_kWh += max(0,v_batteryPowerElectric_kW) * energyModel.p_timeStep_h;
-	v_dailyNaturalGasDemand_kWh += max(0, v_currentPowerMethane_kW) * energyModel.p_timeStep_h;
-	v_dailyDieselDemand_kWh += max(0, v_currentPowerDiesel_kW) * energyModel.p_timeStep_h;
-	v_dailyHydrogenDemand_kWh += max(0, v_currentPowerHydrogen_kW) * energyModel.p_timeStep_h;
+	v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
+	v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
+	v_dailyElectricTrucksDemand_kW += max(0,v_evChargingPowerElectric_kW);
+	v_dailyNeighborhoodBatteryDemand_kW += max(0,v_batteryPowerElectric_kW);
+	v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
+	v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
+	v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
 	//v_dailyDistrictHeatDemand_kWh += 
 	// Supply
-	v_dailyPVGeneration_kWh += v_pvProductionElectric_kW * energyModel.p_timeStep_h;
-	v_dailyWindGeneration_kWh += v_windProductionElectric_kW * energyModel.p_timeStep_h;
-	v_dailyNeighborhoodBatterySupply_kWh += max(0,-v_batteryPowerElectric_kW) * energyModel.p_timeStep_h;
-	v_dailyV2GSupply_kWh += -min(0,v_evChargingPowerElectric_kW) * energyModel.p_timeStep_h;
-	v_dailyNaturalGasSupply_kWh += max(0, -v_currentPowerMethane_kW) * energyModel.p_timeStep_h;
-	v_dailyHydrogenSupply_kWh += max(0, -v_currentPowerHydrogen_kW) * energyModel.p_timeStep_h;
+	v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
+	v_dailyWindGeneration_kW += v_windProductionElectric_kW;
+	v_dailyNeighborhoodBatterySupply_kW += max(0,-v_batteryPowerElectric_kW);
+	v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
+	v_dailyNaturalGasSupply_kW += max(0, -v_currentPowerMethane_kW);
+	v_dailyHydrogenSupply_kW += max(0, -v_currentPowerHydrogen_kW);
 	
 	//v_dailyDistrictHeatSupply_kWh += 
 	
 	if (energyModel.t_h % 24 == 23) {
-		//data_annualElectricityDemand_MWh.add(energyModel.t_h, v_dailyElectricityDemand_kWh/1000);
-		//data_annualElectricitySupply_MWh.add(energyModel.t_h, v_dailyElectricitySupply_kWh/1000); 
+		//data_annualElectricityDemand_MWh.add(energyModel.t_h, v_dailyElectricityDemand_kWh/(24 / energyModel.p_timeStep_h));
+		//data_annualElectricitySupply_MWh.add(energyModel.t_h, v_dailyElectricitySupply_kWh/(24 / energyModel.p_timeStep_h)); 
 		// Demand
-		data_annualBaseloadElectricityDemand_MWh.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kWh/1000);
-		data_annualHeatPumpElectricityDemand_MWh.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kWh/1000);
-		data_annualElectricTrucksDemand_MWh.add(energyModel.t_h, v_dailyElectricTrucksDemand_kWh/1000);
-		data_annualNeighborhoodBatteryDemand_MWh.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kWh/1000);
-		data_annualNaturalGasDemand_MWh.add(energyModel.t_h, v_dailyNaturalGasDemand_kWh/1000);
-		data_annualDieselDemand_MWh.add(energyModel.t_h, v_dailyDieselDemand_kWh/1000);
-		data_annualHydrogenDemand_MWh.add(energyModel.t_h, v_dailyHydrogenDemand_kWh/1000);
-		//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatDemand_kWh/1000);
+		data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualElectricTrucksDemand_kW.add(energyModel.t_h, v_dailyElectricTrucksDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualNeighborhoodBatteryDemand_kW.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualHydrogenDemand_kW.add(energyModel.t_h, v_dailyHydrogenDemand_kW/(24 / energyModel.p_timeStep_h));
+		//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatDemand_kWh/(24 / energyModel.p_timeStep_h));
 		// Supply
-		data_annualPVGeneration_MWh.add(energyModel.t_h, v_dailyPVGeneration_kWh/1000);
-		data_annualWindGeneration_MWh.add(energyModel.t_h, v_dailyWindGeneration_kWh/1000);
-		data_annualNeighborhoodBatterySupply_MWh.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kWh/1000);
-		data_annualV2GSupply_MWh.add(energyModel.t_h, v_dailyV2GSupply_kWh/1000);
-		data_annualNaturalGasSupply_MWh.add(energyModel.t_h, v_dailyNaturalGasSupply_kWh/1000);
-		data_annualHydrogenSupply_MWh.add(energyModel.t_h, v_dailyHydrogenSupply_kWh/1000);
-		//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatSupply_kWh/1000);
+		data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
+		data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
+		data_annualNeighborhoodBatterySupply_kW.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / energyModel.p_timeStep_h));
+		data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
+		data_annualNaturalGasSupply_kW.add(energyModel.t_h, v_dailyNaturalGasSupply_kW/(24 / energyModel.p_timeStep_h));
+		data_annualHydrogenSupply_kW.add(energyModel.t_h, v_dailyHydrogenSupply_kW/(24 / energyModel.p_timeStep_h));
+		//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatSupply_kWh/(24 / energyModel.p_timeStep_h));
 
 		// Resetting the daily values
 		//v_dailyElectricityDemand_kWh = 0;
 		//v_dailyElectricitySupply_kWh = 0;
-		v_dailyBaseloadElectricityDemand_kWh = 0;
-		v_dailyHeatPumpElectricityDemand_kWh = 0;
-		v_dailyElectricTrucksDemand_kWh = 0;
-		v_dailyNeighborhoodBatteryDemand_kWh = 0;
-		v_dailyNaturalGasDemand_kWh = 0;
-		v_dailyDieselDemand_kWh = 0;
-		v_dailyHydrogenDemand_kWh = 0;
+		v_dailyBaseloadElectricityDemand_kW = 0;
+		v_dailyHeatPumpElectricityDemand_kW = 0;
+		v_dailyElectricTrucksDemand_kW = 0;
+		v_dailyNeighborhoodBatteryDemand_kW = 0;
+		v_dailyNaturalGasDemand_kW = 0;
+		v_dailyDieselDemand_kW = 0;
+		v_dailyHydrogenDemand_kW = 0;
 		//v_dailyDistrictHeatDemand_kWh = 0;
-		v_dailyPVGeneration_kWh = 0;
-		v_dailyWindGeneration_kWh = 0;
-		v_dailyNeighborhoodBatterySupply_kWh = 0;
-		v_dailyV2GSupply_kWh = 0;
-		v_dailyNaturalGasSupply_kWh = 0;
-		v_dailyHydrogenSupply_kWh = 0;
+		v_dailyPVGeneration_kW = 0;
+		v_dailyWindGeneration_kW = 0;
+		v_dailyNeighborhoodBatterySupply_kW = 0;
+		v_dailyV2GSupply_kW = 0;
+		v_dailyNaturalGasSupply_kW = 0;
+		v_dailyHydrogenSupply_kW = 0;
 		//v_dailyDistrictHeatSupply_kWh = 0;
 	}
 	
@@ -21399,7 +21208,13 @@ v_currentLoadLowPassed_kW = 0;
 //v_currentIndoorTemp_degC = (p_BuildingThermalAsset == null) ? 0 : p_BuildingThermalAsset.getCurrentTemperature();
 
 // Reset energytotals
-v_hydrogenInStorage_kWh = 0;
+if (b_useHydrogenLocally) {
+	v_hydrogenInStorage_kWh = 1000000;
+}
+else {
+	v_hydrogenInStorage_kWh = 0;
+}
+v_totalHydrogenUsed_MWh = 0;
 
 v_totalEnergyProduced_MWh = 0;
 v_totalEnergyConsumed_MWh = 0;
@@ -21487,23 +21302,23 @@ v_weekendElectricityExport_MWh = 0;
 
 
 // Daily totals
-v_dailyBaseloadElectricityDemand_kWh = 0;
-v_dailyHeatPumpElectricityDemand_kWh = 0;
-v_dailyElectricTrucksDemand_kWh = 0;
-v_dailyNeighborhoodBatteryDemand_kWh = 0;
-v_dailyPVGeneration_kWh = 0;
-v_dailyWindGeneration_kWh = 0;
-v_dailyNeighborhoodBatterySupply_kWh = 0;
-v_dailyV2GSupply_kWh = 0;
+v_dailyBaseloadElectricityDemand_kW = 0;
+v_dailyHeatPumpElectricityDemand_kW = 0;
+v_dailyElectricTrucksDemand_kW = 0;
+v_dailyNeighborhoodBatteryDemand_kW = 0;
+v_dailyPVGeneration_kW = 0;
+v_dailyWindGeneration_kW = 0;
+v_dailyNeighborhoodBatterySupply_kW = 0;
+v_dailyV2GSupply_kW = 0;
 
-data_annualBaseloadElectricityDemand_MWh.reset();
-data_annualHeatPumpElectricityDemand_MWh.reset();
-data_annualElectricTrucksDemand_MWh.reset();
-data_annualNeighborhoodBatteryDemand_MWh.reset();
-data_annualPVGeneration_MWh.reset();
-data_annualWindGeneration_MWh.reset();
-data_annualNeighborhoodBatterySupply_MWh.reset();
-data_annualV2GSupply_MWh.reset();
+data_annualBaseloadElectricityDemand_kW.reset();
+data_annualHeatPumpElectricityDemand_kW.reset();
+data_annualElectricTrucksDemand_kW.reset();
+data_annualNeighborhoodBatteryDemand_kW.reset();
+data_annualPVGeneration_kW.reset();
+data_annualWindGeneration_kW.reset();
+data_annualNeighborhoodBatterySupply_kW.reset();
+data_annualV2GSupply_kW.reset();
 
 // Summer / Winterweek profile data
 /*
@@ -21844,8 +21659,7 @@ switch (p_chargingAttitudeVehicles) {
 		f_simpleCharging();
 	break;
 	case MAX_SPREAD:
-		traceln("***Warning*** MAX_SPREAD charging mode deprecated!!");
-		//f_maxSpreadCharging();
+		f_maxSpreadCharging();
 	break;
 	case MAX_POWER:
 		f_maxPowerCharging( max(0, availableChargingCapacity));
@@ -21877,11 +21691,9 @@ switch (p_chargingAttitudeVehicles) {
 					<Body><![CDATA[ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
 		ev.f_updateAllFlows( 0.0 );
-		//ev.operateBounded(0);
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
@@ -21900,27 +21712,41 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995177</Id>
 					<Name><![CDATA[f_maxSpreadCharging]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>830</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[ArrayList<EnergyAsset> copiedVehicleList = new ArrayList<EnergyAsset>(c_vehiclesAvailableForCharging);
+					<Body><![CDATA[ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	EnergyAsset EA = copiedVehicleList.get(i);
-	J_EAEV ev = (J_EAEV)EA.j_ea;
-	if(!ev.getAvailability() ){
-		EA.f_updateElectricityFlows( 0 );
+	J_EAEV ev = copiedVehicleList.get(i);
+	if(!ev.getAvailability() || ev.getCurrentStateOfCharge() == 1){
+		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
-	if( ev.getCurrentStateOfCharge() < 1 ) {
-		v_evChargingPowerElectric_kW += EA.f_updateElectricityFlows( ev.getMaxSpreadChargingRatio() );
-		//traceln( "charging ratio " + ev.getMaxSpreadChargingRatio());
-		//traceln( "charging speed " + ev.getElectricCapacity_kW() * ev.getMaxSpreadChargingRatio());
+	else if( ev.vehicleScaling != 0 ) {
+		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+		double maxChargingPower_kW = ev.getElectricCapacity_kW();
+		double emptyKWhInBattery = ev.getStorageCapacity_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge();
+		double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+		double chargingPower_kW;
+		double timeToNextTrip = ev.tripTracker.v_nextEventStartTime_min / 60 - energyModel.t_h;
+	
+		if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+			//traceln("Urgency charging! May exceed connection capacity!");
+			chargingPower_kW = maxChargingPower_kW / 2 ;	// delen door 2 als quickfix doordat HAVI trucks anders mega pieken veroorzaken in de middag waardoor 'slim' laden beetje nutteloos lijkt
+		}
+		else {
+			chargingPower_kW = emptyKWhInBattery / timeToNextTrip;
+		}
+		
+		double chargingSpeed = min (chargingPower_kW, ev.capacityElectric_kW / ev.vehicleScaling );
+		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
+		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
+		v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 	}
 }]]></Body>
 				</Function>
@@ -21947,7 +21773,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
-		ev.f_updateAllFlows( 0 );
+		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
@@ -22125,7 +21951,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker;
 	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
-		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+		int rowIndex = uniform_discr(1, 21);//getIndex() % 200;
 		tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
@@ -22887,7 +22713,9 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Reset dataset after rapid run
 
-
+if (p_ownerID.equals("Post NL / Valid Express") || p_ownerID.equals("HAVI logistics BV") ) {
+	traceln("Hydrogen left in GC " + p_ownerID + " = " + v_hydrogenInStorage_kWh);
+}
 v_hydrogenInStorage_kWh = 0;
 
 //Reset specificGC states after rapid run
@@ -22920,21 +22748,23 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
-if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
+if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
 	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL)	;
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
 	else {
-		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
+		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
-		double ratioOfCapacity = powerNeeded_kW / (1000*0.50);
+		double efficiency = 0.5;
+		double ratioOfCapacity = powerNeeded_kW / (1000*efficiency);
 		double[] arr = fuelCellAsset.operate(ratioOfCapacity);
 		/*if (this.p_gridConnectionID.equals("9.0")) {
 			traceln("fuel cell operated: " + Arrays.toString(arr));
 		}*/
 		f_addFlows(arr, fuelCellAsset);
-		v_hydrogenInStorage_kWh -= arr[6];
+		v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
+		v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
 	}
 }]]></Body>
 				</Function>
@@ -23705,7 +23535,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040026</Id>
-					<Name><![CDATA[data_annualHeatPumpElectricityDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
 					<X>1070</X><Y>2130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23727,7 +23557,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040034</Id>
-					<Name><![CDATA[data_annualWindGeneration_MWh]]></Name>
+					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
 					<X>1070</X><Y>2310</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23749,7 +23579,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040041</Id>
-					<Name><![CDATA[data_annualV2GSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
 					<X>1070</X><Y>2350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23771,7 +23601,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040046</Id>
-					<Name><![CDATA[data_annualPVGeneration_MWh]]></Name>
+					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
 					<X>1070</X><Y>2290</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23793,7 +23623,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040051</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
 					<X>1070</X><Y>2170</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23815,7 +23645,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040056</Id>
-					<Name><![CDATA[data_annualBaseloadElectricityDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
 					<X>1070</X><Y>2110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23837,7 +23667,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040068</Id>
-					<Name><![CDATA[data_annualElectricTrucksDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualElectricTrucksDemand_kW]]></Name>
 					<X>1070</X><Y>2150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23859,7 +23689,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715086040072</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatterySupply_MWh]]></Name>
+					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
 					<X>1070</X><Y>2330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24103,7 +23933,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715242538012</Id>
-					<Name><![CDATA[data_annualDieselDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualDieselDemand_kW]]></Name>
 					<X>1070</X><Y>2210</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24125,7 +23955,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715242541763</Id>
-					<Name><![CDATA[data_annualHydrogenDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualHydrogenDemand_kW]]></Name>
 					<X>1070</X><Y>2230</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24170,7 +24000,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715242546547</Id>
-					<Name><![CDATA[data_annualNaturalGasSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 					<X>1070</X><Y>2370</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24215,7 +24045,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715242681124</Id>
-					<Name><![CDATA[data_annualNaturalGasDemand_MWh]]></Name>
+					<Name><![CDATA[data_annualNaturalGasDemand_kW]]></Name>
 					<X>1070</X><Y>2190</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24589,7 +24419,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW || v_currentPowerElec
 				</DataSet>
     			<DataSet>
 					<Id>1715673606961</Id>
-					<Name><![CDATA[data_annualHydrogenSupply_MWh]]></Name>
+					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 					<X>1070</X><Y>2390</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -41926,13 +41756,25 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElectrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit	
 	
+	
 	if (b_useHydrogenLocally) {
 		List<GridConnection> receivingGCs = findAll(energyModel.c_gridConnections, gc -> gc.b_useHydrogenLocally && gc != this);
 		//traceln("hydrogen reveicing gcs: %s", receivingGCs);
 		for (GridConnection gc : receivingGCs) {
+			
 			gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] / receivingGCs.size();
+			
+			/*
+			if (gc.p_ownerID.equals("Post NL / Valid Express")) {
+				gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] * (2/3);
+			}
+			else if (gc.p_ownerID.equals("HAVI logistics BV")) {
+				gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] * (1/3);
+			}
+			*/
 		}
 	}
+
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -44664,6 +44506,8 @@ f_manageCharging();
 
 if (p_batteryAsset != null){ // TEST CODE
 	f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	//traceln("flows:" + Arrays.toString(arr));
 }
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -50026,7 +49870,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     public boolean endTrip(double tripDist_km) {
 		
 		if(available) {
-			traceln("Trip not ended because vehicle never left!");
+			//traceln("Trip not ended because vehicle never left!");
 			return false;
 		} else {
 	    	available = true;
