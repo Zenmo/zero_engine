@@ -47837,7 +47837,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public boolean endTrip(double tripDist_km) {
 	
 		if(available) {
-			traceln("Trip not ended because EV never left!");
+			//traceln("Trip not ended because EV never left!");
 			return false;
 		} else {
 			mileage_km += tripDist_km;
