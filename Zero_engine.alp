@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -46588,9 +46588,6 @@ public void f_operateFixedAssets(){
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_gisregion]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -50051,7 +50048,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	this.rowIndex = rowIndex;
     	this.Vehicle = Vehicle;		
 		this.nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
-		this.tripPatternIdentifier = tripsExcel.getCellStringValue("sheet1", rowIndex + 2, 1);
+		this.tripPatternIdentifier = "";// tripsExcel.getCellStringValue("sheet1", rowIndex + 2, 1);
 		
 	    for (int i = 0; i < nbActivities; i++){
 	    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
