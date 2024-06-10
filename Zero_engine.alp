@@ -12862,8 +12862,8 @@ v_timeStepsElapsed ++;
 				<EmbeddedObject>
 					<Id>1717960182623</Id>
 					<Name><![CDATA[PublicChargers]]></Name>
-					<X>90</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
+					<X>90</X><Y>235</Y>
+					<Label><X>16</X><Y>1</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -13011,6 +13011,15 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_amountOfChargers]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxChargingPower_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_chargingVehicleType]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -21263,8 +21272,7 @@ v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
-c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
-c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
+
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -21296,6 +21304,11 @@ if (energyModel.b_addKpiVisuals) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//v_heatRecievingFromSun_kW = p_irradianceRecievingSurface_m2 * main.v_currentSolarPowerNormalized_r * main.p_solarAbsorptionCoefficient;
 //v_totalHeatRecievedSun_kWh += v_heatRecievingFromSun_kW;
+
+//Update diesel and hydrogen vehicle flows
+c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
+c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
+
 
 //if (p_energyProfile != null & p_company_connection_id != null) {
 for(J_EAProfile e : c_profileAssets) {
@@ -21418,9 +21431,6 @@ for(J_EAConsumption e : c_consumptionAssets) {
 		}
 		//v_currentPowerHydrogen_kW += e.v_currentConsumptionHydrogen_kW - e.v_currentProductionHydrogen_kW;
 	} 
-	else if( e.energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE ) {
-		e.f_updateAllFlows(0);		
-	}
 	else if( e.energyAssetType == OL_EnergyAssetType.DIESEL_DEMAND ) {
 		e.v_powerFraction_fr = 1.0/8760;
 		e.f_updateAllFlows( e.v_powerFraction_fr );	
@@ -46588,6 +46598,15 @@ public void f_operateFixedAssets(){
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_amountOfChargers]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxChargingPower_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_chargingVehicleType]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -46702,6 +46721,69 @@ public void f_operateFixedAssets(){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1718020204898</Id>
+					<Name><![CDATA[p_amountOfChargers]]></Name>
+					<X>1640</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1718020204896</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1718020213388</Id>
+					<Name><![CDATA[p_maxChargingPower_kW]]></Name>
+					<X>1640</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1718020213386</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1718020656896</Id>
+					<Name><![CDATA[p_chargingVehicleType]]></Name>
+					<X>1640</X><Y>140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_EnergyAssetType]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1718020656894</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -46773,6 +46855,51 @@ public void f_operateFixedAssets(){
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
+			<Presentation>
+				<Rectangle>
+					<Id>1718020159680</Id>
+					<Name><![CDATA[rectangle4]]></Name>
+					<X>1600</X><Y>40</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-65536</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>300</Width>
+					<Height>160</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1718020176410</Id>
+					<Name><![CDATA[txt_chargingStationFunctions]]></Name>
+					<X>1620</X><Y>60</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Charging Centre Functions]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Presentation>
 
 				</Level>
 			</Presentation>
@@ -49451,12 +49578,6 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 			traceln("Trip not ended because EV never left!");
 			return false;
 		} else {
-			mileage_km += tripDist_km;
-			//traceln( "J_EAHydrogenVehicle comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);// + ", timestep: " + timestep_h);
-	    	double energyUsedForTrip_kWh = tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
-	    	energyUsed_kWh += energyUsedForTrip_kWh;
-	    	hydrogenConsumption_kW = energyUsedForTrip_kWh / timestep_h;
-	    	energyUse_kW += hydrogenConsumption_kW;
 	    	available = true;
 	    	//traceln("Hydrogen vehicle finished trip!");
 	    	return true;
@@ -49464,7 +49585,22 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 		}
     	//traceln("Current milage: " + mileage + ", energy consumption per km: " + energyConsumption_kWhpkm);
     }
-
+	
+	public boolean progressTrip(double marginalTripDist_km) {
+		if( available) {
+			traceln("Trip not updated because vehicle never left!");
+			return false;
+		}
+		else {
+			mileage_km += marginalTripDist_km;
+	    	double energyUsedThisTimestep_kWh = marginalTripDist_km * vehicleScaling * energyConsumption_kWhpkm;
+	    	energyUsed_kWh += energyUsedThisTimestep_kWh;
+	    	hydrogenConsumption_kW = energyUsedThisTimestep_kWh / timestep_h;
+	    	energyUse_kW += hydrogenConsumption_kW;
+			return true;
+		}
+	}
+	
 	public double getEnergyUsed_kWh() {
 		return energyUsed_kWh;
 	}
@@ -50095,6 +50231,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    		if (Vehicle instanceof J_EADieselVehicle) {
 	    			J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)Vehicle;
 	    			dieselVehicle.progressTrip(v_tripDist_km / currentTripDuration);
+	    		}
+	    		else if (Vehicle instanceof J_EAHydrogenVehicle) {
+	    			J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)Vehicle;
+	    			hydrogenVehicle.progressTrip(v_tripDist_km / currentTripDuration);
 	    		}
 	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*energyModel.p_timeStep_h)) * 60*energyModel.p_timeStep_h ) { // is a trip ending this timestep?
 	    			Vehicle.endTrip(v_tripDist_km);
