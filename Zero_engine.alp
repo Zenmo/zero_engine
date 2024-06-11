@@ -48308,6 +48308,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.ELECTRIC_VEHICLE; // AANPASSING ATE: VRAGEN AAN GILLIS: asset type meegeven in functie J_EAV, want scheelt switch statement in iEA functie.
 	    this.tripTracker = tripTracker;
+	    if (tripTracker != null) {
+	    	tripTracker.Vehicle=this;	    	
+	    }
 	    // Validation checks
 	    if (capacityElectric_kW == 0 || storageCapacity_kWh == 0 || timestep_h == 0 || energyConsumption_kWhpkm == 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
@@ -49236,6 +49239,9 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
 	    this.tripTracker = tripTracker;
+	    if (tripTracker != null) {
+	    	tripTracker.Vehicle=this;	    	
+	    }
 		registerEnergyAsset();
 	}
     
@@ -50376,7 +50382,10 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.DIESEL_VEHICLE; // AANPASSING ATE, scheelt code in interface
-	    this.tripTracker = tripTracker;
+	    this.tripTracker = tripTracker; 
+	    if (tripTracker != null) {
+	    	tripTracker.Vehicle=this;	    	
+	    }
 		registerEnergyAsset();
 	}
     
