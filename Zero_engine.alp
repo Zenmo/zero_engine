@@ -12007,33 +12007,6 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_productionNominal_Nm3]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_productionMinimum_Nm3]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_powerNominal_kW]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_energyConsumptionNominal_kWh_Nm3]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_outputPressure_Bar]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_loadChangeTimeMinMax_s]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_startUpTimeStandby_s]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_hydrogenEnergyDensity_kWh_Nm3]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_startUpTimeIdle_s]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_startUpTimeShutdown_s]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_conversionEfficiencyFC]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12065,18 +12038,6 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_minProductionRatio]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_hydrogenDensity_kg_Nm3]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_oxygenDensity_kg_Nm3]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_oxygenProduction_kgO2_per_kgH2]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_hydrogenEnergyDensity_kWh_kg]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
@@ -19715,9 +19676,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
-						
-						
-
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -23215,97 +23176,6 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 	}
 }]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1714646521271</Id>
-					<Name><![CDATA[f_removeTheJ_EA]]></Name>
-					<X>800</X><Y>110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[j_ea]]></Name>
-						<Type><![CDATA[J_EA]]></Type>
-					</Parameter>
-					<Body><![CDATA[f_removeTheJ_EA_default(j_ea);
-// Abstract method to be used call GC-subtype specific functions]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1714646913998</Id>
-					<Name><![CDATA[f_removeTheJ_EA_default]]></Name>
-					<X>970</X><Y>110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[j_ea]]></Name>
-						<Type><![CDATA[J_EA]]></Type>
-					</Parameter>
-					<Body><![CDATA[c_energyAssets.remove(j_ea);
-energyModel.c_energyAssets.add(j_ea);
-
-if (j_ea instanceof J_EAVehicle) {
-	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
-	if (vehicle instanceof J_EADieselVehicle) {
-		c_dieselVehicles.remove( (J_EADieselVehicle)vehicle );		
-	} else if (vehicle instanceof J_EAHydrogenVehicle) {
-		c_hydrogenVehicles.remove((J_EAHydrogenVehicle)vehicle);		
-	} else if (vehicle instanceof J_EAEV) {
-		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
-		energyModel.c_EVs.remove((J_EAEV)vehicle);
-	}
-	c_vehicleAssets.remove(j_ea);
-	J_ActivityTrackerTrips tripTracker;
-	tripTracker = vehicle.tripTracker;
-	c_tripTrackers.remove( tripTracker );
-	vehicle.tripTracker = null;
-	v_vehicleIndex --;
-} else if (j_ea instanceof J_EAConsumption) {
-	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = null;	
-	}
-} else if (j_ea instanceof J_EAProduction) {
-	c_productionAssets.remove((J_EAProduction)j_ea);
-	//energyModel.c_productionAssets.remove((J_EAProduction)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = false;}
-} else if (j_ea instanceof J_EAConversion) {
-	c_conversionAssets.remove((J_EAConversion)j_ea);
-	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		p_cookingTracker = null;
-	} else if (j_ea instanceof J_EAConversionCurtailer) {
-		p_curtailer = null;
-	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		p_primaryHeatingAsset = null;
-	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		p_primaryHeatingAsset = null;
-	} else if (j_ea instanceof J_EAConversionCurtailer) {
-		p_curtailer = null;
-	}
-} else if  (j_ea instanceof J_EAStorage) {
-	c_storageAssets.remove((J_EAStorage)j_ea);
-	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
-		energyModel.c_ambientAirDependentAssets.remove(j_ea);
-		p_BuildingThermalAsset = null;
-	} else if (j_ea instanceof J_EAStorageGas) {
-		p_gasBuffer = null;
-	} else if (j_ea instanceof J_EAStorageElectric) {
-		p_batteryAsset = null;
-	}
-} else if  (j_ea instanceof J_EAProfile) {
-	//p_energyProfile = null;
-	c_profileAssets.remove((J_EAProfile)j_ea);
-} else {
-	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
-}
-]]></Body>
-				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
@@ -26626,8 +26496,8 @@ f_setCoordinatesUIElements();
 	v_powerFraction_fr = j_ea.v_powerFraction_fr;
 	*/
 	plot.updateData();
-	data_currentConsumptionElectricity_kW.update();
-	data_currentProductionElectricity_kW.update();
+	//data_currentConsumptionElectricity_kW.update();
+	//data_currentProductionElectricity_kW.update();
 }
 ]]></Body>
 				</Function>
@@ -41908,7 +41778,7 @@ FullCapacity.]]></Description>
 					<Id>1715607690911</Id>
 					<Name><![CDATA[v_gridNodeCongestionLimit_kW]]></Name>
 					<Description><![CDATA[Congestion limit  of the grid node. If this limit is reached, electrolyser should not be functional.]]></Description>
-					<X>1610</X><Y>430</Y>
+					<X>1610</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41949,28 +41819,18 @@ FullCapacity.]]></Description>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.05]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1715607690911</Id>
-					<Name><![CDATA[v_gridNodeCongestionLimit_kW]]></Name>
-					<Description><![CDATA[Congestion limit  of the grid node. If this limit is reached, electrolyser should not be functional.]]></Description>
-					<X>1610</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>0</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1709045216547</Id>
@@ -42221,7 +42081,7 @@ FullCapacity.]]></Description>
 				<Variable Class="Parameter">
 					<Id>1717070647695</Id>
 					<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
-					<X>1610</X><Y>460</Y>
+					<X>1600</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42636,7 +42496,7 @@ switch (p_electrolyserOperationMode){
 		f_electrolyserRegimeControl_Price(excessElectricPower_kW, ElectrolyserAsset);
 	break;
 	case BALANCE:
-		f_electrolyserRegimeControl_Balance(currentHSMSGridNodePowerFlow_kW, ElectrolyserAsset);
+		f_electrolyserRegimeControl_Balance(currentGridNodePowerFlow_kW, forecast_time_h, ElectrolyserAsset);
 	break;
 }
 
@@ -43068,7 +42928,7 @@ v_hydrogenProductionDeficit_kWh = 0;]]></Body>
     			<DataSet>
 					<Id>1717069403489</Id>
 					<Name><![CDATA[data_liveWeekGridNoderPowerFlow_kW]]></Name>
-					<X>1610</X><Y>410</Y>
+					<X>1600</X><Y>540</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47052,15 +46912,6 @@ public void f_operateFixedAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_amountOfChargers]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_maxChargingPower_kW]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_chargingVehicleType]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
