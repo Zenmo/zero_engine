@@ -6762,9 +6762,7 @@ f_initializeForecasts();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln(acc_annualElectricityBalance_kW.getTimeSeries());
-
-/*// intStream.parallel experiment works to extract daytime consumption! Now benchmark performance...
+					<Body><![CDATA[/*// intStream.parallel experiment works to extract daytime consumption! Now benchmark performance...
 double daytimeEnergyUsed_MWh = IntStream.range(0, a_annualDaytimeIdxs.length).parallel().mapToDouble(idx -> a_annualEnergyConsumption_kW[idx]*a_annualDaytimeIdxs[idx]).sum()*p_timeStep_h/1000;
 traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnergyUsed_MWh, daytimeEnergyUsed_MWh);
 */
@@ -21807,7 +21805,7 @@ c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
 f_operateFixedAssets();
 f_operateFlexAssets();
 
-if (v_hydrogenInStorage_kWh > 0) {
+if (b_useHydrogenLocally && v_hydrogenInStorage_kWh > 0.1) {
 	f_operateFuelCell();
 }
 
@@ -22788,7 +22786,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
-		traceln("added heatpump to the GC as primary heating asset.");
+		//traceln("added heatpump to the GC as primary heating asset.");
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
@@ -23589,7 +23587,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
 if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
-	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL)	;
+	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
@@ -51297,6 +51295,7 @@ public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implem
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.ELECTRICITY;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HYDROGEN;
+
     /**
 	/**
      * Default constructor
@@ -51312,6 +51311,7 @@ public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implem
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
+	    this.energyAssetType = OL_EnergyAssetType.FUEL_CELL;
 		registerEnergyAsset();
 	}
 
@@ -51575,11 +51575,6 @@ public class J_AVGC_data implements Serializable {
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[ZeroMath.jar]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
