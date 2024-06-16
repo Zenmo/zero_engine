@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1021,6 +1021,18 @@
 			<Option>
 				<Id>1717960327813</Id>
 				<Name><![CDATA[CPO]]></Name>
+			</Option>
+		</OptionList>
+		<OptionList>
+			<Id>1718560423698</Id>
+			<Name><![CDATA[OL_ProfileAssetType]]></Name>
+			<Option>
+				<Id>1718560423699</Id>
+				<Name><![CDATA[ELECTRICITYBASELOAD]]></Name>
+			</Option>
+			<Option>
+				<Id>1718560423700</Id>
+				<Name><![CDATA[CHARGING]]></Name>
 			</Option>
 		</OptionList>
 	</OptionLists>
@@ -10173,6 +10185,9 @@ f_initializeForecasts();]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_nodeStatus]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_uniqueColor]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -15120,6 +15135,30 @@ geupdate vanuit
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1718566355120</Id>
+					<Name><![CDATA[p_uniqueColor]]></Name>
+					<X>140</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[Color]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[randomColor()]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1718566355118</Id>
+							<EditorContolType>COLOR_PICKER</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1658751320739</Id>
 					<Name><![CDATA[c_electricityFlows]]></Name>
@@ -16172,7 +16211,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 					<ReturnType><![CDATA[ArrayList<GridNode>]]></ReturnType>
 					<Id>1718290223518</Id>
 					<Name><![CDATA[f_getConnectedGridNodes]]></Name>
-					<X>1550</X><Y>290</Y>
+					<X>1110</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16184,7 +16223,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 					<ReturnType><![CDATA[ArrayList<GridConnection>]]></ReturnType>
 					<Id>1718290606581</Id>
 					<Name><![CDATA[f_getConnectedGridConnections]]></Name>
-					<X>1550</X><Y>310</Y>
+					<X>1110</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19082,7 +19121,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685647</Id>
-					<Name><![CDATA[v_dailyElectricTrucksDemand_kW]]></Name>
+					<Name><![CDATA[v_dailyElectricVehicleDemand_kW]]></Name>
 					<X>740</X><Y>2150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21417,7 +21456,7 @@ if (energyModel.v_isRapidRun){
 	// Demand
 	v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 	v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
-	v_dailyElectricTrucksDemand_kW += max(0,v_evChargingPowerElectric_kW);
+	v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 	v_dailyNeighborhoodBatteryDemand_kW += max(0,v_batteryPowerElectric_kW);
 	v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
 	v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
@@ -21439,7 +21478,7 @@ if (energyModel.v_isRapidRun){
 		// Demand
 		data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 		data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualElectricTrucksDemand_kW.add(energyModel.t_h, v_dailyElectricTrucksDemand_kW/(24 / energyModel.p_timeStep_h));
+		data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
 		data_annualNeighborhoodBatteryDemand_kW.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / energyModel.p_timeStep_h));
 		data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
 		data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
@@ -21459,7 +21498,7 @@ if (energyModel.v_isRapidRun){
 		//v_dailyElectricitySupply_kWh = 0;
 		v_dailyBaseloadElectricityDemand_kW = 0;
 		v_dailyHeatPumpElectricityDemand_kW = 0;
-		v_dailyElectricTrucksDemand_kW = 0;
+		v_dailyElectricVehicleDemand_kW = 0;
 		v_dailyNeighborhoodBatteryDemand_kW = 0;
 		v_dailyNaturalGasDemand_kW = 0;
 		v_dailyDieselDemand_kW = 0;
@@ -22094,7 +22133,7 @@ v_weekendElectricityExport_MWh = 0;
 // Daily totals
 v_dailyBaseloadElectricityDemand_kW = 0;
 v_dailyHeatPumpElectricityDemand_kW = 0;
-v_dailyElectricTrucksDemand_kW = 0;
+v_dailyElectricVehicleDemand_kW = 0;
 v_dailyNeighborhoodBatteryDemand_kW = 0;
 v_dailyPVGeneration_kW = 0;
 v_dailyWindGeneration_kW = 0;
@@ -22103,7 +22142,7 @@ v_dailyV2GSupply_kW = 0;
 
 data_annualBaseloadElectricityDemand_kW.reset();
 data_annualHeatPumpElectricityDemand_kW.reset();
-data_annualElectricTrucksDemand_kW.reset();
+data_annualElectricVehicleDemand_kW.reset();
 data_annualNeighborhoodBatteryDemand_kW.reset();
 data_annualPVGeneration_kW.reset();
 data_annualWindGeneration_kW.reset();
@@ -24329,7 +24368,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 				</DataSet>
     			<DataSet>
 					<Id>1715086040068</Id>
-					<Name><![CDATA[data_annualElectricTrucksDemand_kW]]></Name>
+					<Name><![CDATA[data_annualElectricVehicleDemand_kW]]></Name>
 					<X>1070</X><Y>2150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -47439,9 +47478,18 @@ public void f_operateFixedAssets(){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for ( J_EA e : c_profileAssets){
+					<Body><![CDATA[for ( J_EAProfile e : c_profileAssets){
 	double[] flowsArray = e.f_updateAllFlows( energyModel.t_h );		
-	v_currentPowerElectricity_kW += flowsArray[4];		
+	if (e.profileType == OL_ProfileAssetType.CHARGING){
+		v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+	}
+	else if( e.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
+		v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
+	}
+	else {
+		traceln( "Profile type is not registered in GCPublicCharger");
+	}
+	//v_currentPowerElectricity_kW += flowsArray[4];		
 }
 ]]></Body>
 				</Function>
@@ -48329,6 +48377,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	public OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
 	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
+	public OL_ProfileAssetType profileType;
 	//protected double outputTemperature_degC;
     /**
      * Default constructor
@@ -48339,10 +48388,11 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(Agent parentAgent, OL_EnergyCarrierType energyCarrier, double[] profile_kWh, double timestep_h) {
+    public J_EAProfile(Agent parentAgent, OL_EnergyCarrierType energyCarrier, double[] profile_kWh, OL_ProfileAssetType profileType, double timestep_h) {
 	    this.parentAgent= parentAgent;
 	    this.energyCarrierConsumed = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
+	    this.profileType = profileType;
 	    this.timestep_h = timestep_h;
 		registerEnergyAsset();
 	}
@@ -51575,6 +51625,11 @@ public class J_AVGC_data implements Serializable {
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[ZeroMath.jar]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
