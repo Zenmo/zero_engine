@@ -111,7 +111,7 @@ public class ZeroAccumulator {
              */
             return timeSeriesTemp;
         } else {
-            return timeSeries.clone();
+            return timeSeries;
         }
     }
 
