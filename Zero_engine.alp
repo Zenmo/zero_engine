@@ -48089,9 +48089,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     	
     	// charging/discharging losses
     	if (inputPower_kW > 0) { // charging (the battery 'consumes' electricity)
-    		deltaEnergy_kWh = etaCharge_r * inputPower_kW * timestep_h; // Actual change of energy content of battery after losses
+    		deltaEnergy_kWh = etaCharge_r * inputPower_kW * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is smaller than inputPower_kW * timestep_h!
     	} else { // discharging (the battery 'produces' electricity)
-    		deltaEnergy_kWh = inputPower_kW / etaDischarge_r * timestep_h; // Actual change of energy content of battery after losses
+    		deltaEnergy_kWh = inputPower_kW / etaDischarge_r * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is larger than inputPower_kW * timestep_h!
     	}
 
     	// Limit SoC to feasible range (0-1)
@@ -48114,7 +48114,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		discharged_kWh += electricityProduction_kW * timestep_h; // Not the change-in-SoC, but the energy flowing out of the battery after losses.
 		charged_kWh += electricityConsumption_kW * timestep_h; // Not the change-in-SoC, but the energy flowing into the battery before losses.
 		
-		updateStateOfCharge( deltaEnergy_kWh / timestep_h );
+		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("Battery SoC: %s", stateOfCharge_r);
 		return returnEnergyFlows();
 	}
