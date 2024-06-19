@@ -46598,15 +46598,6 @@ public void f_operateFixedAssets(){
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_amountOfChargers]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_maxChargingPower_kW]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_chargingVehicleType]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
