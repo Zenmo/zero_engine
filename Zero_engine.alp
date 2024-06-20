@@ -954,6 +954,14 @@
 				<Id>1710163149238</Id>
 				<Name><![CDATA[BALANCE_SUPPLY]]></Name>
 			</Option>
+			<Option>
+				<Id>1718889055431</Id>
+				<Name><![CDATA[WEEKEND]]></Name>
+			</Option>
+			<Option>
+				<Id>1718889037619</Id>
+				<Name><![CDATA[WEEKEND_SPREAD]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1668693527447</Id>
@@ -4841,7 +4849,7 @@ traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWee
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[18]]></Code>
+							<Code><![CDATA[48]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1671636582216</Id>
@@ -23695,7 +23703,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[min(0, -v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0, -v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -45007,6 +45015,32 @@ public void f_operateFlexAssets(){
 			</ScaleRuler>
 			<CurrentLevel>1672138285226</CurrentLevel>
 			<ConnectionsId>1672138285222</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1718879371254</Id>
+					<Name><![CDATA[v_extraBatteryChargingWeekend_kW]]></Name>
+					<X>470</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1718890216255</Id>
+					<Name><![CDATA[v_batteryDischargingWeek_kW]]></Name>
+					<X>470</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -45026,9 +45060,17 @@ public void f_operateFlexAssets(){
 f_manageCharging();
 
 if (p_batteryAsset != null){ // TEST CODE
-	f_batteryManagementWeekend();
-	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	//traceln("flows:" + Arrays.toString(arr));
+	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
+		if (p_batteryOperationMode == WEEKEND || p_batteryOperationMode == WEEKEND_SPREAD) {
+			f_batteryManagementWeekend();
+		}
+		else {
+			f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+		}
+		double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+		v_batteryPowerElectric_kW += arr[4] - arr[0];
+		//traceln("flows:" + Arrays.toString(arr));
+	}
 }
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -45068,32 +45110,92 @@ for (J_EAConversion e : c_conversionAssets) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Setpoint SOC to aim for would be 0 on saturday morning and 1 on sunday evening
+					<Body><![CDATA[// Setpoint SOC to aim for would be 0 on saturday morning and 1 on sunday night
+// Lets say the forecast time for sun is about 48h. If we are not expected to fill up our battery
+// Only then we will add some power from the grid.
 
 double currentSOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-traceln("currentSOC_fr %s", currentSOC_fr);
+//traceln("Current SOC: %s", currentSOC_fr);
+double batteryStorageCapacity_kWh = p_batteryAsset.getStorageCapacity_kWh();
+double batteryElectricCapacity_kW = p_batteryAsset.getCapacityElectric_kW();
+//traceln("currentSOC_fr %s", currentSOC_fr);
 double electricitySurplus_kW = -v_currentPowerElectricity_kW;
 v_allowedCapacity_kW = p_connectionCapacity_kW*0.9;
 double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 double availableChargePower_kW = connectionCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
 double availableDischargePower_kW = electricitySurplus_kW - connectionCapacity_kW; // Max discharging power within grid capacity
 
+int v_startingDayOfWeek = energyModel.v_dayOfWeek1jan;
+double timeOfDay = (energyModel.t_h % (24/energyModel.p_timeStep_h)) % 24;
 
-/*
-double currentInstalledPV_kWp;
-for (J_EAProduction ea: GC.c_productionAssets) {
-	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		currentInstalledPV_kWp += ea.getCapacityElectric_kW();
+int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + v_startingDayOfWeek ) % 7;
+
+//traceln("DayofWeek: %s", dayOfWeek);
+
+if (dayOfWeek == 6 && timeOfDay == 0.0) { // Friday at midnight, we determine our strategy for this weekend
+	double currentInstalledPV_kWp = 0;
+	for (J_EAProduction ea: c_productionAssets) {
+		if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+			currentInstalledPV_kWp += ea.getCapacityElectric_kW();
+		}
+	}
+	//traceln("currentInstalledPV_kWp: %s", currentInstalledPV_kWp);
+	double twoDayForecast = energyModel.v_SolarYieldForecast_fr; // Make sure p_forecastTime_h is 48
+	double expectedSolar_kWh = currentInstalledPV_kWp * twoDayForecast * 48;
+	//traceln("expectedSolar_kWh: %s", expectedSolar_kWh);
+	
+	// Somehow need to add a check to see if the solar production is within the electric capacity
+	if ((1 - currentSOC_fr)*batteryStorageCapacity_kWh > expectedSolar_kWh) { // We hope the current soc is zero
+		// Solar power won't cut it, we need some extra power from the grid
+		double extraNeeded_kWh = (1- currentSOC_fr)*batteryStorageCapacity_kWh - expectedSolar_kWh;
+		//traceln("extraNeeded_kWh: %s", extraNeeded_kWh);
+		v_extraBatteryChargingWeekend_kW = min(extraNeeded_kWh / 48, v_allowedCapacity_kW);
+	}
+	else {
+		v_extraBatteryChargingWeekend_kW = 0;
+	}
+	//traceln("v_extraBatteryChargingWeekend_kW: %s", v_extraBatteryChargingWeekend_kW);
+}
+
+if (p_batteryOperationMode == WEEKEND_SPREAD) {
+	if (dayOfWeek == 1 && timeOfDay == 0.0) { // Sunday at midnight, we determine our strategy for this week
+		v_batteryDischargingWeek_kW = -currentSOC_fr*batteryStorageCapacity_kWh / 120;
 	}
 }
+
+if (dayOfWeek == 6 || dayOfWeek == 0) {
+
+	double power_fr = (v_pvProductionElectric_kW + v_extraBatteryChargingWeekend_kW) / batteryElectricCapacity_kW;
+	//traceln("power_fr: %s", power_fr);
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
+}
+else {
+	if (p_batteryOperationMode == WEEKEND) {
+		double power_fr = (electricitySurplus_kW + p_connectionCapacity_kW) / batteryElectricCapacity_kW;
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
+	}
+	else { // WEEKEND_SPREAD
+		double power_fr = v_batteryDischargingWeek_kW / batteryElectricCapacity_kW;
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
+	
+	}
+/*
+	double SOC_setp_fr = 0;
+	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 0.8; // Feedforward based on current surpluss in Coop
+	double chargeOffset_kW = 0; //100; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	chargeSetpoint_kW = FeedforwardGain_kWpKw * (electricitySurplus_kW + chargeOffset_kW) + (SOC_setp_fr - currentSOC_fr) * FeedbackGain_kWpSOC;
+	traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+
 */
 
-//double currentInstalledWind;
-int v_startingDayOfWeek = energyModel.v_dayOfWeek1jan;
-double timeOfDay = energyModel.t_h % (24/energyModel.p_timeStep_h);
+}
 
-int dayOfWeek = (int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + v_startingDayOfWeek;
-
+/*
 double SOC_setp_fr;
 if (dayOfWeek == 0 || dayOfWeek == 6) {
 	SOC_setp_fr = 1;
@@ -45108,12 +45210,12 @@ double FeedforwardGain_kWpKw = 0.8; // Feedforward based on current surpluss in 
 double chargeOffset_kW = 0; //100; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 double chargeSetpoint_kW = 0;
 chargeSetpoint_kW = FeedforwardGain_kWpKw * (electricitySurplus_kW + chargeOffset_kW) + (SOC_setp_fr - currentSOC_fr) * FeedbackGain_kWpSOC;
-traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
+//traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
 chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
-p_batteryAsset.v_powerFraction_fr = 0; //max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+//traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
+p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
 //traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
-]]></Body>
+*/]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -47835,7 +47937,16 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_addFlows(arr);
     	}
-    	this.lastFlowsArray = arr;
+    	
+    	this.lastFlowsArray = Arrays.copyOfRange(arr, 0, 11);
+    	if (this.parentAgent instanceof GridConnection) {
+    		this.lastFlowsArray[10] = ((GridConnection) this.parentAgent).energyModel.t_h;
+    	}
+    	else if (this.parentAgent instanceof GridNode) {
+    		this.lastFlowsArray[10] = ((GridNode) this.parentAgent).energyModel.t_h;
+    	}
+    	
+    	resetFlows();
     	return arr;
     }
     
@@ -47902,8 +48013,9 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
-	private double lossFactor_r = 0;
 	
+	private double etaCharge_r; // charging efficiency
+	private double etaDischarge_r;
     /**
      * Default constructor
      */
@@ -47920,36 +48032,58 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
+		double eta_r = 1.0; // Default cycle efficiency of 90%. Add this as an argument to constructor?
+		this.etaCharge_r = Math.sqrt(eta_r);
+		this.etaDischarge_r = Math.sqrt(eta_r);
+		//registerEnergyAsset();
     }
 
 	@Override
-	public void calculateLoss() {
-		//no loss for electric batteries modeled yet.
-		energyUse_kW = 0;
-		energyUsed_kWh += energyUse_kW * timestep_h;
-	}
-
-	@Override
 	public double[] operate(double ratioOfChargeCapacity_r) {
-    	double discharge_kW = 0;
-    	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
-    	//double sign = ratioOfChargeCapacity_r / abs( ratioOfChargeCapacity_r ); // charge or discharge
+    	double inputPower_kW = ratioOfChargeCapacity_r * capacityElectric_kW; // Electric power going into battery, before losses.
+    	double deltaEnergy_kWh;   // The change in energy stored in the battery this timestep ('internal' energy)
+    	
+    	// charging/discharging losses
+    	if (inputPower_kW > 0) { // charging (the battery 'consumes' electricity)
+    		deltaEnergy_kWh = etaCharge_r * inputPower_kW * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is smaller than inputPower_kW * timestep_h!
+    	} else { // discharging (the battery 'produces' electricity)
+    		deltaEnergy_kWh = inputPower_kW / etaDischarge_r * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is larger than inputPower_kW * timestep_h!
+    	}
 
-    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * capacityElectric_kW * timestep_h ) ;
+    	// Limit SoC to feasible range (0-1)
     	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
-
-		discharge_kW = -deltaEnergy_kWh / timestep_h;
-
-		electricityProduction_kW = max(discharge_kW, 0);
-		electricityConsumption_kW = max(-discharge_kW, 0);
-		discharged_kWh += electricityProduction_kW * timestep_h;
-		charged_kWh += electricityConsumption_kW * timestep_h;
-		
-		updateStateOfCharge( discharge_kW );
-		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
-    	//return arr;
+    	
+    	if (deltaEnergy_kWh > 0) { // charging, deltaEnergy_kWh and inputPower_kW positive
+    		inputPower_kW = deltaEnergy_kWh / timestep_h / etaCharge_r;
+    		electricityConsumption_kW = inputPower_kW;
+    		electricityProduction_kW = 0;
+    		energyUse_kW = (1-etaCharge_r)*inputPower_kW;    		
+    	} else { // discharging, deltaEnergy_kWh and inputPower_kW negative
+    		inputPower_kW = deltaEnergy_kWh / timestep_h * etaDischarge_r;
+    		electricityConsumption_kW = 0;
+    		electricityProduction_kW = -inputPower_kW; 
+    		energyUse_kW = -deltaEnergy_kWh / timestep_h * (1-etaDischarge_r);
+    	}
+    	energyUsed_kWh += energyUse_kW * timestep_h;
+    	
+		discharged_kWh += electricityProduction_kW * timestep_h; // Not the change-in-SoC, but the energy flowing out of the battery after losses.
+		charged_kWh += electricityConsumption_kW * timestep_h; // Not the change-in-SoC, but the energy flowing into the battery before losses.
+				
+		updateStateOfCharge( deltaEnergy_kWh );
+		//traceln("Battery SoC: %s", stateOfCharge_r);
 		return returnEnergyFlows();
+	}
+	
+	public void setBatteryEfficiency_r(double eta_r) {
+		if (lossFactor_r < 0 || lossFactor_r > 0.99) {
+			traceln("Infeasible eta_r! Should be larger than 0 and no larger than 1! Setting eta_r=1. Input value is: %s", eta_r);
+			this.etaCharge_r = 1;			
+			this.etaDischarge_r = 1;
+		} else {
+			this.etaCharge_r = Math.sqrt(eta_r);			
+			this.etaDischarge_r = Math.sqrt(eta_r);
+		}		
 	}
 
 	@Override
@@ -47966,8 +48100,11 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	}
 
 	@Override
-	public void updateStateOfCharge( double discharge_kW ) {
-		stateOfCharge_r -= ( discharge_kW * timestep_h ) / storageCapacity_kWh;
+	public void updateStateOfCharge( double deltaEnergy_kWh ) {
+		//traceln("Parent: " + parentAgent + " stateOfCharge_r: " + stateOfCharge_r + " deltaE: " + deltaEnergy_kWh + " Capacity: " + storageCapacity_kWh);
+		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
+		//traceln("Parent: " + parentAgent + " stateOfCharge_r: " + stateOfCharge_r + " deltaE: " + deltaEnergy_kWh);
+
 	}
 
 	@Override
@@ -51098,6 +51235,11 @@ public class J_EAConversionDieselGenerator extends J_EAConversion implements Ser
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[ZeroMath.jar]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
