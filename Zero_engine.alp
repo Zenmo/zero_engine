@@ -1075,7 +1075,7 @@ startDate.setYear(p_year-1900);
 getExperiment().getEngine().setStartDate(startDate); 
 
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
+traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -23120,10 +23120,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 						<Name><![CDATA[ea]]></Name>
 						<Type><![CDATA[J_EAConversionDieselGenerator]]></Type>
 					</Parameter>
-					<Body><![CDATA[traceln("v_currentPowerElectricity_kW %s", v_currentPowerElectricity_kW );
-
-
-if (v_currentPowerElectricity_kW > p_connectionCapacity_kW) {
+					<Body><![CDATA[if (v_currentPowerElectricity_kW > p_connectionCapacity_kW) {
 	double powerNeeded_kW = v_currentPowerElectricity_kW - p_connectionCapacity_kW;
 	double efficiency = ea.getEta_r();
 	double capacity_kW = ea.getElectricCapacity_kW();
@@ -45029,8 +45026,8 @@ public void f_operateFlexAssets(){
 f_manageCharging();
 
 if (p_batteryAsset != null){ // TEST CODE
-	f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
-	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	f_batteryManagementWeekend();
+	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	//traceln("flows:" + Arrays.toString(arr));
 }
 /*for( J_EAVehicle v: c_vehicleAssets) {
@@ -45060,6 +45057,63 @@ for (J_EAConversion e : c_conversionAssets) {
 		f_operateDieselGenerator((J_EAConversionDieselGenerator) e);
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1718872970565</Id>
+					<Name><![CDATA[f_batteryManagementWeekend]]></Name>
+					<X>830</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Setpoint SOC to aim for would be 0 on saturday morning and 1 on sunday evening
+
+double currentSOC_fr = p_batteryAsset.getCurrentStateOfCharge();
+traceln("currentSOC_fr %s", currentSOC_fr);
+double electricitySurplus_kW = -v_currentPowerElectricity_kW;
+v_allowedCapacity_kW = p_connectionCapacity_kW*0.9;
+double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+double availableChargePower_kW = connectionCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
+double availableDischargePower_kW = electricitySurplus_kW - connectionCapacity_kW; // Max discharging power within grid capacity
+
+
+/*
+double currentInstalledPV_kWp;
+for (J_EAProduction ea: GC.c_productionAssets) {
+	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		currentInstalledPV_kWp += ea.getCapacityElectric_kW();
+	}
+}
+*/
+
+//double currentInstalledWind;
+int v_startingDayOfWeek = energyModel.v_dayOfWeek1jan;
+double timeOfDay = energyModel.t_h % (24/energyModel.p_timeStep_h);
+
+int dayOfWeek = (int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + v_startingDayOfWeek;
+
+double SOC_setp_fr;
+if (dayOfWeek == 0 || dayOfWeek == 6) {
+	SOC_setp_fr = 1;
+}
+else {
+	SOC_setp_fr = 0;
+}
+
+
+double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+double FeedforwardGain_kWpKw = 0.8; // Feedforward based on current surpluss in Coop
+double chargeOffset_kW = 0; //100; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+double chargeSetpoint_kW = 0;
+chargeSetpoint_kW = FeedforwardGain_kWpKw * (electricitySurplus_kW + chargeOffset_kW) + (SOC_setp_fr - currentSOC_fr) * FeedbackGain_kWpSOC;
+traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
+chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+traceln("chargeSetpoint_kW %s", chargeSetpoint_kW);
+p_batteryAsset.v_powerFraction_fr = 0; //max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -51044,11 +51098,6 @@ public class J_EAConversionDieselGenerator extends J_EAConversion implements Ser
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[ZeroMath.jar]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
