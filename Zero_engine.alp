@@ -1791,7 +1791,8 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1678980746805</Id>
-					<Name><![CDATA[v_netOverloadKPI_pct]]></Name>
+					<Name><![CDATA[v_gridOverloadKPI_pct]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-480</X><Y>940</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2770,7 +2771,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1701965985318</Id>
-					<Name><![CDATA[v_netOverloadDuration_h]]></Name>
+					<Name><![CDATA[v_gridOverloadDuration_h]]></Name>
 					<X>-480</X><Y>960</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5274,7 +5275,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="CollectionVariable">
 					<Id>1716885030303</Id>
 					<Name><![CDATA[c_gridNodeExecutionList]]></Name>
-					<X>300</X><Y>80</Y>
+					<X>300</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5297,6 +5298,21 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GIS_Building]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1718895986988</Id>
+					<Name><![CDATA[c_gridNodeExecutionListReverse]]></Name>
+					<X>300</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridNode]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -5370,6 +5386,7 @@ v_timeStepsElapsed ++;
 				<Event>
 					<Id>1674058522977</Id>
 					<Name><![CDATA[pauseEvent]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>797</X><Y>212</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5813,6 +5830,10 @@ for (EnergyCoop e : pop_energyCoops) {
 	e.f_updateIncentives();
 }
 
+for (GridNode GN : c_gridNodeExecutionListReverse) {
+	GN.f_propagateNodalPricing();
+}
+
 
 /*if (p_parallelize) {
 	c_connectionOwners.parallelStream().forEach(co -> co.f_updateIncentives());	
@@ -5964,7 +5985,7 @@ v_gridNodePeakLoadElectricityHSMS_kW = 0;
 //v_totalElectricityExport_MWh = 0;
 c_timesOfNodePeakLoads_h.clear();
 v_cumulativeGridCapacityHSMS_kW = 0;
-v_netOverloadDuration_h = 0;
+v_gridOverloadDuration_h = 0;
 
 //v_totalHeatProduced_MWh = 0;
 
@@ -5974,10 +5995,10 @@ for(GridNode h : c_gridNodesTopLevel ) {
 	
 	v_totalElectricityImport_MWh += h.v_electricityDrawn_kWh / 1000.0;
 	v_totalElectricityExport_MWh += h.v_electricityDelivered_kWh / 1000.0;
-	c_timesOfNodePeakLoads_h.put(h.p_gridNodeID, h.v_timeOfPeakLoadFiltered_h);
+	//c_timesOfNodePeakLoads_h.put(h.p_gridNodeID, h.v_timeOfPeakLoadFiltered_h);
 	v_cumulativeGridCapacityHSMS_kW += h.p_capacity_kW;
 	
-	v_netOverloadDuration_h += h.v_totalTimeOverloaded_h;
+	v_gridOverloadDuration_h += h.v_totalTimeOverloaded_h;
 }
 
 v_avgNetLoad_fr = sum(c_gridNodesTopLevel, GN->GN.v_averageAbsoluteLoadElectricity_kW)/v_cumulativeGridCapacityHSMS_kW;
@@ -7787,6 +7808,7 @@ for( GridNode GN : pop_gridNodes ) {
 		c_gridNodesNotTopLevel.add(GN);	
 	}
 }
+c_gridNodeExecutionListReverse = c_gridNodeExecutionList;
 Collections.reverse(c_gridNodeExecutionList);
 
 //traceln("Grid Node execution list: %s", c_gridNodeExecutionList );]]></Body>
@@ -10195,9 +10217,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_gridNodeOwnerID]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_energyAssetList]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[b_transportBufferValid]]></Name>
 						</Parameter>
 						<Parameter>
@@ -10220,6 +10239,9 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_uniqueColor]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_localNodalPricingFactor_eurpkWh]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -14227,19 +14249,6 @@ geupdate vanuit
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1688375257135</Id>
-					<Name><![CDATA[v_electricLoadRatioExclBattery]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>50</X><Y>800</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1689233711411</Id>
 					<Name><![CDATA[v_filteredLoadCongestionPricing_kW]]></Name>
 					<X>50</X><Y>690</Y>
@@ -14860,6 +14869,45 @@ geupdate vanuit
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1718895936296</Id>
+					<Name><![CDATA[v_currentLocalNodalPrice_eurpkWh]]></Name>
+					<X>50</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1718895937973</Id>
+					<Name><![CDATA[v_currentTotalNodalPrice_eurpkWh]]></Name>
+					<X>50</X><Y>760</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1718896257049</Id>
+					<Name><![CDATA[v_currentParentNodalPrice_eurpkWh]]></Name>
+					<X>50</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658477613290</Id>
 					<Name><![CDATA[p_gridNodeID]]></Name>
@@ -15039,27 +15087,6 @@ geupdate vanuit
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1676386542136</Id>
-					<Name><![CDATA[p_energyAssetList]]></Name>
-					<X>50</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1676386542134</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1683816606479</Id>
 					<Name><![CDATA[b_transportBufferValid]]></Name>
 					<X>50</X><Y>220</Y>
@@ -15171,7 +15198,7 @@ geupdate vanuit
 					<Id>1707680312891</Id>
 					<Name><![CDATA[p_realCapacityAvailable]]></Name>
 					<Description><![CDATA[This value is set at 'true' if the provided input file of the trafos has a postitive value. If the real world capacity is unknown, the excel input should denote -1. And p_capacity_kW is set at a default value provided bij de excel list.]]></Description>
-					<X>50</X><Y>370</Y>
+					<X>50</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -15229,6 +15256,30 @@ geupdate vanuit
 						<ParameterEditor>
 							<Id>1718566355118</Id>
 							<EditorContolType>COLOR_PICKER</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1718896438696</Id>
+					<Name><![CDATA[p_localNodalPricingFactor_eurpkWh]]></Name>
+					<X>50</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.4]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1718896438694</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -15734,6 +15785,7 @@ for (EnergyCoop e: c_energyCoops){
 					<Id>1666560316436</Id>
 					<Name><![CDATA[f_resetCongestionTariffs]]></Name>
 					<Description><![CDATA[Gridoperator roept deze functie alleen aan als deze node vorige tijdstap congested was maar nu niet meer.]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>780</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15752,6 +15804,7 @@ for (EnergyCoop e: c_energyCoops){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1676387466304</Id>
 					<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>780</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15824,14 +15877,14 @@ if( p_energyAssetList != null) {
 // Low-pass filtered grid load
 //double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
 v_currentLoadElectricityLowPassed_kW += v_lowPassFactor_fr * ( v_currentLoadElectricity_kW - v_currentLoadElectricityLowPassed_kW );
+v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
+v_currentLocalNodalPrice_eurpkWh = v_filteredLoadCongestionPricing_kW / p_capacity_kW * p_localNodalPricingFactor_eurpkWh;
 
 if (energyModel.v_isRapidRun) {
 	if (abs(v_currentLoadElectricityLowPassed_kW) > p_capacity_kW) {
 		//traceln("Overloaded gridNode %s! %s kW", p_gridNodeID, abs(v_currentLoadElectricityLowPassed_kW));
 		v_totalTimeOverloaded_h	+= energyModel.p_timeStep_h;
 	}
-	
-	v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
 	
 	if( abs( v_currentLoadElectricity_kW ) > abs(v_peakLoadAbsoluteElectricity_kW) ) { // store maximum absolute load, but retain sign!
 		v_peakLoadAbsoluteElectricity_kW = ( v_currentLoadElectricity_kW );
@@ -16305,6 +16358,21 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[return this.c_connectedGridConnections;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1718896086734</Id>
+					<Name><![CDATA[f_propagateNodalPricing]]></Name>
+					<X>780</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_currentTotalNodalPrice_eurpkWh = v_currentParentNodalPrice_eurpkWh + v_currentLocalNodalPrice_eurpkWh;
+for (GridNode GN : c_connectedGridNodes ) {
+	GN.v_currentParentNodalPrice_eurpkWh = v_currentTotalNodalPrice_eurpkWh;
+}]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -16956,44 +17024,6 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>HH_mm</LabelFormat>
     			</TimePlot>
-				<Oval>
-					<Id>1698752442733</Id>
-					<Name><![CDATA[oval]]></Name>
-					<X>0</X><Y>0</Y>
-					<Label><X>0</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[//va_LVStation.navigateTo();
-/*
-
-
-Color colorToTrafo = new Color(uniform_discr(0,100), uniform_discr(0,100), uniform_discr(0,100));
-
-for (EA_UtilityObject x : c_connectedUtilityObjects){
-	traceln(x.p_building.gisRegion.getFillColor());
-	x.p_building.v_currentColor = x.p_building.gisRegion.getFillColor();
-	
-	x.p_building.gisRegion.setFillColor(colorToTrafo);
-}
- 
-traceln("Trafo " + this.getIndex());
-
-*/]]></OnClickCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>2</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<RadiusX>6</RadiusX>
-					<RadiusY>40</RadiusY>
-					<Rotation>0.0</Rotation>
-					<FillColor>-16744448</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Oval>
 			</Presentation>
 
 				</Level>
@@ -23218,12 +23248,13 @@ v_currentPowerHydrogen_kW += arr[6] - arr[2];
 v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
 
-//if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
+if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
 	//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
 	//v_currentElectricityConsumption_kW += arr[4];
 	//v_currentElectricityConsumption_kW -= arr[0];
-	//v_currentEnergyConsumption_kW += max(0,arr[9]);
-//} else { // For other assets, 		
+	v_currentEnergyConsumption_kW += max(0,arr[9]);
+	v_currentElectricityConsumption_kW += max(0,arr[9]);
+} else { // For other assets, 		
 	if (caller instanceof J_EAConversionCurtailer) {
 		v_currentEnergyProduction_kW -= max(0,arr[9]);
 		v_currentElectricityProduction_kW -= arr[4];
@@ -23233,7 +23264,7 @@ v_currentPowerDiesel_kW += arr[8];
 		v_currentElectricityConsumption_kW += arr[4];
 		v_currentElectricityProduction_kW += arr[0];
 	}
-//}
+}
 //if ( arr[4] > 0 && arr[3] > arr[4]) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
@@ -37650,7 +37681,7 @@ else {
 	}
 	else {
 		if ( n.v_congested ){
-			n.f_resetCongestionTariffs();
+			n.f_setCongestionTariff(0);
 			n.v_congested = false;
 			n.v_congestionMode = "No congestion atm";
 			n.v_currentCongestionPrice_eurpkWh = 0;
@@ -37916,10 +37947,11 @@ else {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if( energyModel.v_timeStepsElapsed % (1 / energyModel.p_timeStep_h) == 0){
-	v_currentVariableElectricityPrice_eurpMWh = energyModel.tf_dayAheadElectricityPricing_eurpMWh( time(HOUR) + energyModel.p_timeStep_h);
-}
-//traceln("Hello?");]]></Body>
+					<Body><![CDATA[//energyModel.c_gridNodesNotTopLevel.get(0).p_capacity_kW
+//double localBalanceTerm_eurpMWh = 200 * (energyModel.v_totalElectricPower_kW / energyModel.c_gridNodesNotTopLevel.get(0).p_capacity_kW);
+
+v_currentVariableElectricityPrice_eurpMWh = energyModel.tf_dayAheadElectricityPricing_eurpMWh( time(HOUR) + energyModel.p_timeStep_h);
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -39661,7 +39693,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1693300820997</Id>
 					<Name><![CDATA[f_connectTo_J_EA_House]]></Name>
-					<X>970</X><Y>90</Y>
+					<X>960</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -44319,21 +44351,20 @@ if (p_curtailer != null){
 					</Parameter>
 					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//double willingnessToPayDefault_eurpkWh = 0.3;
-	double chargeDischarge_offset_eurpkWh = 0.05;
 	double WTPfeedbackGain_eurpSOC = 0.5; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
-	double priceGain = 2; // How strongly to ramp up power with price-delta's
+	double priceGain_kWhpeur = 3; // How strongly to ramp up power with price-delta's
 	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
 	
 	double chargeSetpoint_kW = 0;	
 	double currentElectricityPriceCharge_eurpkWh;
-	double currentElectricityPriceDischarge_eurpkWh;
+	//double currentElectricityPriceDischarge_eurpkWh;
 	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 		currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW+100.0); // query price at 100kW charging
-		currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW-100.0); // query price at -100kW charging
-	} else { // just get EPEX price
-		currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;
-		currentElectricityPriceDischarge_eurpkWh = currentElectricityPriceCharge_eurpkWh;
+		//currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW-100.0); // query price at -100kW charging
+	} else { // Get EPEX price plus nodal price of GridNode
+		currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;
+		//currentElectricityPriceCharge_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;		
 	}
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 	
@@ -44347,7 +44378,8 @@ if (p_curtailer != null){
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 	
 	
-	double SOC_setp_fr = 0.9 - 3*energyModel.v_electricityYieldForecast_fr;			
+	double SOC_setp_fr = 0.9 - 3*energyModel.v_electricityYieldForecast_fr;	
+	//double SOC_setp_fr = (0.7 + 0.2 * Math.sin(2*Math.PI*(time(HOUR)-18+6)/24))-3*energyModel.v_electricityYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h		
 	/*if (main.v_totalInstalledWindPower_kW > 5000) {
 		SOC_setp_fr = 0.9 - 0.8 * main.v_WindYieldForecast_fr;
 		//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -44364,20 +44396,20 @@ if (p_curtailer != null){
 //	double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
 //	double WTP_discharge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
 	
-	double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 0.5 *(energyModel.v_epexForecast_eurpkWh-currentElectricityPriceCharge_eurpkWh) - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-	double WTP_discharge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 0.5 * (energyModel.v_epexForecast_eurpkWh-currentElectricityPriceCharge_eurpkWh) + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+	double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 0.5*(energyModel.v_epexForecast_eurpkWh - v_electricityPriceLowPassed_eurpkWh) + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+	double WTP_discharge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 0.5*(energyModel.v_epexForecast_eurpkWh - v_electricityPriceLowPassed_eurpkWh) + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
 	
 	
 	//traceln("WTP charge is " + WTP_charge_eurpkWh + " eurpkWh, discharge is " + WTP_discharge_eurpkWh + " eurpkWh");
 	// Choose charging power based on prices and desired SOC level
 	if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) { // if willingness to pay higher than current electricity price
 		//chargeSetpoint_kW = min(p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW)  ;
-		chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain ;
+		chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur ;
 		//traceln("WTP charge " + WTP_charge_eurpkWh + " eurpkWh is high than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so charge!") ;
 	} 
-	else if (WTP_discharge_eurpkWh < currentElectricityPriceDischarge_eurpkWh) {
+	else if (WTP_discharge_eurpkWh < currentElectricityPriceCharge_eurpkWh) {
 		//chargeSetpoint_kW = -min(p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW);
-		chargeSetpoint_kW = -p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain;
+		chargeSetpoint_kW = -p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceCharge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
 		//traceln("WTP discharge " + WTP_discharge_eurpkWh + " eurpkWh is lower than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so discharge!") ;
 	}
 				
@@ -44435,18 +44467,7 @@ if (p_curtailer != null){
 	FeedforwardGain_kWpKw = 0.3; // Feedforward based on current surpluss in Coop
 	FeedbackGain_kWpSOC = 1.5 * 0.6 * p_batteryAsset.getElectricCapacity_kW();
 	double SOC_setp_fr = 0.8;
-	if (energyModel.v_totalInstalledWindPower_kW > energyModel.v_totalInstalledPVPower_kW) {
-		SOC_setp_fr=SOC_setp_fr*(1-0.8*energyModel.v_WindYieldForecast_fr); 
-	} else { //if (energyModel.v_totalInstalledPVPower_kW > 10000) {		// this logic should activate for the buurtelektrificatie-casus	
-		SOC_setp_fr = (0.7 + 0.2 * Math.sin(2*Math.PI*(time(HOUR)-18+6)/24))-3*energyModel.v_SolarYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
-		//traceln("Previous battery power: " + v_previousPowerElectricity_kW + ", previous Coop surpluss: " + currentCoopElectricitySurplus_kW);
-		FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop			
-	}
-	//} else {
-	//	FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop
-	//	SOC_setp_fr = (0.8 + 0.2 * Math.sin(2*Math.PI*(main.t_h-10)/24)); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-	//}
-	//}
+	SOC_setp_fr = (0.7 + 0.2 * Math.sin(2*Math.PI*(time(HOUR)-18+6)/24))-3*energyModel.v_electricityYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
 	
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
@@ -47433,9 +47454,6 @@ public void f_operateFixedAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_gisRegion]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
