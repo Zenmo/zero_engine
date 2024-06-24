@@ -10392,13 +10392,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -10477,6 +10477,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11330,13 +11333,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -11449,6 +11452,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11552,13 +11558,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -11640,6 +11646,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11744,13 +11753,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -11829,6 +11838,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11936,13 +11948,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -12055,6 +12067,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12161,13 +12176,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -12243,6 +12258,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12347,13 +12365,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -12432,6 +12450,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12536,13 +12557,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -12621,6 +12642,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12941,13 +12965,13 @@ v_timeStepsElapsed ++;
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
+							<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+							<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+							<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -13023,6 +13047,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -17169,7 +17196,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1668370002883</Id>
 					<Name><![CDATA[v_additionalTimeSpreadCharging_MIN]]></Name>
 					<Description><![CDATA[In the charging attitude MAX_SPREAD the vehicles can be planned to be full some time before their actual departure. ]]></Description>
-					<X>250</X><Y>260</Y>
+					<X>250</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17601,7 +17628,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1692972667627</Id>
 					<Name><![CDATA[v_hasPV]]></Name>
-					<X>250</X><Y>280</Y>
+					<X>250</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19967,7 +19994,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1668981435974</Id>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 					<X>250</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19992,7 +20019,8 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1668981451986</Id>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
+					<Description><![CDATA[Extra capacity available during weekends]]></Description>
 					<X>250</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20017,7 +20045,8 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1668981461541</Id>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
+					<Description><![CDATA[Extra capacity available during weekdays during the day (8:00 - 20:00)]]></Description>
 					<X>250</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20575,6 +20604,32 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<ParameterEditor>
 							<Id>1717160783029</Id>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1719222254691</Id>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+					<Description><![CDATA[Extra capacity available during weekdays during the evening and night (20:00 - 08:00)]]></Description>
+					<X>250</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0
+]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1719222254689</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -21351,6 +21406,10 @@ v_batteryPowerElectric_kW = 0;
 v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
+
+if (p_ownerID.equals("PreZero")) {
+	f_updateConnectionCapacityNFATO();
+}
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
 c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
@@ -23142,6 +23201,49 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 		v_maximumDieselGeneratorPowerDelivered_kW = max(powerNeeded_kW, v_maximumDieselGeneratorPowerDelivered_kW);
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1719223048358</Id>
+					<Name><![CDATA[f_updateConnectionCapacityNFATO]]></Name>
+					<Description><![CDATA[Updates the Connection Capacity of the GC (and GN ?) depending on the time of day / day of week.]]></Description>
+					<X>1120</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Need to manually set the p_baseConnectionCapacity, which is done in E-Hub settings.
+// can't use l_parentNodeElectric as it was disconnected when switching to new GridNode layout
+GridNode GN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(p_parentNodeElectricID));
+/*
+if (energyModel.v_timeStepsElapsed == 0.0) {
+	traceln("first timestep:");
+	traceln("p_connectionCapacity_kW: %s", p_connectionCapacity_kW);
+	p_baseConnectionCapacity = p_connectionCapacity_kW;
+}
+*/
+
+int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+//traceln("day of week: %s", dayOfWeek);
+if (dayOfWeek == 0 || dayOfWeek == 6) {
+	p_connectionCapacity_kW = p_baseConnectionCapacity_kW + p_nfatoWeekend_kW;
+}
+else {
+	double timeOfDay = energyModel.t_h % 24;
+	//traceln("time of day: %s", timeOfDay);
+	if (timeOfDay < 20 && timeOfDay > 8) {
+		p_connectionCapacity_kW = p_baseConnectionCapacity_kW + p_nfatoWeekDay_kW;
+	}
+	else {
+		p_connectionCapacity_kW = p_baseConnectionCapacity_kW + p_nfatoWeekNight_kW;
+	}
+}
+
+// The only one on this gridnode is this GC
+GN.p_capacity_kW = p_connectionCapacity_kW;
+
+//traceln("p_connectionCapacity_kW %s", p_connectionCapacity_kW);]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -37810,13 +37912,13 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -37895,6 +37997,9 @@ public void f_simpleCharging(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -39747,13 +39852,13 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -39832,6 +39937,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -40938,13 +41046,13 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -41023,6 +41131,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -41439,13 +41550,13 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -41521,6 +41632,9 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -43044,13 +43158,13 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -43129,6 +43243,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -43752,13 +43869,13 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -43837,6 +43954,9 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -44840,13 +44960,13 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -44922,6 +45042,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -45144,7 +45267,7 @@ if (dayOfWeek == 6 && timeOfDay == 0.0) { // Friday at midnight, we determine ou
 	double expectedSolar_kWh = currentInstalledPV_kWp * twoDayForecast * 48;
 	//traceln("expectedSolar_kWh: %s", expectedSolar_kWh);
 	
-	// Somehow need to add a check to see if the solar production is within the electric capacity
+	// Still need to add a check to see if the solar production is within the electric capacity of battery asset
 	if ((1 - currentSOC_fr)*batteryStorageCapacity_kWh > expectedSolar_kWh) { // We hope the current soc is zero
 		// Solar power won't cut it, we need some extra power from the grid
 		double extraNeeded_kWh = (1- currentSOC_fr)*batteryStorageCapacity_kWh - expectedSolar_kWh;
@@ -45164,21 +45287,29 @@ if (p_batteryOperationMode == WEEKEND_SPREAD) {
 }
 
 if (dayOfWeek == 6 || dayOfWeek == 0) {
-
 	double power_fr = (v_pvProductionElectric_kW + v_extraBatteryChargingWeekend_kW) / batteryElectricCapacity_kW;
 	//traceln("power_fr: %s", power_fr);
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
 }
 else {
-	if (p_batteryOperationMode == WEEKEND) {
-		double power_fr = (electricitySurplus_kW + p_connectionCapacity_kW) / batteryElectricCapacity_kW;
+	if ((p_connectionCapacity_kW + electricitySurplus_kW) > 0) {
+		// We can actually charge during the week!
+		double power_fr = min(v_allowedCapacity_kW + electricitySurplus_kW, batteryElectricCapacity_kW) / batteryElectricCapacity_kW;
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
 	}
-	else { // WEEKEND_SPREAD
-		double power_fr = v_batteryDischargingWeek_kW / batteryElectricCapacity_kW;
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
-	
+	else { // Discharge	
+		if (p_batteryOperationMode == WEEKEND) {
+			double power_fr = (electricitySurplus_kW + p_connectionCapacity_kW) / batteryElectricCapacity_kW;
+			// max(-1,min(0, x)) instead of max(-1,min(1, x)) so that we only discharge
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(0, power_fr));
+		}
+		else { // WEEKEND_SPREAD (still needs a check with elec surplus and connection capacity) 
+			double power_fr = min(v_batteryDischargingWeek_kW, v_currentPowerElectricity_kW - p_connectionCapacity_kW) / batteryElectricCapacity_kW;
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(0, power_fr));
+		}
 	}
+//traceln("v_powerFraction_fr: %s", p_batteryAsset.v_powerFraction_fr);
+
 /*
 	double SOC_setp_fr = 0;
 	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
@@ -46429,13 +46560,13 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -46511,6 +46642,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -46875,13 +47009,13 @@ public void f_operateFixedAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
+					<Name><![CDATA[p_baseConnectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+					<Name><![CDATA[p_nfatoWeekend_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+					<Name><![CDATA[p_nfatoWeekDay_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -46957,6 +47091,9 @@ public void f_operateFixedAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
