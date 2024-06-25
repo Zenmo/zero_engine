@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -8435,7 +8435,7 @@ f_initializeForecasts();]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(GridBatteries, x->max(0,x.v_batteryPowerElectric_kW))]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -8555,7 +8555,7 @@ f_initializeForecasts();]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(GridBatteries, x->-min(0,x.v_batteryPowerElectric_kW))]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -22087,6 +22087,7 @@ f_resetSpecificGCStates();
 					<Body><![CDATA[//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double electricitySurplus_kW = - v_currentPowerElectricity_kW; // still excludes battery power
+	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
 	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
 	v_allowedCapacity_kW = p_connectionCapacity_kW*0.9;
 	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
@@ -22104,7 +22105,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
 	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.8; // Feedforward based on current surpluss in Coop
-	double chargeOffset_kW = 100; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (electricitySurplus_kW + chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
@@ -23998,7 +23999,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[min(0, -v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0, -v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -38824,7 +38825,8 @@ if( p_batteryAsset != null){
 		default:
 		break;
 	}
-	v_batteryPowerElectric_kW =  p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	v_batteryPowerElectric_kW =  arr[4] - arr[0];
 	//v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
