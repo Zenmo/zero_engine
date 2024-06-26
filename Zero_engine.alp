@@ -48242,10 +48242,10 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
     	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
 
-    	inputPower_kW = -deltaEnergy_kWh / timestep_h;
+    	inputPower_kW = deltaEnergy_kWh / timestep_h;
 
-		methaneProduction_kW = max(inputPower_kW, 0);
-		methaneConsumption_kW = max(-inputPower_kW, 0);
+		methaneProduction_kW = max(-inputPower_kW, 0);
+		methaneConsumption_kW = max(inputPower_kW, 0);
 		discharged_kWh += methaneProduction_kW * timestep_h;
 		charged_kWh += methaneConsumption_kW * timestep_h;
 		
