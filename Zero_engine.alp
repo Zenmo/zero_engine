@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -4595,7 +4595,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1663577621791</Id>
@@ -15545,7 +15545,6 @@ v_currentLoadHydrogen_kW = 0;
 v_currentLoadHeat_kW = 0;
 
 // determine the net energy flows from all subconnections by nodetype
-
 for( GridNode GN : c_connectedGridNodes ) {
 	switch(p_energyType) {
 		case ELECTRICITY:
@@ -15586,7 +15585,6 @@ for( GridConnection GC : c_connectedGridConnections) {
 		break;
 	}
 }
-
 
 /*if( p_energyType == OL_EnergyCarrierType.ELECTRICITY ){
 	v_electricLoadRatioExclBattery = v_currentLoadElectricity_kW / p_capacity_kW;
@@ -15649,7 +15647,7 @@ if (energyModel.v_isRapidRun){
 	// Profile Data
 	// Year
 	if (energyModel.t_h % 1 == 0) {
-	data_electricityLoadYear_kW.add(energyModel.t_h, v_currentLoadElectricity_kW);
+		data_electricityLoadYear_kW.add(energyModel.t_h, v_currentLoadElectricity_kW);
 	}
 	// SummerWeek
 	if (energyModel.t_h > energyModel.p_startHourSummerWeek && energyModel.t_h <= energyModel.p_startHourSummerWeek+24*7) {
@@ -15812,6 +15810,7 @@ if( p_energyAssetList != null) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[f_sumLoads();
+
 // Low-pass filtered grid load
 //double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
 v_currentLoadElectricityLowPassed_kW += v_lowPassFactor_fr * ( v_currentLoadElectricity_kW - v_currentLoadElectricityLowPassed_kW );
@@ -15831,17 +15830,17 @@ if (energyModel.v_isRapidRun) {
 	
 	if( abs( v_currentLoadElectricityLowPassed_kW ) > abs(v_peakLoadFilteredElectricity_kW) ) { // store maximum absolute load, but retain sign!
 		v_peakLoadFilteredElectricity_kW = ( v_currentLoadElectricityLowPassed_kW );
-		v_timeOfPeakLoadFiltered_h = time(HOUR);
+		v_timeOfPeakLoadFiltered_h = energyModel.t_h;
 	}
 	
 	if( v_currentLoadElectricityLowPassed_kW < v_peakNegLoadElectricity_kW ) { // store peak negative load and time
 		v_peakNegLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
-		v_timeOfPeakNegLoadFiltered_h = time(HOUR);
+		v_timeOfPeakNegLoadFiltered_h = energyModel.t_h;
 	}
 	
 	if( v_currentLoadElectricityLowPassed_kW > v_peakPosLoadElectricity_kW ) { // store peak positive load and time
 		v_peakPosLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
-		v_timeOfPeakPosLoadFiltered_h = time(HOUR);
+		v_timeOfPeakPosLoadFiltered_h = energyModel.t_h;
 	}
 	
 }
@@ -16229,8 +16228,12 @@ for (GridNode GN : c_connectedGridNodes) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
-]]></Body>
+					<Body><![CDATA[if ((v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW) == 0) {
+	v_electricityYieldForecast_fr = 0;
+}
+else {
+	v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -22136,7 +22139,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double SOC_setp_fr = 0.5;
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	if (!c_vehicleAssets.isEmpty()) {
-		SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+		SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { // Look at weather forecast to charge/discharge battery
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -22189,7 +22192,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		double SOC_setp_fr = 0.5;
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
-			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { 
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -22532,7 +22535,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		
 		double chargeSetpoint_kW = 0;
 
-		if ( time(MINUTE) >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+		if ( energyModel.t_h*60 >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
 			//traceln("Urgency charging! May exceed connection capacity!");
 			chargeSetpoint_kW = maxChargingPower_kW;				
 		} else if ( vehicle.getCurrentStateOfCharge() < 0.15 ) {
@@ -22672,7 +22675,7 @@ if (j_ea instanceof J_EAVehicle) {
 		if (p_cookingTracker == null) {
 			//traceln("Adding cookingTracker to house" + this);
 			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, time(MINUTE), (J_EAConversion)j_ea );			
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
@@ -22787,7 +22790,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		double V2G_WTR_offset_eurpkWh = 0.05;
 		double chargeSetpoint_kW = 0;
 
-		if ( time(MINUTE) >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+		if ( energyModel.t_h*60 >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
 			//traceln("Urgency charging! May exceed connection capacity!");
 			chargeSetpoint_kW = maxChargingPower_kW;				
 		} else if ( vehicle.getCurrentStateOfCharge() < 0.15 ) {
@@ -23100,6 +23103,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 					</Parameter>
 					<Body><![CDATA[// This function is called from each energy asset when its method f_updateAllFlows() is called!
 // {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
+
 v_currentPowerElectricity_kW += arr[4] - arr[0];
 v_currentPowerMethane_kW += arr[5] - arr[1];
 v_currentPowerHydrogen_kW += arr[6] - arr[2];
@@ -37808,7 +37812,7 @@ else {
 					<Body><![CDATA[//energyModel.c_gridNodesNotTopLevel.get(0).p_capacity_kW
 //double localBalanceTerm_eurpMWh = 200 * (energyModel.v_totalElectricPower_kW / energyModel.c_gridNodesNotTopLevel.get(0).p_capacity_kW);
 
-v_currentVariableElectricityPrice_eurpMWh = energyModel.tf_dayAheadElectricityPricing_eurpMWh( time(HOUR) + energyModel.p_timeStep_h);
+v_currentVariableElectricityPrice_eurpMWh = energyModel.tf_dayAheadElectricityPricing_eurpMWh( energyModel.t_h + energyModel.p_timeStep_h);
 ]]></Body>
 				</Function>
 			</Functions>
@@ -38642,7 +38646,6 @@ setHeatingTargetTemp();
 if ( p_BuildingThermalAsset!= null ) {
 	v_currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
 }
-
 // CASE: ONE HEATING ASSET --------------------------------------------------------------------------------------------------------------------------------------------
 if ( p_secondaryHeatingAsset == null && p_primaryHeatingAsset != null) {
 
@@ -38680,7 +38683,7 @@ if ( p_secondaryHeatingAsset == null && p_primaryHeatingAsset != null) {
 
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities(time(MINUTE)); // also calls f_updateAllFlows in HOB asset	
+	p_cookingTracker.manageActivities(energyModel.t_h*60); // also calls f_updateAllFlows in HOB asset	
 	v_electricHobConsumption_kW += p_cookingTracker.HOB.electricityConsumption_kW; // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
 	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = p_cookingTracker.HOB.heatProduction_kW;
@@ -39203,7 +39206,7 @@ v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_householdEV.el
 					<Id>1675034695162</Id>
 					<Name><![CDATA[f_determineChargingDemandOfEV]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>800</X><Y>480</Y>
+					<X>810</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39223,7 +39226,7 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 		if ( chargeNeedForNextTrip_kWh == 0) { 
 			p_householdEV.chargingNeed = OL_EVChargingNeed.LOW;
 		}
-		else if (time(MINUTE) < chargeDeadline_min ){
+		else if (energyModel.t_h*60 < chargeDeadline_min ){
 			//traceln(time(MINUTE) + ", " + chargeDeadline_min);
 			//traceln(chargeNeedForNextTrip_kWh);
 			p_householdEV.chargingNeed = OL_EVChargingNeed.MEDIUM;
@@ -39510,7 +39513,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 		double SOC_setp_fr = 0.5;
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
-			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) {
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -41408,7 +41411,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
 				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 			} else {
-				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 			}
 			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
 			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
@@ -42333,7 +42336,7 @@ if (p_curtailer != null){
 				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
 				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 			} else {
-				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 			}
 			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
 			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
@@ -44238,9 +44241,8 @@ if (p_curtailer != null){
 	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 	
-	
 	double SOC_setp_fr = 0.9 - 3*GN.v_electricityYieldForecast_fr;	
-	//SOC_setp_fr = (0.5 + 0.4 * Math.cos(2*Math.PI*(time(HOUR)-18)/24))*(1-3*GN.v_electricityYieldForecast_fr); // Sinusoidal setpoint: aim for high SOC at 18:00h		
+	//SOC_setp_fr = (0.5 + 0.4 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24))*(1-3*GN.v_electricityYieldForecast_fr); // Sinusoidal setpoint: aim for high SOC at 18:00h		
 	//SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(main.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	
 	double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge_fr;
@@ -44260,8 +44262,10 @@ if (p_curtailer != null){
 	}*/
 	
 	double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 1.0*(energyModel.v_epexForecast_eurpkWh - v_electricityPriceLowPassed_eurpkWh) + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+
+
 	chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur ;
-					
+	
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
 }]]></Body>
@@ -44316,7 +44320,7 @@ if (p_curtailer != null){
 	FeedforwardGain_kWpKw = 0.3; // Feedforward based on current surpluss in Coop
 	FeedbackGain_kWpSOC = 1.5 * 0.6 * p_batteryAsset.getElectricCapacity_kW();
 	double SOC_setp_fr = 0.8;
-	SOC_setp_fr = (0.5 + 0.4 * Math.sin(2*Math.PI*(time(HOUR)-18)/24))-3*GN.v_electricityYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
+	SOC_setp_fr = (0.5 + 0.4 * Math.sin(2*Math.PI*(energyModel.t_h-18)/24))-3*GN.v_electricityYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
 	
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
@@ -45124,7 +45128,7 @@ public void f_operateFlexAssets(){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698936515692</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>800</X><Y>220</Y>
+					<X>820</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
