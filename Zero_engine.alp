@@ -47401,6 +47401,23 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
+		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
+		double difference_kW = capacityElectric_kW - this.capacityElectric_kW;
+		if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {			
+			((GridConnection) this.parentAgent).v_totalInstalledWindPower_kW += difference_kW;
+			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
+				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += difference_kW;
+			}
+			((GridConnection) this.parentAgent).energyModel.v_totalInstalledWindPower_kW += difference_kW;
+		}
+		else if (this.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && this.parentAgent instanceof GridConnection) {
+			((GridConnection) this.parentAgent).v_totalInstalledPVPower_kW += difference_kW;
+			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
+				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += difference_kW;
+			}
+			((GridConnection) this.parentAgent).energyModel.v_totalInstalledPVPower_kW += difference_kW;
+		}
+
 		this.capacityElectric_kW = capacityElectric_kW;
 	}
 	
