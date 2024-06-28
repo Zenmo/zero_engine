@@ -23315,7 +23315,10 @@ if (j_ea instanceof J_EAVehicle) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.remove((J_EAProduction)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_hasPV = false; // Should check if there exists other PV assets on this GC
+		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
+		if (otherPV == null) {
+			v_hasPV = false;
+		}
 		v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
 			l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
