@@ -1034,6 +1034,14 @@
 				<Id>1718560423700</Id>
 				<Name><![CDATA[CHARGING]]></Name>
 			</Option>
+			<Option>
+				<Id>1718713672051</Id>
+				<Name><![CDATA[WINDTURBINE]]></Name>
+			</Option>
+			<Option>
+				<Id>1718713684483</Id>
+				<Name><![CDATA[SOLARPANELS]]></Name>
+			</Option>
 		</OptionList>
 	</OptionLists>
 	<ActiveObjectClasses>
@@ -6114,13 +6122,13 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
 	
-	if( ea instanceof J_EAEV ) {
+	/*if( ea instanceof J_EAEV ) {
 		J_EAEV e = (J_EAEV)ea;
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
 		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
-	}
+	}*/
 }
 
 /*
@@ -12695,7 +12703,6 @@ f_initializeForecasts();]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<PresentationId>1717960182626</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
 						<ClassName><![CDATA[GCPublicCharger]]></ClassName>
@@ -13519,25 +13526,6 @@ f_initializeForecasts();]]></Body>
 
 
 				</Level>
-				<EmbeddedObjectPresentation>
-					<Id>1717960182626</Id>
-					<Name><![CDATA[PublicChargers_presentation]]></Name>
-					<X>190</X><Y>660</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
-					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-					<Latitude>0.0</Latitude>
-					<Longitude>0.0</Longitude>
-				</EmbeddedObjectPresentation>
 			</Presentation>
 			<Areas>
 				<Area>
@@ -21686,17 +21674,13 @@ c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
 //if (p_energyProfile != null & p_company_connection_id != null) {
 for(J_EAProfile e : c_profileAssets) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.t_h );		
-		//v_fixedConsumptionElectric_kW += flowsArray[4];
-		if (e.energyAssetName.contains("wind")) { // Specific for WindUnie windprofiles!! Should find a better solution for this!
-			v_windProductionElectric_kW += flowsArray[0]; 
-		}
 		if (e.profileType == OL_ProfileAssetType.CHARGING){
 			v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-		}
-		else if( e.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
+		} else if( e.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
 			v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
-		}
-		else {
+		} else if( e.profileType == OL_ProfileAssetType.WINDTURBINE){
+			v_windProductionElectric_kW += flowsArray[0];
+		} else {
 			traceln( "Profile type is not registered in GridConnection");
 		}
 }
@@ -21705,25 +21689,20 @@ for(J_EAProduction e : c_productionAssets) {
 	if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentSolarPowerNormalized_r );
 		v_pvProductionElectric_kW += flowsArray[0];	
-	}
-	else if(e.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+	} else if(e.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentWindPowerNormalized_r );
 		v_windProductionElectric_kW += flowsArray[0];	
-	}
-	else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATHT ) {
+	} else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATHT ) {
 		e.v_powerFraction_fr = 1;
 		e.f_updateAllFlows( e.v_powerFraction_fr );
-	}
-	else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATLT ) {
+	} else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATLT ) {
 		//e.v_powerFraction_fr = 0;
 		e.f_updateAllFlows( 0 );
-	}
-	else if( e.energyAssetType == OL_EnergyAssetType.LIVESTOCK ) {
+	} else if( e.energyAssetType == OL_EnergyAssetType.LIVESTOCK ) {
 		e.v_powerFraction_fr = 1.0/8760;
 		e.f_updateAllFlows( e.v_powerFraction_fr );
 		//traceln("Methane production of livestock: " + e.v_currentProductionMethane_kW);
-	}
-	else {
+	} else {
 		traceln("ProductionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 		e.v_powerFraction_fr = 0;
 		throw new IllegalStateException("ProductionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
@@ -23067,12 +23046,12 @@ v_currentPowerHydrogen_kW += arr[6] - arr[2];
 v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
 
-if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
+//if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
 	//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
 	//v_currentElectricityConsumption_kW += arr[4];
 	//v_currentElectricityConsumption_kW -= arr[0];
-	v_currentEnergyConsumption_kW += max(0,arr[9]);
-} else { // For other assets, 		
+	//v_currentEnergyConsumption_kW += max(0,arr[9]);
+//} else { // For other assets, 		
 	if (caller instanceof J_EAConversionCurtailer) {
 		v_currentEnergyProduction_kW -= max(0,arr[9]);
 		v_currentElectricityProduction_kW -= arr[4];
@@ -23082,7 +23061,7 @@ if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { /
 		v_currentElectricityConsumption_kW += arr[4];
 		v_currentElectricityProduction_kW += arr[0];
 	}
-}
+//}
 //if ( arr[4] > 0 && arr[3] > arr[4]) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
@@ -23406,9 +23385,6 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Reset dataset after rapid run
 
-if (p_ownerID.equals("Post NL / Valid Express") || p_ownerID.equals("HAVI logistics BV") ) {
-	traceln("Hydrogen left in GC " + p_ownerID + " = " + v_hydrogenInStorage_kWh);
-}
 v_hydrogenInStorage_kWh = 0;
 
 //Reset specificGC states after rapid run
@@ -24029,7 +24005,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
     			<DataSet>
 					<Id>1708508354305</Id>
 					<Name><![CDATA[data_totalSupply_kW]]></Name>
-					<X>150</X><Y>2040</Y>
+					<X>150</X><Y>2020</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25003,7 +24979,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
     			<DataSet>
 					<Id>1715675213282</Id>
 					<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
-					<X>150</X><Y>2000</Y>
+					<X>330</X><Y>2000</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47560,8 +47536,8 @@ public class J_EAStorage extends J_EA implements Serializable {
     	return returnEnergyFlows();
     }
 
-    protected void updateStateOfCharge( double flow_kW ) {
-		stateOfCharge_r = ( (stateOfCharge_r * storageCapacity_kWh) - flow_kW * timestep_h ) / storageCapacity_kWh;
+	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
+		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 	
     @Override
@@ -48224,8 +48200,9 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
-	private double lossFactor_r = 0;
 	
+	private double etaCharge_r; // charging efficiency
+	private double etaDischarge_r;
     /**
      * Default constructor
      */
@@ -48242,37 +48219,58 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
+		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
+		this.etaCharge_r = Math.sqrt(eta_r);
+		this.etaDischarge_r = Math.sqrt(eta_r);
 		registerEnergyAsset();
     }
 
 	@Override
-	public void calculateLoss() {
-		//no loss for electric batteries modeled yet.
-		energyUse_kW = 0;
-		energyUsed_kWh += energyUse_kW * timestep_h;
-	}
-
-	@Override
 	public double[] operate(double ratioOfChargeCapacity_r) {
-    	double discharge_kW = 0;
-    	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
-    	//double sign = ratioOfChargeCapacity_r / abs( ratioOfChargeCapacity_r ); // charge or discharge
+    	double inputPower_kW = ratioOfChargeCapacity_r * capacityElectric_kW; // Electric power going into battery, before losses.
+    	double deltaEnergy_kWh;   // The change in energy stored in the battery this timestep ('internal' energy)
+    	
+    	// charging/discharging losses
+    	if (inputPower_kW > 0) { // charging (the battery 'consumes' electricity)
+    		deltaEnergy_kWh = etaCharge_r * inputPower_kW * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is smaller than inputPower_kW * timestep_h!
+    	} else { // discharging (the battery 'produces' electricity)
+    		deltaEnergy_kWh = inputPower_kW / etaDischarge_r * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is larger than inputPower_kW * timestep_h!
+    	}
 
-    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * capacityElectric_kW * timestep_h ) ;
+    	// Limit SoC to feasible range (0-1)
     	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
-
-		discharge_kW = -deltaEnergy_kWh / timestep_h;
-
-		electricityProduction_kW = max(discharge_kW, 0);
-		electricityConsumption_kW = max(-discharge_kW, 0);
-		discharged_kWh += electricityProduction_kW * timestep_h;
-		charged_kWh += electricityConsumption_kW * timestep_h;
+    	
+    	if (deltaEnergy_kWh > 0) { // charging, deltaEnergy_kWh and inputPower_kW positive
+    		inputPower_kW = deltaEnergy_kWh / timestep_h / etaCharge_r;
+    		electricityConsumption_kW = inputPower_kW;
+    		electricityProduction_kW = 0;
+    		energyUse_kW = (1-etaCharge_r)*inputPower_kW;    		
+    	} else { // discharging, deltaEnergy_kWh and inputPower_kW negative
+    		inputPower_kW = deltaEnergy_kWh / timestep_h * etaDischarge_r;
+    		electricityConsumption_kW = 0;
+    		electricityProduction_kW = -inputPower_kW; 
+    		energyUse_kW = -deltaEnergy_kWh / timestep_h * (1-etaDischarge_r);
+    	}
+    	energyUsed_kWh += energyUse_kW * timestep_h;
+    	
+		discharged_kWh += electricityProduction_kW * timestep_h; // Not the change-in-SoC, but the energy flowing out of the battery after losses.
+		charged_kWh += electricityConsumption_kW * timestep_h; // Not the change-in-SoC, but the energy flowing into the battery before losses.
 		
-		updateStateOfCharge( discharge_kW );
-		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
-    	//return arr;
+		updateStateOfCharge( deltaEnergy_kWh );
+		//traceln("Battery SoC: %s", stateOfCharge_r);
 		return returnEnergyFlows();
+	}
+	
+	public void setBatteryEfficiency_r(double eta_r) {
+		if (eta_r < 0 || eta_r > 1) {
+			traceln("Infeasible eta_r! Should be larger than 0 and no larger than 1! Setting eta_r=1. Input value is: %s", eta_r);
+			this.etaCharge_r = 1;			
+			this.etaDischarge_r = 1;
+		} else {
+			this.etaCharge_r = Math.sqrt(eta_r);			
+			this.etaDischarge_r = Math.sqrt(eta_r);
+		}		
 	}
 
 	@Override
@@ -48289,8 +48287,8 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	}
 
 	@Override
-	protected void updateStateOfCharge( double discharge_kW ) {
-		stateOfCharge_r -= ( discharge_kW * timestep_h ) / storageCapacity_kWh;
+	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
+		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 
 	@Override
@@ -48380,22 +48378,21 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 
 	@Override
 	public double[] operate(double ratioOfChargeCapacity_r) {
-    	double discharge_kW = 0;
     	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
-    	//double sign = ratioOfChargeCapacity_r / abs( ratioOfChargeCapacity_r ); // charge or discharge
+    	double inputPower_kW = ratioOfChargeCapacity_r * capacityGas_kW; // Gas power going into Storage, negative if going out.
 
-    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * capacityGas_kW * timestep_h ) ;
+    	deltaEnergy_kWh = inputPower_kW * timestep_h;
     	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
 
-		discharge_kW = -deltaEnergy_kWh / timestep_h;
+    	inputPower_kW = deltaEnergy_kWh / timestep_h;
 
-		methaneProduction_kW = max(discharge_kW, 0);
-		methaneConsumption_kW = max(-discharge_kW, 0);
+		methaneProduction_kW = max(-inputPower_kW, 0);
+		methaneConsumption_kW = max(inputPower_kW, 0);
 		discharged_kWh += methaneProduction_kW * timestep_h;
 		charged_kWh += methaneConsumption_kW * timestep_h;
 		
-		updateStateOfCharge( discharge_kW );
+		updateStateOfCharge( deltaEnergy_kWh );
 		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
     	//return arr;
 		return returnEnergyFlows();
@@ -48414,8 +48411,8 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	}
 
 	@Override
-	protected void updateStateOfCharge( double discharge_kW ) {
-		stateOfCharge_r -= ( discharge_kW * timestep_h ) / storageCapacity_kWh;
+	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
+		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 
 	@Override
@@ -48508,15 +48505,15 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	@Override
 	public void calculateLoss() {
 		double heatLoss_W = lossFactor_WpK * ( temperature_degC - ambientTemperature_degC );
-		energyUse_kW = heatLoss_W;
-		double energyLoss_kWh = ( heatLoss_W / 1000 ) * timestep_h;
-		double tempDelta = - energyLoss_kWh / (heatCapacity_JpK / 3.6E6 );
-		energyUsed_kWh += energyLoss_kWh;
+		double deltaEnergy_kWh = ( -heatLoss_W / 1000 ) * timestep_h;
+		energyUse_kW = heatLoss_W / 1000;
+		energyUsed_kWh += energyUse_kW * timestep_h;
 		//traceln("Ambient temperature " + ambientTemperature_degC);
 		//traceln("heatCapacity JpK " + heatCapacity_JpK );
 		//traceln("tempdelta loss"+tempDelta);
 		//traceln("lossfacter: " + lossFactor_WpK);
-		updateStateOfCharge( tempDelta );
+		
+		updateStateOfCharge( deltaEnergy_kWh );
 	}
 
 	@Override
@@ -48525,32 +48522,29 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 		
-		calculateLoss(); // Updates
+		calculateLoss(); // Heat lost to the environment; this call also updates energyUse_kW and the 'state of charge' (temperature).
 
-		double discharge_kW = 0;
-    	double energyDelta_kWh = 0;   // to check the request with the energy currently in storage
-    	double deltaTemp_degC;
+		double inputPower_kW = ratioOfChargeCapacity_r * capacityHeat_kW; // positive power means lowering the buffer temperature!
+    	double deltaEnergy_kWh = inputPower_kW * timestep_h; // to check the request with the energy currently in storage
+
     	//double sign = ratioOfChargeCapacity_r / abs( ratioOfChargeCapacity_r ); // charge or discharge
-
-    	energyDelta_kWh = ( ratioOfChargeCapacity_r * capacityHeat_kW * timestep_h );
     	//traceln("capacityHeat_kW " + capacityHeat_kW);
-    	deltaTemp_degC = energyDelta_kWh / (heatCapacity_JpK / 3.6E6 );
+    	//deltaTemp_degC = deltaEnergy_kWh / (heatCapacity_JpK / 3.6E6 );
     	//traceln("tempdelta charge uncapped: "+deltaTemp_degC);
     	//deltaTemp_degC = max( deltaTemp_degC, minTemperature_degC - temperature_degC ); // Is deze functionaliteit nodig in de heatbuffer? Kan op zich geen kwaad... zal als het goed is niet aangesproken worden
     	//deltaTemp_degC = min( deltaTemp_degC, (maxTemperature_degC - temperature_degC ) ); // Is deze functionaliteit nodig in de heatbuffer?
 
-		//double tempDelta = - energy;   // positieve energielevering verlaagt buffertemperatuur!
+		//double tempDelta = - energy;   
 		//energy = energy * (heatCapacity_JpK / 3.6E6 );
-		discharge_kW = - deltaTemp_degC *  (heatCapacity_JpK / 3.6E6) / timestep_h; // positieve energielevering verlaagt buffertemperatuur!
 
-		heatProduction_kW = max(discharge_kW, 0);
-		heatConsumption_kW = max(-discharge_kW, 0);
+		heatProduction_kW = max(-inputPower_kW, 0);
+		heatConsumption_kW = max(inputPower_kW, 0);
 		heatProduced_kWh += heatProduction_kW * timestep_h;
 		heatConsumed_kWh += heatConsumption_kW * timestep_h;
 		//traceln("tempdelta charge: "+deltaTemp_degC);
 		//traceln(">> Heat storage heatproduction = "+ heatProduced_kWh + ", heatconsumption_kW = "+ heatConsumption_kW +" heatConsumed_kWh = "+ heatConsumed_kWh +", heatProduced_kWh = "+ heatProduced_kWh );
 		
-		updateStateOfCharge( deltaTemp_degC );
+		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 
 		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
@@ -48578,7 +48572,8 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	}
 
 	@Override
-	protected void updateStateOfCharge( double tempDelta_degC ) {
+	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
+		double tempDelta_degC = deltaEnergy_kWh / (heatCapacity_JpK / 3.6E6 );
 		temperature_degC += tempDelta_degC;
 		stateOfCharge_r = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 		if (temperature_degC < setTemperature_degC) {
@@ -48709,23 +48704,21 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	@Override
 	public void calculateLoss() {
 		double heatLoss_W = lossFactor_WpK * ( temperature_degC - ambientTemperature_degC );
+		double deltaEnergy_kWh = ( -heatLoss_W / 1000 ) * timestep_h;
 		energyUse_kW = ( heatLoss_W / 1000 );
-		double deltaTemp_degC = - energyUse_kW * timestep_h / (heatCapacity_JpK / 3.6E6 );
 		energyUsed_kWh += max(0,energyUse_kW * timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
-		energyAbsorbed_kWh +=max(0,-energyUse_kW * timestep_h); // Only heat gain when outside is hotter than inside!
+		energyAbsorbed_kWh += max(0,-energyUse_kW * timestep_h); // Only heat gain when outside is hotter than inside!
 		//traceln("Ambient temperature " + ambientTemperature_degC);
 		//traceln("heatCapacity JpK " + heatCapacity_JpK );
 		//traceln("tempdelta loss in thermal building asset (kW) " + energyUse_kW);
 		//traceln("lossfacter: " + lossFactor_WpK);
-		updateStateOfCharge( deltaTemp_degC );
+		updateStateOfCharge( deltaEnergy_kWh );
 	}
 
 	public void solarHeating() {
 		double solarHeating_W = solarAbsorptionFactor_m2 * solarRadiation_Wpm2;
-		energyUse_kW -= solarHeating_W / 1000;
-		double energyGain_kWh = ( solarHeating_W / 1000 ) * timestep_h;
-		double deltaTemp_degC = energyGain_kWh / (heatCapacity_JpK / 3.6E6 );
-		energyAbsorbed_kWh += energyGain_kWh;
+		double deltaEnergy_kWh = ( solarHeating_W / 1000 ) * timestep_h; // Is always positive
+		energyAbsorbed_kWh += deltaEnergy_kWh;
 		//traceln("Solar heating of building! Temp increase this timestep %s degC, solarRadiation %s Wpm2", tempDelta, solarRadiation_Wpm2);
 		//traceln("SolarAbsorptionFactor_m2 is %s, energyGain_kWh is %s", solarAbsorptionFactor_m2, energyAbsorbed_kWh);
 		//traceln("Energy gain of building heatmodel from sun = " + energyUse_kW);
@@ -48741,14 +48734,13 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 		calculateLoss(); // Heat exchange with environment through convection
 		solarHeating(); // Heat influx from sunlight
-
-    	double energyDelta_kWh = ( ratioOfChargeCapacity_r * capacityHeat_kW * timestep_h );
-    	double discharge_kW = - ratioOfChargeCapacity_r * capacityHeat_kW; // positieve energielevering verlaagt buffertemperatuur!
-    	double deltaTemp_degC = energyDelta_kWh / (heatCapacity_JpK / 3.6E6 );
-    	//traceln("capacityHeat_kW " + capacityHeat_kW);
-
-		heatProduction_kW = max(discharge_kW, 0);
-		heatConsumption_kW = max(-discharge_kW, 0);
+  		
+		
+		double inputPower_kW = ratioOfChargeCapacity_r * capacityHeat_kW; // positive power means lowering the buffer temperature!
+    	double deltaEnergy_kWh = inputPower_kW * timestep_h; // to check the request with the energy currently in storage
+    	
+		heatProduction_kW = max(-inputPower_kW, 0);
+		heatConsumption_kW = max(inputPower_kW, 0);
 		heatProduced_kWh += heatProduction_kW * timestep_h;
 		heatConsumed_kWh += heatConsumption_kW * timestep_h;
 		//traceln("Heat consumption delivered by heating asset kW " + heatConsumption_kW);
@@ -48756,7 +48748,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("tempdelta charge: " + deltaTemp_degC);
 		//traceln(">> Heat storage heatproduction = "+ heatProduced_kWh + ", heatconsumption_kW = "+ heatConsumption_kW +" heatConsumed_kWh = "+ heatConsumed_kWh +", heatProduced_kWh = "+ heatProduced_kWh );
 
-		updateStateOfCharge( deltaTemp_degC );
+		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 		double[] arr = returnEnergyFlows();
 		return arr;
@@ -48779,7 +48771,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 
 	@Override
-	protected void updateStateOfCharge( double tempDelta_degC ) {
+	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
+		double tempDelta_degC = deltaEnergy_kWh / (heatCapacity_JpK / 3.6E6 );
 		temperature_degC += tempDelta_degC;
 		stateOfCharge_r = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 		//traceln("SOC: " + stateOfCharge_r);
