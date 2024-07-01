@@ -15775,7 +15775,10 @@ v_nighttimeElectricityDelivered_MWh = 0;
 v_weekdayElectricityDrawn_MWh = 0;
 v_weekdayElectricityDelivered_MWh = 0;
 v_weekendElectricityDrawn_MWh = 0;
-v_weekendElectricityDelivered_MWh = 0;]]></Body>
+v_weekendElectricityDelivered_MWh = 0;
+
+// Reset Accumulators
+acc_annualElectricityBalance_kW.reset();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
