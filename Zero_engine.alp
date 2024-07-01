@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -38678,7 +38678,7 @@ else {
 setHeatingTargetTemp();
 //p_BuildingThermalAsset.j_ea.updateAmbientTemperature(main.v_currentAmbientTemperature_degC);
 
-if( p_BuildingThermalAsset!= null ){
+if( p_BuildingThermalAsset != null ){
 	v_currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
 }		
 
@@ -39323,8 +39323,6 @@ if ( p_heatBuffer != null ){
 if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
 	if (v_currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
 		powerFraction_heatPump_fr = 1; 
-		traceln("Heatpump power = " +  hp.getHeatCapacity_kW());
-		traceln("House capacity = " + p_BuildingThermalAsset.getHeatCapacity_kW());
 		p_BuildingThermalAsset.v_powerFraction_fr = hp.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
 	} 
 	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
@@ -48722,7 +48720,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("Solar heating of building! Temp increase this timestep %s degC, solarRadiation %s Wpm2", tempDelta, solarRadiation_Wpm2);
 		//traceln("SolarAbsorptionFactor_m2 is %s, energyGain_kWh is %s", solarAbsorptionFactor_m2, energyAbsorbed_kWh);
 		//traceln("Energy gain of building heatmodel from sun = " + energyUse_kW);
-		updateStateOfCharge( deltaTemp_degC );
+		updateStateOfCharge( deltaEnergy_kWh );
 	}
 
 	@Override
