@@ -22842,6 +22842,22 @@ if (!l_parentNodeElectric.isConnected()) {
 	traceln("GC: %s", this);
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
 }
+else {
+	// Calculate the Wind and PV Installed under the parent gridnode
+	double PV_kW = 0;
+	double Wind_kW = 0;
+	for (J_EAProduction j_ea : c_productionAssets) {
+		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
+			PV_kW += j_ea.getElectricCapacity_kW();
+		}
+		else if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
+			Wind_kW += j_ea.getElectricCapacity_kW();
+		}
+	}
+	l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += PV_kW;
+	l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += Wind_kW;
+}
+
 f_setOperatingSwitches();
 f_initializeAccumulators();]]></Body>
 				</Function>
@@ -44455,7 +44471,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
 	double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
 	double SOC_setp_fr = 1 - incomingPower_fr;
-	
+
 	chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
@@ -51343,7 +51359,6 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgRatioRoofPotentialPV;
 	public double p_avgRatioBatteryCapacity_v_Power;
 
-	
 	/**
      * Default constructor
      */
