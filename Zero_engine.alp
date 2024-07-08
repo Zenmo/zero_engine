@@ -50927,14 +50927,13 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	   double scalingFactor_f = desiredAnnualDistance_km / currentAnnualDistance_km;
 	   
 	   //distances_km = (ArrayList<Double>)distances_km.stream().map(a -> scalingFactor_f*a).toList();
-       ListIterator<Double> iterator = distances_km.listIterator();
-       
+       ListIterator<Double> iterator = distances_km.listIterator();                                                              
 	   for (int i = 0; i<distances_km.size(); i++) {
 		   //distances_km[i] = distances(i)*scalingFactor_f;		   
 		     iterator.next();
 		     iterator.set(distances_km.get(i)*scalingFactor_f);
 	   }
-	   traceln("Annual distance of triptracker set to: %s km", distances_km.stream().mapToDouble(a -> a).sum());
+	   traceln("Annual distance of triptracker set to: %s km", distances_km.stream().mapToDouble(a -> a).sum());                                
 	   traceln("Desired annual distance was: %s km", desiredAnnualDistance_km);
    }
     
