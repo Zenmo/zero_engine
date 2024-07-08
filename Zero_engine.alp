@@ -10291,15 +10291,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11220,15 +11211,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11427,15 +11409,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11604,15 +11577,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11779,15 +11743,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_batteryAsset]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -11997,15 +11952,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12166,15 +12112,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_batteryAsset]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -12340,15 +12277,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_batteryAsset]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -12730,15 +12658,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_batteryAsset]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -17194,7 +17113,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1668370002883</Id>
 					<Name><![CDATA[v_additionalTimeSpreadCharging_MIN]]></Name>
 					<Description><![CDATA[In the charging attitude MAX_SPREAD the vehicles can be planned to be full some time before their actual departure. ]]></Description>
-					<X>250</X><Y>260</Y>
+					<X>250</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17626,7 +17545,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1692972667627</Id>
 					<Name><![CDATA[v_hasPV]]></Name>
-					<X>250</X><Y>280</Y>
+					<X>250</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19830,6 +19749,54 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720435284052</Id>
+					<Name><![CDATA[v_nfatoStart_h]]></Name>
+					<Description><![CDATA[Start times for Non-Firm ATO per day. Index 0 is Sunday, 1 is Monday etc.]]></Description>
+					<X>250</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[7]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720435316099</Id>
+					<Name><![CDATA[v_nfatoEnd_h]]></Name>
+					<Description><![CDATA[End times for Non-Firm ATO per day. Index 0 is Sunday, 1 is Monday etc.]]></Description>
+					<X>250</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[7]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720435335143</Id>
+					<Name><![CDATA[v_nfatoCapacity_kW]]></Name>
+					<Description><![CDATA[Capacities for Non-Firm ATO per day. Index 0 is Sunday, 1 is Monday etc.]]></Description>
+					<X>250</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[7]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -20157,80 +20124,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1668695364190</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1668981435974</Id>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-					<X>250</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0
-]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1668981435972</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1668981451986</Id>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-					<X>250</X><Y>220</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0
-]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1668981451984</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1668981461541</Id>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-					<X>250</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1668981461539</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -21646,6 +21539,8 @@ v_batteryPowerElectric_kW = 0;
 v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
+
+f_nfatoUpdateConnectionCapacity();
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
 
@@ -23510,6 +23405,69 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 		v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1720430481154</Id>
+					<Name><![CDATA[f_nfatoUpdateConnectionCapacity]]></Name>
+					<Description><![CDATA[Updates the Connection Capacity of the GC depending on the time of day / day of week.]]></Description>
+					<X>210</X><Y>-190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+//traceln("day of week: %s", dayOfWeek);
+double timeOfDay = energyModel.t_h % 24;
+
+// Assuming 0 <= nfatoStart_h < nfatoEnd_h < 24
+if (timeOfDay == v_nfatoStart_h[dayOfWeek]) {
+	p_connectionCapacity_kW += v_nfatoCapacity_kW[dayOfWeek];
+}
+else if (timeOfDay == v_nfatoEnd_h[dayOfWeek]) {
+	p_connectionCapacity_kW -= v_nfatoCapacity_kW[dayOfWeek];
+}]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1720431721926</Id>
+					<Name><![CDATA[f_nfatoSetConnectionCapacity]]></Name>
+					<Description><![CDATA[When changing the NFATO settings this function sets the GC capacity to the correct value. When reset is true the capacity is restored back to its original value.]]></Description>
+					<X>230</X><Y>-170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[reset]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+//traceln("day of week: %s", dayOfWeek);
+double timeOfDay = energyModel.t_h % 24;
+
+// Assuming 0 <= nfatoStart_h < nfatoEnd_h < 24
+if (timeOfDay >= v_nfatoStart_h[dayOfWeek] && timeOfDay <= v_nfatoStart_h[dayOfWeek]) {
+	if (reset) {
+		p_connectionCapacity_kW -= v_nfatoCapacity_kW[dayOfWeek];
+	}
+	else {
+		p_connectionCapacity_kW += v_nfatoCapacity_kW[dayOfWeek];
+	}
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1720435162467</Id>
+					<Name><![CDATA[function]]></Name>
+					<X>-370</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -26181,6 +26139,36 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1720431249474</Id>
+					<Name><![CDATA[button]]></Name>
+					<X>250</X><Y>-250</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_nfatoSetConnectionCapacity(true);
+
+for (int i = 0; i < 7; i++) {
+	v_nfatoStart_h[i] = 8;
+	v_nfatoEnd_h[i] = 15+i;
+	v_nfatoCapacity_kW[i] = 1000 + i;
+}
+
+f_nfatoSetConnectionCapacity(false);
+]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[set NFATO]]></LabelText>
+					</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Level>
@@ -38071,15 +38059,6 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
@@ -39994,15 +39973,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
@@ -41170,15 +41140,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
@@ -41658,15 +41619,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_batteryAsset]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -43323,15 +43275,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
@@ -44014,15 +43957,6 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_batteryAsset]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -45108,15 +45042,6 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_batteryAsset]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
@@ -46531,15 +46456,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
@@ -46960,15 +46876,6 @@ public void f_operateFixedAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_batteryAsset]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
