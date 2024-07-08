@@ -6991,10 +6991,11 @@ for (J_EA e : c_energyAssets) {
 	//energyProduced_MWh +=max(0,-EnergyUsed_kWh)/1000;
 	if (EnergyUsed_kWh > 0) {
 	
-		if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+		/*if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
 			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
 			totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-		} else if( e instanceof J_EAConversionGasCHP ) {
+		} else */
+		if( e instanceof J_EAConversionGasCHP ) {
 			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
 			//electricityProduced_kWh = ((J_EAConversionGasCHP)e).getElectricityProduced_kWh();
 			//electricityProduced_MWh += electricityProduced_kWh/1000;
@@ -10093,7 +10094,7 @@ f_initializeForecasts();]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->max(0,x.v_curtailmentPowerElectric_kW))]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentEnergyCurtailed_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -19954,6 +19955,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720447120435</Id>
 					<Name><![CDATA[v_curtailmentPowerElectric_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21806,7 +21808,6 @@ v_batteryPowerElectric_kW = 0;
 v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
-v_curtailmentPowerElectric_kW = 0;
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
 
@@ -23226,7 +23227,7 @@ if (caller instanceof J_EAStorageElectric) { // Only allocate battery losses as 
 	v_currentElectricityConsumption_kW += max(0,arr[9]);
 } else if (caller instanceof J_EAProduction) {
 	v_currentEnergyProduction_kW += -arr[9]; // This enables J_EAProduction to use curtailer method and 'cancel' production! 
-	v_curtailmentPowerElectric_kW += max(0,arr[9]);
+	v_currentEnergyCurtailed_kW += max(0,arr[9]);
 	v_currentElectricityProduction_kW += arr[0];
 } else {
 	v_currentEnergyProduction_kW += max(0,-arr[9]);
@@ -42470,6 +42471,7 @@ if (p_curtailer != null){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1707149873038</Id>
 					<Name><![CDATA[f_manageCurtailer]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1350</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -43966,10 +43968,10 @@ public void f_batteryManagementPrice( double batterySOC ){
 	f_batteryManagementPriceGrid( batterySOC );
 }
 
-@Override
+/*@Override // Why?
 public void f_calculateEnergyBalance(){
 	f_calculateEnergyBalance_overwrite();
-}]]></AdditionalClassCode>
+}*/]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -44443,6 +44445,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1688369593905</Id>
 					<Name><![CDATA[f_calculateEnergyBalance_overwrite]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>780</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -44475,6 +44478,7 @@ v_conversionPowerElectric_kW = 0;
 
 f_operateFixedAssets();
 f_operateFlexAssets();
+f_curtailment();
 f_connectionMetering();
 
 //v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
@@ -44509,6 +44513,7 @@ if (energyModel.b_addKpiVisuals) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1709827456110</Id>
 					<Name><![CDATA[f_manageCurtailer]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -50126,6 +50131,7 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 		<JavaClass>
 			<Id>1666189454453</Id>
 			<Name><![CDATA[J_EAConversionCurtailer]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Text><![CDATA[/**
  * J_EAConversionCurtailer
  */
@@ -50939,6 +50945,7 @@ public class J_ConnectionContract extends zero_engine.J_Contract implements Seri
 		<JavaClass>
 			<Id>1678469210821</Id>
 			<Name><![CDATA[J_EAConversionCurtailerHeat]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Text><![CDATA[/**
  * J_EAConversionCurtailerHeat
  */
