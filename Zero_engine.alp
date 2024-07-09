@@ -11100,7 +11100,7 @@ f_initializeForecasts();]]></Body>
 				<EmbeddedObject>
 					<Id>1660731999276</Id>
 					<Name><![CDATA[pop_genericGridConnections]]></Name>
-					<X>90</X><Y>410</Y>
+					<X>90</X><Y>250</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30587,6 +30587,11 @@ if( p_actorContractList == null) {
 	double taxFeedin_eurpkWh = 0.0;
 	double proportionalTax_pct = 0.21;
 
+	methaneDeliveryPrice_eurpkWh = 1.25 / 10.0 ; // Guesstimate: 1euro25 per kuub, 10 Kwh per kuub
+	methaneDeliveryTax_eurpkWh = 0.71 / 10.0; 
+	methaneVAT_pct = 0.21;
+	
+	
 	/*if (p_actorID.equals("logistics0owner")){
 		v_contractDelivery = new J_DeliveryContract("coop1", OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 	} else {
@@ -31052,7 +31057,7 @@ while (! isDemandMet ) { // Loop door de treemap tot je requestedPower_kW bereik
 }
 //traceln("total price " + price_eurph);
 //getEngine().pause();
-traceln("Still using treemaps in f_getAveragedElectricityPrice!");
+//traceln("Still using treemaps in f_getAveragedElectricityPrice!");
 
 return price_eurph / requestedPower_kW;
 
@@ -55319,55 +55324,75 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1719905410790</Id>
 					<Name><![CDATA[f_manageHeatingAssets]]></Name>
-					<X>340</X><Y>60</Y>
+					<X>300</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double[] arr = f_calculateTotalHeatDemand();
+					<Body><![CDATA[double[] heatDemands = f_calculateTotalHeatDemand();
 
-// Some variables we need for the EMS that I don't want to clog up the canvas with
-double fixedHeatDemand_kW = arr[0]; // Fixed heat demand
-double hotWaterDemand_kW = arr[1];
-double buildingHeatDemand_kW = arr[2];
+double fixedHeatDemand_kW = heatDemands[0]; // Fixed heat demand from J_EAConsumption
+double hotWaterDemand_kW = heatDemands[1];
+double buildingHeatDemand_kW = heatDemands[2];
+//double totalHeatDemand_kW = fixedHeatDemand_kW + hotWaterDemand_kW + buildingHeatDemand_kW;
 
 double heatCapacityPrimary_kW = p_primaryHeatingAsset != null ? p_primaryHeatingAsset.getHeatCapacity_kW() : 0;
 double heatCapacitySecondary_kW = p_secondaryHeatingAsset != null ? p_secondaryHeatingAsset.getHeatCapacity_kW() : 0;
 double heatCapacityBuilding_kW = p_BuildingThermalAsset != null ? p_BuildingThermalAsset.getHeatCapacity_kW() : 0;
 
-///double currentIndoorTemp_degC = p_BuildingThermalAsset != null ? p_BuildingThermalAsset.getCurrentTemperature() : 0;
-///double tempSetpoint_degC = setHeatingTargetTemp();
-
-/*
-// Add heat from cooking assets to house before going through heating assets
-if (gCGeneric.p_cookingTracker != null) { // check for presence of cooking asset
-	double[] arr = gCGeneric.p_cookingTracker.manageActivities(energyModel.t_h*60); // also calls f_updateAllFlows in HOB asset	
-	gCGeneric.v_electricHobConsumption_kW = arr[4];
-	residualHeatGasPit_kW = arr[3];
-	if (p_BuildingThermalAsset!=null) {
-		p_BuildingThermalAsset.setPowerFraction(residualHeatGasPit_kW / heatCapacityBuilding_kW);
-		p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.getPowerFraction());
-	}
-	else {
-		traceln("Cooking tracker in GC without building"); // This would probably cause heat unbalances?
-	}
-}
-*/
-
 if ( p_secondaryHeatingAsset == null) {
 	if (p_primaryHeatingAsset == null) {
-		if (fixedHeatDemand_kW + hotWaterDemand_kW + buildingHeatDemand_kW) > 0) {
+		if ((fixedHeatDemand_kW + hotWaterDemand_kW + buildingHeatDemand_kW) > 0) {
 	    	throw new RuntimeException(String.format("Exception: Heat demand in GridConnection without heating assets."));
 		}
+	}
 	else { // ONE HEATING ASSET ----------------------------------------------
-		if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
-			f_heatWithHeatpump();
+		if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump && (p_BuildingThermalAsset != null || p_heatBuffer != null)) {
+			// If there is a building or heat buffer we can try some smart heating with a heat pump
+			f_heatWithHeatpump(fixedHeatDemand_kW, hotWaterDemand_kW, buildingHeatDemand_kW);
 		}
 		else {
-			// normal asset?
+			// First heat the building, the powerfraction is automatically bounded
+			p_primaryHeatingAsset.setPowerFraction( buildingHeatDemand_kW / heatCapacityPrimary_kW );
+			if (p_BuildingThermalAsset != null) {
+				// Set the amount the building is heated up by
+				p_BuildingThermalAsset.setPowerFraction( (p_primaryHeatingAsset.getPowerFraction() * heatCapacityPrimary_kW) / heatCapacityBuilding_kW );
+			}
+			// Now fullfill the other heat demand(s)
+			p_primaryHeatingAsset.setPowerFraction( (fixedHeatDemand_kW + hotWaterDemand_kW + p_primaryHeatingAsset.getPowerFraction() * heatCapacityPrimary_kW) / heatCapacityPrimary_kW );
 		}
 	}
-		&& p_primaryHeatingAsset != null) {
+}
+
+else { // TWO HEATING ASSETS ----------------------------------------------
+	f_heatWithHybridAssets(fixedHeatDemand_kW, hotWaterDemand_kW, buildingHeatDemand_kW);
+}
+
+
+double[] flowsArray;
+// Operate the asset(s)
+
+if (p_primaryHeatingAsset != null) {
+	flowsArray = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
+	gCGeneric.v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0];
+	
+	if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
+		gCGeneric.v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
+	}
+}
+
+if (p_secondaryHeatingAsset != null) {
+	flowsArray = p_secondaryHeatingAsset.f_updateAllFlows( p_secondaryHeatingAsset.v_powerFraction_fr );
+	gCGeneric.v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0];
+}
+
+if (p_BuildingThermalAsset != null) {
+	p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
+}
+
+
+
+/*
 	// There is only a gas burner or DH set to heat the building asset and water
 	if ( (p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet) && p_BuildingThermalAsset != null) { 
 		// The temperature has dropped beyond treshold
@@ -55383,13 +55408,14 @@ if ( p_secondaryHeatingAsset == null) {
 			p_primaryHeatingAsset.setPowerFraction(powerDemand_kW / heatCapacityPrimary_kW);
 		}
 	}
-	/*
-	else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ NEEDS FIX FOR HESSENPOORT HOUSES
-		double powerDemand_kW = v_currentPowerHeat_kW;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
-		//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
-	}
-	*/
+	
+	//else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ NEEDS FIX FOR HESSENPOORT HOUSES
+	//	double powerDemand_kW = v_currentPowerHeat_kW;
+	//	p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+	//	//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
+	//}
+	
+	
 	else if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump && (p_BuildingThermalAsset != null || p_heatBuffer != null)) {
 			f_heatWithHeatpump();
 	}
@@ -55406,21 +55432,8 @@ if ( p_secondaryHeatingAsset == null) {
 	//traceln("House " + gCGeneric.p_gridConnectionID + " has no heating asset!");
 }
 
-// Operate the assets? gaat dit goed als je geen building thermal asset hebt? of wordt je primary asset dan ook niet geoperate?
-if (p_primaryHeatingAsset != null) {
-	double[] flowsArray = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-	gCGeneric.v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
-	if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
-		gCGeneric.v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
-	}
-	//traceln("p_primaryHeatingAsset heat production: %s", p_primaryHeatingAsset.heatProduction_kW);
-	
-	if (p_BuildingThermalAsset != null) {
-		p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
-		//traceln("p_BuildingThermalAsset heat consumption: %s", p_BuildingThermalAsset.heatConsumption_kW);
-	}
-}
 
+*/
 
 
 /*
@@ -55829,21 +55842,29 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1719905542899</Id>
 					<Name><![CDATA[f_heatWithHeatpump]]></Name>
-					<X>340</X><Y>120</Y>
+					<X>320</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[fixedHeatDemand_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[hotWaterDemand_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[buildingHeatDemand_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
 					<Body><![CDATA[// Still contains gCGeneric.p_household_EV for now (maybe that will also live on this canvas later)
-
-// p_primaryHeatingAsset instanceof J_EAConversionHeatPump
-double powerDemand_kW = gCGeneric.v_currentPowerHeat_kW; // Fixed heat demand
-double hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.heatConsumption_kW : 0; // Does this even do anything? the asset isn't operated, and if it was it would immediately reset this value
-double currentIndoorTemp_degC = p_BuildingThermalAsset != null ? p_BuildingThermalAsset.getCurrentTemperature() : 0;
+// Probably wanna get rid of this household EV?
 
 
 double powerFraction_heatBuffer_fr = 0;
-double powerFraction_heatPump_fr = 0;
+//double powerFraction_heatPump_fr = 0;
 
 double avgElectricityPrice_eurpkWh = 10;
 
@@ -55858,48 +55879,32 @@ if ( p_smartHeatingEnabled ) {
 	//traceln("avg electircity rprice for HP: " + avgElectricityPrice_eurpkWh);
 }
 
-//heat the buffer if it requires heat
+// Heat the buffer if it requires heat
 if ( p_heatBuffer != null ){
 	double heatBufferHeatCapacity_kW = p_heatBuffer.getHeatCapacity_kW();
-	if ( p_heatBuffer.requiresHeat ){
-		powerFraction_heatPump_fr = 1;
+	if ( p_heatBuffer.requiresHeat || (p_heatBuffer.getCurrentStateOfCharge() < 0.7 && p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < gCGeneric.v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh)){
+		heatPump.setPowerFraction(1);
 		powerFraction_heatBuffer_fr = heatPumpHeatCapacity_kW / heatBufferHeatCapacity_kW;
-		//traceln(getName() + " heat buffer cus of need");
-	}
-	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < gCGeneric.v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
-		//also heat the buffer if the price is cheap, the buffer has some room and the vehicle does not need charging
-		&& p_heatBuffer.getCurrentStateOfCharge() < 0.7) {
-		//if( gCGeneric.p_householdEV == null || gCGeneric.p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH ){
-			powerFraction_heatPump_fr = 1;
-			powerFraction_heatBuffer_fr = heatPumpHeatCapacity_kW / heatBufferHeatCapacity_kW;
-		//}
 	}
 	//reduce the powerfraction in the buffer with the hot water demand.
-	powerFraction_heatBuffer_fr += - hotwaterDemand_kW / heatBufferHeatCapacity_kW;
-} 
+	powerFraction_heatBuffer_fr -= hotWaterDemand_kW / heatBufferHeatCapacity_kW;
+}
 
-//heat the house
-if( powerFraction_heatPump_fr == 0 ){ // Only if the heatpump was not used for the heatbuffer
+// Heat the house 
+if( heatPump.getPowerFraction() == 0 ){ // Only if the heatpump was not used for the heatbuffer
 	if (p_BuildingThermalAsset != null) {
-		if (currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
-			powerFraction_heatPump_fr = 1; 
-			p_BuildingThermalAsset.setPowerFraction(heatPumpHeatCapacity_kW / p_BuildingThermalAsset.getHeatCapacity_kW());
-		}
-		else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < gCGeneric.v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
+		double heatCapacityBuilding_kW = p_BuildingThermalAsset.getHeatCapacity_kW();
+		double currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
+		
+		if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < gCGeneric.v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 			&& currentIndoorTemp_degC < v_tempSetpoint_degC + 1) {
-			//also heat the house if the price is cheap, the the house is colder than desired + 1 and the vehicle does not need charging
-			//if( gCGeneric.p_householdEV == null ){
-				powerFraction_heatPump_fr = 1;
-				p_BuildingThermalAsset.setPowerFraction(heatPumpHeatCapacity_kW / p_BuildingThermalAsset.getHeatCapacity_kW());
-			//}
-			//if (gCGeneric.p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){ // only use heatpump if the vehicle is not about to charge
-			//	powerFraction_heatPump_fr = 1;
-			//	//traceln("heat house cus of cheap");
-			//	p_BuildingThermalAsset.setPowerFraction(heatPumpHeatCapacity_kW / p_BuildingThermalAsset.getHeatCapacity_kW());
-			//}
+			// Also heat the house if the price is cheap and within 1 degree of setpoint
+			heatPump.setPowerFraction(1);
+			p_BuildingThermalAsset.setPowerFraction( heatPumpHeatCapacity_kW / heatCapacityBuilding_kW );
 		} 
 		else {
-			p_BuildingThermalAsset.setPowerFraction(0);
+			heatPump.setPowerFraction( buildingHeatDemand_kW / heatPumpHeatCapacity_kW );		
+			p_BuildingThermalAsset.setPowerFraction( heatPump.getPowerFraction() * heatPumpHeatCapacity_kW / heatCapacityBuilding_kW );
 		}
 	}
 }
@@ -55907,24 +55912,37 @@ if( powerFraction_heatPump_fr == 0 ){ // Only if the heatpump was not used for t
 if ( p_heatBuffer != null ){
 	p_heatBuffer.v_powerFraction_fr = powerFraction_heatBuffer_fr;
 	p_heatBuffer.f_updateAllFlows(powerFraction_heatBuffer_fr);
-}
-p_primaryHeatingAsset.setPowerFraction(powerFraction_heatPump_fr);
-//traceln( "heatpumpt power fraction: " + powerFraction_heatPump_fr);
-]]></Body>
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1719905542902</Id>
-					<Name><![CDATA[f_heatWithHybridHeatpump]]></Name>
-					<X>340</X><Y>140</Y>
+					<Name><![CDATA[f_heatWithHybridAssets]]></Name>
+					<X>320</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double powerDemand_kW = gCGeneric.v_currentPowerHeat_kW; // Fixed heat demand
-double hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.heatConsumption_kW : 0; // Does this even do anything? the asset isn't operated, and if it was it would immediately reset this value
+					<Parameter>
+						<Name><![CDATA[fixedHeatDemand_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[hotWaterDemand_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[buildingHeatDemand_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[double totalHeatDemand_kW = fixedHeatDemand_kW + hotWaterDemand_kW + buildingHeatDemand_kW;
+
 double currentIndoorTemp_degC = p_BuildingThermalAsset != null ? p_BuildingThermalAsset.getCurrentTemperature() : 0;
+
+double heatCapacityPrimary_kW = p_primaryHeatingAsset != null ? p_primaryHeatingAsset.getHeatCapacity_kW() : 0;
+double heatCapacitySecondary_kW = p_secondaryHeatingAsset != null ? p_secondaryHeatingAsset.getHeatCapacity_kW() : 0;
+double heatCapacityBuilding_kW = p_BuildingThermalAsset != null ? p_BuildingThermalAsset.getHeatCapacity_kW() : 0;
 
 
 if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // Heatpump and gasburner, switch based on heatpump COP)
@@ -55934,111 +55952,41 @@ if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump & p_secondaryHeatin
 	double heatPumpElectricCapacity_kW = heatPump.getElectricCapacity_kW();
 	double heatPumpHeatCapacity_kW = heatPump.getHeatCapacity_kW();
 	
-	
-	
-	if (p_buildingThermalAsset != null) {
-	//J_EAConversionHeatPump HP = (J_EAConversionHeatPump)p_primaryHeatingAsset;
-	//v_copHeatpump = HP.getCOP();
-	if (currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
-		//HP.updateAmbientTemp(main.v_currentAmbientTemperature_degC); // update heatpump temp levels! <-- waarom dit gebeurt al in de main (peter 21-02-23)
-		boolean gasCheaper = f_calcCheapestHeatingPrice();
-		if ( gasCheaper ) { // heat with gas
-			//traceln("gas is cheaper");
-			powerDemand_kW = hotwaterDemand_kW + (v_tempSetpoint_degC - currentIndoorTemp_degC) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
-			p_primaryHeatingAsset.setPowerFraction(0);
-			p_secondaryHeatingAsset.setPowerFraction( powerDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW() );
-			p_BuildingThermalAsset.setPowerFraction( (p_secondaryHeatingAsset.getPowerFraction() * p_secondaryHeatingAsset.getHeatCapacity_kW() - hotwaterDemand_kW) / p_BuildingThermalAsset.getHeatCapacity_kW() );
+	boolean gasCheaper = f_calcCheapestHeatingPrice();
+	if (gasCheaper) { // heat with gas
+		p_primaryHeatingAsset.setPowerFraction(0);
+		if (buildingHeatDemand_kW > 0) {
+			p_secondaryHeatingAsset.setPowerFraction( buildingHeatDemand_kW / heatCapacitySecondary_kW );
+			p_BuildingThermalAsset.setPowerFraction( p_secondaryHeatingAsset.getPowerFraction() * heatCapacitySecondary_kW / heatCapacityBuilding_kW );
 		}
-		else { // heat with heatpump
-			//double powerDemand_kW = (v_tempSetpoint_degC - houseTemp) * ((J_EAStorageHeat)p_BuildingThermalAsset.j_ea).getHeatCapacity_JpK() / 3.6e6;
-			p_primaryHeatingAsset.setPowerFraction(1); //min(1,powerDemand_kW / p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
-			p_secondaryHeatingAsset.setPowerFraction( hotwaterDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW() );
-			p_BuildingThermalAsset.setPowerFraction( heatPump.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW() );
-			//traceln("HP is cheaper");
+		p_secondaryHeatingAsset.setPowerFraction( totalHeatDemand_kW / heatCapacitySecondary_kW );
+	}
+	else { // heat with heatpump
+		p_secondaryHeatingAsset.setPowerFraction(0);
+		if (buildingHeatDemand_kW > 0) {
+			p_primaryHeatingAsset.setPowerFraction( buildingHeatDemand_kW / heatCapacityPrimary_kW );
+			p_BuildingThermalAsset.setPowerFraction( p_primaryHeatingAsset.getPowerFraction() * heatCapacityPrimary_kW / heatCapacityBuilding_kW );
 		}
+		p_primaryHeatingAsset.setPowerFraction( totalHeatDemand_kW / heatCapacityPrimary_kW );
 	}
-	else { // Just supply DHW demand with gas burner
-		p_secondaryHeatingAsset.setPowerFraction( hotwaterDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW() );
-		p_primaryHeatingAsset.setPowerFraction(0.0);
-		p_BuildingThermalAsset.setPowerFraction(0.0);
-		//traceln("just DHW");
-	}
-	
-	// why not updating the flows of the primary / building aswell? Is that always done in the main manageheatingassets function?
-	p_secondaryHeatingAsset.f_updateAllFlows( p_secondaryHeatingAsset.v_powerFraction_fr );
-
-}
-else if( p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet && ( p_secondaryHeatingAsset instanceof J_EAConversionElectricHeater || p_secondaryHeatingAsset instanceof J_EAConversionHeatPump ) && p_heatBuffer instanceof J_EAStorageHeat ) { // Heat Delivery Set and booster water/water heatpump with buffer for hotwater, )
-	p_primaryHeatingAsset.setPowerFraction(0);
-	p_secondaryHeatingAsset.setPowerFraction(0);
-	p_heatBuffer.setPowerFraction(0);
-	
-	traceln("bivalent DH system with buffer operating mode");
-	double bufferTemp_degC = p_heatBuffer.getCurrentTemperature();
-	//double houseTemperature_degC = p_BuildingThermalAsset.getCurrentTemperature(); // use currentIndoorTemp_degC
-	
-	// buffer instead of heatpump! TODO: change to refill buffer! double secondaryDemand_kW = v_hotwaterDemand_kW;
-	traceln(" thermalstoragetemp "+ p_BuildingThermalAsset.getCurrentTemperature() + ",  v_setpoint_degC " + v_tempSetpoint_degC);
-	
-	// 1) w/w heatpump feeds (only) the local heat buffer for tapwater when temperature is beneath buffer setpoint:
-	boolean b_bufferTempBelowSetpoint = bufferTemp_degC < p_heatBuffer.getSetTemperature_degC();
-	
-	p_secondaryHeatingAsset.v_powerFraction_fr = b_bufferTempBelowSetpoint ? 1 : 0;
-	p_secondaryHeatingAsset.f_updateAllFlows( p_secondaryHeatingAsset.v_powerFraction_fr );
-	
-	double heatSupplyToBuffer_kW = p_secondaryHeatingAsset.heatProduction_kW;
-		
-	// 2) supply tapwater from local heatbuffer on demand, AND take in heat from the heatpump
-	p_heatBuffer.v_powerFraction_fr = ( - hotwaterDemand_kW + heatSupplyToBuffer_kW ) / p_heatBuffer.capacityHeat_kW;
-	p_heatBuffer.f_updateAllFlows( p_heatBuffer.v_powerFraction_fr );
-	
-	// 3) heat the house from heat delivery set directly, and take care to add this heat load to the existing heat flow from w/w heatpump consumption!
-	boolean b_houseTempBelowSetpoint = currentIndoorTemp_degC < v_tempSetpoint_degC? true : false;
-	
-	p_primaryHeatingAsset.v_powerFraction_fr += b_houseTempBelowSetpoint? 1 : 0;  // maybe cap for maximum 1?
-	//p_primaryHeatingAsset.f_updateAllFlows(	p_primaryHeatingAsset.v_powerFraction_fr );
-	
-	double heatFlowToHouse_kW = p_primaryHeatingAsset.getHeatCapacity_kW() * p_primaryHeatingAsset.v_powerFraction_fr - p_secondaryHeatingAsset.heatConsumption_kW;
-	p_BuildingThermalAsset.v_powerFraction_fr = (heatFlowToHouse_kW / p_BuildingThermalAsset.capacityHeat_kW );
-	//p_primaryHeatingAsset.v_powerFraction_fr = p_BuildingThermalAsset.j_ea.getCurrentTemperature() < v_tempSetpoint_degC ? 1 : 0;
-	//traceln("b_primaryOperate = "+ b_primaryOperate + ", GCHouse f_heatWithHybridHeatpump: p_secondaryHeatingAsset.j_ea.capacityHeat_kW = " + p_secondaryHeatingAsset.j_ea.capacityHeat_kW + ". p_secondaryHeatingAsset.j_ea =  "+p_secondaryHeatingAsset.j_ea.toString());
-	
-	//boolean b_primaryOperate = houseTemperature_degC < v_tempSetpoint_degC ? true : false;
-	
-	
-	//p_secondaryHeatingAsset.v_powerFraction_fr = secondaryDemand_kW / p_secondaryHeatingAsset.j_ea.getHeatCapacity_kW(); 
-	
-	
-	//p_BuildingThermalAsset.v_powerFraction_fr = p_primaryHeatingAsset.j_ea.capacityHeat_kW * p_primaryHeatingAsset.v_powerFraction_fr;
-
-	//traceln("GCHouse f_heatwithhybrid... -> p_primaryHeatingAsset.v_powerFraction_fr = " + p_primaryHeatingAsset.v_powerFraction_fr + ", p_secondaryHeatingAsset.v_powerFraction_fr = " + p_secondaryHeatingAsset.v_powerFraction_fr + ", p_BuildingThermalAsset.v_powerFraction_fr" + p_BuildingThermalAsset.v_powerFraction_fr);
-	//p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
-	//p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-	//p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
-	
 }
 else {
-	traceln("**** EXCEPTION ****: Unsupported combination of heatings systems in house " + gCGeneric.p_gridConnectionID);
-	p_primaryHeatingAsset.v_powerFraction_fr = 0;
-	p_secondaryHeatingAsset.v_powerFraction_fr = 0;
-	p_BuildingThermalAsset.v_powerFraction_fr = 0;
-}
-
-]]></Body>
+	throw new RuntimeException(String.format("Exception: Unsupported combination of heatings systems in GC."));
+}]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1719905542904</Id>
 					<Name><![CDATA[setHeatingTargetTemp]]></Name>
-					<X>360</X><Y>80</Y>
+					<X>340</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double tempSetpoint_degC;
-if ( getHourOfDay() > v_heatingOn_time && getHourOfDay() < v_heatingOff_time){
-	tempSetpoint_degC = v_dayTempSetpoint_degC ; 
+if ( getHourOfDay() > v_heatingOn_time && getHourOfDay() < v_heatingOff_time) {
+	tempSetpoint_degC = v_dayTempSetpoint_degC; 
 }
 else {
 	tempSetpoint_degC = v_nightTempSetpoint_degC;
@@ -56050,14 +55998,12 @@ return tempSetpoint_degC;]]></Body>
 					<ReturnType><![CDATA[boolean]]></ReturnType>
 					<Id>1719905542906</Id>
 					<Name><![CDATA[f_calcCheapestHeatingPrice]]></Name>
-					<X>360</X><Y>160</Y>
+					<X>340</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[return false;
-/*
-double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset).getCOP();
+					<Body><![CDATA[double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset).getCOP();
 boolean isGasCheaper = false;
 
 double v_gasHeatingCost_eurpkWh_TEMPORARY;
@@ -56070,7 +56016,7 @@ if(gCGeneric.l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 }	
 
 return isGasCheaper;
-*/]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -56127,7 +56073,7 @@ if (b_useHydrogenLocally && v_hydrogenInStorage_kWh > 0.1) {
 					<ReturnType><![CDATA[double[]]]></ReturnType>
 					<Id>1720519299603</Id>
 					<Name><![CDATA[f_calculateTotalHeatDemand]]></Name>
-					<X>320</X><Y>30</Y>
+					<X>320</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -56136,6 +56082,7 @@ if (b_useHydrogenLocally && v_hydrogenInStorage_kWh > 0.1) {
 double hotWaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.heatConsumption_kW : 0; // Does this even do anything? the asset isn't operated, and if it was it would immediately reset this value
 double buildingHeatDemand_kW = 0;
 
+
 double residualHeatGasPit_kW;
 // Add heat from cooking assets to house before calculating heat demand
 if (gCGeneric.p_cookingTracker != null) { // check for presence of cooking asset
@@ -56143,7 +56090,7 @@ if (gCGeneric.p_cookingTracker != null) { // check for presence of cooking asset
 	gCGeneric.v_electricHobConsumption_kW = arr[4];
 	residualHeatGasPit_kW = arr[3];
 	if (p_BuildingThermalAsset!=null) {
-		p_BuildingThermalAsset.setPowerFraction(residualHeatGasPit_kW / heatCapacityBuilding_kW);
+		p_BuildingThermalAsset.setPowerFraction(residualHeatGasPit_kW / p_BuildingThermalAsset.getHeatCapacity_kW());
 		p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.getPowerFraction());
 	}
 	else {
@@ -56151,17 +56098,17 @@ if (gCGeneric.p_cookingTracker != null) { // check for presence of cooking asset
 	}
 }
 
-
-if (p_buildingThermalAsset != null) {
+if (p_BuildingThermalAsset != null) {
 	double currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
 	double tempSetpoint_degC = setHeatingTargetTemp();
 		
-	if (currentIndoorTemp_degC < tempSetpoint_degC - p_heatingKickinTreshold_degC) {
+	if (currentIndoorTemp_degC < (tempSetpoint_degC - p_heatingKickinTreshold_degC)) {
 		buildingHeatDemand_kW = (tempSetpoint_degC - currentIndoorTemp_degC) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 	}		
 }
 
-return {fixedHeatDemand_kW, hotWaterDemand_kW, buildingHeatDemand_kW};]]></Body>
+double[] arr = {fixedHeatDemand_kW, hotWaterDemand_kW, buildingHeatDemand_kW};
+return arr;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -57689,10 +57636,10 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 
     @Override
     public double[] operate(double ratioOfCapacity) {
-		traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
+		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		this.methaneConsumption_kW = heatProduction_kW / eta_r;
-		traceln("Produced %s kW heat and Consumed %s kW methane", heatProduction_kW, methaneConsumption_kW);
+		//traceln("Produced %s kW heat and Consumed %s kW methane", heatProduction_kW, methaneConsumption_kW);
 		this.energyUse_kW = (methaneConsumption_kW - heatProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
