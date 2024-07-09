@@ -22252,7 +22252,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double SOC_setp_fr = 0.5;
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	if (!c_vehicleAssets.isEmpty()) {
-		SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+		SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { // Look at weather forecast to charge/discharge battery
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -22305,7 +22305,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		double SOC_setp_fr = 0.5;
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
-			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { 
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -39650,7 +39650,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 		double SOC_setp_fr = 0.5;
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
-			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) {
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -44430,7 +44430,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	FeedforwardGain_kWpKw = 0.3; // Feedforward based on current surpluss in Coop
 	FeedbackGain_kWpSOC = 1.5 * 0.6 * p_batteryAsset.getElectricCapacity_kW();
 	double SOC_setp_fr = 0.8;
-	SOC_setp_fr = (0.5 + 0.4 * Math.sin(2*Math.PI*(time(HOUR)-18)/24))-3*GN.v_electricityYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
+	SOC_setp_fr = (0.5 + 0.4 * Math.sin(2*Math.PI*(energyModel.t_h-18)/24))-3*GN.v_electricityYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
 	
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
