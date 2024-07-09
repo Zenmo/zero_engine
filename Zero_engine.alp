@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -2010,6 +2010,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1699275323335</Id>
 					<Name><![CDATA[v_dayOfYear]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>560</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4595,7 +4596,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1663577621791</Id>
@@ -10374,9 +10375,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 						</Parameter>
 					</Parameters>
@@ -11330,9 +11328,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_nageisoleerd]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 						</Parameter>
 					</Parameters>
@@ -11501,9 +11496,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 						</Parameter>
 					</Parameters>
@@ -11667,9 +11659,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -11879,10 +11868,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
+							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12045,9 +12034,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -12215,9 +12201,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 						</Parameter>
 					</Parameters>
@@ -12381,9 +12364,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -12763,9 +12743,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_amountOfChargers]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12897,15 +12874,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_batteryAsset]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nfatoStart_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoEnd_h]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12961,9 +12929,6 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[b_useHydrogenLocally]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -19721,21 +19686,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1717159495994</Id>
-					<Name><![CDATA[v_hydrogenInStorage_kWh]]></Name>
-					<X>1110</X><Y>720</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1717414924763</Id>
 					<Name><![CDATA[v_hydrogenElectricityConsumption_kW]]></Name>
 					<X>180</X><Y>1090</Y>
@@ -19745,21 +19695,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1717666056845</Id>
-					<Name><![CDATA[v_totalHydrogenUsed_MWh]]></Name>
-					<X>1110</X><Y>740</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -19861,7 +19796,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720442507543</Id>
 					<Name><![CDATA[v_enableCurtailment]]></Name>
-					<X>250</X><Y>300</Y>
+					<X>250</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19964,6 +19899,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double[]]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new double[7]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720520594279</Id>
+					<Name><![CDATA[v_enableNFato]]></Name>
+					<X>250</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -20708,30 +20658,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1717160783031</Id>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-					<X>1080</X><Y>680</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[boolean]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1717160783029</Id>
-							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1718887078133</Id>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 					<X>50</X><Y>436</Y>
@@ -21371,7 +21297,7 @@ if (energyModel.v_isRapidRun){
 	
 	//v_dailyDistrictHeatSupply_kWh += 
 	
-	if (energyModel.t_h % 24 == 23) {
+	if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 		//data_annualElectricityDemand_MWh.add(energyModel.t_h, v_dailyElectricityDemand_kWh/(24 / energyModel.p_timeStep_h));
 		//data_annualElectricitySupply_MWh.add(energyModel.t_h, v_dailyElectricitySupply_kWh/(24 / energyModel.p_timeStep_h)); 
 		// Demand
@@ -21732,7 +21658,9 @@ v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
 
-f_nfatoUpdateConnectionCapacity();
+if (v_enableNFato) {
+	f_nfatoUpdateConnectionCapacity();
+}
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
 
@@ -21743,9 +21671,6 @@ if (v_enableCurtailment) {
 	f_curtailment();
 }
 
-if (b_useHydrogenLocally && v_hydrogenInStorage_kWh > 0.1) {
-	f_operateFuelCell();
-}
 
 f_connectionMetering();
 
@@ -21932,13 +21857,13 @@ v_currentLoadLowPassed_kW = 0;
 //v_currentIndoorTemp_degC = (p_BuildingThermalAsset == null) ? 0 : p_BuildingThermalAsset.getCurrentTemperature();
 
 // Reset energytotals
-if (b_useHydrogenLocally) {
+/*if (b_useHydrogenLocally) {
 	v_hydrogenInStorage_kWh = 1000000;
 }
 else {
 	v_hydrogenInStorage_kWh = 0;
-}
-v_totalHydrogenUsed_MWh = 0;
+}*/
+//v_totalHydrogenUsed_MWh = 0;
 
 v_totalEnergyProduced_MWh = 0;
 v_totalEnergyConsumed_MWh = 0;
@@ -23530,7 +23455,7 @@ acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Reset dataset after rapid run
 
-v_hydrogenInStorage_kWh = 0;
+//v_hydrogenInStorage_kWh = 0;
 
 //Reset specificGC states after rapid run
 f_resetSpecificGCStatesAfterRapidRun();
@@ -23550,37 +23475,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1717159669207</Id>
-					<Name><![CDATA[f_operateFuelCell]]></Name>
-					<X>1080</X><Y>700</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
-if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
-	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
-	if (fuelCellAsset == null) {
-		traceln("No fuel cell asset found");
-	}
-	else {
-		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
-		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
-		double efficiency = 0.5;
-		double ratioOfCapacity = powerNeeded_kW / (1000*efficiency);
-		double[] arr = fuelCellAsset.operate(ratioOfCapacity);
-		/*if (this.p_gridConnectionID.equals("9.0")) {
-			traceln("fuel cell operated: " + Arrays.toString(arr));
-		}*/
-		f_addFlows(arr, fuelCellAsset);
-		v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
-		v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
-	}
-}]]></Body>
+					<Body><![CDATA[// to be overwritten by child GCs!]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23612,8 +23507,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-
-					<Body><![CDATA[int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+					<Body><![CDATA[int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
 //traceln("day of week: %s", dayOfWeek);
 double timeOfDay = energyModel.t_h % 24;
 
@@ -23640,7 +23534,8 @@ else if (timeOfDay == v_nfatoEnd_h[dayOfWeek]) {
 						<Name><![CDATA[reset]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
-					<Body><![CDATA[int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+					<Body><![CDATA[//int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
 //traceln("day of week: %s", dayOfWeek);
 double timeOfDay = energyModel.t_h % 24;
 
@@ -38208,9 +38103,6 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 				</Parameter>
 			</Parameters>
@@ -40134,9 +40026,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 				</Parameter>
 			</Parameters>
@@ -41304,9 +41193,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 				</Parameter>
 			</Parameters>
@@ -41752,10 +41638,10 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -41974,6 +41860,36 @@ FullCapacity.]]></Description>
 					<Name><![CDATA[v_gridNodeCongestionLimit_kW]]></Name>
 					<Description><![CDATA[Congestion limit  of the grid node. If this limit is reached, electrolyser should not be functional.]]></Description>
 					<X>1610</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720522233689</Id>
+					<Name><![CDATA[v_hydrogenInStorage_kWh]]></Name>
+					<X>1183</X><Y>729</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720522233691</Id>
+					<Name><![CDATA[v_totalHydrogenUsed_MWh]]></Name>
+					<X>1183</X><Y>749</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42297,6 +42213,30 @@ FullCapacity.]]></Description>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1720522233694</Id>
+					<Name><![CDATA[b_useHydrogenLocally]]></Name>
+					<X>1153</X><Y>689</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1720522233692</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1716916299738</Id>
 					<Name><![CDATA[c_forecast_RES_kW]]></Name>
@@ -42584,23 +42524,14 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElectrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit	
 	
 	
-	if (b_useHydrogenLocally) {
+	/*if (b_useHydrogenLocally) {
 		List<GridConnection> receivingGCs = findAll(energyModel.c_gridConnections, gc -> gc.b_useHydrogenLocally && gc != this);
 		//traceln("hydrogen reveicing gcs: %s", receivingGCs);
 		for (GridConnection gc : receivingGCs) {
 			
-			gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] / receivingGCs.size();
-			
-			/*
-			if (gc.p_ownerID.equals("Post NL / Valid Express")) {
-				gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] * (2/3);
-			}
-			else if (gc.p_ownerID.equals("HAVI logistics BV")) {
-				gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] * (1/3);
-			}
-			*/
+			gc.v_hydrogenInStorage_kWh += energyModel.p_timeStep_h * flowsArray[2] / receivingGCs.size();					
 		}
-	}
+	}*/
 
 }]]></Body>
 				</Function>
@@ -43093,6 +43024,37 @@ v_hydrogenProductionDeficit_kWh = 0;]]></Body>
 }
 ]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1720522233686</Id>
+					<Name><![CDATA[f_operateFuelCell]]></Name>
+					<X>1153</X><Y>709</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
+if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
+	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
+	if (fuelCellAsset == null) {
+		traceln("No fuel cell asset found");
+	}
+	else {
+		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
+		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
+		double efficiency = 0.5;
+		double ratioOfCapacity = powerNeeded_kW / (1000*efficiency);
+		double[] arr = fuelCellAsset.operate(ratioOfCapacity);
+		/*if (this.p_gridConnectionID.equals("9.0")) {
+			traceln("fuel cell operated: " + Arrays.toString(arr));
+		}*/
+		f_addFlows(arr, fuelCellAsset);
+		v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
+		v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
+	}
+}]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
@@ -43407,9 +43369,6 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -44090,9 +44049,6 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -45156,9 +45112,6 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -46573,9 +46526,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 				</Parameter>
 			</Parameters>
@@ -46996,9 +46946,6 @@ public void f_operateFixedAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
@@ -47445,15 +47392,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_batteryAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_nfatoStart_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoEnd_h]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
@@ -47509,9 +47447,6 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
