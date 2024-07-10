@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -21742,38 +21742,41 @@ for(J_EAProduction e : c_productionAssets) {
 for(J_EAConsumption e : c_consumptionAssets) {
 	if( e.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) { // TODO: Replace with more descriptive EnergyAssetType, don't switch based on GridConnectionCategory!
 		double[] flowsArray;
-		switch(e.energyAssetName) {
-			case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
-			break;
-			case "Industry_other_electricity":
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
-			break;
-			case "LOGISTICS_FLEET_HGV_E" :
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentLogisticsFleetEDemand_fr );
-			break;
-			case "INDUSTRY_STEEL_ELECTRICITY_DEMAND" :
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustrySteelElectricityDemand_fr );
-			break;
-			case "House_other_electricity":
-				//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
-				double randomizer = 0.7 + uniform(0.0, 0.6);
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
-			break;
-			case "Office_other_electricity":
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
-			break;
-			case "Store_other_electricity":
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
-			break;				
-			default:
-				traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
-				throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
-				// Try if the energyAssetName matches with one of the names in comp_elec_consumption
+		if (e.energyAssetName != null) {
+			switch(e.energyAssetName) {
+				case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
+				break;
+				case "Industry_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
+				break;
+				case "LOGISTICS_FLEET_HGV_E" :
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentLogisticsFleetEDemand_fr );
+				break;
+				case "INDUSTRY_STEEL_ELECTRICITY_DEMAND" :
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustrySteelElectricityDemand_fr );
+				break;
+				case "House_other_electricity":
+					//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
+					double randomizer = 0.7 + uniform(0.0, 0.6);
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
+				break;
+				case "Office_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+				break;
+				case "Store_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+				break;				
+				default:
+					traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
+					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
+					// Try if the energyAssetName matches with one of the names in comp_elec_consumption
+			}
+			v_fixedConsumptionElectric_kW += flowsArray[4];
 		}
-		
-		v_fixedConsumptionElectric_kW += flowsArray[4];
-			
+		else {
+			throw new RuntimeException("ELECTRICITY_DEMAND with unknown name in GC: " + this.p_gridConnectionID);
+		}			
 	} 
 	else if( e.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION ){	
 		e.f_updateAllFlows( energyModel.v_currentHouseHoldHotWaterDemand_fr );
@@ -41639,9 +41642,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
