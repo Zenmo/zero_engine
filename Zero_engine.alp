@@ -48630,7 +48630,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     public double[] operate(double time_h) {
     	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
     		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
-    		time_h = a_energyProfile_kWh.length * timestep_h - 1;
+    		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
     	}
     	if (energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
     		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
@@ -48650,7 +48650,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	}
 		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_energyProfile_kWh.length);	
     	this.energyUse_kW = (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW);
-		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses!
+		this.energyUsed_kWh += timestep_h * energyUse_kW; 
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
 		double[] arr = returnEnergyFlows();
