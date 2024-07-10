@@ -7752,6 +7752,10 @@ for( GridNode GN : pop_gridNodes ) {
 		v_topLevelGridCapacity_kW+=GN.p_capacity_kW;
 	} else {		
 		c_gridNodesNotTopLevel.add(GN);	
+		if (GN.p_gridNodeID.equals(parentNode.p_parentNodeID)) {
+			traceln("Throwing exception because of circular dependency between gridNodes! GridNode %s and parentNode %s", GN.p_gridNodeID, parentNode.p_gridNodeID);
+			throw new RuntimeException("Exception: circular GridNode dependency, only tree-topology supported");
+		}
 	}
 }
 c_gridNodeExecutionListReverse = c_gridNodeExecutionList;
@@ -48582,6 +48586,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
 	public OL_ProfileAssetType profileType;
+	private double profileTimestep_h;
 	//protected double outputTemperature_degC;
     /**
      * Default constructor
@@ -48592,12 +48597,17 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(Agent parentAgent, OL_EnergyCarrierType energyCarrier, double[] profile_kWh, OL_ProfileAssetType profileType, double timestep_h) {
+    public J_EAProfile(Agent parentAgent, OL_EnergyCarrierType energyCarrier, double[] profile_kWh, OL_ProfileAssetType profileType, double profileTimestep_h) {
 	    this.parentAgent= parentAgent;
 	    this.energyCarrierConsumed = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
 	    this.profileType = profileType;
-	    this.timestep_h = timestep_h;
+	    this.profileTimestep_h = profileTimestep_h;
+	    if (parentAgent instanceof GridConnection) {
+	    	this.timestep_h = ((GridConnection)parentAgent).energyModel.p_timeStep_h;
+	    } else {
+	    	this.timestep_h = profileTimestep_h;
+	    }
 		registerEnergyAsset();
 	}
 
@@ -48618,25 +48628,25 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     
     @Override
     public double[] operate(double time_h) {
-    	if ( (int)floor(time_h/timestep_h) >= a_energyProfile_kWh.length ) {
+    	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
     		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
     		time_h = a_energyProfile_kWh.length * timestep_h - 1;
     	}
     	if (energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
-    		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
-        	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);        	
+    		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
+        	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);        	
     	} else if (energyCarrierConsumed == OL_EnergyCarrierType.METHANE) {
-    		this.methaneConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
-        	this.methaneProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);    		    		
+    		this.methaneConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
+        	this.methaneProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);    		    		
     	} else if (energyCarrierConsumed == OL_EnergyCarrierType.HYDROGEN) {
-    		this.hydrogenConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
-        	this.hydrogenProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+    		this.hydrogenConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
+        	this.hydrogenProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
     	} else if  (energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
-    		this.heatConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
-        	this.heatProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+    		this.heatConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
+        	this.heatProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
         	//traceln("Current heat consumption: %s", this.heatConsumption_kW);
     	} else if  (energyCarrierConsumed == OL_EnergyCarrierType.DIESEL) {
-    		this.dieselConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+    		this.dieselConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
     	}
 		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_energyProfile_kWh.length);	
     	this.energyUse_kW = (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW);
