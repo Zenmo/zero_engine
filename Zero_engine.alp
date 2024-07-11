@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -21743,6 +21743,11 @@ for(J_EAConsumption e : c_consumptionAssets) {
 	if( e.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) { // TODO: Replace with more descriptive EnergyAssetType, don't switch based on GridConnectionCategory!
 		double[] flowsArray;
 		switch(e.energyAssetName) {
+			case "House_other_electricity":
+				//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
+				double randomizer = 0.7 + uniform(0.0, 0.6);
+				flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
+			break;
 			case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
 				flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
 			break;
@@ -21755,11 +21760,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 			case "INDUSTRY_STEEL_ELECTRICITY_DEMAND" :
 				flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustrySteelElectricityDemand_fr );
 			break;
-			case "House_other_electricity":
-				//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
-				double randomizer = 0.7 + uniform(0.0, 0.6);
-				flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
-			break;
+
 			case "Office_other_electricity":
 				flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
 			break;
@@ -22099,6 +22100,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double availableChargePower_kW = connectionCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = electricitySurplus_kW - connectionCapacity_kW; // Max discharging power within grid capacity
 
+	/*
 	double SOC_setp_fr = 0.5;
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	if (!c_vehicleAssets.isEmpty()) {
@@ -22116,6 +22118,23 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+	*/
+	
+
+	// ----------------------------------------------------
+	double FeedforwardGain_kWpKw = 0.3; // Feedforward based on current surpluss in Coop
+	double FeedbackGain_kWpSOC = 1.5 * 0.6 * p_batteryAsset.getElectricCapacity_kW();
+	double SOC_setp_fr = 0.8;
+	SOC_setp_fr = (0.5 + 0.4 * Math.sin(2*Math.PI*(energyModel.t_h-18)/24))-3* energyModel.v_SolarYieldForecast_fr ; // Sinusoidal setpoint: aim for high SOC at 18:00h
+	
+	double chargeSetpoint_kW = FeedforwardGain_kWpKw * electricitySurplus_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power	
+	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+	//traceln("hello?");
+	
+	
+	
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -22807,7 +22826,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698854861644</Id>
@@ -38738,9 +38757,9 @@ if ( p_secondaryHeatingAsset == null && p_primaryHeatingAsset != null) {
 		}
 	}
 	/*
-	else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ NEEDS FIX FOR HESSENPOORT HOUSES
+	else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null) { //NEEDS FIX FOR HESSENPOORT HOUSES
 		double powerDemand_kW = v_currentPowerHeat_kW;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
 		//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
 	}
 	*/
@@ -41639,9 +41658,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
