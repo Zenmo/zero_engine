@@ -950,6 +950,10 @@
 				<Id>1710163149238</Id>
 				<Name><![CDATA[BALANCE_SUPPLY]]></Name>
 			</Option>
+			<Option>
+				<Id>1720795257031</Id>
+				<Name><![CDATA[SELFCONSUMPTION]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1668693527447</Id>
@@ -22090,7 +22094,32 @@ f_resetSpecificGCStates();
 						<Name><![CDATA[batterySOC]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
+					<Body><![CDATA[double batteryStorageCapacity_kWh = p_batteryAsset.getStorageCapacity_kWh();
+if (batteryStorageCapacity_kWh != 0){	
+	double batteryCapacity_kW = p_batteryAsset.getCapacityElectric_kW();
+	double electricitySurplus_kW = - v_currentPowerElectricity_kW; // Still excludes battery power
+	double v_allowedCapacity_kW = 0.95 * p_connectionCapacity_kW;
+	double availableChargePower_kW = v_allowedCapacity_kW + electricitySurplus_kW; // Max battery charging power within connection capacity
+	if (availableChargePower_kW < 0) { // Prevent congestion
+		p_batteryAsset.setPowerFraction( availableChargePower_kW / batteryCapacity_kW );
+		return;
+	}
+	
+	double availableDischargePower_kW = electricitySurplus_kW - v_allowedCapacity_kW; // Max discharging power within connection capacity
+	double expectedWind_kWh = v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
+	double expectedSolar_kWh = v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
+	double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
+	double SOC_setp_fr = 1 - incomingPower_fr;
+	double FeedbackGain_kWpSOC = 3 * batteryCapacity_kW; // How strongly to aim for SOC setpoint
+	double chargeSetpoint_kW = FeedbackGain_kWpSOC * (SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW), availableChargePower_kW); // Don't allow too much (dis)charging!
+	p_batteryAsset.setPowerFraction( chargeSetpoint_kW / batteryCapacity_kW );
+}
+
+
+/*
+
+//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double electricitySurplus_kW = - v_currentPowerElectricity_kW; // still excludes battery power
 	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
@@ -22100,7 +22129,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double availableChargePower_kW = connectionCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = electricitySurplus_kW - connectionCapacity_kW; // Max discharging power within grid capacity
 
-	/*
+	
 	double SOC_setp_fr = 0.5;
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	if (!c_vehicleAssets.isEmpty()) {
@@ -22118,7 +22147,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
-	*/
+	
 	
 
 	// ----------------------------------------------------
@@ -22132,10 +22161,9 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power	
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 	//traceln("hello?");
-	
-	
-	
-}]]></Body>
+}
+
+*/]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -45242,14 +45270,26 @@ public void f_operateFlexAssets(){
 
 f_manageCharging();
 
-if (p_batteryAsset != null){ // TEST CODE
-	if (p_batteryAsset.getStorageCapacity_kWh() > 0) {
-		f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
-		double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-		//traceln("flows:" + Arrays.toString(arr));
-		v_batteryPowerElectric_kW = arr[4] - arr[0];
+if (p_batteryAsset != null){
+	switch (p_batteryOperationMode) {
+		case BALANCE:
+			f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+			break;
+		case PRICE:
+			f_batteryManagementPrice(p_batteryAsset.getCurrentStateOfCharge());
+			break;
+		case SELFCONSUMPTION:
+			f_batteryManagementSelfConsumption();
+			break;
+		default:
+			traceln("invalid battery operation mode in GC " + this.p_gridConnectionID);
+			break;
 	}
+	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	//traceln("flows:" + Arrays.toString(arr));
+	v_batteryPowerElectric_kW = arr[4] - arr[0];
 }
+
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 }*/
@@ -45272,6 +45312,22 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }*/
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1720795445554</Id>
+					<Name><![CDATA[f_batteryManagementSelfConsumption]]></Name>
+					<X>790</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[double batteryStorageCapacity_kWh = p_batteryAsset.getStorageCapacity_kWh();
+if (batteryStorageCapacity_kWh != 0){
+	double batteryCapacity_kW = p_batteryAsset.getCapacityElectric_kW();
+	p_batteryAsset.setPowerFraction( - v_currentPowerElectricity_kW / batteryCapacity_kW );		
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -48309,6 +48365,14 @@ public class J_EA implements Cloneable {
     
     public Agent getParentAgent() {
     	return parentAgent;
+    }
+    
+    public void setPowerFraction(double powerfraction) {
+    	this.v_powerFraction_fr = min(1, max(-1, powerfraction));
+    }
+    
+    public double getPowerFraction() {
+    	return this.v_powerFraction_fr;
     }
     
     public void setUI_EnergyAsset(UI_EnergyAsset ui_energyAsset) {
