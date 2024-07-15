@@ -48141,6 +48141,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 	public double yearlyDemandHydrogen_kWh;
 	public double yearlyDemandMethane_kWh;
 	public double yearlyDemandDiesel_kWh;
+	public double loadLoad_kWh = 0;
 	/**
      * Default constructor
      */
@@ -48177,6 +48178,24 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	energyUsed_kWh += energyUse_kW * timestep_h;
     	return returnEnergyFlows();
    	}
+	
+    public double[] curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    	double currentElectricityProduction_kW = lastFlowsArray[4];
+    	double curtailmentPower_kW = max(0,min(currentElectricityProduction_kW, curtailmentSetpoint_kW));
+    	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
+    	loadLoad_kWh += curtailmentPower_kW * timestep_h;
+    	double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
+    	lastFlowsArray[4] -= curtailmentPower_kW;
+    	lastFlowsArray[9] -= curtailmentPower_kW;
+    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(arr, this);
+    	}
+    	if (ui_energyAsset!= null) {
+    		ui_energyAsset.f_addFlows(arr);
+    	}
+    	return arr;
+    }
 
 	@Override
 	public String toString() {
@@ -48588,6 +48607,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	public OL_ProfileAssetType profileType;
 	private double profileTimestep_h;
 	//protected double outputTemperature_degC;
+	public double loadLoad_kWh = 0;
+	
     /**
      * Default constructor
      */
@@ -48662,6 +48683,24 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
+    public double[] curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    	double currentElectricityProduction_kW = lastFlowsArray[4];
+    	double curtailmentPower_kW = max(0,min(currentElectricityProduction_kW, curtailmentSetpoint_kW));
+    	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
+    	loadLoad_kWh += curtailmentPower_kW * timestep_h;
+    	double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
+    	lastFlowsArray[4] -= curtailmentPower_kW;
+    	lastFlowsArray[9] -= curtailmentPower_kW;
+    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(arr, this);
+    	}
+    	if (ui_energyAsset!= null) {
+    		ui_energyAsset.f_addFlows(arr);
+    	}
+    	return arr;
+    }
+	
 	@Override
 	public String toString() {
 		return
