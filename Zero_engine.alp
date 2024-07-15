@@ -12497,6 +12497,9 @@ f_initializeForecasts();]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_pand_nr]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pandNaam]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12812,7 +12815,6 @@ f_initializeForecasts();]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<PresentationId>1718797589407</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
 						<ClassName><![CDATA[GCNeighborhood]]></ClassName>
@@ -13592,25 +13594,6 @@ f_initializeForecasts();]]></Body>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
-				<EmbeddedObjectPresentation>
-					<Id>1718797589407</Id>
-					<Name><![CDATA[Neighborhoods_presentation]]></Name>
-					<X>0</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
-					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
-					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
-					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
-					<Latitude>0.0</Latitude>
-					<Longitude>0.0</Longitude>
-				</EmbeddedObjectPresentation>
 			</Presentation>
 
 				</Level>
@@ -19855,26 +19838,10 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1720435284052</Id>
-					<Name><![CDATA[v_nfatoStart_h]]></Name>
-					<Description><![CDATA[Start times for Non-Firm ATO per day. Index 0 is Sunday, 1 is Monday etc.]]></Description>
-					<X>250</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[7]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1720435316099</Id>
-					<Name><![CDATA[v_nfatoEnd_h]]></Name>
-					<Description><![CDATA[End times for Non-Firm ATO per day. Index 0 is Sunday, 1 is Monday etc.]]></Description>
-					<X>250</X><Y>220</Y>
+					<Name><![CDATA[v_nfatoWeekendCapacity_kW]]></Name>
+					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
+					<X>250</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19882,15 +19849,15 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double[]]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[7]]]></Code>
+							<Code><![CDATA[new double[24]]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1720435335143</Id>
-					<Name><![CDATA[v_nfatoCapacity_kW]]></Name>
-					<Description><![CDATA[Capacities for Non-Firm ATO per day. Index 0 is Sunday, 1 is Monday etc.]]></Description>
-					<X>250</X><Y>240</Y>
+					<Name><![CDATA[v_nfatoWeekCapacity_kW]]></Name>
+					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
+					<X>250</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19898,7 +19865,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double[]]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[7]]]></Code>
+							<Code><![CDATA[new double[24]]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -23505,21 +23472,34 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<Id>1720430481154</Id>
 					<Name><![CDATA[f_nfatoUpdateConnectionCapacity]]></Name>
 					<Description><![CDATA[Updates the Connection Capacity of the GC depending on the time of day / day of week.]]></Description>
-					<X>210</X><Y>-190</Y>
+					<X>780</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
-//traceln("day of week: %s", dayOfWeek);
-double timeOfDay = energyModel.t_h % 24;
 
-// Assuming 0 <= nfatoStart_h < nfatoEnd_h < 24
-if (timeOfDay == v_nfatoStart_h[dayOfWeek]) {
-	p_connectionCapacity_kW += v_nfatoCapacity_kW[dayOfWeek];
-}
-else if (timeOfDay == v_nfatoEnd_h[dayOfWeek]) {
-	p_connectionCapacity_kW -= v_nfatoCapacity_kW[dayOfWeek];
+double timeOfDay = energyModel.t_h % 24;
+int hourOfDay = (int) timeOfDay;
+
+if (timeOfDay == hourOfDay) {
+	int previousHour = ((hourOfDay - 1) % 24 + 24) % 24;
+	if (dayOfWeek == 0 || dayOfWeek == 6) {
+		if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
+			p_connectionCapacity_kW += v_nfatoWeekendCapacity_kW[hourOfDay] - v_nfatoWeekCapacity_kW[previousHour];
+		}
+		else {
+			p_connectionCapacity_kW += v_nfatoWeekendCapacity_kW[hourOfDay] - v_nfatoWeekendCapacity_kW[previousHour];
+		}
+	}
+	else {
+		if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
+			p_connectionCapacity_kW += v_nfatoWeekCapacity_kW[hourOfDay] - v_nfatoWeekendCapacity_kW[previousHour];
+		}
+		else {
+			p_connectionCapacity_kW += v_nfatoWeekCapacity_kW[hourOfDay] - v_nfatoWeekCapacity_kW[previousHour];
+		}
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -23528,7 +23508,7 @@ else if (timeOfDay == v_nfatoEnd_h[dayOfWeek]) {
 					<Id>1720431721926</Id>
 					<Name><![CDATA[f_nfatoSetConnectionCapacity]]></Name>
 					<Description><![CDATA[When changing the NFATO settings this function sets the GC capacity to the correct value. When reset is true the capacity is restored back to its original value.]]></Description>
-					<X>230</X><Y>-170</Y>
+					<X>780</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23537,18 +23517,26 @@ else if (timeOfDay == v_nfatoEnd_h[dayOfWeek]) {
 						<Name><![CDATA[reset]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
-					<Body><![CDATA[//int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
-int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
-//traceln("day of week: %s", dayOfWeek);
-double timeOfDay = energyModel.t_h % 24;
+					<Body><![CDATA[int mult = reset == true ? -1 : 1; // When reset is true we need to subtract the capacity, else we add
 
-// Assuming 0 <= nfatoStart_h < nfatoEnd_h < 24
-if (timeOfDay >= v_nfatoStart_h[dayOfWeek] && timeOfDay <= v_nfatoStart_h[dayOfWeek]) {
-	if (reset) {
-		p_connectionCapacity_kW -= v_nfatoCapacity_kW[dayOfWeek];
+int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
+double timeOfDay = energyModel.t_h % 24;
+int hourOfDay = (int) timeOfDay;
+
+if (dayOfWeek == 0 || dayOfWeek == 6) {
+	if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
+		p_connectionCapacity_kW += mult * v_nfatoWeekCapacity_kW[hourOfDay];
 	}
 	else {
-		p_connectionCapacity_kW += v_nfatoCapacity_kW[dayOfWeek];
+		p_connectionCapacity_kW += mult * v_nfatoWeekendCapacity_kW[hourOfDay];
+	}
+}
+else {
+	if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
+		p_connectionCapacity_kW += mult * v_nfatoWeekendCapacity_kW[hourOfDay];
+	}
+	else {
+		p_connectionCapacity_kW += mult * v_nfatoWeekCapacity_kW[hourOfDay];
 	}
 }]]></Body>
 				</Function>
@@ -26124,36 +26112,6 @@ if (timeOfDay >= v_nfatoStart_h[dayOfWeek] && timeOfDay <= v_nfatoStart_h[dayOfW
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1720431249474</Id>
-					<Name><![CDATA[button]]></Name>
-					<X>250</X><Y>-250</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[f_nfatoSetConnectionCapacity(true);
-
-for (int i = 0; i < 7; i++) {
-	v_nfatoStart_h[i] = 8;
-	v_nfatoEnd_h[i] = 15+i;
-	v_nfatoCapacity_kW[i] = 1000 + i;
-}
-
-f_nfatoSetConnectionCapacity(false);
-]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[set NFATO]]></LabelText>
-					</ExtendedProperties>
-				</Control>
 			</Presentation>
 
 				</Level>
@@ -46234,6 +46192,27 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1716898471371</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1721036302503</Id>
+					<Name><![CDATA[p_pandNaam]]></Name>
+					<X>250</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1721036302501</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
