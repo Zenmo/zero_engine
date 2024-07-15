@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -12496,6 +12496,9 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_pand_nr]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pandNaam]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -41640,9 +41643,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[b_useHydrogenLocally]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -45991,7 +45991,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1702460377737</Id>
 					<Name><![CDATA[p_buildingAdress]]></Name>
-					<X>40</X><Y>330</Y>
+					<X>40</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46012,7 +46012,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398523</Id>
 					<Name><![CDATA[p_huisnummer]]></Name>
-					<X>40</X><Y>370</Y>
+					<X>40</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46033,7 +46033,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398526</Id>
 					<Name><![CDATA[p_openbareR]]></Name>
-					<X>40</X><Y>350</Y>
+					<X>40</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46054,7 +46054,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398534</Id>
 					<Name><![CDATA[p_woonplaats]]></Name>
-					<X>40</X><Y>450</Y>
+					<X>40</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46075,7 +46075,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398537</Id>
 					<Name><![CDATA[p_huisletter]]></Name>
-					<X>40</X><Y>390</Y>
+					<X>40</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46096,7 +46096,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398540</Id>
 					<Name><![CDATA[p_toevoeging]]></Name>
-					<X>40</X><Y>410</Y>
+					<X>40</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46117,7 +46117,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 				<Variable Class="Parameter">
 					<Id>1704894398543</Id>
 					<Name><![CDATA[p_postcode]]></Name>
-					<X>40</X><Y>430</Y>
+					<X>40</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46160,7 +46160,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 					<Id>1715847529655</Id>
 					<Name><![CDATA[p_trafoID]]></Name>
 					<Description><![CDATA[temporary parameter untill the trafo id has a seperate colomn in the DB]]></Description>
-					<X>40</X><Y>600</Y>
+					<X>40</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46234,6 +46234,27 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1716898471371</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1720957704753</Id>
+					<Name><![CDATA[p_pandNaam]]></Name>
+					<X>40</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1720957704751</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -46362,29 +46383,6 @@ gisRegion.setLineWidth( width );]]></Body>
 					<Z>0</Z>
 					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
 
-			<Presentation>
-				<Text>
-					<Id>1702460377734</Id>
-					<Name><![CDATA[text10]]></Name>
-					<X>30</X><Y>300</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Toegevoegd_door_Ate]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-			</Presentation>
 
 				</Level>
 			</Presentation>
@@ -47046,7 +47044,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="PlainVariable">
 					<Id>1718899895524</Id>
 					<Name><![CDATA[v_isActiveCharger]]></Name>
-					<X>250</X><Y>300</Y>
+					<X>250</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47055,10 +47053,25 @@ public void f_operateFixedAssets(){
 						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1720728863554</Id>
+					<Name><![CDATA[v_netBewustLadenActive]]></Name>
+					<X>250</X><Y>380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1717959948784</Id>
 					<Name><![CDATA[p_gisregion]]></Name>
-					<X>50</X><Y>510</Y>
+					<X>150</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47142,7 +47155,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1718879495372</Id>
 					<Name><![CDATA[p_CPOName]]></Name>
-					<X>190</X><Y>510</Y>
+					<X>50</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47163,7 +47176,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1718903294274</Id>
 					<Name><![CDATA[p_isInitialCharger]]></Name>
-					<X>250</X><Y>320</Y>
+					<X>250</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47184,7 +47197,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1720377369145</Id>
 					<Name><![CDATA[p_chargingProfileName]]></Name>
-					<X>250</X><Y>340</Y>
+					<X>250</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
