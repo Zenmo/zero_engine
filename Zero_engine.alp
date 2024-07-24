@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161156" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -19909,6 +19909,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1720520594279</Id>
 					<Name><![CDATA[v_enableNFato]]></Name>
 					<X>250</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1721729079619</Id>
+					<Name><![CDATA[v_hasQuarterHourlyValues]]></Name>
+					<X>250</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46331,6 +46346,17 @@ gisRegion.setLineWidth( width );]]></Body>
 					<Body><![CDATA[gisRegion.setFillColor( color );
 ]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1721720076889</Id>
+					<Name><![CDATA[f_initializeBuildingConnections]]></Name>
+					<X>715</X><Y>35</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -48054,6 +48080,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 	public double yearlyDemandHydrogen_kWh;
 	public double yearlyDemandMethane_kWh;
 	public double yearlyDemandDiesel_kWh;
+	public double consumptionScaling_fr = 1;
 	/**
      * Default constructor
      */
@@ -51732,7 +51759,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_hydrogenEnergyDensity_kWh_Nm3;
 	public double p_avgDieselConsumptionCar_kmpl;
 	public double p_avgGasolineConsumptionCar_kmpl;
-	public double p_hydrogenEnergyDensity_kWh_kg;
+	public double p_hydrogenSpecificEnergy_kWh_kg;
 	public double p_hydrogenDensity_kg_Nm3;
 	public double p_oxygenDensity_kg_Nm3;
 	public double p_avgCOPHeatpump;
