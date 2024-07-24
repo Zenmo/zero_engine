@@ -12546,9 +12546,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_trafoID]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_pandcluster_nr]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12585,27 +12582,6 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_defaultFillColor]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_buildingAdress]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_defaultLineWidth]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12613,6 +12589,9 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_pandNaam]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_annotation]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12665,12 +12644,12 @@ f_initializeForecasts();]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[zero_engine]]></PackageName>
-						<ClassName><![CDATA[GIS_Area]]></ClassName>
+						<ClassName><![CDATA[GIS_Object]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[zero_engine]]></PackageName>
-							<ClassName><![CDATA[GIS_Area]]></ClassName>
+							<ClassName><![CDATA[GIS_Object]]></ClassName>
 							<ItemName><![CDATA[1667726338855]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
@@ -12704,6 +12683,9 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_defaultLineStyle]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_annotation]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12816,6 +12798,9 @@ f_initializeForecasts();]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_defaultLineStyle]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_annotation]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -21077,7 +21062,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1704895219414</Id>
-					<Name><![CDATA[c_connectedGISAreas]]></Name>
+					<Name><![CDATA[c_connectedGISObjects]]></Name>
 					<X>50</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21085,7 +21070,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[GIS_Area]]></ElementClass>
+						<ElementClass><![CDATA[GIS_Object]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -21108,7 +21093,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1715082351013</Id>
 					<Name><![CDATA[c_heatingTypes]]></Name>
-					<X>250</X><Y>530</Y>
+					<X>280</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23081,10 +23066,10 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//
-if ( c_connectedGISAreas.size()>0) { // can this go into initialisation function?
+if ( c_connectedGISObjects.size()>0) { // can this go into initialisation function?
 	//p_floorSurfaceArea_m2 = totalSurfaceAreaGC_m2;
-	p_longitude = c_connectedGISAreas.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
-	p_latitude = c_connectedGISAreas.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
+	p_longitude = c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
+	p_latitude = c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
 	setLatLon(p_latitude, p_longitude);  
 			
 	//If GC has no assigned trafo_id --> Assign to nearest trafo
@@ -44940,7 +44925,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1667726338857</Id>
-			<Name><![CDATA[GIS_Area]]></Name>
+			<Name><![CDATA[GIS_Object]]></Name>
+			<Description><![CDATA[Generic Object for GISRegions. Is used for GridConnections of type: GCEnergyProduction, GCEnergyConversion, GCGridBattery, GCPublicCharger.]]></Description>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1667726338855</Id>
@@ -45036,7 +45022,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 				<Variable Class="Parameter">
 					<Id>1697009799975</Id>
 					<Name><![CDATA[gisRegion]]></Name>
-					<X>50</X><Y>120</Y>
+					<X>50</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -45057,7 +45043,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 				<Variable Class="Parameter">
 					<Id>1697009799980</Id>
 					<Name><![CDATA[p_longitude]]></Name>
-					<X>50</X><Y>60</Y>
+					<X>50</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -45100,7 +45086,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<Id>1697464235545</Id>
 					<Name><![CDATA[p_areaType]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>50</X><Y>40</Y>
+					<X>50</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -45124,7 +45110,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 				<Variable Class="Parameter">
 					<Id>1702547667207</Id>
 					<Name><![CDATA[p_GISRegion_coords]]></Name>
-					<X>50</X><Y>100</Y>
+					<X>50</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -45250,6 +45236,27 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1721809794727</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1721830375724</Id>
+					<Name><![CDATA[p_annotation]]></Name>
+					<X>50</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1721830375722</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -46097,9 +46104,10 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 		<ActiveObjectClass>
 			<Id>1676382560905</Id>
 			<Name><![CDATA[GIS_Building]]></Name>
+			<Description><![CDATA[Object for GISRegions of buildings. Contains information about the building. The adresses are available through the contained GridConnections.]]></Description>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
-				<ClassName><![CDATA[GIS_Area]]></ClassName>
+				<ClassName><![CDATA[GIS_Object]]></ClassName>
 			</ExtendsReference>
 			<Parameters>
 				<Parameter>
@@ -46131,6 +46139,42 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_defaultLineStyle]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_status]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_useType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_buildingType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_buildingYear]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floors]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pandcluster_nr]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_uniek_pand]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pand_nr]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_pandNaam]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_annotation]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -46252,7 +46296,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1696858052529</Id>
 					<Name><![CDATA[p_status]]></Name>
-					<X>50</X><Y>530</Y>
+					<X>40</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46273,7 +46317,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1696858052547</Id>
 					<Name><![CDATA[p_useType]]></Name>
-					<X>50</X><Y>550</Y>
+					<X>40</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46294,7 +46338,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1696858052551</Id>
 					<Name><![CDATA[p_buildingType]]></Name>
-					<X>50</X><Y>490</Y>
+					<X>40</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46318,7 +46362,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1696858052555</Id>
 					<Name><![CDATA[p_buildingYear]]></Name>
-					<X>50</X><Y>510</Y>
+					<X>40</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46339,7 +46383,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1696858052560</Id>
 					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
-					<X>50</X><Y>450</Y>
+					<X>40</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46360,7 +46404,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1696858052564</Id>
 					<Name><![CDATA[p_floors]]></Name>
-					<X>50</X><Y>430</Y>
+					<X>40</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46381,7 +46425,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1714137583569</Id>
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-					<X>50</X><Y>470</Y>
+					<X>40</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46400,31 +46444,9 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1715847529655</Id>
-					<Name><![CDATA[p_trafoID]]></Name>
-					<Description><![CDATA[temporary parameter untill the trafo id has a seperate colomn in the DB]]></Description>
-					<X>470</X><Y>360</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1715847529653</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1716898390947</Id>
 					<Name><![CDATA[p_pandcluster_nr]]></Name>
-					<X>50</X><Y>620</Y>
+					<X>40</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46445,7 +46467,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1716898460038</Id>
 					<Name><![CDATA[p_uniek_pand]]></Name>
-					<X>50</X><Y>580</Y>
+					<X>40</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46466,7 +46488,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1716898471373</Id>
 					<Name><![CDATA[p_pand_nr]]></Name>
-					<X>50</X><Y>600</Y>
+					<X>40</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46487,7 +46509,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1721036302503</Id>
 					<Name><![CDATA[p_pandNaam]]></Name>
-					<X>50</X><Y>410</Y>
+					<X>40</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46498,153 +46520,6 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1721036302501</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873816</Id>
-					<Name><![CDATA[p_huisnummer]]></Name>
-					<X>50</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873814</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873819</Id>
-					<Name><![CDATA[p_openbareR]]></Name>
-					<X>50</X><Y>220</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873817</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873822</Id>
-					<Name><![CDATA[p_woonplaats]]></Name>
-					<X>50</X><Y>320</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873820</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873825</Id>
-					<Name><![CDATA[p_huisletter]]></Name>
-					<X>50</X><Y>260</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873823</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873828</Id>
-					<Name><![CDATA[p_toevoeging]]></Name>
-					<X>50</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873826</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873831</Id>
-					<Name><![CDATA[p_postcode]]></Name>
-					<X>50</X><Y>300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873829</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1721723873834</Id>
-					<Name><![CDATA[p_buildingAdress]]></Name>
-					<X>50</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1721723873832</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -46723,7 +46598,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Text>
 					<Id>1721721465291</Id>
 					<Name><![CDATA[t_buildingDescription1]]></Name>
-					<X>60</X><Y>370</Y>
+					<X>50</X><Y>180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46734,27 +46609,6 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Building Info]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>18</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1721723873813</Id>
-					<Name><![CDATA[t_adressDescription]]></Name>
-					<X>60</X><Y>160</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Adress Info]]></Text>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>18</Size>
@@ -46786,9 +46640,10 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 		<ActiveObjectClass>
 			<Id>1660572036696</Id>
 			<Name><![CDATA[GIS_Parcel]]></Name>
+			<Description><![CDATA[Object for GISRegions of empty parcels. c_containedGridConnections should always be empty, hence the adress]]></Description>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
-				<ClassName><![CDATA[GIS_Area]]></ClassName>
+				<ClassName><![CDATA[GIS_Object]]></ClassName>
 			</ExtendsReference>
 			<Parameters>
 				<Parameter>
@@ -46820,6 +46675,30 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_defaultLineStyle]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_woonplaats]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisletter]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_toevoeging]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_postcode]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fullAdress]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_annotation]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -47043,6 +46922,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Variable Class="Parameter">
 					<Id>1721721402317</Id>
 					<Name><![CDATA[p_fullAdress]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>50</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -47881,7 +47761,7 @@ public void f_operateFlexAssets(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[GIS_Area]]></Type>
+						<Type><![CDATA[GIS_Object]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<UnitOfValue Class="TimeUnits"><![CDATA[SECOND]]></UnitOfValue>
 						<SdArray>false</SdArray>
