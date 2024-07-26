@@ -12636,7 +12636,7 @@ f_initializeForecasts();]]></Body>
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1676382641980</Id>
-					<Name><![CDATA[pop_GIS_Areas]]></Name>
+					<Name><![CDATA[pop_GIS_Objects]]></Name>
 					<X>297</X><Y>382</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -45025,7 +45025,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<X>50</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 						<Type><![CDATA[GISRegion]]></Type>
@@ -45110,6 +45110,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 				<Variable Class="Parameter">
 					<Id>1702547667207</Id>
 					<Name><![CDATA[p_GISRegion_coords]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>50</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -46141,39 +46142,6 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<Name><![CDATA[p_defaultLineStyle]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_status]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_useType]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_buildingType]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_buildingYear]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_floors]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_pandcluster_nr]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_uniek_pand]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_pand_nr]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_pandNaam]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_annotation]]></Name>
 				</Parameter>
 			</Parameters>
@@ -46675,27 +46643,6 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_defaultLineStyle]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_fullAdress]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_annotation]]></Name>
