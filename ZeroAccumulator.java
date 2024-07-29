@@ -130,4 +130,13 @@ public class ZeroAccumulator {
             return ZeroMath.arrayMultiply(timeSeries.clone(), sampleWeight);
         }
     }
+
+    public Double getY(int i) {
+        if (!hasTimeSeries) {
+            return null;
+        }
+        else {
+            return timeSeries[i];
+        }
+    }
 }
