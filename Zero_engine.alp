@@ -4980,7 +4980,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1721289658521</Id>
@@ -40238,9 +40238,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_DHheatStorage]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
