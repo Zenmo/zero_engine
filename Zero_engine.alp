@@ -15131,6 +15131,21 @@ geupdate vanuit
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1722352346370</Id>
+					<Name><![CDATA[p_hasManualGridTopology]]></Name>
+					<X>-320</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658477613290</Id>
 					<Name><![CDATA[p_gridNodeID]]></Name>
@@ -17247,6 +17262,27 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>HH_mm</LabelFormat>
     			</TimePlot>
+				<Text>
+					<Id>1722352346368</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>-330</X><Y>90</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[TEMPORARY CHECK (REMOVE ONCE NO LONGER NEEDED)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -20313,9 +20349,8 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721833484396</Id>
 					<Name><![CDATA[v_previousPowerHeat_kW]]></Name>
-					<X>1120</X><Y>290</Y>
 					<Description><![CDATA[Heat balance of previous timestep]]></Description>
-					<X>250</X><Y>230</Y>
+					<X>1120</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20325,7 +20360,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
-					</Properties>				
+					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1721122517382</Id>
@@ -20367,6 +20402,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1722352060217</Id>
+					<Name><![CDATA[p_hasManualGridTopology]]></Name>
+					<X>-390</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -26705,6 +26755,27 @@ else {
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>20</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1722352069030</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>-400</X><Y>530</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[TEMPORARY CHECK (REMOVE ONCE NO LONGER NEEDED)]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
