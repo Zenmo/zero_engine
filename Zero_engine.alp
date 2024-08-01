@@ -1027,12 +1027,28 @@
 				<Name><![CDATA[COOP]]></Name>
 			</Option>
 			<Option>
-				<Id>1707990736908</Id>
-				<Name><![CDATA[OTHER]]></Name>
+				<Id>1722505556838</Id>
+				<Name><![CDATA[SOLARFARM_OP]]></Name>
+			</Option>
+			<Option>
+				<Id>1722505534634</Id>
+				<Name><![CDATA[WINDFARM_OP]]></Name>
+			</Option>
+			<Option>
+				<Id>1722505559622</Id>
+				<Name><![CDATA[ELECTROLYSER_OP]]></Name>
+			</Option>
+			<Option>
+				<Id>1722505562966</Id>
+				<Name><![CDATA[BATTERY_OP]]></Name>
 			</Option>
 			<Option>
 				<Id>1717960327813</Id>
-				<Name><![CDATA[CPO]]></Name>
+				<Name><![CDATA[CHARGEPOINT_OP]]></Name>
+			</Option>
+			<Option>
+				<Id>1707990736908</Id>
+				<Name><![CDATA[OTHER]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -10557,10 +10573,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -10572,16 +10588,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -10590,7 +10606,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11488,10 +11507,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -11518,16 +11537,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -11542,10 +11561,13 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_nageisoleerd]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11680,10 +11702,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -11695,16 +11717,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -11713,10 +11735,13 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHheatStorage]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11848,10 +11873,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -11863,16 +11888,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -11881,7 +11906,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12016,10 +12044,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -12028,16 +12056,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -12088,7 +12116,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12223,10 +12254,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -12235,16 +12266,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -12253,7 +12284,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12385,10 +12419,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -12400,16 +12434,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -12418,7 +12452,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12550,10 +12587,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -12565,16 +12602,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -12583,7 +12620,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -13060,10 +13100,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -13072,16 +13112,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -13102,13 +13142,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_CPOName]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isInitialCharger]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_chargingProfileName]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -13247,10 +13290,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisnummer]]></Name>
+							<Name><![CDATA[p_houseNumber]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_openbareR]]></Name>
+							<Name><![CDATA[p_streetName]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -13259,16 +13302,16 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_GISPoint]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_woonplaats]]></Name>
+							<Name><![CDATA[p_city]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_huisletter]]></Name>
+							<Name><![CDATA[p_houseLetter]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_toevoeging]]></Name>
+							<Name><![CDATA[p_houseAddition]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_postcode]]></Name>
+							<Name><![CDATA[p_postalcode]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_owner]]></Name>
@@ -13277,7 +13320,10 @@ f_initializeForecasts();]]></Body>
 							<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+							<Name><![CDATA[p_purposeBAG]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_name]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15446,18 +15492,19 @@ geupdate vanuit
 					<Id>1709911209033</Id>
 					<Name><![CDATA[p_nodeStatus]]></Name>
 					<Description><![CDATA[Shows if the node is active or not active]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>50</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
+						<Type><![CDATA[boolean]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1709911209031</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -20903,14 +20950,14 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1697034280325</Id>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 					<X>50</X><Y>335</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
+						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
@@ -20924,7 +20971,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1697034280332</Id>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 					<X>50</X><Y>315</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20987,7 +21034,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004315356</Id>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 					<X>50</X><Y>415</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21008,7 +21055,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004325816</Id>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 					<X>50</X><Y>355</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21029,7 +21076,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004335815</Id>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 					<X>50</X><Y>375</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21050,7 +21097,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1703004381440</Id>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 					<X>50</X><Y>395</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21113,7 +21160,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1718887078133</Id>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
 					<X>50</X><Y>436</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -21125,6 +21172,27 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1718887078131</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1722429053561</Id>
+					<Name><![CDATA[p_name]]></Name>
+					<X>-300</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1722429053559</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -23287,7 +23355,8 @@ if (p_parentNodeElectricID == null) {
 
 f_connectToParents();
 if (!l_parentNodeElectric.isConnected()) {
-	traceln("GC: %s", this);
+	traceln("GC: %s with id %s and name %s", this, p_gridConnectionID, p_name);
+	traceln("GN id %s", p_parentNodeElectricID);
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
 }
 else {
@@ -30603,13 +30672,13 @@ energyModel.c_connectionOwners.add(this);]]></StartupCode>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
+						<Type><![CDATA[boolean]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1709048918240</Id>
 							<Label><![CDATA[p_detailedCompany]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -38631,10 +38700,10 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -38646,16 +38715,16 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -38664,10 +38733,10 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_eigenOprit]]></Name>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -40585,10 +40654,10 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -40600,16 +40669,16 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -40618,7 +40687,10 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -41786,10 +41858,10 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -41801,16 +41873,16 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -41819,7 +41891,10 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -42244,10 +42319,10 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -42256,16 +42331,16 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -42274,7 +42349,10 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -43905,10 +43983,10 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -43920,16 +43998,16 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -43938,7 +44016,10 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -44585,10 +44666,10 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionID]]></Name>
@@ -44600,16 +44681,16 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -44618,7 +44699,10 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -45822,10 +45906,10 @@ public void f_resetSpecificGCStates(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -45834,16 +45918,16 @@ public void f_resetSpecificGCStates(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -45852,7 +45936,10 @@ public void f_resetSpecificGCStates(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -47406,10 +47493,10 @@ public void f_operateFixedAssets(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -47418,16 +47505,16 @@ public void f_operateFixedAssets(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -47436,7 +47523,10 @@ public void f_operateFixedAssets(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -47923,10 +48013,10 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
+					<Name><![CDATA[p_houseNumber]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
+					<Name><![CDATA[p_streetName]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
@@ -47935,16 +48025,16 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_GISPoint]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_woonplaats]]></Name>
+					<Name><![CDATA[p_city]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_huisletter]]></Name>
+					<Name><![CDATA[p_houseLetter]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_toevoeging]]></Name>
+					<Name><![CDATA[p_houseAddition]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_postcode]]></Name>
+					<Name><![CDATA[p_postalcode]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_owner]]></Name>
@@ -47953,7 +48043,10 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_gebruiksdoelBAG]]></Name>
+					<Name><![CDATA[p_purposeBAG]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_name]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
