@@ -11581,6 +11581,9 @@ f_initializeForecasts();]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_curtailmentMode]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_eigenOprit]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -38825,6 +38828,9 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_curtailmentMode]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_eigenOprit]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -39369,6 +39375,27 @@ public void f_simpleCharging(){
 						<ParameterEditor>
 							<Id>1717417303618</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1722350833847</Id>
+					<Name><![CDATA[p_eigenOprit]]></Name>
+					<X>440</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1722350833845</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
