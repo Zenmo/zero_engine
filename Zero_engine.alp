@@ -17902,22 +17902,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1670254349157</Id>
-					<Name><![CDATA[v_enable_nfATO_b]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>80</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1671027786040</Id>
 					<Name><![CDATA[v_windProductionElectric_kW]]></Name>
 					<X>150</X><Y>1220</Y>
@@ -21470,72 +21454,143 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516437894</Id>
+					<Name><![CDATA[c_fixedConsumptionElectricAssets]]></Name>
+					<X>-120</X><Y>980</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516468629</Id>
+					<Name><![CDATA[c_electricHobAssets]]></Name>
+					<X>-120</X><Y>1050</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516515981</Id>
+					<Name><![CDATA[c_conversionElectricAssets]]></Name>
+					<X>-120</X><Y>1030</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516532968</Id>
+					<Name><![CDATA[c_electricHeatpumpAssets]]></Name>
+					<X>-120</X><Y>1070</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516544883</Id>
+					<Name><![CDATA[c_electrolyserAssets]]></Name>
+					<X>-120</X><Y>1090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516559744</Id>
+					<Name><![CDATA[c_EvAssets]]></Name>
+					<X>-120</X><Y>1110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516579645</Id>
+					<Name><![CDATA[c_pvAssets]]></Name>
+					<X>-120</X><Y>1200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722516597938</Id>
+					<Name><![CDATA[c_windAssets]]></Name>
+					<X>-120</X><Y>1220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722517079192</Id>
+					<Name><![CDATA[c_batteryAssets]]></Name>
+					<X>-120</X><Y>1130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EA]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
-				<Event>
-					<Id>1668981173495</Id>
-					<Name><![CDATA[e_startNonFirmATO]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="cyclic">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1669017600000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[1d/1f]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[v_allowedCapacity_kW = p_nfatoLvl_kW;]]></Action>
-				</Event>
-				<Event>
-					<Id>1668981249422</Id>
-					<Name><![CDATA[e_endNonFirmATO]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>120</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="cyclic">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1669017600000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[1d/1f]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;]]></Action>
-				</Event>
 				<Event>
 					<Id>1675011317461</Id>
 					<Name><![CDATA[e_initializeLowPassEprice]]></Name>
@@ -21747,255 +21802,9 @@ v_electricityChargedByBattery_kWh += max(v_batteryPowerElectric_kW, 0) * energyM
 v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * energyModel.p_timeStep_h;*/
 
 if (energyModel.v_isRapidRun){
-	v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
-
-	double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW));
-	double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW));
-	
-	if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { 
-	// Daytime totals. Use overal-total minus daytime total to get nighttime totals.
-		v_daytimeTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
-		v_daytimeTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
-		
-		v_daytimeElectricityImport_MWh += max(0,v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
-		v_daytimeElectricityExport_MWh += max(0,-v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
-		v_daytimeMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
-		v_daytimeDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
-		v_daytimeHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
-		v_daytimeHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
-		
-		v_daytimeEnergyConsumed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
-		v_daytimeEnergyProduced_MWh += v_currentEnergyProduction_kW / 1000 * energyModel.p_timeStep_h;
-		v_daytimeElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
-		v_daytimeElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;		
-	}  /*else { // Nighttime
-		v_nighttimeTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
-		v_nighttimeTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
-		v_nighttimeEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
-		v_nighttimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
-		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
-		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
-	}  */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
-
-	// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
-	if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		v_weekdayTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
-		v_weekdayTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
-		
-		v_weekdayElectricityImport_MWh += max(0,v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
-		v_weekdayElectricityExport_MWh += max(0,-v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
-		v_weekdayMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
-		v_weekdayDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
-		v_weekdayHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
-		v_weekdayHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
-		
-		v_weekdayEnergyConsumed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
-		v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW / 1000 * energyModel.p_timeStep_h;
-		v_weekdayElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
-		v_weekdayElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;		
-	} /*else { // Weekend
-		v_weekendTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
-		v_weekendTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
-		v_weekendEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
-		v_weekendEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
-		//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
-		//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
-	} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
-
-	if (energyModel.t_h > energyModel.p_startHourSummerWeek & energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7) {
-		acc_summerElectricityBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerElectricity_kW);
-		acc_summerMethaneBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerMethane_kW);
-		acc_summerHydrogenBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerHydrogen_kW);
-		acc_summerDieselBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerDiesel_kW);
-		acc_summerHeatBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerHeat_kW);
-		acc_summerTotalImport_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,currentImport_kW);
-		acc_summerTotalExport_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,currentExport_kW);
-		
-		acc_summerEnergyProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyProduction_kW);
-		acc_summerEnergyConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyConsumption_kW);
-		acc_summerEnergyCurtailed_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyCurtailed_kW);
-		acc_summerElectricityProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentElectricityProduction_kW);
-		acc_summerElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentElectricityConsumption_kW);
-		acc_summerHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyProductionHeat_kW);	
-	
-		acc_summerConnectionCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek, p_connectionCapacity_kW);
-	}	
-
-	if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7) {
-		acc_winterElectricityBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerElectricity_kW);
-		acc_winterMethaneBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerMethane_kW);
-		acc_winterHydrogenBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerHydrogen_kW);
-		acc_winterDieselBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerDiesel_kW);
-		acc_winterHeatBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerHeat_kW);
-		acc_winterTotalImport_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,currentImport_kW);
-		acc_winterTotalExport_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,currentExport_kW);
-		
-		acc_winterEnergyProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyProduction_kW);
-		acc_winterEnergyConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyConsumption_kW);
-		acc_winterEnergyCurtailed_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyCurtailed_kW);
-		acc_winterElectricityProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityProduction_kW);
-		acc_winterElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityConsumption_kW);
-		acc_winterHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyProductionHeat_kW);	
-	
-		acc_winterConnectionCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek, p_connectionCapacity_kW);
-	
-	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//Summer week
-	if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
-		data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
-		data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
-		data_summerWeekElectricTrucksDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
-		data_summerWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
-		data_summerWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
-		data_summerWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
-		data_summerWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
-		
-		data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
-		data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-		data_summerWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
-		data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
-		data_summerWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
-		data_summerWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
-	}
-	
-	//Winter week
-	if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
-		data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
-		data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
-		data_winterWeekElectricTrucksDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
-		data_winterWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
-		data_winterWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
-		data_winterWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
-		data_winterWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
-		
-		data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
-		data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-		data_winterWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
-		data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
-		data_winterWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
-		data_winterWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
-	}
-
-	// Daily Totals used in year profile.
-	//v_dailyElectricityDemand_kWh += v_currentElectricityConsumption_kW*energyModel.p_timeStep_h;
-	//v_dailyElectricitySupply_kWh += v_currentElectricityProduction_kW*energyModel.p_timeStep_h; 
-	// Demand
-	v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
-	v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
-	v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
-	v_dailyNeighborhoodBatteryDemand_kW += max(0,v_batteryPowerElectric_kW);
-	v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
-	v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
-	v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
-	//v_dailyDistrictHeatDemand_kWh += 
-	// Supply
-	v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
-	v_dailyWindGeneration_kW += v_windProductionElectric_kW;
-	v_dailyNeighborhoodBatterySupply_kW += max(0,-v_batteryPowerElectric_kW);
-	v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
-	v_dailyNaturalGasSupply_kW += max(0, -v_currentPowerMethane_kW);
-	v_dailyHydrogenSupply_kW += max(0, -v_currentPowerHydrogen_kW);
-	
-	//v_dailyDistrictHeatSupply_kWh += 
-	
-	if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
-		//data_annualElectricityDemand_MWh.add(energyModel.t_h, v_dailyElectricityDemand_kWh/(24 / energyModel.p_timeStep_h));
-		//data_annualElectricitySupply_MWh.add(energyModel.t_h, v_dailyElectricitySupply_kWh/(24 / energyModel.p_timeStep_h)); 
-		// Demand
-		data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualNeighborhoodBatteryDemand_kW.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
-		data_annualHydrogenDemand_kW.add(energyModel.t_h, v_dailyHydrogenDemand_kW/(24 / energyModel.p_timeStep_h));
-		//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatDemand_kWh/(24 / energyModel.p_timeStep_h));
-		// Supply
-		data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
-		data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
-		data_annualNeighborhoodBatterySupply_kW.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / energyModel.p_timeStep_h));
-		data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
-		data_annualNaturalGasSupply_kW.add(energyModel.t_h, v_dailyNaturalGasSupply_kW/(24 / energyModel.p_timeStep_h));
-		data_annualHydrogenSupply_kW.add(energyModel.t_h, v_dailyHydrogenSupply_kW/(24 / energyModel.p_timeStep_h));
-		//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatSupply_kWh/(24 / energyModel.p_timeStep_h));
-
-		// Resetting the daily values
-		//v_dailyElectricityDemand_kWh = 0;
-		//v_dailyElectricitySupply_kWh = 0;
-		v_dailyBaseloadElectricityDemand_kW = 0;
-		v_dailyHeatPumpElectricityDemand_kW = 0;
-		v_dailyElectricVehicleDemand_kW = 0;
-		v_dailyNeighborhoodBatteryDemand_kW = 0;
-		v_dailyNaturalGasDemand_kW = 0;
-		v_dailyDieselDemand_kW = 0;
-		v_dailyHydrogenDemand_kW = 0;
-		//v_dailyDistrictHeatDemand_kWh = 0;
-		v_dailyPVGeneration_kW = 0;
-		v_dailyWindGeneration_kW = 0;
-		v_dailyNeighborhoodBatterySupply_kW = 0;
-		v_dailyV2GSupply_kW = 0;
-		v_dailyNaturalGasSupply_kW = 0;
-		v_dailyHydrogenSupply_kW = 0;
-		//v_dailyDistrictHeatSupply_kWh = 0;
-	}
-	
-	// Store time series in arrays
-	acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentPowerElectricity_kW);
-	acc_annualMethaneBalance_kW.addStep(energyModel.t_h,v_currentPowerMethane_kW);
-	acc_annualHydrogenBalance_kW.addStep(energyModel.t_h,v_currentPowerHydrogen_kW);
-	acc_annualDieselBalance_kW.addStep(energyModel.t_h,v_currentPowerDiesel_kW);
-	acc_annualHeatBalance_kW.addStep(energyModel.t_h,v_currentPowerHeat_kW);
-	acc_annualTotalImport_kW.addStep(energyModel.t_h,currentImport_kW);
-	acc_annualTotalExport_kW.addStep(energyModel.t_h,currentExport_kW);
-	
-	acc_annualEnergyProduction_kW.addStep(energyModel.t_h,v_currentEnergyProduction_kW);
-	acc_annualEnergyConsumption_kW.addStep(energyModel.t_h,v_currentEnergyConsumption_kW);
-	acc_annualEnergyCurtailed_kW.addStep(energyModel.t_h,v_currentEnergyCurtailed_kW);
-	acc_annualElectricityProduction_kW.addStep(energyModel.t_h,v_currentElectricityProduction_kW);
-	acc_annualElectricityConsumption_kW.addStep(energyModel.t_h,v_currentElectricityConsumption_kW);
-	acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHeat_kW);
-	
-	//a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerElectricity_kW;
-	//a_annualMethaneBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerMethane_kW;
-	//a_annualHydrogenBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerHydrogen_kW;
-	//a_annualDieselBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerDiesel_kW;
-	//a_annualHeatBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerHeat_kW;
-	//a_annualTotalImport_kW[energyModel.v_timeStepsElapsed] = currentImport_kW;//max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerMethane_kW) + max(0, v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW) + max(0,v_currentPowerHeat_kW);
-	//a_annualTotalExport_kW[energyModel.v_timeStepsElapsed] = currentExport_kW;//max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerMethane_kW) + max(0, -v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW) + max(0,-v_currentPowerHeat_kW);
-	
-	//a_annualEnergyProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProduction_kW;
-	//a_annualEnergyConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyConsumption_kW;
-	//a_annualEnergyCurtailed_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyCurtailed_kW;
-	//a_annualElectricityProduction_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityProduction_kW;
-	//a_annualElectricityConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
-	//a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
-	
-} else {
-	data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
-	
-	data_naturalGasDemand_kW.update();
-	data_dieselDemand_kW.update();
-	data_hydrogenDemand_kW.update();
-	data_baseloadElectricityDemand_kW.update();
-	data_hydrogenElectricityDemand_kW.update();
-	data_heatPumpElectricityDemand_kW.update();
-	//data_electricCarsDemand_kW.update();
-	data_electricTrucksDemand_kW.update();
-	data_neighborhoodBatteryDemand_kW.update();	
-	
-	data_PVGeneration_kW.update();	
-	data_windGeneration_kW.update();	
-	data_neighborhoodBatterySupply_kW.update();	
-	data_V2GSupply_kW.update();
-	data_hydrogenSupply_kW.update();
-	
-	data_totalDemand_kW.update();
-	data_totalSupply_kW.update();
-	
-	data_gridCapacityDemand_kW.update();
-	data_gridCapacitySupply_kW.update();
-	//data_totalNetLoad_kW.update();
+	f_fillAnnualDatasets();
+	} else {
+	f_fillLiveDatasets();
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -22311,7 +22120,7 @@ c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
 //if (p_energyProfile != null & p_company_connection_id != null) {
 for(J_EAProfile e : c_profileAssets) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.t_h );		
-		if (e.profileType == OL_ProfileAssetType.CHARGING){
+		/*if (e.profileType == OL_ProfileAssetType.CHARGING){
 			v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 		} else if( e.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
 			v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
@@ -22319,16 +22128,16 @@ for(J_EAProfile e : c_profileAssets) {
 			v_windProductionElectric_kW += flowsArray[0];
 		} else {
 			traceln( "Profile type is not registered in GridConnection");
-		}
+		}*/
 }
 
 for(J_EAProduction e : c_productionAssets) {
 	if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentSolarPowerNormalized_r );
-		v_pvProductionElectric_kW += flowsArray[0];	
+		//v_pvProductionElectric_kW += flowsArray[0];	
 	} else if(e.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentWindPowerNormalized_r );
-		v_windProductionElectric_kW += flowsArray[0];	
+		//v_windProductionElectric_kW += flowsArray[0];	
 	} else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATHT ) {
 		e.v_powerFraction_fr = 1;
 		e.f_updateAllFlows( e.v_powerFraction_fr );
@@ -22379,7 +22188,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
 					// Try if the energyAssetName matches with one of the names in comp_elec_consumption
 			}
-			v_fixedConsumptionElectric_kW += flowsArray[4];
+			//v_fixedConsumptionElectric_kW += flowsArray[4];
 		}
 		else {
 			throw new RuntimeException("ELECTRICITY_DEMAND with unknown name in GC: " + this.p_gridConnectionID);
@@ -22695,7 +22504,7 @@ f_resetSpecificGCStates();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669022552777</Id>
 					<Name><![CDATA[f_batteryManagementBalance]]></Name>
-					<X>800</X><Y>280</Y>
+					<X>810</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22738,7 +22547,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669022552780</Id>
 					<Name><![CDATA[f_batteryManagementPrice]]></Name>
-					<X>800</X><Y>300</Y>
+					<X>810</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22813,7 +22622,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669025846794</Id>
 					<Name><![CDATA[f_manageHeatingAssets]]></Name>
-					<X>800</X><Y>340</Y>
+					<X>810</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22856,30 +22665,30 @@ if ( p_BuildingThermalAsset == null ) {
 			//p_BuildingThermalAsset.v_powerFraction_fr = 0;
 		}
 		p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
-		v_conversionPowerElectric_kW += p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;//			traceln("heatpump electricity consumption: " + (p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW));
-		if (p_secondaryHeatingAsset instanceof J_EAConversionHeatPump) {
+		//v_conversionPowerElectric_kW += p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;//			traceln("heatpump electricity consumption: " + (p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW));
+		/*if (p_secondaryHeatingAsset instanceof J_EAConversionHeatPump) {
 			v_heatPumpElectricityConsumption_kW += p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
-		}
+		}*/
 	}
 	if (p_primaryHeatingAsset != null) {
 		double[] flowsArray = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-		v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
-		if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
+		//v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
+		/*if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
 			v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
-		}
+		}*/
 	}
 } else { // TODO: Implement thermostat functionality for thermal storage asset. Where to get temp setpoint?
 	traceln("No thermostat functionality available to manage p_BuildingThermalAsset!!");
 	double[] flowsArray = p_primaryHeatingAsset.f_updateAllFlows(0);
-	v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
+	/*	v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 	if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
 		v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0]; 
-	}
+	}*/
 	flowsArray = p_secondaryHeatingAsset.f_updateAllFlows(0);	
-	v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
+	/*v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 	if (p_secondaryHeatingAsset instanceof J_EAConversionHeatPump) {
 		v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
-	}
+	}*/
 	p_BuildingThermalAsset.f_updateAllFlows(0);
 }]]></Body>
 				</Function>
@@ -22912,7 +22721,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995172</Id>
 					<Name><![CDATA[f_manageCharging]]></Name>
-					<X>800</X><Y>360</Y>
+					<X>810</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22966,7 +22775,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	else {
 		if (ev.vehicleScaling != 0) {
 			double[] flowsArray = ev.f_updateAllFlows(1);
-			v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 		}
 	}
 }
@@ -23012,7 +22821,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		double chargingSpeed = min (chargingPower_kW, ev.capacityElectric_kW / ev.vehicleScaling );
 		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
 		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
-		v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 	}
 }]]></Body>
 				</Function>
@@ -23062,7 +22871,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 				ratio = 1;
 			}*/
 			double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
-			v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 			//v_evChargingPowerElectric_kW += ev.electricityConsumption_kW - ev.electricityProduction_kW;
 		}
 	}
@@ -23184,7 +22993,8 @@ if (j_ea instanceof J_EAVehicle) {
 		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
-		energyModel.c_EVs.add((J_EAEV)vehicle);		
+		energyModel.c_EVs.add((J_EAEV)vehicle);	
+		c_EvAssets.add(j_ea);
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
@@ -23213,6 +23023,9 @@ if (j_ea instanceof J_EAVehicle) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		p_DHWAsset = (J_EAConsumption)j_ea;	
 	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
+		c_fixedConsumptionElectricAssets.add(j_ea);
+	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.add((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
@@ -23224,6 +23037,7 @@ if (j_ea instanceof J_EAVehicle) {
 			l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
 		}
 		energyModel.v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
@@ -23231,11 +23045,16 @@ if (j_ea instanceof J_EAVehicle) {
 			l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
 		}
 		energyModel.v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		c_windAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
-	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		//traceln("Adding HOB to house" + this);
+		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
+			c_electricHobAssets.add(j_ea);
+			c_conversionElectricAssets.add(j_ea);
+		}
 		if (p_cookingTracker == null) {
 			//traceln("Adding cookingTracker to house" + this);
 			int rowIndex = uniform_discr(2, 300); 
@@ -23247,14 +23066,12 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		c_electricHeatpumpAssets.add(j_ea);
+		c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	//} else if (j_ea instanceof J_EAConversionCurtailer) {
-//		p_curtailer = (J_EAConversionCurtailer)j_ea;
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -23278,12 +23095,25 @@ if (j_ea instanceof J_EAVehicle) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
+		c_batteryAssets.add(j_ea);
 	} else if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
 	c_profileAssets.add((J_EAProfile)j_ea);
+	if (((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHARGING){
+			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+			c_EvAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
+			//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
+			c_fixedConsumptionElectricAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
+			//v_windProductionElectric_kW += flowsArray[0];
+			c_windAssets.add(j_ea);
+		} else {
+			traceln( "Profile type is not registered in GridConnection");
+		}
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -23458,7 +23288,7 @@ v_allowedCapacity_kW = p_connectionCapacity_kW;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1701956274181</Id>
 					<Name><![CDATA[f_calculateKPIs]]></Name>
-					<X>780</X><Y>520</Y>
+					<X>780</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23730,7 +23560,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[DataSet]]></ReturnType>
 					<Id>1708520215192</Id>
 					<Name><![CDATA[f_getDuurkromme]]></Name>
-					<X>800</X><Y>540</Y>
+					<X>800</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24193,7 +24023,7 @@ else {
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-					<X>800.6</X><Y>319.4</Y>
+					<X>810.6</X><Y>319.4</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24308,6 +24138,316 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 	//v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
 }
 	]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722518225504</Id>
+					<Name><![CDATA[f_fillLiveDatasets]]></Name>
+					<X>820</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
+
+data_naturalGasDemand_kW.update();
+data_dieselDemand_kW.update();
+data_hydrogenDemand_kW.update();
+data_hydrogenSupply_kW.update();
+
+data_totalDemand_kW.update();
+data_totalSupply_kW.update();
+
+data_gridCapacityDemand_kW.update();
+data_gridCapacitySupply_kW.update();
+// Gather specific electricity flows from corresponding energy assets
+v_fixedConsumptionElectric_kW = 0;
+for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
+	v_fixedConsumptionElectric_kW += j_ea.getLastFlows()[4];
+}
+data_baseloadElectricityDemand_kW.update();
+
+v_hydrogenElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electrolyserAssets) {
+	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows()[4];
+}
+data_hydrogenElectricityDemand_kW.update();
+
+v_heatPumpElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electricHeatpumpAssets) {
+	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows()[4];
+}
+data_heatPumpElectricityDemand_kW.update();
+
+//data_electricCarsDemand_kW.update();
+v_evChargingPowerElectric_kW = 0;
+for (J_EA j_ea : c_EvAssets) {
+	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
+}
+data_electricTrucksDemand_kW.update();
+data_V2GSupply_kW.update();
+
+v_batteryPowerElectric_kW = 0;
+
+for (J_EA j_ea : c_batteryAssets) {
+	v_batteryPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
+}
+data_neighborhoodBatteryDemand_kW.update();	
+data_neighborhoodBatterySupply_kW.update();	
+
+v_pvProductionElectric_kW = 0;
+for (J_EA j_ea : c_pvAssets) {
+	v_pvProductionElectric_kW += j_ea.getLastFlows()[0];
+}
+data_PVGeneration_kW.update();	
+
+v_windProductionElectric_kW = 0;
+for (J_EA j_ea : c_windAssets) {
+	v_windProductionElectric_kW += j_ea.getLastFlows()[0];
+}
+data_windGeneration_kW.update();	
+
+
+
+
+//data_totalNetLoad_kW.update();]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722518905501</Id>
+					<Name><![CDATA[f_fillAnnualDatasets]]></Name>
+					<X>820</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
+
+double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW));
+double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW));
+
+if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { 
+// Daytime totals. Use overal-total minus daytime total to get nighttime totals.
+	v_daytimeTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
+	v_daytimeTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
+	
+	v_daytimeElectricityImport_MWh += max(0,v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
+	v_daytimeElectricityExport_MWh += max(0,-v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
+	v_daytimeMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
+	v_daytimeDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
+	v_daytimeHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
+	v_daytimeHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
+	
+	v_daytimeEnergyConsumed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
+	v_daytimeEnergyProduced_MWh += v_currentEnergyProduction_kW / 1000 * energyModel.p_timeStep_h;
+	v_daytimeElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
+	v_daytimeElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;		
+}  /*else { // Nighttime
+	v_nighttimeTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
+	v_nighttimeTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
+	v_nighttimeEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
+	v_nighttimeEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
+	//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
+	//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
+}  */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
+
+// Weekday totals. Use overal-totals minus weekday totals to get weekend totals.
+if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	v_weekdayTotalImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
+	v_weekdayTotalExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
+	
+	v_weekdayElectricityImport_MWh += max(0,v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
+	v_weekdayElectricityExport_MWh += max(0,-v_currentPowerElectricity_kW) /1000 * energyModel.p_timeStep_h;
+	v_weekdayMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekdayDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekdayHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
+	v_weekdayHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
+	
+	v_weekdayEnergyConsumed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekdayElectricityConsumed_MWh += v_currentElectricityConsumption_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekdayElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;		
+} /*else { // Weekend
+	v_weekendTotalImport_MWh += currentImport_MWh * energyModel.p_timeStep_h;
+	v_weekendTotalExport_MWh += currentExport_MWh * energyModel.p_timeStep_h;
+	v_weekendEnergyUsed_MWh += v_currentEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekendEnergyProduced_MWh += ( v_currentEnergyProduction_kW/1000 - v_currentEnergyCurtailed_kW/1000 ) * energyModel.p_timeStep_h;
+	//v_nighttimePeakElecImport_kW = max(v_nighttimePeakElecImport_kW,v_currentElectricityImport_kW);
+	//v_nighttimePeakElecExport_kW = max(v_nighttimePeakElecExport_kW,v_currentElectricityExport_kW);
+} */ // This is done 'cheaper' i f_calculateKPIs as a single calculation at the end of the run, by taking the difference of total yearly quantities and daytime quantities
+
+if (energyModel.t_h > energyModel.p_startHourSummerWeek & energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7) {
+	acc_summerElectricityBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerElectricity_kW);
+	acc_summerMethaneBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerMethane_kW);
+	acc_summerHydrogenBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerHydrogen_kW);
+	acc_summerDieselBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerDiesel_kW);
+	acc_summerHeatBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentPowerHeat_kW);
+	acc_summerTotalImport_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,currentImport_kW);
+	acc_summerTotalExport_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,currentExport_kW);
+	
+	acc_summerEnergyProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyProduction_kW);
+	acc_summerEnergyConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyConsumption_kW);
+	acc_summerEnergyCurtailed_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyCurtailed_kW);
+	acc_summerElectricityProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentElectricityProduction_kW);
+	acc_summerElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentElectricityConsumption_kW);
+	acc_summerHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyProductionHeat_kW);	
+
+	acc_summerConnectionCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek, p_connectionCapacity_kW);
+}	
+
+if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7) {
+	acc_winterElectricityBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerElectricity_kW);
+	acc_winterMethaneBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerMethane_kW);
+	acc_winterHydrogenBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerHydrogen_kW);
+	acc_winterDieselBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerDiesel_kW);
+	acc_winterHeatBalance_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentPowerHeat_kW);
+	acc_winterTotalImport_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,currentImport_kW);
+	acc_winterTotalExport_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,currentExport_kW);
+	
+	acc_winterEnergyProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyProduction_kW);
+	acc_winterEnergyConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyConsumption_kW);
+	acc_winterEnergyCurtailed_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyCurtailed_kW);
+	acc_winterElectricityProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityProduction_kW);
+	acc_winterElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityConsumption_kW);
+	acc_winterHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyProductionHeat_kW);	
+
+	acc_winterConnectionCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek, p_connectionCapacity_kW);
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Summer week
+if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
+	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
+	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
+	data_summerWeekElectricTrucksDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
+	data_summerWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
+	data_summerWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
+	data_summerWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
+	
+	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
+	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
+	data_summerWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
+	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
+	data_summerWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
+	data_summerWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
+}
+
+//Winter week
+if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
+	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
+	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
+	data_winterWeekElectricTrucksDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
+	data_winterWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
+	data_winterWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
+	data_winterWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
+	
+	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
+	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
+	data_winterWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
+	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
+	data_winterWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
+	data_winterWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
+}
+
+// Daily Totals used in year profile.
+//v_dailyElectricityDemand_kWh += v_currentElectricityConsumption_kW*energyModel.p_timeStep_h;
+//v_dailyElectricitySupply_kWh += v_currentElectricityProduction_kW*energyModel.p_timeStep_h; 
+// Demand
+v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
+v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
+v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
+v_dailyNeighborhoodBatteryDemand_kW += max(0,v_batteryPowerElectric_kW);
+v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
+v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
+v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
+//v_dailyDistrictHeatDemand_kWh += 
+// Supply
+v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
+v_dailyWindGeneration_kW += v_windProductionElectric_kW;
+v_dailyNeighborhoodBatterySupply_kW += max(0,-v_batteryPowerElectric_kW);
+v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
+v_dailyNaturalGasSupply_kW += max(0, -v_currentPowerMethane_kW);
+v_dailyHydrogenSupply_kW += max(0, -v_currentPowerHydrogen_kW);
+
+//v_dailyDistrictHeatSupply_kWh += 
+
+if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
+	//data_annualElectricityDemand_MWh.add(energyModel.t_h, v_dailyElectricityDemand_kWh/(24 / energyModel.p_timeStep_h));
+	//data_annualElectricitySupply_MWh.add(energyModel.t_h, v_dailyElectricitySupply_kWh/(24 / energyModel.p_timeStep_h)); 
+	// Demand
+	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualNeighborhoodBatteryDemand_kW.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualHydrogenDemand_kW.add(energyModel.t_h, v_dailyHydrogenDemand_kW/(24 / energyModel.p_timeStep_h));
+	//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatDemand_kWh/(24 / energyModel.p_timeStep_h));
+	// Supply
+	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
+	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
+	data_annualNeighborhoodBatterySupply_kW.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualNaturalGasSupply_kW.add(energyModel.t_h, v_dailyNaturalGasSupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualHydrogenSupply_kW.add(energyModel.t_h, v_dailyHydrogenSupply_kW/(24 / energyModel.p_timeStep_h));
+	//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatSupply_kWh/(24 / energyModel.p_timeStep_h));
+
+	// Resetting the daily values
+	//v_dailyElectricityDemand_kWh = 0;
+	//v_dailyElectricitySupply_kWh = 0;
+	v_dailyBaseloadElectricityDemand_kW = 0;
+	v_dailyHeatPumpElectricityDemand_kW = 0;
+	v_dailyElectricVehicleDemand_kW = 0;
+	v_dailyNeighborhoodBatteryDemand_kW = 0;
+	v_dailyNaturalGasDemand_kW = 0;
+	v_dailyDieselDemand_kW = 0;
+	v_dailyHydrogenDemand_kW = 0;
+	//v_dailyDistrictHeatDemand_kWh = 0;
+	v_dailyPVGeneration_kW = 0;
+	v_dailyWindGeneration_kW = 0;
+	v_dailyNeighborhoodBatterySupply_kW = 0;
+	v_dailyV2GSupply_kW = 0;
+	v_dailyNaturalGasSupply_kW = 0;
+	v_dailyHydrogenSupply_kW = 0;
+	//v_dailyDistrictHeatSupply_kWh = 0;
+}
+
+// Store time series in arrays
+acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentPowerElectricity_kW);
+acc_annualMethaneBalance_kW.addStep(energyModel.t_h,v_currentPowerMethane_kW);
+acc_annualHydrogenBalance_kW.addStep(energyModel.t_h,v_currentPowerHydrogen_kW);
+acc_annualDieselBalance_kW.addStep(energyModel.t_h,v_currentPowerDiesel_kW);
+acc_annualHeatBalance_kW.addStep(energyModel.t_h,v_currentPowerHeat_kW);
+acc_annualTotalImport_kW.addStep(energyModel.t_h,currentImport_kW);
+acc_annualTotalExport_kW.addStep(energyModel.t_h,currentExport_kW);
+
+acc_annualEnergyProduction_kW.addStep(energyModel.t_h,v_currentEnergyProduction_kW);
+acc_annualEnergyConsumption_kW.addStep(energyModel.t_h,v_currentEnergyConsumption_kW);
+acc_annualEnergyCurtailed_kW.addStep(energyModel.t_h,v_currentEnergyCurtailed_kW);
+acc_annualElectricityProduction_kW.addStep(energyModel.t_h,v_currentElectricityProduction_kW);
+acc_annualElectricityConsumption_kW.addStep(energyModel.t_h,v_currentElectricityConsumption_kW);
+acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHeat_kW);
+
+//a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerElectricity_kW;
+//a_annualMethaneBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerMethane_kW;
+//a_annualHydrogenBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerHydrogen_kW;
+//a_annualDieselBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerDiesel_kW;
+//a_annualHeatBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerHeat_kW;
+//a_annualTotalImport_kW[energyModel.v_timeStepsElapsed] = currentImport_kW;//max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerMethane_kW) + max(0, v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW) + max(0,v_currentPowerHeat_kW);
+//a_annualTotalExport_kW[energyModel.v_timeStepsElapsed] = currentExport_kW;//max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerMethane_kW) + max(0, -v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW) + max(0,-v_currentPowerHeat_kW);
+
+//a_annualEnergyProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProduction_kW;
+//a_annualEnergyConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyConsumption_kW;
+//a_annualEnergyCurtailed_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyCurtailed_kW;
+//a_annualElectricityProduction_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityProduction_kW;
+//a_annualElectricityConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
+//a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -39599,10 +39739,10 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 
 if (p_BuildingThermalAsset!=null && p_primaryHeatingAsset != null) {
 	double[] flowsArray = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-	v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
+	/*v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 	if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
 		v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
-	}
+	}*/
 	
 	p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
 
@@ -39655,7 +39795,7 @@ if( p_batteryAsset != null){
 		break;
 	}
 	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batteryPowerElectric_kW =  arr[4] - arr[0];
+	//v_batteryPowerElectric_kW =  arr[4] - arr[0];
 	//v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
@@ -39676,7 +39816,7 @@ if ( p_batteryAsset != null ) {
 		}
 
 		double[] flowsArray = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		v_batteryPowerElectric_kW = flowsArray[4] - flowsArray[0];//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+		//v_batteryPowerElectric_kW = flowsArray[4] - flowsArray[0];//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
 	}
@@ -40106,7 +40246,7 @@ if( p_householdEV.getCurrentStateOfCharge() < 1 ) {
 	}//*/
 }
 double[] flowsArray = p_householdEV.f_updateAllFlows(powerFraction_fr);
-v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_householdEV.electricityConsumption_kW - p_householdEV.electricityProduction_kW;
+//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_householdEV.electricityConsumption_kW - p_householdEV.electricityProduction_kW;
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -46227,7 +46367,7 @@ public void f_resetSpecificGCStates(){
 				<Variable Class="PlainVariable">
 					<Id>1721139587618</Id>
 					<Name><![CDATA[v_enableFuelCell]]></Name>
-					<X>250</X><Y>360</Y>
+					<X>250</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46261,7 +46401,7 @@ if (p_batteryAsset != null){ // TEST CODE
 		f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 		double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 		//traceln("flows:" + Arrays.toString(arr));
-		v_batteryPowerElectric_kW = arr[4] - arr[0];
+		//v_batteryPowerElectric_kW = arr[4] - arr[0];
 	}
 }
 /*for( J_EAVehicle v: c_vehicleAssets) {
