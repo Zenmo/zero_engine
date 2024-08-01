@@ -4727,7 +4727,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[10]]></Code>
+							<Code><![CDATA[18]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1671636582216</Id>
@@ -14414,7 +14414,7 @@ geupdate vanuit
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[10]]></Code>
+							<Code><![CDATA[0]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -16073,7 +16073,9 @@ if (energyModel.v_isRapidRun){
 	} else {
 		acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW;
 	}*/
-	acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW);
+	//acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW);
+	acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricityLowPassed_kW);
+	
 	
 	v_annualElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000; // replace with acc.getSumPos(); in KPI function!
 	v_annualElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000; // replace with acc.getSumPos(); in KPI function!
@@ -22001,7 +22003,7 @@ if (energyModel.v_isRapidRun){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664961435385</Id>
 					<Name><![CDATA[f_operateFlexAssets]]></Name>
-					<X>800</X><Y>240</Y>
+					<X>800</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22293,7 +22295,7 @@ if (energyModel.b_addKpiVisuals) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528300576</Id>
 					<Name><![CDATA[f_operateFixedAssets]]></Name>
-					<X>800</X><Y>220</Y>
+					<X>800</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23669,7 +23671,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1702373771433</Id>
 					<Name><![CDATA[f_addFlows]]></Name>
-					<X>800</X><Y>200</Y>
+					<X>820</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23693,14 +23695,15 @@ v_currentPowerDiesel_kW += arr[8];
 if (caller instanceof J_EAStorageElectric) { // Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need a 10th element in arr indicating power into storage??
 	v_currentEnergyConsumption_kW += max(0,arr[9]);
 	v_currentElectricityConsumption_kW += max(0,arr[9]);
-} else if (caller instanceof J_EAProduction) {
+/*} else if (caller instanceof J_EAProduction) {
 	v_currentEnergyProduction_kW += -arr[9]; // This enables J_EAProduction to use curtailer method and 'cancel' production! 
-	v_currentEnergyCurtailed_kW += max(0,arr[9]);
+//	v_currentEnergyCurtailed_kW += max(0,arr[9]);
 	v_currentElectricityProduction_kW += arr[0];
 } else if (caller instanceof J_EAConsumption) {
 	v_currentEnergyConsumption_kW += arr[9]; // This enables J_EAConsumption to use curtailer method and 'cancel' consumption! 
 	//v_currentLoadLoad_kW += max(0,arr[9]); // lostLoad is not yet a thing
 	v_currentElectricityConsumption_kW += arr[4];
+*/
 } else {
 	v_currentEnergyProduction_kW += max(0,-arr[9]);
 	v_currentEnergyConsumption_kW += max(0,arr[9]);		
@@ -24095,7 +24098,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 	break;
 	case PRICE:
 	// Prevent feedin when nodal price is negative
-	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < -0.2) {
+	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < -0.15) {
 		for (J_EAProduction j_ea : c_productionAssets) {
 			j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW);
 			if (!(v_currentPowerElectricity_kW < 0)) {
@@ -24250,6 +24253,61 @@ else {
 
 //traceln("Hello!");
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722512642645</Id>
+					<Name><![CDATA[f_removeFlows]]></Name>
+					<X>910</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[arr]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[caller]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[// This function is called from each energy asset when curtailment or 'lostLoad' methods are called
+// {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
+v_currentPowerElectricity_kW += arr[4] - arr[0];
+v_currentPowerMethane_kW += arr[5] - arr[1];
+v_currentPowerHydrogen_kW += arr[6] - arr[2];
+v_currentPowerHeat_kW += arr[7] - arr[3];
+v_currentPowerDiesel_kW += arr[8];
+
+if (caller instanceof J_EAStorageElectric) { // Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need a 10th element in arr indicating power into storage??
+	v_currentEnergyConsumption_kW += min(0,arr[9]);
+	v_currentElectricityConsumption_kW += min(0,arr[9]);
+/*} else if (caller instanceof J_EAProduction) {
+	v_currentEnergyProduction_kW += -max(0,arr[9]); // This enables J_EAProduction to use curtailer method and 'cancel' production! 
+	
+	v_currentElectricityProduction_kW += arr[0];
+} else if (caller instanceof J_EAConsumption) {
+	v_currentEnergyConsumption_kW += min(0,arr[9]); // This enables J_EAConsumption to use curtailer method and 'cancel' consumption! 
+	//v_currentLoadLoad_kW += max(0,arr[9]); // lostLoad is not yet a thing
+	v_currentElectricityConsumption_kW += arr[4];*/
+} else {
+	double curtailment_kW = max(0,arr[9]); // In the removeFlows function, positive energyUse is 'curtailed' production 
+	double lostLoad_kW = max(0,-arr[9]); // In the removeFlows function, negative energyUse is 'removed' consumption
+	v_currentEnergyCurtailed_kW += curtailment_kW;
+	v_currentEnergyProduction_kW -= curtailment_kW; 
+	v_currentEnergyConsumption_kW -= lostLoad_kW; 
+	
+	v_currentElectricityConsumption_kW += arr[4];
+	v_currentElectricityProduction_kW += arr[0];
+}
+
+if ( caller instanceof J_EAConversionHeatPump ) {
+	//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
+	v_currentEnergyProductionHeat_kW = -arr[9];
+	//v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
+}
+	]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -27426,6 +27484,30 @@ data_currentProductionElectricity_kW.add(totalElectricityProduction_kW);
 data_currentConsumptionElectricity_kW.add(totalElectricityConsumption_kW);
 ]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722513456426</Id>
+					<Name><![CDATA[f_removeFlows]]></Name>
+					<X>830</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[arr]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Body><![CDATA[v_currentProductionElectricity_kW += arr[0];
+v_currentConsumptionElectricity_kW += arr[4];
+v_currentProductionMethane_kW += arr[1];
+v_currentConsumptionMethane_kW += arr[5];
+v_currentProductionHydrogen_kW += arr[2];
+v_currentConsumptionHydrogen_kW += arr[6];
+v_currentProductionHeat_kW += arr[3];
+v_currentConsumptionHeat_kW += arr[7];
+v_currentConsumptionDiesel_kW += arr[8];]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
@@ -28400,6 +28482,7 @@ p_parentAgent = j_ea.parentAgent;
 
 @since: Sprint 6
 @author: Gillis]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>220</X><Y>-50</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -31833,6 +31916,7 @@ f_connectToParentActor();]]></Body>
 				<AgentLink>
 					<Id>1703256762219</Id>
 					<Name><![CDATA[l_subTenant]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>200</X><Y>-20</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -31854,6 +31938,7 @@ f_connectToParentActor();]]></Body>
 				<AgentLink>
 					<Id>1704895007444</Id>
 					<Name><![CDATA[l_ownedBuildings]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>310</X><Y>-20</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -38827,9 +38912,6 @@ public void f_simpleCharging(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_curtailmentMode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_eigenOprit]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -48521,11 +48603,13 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	lastFlowsArray[9] += curtailmentPower_kW;
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr, this);
+    		((GridConnection)parentAgent).f_removeFlows(arr, this);
     	}
     	if (ui_energyAsset!= null) {
-    		ui_energyAsset.f_addFlows(arr);
+    		ui_energyAsset.f_removeFlows(arr);
     	}
+    	this.lastFlowsArray[0] -= curtailmentPower_kW;
+    	this.lastFlowsArray[9] += curtailmentPower_kW;
     	return arr;
     }
 	
@@ -48785,11 +48869,13 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	lastFlowsArray[9] -= curtailmentPower_kW;
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr, this);
+    		((GridConnection)parentAgent).f_removeFlows(arr, this);
     	}
     	if (ui_energyAsset!= null) {
-    		ui_energyAsset.f_addFlows(arr);
+    		ui_energyAsset.f_removeFlows(arr);
     	}
+    	this.lastFlowsArray[4] -= curtailmentPower_kW;
+    	this.lastFlowsArray[9] -= curtailmentPower_kW;
     	return arr;
     }
 
@@ -49289,10 +49375,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	lastFlowsArray[9] -= curtailmentPower_kW;
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(arr, this);
+    		((GridConnection)parentAgent).f_removeFlows(arr, this);
     	}
     	if (ui_energyAsset!= null) {
-    		ui_energyAsset.f_addFlows(arr);
+    		ui_energyAsset.f_removeFlows(arr);
     	}
     	return arr;
     }
