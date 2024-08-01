@@ -7702,9 +7702,7 @@ acc_winterHeatProduction_kW.reset();]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Sorting netload values for belastingsduurkromme
 data_netbelastingDuurkrommeVorige_kW.reset();
-//data_netbelastingshistogram_kW.reset();
 boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
-//int arraySize = data_annualBusinessParkNetLoad_kW.size();
 double[] a_annualNetLoad_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
 int arraySize = a_annualNetLoad_kW.length;
 
@@ -7715,6 +7713,9 @@ double[] netLoadArrayDay_kW = new double[arraySize/2];
 double[] netLoadArrayNight_kW = new double[arraySize/2];
 double[] netLoadArrayWeekday_kW = new double[arraySize];
 double[] netLoadArrayWeekend_kW = new double[arraySize];
+
+/*a_annualNetLoad_kW = Arrays.copyOfRange(a_annualNetLoad_kW, 500, 8759);
+arraySize = a_annualNetLoad_kW.length;*/
 
 int i_winter=0;
 int i_summer=0;
@@ -14429,7 +14430,7 @@ geupdate vanuit
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.8*1.2 * energyModel.p_timeStep_h) //0.2 ]]></Code>
+							<Code><![CDATA[min(1, 0.8 * energyModel.p_timeStep_h) //0.2 ]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -15578,7 +15579,7 @@ geupdate vanuit
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0.3]]></Code>
+							<Code><![CDATA[0.20]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1718896438694</Id>
@@ -21787,23 +21788,9 @@ else {
 	pauseSimulation();
 }
 
-// Energy totals per energy asset category, where are they used??
-/*v_electricityChargedByEVs_kWh += max(v_evChargingPowerElectric_kW, 0) * energyModel.p_timeStep_h;
-v_electricityDischargedByEVs_kWh += max(-v_evChargingPowerElectric_kW, 0) * energyModel.p_timeStep_h;
-
-v_electricityProducedPV_kWh += v_pvProductionElectric_kW * energyModel.p_timeStep_h;
-v_electricityProducedWind_kWh += v_windProductionElectric_kW * energyModel.p_timeStep_h;
-v_electricityConsumedFixedProfile_kWh += v_fixedConsumptionElectric_kW * energyModel.p_timeStep_h;
-
-v_electricityConvertedToX_kWh += max(v_conversionPowerElectric_kW, 0) * energyModel.p_timeStep_h;
-v_xConvertedToElectricity_kWh += max(-v_conversionPowerElectric_kW, 0) * energyModel.p_timeStep_h;
-
-v_electricityChargedByBattery_kWh += max(v_batteryPowerElectric_kW, 0) * energyModel.p_timeStep_h;
-v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * energyModel.p_timeStep_h;*/
-
 if (energyModel.v_isRapidRun){
 	f_fillAnnualDatasets();
-	} else {
+} else {
 	f_fillLiveDatasets();
 }]]></Body>
 				</Function>
@@ -23928,10 +23915,13 @@ f_resetSpecificGCStatesAfterRapidRun();
 	break;
 	case PRICE:
 	// Prevent feedin when nodal price is negative
-	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < -0.15) {
+	double priceTreshold_eur = -0.1;
+	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
+	
+		double v_currentPowerElectricitySetpoint_kW = v_currentPowerElectricity_kW * max(0,1+(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
 		for (J_EAProduction j_ea : c_productionAssets) {
-			j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW);
-			if (!(v_currentPowerElectricity_kW < 0)) {
+			j_ea.curtailElectricityProduction(v_currentPowerElectricitySetpoint_kW-v_currentPowerElectricity_kW);
+			if (!(v_currentPowerElectricity_kW < v_currentPowerElectricitySetpoint_kW)) {
 				break;
 			}
 		}
@@ -24035,7 +24025,7 @@ else {
 					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//double willingnessToPayDefault_eurpkWh = 0.3;
 	double WTPfeedbackGain_eurpSOC = 0.5; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
-	double priceGain_kWhpeur = 3; // How strongly to ramp up power with price-delta's
+	double priceGain_kWhpeur = 2; // How strongly to ramp up power with price-delta's
 	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
 	
 	double chargeSetpoint_kW = 0;	
@@ -24047,13 +24037,6 @@ else {
 	
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 
-	/*	
-	double currentCoopElectricitySurplus_kW = -GN.v_currentLoadElectricity_kW + v_previousPowerElectricity_kW;			
-	double CoopConnectionCapacity_kW = 0.95*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
-	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);
-	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
-	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
-	*/
 	
 	double SOC_setp_fr = 0.9 - 3*GN.v_electricityYieldForecast_fr;	
 	//double SOC_setp_fr = 0.9 - 2*energyModel.v_WindYieldForecast_fr;	
@@ -24199,6 +24182,10 @@ data_neighborhoodBatterySupply_kW.update();
 v_pvProductionElectric_kW = 0;
 for (J_EA j_ea : c_pvAssets) {
 	v_pvProductionElectric_kW += j_ea.getLastFlows()[0];
+}
+if (v_pvProductionElectric_kW < 0) {
+	traceln("Negative v_pvProductionElectric_kW! Curtailment error? Value: %s", v_pvProductionElectric_kW);
+	pauseSimulation();
 }
 data_PVGeneration_kW.update();	
 
@@ -24353,9 +24340,53 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 	data_winterWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
 }
 
-// Daily Totals used in year profile.
-//v_dailyElectricityDemand_kWh += v_currentElectricityConsumption_kW*energyModel.p_timeStep_h;
-//v_dailyElectricitySupply_kWh += v_currentElectricityProduction_kW*energyModel.p_timeStep_h; 
+v_fixedConsumptionElectric_kW = 0;
+for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
+	v_fixedConsumptionElectric_kW += j_ea.getLastFlows()[4];
+}
+//data_baseloadElectricityDemand_kW.update();
+
+v_hydrogenElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electrolyserAssets) {
+	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows()[4];
+}
+//data_hydrogenElectricityDemand_kW.update();
+
+v_heatPumpElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electricHeatpumpAssets) {
+	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows()[4];
+}
+//data_heatPumpElectricityDemand_kW.update();
+
+//data_electricCarsDemand_kW.update();
+v_evChargingPowerElectric_kW = 0;
+for (J_EA j_ea : c_EvAssets) {
+	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
+}
+//data_electricTrucksDemand_kW.update();
+//data_V2GSupply_kW.update();
+
+v_batteryPowerElectric_kW = 0;
+
+for (J_EA j_ea : c_batteryAssets) {
+	v_batteryPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
+}
+//data_neighborhoodBatteryDemand_kW.update();	
+//data_neighborhoodBatterySupply_kW.update();	
+
+v_pvProductionElectric_kW = 0;
+for (J_EA j_ea : c_pvAssets) {
+	v_pvProductionElectric_kW += j_ea.getLastFlows()[0];
+}
+
+//data_PVGeneration_kW.update();	
+
+v_windProductionElectric_kW = 0;
+for (J_EA j_ea : c_windAssets) {
+	v_windProductionElectric_kW += j_ea.getLastFlows()[0];
+}
+//data_windGeneration_kW.update();	
+
 // Demand
 v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
@@ -48748,8 +48779,6 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_removeFlows(arr);
     	}
-    	this.lastFlowsArray[0] -= curtailmentPower_kW;
-    	this.lastFlowsArray[9] += curtailmentPower_kW;
     	return arr;
     }
 	
@@ -49014,8 +49043,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	if (ui_energyAsset!= null) {
     		ui_energyAsset.f_removeFlows(arr);
     	}
-    	this.lastFlowsArray[4] -= curtailmentPower_kW;
-    	this.lastFlowsArray[9] -= curtailmentPower_kW;
+
     	return arr;
     }
 
