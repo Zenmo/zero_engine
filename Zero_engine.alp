@@ -5420,7 +5420,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="CollectionVariable">
 					<Id>1722584740368</Id>
 					<Name><![CDATA[c_pausedGridConnections]]></Name>
-					<Description><![CDATA[A paused GridConnection is removed from the collection c_gridConnections and stored in here. Paused GridConnections are not ]]></Description>
+					<Description><![CDATA[A paused GridConnection is removed from the collection c_gridConnections and stored in here. Paused GridConnections are not operated or counted towards totals.]]></Description>
 					<X>90</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8044,6 +8044,7 @@ f_initializeForecasts();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722590514591</Id>
 					<Name><![CDATA[f_initializePause]]></Name>
+					<Description><![CDATA[Function to initialize the paused gridconnections.]]></Description>
 					<X>590</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24271,11 +24272,12 @@ else {
 //traceln("Hello!");
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722584668566</Id>
 					<Name><![CDATA[f_pause]]></Name>
+					<Description><![CDATA[Function to pause a gridconnection so it is not operated or counted towards totals in the energy model.]]></Description>
 					<X>780</X><Y>690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24288,6 +24290,12 @@ else {
 					<Body><![CDATA[if (isPaused) {
 	energyModel.c_gridConnections.remove(this);
 	energyModel.c_pausedGridConnections.add(this);
+	
+	// Set GIS Region visibility
+	for (GIS_Object obj : c_connectedGISObjects) {
+		obj.gisRegion.setVisible(false);
+	}
+	
 	
 	// update GN parents' wind / solar totals
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, false);
@@ -24325,6 +24333,11 @@ else {
 	energyModel.c_gridConnections.add(this);
 	energyModel.c_pausedGridConnections.remove(this);
 
+	// Set GIS Region visibility
+	for (GIS_Object obj : c_connectedGISObjects) {
+		obj.gisRegion.setVisible(true);
+	}
+	
 	// Set Connection Capacity according to NFATO
 	f_nfatoSetConnectionCapacity(false);
 	
@@ -26957,7 +26970,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722585008843</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>550</X><Y>590</Y>
+					<X>760</X><Y>720</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26979,7 +26992,7 @@ f_pause(v_isPaused);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722585348154</Id>
 					<Name><![CDATA[button1]]></Name>
-					<X>550</X><Y>640</Y>
+					<X>760</X><Y>770</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
