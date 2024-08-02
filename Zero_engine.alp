@@ -5063,7 +5063,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="CollectionVariable">
 					<Id>1663312177330</Id>
 					<Name><![CDATA[c_gridConnections]]></Name>
-					<X>90</X><Y>290</Y>
+					<X>90</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5360,7 +5360,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<Id>1716453161218</Id>
 					<Name><![CDATA[c_subGridConnections]]></Name>
 					<Description><![CDATA[A subGridConnections are a subset of (children of) of GridConnections that are "part" of another GC and thus are not counted towards the totals.]]></Description>
-					<X>90</X><Y>270</Y>
+					<X>90</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5413,6 +5413,22 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridNode]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1722584740368</Id>
+					<Name><![CDATA[c_pausedGridConnections]]></Name>
+					<Description><![CDATA[A paused GridConnection is removed from the collection c_gridConnections and stored in here. Paused GridConnections are not ]]></Description>
+					<X>90</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -7091,47 +7107,50 @@ double totalEnergyUsed_MWh = 0;
 double totalEnergyChargedOutsideModel_MWh = 0;
 double totalHeatProduced_MWh = 0;
 for (J_EA e : c_energyAssets) {
-	double EnergyUsed_kWh = e.getEnergyUsed_kWh();
-	//double electricityProduced_kWh = 0;
+	if (!((GridConnection) e.getParentAgent()).v_isPaused ) {
 	
-	//energyConsumed_MWh += max(0,EnergyUsed_kWh)/1000;
-	//energyProduced_MWh +=max(0,-EnergyUsed_kWh)/1000;
-	if (EnergyUsed_kWh > 0) {
-	
-		/*if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-			totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-		} else */
-		if( e instanceof J_EAConversionGasCHP ) {
-			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			//electricityProduced_kWh = ((J_EAConversionGasCHP)e).getElectricityProduced_kWh();
-			//electricityProduced_MWh += electricityProduced_kWh/1000;
+		double EnergyUsed_kWh = e.getEnergyUsed_kWh();
+		//double electricityProduced_kWh = 0;
+		
+		//energyConsumed_MWh += max(0,EnergyUsed_kWh)/1000;
+		//energyProduced_MWh +=max(0,-EnergyUsed_kWh)/1000;
+		if (EnergyUsed_kWh > 0) {
+		
+			/*if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+			} else */
+			if( e instanceof J_EAConversionGasCHP ) {
+				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				//electricityProduced_kWh = ((J_EAConversionGasCHP)e).getElectricityProduced_kWh();
+				//electricityProduced_MWh += electricityProduced_kWh/1000;
+			} else {
+				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+			}		
+			if ( e instanceof J_EABuilding ) {
+				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+				deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-18)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+			}
 		} else {
-			totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-		}		
-		if ( e instanceof J_EABuilding ) {
-			totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-			deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-18)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+			/*if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
+				electricityProduced_MWh -= EnergyUsed_kWh/1000;
+			}*/
+			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
 		}
-	} else {
-		/*if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
-			electricityProduced_MWh -= EnergyUsed_kWh/1000;
-		}*/
-		totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-	}
-	if (e instanceof J_EABuilding) {
-		totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-		totalHeatProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
-	}
-	if (e instanceof J_EAStorageHeat) {
-		totalAmbientHeating_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
-		totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;						
-	}
-	if (e instanceof J_EAEV) {
-		totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
-	}
-	if (e instanceof J_EAConversionHeatPump) {
-		totalHeatProduced_MWh -= EnergyUsed_kWh/1000;						
+		if (e instanceof J_EABuilding) {
+			totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+			totalHeatProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
+		}
+		if (e instanceof J_EAStorageHeat) {
+			totalAmbientHeating_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
+			totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;						
+		}
+		if (e instanceof J_EAEV) {
+			totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
+		}
+		if (e instanceof J_EAConversionHeatPump) {
+			totalHeatProduced_MWh -= EnergyUsed_kWh/1000;						
+		}
 	}
 }
 traceln("Check energy used from array and from energy assets: %s MWh", ( v_totalEnergyUsed_MWh - totalEnergyUsed_MWh) );
@@ -7939,14 +7958,19 @@ pop_connectionOwners.forEach(CO -> CO.f_initialize());
 f_buildGridNodeTree();
 c_gridConnections.forEach(GC -> GC.f_initialize());
 
+// Loop over populations to check v_ispaused
+f_initializePause();
+
 v_totalInstalledPVPower_kW = 0;
 v_totalInstalledWindPower_kW = 0;
 for (J_EA ea : c_energyAssets) {
-	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
-	}
-	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
+	if ( !((GridConnection) ea.getParentAgent()).v_isPaused ) {
+		if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+			v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
+		}
+		if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+			v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
+		}
 	}
 }
 for (GridNode GN : c_gridNodeExecutionList) {
@@ -8014,6 +8038,32 @@ f_initializeForecasts();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[return this.c_gridNodesNotTopLevel;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722590514591</Id>
+					<Name><![CDATA[f_initializePause]]></Name>
+					<X>590</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (GridConnection GC : EnergyProductionSites) {
+	if (GC.v_isPaused) {
+		GC.f_pause(true);
+	}
+}
+for (GridConnection GC : EnergyConversionSites) {
+	if (GC.v_isPaused) {
+		GC.f_pause(true);
+	}
+}
+for (GridConnection GC : GridBatteries) {
+	if (GC.v_isPaused) {
+		GC.f_pause(true);
+	}
+}]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -16602,14 +16652,9 @@ for (GridNode GN : c_connectedGridNodes ) {
 v_totalInstalledPVPower_kW = 0;
 
 for (GridConnection GC : c_connectedGridConnections) {
-	for (J_EA ea : GC.c_energyAssets) {
-		if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-			v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
-		}
-		if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-			v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
-		}
-		//if (ea.energyAssetType == OL_EnergyAssetType.) {
+	if (!GC.v_isPaused) {
+		v_totalInstalledWindPower_kW += GC.v_totalInstalledWindPower_kW;
+		v_totalInstalledPVPower_kW += GC.v_totalInstalledPVPower_kW;
 	}
 }
 
@@ -16644,6 +16689,55 @@ if ( p_energyType == OL_EnergyCarrierType.HEAT ) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722591244558</Id>
+					<Name><![CDATA[f_updateTotalInstalledProductionAssets]]></Name>
+					<X>1040</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[energyAssetType]]></Name>
+						<Type><![CDATA[OL_EnergyAssetType]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[power_kw]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[increase]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (energyAssetType == OL_EnergyAssetType.WINDMILL) {
+	if (increase) {
+		v_totalInstalledWindPower_kW += power_kw;
+	}
+	else {
+		v_totalInstalledWindPower_kW -= power_kw;
+	}
+}
+else if (energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+	if (increase) {
+		v_totalInstalledPVPower_kW += power_kw;
+	}
+	else {
+		v_totalInstalledPVPower_kW -= power_kw;
+	}
+}
+else {
+	throw new IllegalStateException("Wrong energy asset type");
+}
+
+if (p_parentNodeID != null) {
+	GridNode myParentNode = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_parentNodeID));
+	if (myParentNode != null) {
+		myParentNode.f_updateTotalInstalledProductionAssets(energyAssetType, power_kw, increase);
+	}
+}]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -20418,6 +20512,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1722584654288</Id>
+					<Name><![CDATA[v_isPaused]]></Name>
+					<X>250</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -23146,14 +23255,14 @@ if (j_ea instanceof J_EAVehicle) {
 		v_hasPV = true;
 		v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), true);
 		}
 		energyModel.v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), true);
 		}
 		energyModel.v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
 	}
@@ -23377,7 +23486,8 @@ else {
 
 f_setOperatingSwitches();
 f_initializeAccumulators();
-v_allowedCapacity_kW = p_connectionCapacity_kW;]]></Body>
+v_allowedCapacity_kW = p_connectionCapacity_kW;
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23860,14 +23970,14 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), false);
 		}
 		energyModel.v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), false);
 		}
 		energyModel.v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
 	}
@@ -24160,6 +24270,69 @@ else {
 
 //traceln("Hello!");
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722584668566</Id>
+					<Name><![CDATA[f_pause]]></Name>
+					<X>780</X><Y>690</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[isPaused]]></Name>
+						<Type><![CDATA[boolean]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (isPaused) {
+	energyModel.c_gridConnections.remove(this);
+	energyModel.c_pausedGridConnections.add(this);
+	
+	// update GN parents' wind / solar totals
+	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, false);
+	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, false);
+	
+	// Reset Connection Capacity to default
+	f_nfatoSetConnectionCapacity(true);
+	
+	// Is setting all of these to zero overkill?
+	v_previousPowerElectricity_kW = 0;
+	v_previousPowerHeat_kW = 0;
+	v_currentPowerElectricity_kW = 0;
+	v_currentPowerMethane_kW = 0;
+	v_currentPowerHydrogen_kW = 0;
+	v_currentPowerHeat_kW = 0;
+	v_currentPowerDiesel_kW = 0;
+	v_currentElectricityConsumption_kW = 0;
+	v_currentElectricityProduction_kW = 0;
+	v_currentEnergyConsumption_kW = 0;
+	v_currentEnergyProduction_kW = 0;
+	v_currentEnergyCurtailed_kW = 0;
+	v_currentEnergyProductionHeat_kW = 0;
+	v_fixedConsumptionElectric_kW = 0;
+	v_electricHobConsumption_kW = 0;
+	v_heatPumpElectricityConsumption_kW = 0;
+	v_hydrogenElectricityConsumption_kW = 0;
+	v_evChargingPowerElectric_kW = 0;
+	v_batteryPowerElectric_kW = 0;
+	v_windProductionElectric_kW = 0;
+	v_pvProductionElectric_kW = 0;
+	v_conversionPowerElectric_kW = 0;
+	
+}
+else {
+	energyModel.c_gridConnections.add(this);
+	energyModel.c_pausedGridConnections.remove(this);
+
+	// Set Connection Capacity according to NFATO
+	f_nfatoSetConnectionCapacity(false);
+	
+	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
+	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, true);
+	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, true);
+	
+}]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -26780,6 +26953,50 @@ else {
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1722585008843</Id>
+					<Name><![CDATA[button]]></Name>
+					<X>550</X><Y>590</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[v_isPaused = true;
+f_pause(v_isPaused);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[pause]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1722585348154</Id>
+					<Name><![CDATA[button1]]></Name>
+					<X>550</X><Y>640</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[v_isPaused = false;
+f_pause(v_isPaused);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[unpause]]></LabelText>
+					</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Level>
