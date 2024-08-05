@@ -23044,7 +23044,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	else {
 		if (ev.vehicleScaling != 0) {
 			double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-			//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - time( MINUTE );
+			//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
 			double maxChargingPower_kW = ev.getElectricCapacity_kW();
 			//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
 			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
@@ -23098,9 +23098,9 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	} else {
 		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
 		double chargeNeedForNextTrip_kWh = max(0, vehicle.energyNeedForNextTrip_kWh - vehicle.getStorageCapacity_kWh()*vehicle.getCurrentStateOfCharge());
-		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - time( MINUTE );
+		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
 		double maxChargingPower_kW = vehicle.getElectricCapacity_kW();
-		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - time ( MINUTE );
+		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
 		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
 
 		double priceGain_kWhpeur = 1; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
@@ -23336,9 +23336,9 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	} else {
 		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
 		double chargeNeedForNextTrip_kWh = vehicle.energyNeedForNextTrip_kWh - vehicle.getStorageCapacity_kWh()*vehicle.getCurrentStateOfCharge();
-		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - time( MINUTE );
+		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
 		double maxChargingPower_kW = vehicle.getElectricCapacity_kW();
-		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - time ( MINUTE );
+		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
 		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
 
 		double priceGain_kWhpeur = 1; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
@@ -40048,7 +40048,7 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 	}
 	else { // could use some charging
 		double chargeNeedForNextTrip_kWh = max(0, p_householdEV.tripTracker.v_energyNeedForNextTrip_kWh + p_householdEV.getStorageCapacity_kWh() * (p_minEVChargeTarget_fr - p_householdEV.getCurrentStateOfCharge()));
-		double timeToNextTrip_min = p_householdEV.tripTracker.v_nextEventStartTime_min - time ( MINUTE );
+		double timeToNextTrip_min = p_householdEV.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
 		double chargeDeadline_min = floor((p_householdEV.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / p_householdEV.getElectricCapacity_kW()) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
 		if ( chargeNeedForNextTrip_kWh == 0) { 
 			p_householdEV.chargingNeed = OL_EVChargingNeed.LOW;
