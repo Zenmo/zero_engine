@@ -1631,7 +1631,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1666979627442</Id>
 					<Name><![CDATA[v_totalBatteryInstalledCapacity_MWh]]></Name>
-					<X>-480</X><Y>800</Y>
+					<X>1117</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6204,7 +6204,7 @@ if (v_totalHydrogenImport_MWh > v_totalHydrogenExport_MWh) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_totalBatteryDischargeAmount_MWh = 0;
 v_totalBatteryChargeAmount_MWh = 0;
-v_totalBatteryInstalledCapacity_MWh = 0;
+//v_totalBatteryInstalledCapacity_MWh = 0;
 v_totalBatteryEnergyUsed_MWh = 0;
 
 for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs and c_storageAssets
@@ -6850,6 +6850,7 @@ for (GridConnection GC : c_gridConnections) {
 	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(time(MINUTE)));
 }
+f_setInitialValues();
 
 v_isRapidRun = false;
 b_addKpiVisuals = true;
@@ -7945,28 +7946,21 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// What if this function is accidently called twice? Need to start with a clean sheet?
 
-// Initialize all agents in the correct order
+// Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 // pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 
 f_buildGridNodeTree();
 c_gridConnections.forEach(GC -> GC.f_initialize());
 
-v_totalInstalledPVPower_kW = 0;
-v_totalInstalledWindPower_kW = 0;
-for (J_EA ea : c_energyAssets) {
-	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
-	}
-	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
-	}
-}
 for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_initializeGridnode();
 }
 
-f_initializeForecasts();]]></Body>
+f_initializeForecasts();
+
+// set initial values
+f_setInitialValues();]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -8027,6 +8021,34 @@ f_initializeForecasts();]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[return this.c_gridNodesNotTopLevel;]]></Body>
+				</Function>
+				<Function AccessType="private" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1722853692644</Id>
+					<Name><![CDATA[f_setInitialValues]]></Name>
+					<X>590</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_totalInstalledPVPower_kW = 0;
+v_totalInstalledWindPower_kW = 0;
+for (J_EA ea : c_energyAssets) {
+	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
+	}
+	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
+	}
+}
+
+// Total installed battery capacity
+v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric)/1000;
+traceln("Total installed battery capacity: %s MWh", v_totalBatteryInstalledCapacity_MWh);
+
+// Starting prices
+c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -15127,6 +15149,7 @@ geupdate vanuit
 				<Variable Class="PlainVariable">
 					<Id>1718896257049</Id>
 					<Name><![CDATA[v_currentParentNodalPrice_eurpkWh]]></Name>
+					<Description><![CDATA[Given a default value for 'top' agents, this can be seen as average market price of electricity.]]></Description>
 					<X>50</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15135,7 +15158,7 @@ geupdate vanuit
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
+							<Code><![CDATA[0.1]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -16066,8 +16089,7 @@ v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteEl
 
 if (energyModel.v_isRapidRun){
 	//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
-	//data_annualElectricityBalance_kW.add(energyModel.t_h, v_currentLoadElectricity_kW); // replace with array!
-	//a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentLoadElectricity_kW;
+	
 	/*if (energyModel.b_enableDLR) {
 		acc_annualElectricityBalance_kW.addStep(energyModel.t_h,100*v_currentLoadElectricity_kW/ (p_capacity_kW * energyModel.v_currentDLRfactor_fr));
 		//acc_DLR_kW.addStep(energyModel.t_h, p_capacity_kW * energyModel.v_currentDLRfactor_fr);
@@ -16079,7 +16101,7 @@ if (energyModel.v_isRapidRun){
 	
 	
 	v_annualElectricityDrawn_MWh += max(v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000; // replace with acc.getSumPos(); in KPI function!
-	v_annualElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000; // replace with acc.getSumPos(); in KPI function!
+	v_annualElectricityDelivered_MWh += max(-v_currentLoadElectricity_kW, 0) * energyModel.p_timeStep_h / 1000; // replace with acc.getSumNeg(); in KPI function!
 	double currentExcessExport_MWh = max(0,v_currentLoadElectricity_kW-p_capacity_kW) / 1000 * energyModel.p_timeStep_h;
 	double currentExcessImport_MWh = max(0,-v_currentLoadElectricity_kW-p_capacity_kW) / 1000 * energyModel.p_timeStep_h;
 	v_annualExcessExport_MWh += currentExcessExport_MWh;
@@ -23915,7 +23937,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 	break;
 	case PRICE:
 	// Prevent feedin when nodal price is negative
-	double priceTreshold_eur = -0.1;
+	double priceTreshold_eur = -0.0;
 	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
 	
 		double v_currentPowerElectricitySetpoint_kW = v_currentPowerElectricity_kW * max(0,1+(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
