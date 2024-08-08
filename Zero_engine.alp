@@ -23391,21 +23391,6 @@ v_totalImport_MWh = (v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hyd
 v_totalExport_MWh = (v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh+ v_hydrogenDelivered_kWh + v_dieselDelivered_kWh + v_heatDelivered_kWh)/1000;
 
 
-/*v_methaneDrawn_kWh = Arrays.stream(a_annualMethaneBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
-v_methaneDelivered_kWh = -Arrays.stream(a_annualMethaneBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
-
-v_hydrogenDrawn_kWh = Arrays.stream(a_annualHydrogenBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
-v_hydrogenDelivered_kWh = -Arrays.stream(a_annualHydrogenBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
-
-v_dieselDrawn_kWh = Arrays.stream(a_annualDieselBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
-v_dieselDelivered_kWh = -Arrays.stream(a_annualDieselBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
-
-v_heatDrawn_kWh = Arrays.stream(a_annualHeatBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
-v_heatDelivered_kWh = -Arrays.stream(a_annualHeatBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;*/
-
-//Arrays.stream(a_annualHeatBalance_kW).su
-//traceln("Sum of e balance: %s", a_annualElectricityBalance_kW.sum());
-
 // Yeartotals from arrays
 v_totalEnergyProduced_MWh = acc_annualEnergyProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalEnergyConsumed_MWh = acc_annualEnergyConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
@@ -23445,29 +23430,6 @@ v_summerWeekElectricityProduced_MWh = acc_summerElectricityProduction_kW.getSum(
 v_summerWeekElectricitySelfConsumed_MWh = max(0,v_summerWeekElectricityConsumed_MWh - v_summerWeekElectricityImport_MWh);v_summerWeekElectricitySelfConsumed_MWh = max(0,v_summerWeekElectricityConsumed_MWh - v_summerWeekElectricityImport_MWh);
 
 // Calcs winterweek
-//startIdx = roundToInt(energyModel.p_startHourWinterWeek/energyModel.p_timeStep_h);
-//endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
-/*v_winterWeekTotalImport_MWh = Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekTotalExport_MWh = Arrays.stream( Arrays.copyOfRange(a_annualTotalExport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-
-v_winterWeekEnergyConsumed_MWh = Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergyProduced_MWh = Arrays.stream( Arrays.copyOfRange(a_annualEnergyProduction_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-
-v_winterWeekSelfConsumedEnergy_MWh = max(0, v_winterWeekEnergyConsumed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
-
-v_winterWeekMethaneImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualMethaneBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekDieselImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualDieselBalance_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekHydrogenImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualHydrogenBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekHydrogenExport_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualHydrogenBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
-
-// Electricity selfconsumed
-v_winterWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityExport_MWh = -Arrays.stream(Arrays.copyOfRange(a_annualElectricityBalance_kW, startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityConsumption_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(a_annualElectricityProduction_kW, startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-
-v_winterWeekElectricitySelfConsumed_MWh = max(0,v_winterWeekElectricityConsumed_MWh - v_winterWeekElectricityImport_MWh);*/
 
 v_winterWeekTotalImport_MWh = acc_winterTotalImport_kW.getIntegral()/1000; // Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekTotalExport_MWh = acc_winterTotalExport_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualTotalExport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
@@ -35996,6 +35958,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_electricityVolume_kWh += CO.v_electricityVolume_kWh;
 		//if (energyModel.v_isRapidRun){		
 		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
+			v_currentEnergyConsumption_kW += GC.v_currentEnergyConsumption_kW;
 			v_currentEnergyProduction_kW += GC.v_currentEnergyProduction_kW;
 			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;			
 			v_currentElectricityConsumption_kW += GC.v_currentElectricityConsumption_kW;
@@ -36013,6 +35976,10 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			v_windProductionElectric_kW += GC.v_windProductionElectric_kW;
 			v_pvProductionElectric_kW += GC.v_pvProductionElectric_kW;
 			v_conversionPowerElectric_kW += GC.v_conversionPowerElectric_kW;
+			
+			v_methaneVolume_kWh += GC.v_currentPowerMethane_kW * energyModel.p_timeStep_h;
+			v_dieselVolume_kWh += GC.v_currentPowerDiesel_kW * energyModel.p_timeStep_h;
+			v_hydrogenVolume_kWh += GC.v_currentPowerHydrogen_kW * energyModel.p_timeStep_h;
 		}
 		//v_heatVolume_kWh += n.v_heatVolume_kWh;
 		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
@@ -36682,7 +36649,7 @@ v_daytimeEnergyUsed_MWh = 0;
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_electricityImported_kWh = acc_annualElectricityBalance_kW.getSumPos() * energyModel.p_timeStep_h;
-v_electricityExported_kWh = acc_annualElectricityBalance_kW.getSum() * energyModel.p_timeStep_h - v_electricityImported_kWh;
+v_electricityExported_kWh = -(acc_annualElectricityBalance_kW.getSum() * energyModel.p_timeStep_h - v_electricityImported_kWh);
 //v_electricityDeliveredToGrid_kWh = -Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
 
 
@@ -36709,8 +36676,8 @@ v_dieselImported_kWh = acc_annualDieselBalance_kW.getSum() * energyModel.p_timeS
 //v_heatImported_kWh = Arrays.stream(a_annualHeatBalance_kW).sum() * energyModel.p_timeStep_h;
 //v_heatExported_kWh = 0;
 
-//v_totalImport_MWh = (v_electricityImported_kWh + v_methaneImported_kWh + v_hydrogenImported_kWh + v_dieselImported_kWh)/1000; // v_heatDrawn_kWh
-//v_totalExport_MWh = (v_electricityExported_kWh + v_methaneExported_kWh+ v_hydrogenExported_kWh)/1000; // v_heatDelivered_kWh
+v_totalImport_MWh = (v_electricityImported_kWh + v_methaneImported_kWh + v_hydrogenImported_kWh + v_dieselImported_kWh)/1000; // v_heatDrawn_kWh
+v_totalExport_MWh = (v_electricityExported_kWh + v_methaneExported_kWh+ v_hydrogenExported_kWh)/1000; // v_heatDelivered_kWh
 
 v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyUsed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 double totalSelfConsumedEnergyCheck_MWh = max (0, v_totalEnergyProduced_MWh - v_totalExport_MWh);
@@ -37211,29 +37178,19 @@ if (abs(EDVcosts_eur-EDVincome_eur) > 1) {
 	double currentExport_MWh = (max(0,-v_electricityVolume_kWh) + max(0,-v_heatVolume_kWh) + max(0,-v_methaneVolume_kWh) + max(0,-v_hydrogenVolume_kWh) + max(0,-v_dieselVolume_kWh))/1000;
 	
 	//traceln("ElectricityVolume_kWh: %s kWh, current production: %s kW", v_electricityVolume_kWh, v_currentOwnElectricityProduction_kW);	
-	//v_totalEnergyUsed_MWh += (v_currentEnergyConsumption_kW * energyModel.p_timeStep_h)/1000;
-	//v_totalEnergyProduced_MWh += (v_currentEnergyProduction_kW * energyModel.p_timeStep_h)/1000;
-	//v_totalEnergyCurtailed_MWh += (v_currentEnergyCurtailed_kW * energyModel.p_timeStep_h)/1000;
+	v_totalEnergyUsed_MWh += (v_currentEnergyConsumption_kW * energyModel.p_timeStep_h)/1000;
+	v_totalEnergyProduced_MWh += (v_currentEnergyProduction_kW * energyModel.p_timeStep_h)/1000;
+	v_totalEnergyCurtailed_MWh += (v_currentEnergyCurtailed_kW * energyModel.p_timeStep_h)/1000;
 	
 	//data_annualCoopElectricityBalance_kW.add(energyModel.t_h, v_electricitySurplus_kW);
 	acc_annualElectricityBalance_kW.addStep(energyModel.t_h, -v_electricitySurplus_kW);
 	acc_annualElectricityProduction_kW.addStep(energyModel.t_h, v_currentElectricityProduction_kW);
 	acc_annualElectricityConsumption_kW.addStep(energyModel.t_h, v_currentElectricityConsumption_kW);
 	acc_annualOwnElectricityProduction_kW.addStep(energyModel.t_h, v_currentOwnElectricityProduction_kW);
-		// Store time series in arrays
 	
 	acc_annualMethaneBalance_kW.addStep(energyModel.t_h, v_methaneVolume_kWh/energyModel.p_timeStep_h);
 	acc_annualHydrogenBalance_kW.addStep(energyModel.t_h, v_hydrogenVolume_kWh/energyModel.p_timeStep_h);
 	acc_annualDieselBalance_kW.addStep(energyModel.t_h, v_dieselVolume_kWh/energyModel.p_timeStep_h);
-	
-	//a_annualHeatBalance_kW[energyModel.v_timeStepsElapsed] = v_heatVolume_kWh/energyModel.p_timeStep_h;
-	//a_annualTotalImport_kW[energyModel.v_timeStepsElapsed] = currentImport_kW;//max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerMethane_kW) + max(0, v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW) + max(0,v_currentPowerHeat_kW);
-	//a_annualTotalExport_kW[energyModel.v_timeStepsElapsed] = currentExport_kW;//max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerMethane_kW) + max(0, -v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW) + max(0,-v_currentPowerHeat_kW);
-	
-	//a_annualEnergyProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProduction_kW;
-	//a_annualEnergyCurtailed_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyCurtailed_kW;
-	//a_annualEnergyConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyConsumption_kW;
-	//a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
 	
 	//double currentImport_MWh = (max(0,v_electricityVolume_kWh) + max(0,v_heatVolume_kWh) + max(0,v_methaneVolume_kWh) + max(0,v_hydrogenVolume_kWh) + max(0,v_dieselVolume_kWh))/1000;
 	//double currentExport_MWh = (max(0,-v_electricityVolume_kWh) + max(0,-v_heatVolume_kWh) + max(0,-v_methaneVolume_kWh) + max(0,-v_hydrogenVolume_kWh) + max(0,-v_dieselVolume_kWh))/1000;
@@ -37244,7 +37201,6 @@ if (abs(EDVcosts_eur-EDVincome_eur) > 1) {
 		v_daytimeTotalExport_MWh += currentExport_MWh;
 		v_daytimeEnergyUsed_MWh += v_currentEnergyConsumption_kW * energyModel.p_timeStep_h/1000;
 		v_daytimeEnergyProduced_MWh += v_currentEnergyProduction_kW/1000  * energyModel.p_timeStep_h;
-		
 		
 		v_daytimeElectricityExport_MWh += max(0,-v_electricityVolume_kWh) /1000;
 		v_daytimeElectricityProduced_MWh += v_currentElectricityProduction_kW / 1000 * energyModel.p_timeStep_h;
@@ -37281,6 +37237,9 @@ if (abs(EDVcosts_eur-EDVincome_eur) > 1) {
 	data_neighborhoodBatteryDemand_kW.update();
 	data_neighborhoodBatterySupply_kW.update();
 	data_heatPumpElectricityDemand_kW.update();
+	data_naturalGasDemand_kW.update();
+	data_hydrogenDemand_kW.update();
+	data_dieselDemand_kW.update();
 }
 ]]></Body>
 				</Function>
