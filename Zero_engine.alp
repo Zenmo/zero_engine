@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161238" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1084,6 +1084,10 @@
 			</Option>
 		</OptionList>
 	</OptionLists>
+	
+	<Folders>
+		
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -36720,9 +36724,10 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 		double electricityConsumption_kW = max(0,CO.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
 		double electricityProduction_kW = max(0,-CO.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
 		v_currentElectricityConsumption_kW += electricityConsumption_kW;
-		//v_currentEnergyConsumption_kW += electricityConsumption_kW;
+		
+		v_currentEnergyConsumption_kW += electricityConsumption_kW;
 		v_currentElectricityProduction_kW += electricityProduction_kW;
-		//v_currentEnergyProduction_kW += electricityProduction_kW;
+		v_currentEnergyProduction_kW += electricityProduction_kW;
 
 		//v_heatVolume_kWh += n.v_heatVolume_kWh;
 		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
@@ -36736,9 +36741,9 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 		double electricityConsumption_kW = max(0,EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
 		double electricityProduction_kW = max(0,-EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
 		v_currentElectricityConsumption_kW += electricityConsumption_kW;
-		//v_currentEnergyConsumption_kW += electricityConsumption_kW;
+		v_currentEnergyConsumption_kW += electricityConsumption_kW;
 		v_currentElectricityProduction_kW += electricityProduction_kW;
-		//v_currentEnergyProduction_kW += electricityProduction_kW;
+		v_currentEnergyProduction_kW += electricityProduction_kW;
 		
 		//v_heatVolume_kWh += n.v_heatVolume_kWh;
 		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
@@ -37485,7 +37490,7 @@ v_weekendHydrogenExport_MWh = v_hydrogenExported_kWh/1000 - v_weekdayHydrogenExp
 v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
 
-//f_financesL4L_v2();
+f_getFinancesL4L_v2();
 //f_duurkrommes();
 
 
@@ -51490,7 +51495,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -51511,7 +51516,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1658477103140">
 		<Id>1658477103163</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
