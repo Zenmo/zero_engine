@@ -4255,7 +4255,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315937</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[v_dailyBatteriesDemand_kW]]></Name>
 					<X>20</X><Y>2890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4291,7 +4291,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315943</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
 					<X>20</X><Y>3050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -7355,14 +7355,14 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	double v_currentBaseloadElectricityDemand_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
 	double v_currentHeatPumpElectricityDemand_kW = sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW);
 	double v_currentElectricTrucksDemand_kW = sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW));
-	double v_currentNeighborhoodBatteryDemand_kW = sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW));
+	double v_currentBatteriesDemand_kW = sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW));
 	double v_currentNaturalGasDemand_kW = sum(c_gridConnections, x-> max(0, x.v_currentPowerMethane_kW));
 	double v_currentDieselDemand_kW = sum(c_gridConnections, x-> max(0, x.v_currentPowerDiesel_kW));
 	double v_currentHydrogenDemand_kW = sum(c_gridConnections, x-> max(0, x.v_currentPowerHydrogen_kW));
 	
 	double v_currentPVGeneration_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 	double v_currentWindGeneration_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
-	double v_currentNeighborhoodBatterySupply_kW = sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW));
+	double v_currentBatteriesSupply_kW = sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW));
 	double v_currentV2GSupply_kW = sum(c_gridConnections, x-> max(0, -x.v_evChargingPowerElectric_kW));
 	double v_currentNaturalGasSupply_kWh = sum(c_gridConnections, x-> max(0, - x.v_currentPowerMethane_kW));
 	double v_currentHydrogenSupply_kW = sum(c_gridConnections, x-> max(0, -x.v_currentPowerHydrogen_kW));
@@ -7462,14 +7462,14 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		data_summerWeekHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
 		//data_summerWeekElectricCarsDemand_kW.add(t_h, sum(c_gridConnections, x->x.v_electricCarsDemand_kW));
 		data_summerWeekElectricTrucksDemand_kW.add(t_h, v_currentElectricTrucksDemand_kW);
-		data_summerWeekNeighborhoodBatteryDemand_kW.add(t_h, v_currentNeighborhoodBatteryDemand_kW);
+		data_summerWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 		data_summerWeekNaturalGasDemand_kW.add(t_h, v_currentNaturalGasDemand_kW);
 		data_summerWeekDieselDemand_kW.add(t_h, v_currentDieselDemand_kW);
 		data_summerWeekHydrogenDemand_kW.add(t_h, v_currentHydrogenDemand_kW);
 		
 		data_summerWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 		data_summerWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
-		data_summerWeekNeighborhoodBatterySupply_kW.add(t_h, v_currentNeighborhoodBatterySupply_kW);
+		data_summerWeekBatteriesSupply_kW.add(t_h, v_currentBatteriesSupply_kW);
 		data_summerWeekV2GSupply_kW.add(t_h, v_currentV2GSupply_kW);
 		data_summerWeekNaturalGasSupply_kW.add(t_h, v_currentNaturalGasSupply_kWh);
 		data_summerWeekHydrogenSupply_kW.add(t_h, v_currentHydrogenSupply_kW);
@@ -7506,14 +7506,14 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		data_winterWeekHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
 		//data_winterWeekElectricCarsDemand_kW.add(t_h, sum(c_gridConnections, x->x.v_electricCarsDemand_kW));
 		data_winterWeekElectricTrucksDemand_kW.add(t_h, v_currentElectricTrucksDemand_kW);
-		data_winterWeekNeighborhoodBatteryDemand_kW.add(t_h, v_currentNeighborhoodBatteryDemand_kW);
+		data_winterWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 		data_winterWeekNaturalGasDemand_kW.add(t_h, v_currentNaturalGasDemand_kW);
 		data_winterWeekDieselDemand_kW.add(t_h, v_currentDieselDemand_kW);
 		data_winterWeekHydrogenDemand_kW.add(t_h, v_currentHydrogenDemand_kW);
 		
 		data_winterWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 		data_winterWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
-		data_winterWeekNeighborhoodBatterySupply_kW.add(t_h, v_currentNeighborhoodBatterySupply_kW);
+		data_winterWeekBatteriesSupply_kW.add(t_h, v_currentBatteriesSupply_kW);
 		data_winterWeekV2GSupply_kW.add(t_h, v_currentV2GSupply_kW);
 		data_winterWeekNaturalGasSupply_kW.add(t_h, v_currentNaturalGasSupply_kWh);	
 		data_winterWeekHydrogenSupply_kW.add(t_h, v_currentHydrogenSupply_kW);
@@ -7531,19 +7531,19 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	
 	
 	// Replace with arrays!! Or discard fully? 
-	/*data_annualBusinessParkDemand_kW.add(t_h,v_currentBaseloadElectricityDemand_kW+v_currentHeatPumpElectricityDemand_kW+v_currentElectricTrucksDemand_kW+v_currentNeighborhoodBatteryDemand_kW); // Not robust when adding other types of assets!!
-	data_annualBusinessParkSupply_kW.add(t_h,v_currentPVGeneration_kW+v_currentWindGeneration_kW+v_currentNeighborhoodBatterySupply_kW+v_currentV2GSupply_kWh); // Not robust when adding other types of assets!!
+	/*data_annualBusinessParkDemand_kW.add(t_h,v_currentBaseloadElectricityDemand_kW+v_currentHeatPumpElectricityDemand_kW+v_currentElectricTrucksDemand_kW+v_currentBatteriesDemand_kW); // Not robust when adding other types of assets!!
+	data_annualBusinessParkSupply_kW.add(t_h,v_currentPVGeneration_kW+v_currentWindGeneration_kW+v_currentBatteriesSupply_kW+v_currentV2GSupply_kWh); // Not robust when adding other types of assets!!
 	data_annualBusinessParkNetLoad_kW.add(t_h,sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
 	
 	data_annualBaseloadElectricityDemand_kW.add(t_h, v_currentBaseloadElectricityDemand_kW);
 	data_annualHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
 	//data_annualElectricCarsDemand_kW.add(t_h, v_currentElectricCarsDemand_kW);
 	data_annualElectricTrucksDemand_kW.add(t_h, v_currentElectricTrucksDemand_kW);
-	data_annualNeighborhoodBatteryDemand_kW.add(t_h, v_currentNeighborhoodBatteryDemand_kW);
+	data_annualBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 	
 	data_annualPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_annualWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
-	data_annualNeighborhoodBatterySupply_kW.add(t_h, v_currentNeighborhoodBatterySupply_kW);
+	data_annualBatteriesSupply_kW.add(t_h, v_currentBatteriesSupply_kW);
 	data_annualV2GSupply_kW.add(t_h, v_currentV2GSupply_kWh);
 	*/
 	
@@ -7555,14 +7555,14 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	v_dailyHeatPumpElectricityDemand_kW += v_currentHeatPumpElectricityDemand_kW;
 	//v_dailyElectricCarsDemand_kWh += sum(c_gridConnections, x->x.v_electricCarsDemand_kW)*p_timeStep_h;
 	v_dailyElectricTrucksDemand_kW += v_currentElectricTrucksDemand_kW;
-	v_dailyNeighborhoodBatteryDemand_kW += v_currentNeighborhoodBatteryDemand_kW;
+	v_dailyBatteriesDemand_kW += v_currentBatteriesDemand_kW;
 	v_dailyNaturalGasDemand_kW += v_currentNaturalGasDemand_kW;
 	v_dailyDieselDemand_kW += v_currentDieselDemand_kW;
 	v_dailyHydrogenDemand_kW += v_currentHydrogenDemand_kW;
 	
 	v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
 	v_dailyWindGeneration_kW += v_currentWindGeneration_kW;
-	v_dailyNeighborhoodBatterySupply_kW += v_currentNeighborhoodBatterySupply_kW;
+	v_dailyBatteriesSupply_kW += v_currentBatteriesSupply_kW;
 	v_dailyV2GSupply_kW += v_currentV2GSupply_kW;
 	v_dailyNaturalGasSupply_kW += v_currentNaturalGasSupply_kWh;
 	v_dailyHydrogenSupply_kW += v_currentHydrogenSupply_kW;
@@ -7574,13 +7574,13 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		data_annualHeatPumpElectricityDemand_kW.add(t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / p_timeStep_h));
 		//data_annualElectricCarsDemand_MWh.add(t_h, v_dailyElectricCarsDemand_kWh/(24 / p_timeStep_h));
 		data_annualElectricTrucksDemand_kW.add(t_h, v_dailyElectricTrucksDemand_kW/(24 / p_timeStep_h));
-		data_annualNeighborhoodBatteryDemand_kW.add(t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / p_timeStep_h));
+		data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW/(24 / p_timeStep_h));
 		data_annualNaturalGasDemand_kW.add(t_h, v_dailyNaturalGasDemand_kW/(24 / p_timeStep_h));
 		data_annualDieselDemand_kW.add(t_h, v_dailyDieselDemand_kW/(24 / p_timeStep_h));
 		data_annualHydrogenDemand_kW.add(t_h, v_dailyHydrogenDemand_kW/(24 / p_timeStep_h));
 		data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW/(24 / p_timeStep_h));
 		data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW/(24 / p_timeStep_h));
-		data_annualNeighborhoodBatterySupply_kW.add(t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / p_timeStep_h));
+		data_annualBatteriesSupply_kW.add(t_h, v_dailyBatteriesSupply_kW/(24 / p_timeStep_h));
 		data_annualV2GSupply_kW.add(t_h, v_dailyV2GSupply_kW/(24 / p_timeStep_h));
 		data_annualNaturalGasSupply_kW.add(t_h, v_dailyNaturalGasSupply_kW/(24 / p_timeStep_h));
 		data_annualHydrogenSupply_kW.add(t_h, v_dailyHydrogenSupply_kW/(24 / p_timeStep_h));
@@ -7593,14 +7593,14 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		v_dailyHeatPumpElectricityDemand_kW = 0;
 		//v_dailyElectricCarsDemand_kWh = 0;
 		v_dailyElectricTrucksDemand_kW = 0;
-		v_dailyNeighborhoodBatteryDemand_kW = 0;
+		v_dailyBatteriesDemand_kW = 0;
 		v_dailyNaturalGasDemand_kW = 0;
 		v_dailyDieselDemand_kW = 0;
 		v_dailyHydrogenDemand_kW = 0;
 		
 		v_dailyPVGeneration_kW = 0;
 		v_dailyWindGeneration_kW = 0;
-		v_dailyNeighborhoodBatterySupply_kW = 0;
+		v_dailyBatteriesSupply_kW = 0;
 		v_dailyV2GSupply_kW = 0;
 		v_dailyNaturalGasSupply_kW = 0;
 		v_dailyHydrogenSupply_kW = 0;
@@ -7650,11 +7650,11 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 data_annualHeatPumpElectricityDemand_kW.reset();
 data_annualElectricCarsDemand_kW.reset();
 data_annualElectricTrucksDemand_kW.reset();
-data_annualNeighborhoodBatteryDemand_kW.reset();
+data_annualBatteriesDemand_kW.reset();
 
 data_annualPVGeneration_kW.reset();
 data_annualWindGeneration_kW.reset();
-data_annualNeighborhoodBatterySupply_kW.reset();
+data_annualBatteriesSupply_kW.reset();
 data_annualV2GSupply_kW.reset();
 
 data_annualBusinessParkDemand_kW.reset();
@@ -7667,11 +7667,11 @@ data_annualBaseloadElectricityDemand_kW.reset();
 data_annualHeatPumpElectricityDemand_kW.reset();
 //data_annualElectricCarsDemand_MWh.reset();
 data_annualElectricTrucksDemand_kW.reset();
-data_annualNeighborhoodBatteryDemand_kW.reset();
+data_annualBatteriesDemand_kW.reset();
 
 data_annualPVGeneration_kW.reset();
 data_annualWindGeneration_kW.reset();
-data_annualNeighborhoodBatterySupply_kW.reset();
+data_annualBatteriesSupply_kW.reset();
 data_annualV2GSupply_kW.reset();
 
 v_totalElectricityExport_MWh = 0;
@@ -9334,7 +9334,7 @@ for (GridConnection GC : GridBatteries) {
 				</DataSet>
     			<DataSet>
 					<Id>1715246336432</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
 					<X>390</X><Y>2890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9400,7 +9400,7 @@ for (GridConnection GC : GridBatteries) {
 				</DataSet>
     			<DataSet>
 					<Id>1715246336451</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
 					<X>390</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9644,7 +9644,7 @@ for (GridConnection GC : GridBatteries) {
 				</DataSet>
     			<DataSet>
 					<Id>1715246378204</Id>
-					<Name><![CDATA[data_summerWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
 					<X>830</X><Y>2890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9710,7 +9710,7 @@ for (GridConnection GC : GridBatteries) {
 				</DataSet>
     			<DataSet>
 					<Id>1715246378219</Id>
-					<Name><![CDATA[data_summerWeekNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
 					<X>830</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9908,7 +9908,7 @@ for (GridConnection GC : GridBatteries) {
 				</DataSet>
     			<DataSet>
 					<Id>1715246378264</Id>
-					<Name><![CDATA[data_winterWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
 					<X>1280</X><Y>2890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9974,7 +9974,7 @@ for (GridConnection GC : GridBatteries) {
 				</DataSet>
     			<DataSet>
 					<Id>1715246378279</Id>
-					<Name><![CDATA[data_winterWeekNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
 					<X>1280</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19629,7 +19629,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685649</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[v_dailyBatteriesDemand_kW]]></Name>
 					<X>740</X><Y>2170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19665,7 +19665,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715086685655</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
 					<X>740</X><Y>2330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -22450,19 +22450,19 @@ v_weekendElectricityExport_MWh = 0;
 v_dailyBaseloadElectricityDemand_kW = 0;
 v_dailyHeatPumpElectricityDemand_kW = 0;
 v_dailyElectricVehicleDemand_kW = 0;
-v_dailyNeighborhoodBatteryDemand_kW = 0;
+v_dailyBatteriesDemand_kW = 0;
 v_dailyPVGeneration_kW = 0;
 v_dailyWindGeneration_kW = 0;
-v_dailyNeighborhoodBatterySupply_kW = 0;
+v_dailyBatteriesSupply_kW = 0;
 v_dailyV2GSupply_kW = 0;
 
 data_annualBaseloadElectricityDemand_kW.reset();
 data_annualHeatPumpElectricityDemand_kW.reset();
 data_annualElectricVehicleDemand_kW.reset();
-data_annualNeighborhoodBatteryDemand_kW.reset();
+data_annualBatteriesDemand_kW.reset();
 data_annualPVGeneration_kW.reset();
 data_annualWindGeneration_kW.reset();
-data_annualNeighborhoodBatterySupply_kW.reset();
+data_annualBatteriesSupply_kW.reset();
 data_annualV2GSupply_kW.reset();
 
 // Summer / Winterweek profile data
@@ -22470,18 +22470,18 @@ data_annualV2GSupply_kW.reset();
 data_summerWeekBaseloadElectricityDemand_kW.reset();
 data_summerWeekHeatPumpElectricityDemand_kW.reset();
 data_summerWeekElectricTrucksDemand_kW.reset();
-data_summerWeekNeighborhoodBatteryDemand_kW.reset();
+data_summerWeekBatteriesDemand_kW.reset();
 data_summerWeekPVGeneration_kW.reset();
 data_summerWeekWindGeneration_kW.reset();
-data_summerWeekNeighborhoodBatterySupply_kW.reset();
+data_summerWeekBatteriesSupply_kW.reset();
 data_summerWeekV2GSupply_kW.reset();
 data_winterWeekBaseloadElectricityDemand_kW.reset();
 data_winterWeekHeatPumpElectricityDemand_kW.reset();
 data_winterWeekElectricTrucksDemand_kW.reset();
-data_winterWeekNeighborhoodBatteryDemand_kW.reset();
+data_winterWeekBatteriesDemand_kW.reset();
 data_winterWeekPVGeneration_kW.reset();
 data_winterWeekWindGeneration_kW.reset();
-data_winterWeekNeighborhoodBatterySupply_kW.reset();
+data_winterWeekBatteriesSupply_kW.reset();
 data_winterWeekV2GSupply_kW.reset();
 */
 //Reset gridconnections flows:
@@ -24410,14 +24410,14 @@ if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < en
 	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
 	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
-	data_summerWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
 	data_summerWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
 	data_summerWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
 	data_summerWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
 	
 	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_summerWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
+	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
 	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
 	data_summerWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
 	data_summerWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
@@ -24428,14 +24428,14 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
 	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
-	data_winterWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
 	data_winterWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
 	data_winterWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
 	data_winterWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
 	
 	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_winterWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
+	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
 	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
 	data_winterWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
 	data_winterWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
@@ -24445,7 +24445,7 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
-v_dailyNeighborhoodBatteryDemand_kW += max(0,v_batteryPowerElectric_kW);
+v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
 v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
 v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
 v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
@@ -24453,7 +24453,7 @@ v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
 // Supply
 v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
 v_dailyWindGeneration_kW += v_windProductionElectric_kW;
-v_dailyNeighborhoodBatterySupply_kW += max(0,-v_batteryPowerElectric_kW);
+v_dailyBatteriesSupply_kW += max(0,-v_batteryPowerElectric_kW);
 v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
 v_dailyNaturalGasSupply_kW += max(0, -v_currentPowerMethane_kW);
 v_dailyHydrogenSupply_kW += max(0, -v_currentPowerHydrogen_kW);
@@ -24467,7 +24467,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualNeighborhoodBatteryDemand_kW.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHydrogenDemand_kW.add(energyModel.t_h, v_dailyHydrogenDemand_kW/(24 / energyModel.p_timeStep_h));
@@ -24475,7 +24475,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	// Supply
 	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
 	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
-	data_annualNeighborhoodBatterySupply_kW.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBatteriesSupply_kW.add(energyModel.t_h, v_dailyBatteriesSupply_kW/(24 / energyModel.p_timeStep_h));
 	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
 	data_annualNaturalGasSupply_kW.add(energyModel.t_h, v_dailyNaturalGasSupply_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHydrogenSupply_kW.add(energyModel.t_h, v_dailyHydrogenSupply_kW/(24 / energyModel.p_timeStep_h));
@@ -24487,14 +24487,14 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	v_dailyBaseloadElectricityDemand_kW = 0;
 	v_dailyHeatPumpElectricityDemand_kW = 0;
 	v_dailyElectricVehicleDemand_kW = 0;
-	v_dailyNeighborhoodBatteryDemand_kW = 0;
+	v_dailyBatteriesDemand_kW = 0;
 	v_dailyNaturalGasDemand_kW = 0;
 	v_dailyDieselDemand_kW = 0;
 	v_dailyHydrogenDemand_kW = 0;
 	//v_dailyDistrictHeatDemand_kWh = 0;
 	v_dailyPVGeneration_kW = 0;
 	v_dailyWindGeneration_kW = 0;
-	v_dailyNeighborhoodBatterySupply_kW = 0;
+	v_dailyBatteriesSupply_kW = 0;
 	v_dailyV2GSupply_kW = 0;
 	v_dailyNaturalGasSupply_kW = 0;
 	v_dailyHydrogenSupply_kW = 0;
@@ -25288,7 +25288,7 @@ else {
 				</DataSet>
     			<DataSet>
 					<Id>1715086040051</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
 					<X>1070</X><Y>2170</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25354,7 +25354,7 @@ else {
 				</DataSet>
     			<DataSet>
 					<Id>1715086040072</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
 					<X>1070</X><Y>2330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25510,7 +25510,7 @@ else {
 				</DataSet>
     			<DataSet>
 					<Id>1715088549933</Id>
-					<Name><![CDATA[data_summerWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
 					<X>1490</X><Y>2000</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25576,7 +25576,7 @@ else {
 				</DataSet>
     			<DataSet>
 					<Id>1715088549958</Id>
-					<Name><![CDATA[data_summerWeekNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
 					<X>1490</X><Y>2150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25908,7 +25908,7 @@ else {
 				</DataSet>
     			<DataSet>
 					<Id>1715244361125</Id>
-					<Name><![CDATA[data_winterWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
 					<X>1490</X><Y>2311</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25974,7 +25974,7 @@ else {
 				</DataSet>
     			<DataSet>
 					<Id>1715244361147</Id>
-					<Name><![CDATA[data_winterWeekNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
 					<X>1490</X><Y>2461</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -34307,7 +34307,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1723103882805</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[v_dailyBatteriesDemand_kW]]></Name>
 					<X>62.66666666666663</X><Y>1985.3333333333333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -34343,7 +34343,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1723103882811</Id>
-					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
 					<X>62.66666666666663</X><Y>2145.333333333333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -38086,7 +38086,7 @@ acc_annualDieselBalance_kW.addStep(energyModel.t_h, v_dieselVolume_kWh/energyMod
 v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
-v_dailyNeighborhoodBatteryDemand_kW += max(0,v_batteryPowerElectric_kW);
+v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
 v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
 v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
 v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
@@ -38094,7 +38094,7 @@ v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
 // Supply
 v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
 v_dailyWindGeneration_kW += v_windProductionElectric_kW;
-v_dailyNeighborhoodBatterySupply_kW += max(0,-v_batteryPowerElectric_kW);
+v_dailyBatteriesSupply_kW += max(0,-v_batteryPowerElectric_kW);
 v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
 v_dailyNaturalGasSupply_kW += max(0, -v_currentPowerMethane_kW);
 v_dailyHydrogenSupply_kW += max(0, -v_currentPowerHydrogen_kW);
@@ -38108,7 +38108,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualNeighborhoodBatteryDemand_kW.add(energyModel.t_h, v_dailyNeighborhoodBatteryDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHydrogenDemand_kW.add(energyModel.t_h, v_dailyHydrogenDemand_kW/(24 / energyModel.p_timeStep_h));
@@ -38116,7 +38116,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	// Supply
 	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
 	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
-	data_annualNeighborhoodBatterySupply_kW.add(energyModel.t_h, v_dailyNeighborhoodBatterySupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBatteriesSupply_kW.add(energyModel.t_h, v_dailyBatteriesSupply_kW/(24 / energyModel.p_timeStep_h));
 	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
 	data_annualNaturalGasSupply_kW.add(energyModel.t_h, v_dailyNaturalGasSupply_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHydrogenSupply_kW.add(energyModel.t_h, v_dailyHydrogenSupply_kW/(24 / energyModel.p_timeStep_h));
@@ -38128,14 +38128,14 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	v_dailyBaseloadElectricityDemand_kW = 0;
 	v_dailyHeatPumpElectricityDemand_kW = 0;
 	v_dailyElectricVehicleDemand_kW = 0;
-	v_dailyNeighborhoodBatteryDemand_kW = 0;
+	v_dailyBatteriesDemand_kW = 0;
 	v_dailyNaturalGasDemand_kW = 0;
 	v_dailyDieselDemand_kW = 0;
 	v_dailyHydrogenDemand_kW = 0;
 	//v_dailyDistrictHeatDemand_kWh = 0;
 	v_dailyPVGeneration_kW = 0;
 	v_dailyWindGeneration_kW = 0;
-	v_dailyNeighborhoodBatterySupply_kW = 0;
+	v_dailyBatteriesSupply_kW = 0;
 	v_dailyV2GSupply_kW = 0;
 	v_dailyNaturalGasSupply_kW = 0;
 	v_dailyHydrogenSupply_kW = 0;
@@ -38148,14 +38148,14 @@ if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < en
 	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
 	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
-	data_summerWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
 	data_summerWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
 	data_summerWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
 	data_summerWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
 	
 	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_summerWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
+	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
 	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
 	data_summerWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
 	data_summerWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
@@ -38182,14 +38182,14 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
 	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
-	data_winterWeekNeighborhoodBatteryDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
 	data_winterWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
 	data_winterWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
 	data_winterWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
 	
 	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_winterWeekNeighborhoodBatterySupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
+	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
 	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
 	data_winterWeekNaturalGasSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerMethane_kW));
 	data_winterWeekHydrogenSupply_kW.add(energyModel.t_h, max(0, -v_currentPowerHydrogen_kW));
@@ -38656,7 +38656,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 				</DataSet>
     			<DataSet>
 					<Id>1723103882854</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
 					<X>392.66666666666663</X><Y>1985.3333333333333</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -38722,7 +38722,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 				</DataSet>
     			<DataSet>
 					<Id>1723103882880</Id>
-					<Name><![CDATA[data_annualNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
 					<X>392.66666666666663</X><Y>2145.333333333333</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -39034,7 +39034,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 				</DataSet>
     			<DataSet>
 					<Id>1723108215497</Id>
-					<Name><![CDATA[data_summerWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
 					<X>390.66666666666674</X><Y>2337.3333333333335</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -39100,7 +39100,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 				</DataSet>
     			<DataSet>
 					<Id>1723108215527</Id>
-					<Name><![CDATA[data_summerWeekNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
 					<X>390.66666666666674</X><Y>2487.3333333333335</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -39298,7 +39298,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 				</DataSet>
     			<DataSet>
 					<Id>1723108215613</Id>
-					<Name><![CDATA[data_winterWeekNeighborhoodBatteryDemand_kW]]></Name>
+					<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
 					<X>390.66666666666674</X><Y>2648.3333333333335</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -39364,7 +39364,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 				</DataSet>
     			<DataSet>
 					<Id>1723108215642</Id>
-					<Name><![CDATA[data_winterWeekNeighborhoodBatterySupply_kW]]></Name>
+					<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
 					<X>390.66666666666674</X><Y>2798.3333333333335</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
