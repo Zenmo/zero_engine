@@ -37351,6 +37351,53 @@ v_daytimeEnergyProduced_MWh = 0;
 v_daytimeEnergyConsumed_MWh = 0;
 
 //data_annualCoopElectricityBalance_kW.reset();
+
+// Reset accumulators
+acc_annualElectricityBalance_kW.reset();
+acc_annualMethaneBalance_kW.reset();
+acc_annualHydrogenBalance_kW.reset();
+acc_annualDieselBalance_kW.reset();
+acc_annualHeatBalance_kW.reset();
+//acc_annualTotalImport_kW.reset();
+//acc_annualTotalExport_kW.reset();
+
+//acc_annualEnergyProduction_kW.reset();
+//acc_annualEnergyConsumption_kW.reset();
+//acc_annualEnergyCurtailed_kW.reset();
+acc_annualElectricityProduction_kW.reset();
+acc_annualElectricityConsumption_kW.reset();
+acc_annualHeatProduction_kW.reset();
+
+acc_summerElectricityBalance_kW.reset();
+acc_summerMethaneBalance_kW.reset();
+acc_summerHydrogenBalance_kW.reset();
+acc_summerDieselBalance_kW.reset();
+acc_summerHeatBalance_kW.reset();
+acc_summerTotalImport_kW.reset();
+acc_summerTotalExport_kW.reset();
+
+acc_summerEnergyProduction_kW.reset();
+acc_summerEnergyConsumption_kW.reset();
+acc_summerEnergyCurtailed_kW.reset();
+acc_summerElectricityProduction_kW.reset();
+acc_summerElectricityConsumption_kW.reset();
+acc_summerHeatProduction_kW.reset();
+
+acc_winterElectricityBalance_kW.reset();
+acc_winterMethaneBalance_kW.reset();
+acc_winterHydrogenBalance_kW.reset();
+acc_winterDieselBalance_kW.reset();
+acc_winterHeatBalance_kW.reset();
+acc_winterTotalImport_kW.reset();
+acc_winterTotalExport_kW.reset();
+
+acc_winterEnergyProduction_kW.reset();
+acc_winterEnergyConsumption_kW.reset();
+acc_winterEnergyCurtailed_kW.reset();
+acc_winterElectricityProduction_kW.reset();
+acc_winterElectricityConsumption_kW.reset();
+acc_winterHeatProduction_kW.reset();
+
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -37490,7 +37537,7 @@ v_weekendHydrogenExport_MWh = v_hydrogenExported_kWh/1000 - v_weekdayHydrogenExp
 v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
 
-f_getFinancesL4L_v2();
+//f_getFinancesL4L_v2();
 //f_duurkrommes();
 
 
