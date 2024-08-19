@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *************************************************
-	         AnyLogic Project File 
-*************************************************	         
+	         AnyLogic Project File
+*************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.0.202404161236" AlpVersion="8.9.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1056,6 +1056,10 @@
 			</Option>
 		</OptionList>
 	</OptionLists>
+	
+	<Folders>
+		
+	</Folders>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -41442,7 +41446,7 @@ switch (p_heatingType) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1693302929918</Id>
 					<Name><![CDATA[f_connectToJ_EA_DistrictHeating]]></Name>
-					<X>950</X><Y>170</Y>
+					<X>1020</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -48487,7 +48491,7 @@ v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if(p_primaryHeatingAsset == null){ // null check, as certain neighborhoods don't have thermal assets
+					<Body><![CDATA[if(p_primaryHeatingAsset == null){ // null check, as certain neighborhoods don't have thermal assets (fix dat niet elke tijdstep wordt aangeroepen)!
 	return;
 }
 
@@ -48499,27 +48503,20 @@ double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatin
 double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getHeatCapacity_kW());
 double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getHeatCapacity_kW());
 
-p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
-p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
-p_tertiaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATDELIVERYSET;			
+//p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
+//p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
+//p_tertiaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATDELIVERYSET;			
 			
 		
 //Gas burner control (always assigned to primary heating asset)	
-double[] flowsArrayGB = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-v_conversionPowerElectric_kW += flowsArrayGB[4] - flowsArrayGB[0];//???????? WAT DOET DIT ???????????????? //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
+p_primaryHeatingAsset.f_updateAllFlows(powerFraction_GASBURNER);
 
 //Heatpump control (always assigned to secondary heating asset)
-double[] flowsArrayHP = p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
-v_conversionPowerElectric_kW += flowsArrayHP[4] - flowsArrayHP[0];//???????? WAT DOET DIT ???????????????? //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
-v_heatPumpElectricityConsumption_kW += flowsArrayHP[4] - flowsArrayHP[0];
+p_secondaryHeatingAsset.f_updateAllFlows(powerFraction_HEATPUMP);
 
 //Heat delivery set control (always assigned to tertiary heating asset)
-double[] flowsArrayDH = p_tertiaryHeatingAsset.f_updateAllFlows(p_tertiaryHeatingAsset.v_powerFraction_fr);
-v_conversionPowerElectric_kW += flowsArrayDH[4] - flowsArrayDH[0];//???????? WAT DOET DIT ???????????????? //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
-
-
-//Die v_conversionPowerElectric_kW bestaan in de default manage heating, wat doet die?
-// -->zoek uit wat het doet en waarom, en fix het.]]></Body>
+p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -48553,17 +48550,24 @@ double hybridHPPowerDemand 	   		= powerDemand_companies_kW*v_amountOfHybridHeat
 //double DistrictHeatingPowerDemand = powerDemand_companies_kW*v_amountOfDistrictHeating_companies_pct	 + powerDemand_households_kW*v_amountOfDistrictHeating_houses_pct;
 double DistrictHeatingPowerDemand 	= (powerDemand_companies_kW+powerDemand_households_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand; // To make sure all power demand is met
 
+
 if ( HP_COP < p_thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
-powerDemandDivision[0] = gasBurnerPowerDemand + hybridHPPowerDemand;
-powerDemandDivision[1] = electricHPPowerDemand;
-powerDemandDivision[2] = DistrictHeatingPowerDemand;
+	powerDemandDivision[0] = gasBurnerPowerDemand + hybridHPPowerDemand;
+	powerDemandDivision[1] = electricHPPowerDemand;
+	powerDemandDivision[2] = DistrictHeatingPowerDemand;
 }
 else{
-powerDemandDivision[0] = gasBurnerPowerDemand;
-powerDemandDivision[1] = electricHPPowerDemand + hybridHPPowerDemand;
-powerDemandDivision[2] = DistrictHeatingPowerDemand;
+	powerDemandDivision[0] = gasBurnerPowerDemand;
+	powerDemandDivision[1] = electricHPPowerDemand + hybridHPPowerDemand;
+	powerDemandDivision[2] = DistrictHeatingPowerDemand;
 }
-			
+
+/*
+//TESTER
+	powerDemandDivision[0] = powerDemand_companies_kW*1 + powerDemand_households_kW*1;
+	powerDemandDivision[1] = powerDemand_companies_kW*0 + powerDemand_households_kW*0;
+	powerDemandDivision[2] = 0;
+*/		
 return powerDemandDivision; //{Gasburner power request, HP power request, DH power request}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -48799,7 +48803,7 @@ if (j_ea instanceof J_EAVehicle) {
 			</Presentation>
 
 		</ActiveObjectClass>
-	</ActiveObjectClasses>	
+	</ActiveObjectClasses>
 	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -48820,7 +48824,7 @@ if (j_ea instanceof J_EAVehicle) {
 		<ExportSettings>
 		</ExportSettings>
 	</Database>
-	
+
 	<RunConfiguration ActiveObjectClassId="1658477103140">
 		<Id>1658477103163</Id>
 		<Name><![CDATA[RunConfiguration]]></Name>
@@ -48932,6 +48936,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	
 	public double getCapacityElectric_kW() {
 		return this.capacityElectric_kW;
+	}
+	
+	public String getName() {
+		return this.energyAssetName;
 	}
 	
 	@Override
