@@ -15136,7 +15136,7 @@ geupdate vanuit
 					<Id>1722508380897</Id>
 					<Name><![CDATA[v_annualHeatImport_MWh]]></Name>
 					<X>1620</X><Y>50</Y>
-						<Label><X>10</X><Y>0</Y></Label>
+					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -15144,7 +15144,6 @@ geupdate vanuit
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
-
 				<Variable Class="Parameter">
 					<Id>1658477613290</Id>
 					<Name><![CDATA[p_gridNodeID]]></Name>
@@ -21335,7 +21334,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
-
 				<Variable Class="Parameter">
 					<Id>1722411169263</Id>
 					<Name><![CDATA[p_curtailmentMode]]></Name>
