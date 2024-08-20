@@ -48335,7 +48335,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[GIS_Object]]></Type>
+						<Type><![CDATA[GISRegion]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<UnitOfValue Class="TimeUnits"><![CDATA[SECOND]]></UnitOfValue>
 						<SdArray>false</SdArray>
