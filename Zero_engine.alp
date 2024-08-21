@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -43997,78 +43997,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1677512038554</Id>
-					<Name><![CDATA[b_monovalentSystem]]></Name>
-					<X>520</X><Y>550</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512061721</Id>
-					<Name><![CDATA[b_bivalentSystem]]></Name>
-					<X>520</X><Y>570</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512068434</Id>
-					<Name><![CDATA[b_validLocalBuffer]]></Name>
-					<X>520</X><Y>590</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512088967</Id>
-					<Name><![CDATA[b_storageBelowSetpoint]]></Name>
-					<X>520</X><Y>610</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512107241</Id>
-					<Name><![CDATA[b_storageBelowMinimum]]></Name>
-					<X>520</X><Y>630</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512121917</Id>
-					<Name><![CDATA[b_storageBelowNetworkTemp]]></Name>
-					<X>520</X><Y>650</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1677512160570</Id>
 					<Name><![CDATA[b_residualHeatLTSource]]></Name>
 					<X>520</X><Y>670</Y>
@@ -44091,6 +44019,21 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724252832488</Id>
+					<Name><![CDATA[b_validLocalBuffer]]></Name>
+					<X>520</X><Y>650</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -44175,113 +44118,57 @@ double tempSetpoint_degC = 0;
 double minBufferTemp_degC = 0;
 double maxTempBuffer_degC = 0;
 double storageTemp_degC = 0;
-double DHnetworkTemp_degC = 0;
-
-double electricitySurplussCoop_kW = 0;
-double totalHeatingPower_kWth = 0;
-
+//double DHnetworkTemp_degC = 0;
 //v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 v_currentElectricityPriceConsumption_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;
 
 if (l_ownerActor.getConnectedAgent() instanceof EnergyCoop){
-	electricitySurplussCoop_kW = ((EnergyCoop)l_ownerActor.getConnectedAgent()).v_electricitySurplus_kW + v_previousPowerElectricity_kW; // From last timestep! So compensate for own electric power
+	//electricitySurplussCoop_kW = ((EnergyCoop)l_ownerActor.getConnectedAgent()).v_electricitySurplus_kW + v_previousPowerElectricity_kW; // From last timestep! So compensate for own electric power
 	//traceln("DH function! Electricity surpluss in Coop: " + electricitySurplussCoop_kW + ", own power " + v_previousPowerElectricity_kW,1 );
-}
-	
+}	
 //		((J_EAConversionHeatPump)e.j_ea).updateParameters(main.p_undergroundTemperature_degC, storageTemp_degC); // update heatpump temp levels!
-
-tempSetpoint_degC = p_DHheatStorage.getSetTemperature_degC();
-minBufferTemp_degC = p_DHheatStorage.getMinTemperature_degC();
-maxTempBuffer_degC = p_DHheatStorage.getMaxTemperature_degC();
-storageTemp_degC = p_DHheatStorage.getCurrentTemperature();
-
-b_storageBelowSetpoint = storageTemp_degC < tempSetpoint_degC;
-b_storageBelowMinimum = storageTemp_degC < minBufferTemp_degC;
-b_storageBelowNetworkTemp = storageTemp_degC < DHnetworkTemp_degC;
-
-
-// traceln("network temperature: "+DHnetworkTemp_degC+", bivalent system? :"+b_bivalentSystem+", storage current Temp = "+storageTemp_degC+", storage minTemp = "+minBufferTemp_degC+", storage below setpoint ? : "+b_storageBelowSetpoint + ", storage below minimumTemp? "+b_storageBelowMinimum+", storage below network temp: "+b_storageBelowNetworkTemp);
-
-//DHnetworkTemp_degC = l_parentNodeHeat.getConnectedAgent().p_transportBuffer.getCurrentTemperature();
-//traceln("DH network temp degC: %s", DHnetworkTemp_degC);
-//traceln("DH 'factory' temp degC: %s ", storageTemp_degC);
-v_bufferTemp_degC = storageTemp_degC;
-//double heatTransferToNetworkCoefficient_kWpK = 10000;
-//traceln("storageTemp_degC: " + storageTemp_degC + ", DHnetworkTemp_degC: " + DHnetworkTemp_degC);
 double heatTransferToNetwork_kW = l_parentNodeHeat.getConnectedAgent().v_currentLoadHeat_kW - v_previousPowerHeat_kW;// max( storageTemp_degC - DHnetworkTemp_degC, 0 ) * heatTransferToNetworkCoefficient_kWpK;
-//traceln("storageTemp_degC: "+storageTemp_degC+", network current temp_degC: " + DHnetworkTemp_degC + ", heatTransferToNetwork_kW: "+heatTransferToNetwork_kW);
 
-boolean b_LTresidualHeatAssetTempAboveTargetTemp = b_residualHeatLTSource && p_residualHeatLTSource.getCurrentTemperature() > storageTemp_degC? true : false;
-boolean b_primarySourceTempAboveTargetTemp = p_primaryHeatingAsset.getCurrentTemperature() > storageTemp_degC? true : false;
-boolean b_secondarySourceTempAboveTargetTemp = false;  // set later if present but be available outside if-context
-
-if( b_monovalentSystem ) {
-	//traceln("monovalent DHsystem logic");
-	p_primaryHeatingAsset.v_powerFraction_fr = b_storageBelowSetpoint && b_primarySourceTempAboveTargetTemp? 1 : 0;
-	//traceln("Primary heating system powerFraction: %s", p_primaryHeatingAsset.v_powerFraction_fr);
-	totalHeatingPower_kWth = b_primarySourceTempAboveTargetTemp? p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getHeatCapacity_kW() : 0; // only model net heat flow when temperature levels allow this
-	//traceln("totalHeatingPower " +totalHeatingPower_kWth);
-	//traceln("DHGRC storage temp: "+storageTemp_degC+", LT-residual temp: "+p_residualHeatLTSource.j_ea.getCurrentTemperature()+", primary source temp = "+ p_primaryHeatingAsset.j_ea.getCurrentTemperature()+", primary source above target temp: "+b_primarySourceTempAboveTargetTemp);	
-}
-else if( b_bivalentSystem ) {
-	//traceln("bivalent DHsystem logic");
-	p_primaryHeatingAsset.v_powerFraction_fr = 0;
-	p_secondaryHeatingAsset.v_powerFraction_fr = 0;
-	/*if (p_smartHeatingEnabled ) {
-		f_operateSmartHeating();
-	}
-	else{*/
-	b_secondarySourceTempAboveTargetTemp = p_secondaryHeatingAsset.getCurrentTemperature() > storageTemp_degC? true : false;
-
-	//double maxPrimaryPower_kW = b_primarySourceTempAboveTargetTemp? p_primaryHeatingAsset.j_ea.getHeatCapacity_kW() : 0; // only count effective power when hot enough to actually heat.
-
-	p_primaryHeatingAsset.v_powerFraction_fr = b_primarySourceTempAboveTargetTemp && b_storageBelowSetpoint? 1 : 0;
-	p_secondaryHeatingAsset.v_powerFraction_fr = b_secondarySourceTempAboveTargetTemp && (b_storageBelowMinimum || b_storageBelowNetworkTemp)? 1 : 0;
-	
-	totalHeatingPower_kWth = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getHeatCapacity_kW() +
-		p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getHeatCapacity_kW() ;// + p_backupHeatingAsset.v_powerFraction_fr * p_backupHeatingAsset.j_ea.getHeatCapacity_kW();
-		//traceln("DHGRC storage temp: "+storageTemp_degC+", LT-residual temp: "+p_residualHeatLTSource.j_ea.getCurrentTemperature()+", primary source temp = "+ p_primaryHeatingAsset.j_ea.getCurrentTemperature()+", primary source above target temp: "+b_primarySourceTempAboveTargetTemp+", second temp: "+p_secondaryHeatingAsset.j_ea.getCurrentTemperature()+", second above target temp: "+b_secondarySourceTempAboveTargetTemp);	
-}
-
-// Block (passive energy flows if too cold
-//heatTransferToNetwork_kW = b_storageBelowNetworkTemp? 0 : heatTransferToNetwork_kW;
-
-p_primaryHeatingAsset.f_updateAllFlows( p_primaryHeatingAsset.v_powerFraction_fr );
-
-if( b_bivalentSystem ) {
-	p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
-}
 if( b_validLocalBuffer ) {
+	tempSetpoint_degC = p_DHheatStorage.getSetTemperature_degC();
+	v_bufferTemp_degC = p_DHheatStorage.getCurrentTemperature();
+
 	//traceln("Thermal storage asset heatCapacity: " + p_DHheatStorage.getHeatCapacity_kW());
-	//traceln("Total heating power: " +totalHeatingPower_kWth);
+	double heatingSetpoint_kW = max(0,(tempSetpoint_degC - v_bufferTemp_degC)) * p_DHheatStorage.getHeatCapacity_JpK() / (3.6e6 * energyModel.p_timeStep_h);
+	double[] arr = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getHeatCapacity_kW() );
+	double heatingPower_kW = arr[3];
 	
-	p_DHheatStorage.v_powerFraction_fr = ( totalHeatingPower_kWth - heatTransferToNetwork_kW ) / p_DHheatStorage.getHeatCapacity_kW();
+	//traceln("Heating setpoint: %s kW, heating power: %s kW", heatingSetpoint_kW, heatingPower_kW);	
+	p_DHheatStorage.v_powerFraction_fr = ( heatingPower_kW - heatTransferToNetwork_kW ) / p_DHheatStorage.getHeatCapacity_kW();
 	if ( abs(p_DHheatStorage.v_powerFraction_fr ) > 1) {
 		traceln("p_DHheatStorage.v_powerFraction_fr greater than 1! %s", p_DHheatStorage.v_powerFraction_fr );
 	}
 	p_DHheatStorage.f_updateAllFlows(p_DHheatStorage.v_powerFraction_fr);
 	//traceln("heatTransferToNetwork_kW: " + heatTransferToNetwork_kW);
 	//traceln("District heating system temperature: %s degC", p_DHheatStorage.getCurrentTemperature());
+} else {
+	double[] arr = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getHeatCapacity_kW()); // heatingasset must be powerful enough every single timestep!
+	if ( 0.01 < (heatTransferToNetwork_kW - arr[3]) ) {
+		traceln("Warning! District heating primary heating asset not able to fulfill heat demand! Heatdemand: %s kW, heat produced: %s kW", heatTransferToNetwork_kW, arr[3] );
+	}	
+	//traceln("Primary heating system powerFraction: %s", p_primaryHeatingAsset.v_powerFraction_fr);
+	//totalHeatingPower_kWth = b_primarySourceTempAboveTargetTemp? p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getHeatCapacity_kW() : 0; // only model net heat flow when temperature levels allow this
+
 }
 
+//double heatTransferToNetworkCoefficient_kWpK = 10000;
+//traceln("storageTemp_degC: " + storageTemp_degC + ", DHnetworkTemp_degC: " + DHnetworkTemp_degC);
+
+//traceln("storageTemp_degC: "+storageTemp_degC+", network current temp_degC: " + DHnetworkTemp_degC + ", heatTransferToNetwork_kW: "+heatTransferToNetwork_kW);
+
+//traceln("totalHeatingPower " +totalHeatingPower_kWth);
+
+// Block (passive energy flows if too cold
+//heatTransferToNetwork_kW = b_storageBelowNetworkTemp? 0 : heatTransferToNetwork_kW;
+
+//p_primaryHeatingAsset.f_updateAllFlows( p_primaryHeatingAsset.v_powerFraction_fr );
+
 //traceln("District heating " + p_parentNodeHeatID + " storage temperature " + storageTemp_degC + " degC" + ", district heating network temperature " + p_parentNodeHeat.p_transportBuffer.getCurrentTemperature() + " deg C" );
-
-/*for( J_EAConversion v : c_conversionAssets ) {	
-	//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_heatPumpElectricityConsumption_kW +=  v.electricityConsumption_kW - v.electricityProduction_kW;
-	//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-}*/
-
-/*
-for( J_EA e : c_productionAssets ){
-	e.f_updateAllFlows( e.v_powerFraction_fr );
-	//v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
-}*/
-
 
 //v_currentPowerHeat_kW += p_BuildingThermalAsset.heatConsumption_kW - p_BuildingThermalAsset.heatProduction_kW;
 
@@ -44413,8 +44300,6 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// one time setting of booleans marking system configuration for use in transparant logic switching
-b_monovalentSystem = p_primaryHeatingAsset instanceof J_EA & p_secondaryHeatingAsset == null? true : false;
-b_bivalentSystem = p_primaryHeatingAsset instanceof J_EA & p_secondaryHeatingAsset != null? true : false;
 b_residualHeatLTSource = p_residualHeatLTSource instanceof J_EAProduction? true : false;
 
 // Check if buffer is present and has physically correct parameters
@@ -44582,6 +44467,7 @@ switch (p_heatingType) {
 //}
 } else if (j_ea instanceof J_EAStorageHeat ) {
 	p_DHheatStorage = (J_EAStorageHeat)j_ea;
+	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
 } else {
 	traceln("f_connectToChild in EnergyAsset: Exception! EnergyAsset " + j_ea + " is of unknown type or null! ");
 }
