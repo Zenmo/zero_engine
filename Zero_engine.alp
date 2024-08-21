@@ -24250,7 +24250,9 @@ data_V2GSupply_kW.update();
 v_batteryPowerElectric_kW = 0;
 
 for (J_EA j_ea : c_batteryAssets) {
-	v_batteryPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
+	if (j_ea.getElectricCapacity_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
+		v_batteryPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
+	}
 }
 data_batteryCharging_kW.update();	
 data_batteryDischarging_kW.update();	
@@ -47753,10 +47755,10 @@ public void f_batteryManagementPrice( double batterySOC ){
 	f_batteryManagementPriceGrid( batterySOC );
 }
 
-/*@Override // Why?
+@Override // Why?
 public void f_calculateEnergyBalance(){
 	f_calculateEnergyBalance_overwrite();
-}*/]]></AdditionalClassCode>
+}]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -48048,7 +48050,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if ( p_batteryAsset != null ) {
-	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
+	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0 && p_batteryAsset.getCapacityElectric_kW() != 0.0) {
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
 			//f_batteryManagementGridLoad(v_batterySOC_fr);
@@ -48058,7 +48060,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
 			f_batteryManagementPrice(v_batterySOC_fr);
 		}
-
+		
 		double[] flowsArray = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		v_batteryPowerElectric_kW = flowsArray[4] - flowsArray[0];//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
@@ -48205,7 +48207,6 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		
 	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
-	
 	double FeedbackGain_kWpSOC = 3 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
@@ -48234,7 +48235,6 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getElectricCapacity_kW());
 		return;
 	}
-	
 	double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
 	double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
 	double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
@@ -48243,7 +48243,6 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
-
 }
 ]]></Body>
 				</Function>
@@ -48252,7 +48251,6 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1688369593905</Id>
 					<Name><![CDATA[f_calculateEnergyBalance_overwrite]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>780</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -48270,6 +48268,7 @@ v_currentElectricityProduction_kW = 0;
 v_currentEnergyConsumption_kW = 0;
 v_currentEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
+
 
 // Categorical power flows
 v_fixedConsumptionElectric_kW = 0;
@@ -48309,10 +48308,6 @@ v_selfConsumption_fr = 1 - (v_electricityDeliveredToGrid_kWh + v_heatDelivered_k
 v_selfSufficiency_fr = 1 - (v_electricityDrawnFromGrid_kWh + v_heatDrawn_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh) / v_totalEnergyUsed_kWh; // Need to account for energy in storages
 v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 */
-if (energyModel.b_addKpiVisuals) {
-	//pl_SOC.updateData();
-	//pl_powerFlows.updateData();
-}
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -52987,7 +52982,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	@Override
 	public double getCurrentStateOfCharge() {
-    	return stateOfCharge_r;
+    	return this.stateOfCharge_r;
 	}
 
 	public double getCapacityAvailable_kW() {
@@ -53002,14 +52997,18 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	}
 	
 	public double getCapacityElectric_kW() {
-		return capacityElectric_kW;
+		return this.capacityElectric_kW;
+	}
+	
+	public double getStorageCapacity_kWh() {
+		return this.storageCapacity_kWh;
 	}
 
 	public double getTotalChargeAmount_kWh() {
-		return charged_kWh;
+		return this.charged_kWh;
 	}
 	public double getTotalDischargeAmount_kWh() {
-		return discharged_kWh;
+		return this.discharged_kWh;
 	}
 	
 	public void setStorageCapacity_kWh(double storageCapacity_kWh) {
@@ -53031,7 +53030,15 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		<JavaClass>
 			<Id>1659446215929</Id>
 			<Name><![CDATA[J_EAStorageGas]]></Name>
-			<Text><![CDATA[/**
+			<Text><![CDATA[package zero_engine;
+
+import java.io.Serializable;
+
+package zero_engine;
+
+import java.io.Serializable;
+
+/**
  * J_EAStorageGas
  */
 public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializable {
@@ -53135,7 +53142,9 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	 */
 	private static final long serialVersionUID = 1L;
 
-}]]></Text>
+} 
+ 
+]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
