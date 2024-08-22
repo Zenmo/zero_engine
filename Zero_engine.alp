@@ -22866,16 +22866,19 @@ switch (p_chargingAttitudeVehicles) {
 int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV ev = copiedVehicleList.get(i);
+	
+	if (ev.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
 		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
 	else {
-		if (ev.vehicleScaling != 0) {
 			double[] flowsArray = ev.f_updateAllFlows(1);
 			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-		}
 	}
 }
 
@@ -22896,12 +22899,17 @@ int countDeletedItems = 0;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV ev = copiedVehicleList.get(i);
+	
+	if (ev.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if(!ev.getAvailability() || ev.getCurrentStateOfCharge() == 1){
 		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
-	else if( ev.vehicleScaling != 0 ) {
+	else {
 		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
 		double maxChargingPower_kW = ev.getElectricCapacity_kW();
 		double emptyKWhInBattery = ev.getStorageCapacity_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge();
@@ -22946,33 +22954,36 @@ int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
+	
+	if (ev.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
 		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
 	else {
-		if (ev.vehicleScaling != 0) {
-			double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-			//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-			double maxChargingPower_kW = ev.getElectricCapacity_kW();
-			//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
-			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-			
-			if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-			//traceln("Urgency charging! May exceed connection capacity!");
-				chargeSetpoint_kW = maxChargingPower_kW ;	
-			}
-			
-			double chargingSpeed = min (chargeSetpoint_kW, ev.capacityElectric_kW / ev.vehicleScaling );
-			double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
-			/*if ( ev.getChargingTimeToFull_MIN() > EA.nextEventStartTime_min - energyModel.p_timeStep_h * 60 ){
-				ratio = 1;
-			}*/
-			double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
-			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-			//v_evChargingPowerElectric_kW += ev.electricityConsumption_kW - ev.electricityProduction_kW;
+		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
+		double maxChargingPower_kW = ev.getElectricCapacity_kW();
+		//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
+		double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+		
+		if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+		//traceln("Urgency charging! May exceed connection capacity!");
+			chargeSetpoint_kW = maxChargingPower_kW ;	
 		}
+		
+		double chargingSpeed = min (chargeSetpoint_kW, ev.capacityElectric_kW / ev.vehicleScaling );
+		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
+		/*if ( ev.getChargingTimeToFull_MIN() > EA.nextEventStartTime_min - energyModel.p_timeStep_h * 60 ){
+			ratio = 1;
+		}*/
+		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
+		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+		//v_evChargingPowerElectric_kW += ev.electricityConsumption_kW - ev.electricityProduction_kW;
 	}
 }]]></Body>
 				</Function>
@@ -23001,6 +23012,11 @@ double remainingChargePower_kW = availableChargingPower_kW;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV vehicle = copiedVehicleList.get(i);
+	
+	if (vehicle.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if(!vehicle.getAvailability() ){
 		vehicle.f_updateAllFlows( 0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
@@ -23260,6 +23276,11 @@ double remainingChargePower_kW = availableChargingPower_kW;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV vehicle = copiedVehicleList.get(i);
+	
+	if (vehicle.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if(!vehicle.getAvailability() ){
 		vehicle.f_updateAllFlows( 0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
@@ -24242,6 +24263,9 @@ data_heatPumpElectricityDemand_kW.update();
 //data_electricCarsDemand_kW.update();
 v_evChargingPowerElectric_kW = 0;
 for (J_EA j_ea : c_EvAssets) {
+	if (((J_EAEV)j_ea).vehicleScaling == 0) {
+		continue;
+	}
 	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
 }
 data_electricVehicleDemand_kW.update();
@@ -51675,10 +51699,10 @@ else{
 
 /*
 //TESTER
-	powerDemandDivision[0] = powerDemand_companies_kW*1 + powerDemand_households_kW*1;
-	powerDemandDivision[1] = powerDemand_companies_kW*0 + powerDemand_households_kW*0;
+	powerDemandDivision[0] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
+	powerDemandDivision[1] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
 	powerDemandDivision[2] = 0;
-*/		
+*/	
 return powerDemandDivision; //{Gasburner power request, HP power request, DH power request}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -53781,8 +53805,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
      */
     public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
 		this.parentAgent = parentAgent;
-		this.capacityElectric_kW = capacityElectricity_kW * vehicleScaling; // for EV, this is max charging power.
-		this.storageCapacity_kWh = storageCapacity_kWh * vehicleScaling;
+		this.capacityElectric_kW = capacityElectricity_kW; // for EV, this is max charging power.
+		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialStateOfCharge_r = stateOfCharge_r;
 		this.stateOfCharge_r = initialStateOfCharge_r;
 		this.timestep_h = timestep_h;
@@ -53808,10 +53832,10 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    	double discharge_kW = 0;
 	    	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
 	    	
-	    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * capacityElectric_kW * timestep_h ) ;
-	    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
-	    	deltaEnergy_kWh = min(deltaEnergy_kWh, ratioOfChargeCapacity_r * capacityElectric_kW * timestep_h ); // prevent charging faster than allowed
-	    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
+	    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ) ;
+	    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
+	    	deltaEnergy_kWh = min(deltaEnergy_kWh, ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent charging faster than allowed
+	    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * (storageCapacity_kWh * vehicleScaling) ); // Prevent overcharge
 	    
 			discharge_kW = -deltaEnergy_kWh / timestep_h;
 			//traceln("state of charge: " + stateOfCharge_r * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
@@ -53826,7 +53850,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
 
 	public void updateStateOfCharge( double power_kW ) {
-		stateOfCharge_r -= ( power_kW * timestep_h ) / storageCapacity_kWh;
+		stateOfCharge_r -= ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
 	}
 
 	@Override
@@ -53853,10 +53877,15 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		if(available) {
 			traceln("Trip not ended because EV never left!");
 			return false;
+		}else if (this.vehicleScaling == 0) {
+			this.available = true;
+			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
+			return true;
 		} else {
 			mileage_km += tripDist_km;
 			//traceln( "J_EAEV comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);
-			stateOfCharge_r -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / storageCapacity_kWh;
+			//traceln("EV of type: " + this.energyAssetType + "state of charge: " + stateOfCharge_r);
+			stateOfCharge_r -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / (storageCapacity_kWh * vehicleScaling);
 			//traceln("storage capacity: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / timestep_h;
@@ -53885,9 +53914,13 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
 
 	public double getStorageCapacity_kWh() {
-		return storageCapacity_kWh;
+		return (storageCapacity_kWh * vehicleScaling);
 	}
 	
+	@Override
+	public double getElectricCapacity_kW() {
+		return (capacityElectric_kW * vehicleScaling);
+	}
 	public double getTotalChargeAmount_kWh() {
 		return charged_kWh;
 	}
@@ -53904,7 +53937,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
 
 	public double getChargingTimeToFull_MIN() {
-		double chargingTime_min = ceil( 60 * (storageCapacity_kWh - storageCapacity_kWh * stateOfCharge_r) / capacityElectric_kW ) ;
+		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh * vehicleScaling) - (storageCapacity_kWh * vehicleScaling) * stateOfCharge_r) / (capacityElectric_kW * vehicleScaling) ) ;
 		return chargingTime_min;
 	}
 
@@ -55400,7 +55433,15 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    }
 	    prepareNextActivity(time_min);    	
     }
-    
+   
+   public void setVehicle(J_EAVehicle Vehicle) {
+	   this.Vehicle = Vehicle;
+   }
+   
+   public void setDistanceScaling_fr(double distanceScaling_fr) {
+	   this.distanceScaling_fr = distanceScaling_fr;
+   }
+   
    public void setAnnualDistance_km(double desiredAnnualDistance_km) { // Scale trips to come to a certain total annual distance traveled. This can lead to unfeasibly long trips for EVs!!
 	   /* double currentAnnualDistance_km = 0;
 	   int tripNo=0;
@@ -55553,6 +55594,10 @@ public class J_EAVehicle extends J_EA implements Serializable {
     	return false;
     }
     
+    public void setVehicleScaling(double vehicleScaling) {
+    	this.vehicleScaling = vehicleScaling;
+    }
+    
 	public void setTripTracker(J_ActivityTrackerTrips tracker) {
 		tripTracker = tracker;
 	}
@@ -55563,6 +55608,10 @@ public class J_EAVehicle extends J_EA implements Serializable {
     
 	public boolean getAvailability() {
 		return available;
+	}
+	
+	public double getVehicleScaling() {
+		return vehicleScaling;
 	}
 	
 	@Override
