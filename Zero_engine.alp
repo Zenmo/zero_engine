@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -51347,6 +51347,18 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724397994084</Id>
+					<Name><![CDATA[v_nbCurrentHouseholdsWithBattery]]></Name>
+					<X>1680</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1718725906048</Id>
 					<Name><![CDATA[p_gisRegion]]></Name>
@@ -51432,11 +51444,17 @@ f_manageHeatingAssets();
 
 f_manageCharging();
 
-if (p_batteryAsset != null){ // TEST CODE
-	f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+//Electric Storage
+List<J_EAStorage> batteries = findAll(c_storageAssets, storage -> storage.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC);
+for(int i = 0; i < batteries.size() ; i++){
+	if (batteries.get(i).getStorageCapacity_kWh() != 0){
+	f_batteryManagementBalance(batteries.get(i).getCurrentStateOfCharge());
 	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	//traceln("flows:" + Arrays.toString(arr));
+	}
 }
+
+
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 }*/
@@ -51588,7 +51606,8 @@ else{
 	powerDemandDivision[0] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
 	powerDemandDivision[1] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
 	powerDemandDivision[2] = 0;
-*/	
+*/
+
 return powerDemandDivision; //{Gasburner power request, HP power request, DH power request}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -51776,7 +51795,7 @@ if (j_ea instanceof J_EAVehicle) {
 			<Presentation>
 				<Rectangle>
 					<Id>1722502672021</Id>
-					<Name><![CDATA[rectangle4]]></Name>
+					<Name><![CDATA[rect_heatSliderFunctionality]]></Name>
 					<X>1650</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -51799,7 +51818,7 @@ if (j_ea instanceof J_EAVehicle) {
 				</Rectangle>
 				<Text>
 					<Id>1722502691313</Id>
-					<Name><![CDATA[text3]]></Name>
+					<Name><![CDATA[txt_heatSliderFunctionality]]></Name>
 					<X>1680</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -51811,6 +51830,49 @@ if (j_ea instanceof J_EAVehicle) {
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Heat sliders functionality]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1724397965238</Id>
+					<Name><![CDATA[rect_batterySliderFunctionality]]></Name>
+					<X>1650</X><Y>400</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16711936</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>430</Width>
+					<Height>170</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1724397981363</Id>
+					<Name><![CDATA[txt_batterySliderFunctionality]]></Name>
+					<X>1670</X><Y>420</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Battery sliders functionality]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
