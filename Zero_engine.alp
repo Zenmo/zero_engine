@@ -22866,16 +22866,19 @@ switch (p_chargingAttitudeVehicles) {
 int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV ev = copiedVehicleList.get(i);
+	
+	if (ev.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
 		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
 	else {
-		if (ev.vehicleScaling != 0) {
 			double[] flowsArray = ev.f_updateAllFlows(1);
 			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-		}
 	}
 }
 
@@ -22896,12 +22899,17 @@ int countDeletedItems = 0;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV ev = copiedVehicleList.get(i);
+	
+	if (ev.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if(!ev.getAvailability() || ev.getCurrentStateOfCharge() == 1){
 		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
-	else if( ev.vehicleScaling != 0 ) {
+	else {
 		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
 		double maxChargingPower_kW = ev.getElectricCapacity_kW();
 		double emptyKWhInBattery = ev.getStorageCapacity_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge();
@@ -22946,33 +22954,36 @@ int countDeletedItems = 0;
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
+	
+	if (ev.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
 		ev.f_updateAllFlows( 0.0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
 		countDeletedItems ++;
 	}
 	else {
-		if (ev.vehicleScaling != 0) {
-			double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-			//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-			double maxChargingPower_kW = ev.getElectricCapacity_kW();
-			//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
-			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-			
-			if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-			//traceln("Urgency charging! May exceed connection capacity!");
-				chargeSetpoint_kW = maxChargingPower_kW ;	
-			}
-			
-			double chargingSpeed = min (chargeSetpoint_kW, ev.capacityElectric_kW / ev.vehicleScaling );
-			double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
-			/*if ( ev.getChargingTimeToFull_MIN() > EA.nextEventStartTime_min - energyModel.p_timeStep_h * 60 ){
-				ratio = 1;
-			}*/
-			double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
-			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-			//v_evChargingPowerElectric_kW += ev.electricityConsumption_kW - ev.electricityProduction_kW;
+		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
+		double maxChargingPower_kW = ev.getElectricCapacity_kW();
+		//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
+		double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+		
+		if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+		//traceln("Urgency charging! May exceed connection capacity!");
+			chargeSetpoint_kW = maxChargingPower_kW ;	
 		}
+		
+		double chargingSpeed = min (chargeSetpoint_kW, ev.capacityElectric_kW / ev.vehicleScaling );
+		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
+		/*if ( ev.getChargingTimeToFull_MIN() > EA.nextEventStartTime_min - energyModel.p_timeStep_h * 60 ){
+			ratio = 1;
+		}*/
+		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
+		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+		//v_evChargingPowerElectric_kW += ev.electricityConsumption_kW - ev.electricityProduction_kW;
 	}
 }]]></Body>
 				</Function>
@@ -23001,6 +23012,11 @@ double remainingChargePower_kW = availableChargingPower_kW;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV vehicle = copiedVehicleList.get(i);
+	
+	if (vehicle.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if(!vehicle.getAvailability() ){
 		vehicle.f_updateAllFlows( 0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
@@ -23260,6 +23276,11 @@ double remainingChargePower_kW = availableChargingPower_kW;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV vehicle = copiedVehicleList.get(i);
+	
+	if (vehicle.getVehicleScaling() == 0) {
+		continue;
+	}
+	
 	if(!vehicle.getAvailability() ){
 		vehicle.f_updateAllFlows( 0 );
 		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
@@ -24242,6 +24263,9 @@ data_heatPumpElectricityDemand_kW.update();
 //data_electricCarsDemand_kW.update();
 v_evChargingPowerElectric_kW = 0;
 for (J_EA j_ea : c_EvAssets) {
+	if (((J_EAEV)j_ea).vehicleScaling == 0) {
+		continue;
+	}
 	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
 }
 data_electricVehicleDemand_kW.update();
@@ -43999,78 +44023,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1677512038554</Id>
-					<Name><![CDATA[b_monovalentSystem]]></Name>
-					<X>520</X><Y>550</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512061721</Id>
-					<Name><![CDATA[b_bivalentSystem]]></Name>
-					<X>520</X><Y>570</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512068434</Id>
-					<Name><![CDATA[b_validLocalBuffer]]></Name>
-					<X>520</X><Y>590</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512088967</Id>
-					<Name><![CDATA[b_storageBelowSetpoint]]></Name>
-					<X>520</X><Y>610</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512107241</Id>
-					<Name><![CDATA[b_storageBelowMinimum]]></Name>
-					<X>520</X><Y>630</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1677512121917</Id>
-					<Name><![CDATA[b_storageBelowNetworkTemp]]></Name>
-					<X>520</X><Y>650</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1677512160570</Id>
 					<Name><![CDATA[b_residualHeatLTSource]]></Name>
 					<X>520</X><Y>670</Y>
@@ -44093,6 +44045,21 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724252832488</Id>
+					<Name><![CDATA[b_validLocalBuffer]]></Name>
+					<X>520</X><Y>650</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -44177,113 +44144,57 @@ double tempSetpoint_degC = 0;
 double minBufferTemp_degC = 0;
 double maxTempBuffer_degC = 0;
 double storageTemp_degC = 0;
-double DHnetworkTemp_degC = 0;
-
-double electricitySurplussCoop_kW = 0;
-double totalHeatingPower_kWth = 0;
-
+//double DHnetworkTemp_degC = 0;
 //v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 v_currentElectricityPriceConsumption_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;
 
 if (l_ownerActor.getConnectedAgent() instanceof EnergyCoop){
-	electricitySurplussCoop_kW = ((EnergyCoop)l_ownerActor.getConnectedAgent()).v_electricitySurplus_kW + v_previousPowerElectricity_kW; // From last timestep! So compensate for own electric power
+	//electricitySurplussCoop_kW = ((EnergyCoop)l_ownerActor.getConnectedAgent()).v_electricitySurplus_kW + v_previousPowerElectricity_kW; // From last timestep! So compensate for own electric power
 	//traceln("DH function! Electricity surpluss in Coop: " + electricitySurplussCoop_kW + ", own power " + v_previousPowerElectricity_kW,1 );
-}
-	
+}	
 //		((J_EAConversionHeatPump)e.j_ea).updateParameters(main.p_undergroundTemperature_degC, storageTemp_degC); // update heatpump temp levels!
-
-tempSetpoint_degC = p_DHheatStorage.getSetTemperature_degC();
-minBufferTemp_degC = p_DHheatStorage.getMinTemperature_degC();
-maxTempBuffer_degC = p_DHheatStorage.getMaxTemperature_degC();
-storageTemp_degC = p_DHheatStorage.getCurrentTemperature();
-
-b_storageBelowSetpoint = storageTemp_degC < tempSetpoint_degC;
-b_storageBelowMinimum = storageTemp_degC < minBufferTemp_degC;
-b_storageBelowNetworkTemp = storageTemp_degC < DHnetworkTemp_degC;
-
-
-// traceln("network temperature: "+DHnetworkTemp_degC+", bivalent system? :"+b_bivalentSystem+", storage current Temp = "+storageTemp_degC+", storage minTemp = "+minBufferTemp_degC+", storage below setpoint ? : "+b_storageBelowSetpoint + ", storage below minimumTemp? "+b_storageBelowMinimum+", storage below network temp: "+b_storageBelowNetworkTemp);
-
-//DHnetworkTemp_degC = l_parentNodeHeat.getConnectedAgent().p_transportBuffer.getCurrentTemperature();
-//traceln("DH network temp degC: %s", DHnetworkTemp_degC);
-//traceln("DH 'factory' temp degC: %s ", storageTemp_degC);
-v_bufferTemp_degC = storageTemp_degC;
-//double heatTransferToNetworkCoefficient_kWpK = 10000;
-//traceln("storageTemp_degC: " + storageTemp_degC + ", DHnetworkTemp_degC: " + DHnetworkTemp_degC);
 double heatTransferToNetwork_kW = l_parentNodeHeat.getConnectedAgent().v_currentLoadHeat_kW - v_previousPowerHeat_kW;// max( storageTemp_degC - DHnetworkTemp_degC, 0 ) * heatTransferToNetworkCoefficient_kWpK;
-//traceln("storageTemp_degC: "+storageTemp_degC+", network current temp_degC: " + DHnetworkTemp_degC + ", heatTransferToNetwork_kW: "+heatTransferToNetwork_kW);
 
-boolean b_LTresidualHeatAssetTempAboveTargetTemp = b_residualHeatLTSource && p_residualHeatLTSource.getCurrentTemperature() > storageTemp_degC? true : false;
-boolean b_primarySourceTempAboveTargetTemp = p_primaryHeatingAsset.getCurrentTemperature() > storageTemp_degC? true : false;
-boolean b_secondarySourceTempAboveTargetTemp = false;  // set later if present but be available outside if-context
-
-if( b_monovalentSystem ) {
-	//traceln("monovalent DHsystem logic");
-	p_primaryHeatingAsset.v_powerFraction_fr = b_storageBelowSetpoint && b_primarySourceTempAboveTargetTemp? 1 : 0;
-	//traceln("Primary heating system powerFraction: %s", p_primaryHeatingAsset.v_powerFraction_fr);
-	totalHeatingPower_kWth = b_primarySourceTempAboveTargetTemp? p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getHeatCapacity_kW() : 0; // only model net heat flow when temperature levels allow this
-	//traceln("totalHeatingPower " +totalHeatingPower_kWth);
-	//traceln("DHGRC storage temp: "+storageTemp_degC+", LT-residual temp: "+p_residualHeatLTSource.j_ea.getCurrentTemperature()+", primary source temp = "+ p_primaryHeatingAsset.j_ea.getCurrentTemperature()+", primary source above target temp: "+b_primarySourceTempAboveTargetTemp);	
-}
-else if( b_bivalentSystem ) {
-	//traceln("bivalent DHsystem logic");
-	p_primaryHeatingAsset.v_powerFraction_fr = 0;
-	p_secondaryHeatingAsset.v_powerFraction_fr = 0;
-	/*if (p_smartHeatingEnabled ) {
-		f_operateSmartHeating();
-	}
-	else{*/
-	b_secondarySourceTempAboveTargetTemp = p_secondaryHeatingAsset.getCurrentTemperature() > storageTemp_degC? true : false;
-
-	//double maxPrimaryPower_kW = b_primarySourceTempAboveTargetTemp? p_primaryHeatingAsset.j_ea.getHeatCapacity_kW() : 0; // only count effective power when hot enough to actually heat.
-
-	p_primaryHeatingAsset.v_powerFraction_fr = b_primarySourceTempAboveTargetTemp && b_storageBelowSetpoint? 1 : 0;
-	p_secondaryHeatingAsset.v_powerFraction_fr = b_secondarySourceTempAboveTargetTemp && (b_storageBelowMinimum || b_storageBelowNetworkTemp)? 1 : 0;
-	
-	totalHeatingPower_kWth = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getHeatCapacity_kW() +
-		p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getHeatCapacity_kW() ;// + p_backupHeatingAsset.v_powerFraction_fr * p_backupHeatingAsset.j_ea.getHeatCapacity_kW();
-		//traceln("DHGRC storage temp: "+storageTemp_degC+", LT-residual temp: "+p_residualHeatLTSource.j_ea.getCurrentTemperature()+", primary source temp = "+ p_primaryHeatingAsset.j_ea.getCurrentTemperature()+", primary source above target temp: "+b_primarySourceTempAboveTargetTemp+", second temp: "+p_secondaryHeatingAsset.j_ea.getCurrentTemperature()+", second above target temp: "+b_secondarySourceTempAboveTargetTemp);	
-}
-
-// Block (passive energy flows if too cold
-//heatTransferToNetwork_kW = b_storageBelowNetworkTemp? 0 : heatTransferToNetwork_kW;
-
-p_primaryHeatingAsset.f_updateAllFlows( p_primaryHeatingAsset.v_powerFraction_fr );
-
-if( b_bivalentSystem ) {
-	p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
-}
 if( b_validLocalBuffer ) {
+	tempSetpoint_degC = p_DHheatStorage.getSetTemperature_degC();
+	v_bufferTemp_degC = p_DHheatStorage.getCurrentTemperature();
+
 	//traceln("Thermal storage asset heatCapacity: " + p_DHheatStorage.getHeatCapacity_kW());
-	//traceln("Total heating power: " +totalHeatingPower_kWth);
+	double heatingSetpoint_kW = max(0,(tempSetpoint_degC - v_bufferTemp_degC)) * p_DHheatStorage.getHeatCapacity_JpK() / (3.6e6 * energyModel.p_timeStep_h);
+	double[] arr = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getHeatCapacity_kW() );
+	double heatingPower_kW = arr[3];
 	
-	p_DHheatStorage.v_powerFraction_fr = ( totalHeatingPower_kWth - heatTransferToNetwork_kW ) / p_DHheatStorage.getHeatCapacity_kW();
+	//traceln("Heating setpoint: %s kW, heating power: %s kW", heatingSetpoint_kW, heatingPower_kW);	
+	p_DHheatStorage.v_powerFraction_fr = ( heatingPower_kW - heatTransferToNetwork_kW ) / p_DHheatStorage.getHeatCapacity_kW();
 	if ( abs(p_DHheatStorage.v_powerFraction_fr ) > 1) {
 		traceln("p_DHheatStorage.v_powerFraction_fr greater than 1! %s", p_DHheatStorage.v_powerFraction_fr );
 	}
 	p_DHheatStorage.f_updateAllFlows(p_DHheatStorage.v_powerFraction_fr);
 	//traceln("heatTransferToNetwork_kW: " + heatTransferToNetwork_kW);
 	//traceln("District heating system temperature: %s degC", p_DHheatStorage.getCurrentTemperature());
+} else {
+	double[] arr = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getHeatCapacity_kW()); // heatingasset must be powerful enough every single timestep!
+	if ( 0.01 < (heatTransferToNetwork_kW - arr[3]) ) {
+		traceln("Warning! District heating primary heating asset not able to fulfill heat demand! Heatdemand: %s kW, heat produced: %s kW", heatTransferToNetwork_kW, arr[3] );
+	}	
+	//traceln("Primary heating system powerFraction: %s", p_primaryHeatingAsset.v_powerFraction_fr);
+	//totalHeatingPower_kWth = b_primarySourceTempAboveTargetTemp? p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getHeatCapacity_kW() : 0; // only model net heat flow when temperature levels allow this
+
 }
 
+//double heatTransferToNetworkCoefficient_kWpK = 10000;
+//traceln("storageTemp_degC: " + storageTemp_degC + ", DHnetworkTemp_degC: " + DHnetworkTemp_degC);
+
+//traceln("storageTemp_degC: "+storageTemp_degC+", network current temp_degC: " + DHnetworkTemp_degC + ", heatTransferToNetwork_kW: "+heatTransferToNetwork_kW);
+
+//traceln("totalHeatingPower " +totalHeatingPower_kWth);
+
+// Block (passive energy flows if too cold
+//heatTransferToNetwork_kW = b_storageBelowNetworkTemp? 0 : heatTransferToNetwork_kW;
+
+//p_primaryHeatingAsset.f_updateAllFlows( p_primaryHeatingAsset.v_powerFraction_fr );
+
 //traceln("District heating " + p_parentNodeHeatID + " storage temperature " + storageTemp_degC + " degC" + ", district heating network temperature " + p_parentNodeHeat.p_transportBuffer.getCurrentTemperature() + " deg C" );
-
-/*for( J_EAConversion v : c_conversionAssets ) {	
-	//v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-	v_heatPumpElectricityConsumption_kW +=  v.electricityConsumption_kW - v.electricityProduction_kW;
-	//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-	//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-	//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-	//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-}*/
-
-/*
-for( J_EA e : c_productionAssets ){
-	e.f_updateAllFlows( e.v_powerFraction_fr );
-	//v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
-}*/
-
 
 //v_currentPowerHeat_kW += p_BuildingThermalAsset.heatConsumption_kW - p_BuildingThermalAsset.heatProduction_kW;
 
@@ -44415,8 +44326,6 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// one time setting of booleans marking system configuration for use in transparant logic switching
-b_monovalentSystem = p_primaryHeatingAsset instanceof J_EA & p_secondaryHeatingAsset == null? true : false;
-b_bivalentSystem = p_primaryHeatingAsset instanceof J_EA & p_secondaryHeatingAsset != null? true : false;
 b_residualHeatLTSource = p_residualHeatLTSource instanceof J_EAProduction? true : false;
 
 // Check if buffer is present and has physically correct parameters
@@ -44584,6 +44493,7 @@ switch (p_heatingType) {
 //}
 } else if (j_ea instanceof J_EAStorageHeat ) {
 	p_DHheatStorage = (J_EAStorageHeat)j_ea;
+	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
 } else {
 	traceln("f_connectToChild in EnergyAsset: Exception! EnergyAsset " + j_ea + " is of unknown type or null! ");
 }
@@ -51433,6 +51343,18 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724397994084</Id>
+					<Name><![CDATA[v_nbCurrentHouseholdsWithBattery]]></Name>
+					<X>1680</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1718725906048</Id>
 					<Name><![CDATA[p_gisRegion]]></Name>
@@ -51518,11 +51440,17 @@ f_manageHeatingAssets();
 
 f_manageCharging();
 
-if (p_batteryAsset != null){ // TEST CODE
-	f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+//Electric Storage
+List<J_EAStorage> batteries = findAll(c_storageAssets, storage -> storage.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC);
+for(int i = 0; i < batteries.size() ; i++){
+	if (batteries.get(i).getStorageCapacity_kWh() != 0){
+	f_batteryManagementBalance(batteries.get(i).getCurrentStateOfCharge());
 	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	//traceln("flows:" + Arrays.toString(arr));
+	}
 }
+
+
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 }*/
@@ -51671,10 +51599,11 @@ else{
 
 /*
 //TESTER
-	powerDemandDivision[0] = powerDemand_companies_kW*1 + powerDemand_households_kW*1;
-	powerDemandDivision[1] = powerDemand_companies_kW*0 + powerDemand_households_kW*0;
+	powerDemandDivision[0] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
+	powerDemandDivision[1] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
 	powerDemandDivision[2] = 0;
-*/		
+*/
+
 return powerDemandDivision; //{Gasburner power request, HP power request, DH power request}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -51862,7 +51791,7 @@ if (j_ea instanceof J_EAVehicle) {
 			<Presentation>
 				<Rectangle>
 					<Id>1722502672021</Id>
-					<Name><![CDATA[rectangle4]]></Name>
+					<Name><![CDATA[rect_heatSliderFunctionality]]></Name>
 					<X>1650</X><Y>0</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -51885,7 +51814,7 @@ if (j_ea instanceof J_EAVehicle) {
 				</Rectangle>
 				<Text>
 					<Id>1722502691313</Id>
-					<Name><![CDATA[text3]]></Name>
+					<Name><![CDATA[txt_heatSliderFunctionality]]></Name>
 					<X>1680</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -51897,6 +51826,49 @@ if (j_ea instanceof J_EAVehicle) {
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Heat sliders functionality]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1724397965238</Id>
+					<Name><![CDATA[rect_batterySliderFunctionality]]></Name>
+					<X>1650</X><Y>400</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16711936</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>430</Width>
+					<Height>170</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1724397981363</Id>
+					<Name><![CDATA[txt_batterySliderFunctionality]]></Name>
+					<X>1670</X><Y>420</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Battery sliders functionality]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -53797,8 +53769,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
      */
     public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
 		this.parentAgent = parentAgent;
-		this.capacityElectric_kW = capacityElectricity_kW * vehicleScaling; // for EV, this is max charging power.
-		this.storageCapacity_kWh = storageCapacity_kWh * vehicleScaling;
+		this.capacityElectric_kW = capacityElectricity_kW; // for EV, this is max charging power.
+		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialStateOfCharge_r = stateOfCharge_r;
 		this.stateOfCharge_r = initialStateOfCharge_r;
 		this.timestep_h = timestep_h;
@@ -53824,10 +53796,10 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    	double discharge_kW = 0;
 	    	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
 	    	
-	    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * capacityElectric_kW * timestep_h ) ;
-	    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
-	    	deltaEnergy_kWh = min(deltaEnergy_kWh, ratioOfChargeCapacity_r * capacityElectric_kW * timestep_h ); // prevent charging faster than allowed
-	    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
+	    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ) ;
+	    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
+	    	deltaEnergy_kWh = min(deltaEnergy_kWh, ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent charging faster than allowed
+	    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * (storageCapacity_kWh * vehicleScaling) ); // Prevent overcharge
 	    
 			discharge_kW = -deltaEnergy_kWh / timestep_h;
 			//traceln("state of charge: " + stateOfCharge_r * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
@@ -53842,7 +53814,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
 
 	public void updateStateOfCharge( double power_kW ) {
-		stateOfCharge_r -= ( power_kW * timestep_h ) / storageCapacity_kWh;
+		stateOfCharge_r -= ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
 	}
 
 	@Override
@@ -53869,10 +53841,15 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		if(available) {
 			traceln("Trip not ended because EV never left!");
 			return false;
+		}else if (this.vehicleScaling == 0) {
+			this.available = true;
+			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
+			return true;
 		} else {
 			mileage_km += tripDist_km;
 			//traceln( "J_EAEV comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);
-			stateOfCharge_r -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / storageCapacity_kWh;
+			//traceln("EV of type: " + this.energyAssetType + "state of charge: " + stateOfCharge_r);
+			stateOfCharge_r -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / (storageCapacity_kWh * vehicleScaling);
 			//traceln("storage capacity: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / timestep_h;
@@ -53901,9 +53878,13 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
 
 	public double getStorageCapacity_kWh() {
-		return storageCapacity_kWh;
+		return (storageCapacity_kWh * vehicleScaling);
 	}
 	
+	@Override
+	public double getElectricCapacity_kW() {
+		return (capacityElectric_kW * vehicleScaling);
+	}
 	public double getTotalChargeAmount_kWh() {
 		return charged_kWh;
 	}
@@ -53920,7 +53901,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
 
 	public double getChargingTimeToFull_MIN() {
-		double chargingTime_min = ceil( 60 * (storageCapacity_kWh - storageCapacity_kWh * stateOfCharge_r) / capacityElectric_kW ) ;
+		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh * vehicleScaling) - (storageCapacity_kWh * vehicleScaling) * stateOfCharge_r) / (capacityElectric_kW * vehicleScaling) ) ;
 		return chargingTime_min;
 	}
 
@@ -55416,7 +55397,15 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    }
 	    prepareNextActivity(time_min);    	
     }
-    
+   
+   public void setVehicle(J_EAVehicle Vehicle) {
+	   this.Vehicle = Vehicle;
+   }
+   
+   public void setDistanceScaling_fr(double distanceScaling_fr) {
+	   this.distanceScaling_fr = distanceScaling_fr;
+   }
+   
    public void setAnnualDistance_km(double desiredAnnualDistance_km) { // Scale trips to come to a certain total annual distance traveled. This can lead to unfeasibly long trips for EVs!!
 	   /* double currentAnnualDistance_km = 0;
 	   int tripNo=0;
@@ -55569,6 +55558,10 @@ public class J_EAVehicle extends J_EA implements Serializable {
     	return false;
     }
     
+    public void setVehicleScaling(double vehicleScaling) {
+    	this.vehicleScaling = vehicleScaling;
+    }
+    
 	public void setTripTracker(J_ActivityTrackerTrips tracker) {
 		tripTracker = tracker;
 	}
@@ -55579,6 +55572,10 @@ public class J_EAVehicle extends J_EA implements Serializable {
     
 	public boolean getAvailability() {
 		return available;
+	}
+	
+	public double getVehicleScaling() {
+		return vehicleScaling;
 	}
 	
 	@Override
