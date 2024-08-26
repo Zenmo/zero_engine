@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -6111,10 +6111,6 @@ for(GridNode n : c_gridNodesTopLevel) {
 	v_currentElectricityImport_kW += max(0, n.v_currentLoadElectricity_kW );
 	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
 }
-
-if( p_gridNodeTimeSeriesExcel != null){
-	f_writeGridNodeTimeseriesToExcel();
-}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -6953,6 +6949,11 @@ for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 }	
 //traceln("HVMV overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
 double startTime = System.currentTimeMillis();
+
+if( p_gridNodeTimeSeriesExcel != null){
+	f_writeGridNodeTimeseriesToExcel();
+}
+
 f_calculateKPIs();
 v_kpiCalcsRuntime_ms = (System.currentTimeMillis()-startTime);
 traceln("---FINISHED YEAR MODEL RUN----");
@@ -8237,13 +8238,27 @@ for (GridConnection GC : GridBatteries) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int columnIndex = 2;
-int rowIndex = roundToInt(4 * t_h ) + 2;
-p_gridNodeTimeSeriesExcel.setCellValue(t_h, "Sheet1", rowIndex, 1);
+					<Body><![CDATA[traceln("Start writing trafoloads to excel!");
+
+int columnIndex = 2;
+//int rowIndex = roundToInt(4 * t_h ) + 2;
+
+int arraySize = acc_annualElectricityBalance_kW.getTimeSeries().length;
+traceln("ArraySize: %s", arraySize);
+for (int i = 0; i < arraySize ; i++) {
+	p_gridNodeTimeSeriesExcel.setCellValue((i)*p_timeStep_h, "Sheet1", i+2, 1);
+}
+
 for(GridNode gn : pop_gridNodes){
-	p_gridNodeTimeSeriesExcel.setCellValue(gn.v_currentLoadElectricity_kW, "Sheet1", rowIndex, columnIndex);
+	
+	double[] loadArray = gn.acc_annualElectricityBalance_kW.getTimeSeries();
+	for (int i = 0; i < arraySize ; i++ ) {		
+		p_gridNodeTimeSeriesExcel.setCellValue(loadArray[i], "Sheet1", i+2, columnIndex);
+	}
 	columnIndex++;
-}]]></Body>
+}
+
+traceln("Finished writing trafoloads to excel!");]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -56165,11 +56180,6 @@ public class J_AVGC_data implements Serializable {
 		</Resource>
 		<Resource>
 			<Path><![CDATA[ZeroMath.jar]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[GridNode Timeseries Output.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
