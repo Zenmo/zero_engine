@@ -1035,6 +1035,18 @@
 				<Name><![CDATA[CPO]]></Name>
 			</Option>
 		</OptionList>
+		<OptionList>
+			<Id>1724845732335</Id>
+			<Name><![CDATA[OL_CurtailmentMode]]></Name>
+			<Option>
+				<Id>1724845732336</Id>
+				<Name><![CDATA[CAPACITY]]></Name>
+			</Option>
+			<Option>
+				<Id>1724845732337</Id>
+				<Name><![CDATA[PRICE]]></Name>
+			</Option>
+		</OptionList>
 	</OptionLists>
 	
 	<Folders>
@@ -10485,6 +10497,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11459,6 +11474,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11654,6 +11672,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11845,6 +11866,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12074,6 +12098,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12265,6 +12292,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12458,6 +12488,9 @@ v_timeStepsElapsed ++;
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12649,6 +12682,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -13054,6 +13090,9 @@ v_timeStepsElapsed ++;
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailmentMode]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -19662,6 +19701,33 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724846136897</Id>
+					<Name><![CDATA[v_enableCurtailment]]></Name>
+					<X>250</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724854087488</Id>
+					<Name><![CDATA[v_PVZEffectiveTimeOperated_h]]></Name>
+					<X>1080</X><Y>900</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -20640,6 +20706,30 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1724845684246</Id>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+					<X>250</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_CurtailmentMode]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_CurtailmentMode.CAPACITY]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1724845684244</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626903</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
@@ -21086,7 +21176,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660212665961</Id>
 					<Name><![CDATA[f_connectionMetering]]></Name>
-					<X>800</X><Y>480</Y>
+					<X>800</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21424,6 +21514,10 @@ f_operateFlexAssets();
 
 if (v_hydrogenInStorage_kWh > 0) {
 	f_operateFuelCell();
+}
+
+if (v_enableCurtailment) {
+	f_curtailment();
 }
 
 f_connectionMetering();
@@ -21829,6 +21923,8 @@ data_annualEnergyCurtailed_kW.reset();
 data_annualElectricityProduction_kW.reset();
 data_annualElectricityConsumption_kW.reset();
 data_annualHeatProduction_kW.reset();*/
+
+v_PVZEffectiveTimeOperated_h = 0;
 
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
@@ -22565,7 +22661,7 @@ f_initializeAccumulators();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1701956274181</Id>
 					<Name><![CDATA[f_calculateKPIs]]></Name>
-					<X>780</X><Y>520</Y>
+					<X>780</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22799,22 +22895,25 @@ v_currentPowerHydrogen_kW += arr[6] - arr[2];
 v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
 
-if (caller instanceof J_EAStorageElectric) { // || caller instanceof J_EAEV) { // for battery or EV, if energy is 'produced' (battery supplying electricity), substract this from the electricityConsumed instead of counting it as 'energy'production
-	//v_totalElectricityConsumed_MWh += caller.energyUse_kW * energyModel.p_timeStep_h / 1000;
-	//v_currentElectricityConsumption_kW += arr[4];
-	//v_currentElectricityConsumption_kW -= arr[0];
+if (caller instanceof J_EAStorageElectric) { // Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need a 10th element in arr indicating power into storage??
 	v_currentEnergyConsumption_kW += max(0,arr[9]);
-} else { // For other assets, 		
-	if (caller instanceof J_EAConversionCurtailer) {
-		v_currentEnergyProduction_kW -= max(0,arr[9]);
-		v_currentElectricityProduction_kW -= arr[4];
-	} else {
-		v_currentEnergyProduction_kW += max(0,-arr[9]);
-		v_currentEnergyConsumption_kW += max(0,arr[9]);		
-		v_currentElectricityConsumption_kW += arr[4];
-		v_currentElectricityProduction_kW += arr[0];
-	}
+	v_currentElectricityConsumption_kW += max(0,arr[9]);
+/*} else if (caller instanceof J_EAProduction) {
+	v_currentEnergyProduction_kW += -arr[9]; // This enables J_EAProduction to use curtailer method and 'cancel' production! 
+//	v_currentEnergyCurtailed_kW += max(0,arr[9]);
+	v_currentElectricityProduction_kW += arr[0];
+} else if (caller instanceof J_EAConsumption) {
+	v_currentEnergyConsumption_kW += arr[9]; // This enables J_EAConsumption to use curtailer method and 'cancel' consumption! 
+	//v_currentLoadLoad_kW += max(0,arr[9]); // lostLoad is not yet a thing
+	v_currentElectricityConsumption_kW += arr[4];
+*/
+} else {
+	v_currentEnergyProduction_kW += max(0,-arr[9]);
+	v_currentEnergyConsumption_kW += max(0,arr[9]);		
+	v_currentElectricityConsumption_kW += arr[4];
+	v_currentElectricityProduction_kW += arr[0];
 }
+
 //if ( arr[4] > 0 && arr[3] > arr[4]) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
@@ -22834,7 +22933,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[DataSet]]></ReturnType>
 					<Id>1708520215192</Id>
 					<Name><![CDATA[f_getDuurkromme]]></Name>
-					<X>800</X><Y>540</Y>
+					<X>800</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23248,6 +23347,122 @@ else {
 GN.p_capacity_kW = p_connectionCapacity_kW;
 
 //traceln("p_connectionCapacity_kW %s", p_connectionCapacity_kW);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1724834530234</Id>
+					<Name><![CDATA[f_curtailment]]></Name>
+					<X>800</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int linesCurtailed = 0;
+
+switch(p_curtailmentMode) {
+	case CAPACITY:
+		// Keep feedin power within connection capacity
+		if (v_currentPowerElectricity_kW < - p_connectionCapacity_kW) { // overproduction!
+			for (J_EAProduction j_ea : c_productionAssets) {
+				j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW - p_connectionCapacity_kW);
+				if (!(v_currentPowerElectricity_kW < - p_connectionCapacity_kW)) {
+					break;
+				}
+			}
+		}
+		else {
+			//traceln(" p_connectionCapacity_kW: " + p_connectionCapacity_kW);
+			while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
+				linesCurtailed ++;
+				if (linesCurtailed > 8) {
+					traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
+					//pauseSimulation();
+					break;
+				}
+				//traceln(" linesCurtailed: " + linesCurtailed);
+				//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
+				for (J_EAProfile j_ea : c_profileAssets) {
+					// curtail the pvz profiles. Done in steps (production lines can't be operated at fractional power)
+					if (j_ea.energyAssetName.contains("PVZ")) {
+						//traceln("energyAssetName: " + j_ea.energyAssetName);
+						double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
+						//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
+						double curtailmentSetpoint_kW = ( 1.0 / (8 + 1 - linesCurtailed)) * currentElectricityConsumption_kW;
+						//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
+						j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
+					}
+				}
+			}
+		}
+		break;
+		
+	default:
+		break;
+}
+
+// TODO: find a way to accomodate for the start up time (approx 30 mins? Or just make it a slider :P) of the production lines when calculating the effective time operated
+// A crude way to implement a single timestep (15 min) delay would be to store a variable v_previousLinesCurtailed and only if it is not 8 do we allow the operationtime to update
+// This would not account for the fact that it might still take additional time to start a new production line.
+if (energyModel.v_isRapidRun) {
+	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1724844370965</Id>
+					<Name><![CDATA[f_removeFlows]]></Name>
+					<X>950</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[arr]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[caller]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[// This function is called from each energy asset when curtailment or 'lostLoad' methods are called
+// {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
+v_currentPowerElectricity_kW += arr[4] - arr[0];
+v_currentPowerMethane_kW += arr[5] - arr[1];
+v_currentPowerHydrogen_kW += arr[6] - arr[2];
+v_currentPowerHeat_kW += arr[7] - arr[3];
+v_currentPowerDiesel_kW += arr[8];
+
+if (caller instanceof J_EAStorageElectric) { // Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need a 10th element in arr indicating power into storage??
+	v_currentEnergyConsumption_kW += min(0,arr[9]);
+	v_currentElectricityConsumption_kW += min(0,arr[9]);
+/*} else if (caller instanceof J_EAProduction) {
+	v_currentEnergyProduction_kW += -max(0,arr[9]); // This enables J_EAProduction to use curtailer method and 'cancel' production! 
+	
+	v_currentElectricityProduction_kW += arr[0];
+} else if (caller instanceof J_EAConsumption) {
+	v_currentEnergyConsumption_kW += min(0,arr[9]); // This enables J_EAConsumption to use curtailer method and 'cancel' consumption! 
+	//v_currentLoadLoad_kW += max(0,arr[9]); // lostLoad is not yet a thing
+	v_currentElectricityConsumption_kW += arr[4];*/
+} else {
+	double curtailment_kW = max(0,arr[9]); // In the removeFlows function, positive energyUse is 'curtailed' production 
+	double lostLoad_kW = max(0,-arr[9]); // In the removeFlows function, negative energyUse is 'removed' consumption
+	v_currentEnergyCurtailed_kW += curtailment_kW;
+	v_currentEnergyProduction_kW -= curtailment_kW; 
+	v_currentEnergyConsumption_kW -= lostLoad_kW; 
+	
+	v_currentElectricityConsumption_kW += arr[4];
+	v_currentElectricityProduction_kW += arr[0];
+}
+
+if ( caller instanceof J_EAConversionHeatPump ) {
+	//v_totalHeatProduced_MWh += max(0,(arr[3]-arr[4]) * energyModel.p_timeStep_h / 1000); // This should only be non-zero for heatpumps!! But this is method is highly unsafe...
+	v_currentEnergyProductionHeat_kW = -arr[9];
+	//v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
+}
+	]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -25789,7 +26004,7 @@ GN.p_capacity_kW = p_connectionCapacity_kW;
 					<Id>1668968408696</Id>
 					<Name><![CDATA[pl_SOC]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>510</X><Y>570</Y>
+					<X>520</X><Y>570</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -38005,6 +38220,9 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -39945,6 +40163,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -41139,6 +41360,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -41639,6 +41863,9 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -43251,6 +43478,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -43961,6 +44191,9 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -45049,6 +45282,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -46650,6 +46886,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -47099,6 +47338,9 @@ public void f_operateFixedAssets(){
 				<Parameter>
 					<Name><![CDATA[p_nfatoWeekNight_kW]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_curtailmentMode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -47422,6 +47664,23 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	return returnEnergyFlows();
 	}
 
+    public double[] curtailElectricityProduction(double curtailmentSetpoint_kW) {
+    	double currentElectricityProduction_kW = lastFlowsArray[0];
+    	double curtailmentPower_kW = max(0,min(currentElectricityProduction_kW, curtailmentSetpoint_kW));
+    	energyUsed_kWh += curtailmentPower_kW * timestep_h;
+    	double[] arr = {-curtailmentPower_kW, 0, 0, 0, 0, 0, 0, 0, 0, curtailmentPower_kW};
+    	lastFlowsArray[0] -= curtailmentPower_kW;
+    	lastFlowsArray[9] += curtailmentPower_kW;
+    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_removeFlows(arr, this);
+    	}
+    	//if (ui_energyAsset!= null) {
+    	//	ui_energyAsset.f_removeFlows(arr);
+    	//}
+    	return arr;
+    }
+	
 	@Override
 	public String toString() {
 		return
@@ -48051,6 +48310,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
 	//protected double outputTemperature_degC;
+	public double lostLoad_kWh = 0;
+
     /**
      * Default constructor
      */
@@ -48127,6 +48388,26 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
+	
+    public double[] curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    	double currentElectricityConsumption_kW = lastFlowsArray[4];
+    	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
+    	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
+    	lostLoad_kWh += curtailmentPower_kW * timestep_h;
+    	double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
+    	lastFlowsArray[4] -= curtailmentPower_kW;
+    	lastFlowsArray[9] -= curtailmentPower_kW;
+    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_removeFlows(arr, this);
+    	}
+    	//if (ui_energyAsset!= null) {
+    	//	ui_energyAsset.f_removeFlows(arr);
+    	//}
+    	return arr;
+    }
+    
+    
 	@Override
 	public String toString() {
 		return
