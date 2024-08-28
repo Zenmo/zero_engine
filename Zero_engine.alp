@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -5116,6 +5116,27 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1724587724718</Id>
+					<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
+					<X>1280</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[ExcelFile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1724587724716</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -6089,7 +6110,8 @@ for(GridNode n : c_gridNodeExecutionList) {
 for(GridNode n : c_gridNodesTopLevel) {
 	v_currentElectricityImport_kW += max(0, n.v_currentLoadElectricity_kW );
 	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
-}]]></Body>
+}
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6927,6 +6949,11 @@ for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 }	
 //traceln("HVMV overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
 double startTime = System.currentTimeMillis();
+
+if( p_gridNodeTimeSeriesExcel != null){
+	f_writeGridNodeTimeseriesToExcel();
+}
+
 f_calculateKPIs();
 v_kpiCalcsRuntime_ms = (System.currentTimeMillis()-startTime);
 traceln("---FINISHED YEAR MODEL RUN----");
@@ -8199,6 +8226,39 @@ for (GridConnection GC : GridBatteries) {
 		GC.f_pause(true);
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1724575401400</Id>
+					<Name><![CDATA[f_writeGridNodeTimeseriesToExcel]]></Name>
+					<Description><![CDATA[This function writes the load on each gridnode for each timestep to excel]]></Description>
+					<X>1280</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Start writing trafoloads to excel!");
+
+int columnIndex = 2;
+//int rowIndex = roundToInt(4 * t_h ) + 2;
+
+int arraySize = acc_annualElectricityBalance_kW.getTimeSeries().length;
+traceln("ArraySize: %s", arraySize);
+for (int i = 0; i < arraySize ; i++) {
+	p_gridNodeTimeSeriesExcel.setCellValue((i)*p_timeStep_h, "Sheet1", i+2, 1);
+}
+
+for(GridNode gn : pop_gridNodes){
+	
+	double[] loadArray = gn.acc_annualElectricityBalance_kW.getTimeSeries();
+	for (int i = 0; i < arraySize ; i++ ) {		
+		p_gridNodeTimeSeriesExcel.setCellValue(loadArray[i], "Sheet1", i+2, columnIndex);
+	}
+	columnIndex++;
+}
+
+traceln("Finished writing trafoloads to excel!");]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
