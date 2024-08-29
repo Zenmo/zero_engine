@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -102,75 +102,50 @@
 		</OptionList>
 		<OptionList>
 			<Id>1659118272924</Id>
-			<Name><![CDATA[OL_GridConnectionType]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[OL_GISObjectType]]></Name>
 			<Option>
-				<Id>1659118284642</Id>
-				<Name><![CDATA[DETACHED]]></Name>
-			</Option>
-			<Option>
-				<Id>1659118298339</Id>
-				<Name><![CDATA[SEMIDETACHED]]></Name>
-			</Option>
-			<Option>
-				<Id>1659118321493</Id>
-				<Name><![CDATA[TERRACED]]></Name>
-			</Option>
-			<Option>
-				<Id>1659118323157</Id>
-				<Name><![CDATA[APPARTMENT]]></Name>
+				<Id>1659118342822</Id>
+				<Name><![CDATA[REGION]]></Name>
 			</Option>
 			<Option>
 				<Id>1659118328423</Id>
-				<Name><![CDATA[HIGHRISE]]></Name>
+				<Name><![CDATA[PARCEL]]></Name>
 			</Option>
 			<Option>
 				<Id>1659118330290</Id>
-				<Name><![CDATA[STORE]]></Name>
+				<Name><![CDATA[BUILDING]]></Name>
 			</Option>
 			<Option>
-				<Id>1659118342822</Id>
-				<Name><![CDATA[OFFICE]]></Name>
+				<Id>1724852069141</Id>
+				<Name><![CDATA[GRIDNODE]]></Name>
+			</Option>
+			<Option>
+				<Id>1659118284642</Id>
+				<Name><![CDATA[CHARGER]]></Name>
+			</Option>
+			<Option>
+				<Id>1659118298339</Id>
+				<Name><![CDATA[SOLARFARM]]></Name>
+			</Option>
+			<Option>
+				<Id>1659118321493</Id>
+				<Name><![CDATA[WINDFARM]]></Name>
+			</Option>
+			<Option>
+				<Id>1659118323157</Id>
+				<Name><![CDATA[BATTERY]]></Name>
+			</Option>
+			<Option>
+				<Id>1724848835916</Id>
+				<Name><![CDATA[ELECTROLYSER]]></Name>
 			</Option>
 			<Option>
 				<Id>1659118344195</Id>
-				<Name><![CDATA[SCHOOL]]></Name>
+				<Name><![CDATA[ANTI_LAYER]]></Name>
 			</Option>
 			<Option>
-				<Id>1661512420149</Id>
-				<Name><![CDATA[MT]]></Name>
-			</Option>
-			<Option>
-				<Id>1664543832529</Id>
-				<Name><![CDATA[HT]]></Name>
-			</Option>
-			<Option>
-				<Id>1664543845215</Id>
-				<Name><![CDATA[NONE]]></Name>
-			</Option>
-			<Option>
-				<Id>1665480208045</Id>
-				<Name><![CDATA[STEEL]]></Name>
-			</Option>
-			<Option>
-				<Id>1665480220730</Id>
-				<Name><![CDATA[INDUSTRY_OTHER]]></Name>
-			</Option>
-			<Option>
-				<Id>1666967705762</Id>
-				<Name><![CDATA[LOGISTICS]]></Name>
-			</Option>
-			<Option>
-				<Id>1684331909482</Id>
-				<Name><![CDATA[FARM]]></Name>
-			</Option>
-			<Option>
-				<Id>1684397551611</Id>
-				<Name><![CDATA[AGRO_ENERGYHUB]]></Name>
-			</Option>
-			<Option>
-				<Id>1685518612022</Id>
-				<Name><![CDATA[VILLAGE]]></Name>
+				<Id>1724849181274</Id>
+				<Name><![CDATA[OTHER]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -12648,7 +12623,7 @@ for (GridConnection GC : GridBatteries) {
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_areaType]]></Name>
+							<Name><![CDATA[p_GISObjectType]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_GISRegion_coords]]></Name>
@@ -12742,7 +12717,7 @@ for (GridConnection GC : GridBatteries) {
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_areaType]]></Name>
+							<Name><![CDATA[p_GISObjectType]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_GISRegion_coords]]></Name>
@@ -12836,7 +12811,7 @@ for (GridConnection GC : GridBatteries) {
 							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_areaType]]></Name>
+							<Name><![CDATA[p_GISObjectType]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_GISRegion_coords]]></Name>
@@ -46208,7 +46183,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
-						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;
 
@@ -46293,8 +46268,8 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for( J_EA v : c_conversionAssets ){
-	if (v instanceof J_EAConversionElectrolyserAte) {
-		f_manageElectrolyser((J_EAConversionElectrolyserAte)v);
+	if (v instanceof J_EAConversionElectrolyser) {
+		f_manageElectrolyser((J_EAConversionElectrolyser)v);
 	}
 	//if (v instanceof J_EAConversionCurtailer) {
 		// Must go last! 
@@ -46349,7 +46324,7 @@ if (p_batteryAsset != null){
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
-						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[double solar_forecast_kW;
 double wind_forecast_kW;
@@ -46463,7 +46438,7 @@ return elektrolyserSetpointElectric_kW;]]></Body>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
-						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
@@ -46563,7 +46538,7 @@ switch (ElectrolyserAsset.getState()){
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
-						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[double solar_forecast_kW;
 double wind_forecast_kW;
@@ -46731,7 +46706,7 @@ v_hydrogenInStorage_kWh = 0;]]></Body>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
-						<Type><![CDATA[J_EAConversionElectrolyserAte]]></Type>
+						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[switch (ElectrolyserAsset.getState()){
 
@@ -48594,20 +48569,16 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1697464235545</Id>
-					<Name><![CDATA[p_areaType]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>50</X><Y>60</Y>
+					<Name><![CDATA[p_GISObjectType]]></Name>
+					<X>50</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[OL_AreaType]]></Type>
+						<Type><![CDATA[OL_GISObjectType]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[OL_AreaType.BUSINESS]]></Code>
-						</DefaultValue>
 						<ParameterEditor>
 							<Id>1697464235543</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -48757,7 +48728,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 				<Variable Class="Parameter">
 					<Id>1721830375724</Id>
 					<Name><![CDATA[p_annotation]]></Name>
-					<X>50</X><Y>40</Y>
+					<X>50</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -49212,7 +49183,7 @@ if (v_enableFuelCell) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
 if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
-	J_EAConversionFuelCellAte fuelCellAsset = (J_EAConversionFuelCellAte) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
+	J_EAConversionFuelCell fuelCellAsset = (J_EAConversionFuelCell) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
@@ -49641,7 +49612,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<Name><![CDATA[p_latitude]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_areaType]]></Name>
+					<Name><![CDATA[p_GISObjectType]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_GISRegion_coords]]></Name>
@@ -50144,7 +50115,7 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<Name><![CDATA[gisRegion]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_areaType]]></Name>
+					<Name><![CDATA[p_GISObjectType]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_GISRegion_coords]]></Name>
@@ -55707,11 +55678,11 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
 			<Id>1707991094535</Id>
-			<Name><![CDATA[J_EAConversionElectrolyserAte]]></Name>
+			<Name><![CDATA[J_EAConversionElectrolyser]]></Name>
 			<Text><![CDATA[/**
- * J_EAConversionElektrolyserAte
+ * J_EAConversionElektrolyser
  */
-public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion implements Serializable {
+public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
@@ -55722,13 +55693,13 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 	/**
      * Default constructor
      */
-    public J_EAConversionElectrolyserAte() {
+    public J_EAConversionElectrolyser() {
     }
 
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionElectrolyserAte(Agent parentAgent, OL_ElectrolyserState state, double capacityElectric_kW, double efficiency_r, double  timestep_h, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
+    public J_EAConversionElectrolyser(Agent parentAgent, OL_ElectrolyserState state, double capacityElectric_kW, double efficiency_r, double  timestep_h, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
 	    this.parentAgent = parentAgent;
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
@@ -55830,11 +55801,11 @@ public class J_EAConversionElectrolyserAte extends zero_engine.J_EAConversion im
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
 			<Id>1707992650964</Id>
-			<Name><![CDATA[J_EAConversionFuelCellAte]]></Name>
+			<Name><![CDATA[J_EAConversionFuelCell]]></Name>
 			<Text><![CDATA[/**
  * J_EAConversionFuelCell
  */
-public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implements Serializable {
+public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.ELECTRICITY;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HYDROGEN;
@@ -55843,13 +55814,13 @@ public class J_EAConversionFuelCellAte extends zero_engine.J_EAConversion implem
 	/**
      * Default constructor
      */
-    public J_EAConversionFuelCellAte() {
+    public J_EAConversionFuelCell() {
     }
 
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionFuelCellAte(Agent parentAgent, double capacityElectric_kW, double efficiency_r, double  timestep_h) {
+    public J_EAConversionFuelCell(Agent parentAgent, double capacityElectric_kW, double efficiency_r, double  timestep_h) {
 	    this.parentAgent = parentAgent;
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
