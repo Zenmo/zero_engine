@@ -8133,16 +8133,16 @@ f_setInitialValues();]]></Body>
 					<Body><![CDATA[v_totalInstalledPVPower_kW = 0;
 v_totalInstalledWindPower_kW = 0;
 for (J_EA ea : c_energyAssets) {
-	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL && !((GridConnection)ea.getParentAgent()).v_isPaused ) {
 		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
 	}
-	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && !((GridConnection)ea.getParentAgent()).v_isPaused ) {
 		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
 	}
 }
 
 // Total installed battery capacity
-v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric)/1000;
+v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric && !(((GridConnection)j_ea.getParentAgent()).v_isPaused))/1000;
 traceln("Total installed battery capacity: %s MWh", v_totalBatteryInstalledCapacity_MWh);
 
 // Starting prices
@@ -24593,6 +24593,8 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 	// update GN parents' wind / solar totals
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, false);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, false);
+	energyModel.v_totalInstalledPVPower_kW -= v_totalInstalledPVPower_kW;
+	energyModel.v_totalInstalledWindPower_kW -= v_totalInstalledWindPower_kW;
 	
 	// Reset Connection Capacity to default
 	f_nfatoSetConnectionCapacity(true);
@@ -24637,7 +24639,8 @@ else {
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, true);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, true);
-	
+	energyModel.v_totalInstalledPVPower_kW += v_totalInstalledPVPower_kW;
+	energyModel.v_totalInstalledWindPower_kW += v_totalInstalledWindPower_kW;
 }]]></Body>
 				</Function>
 			</Functions>
@@ -51973,17 +51976,17 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
 		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
 		double difference_kW = capacityElectric_kW - this.capacityElectric_kW;
-		if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {			
+		if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {		
 			((GridConnection) this.parentAgent).v_totalInstalledWindPower_kW += difference_kW;
 			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += difference_kW;
+				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, difference_kW, true);
 			}
 			((GridConnection) this.parentAgent).energyModel.v_totalInstalledWindPower_kW += difference_kW;
 		}
 		else if (this.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && this.parentAgent instanceof GridConnection) {
 			((GridConnection) this.parentAgent).v_totalInstalledPVPower_kW += difference_kW;
 			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += difference_kW;
+				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, difference_kW, true);
 			}
 			((GridConnection) this.parentAgent).energyModel.v_totalInstalledPVPower_kW += difference_kW;
 		}
