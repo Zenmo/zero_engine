@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1699,7 +1699,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1671636172718</Id>
 					<Name><![CDATA[v_WindYieldForecast_fr]]></Name>
-					<X>810</X><Y>280</Y>
+					<X>810</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1711,7 +1711,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1671636200983</Id>
 					<Name><![CDATA[v_SolarYieldForecast_fr]]></Name>
-					<X>810</X><Y>300</Y>
+					<X>810</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1723,7 +1723,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1671638019875</Id>
 					<Name><![CDATA[v_epexForecast_eurpkWh]]></Name>
-					<X>810</X><Y>340</Y>
+					<X>810</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4489,7 +4489,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1718883144081</Id>
 					<Name><![CDATA[v_electricityYieldForecast_fr]]></Name>
-					<X>810</X><Y>320</Y>
+					<X>810</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4652,6 +4652,36 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[DataSet]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724919837645</Id>
+					<Name><![CDATA[v_runStartTime_h]]></Name>
+					<X>790</X><Y>162</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1724919837647</Id>
+					<Name><![CDATA[v_runEndTime_h]]></Name>
+					<X>790</X><Y>182</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[8760.0]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -4836,7 +4866,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>810</X><Y>360</Y>
+					<X>810</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4921,7 +4951,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[8160]]></Code>
+							<Code><![CDATA[8000]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1699275323337</Id>
@@ -5539,8 +5569,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Event>
 					<Id>1674058522977</Id>
 					<Name><![CDATA[pauseEvent]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>797</X><Y>212</Y>
+					<X>797</X><Y>252</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5557,7 +5586,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<OccurrenceAtTime>true</OccurrenceAtTime>
 						<OccurrenceDate>1674115200000</OccurrenceDate>
 						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[60*24]]></Code>
+							<Code><![CDATA[8168]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
@@ -6130,7 +6159,7 @@ for (EnergySupplier e : pop_energySuppliers) {
 
 @author: Jorrit
 @since: 27-10-2022]]></Description>
-					<X>-830</X><Y>560</Y>
+					<X>800</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6244,7 +6273,7 @@ v_avgNetLoad_fr = c_gridNodesHSMS.get(0).v_averageAbsoluteLoadElectricity_kW/c_g
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-830</X><Y>580</Y>
+					<X>800</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6296,7 +6325,7 @@ if (v_totalHydrogenImport_MWh > v_totalHydrogenExport_MWh) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1666978595555</Id>
 					<Name><![CDATA[f_sumBatteryUse]]></Name>
-					<X>-830</X><Y>600</Y>
+					<X>800</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6850,7 +6879,8 @@ for (J_EA EA : c_energyAssets) {
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(0));
+	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(v_runStartTime_h));
+	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(v_runStartTime_h*60));
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -6869,7 +6899,7 @@ for (EnergyCoop EC : pop_energyCoops) {
 }
 
 
-t_h=0;
+t_h=v_runStartTime_h;
 int v_timeStepsElapsed_live = v_timeStepsElapsed;
 v_timeStepsElapsed=0;
 f_initializeForecasts();
@@ -6879,7 +6909,7 @@ v_isRapidRun = true;
 f_resetAnnualValues();
 
 //Run energy calculations loop
-for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
+for(t_h = v_runStartTime_h; t_h < v_runEndTime_h; t_h += p_timeStep_h){
 	// Update time-series for model-wide variables (such as temps, wind, etc.)
 	double startTime = System.currentTimeMillis();
 	f_updateTimeseries(t_h);
@@ -6969,7 +6999,7 @@ f_initializeForecasts();
 
 @author: JorritvandenHouten
 @since: Sprint 6]]></Description>
-					<X>-840</X><Y>540</Y>
+					<X>790</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7766,12 +7796,14 @@ acc_annualDLRfactor_f.reset();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1700560766579</Id>
 					<Name><![CDATA[f_duurkrommes]]></Name>
-					<X>-830</X><Y>620</Y>
+					<X>800</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, get load duration curves from that one!
+					<Body><![CDATA[int runStartIdx = (int)(v_runStartTime_h/p_timeStep_h);
+int runEndIdx = (int)(v_runEndTime_h/p_timeStep_h);
+if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, get load duration curves from that one!
 	data_netbelastingDuurkromme_kW = c_gridNodesTopLevel.get(0).f_getDuurkromme();
 	
 	if (b_enableDLR) {
@@ -7797,11 +7829,11 @@ acc_annualDLRfactor_f.reset();]]></Body>
 		if (data_netbelastingDuurkrommeVorige_kW != null) { // Not second run either!
 			data_netbelastingDuurkrommeVorige_kW.reset();
 		} else {
-			data_netbelastingDuurkrommeVorige_kW = new DataSet(roundToInt(365*24/p_timeStep_h));
+			data_netbelastingDuurkrommeVorige_kW = new DataSet(roundToInt((v_runEndTime_h-v_runStartTime_h)/p_timeStep_h));
 		}
 		firstRun = false;
 	} else {
-		data_netbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/p_timeStep_h));
+		data_netbelastingDuurkromme_kW = new DataSet(roundToInt((v_runEndTime_h-v_runStartTime_h)/p_timeStep_h));
 		data_summerWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/p_timeStep_h));
 		data_winterWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/p_timeStep_h));
 		data_daytimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/2/p_timeStep_h));
@@ -7816,10 +7848,10 @@ acc_annualDLRfactor_f.reset();]]></Body>
 	*/
 	
 	double[] a_annualNetLoad_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone();
-	int arraySize = a_annualNetLoad_kW.length;
-	for (int i = 0; i < 5; i++) {
+	int arraySize = roundToInt((v_runEndTime_h-v_runStartTime_h)/p_timeStep_h);// a_annualNetLoad_kW.length;
+	/*for (int i = 0; i < 5; i++) {
 		a_annualNetLoad_kW[i] = 0;
-	}
+	}*/
 	//double[] netLoadArray_kW = new double[arraySize];
 	//double[] netLoadArrayWinter_kW = new double[data_winterWeekNetbelastingDuurkromme_kW.size()];
 	//double[] netLoadArraySummer_kW = new double[data_winterWeekNetbelastingDuurkromme_kW.size()];
@@ -7841,7 +7873,7 @@ acc_annualDLRfactor_f.reset();]]></Body>
 	int i_night=0;
 	int i_weekday=0;
 	int i_weekend=0;
-	for(int i=0; i<arraySize ; i++) {
+	for(int i=runStartIdx; i<runEndIdx ; i++) {
 		//netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
 		if (!firstRun) {
 			data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
@@ -7908,7 +7940,7 @@ acc_annualDLRfactor_f.reset();]]></Body>
 	}
 	
 	//Netbelastingduurkromme dag
-	arraySize = roundToInt(8760/2/p_timeStep_h);
+	arraySize = (int)((runEndIdx - runStartIdx)/2.0); // roundToInt(8760/2/p_timeStep_h);
 	data_daytimeNetbelastingDuurkromme_kW.reset();
 	for(int i=0; i< arraySize; i++) {
 		data_daytimeNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayDay_kW[i]);
@@ -13721,7 +13753,7 @@ for (GridConnection GC : GridBatteries) {
 				<Line>
 					<Id>1671703651139</Id>
 					<Name><![CDATA[line7]]></Name>
-					<X>777</X><Y>242</Y>
+					<X>777</X><Y>412</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13745,7 +13777,7 @@ for (GridConnection GC : GridBatteries) {
 				<Text>
 					<Id>1671703651141</Id>
 					<Name><![CDATA[text10]]></Name>
-					<X>867</X><Y>222</Y>
+					<X>867</X><Y>392</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13857,7 +13889,7 @@ for (GridConnection GC : GridBatteries) {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1697557019965</Id>
 					<Name><![CDATA[rapidSimButton]]></Name>
-					<X>787</X><Y>162</Y>
+					<X>787</X><Y>202</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -16418,22 +16450,26 @@ v_weekendElectricityDelivered_MWh = v_annualElectricityDelivered_MWh - v_weekday
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[boolean firstRun = true;
+					<Body><![CDATA[int runStartIdx = (int)(energyModel.v_runStartTime_h/energyModel.p_timeStep_h);
+int runEndIdx = (int)(energyModel.v_runEndTime_h/energyModel.p_timeStep_h);
+int nRunIdxs = runEndIdx - runStartIdx;
+
+boolean firstRun = true;
 if (data_netbelastingDuurkromme_kW != null) {	
 	if (data_netbelastingDuurkrommeVorige_kW != null) { // Not second run either!
 		data_netbelastingDuurkrommeVorige_kW.reset();
 	} else {
-		data_netbelastingDuurkrommeVorige_kW = new DataSet(roundToInt(365*24/energyModel.p_timeStep_h));
+		data_netbelastingDuurkrommeVorige_kW = new DataSet(nRunIdxs);
 	}
 	firstRun = false;
 } else {
-	data_netbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/energyModel.p_timeStep_h));
+	data_netbelastingDuurkromme_kW = new DataSet(nRunIdxs);
 	data_summerWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/energyModel.p_timeStep_h));
 	data_winterWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/energyModel.p_timeStep_h));
-	data_daytimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/2/energyModel.p_timeStep_h));
-	data_nighttimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/2/energyModel.p_timeStep_h));
-	data_weekdayNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/7*5/energyModel.p_timeStep_h)+100);
-	data_weekendNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/7*2/energyModel.p_timeStep_h)+100);
+	data_daytimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(nRunIdxs/2 + 24 / energyModel.p_timeStep_h));
+	data_nighttimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(nRunIdxs/2 + 24 / energyModel.p_timeStep_h));
+	data_weekdayNetbelastingDuurkromme_kW = new DataSet(roundToInt(nRunIdxs/7*5 + 24 / energyModel.p_timeStep_h));
+	data_weekendNetbelastingDuurkromme_kW = new DataSet(roundToInt(nRunIdxs/7*2 + 24 / energyModel.p_timeStep_h));
 }
 
 // We copy our annual array to preserve it as a time-series and make new arrays for the others
@@ -16449,8 +16485,8 @@ if (energyModel.b_enableDLR) {
 
 double[] netLoadArraySummerweek_kW = new double[roundToInt(24*7 / energyModel.p_timeStep_h)];
 double[] netLoadArrayWinterweek_kW= new double[roundToInt(24*7 / energyModel.p_timeStep_h)];
-double[] netLoadArrayDaytime_kW = new double[arraySize/2];
-double[] netLoadArrayNighttime_kW = new double[arraySize/2];
+double[] netLoadArrayDaytime_kW = new double[roundToInt(nRunIdxs/2 + 24/ energyModel.p_timeStep_h)];
+double[] netLoadArrayNighttime_kW = new double[roundToInt(nRunIdxs/2 + 24/ energyModel.p_timeStep_h)];
 // For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
 ArrayList<Double> listNetLoadArrayWeekday_kW = new ArrayList<>(); 
 ArrayList<Double> listNetLoadArrayWeekend_kW = new ArrayList<>();
@@ -16464,10 +16500,10 @@ int i_weekend=0;
 
 //double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
 
-for(int i=0; i<arraySize ; i++) {
+for(int i=runStartIdx; i<runEndIdx; i++) {
 	if (!firstRun) {
 		// First we make sure to store our previous Load Curve
-		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
+		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i-runStartIdx));		
 	}
 	// summer/winter
 	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
@@ -16496,6 +16532,9 @@ for(int i=0; i<arraySize ; i++) {
 	}
 	
 }
+netLoadArrayDaytime_kW = Arrays.copyOfRange(netLoadArrayDaytime_kW,0,i_day);
+netLoadArrayNighttime_kW = Arrays.copyOfRange(netLoadArrayNighttime_kW,0,i_night);
+
 
 // Now we have the size of the weekday & weekend arrays.
 double[] netLoadArrayWeekday_kW = new double[listNetLoadArrayWeekday_kW.size()];
@@ -16507,7 +16546,8 @@ for (int i = 0; i < listNetLoadArrayWeekend_kW.size(); i++) {
 	netLoadArrayWeekend_kW[i] = listNetLoadArrayWeekend_kW.get(i);
 }
 
-
+netLoadArrayAnnual_kW = Arrays.copyOfRange(netLoadArrayAnnual_kW,runStartIdx,runEndIdx);
+arraySize = netLoadArrayAnnual_kW.length;
 // Sort all arrays
 Arrays.parallelSort(netLoadArrayAnnual_kW);
 Arrays.parallelSort(netLoadArraySummerweek_kW);
@@ -16516,6 +16556,9 @@ Arrays.parallelSort(netLoadArrayDaytime_kW);
 Arrays.parallelSort(netLoadArrayNighttime_kW);
 Arrays.parallelSort(netLoadArrayWeekday_kW);
 Arrays.parallelSort(netLoadArrayWeekend_kW);
+
+traceln("Peak grid load: %s", netLoadArrayAnnual_kW[netLoadArrayAnnual_kW.length-1]);
+netLoadArrayAnnual_kW[netLoadArrayAnnual_kW.length-1] = 0;
 
 // Write results to datasets
 // Netbelastingduurkromme year
@@ -16532,7 +16575,7 @@ Arrays.parallelSort(netLoadArrayWeekend_kW);
 //traceln("annaualElectricityBalance first element: %s, last element: %s", netLoadArrayAnnual_kW[0], netLoadArrayAnnual_kW[arraySize-1]);
 for(int i=0; i< arraySize; i++) {
 	//traceln("netloadloop iterator: %s", i);
-	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
+	data_netbelastingDuurkromme_kW.add((i+runStartIdx)*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
 // Netbelastingduurkromme summer / winter
 
@@ -33681,22 +33724,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1707141890843</Id>
-					<Name><![CDATA[a_annualElectricityBalance_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1080</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1707920254096</Id>
 					<Name><![CDATA[v_currentElectricityConsumption_kW]]></Name>
 					<X>40</X><Y>810</Y>
@@ -33718,54 +33745,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1707920292568</Id>
-					<Name><![CDATA[a_annualEnergyCurtailed_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1020</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1707920292571</Id>
-					<Name><![CDATA[a_annualElectricityProduction_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1040</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1707920292573</Id>
-					<Name><![CDATA[a_annualElectricityConsumption_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1060</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -33814,54 +33793,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1707987033631</Id>
-					<Name><![CDATA[a_annualMethaneBalance_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1707987033633</Id>
-					<Name><![CDATA[a_annualHydrogenBalance_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1120</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1707987033635</Id>
-					<Name><![CDATA[a_annualDieselBalance_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1709644748300</Id>
 					<Name><![CDATA[v_currentOwnElectricityProduction_kW]]></Name>
 					<X>40</X><Y>860</Y>
@@ -33871,22 +33802,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1709644907971</Id>
-					<Name><![CDATA[a_annualOwnElectricityProduction_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-500</X><Y>1160</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double[]]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new double[roundToInt(8760/energyModel.p_timeStep_h)]]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -55485,6 +55400,18 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 
     	}
     }
+   
+   	public void setStartIndex(double t_h) {
+   		// 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
+   		double time_min = t_h * 60.0;
+	    while ( starttimes_min.get(v_eventIndex) < time_min ) {	
+	    	v_eventIndex++;
+	    	if ( v_eventIndex > starttimes_min.size() - 1 ) {	
+	    		break;
+	    	}
+	    }
+	    prepareNextActivity(time_min);    	
+   	}
     
     public void prepareNextActivity(double time_min) {
 		if ( v_eventIndex >= starttimes_min.size()  ) {
