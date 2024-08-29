@@ -24238,8 +24238,10 @@ data_heatPumpElectricityDemand_kW.update();
 //data_electricCarsDemand_kW.update();
 v_evChargingPowerElectric_kW = 0;
 for (J_EA j_ea : c_EvAssets) {
-	if (((J_EAEV)j_ea).vehicleScaling == 0) {
-		continue;
+	if (j_ea instanceof J_EAEV) {
+		if (((J_EAEV)j_ea).vehicleScaling == 0) {
+			continue;
+		}
 	}
 	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
 }
@@ -24403,6 +24405,11 @@ for (J_EA j_ea : c_electricHeatpumpAssets) {
 //data_electricCarsDemand_kW.update();
 v_evChargingPowerElectric_kW = 0;
 for (J_EA j_ea : c_EvAssets) {
+	if (j_ea instanceof J_EAEV) {
+		if (((J_EAEV)j_ea).vehicleScaling == 0) {
+			continue;
+		}
+	}
 	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
 }
 //data_electricTrucksDemand_kW.update();
