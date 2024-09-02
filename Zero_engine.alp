@@ -5091,6 +5091,27 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1724587724718</Id>
+					<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
+					<X>1280</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[ExcelFile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1724587724716</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -6064,7 +6085,8 @@ for(GridNode n : c_gridNodeExecutionList) {
 for(GridNode n : c_gridNodesTopLevel) {
 	v_currentElectricityImport_kW += max(0, n.v_currentLoadElectricity_kW );
 	v_currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
-}]]></Body>
+}
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6902,6 +6924,11 @@ for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 }	
 //traceln("HVMV overloaded hours: %s", c_gridNodesHSMS.get(0).v_totalTimeOverloaded_h);
 double startTime = System.currentTimeMillis();
+
+if( p_gridNodeTimeSeriesExcel != null){
+	f_writeGridNodeTimeseriesToExcel();
+}
+
 f_calculateKPIs();
 v_kpiCalcsRuntime_ms = (System.currentTimeMillis()-startTime);
 traceln("---FINISHED YEAR MODEL RUN----");
@@ -8174,6 +8201,39 @@ for (GridConnection GC : GridBatteries) {
 		GC.f_pause(true);
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1724575401400</Id>
+					<Name><![CDATA[f_writeGridNodeTimeseriesToExcel]]></Name>
+					<Description><![CDATA[This function writes the load on each gridnode for each timestep to excel]]></Description>
+					<X>1280</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Start writing trafoloads to excel!");
+
+int columnIndex = 2;
+//int rowIndex = roundToInt(4 * t_h ) + 2;
+
+int arraySize = acc_annualElectricityBalance_kW.getTimeSeries().length;
+traceln("ArraySize: %s", arraySize);
+for (int i = 0; i < arraySize ; i++) {
+	p_gridNodeTimeSeriesExcel.setCellValue((i)*p_timeStep_h, "Sheet1", i+2, 1);
+}
+
+for(GridNode gn : pop_gridNodes){
+	
+	double[] loadArray = gn.acc_annualElectricityBalance_kW.getTimeSeries();
+	for (int i = 0; i < arraySize ; i++ ) {		
+		p_gridNodeTimeSeriesExcel.setCellValue(loadArray[i], "Sheet1", i+2, columnIndex);
+	}
+	columnIndex++;
+}
+
+traceln("Finished writing trafoloads to excel!");]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -23173,6 +23233,8 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+	} else if (j_ea instanceof J_EAConversionElectrolyserAte) {
+		c_electrolyserAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -23813,6 +23875,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
+		c_EvAssets.remove(j_ea);
 	}
 	c_vehicleAssets.remove(j_ea);
 		
@@ -23824,6 +23887,9 @@ if (j_ea instanceof J_EAVehicle) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		p_DHWAsset = null;	
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
+		c_fixedConsumptionElectricAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
@@ -23838,6 +23904,7 @@ if (j_ea instanceof J_EAVehicle) {
 			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), false);
 		}
 		energyModel.v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
+		c_pvAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
@@ -23845,9 +23912,14 @@ if (j_ea instanceof J_EAVehicle) {
 			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), false);
 		}
 		energyModel.v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
+		c_windAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
+	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
+		c_electricHobAssets.remove(j_ea);
+		c_conversionElectricAssets.remove(j_ea);
+	}	
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
@@ -23855,8 +23927,12 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		p_primaryHeatingAsset = null;
 		energyModel.c_ambientAirDependentAssets.remove(j_ea);
-	//} else if (j_ea instanceof J_EAConversionCurtailer) {
-	//	p_curtailer = null;
+		c_electricHeatpumpAssets.remove(j_ea);
+		c_conversionElectricAssets.remove(j_ea);
+	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
+		p_primaryHeatingAsset = null;
+	} else if (j_ea instanceof J_EAConversionElectrolyserAte) {
+		c_electrolyserAssets.remove(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
@@ -23868,6 +23944,8 @@ if (j_ea instanceof J_EAVehicle) {
 		p_gasBuffer = null;
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = null;
+		c_batteryAssets.remove(j_ea);
+		
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = null;
