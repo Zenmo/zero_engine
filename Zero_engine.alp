@@ -23233,7 +23233,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	} else if (j_ea instanceof J_EAConversionElectrolyserAte) {
+	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		c_electrolyserAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
@@ -23931,7 +23931,7 @@ if (j_ea instanceof J_EAVehicle) {
 		c_conversionElectricAssets.remove(j_ea);
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = null;
-	} else if (j_ea instanceof J_EAConversionElectrolyserAte) {
+	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		c_electrolyserAssets.remove(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
