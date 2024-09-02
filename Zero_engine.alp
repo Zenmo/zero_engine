@@ -6915,7 +6915,7 @@ for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
 for (GridNode GN : pop_gridNodes) {
-	GN.f_resetStates();
+	//GN.f_resetStates();
 }
 for (GridConnection GC : c_gridConnections) {
 	//GC.f_resetStates();
@@ -16413,9 +16413,11 @@ if (data_netbelastingDuurkromme_kW != null) {
 
 // We copy our annual array to preserve it as a time-series and make new arrays for the others
 double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone(); 
-double[] annualDLRarray = energyModel.acc_annualDLRfactor_f.getTimeSeries().clone();
+
 int arraySize = netLoadArrayAnnual_kW.length;
+
 if (energyModel.b_enableDLR) {
+	double[] annualDLRarray = energyModel.acc_annualDLRfactor_f.getTimeSeries().clone();
 	for (int i = 0; i < arraySize; i++) {
 		netLoadArrayAnnual_kW[i] = 100 * netLoadArrayAnnual_kW[i] / (p_capacity_kW * max(energyModel.v_minDLRfactor_fr,annualDLRarray[i]));
 	}
