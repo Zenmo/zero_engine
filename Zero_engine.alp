@@ -24648,6 +24648,30 @@ else {
 	
 }]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1725365906572</Id>
+					<Name><![CDATA[f_getAdress]]></Name>
+					<X>50</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[String adressGC;
+String street_and_additions = "";
+
+//Define street and its additions
+street_and_additions = street_and_additions + p_streetName + " " + String.valueOf(p_houseNumber);
+street_and_additions = p_houseLetter != null ? street_and_additions + "-" + p_houseLetter : street_and_additions;
+street_and_additions = p_houseAddition != null ? street_and_additions + "-" + p_houseAddition : street_and_additions;
+
+//Define full adress
+adressGC = street_and_additions + ", " + p_postalcode + p_city;	
+
+//Return
+return adressGC;]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
