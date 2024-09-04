@@ -6320,13 +6320,13 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
 	
-	/*if( ea instanceof J_EAEV ) {
+	if( ea instanceof J_EAEV ) {
 		J_EAEV e = (J_EAEV)ea;
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
 		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
-	}*/
+	}
 }
 
 /*
@@ -6950,7 +6950,7 @@ for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
 for (GridNode GN : pop_gridNodes) {
-	GN.f_resetStates();
+	//GN.f_resetStates();
 }
 for (GridConnection GC : c_gridConnections) {
 	//GC.f_resetStates();
@@ -8168,16 +8168,16 @@ f_setInitialValues();]]></Body>
 					<Body><![CDATA[v_totalInstalledPVPower_kW = 0;
 v_totalInstalledWindPower_kW = 0;
 for (J_EA ea : c_energyAssets) {
-	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL && !((GridConnection)ea.getParentAgent()).v_isPaused ) {
 		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
 	}
-	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && !((GridConnection)ea.getParentAgent()).v_isPaused ) {
 		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
 	}
 }
 
 // Total installed battery capacity
-v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric)/1000;
+v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric && !(((GridConnection)j_ea.getParentAgent()).v_isPaused))/1000;
 traceln("Total installed battery capacity: %s MWh", v_totalBatteryInstalledCapacity_MWh);
 
 // Starting prices
@@ -16481,9 +16481,11 @@ if (data_netbelastingDuurkromme_kW != null) {
 
 // We copy our annual array to preserve it as a time-series and make new arrays for the others
 double[] netLoadArrayAnnual_kW = acc_annualElectricityBalance_kW.getTimeSeries().clone(); 
-double[] annualDLRarray = energyModel.acc_annualDLRfactor_f.getTimeSeries().clone();
+
 int arraySize = netLoadArrayAnnual_kW.length;
+
 if (energyModel.b_enableDLR) {
+	double[] annualDLRarray = energyModel.acc_annualDLRfactor_f.getTimeSeries().clone();
 	for (int i = 0; i < arraySize; i++) {
 		netLoadArrayAnnual_kW[i] = 100 * netLoadArrayAnnual_kW[i] / (p_capacity_kW * max(energyModel.v_minDLRfactor_fr,annualDLRarray[i]));
 	}
@@ -21939,7 +21941,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660212665961</Id>
 					<Name><![CDATA[f_connectionMetering]]></Name>
-					<X>800</X><Y>500</Y>
+					<X>800</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22905,27 +22907,24 @@ switch (p_chargingAttitudeVehicles) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
-int countDeletedItems = 0;
-for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	J_EAEV ev = copiedVehicleList.get(i);
-	
-	if (ev.getVehicleScaling() == 0) {
-		continue;
-	}
-	
-	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
-		ev.f_updateAllFlows( 0.0 );
-		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-		countDeletedItems ++;
-	}
-	else {
-			double[] flowsArray = ev.f_updateAllFlows(1);
-			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-	}
-}
+					<Body><![CDATA[// Removing items while going through a loop, so we do so in reverse order
 
-]]></Body>
+ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
+int countDeletedItems = 0;
+
+for ( int i = 0; i < copiedVehicleList.size(); i++ ) {
+	J_EAEV ev = copiedVehicleList.get(i);
+	if (ev.vehicleScaling != 0) {
+		if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ) {
+			ev.f_updateAllFlows( 0.0 );
+			c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
+			countDeletedItems ++;
+		}
+		else {
+			ev.f_updateAllFlows( 1.0 );
+		}
+	}
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -22942,36 +22941,35 @@ int countDeletedItems = 0;
 
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	J_EAEV ev = copiedVehicleList.get(i);
-	
-	if (ev.getVehicleScaling() == 0) {
-		continue;
-	}
-	
-	if(!ev.getAvailability() || ev.getCurrentStateOfCharge() == 1){
-		ev.f_updateAllFlows( 0.0 );
-		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-		countDeletedItems ++;
-	}
-	else {
-		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-		double maxChargingPower_kW = ev.getElectricCapacity_kW();
-		double emptyKWhInBattery = ev.getStorageCapacity_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge();
-		double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-		double chargingPower_kW;
-		double timeToNextTrip = ev.tripTracker.v_nextEventStartTime_min / 60 - energyModel.t_h;
-	
-		if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-			//traceln("Urgency charging! May exceed connection capacity!");
-			chargingPower_kW = maxChargingPower_kW / 2 ;	// delen door 2 als quickfix doordat HAVI trucks anders mega pieken veroorzaken in de middag waardoor 'slim' laden beetje nutteloos lijkt
+	if (ev.vehicleScaling != 0) {
+		if(!ev.getAvailability() || ev.getCurrentStateOfCharge() == 1) {
+			ev.f_updateAllFlows( 0.0 );
+			c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
+			countDeletedItems ++;
 		}
 		else {
-			chargingPower_kW = emptyKWhInBattery / timeToNextTrip;
+			double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+			double maxChargingPower_kW = ev.getElectricCapacity_kW();
+			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+			
+			double emptyKWhInBattery = ev.getStorageCapacity_kWh() * (1 - ev.getCurrentStateOfCharge());
+			double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min / 60 - energyModel.t_h;			
+			// At the end of the simulation the triptracker returns back to the start of the year, so we make sure the timeToNextTrip is not negative
+			timeToNextTrip_h = (timeToNextTrip_h % 8760 + 8760) % 8760;
+			
+			double chargingPower_kW;		
+			if ( energyModel.t_h >= chargeDeadline_h && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+				//traceln("Urgency charging! May exceed connection capacity!");
+				chargingPower_kW = maxChargingPower_kW / 2 ;	// delen door 2 als quickfix doordat HAVI trucks anders mega pieken veroorzaken in de middag waardoor 'slim' laden beetje nutteloos lijkt
+			}
+			else {
+				chargingPower_kW = emptyKWhInBattery / timeToNextTrip_h;
+			}
+			
+			chargingPower_kW = min(chargingPower_kW, maxChargingPower_kW); // cap the charging speed at the electric capacity
+			double ratio_fr = chargingPower_kW / maxChargingPower_kW;
+			ev.f_updateAllFlows( ratio_fr );
 		}
-		
-		double chargingSpeed = min (chargingPower_kW, ev.capacityElectric_kW / ev.vehicleScaling );
-		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
-		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
-		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 	}
 }]]></Body>
 				</Function>
@@ -22987,46 +22985,59 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[availableCapacityForCharging]]></Name>
+						<Name><![CDATA[availableCapacityForCharging_kW]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[double totalElectricVehiclesCharging = sum( c_vehiclesAvailableForCharging, x -> x.vehicleScaling);
-double chargeSetpoint_kW = availableCapacityForCharging / totalElectricVehiclesCharging;
+					<Body><![CDATA[double remainingChargingPower_kW = availableCapacityForCharging_kW;
+
 ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
+
+// Sort vehicles by time until charge deadline
+copiedVehicleList.sort((ev1, ev2) -> Double.compare(f_getChargeDeadline(ev1), f_getChargeDeadline(ev2)));
+c_vehiclesAvailableForCharging = copiedVehicleList;
+
 for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	//EnergyAsset EA = copiedVehicleList.get(i);
 	J_EAEV ev = copiedVehicleList.get(i);
-	
-	if (ev.getVehicleScaling() == 0) {
-		continue;
-	}
-	
-	if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ){
-		ev.f_updateAllFlows( 0.0 );
-		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-		countDeletedItems ++;
-	}
-	else {
-		double chargeNeedForNextTrip_kWh = max(0, ev.energyNeedForNextTrip_kWh - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-		double maxChargingPower_kW = ev.getElectricCapacity_kW();
-		//double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min/60 - energyModel.t_h;
-		double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-		
-		if ( energyModel.t_h >= chargeDeadline_h & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-		//traceln("Urgency charging! May exceed connection capacity!");
-			chargeSetpoint_kW = maxChargingPower_kW ;	
+	if (ev.vehicleScaling != 0) {
+		if( !ev.getAvailability() || ev.getCurrentStateOfCharge() == 1 ) {
+			ev.f_updateAllFlows( 0.0 );
+			c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
+			countDeletedItems ++;
 		}
-		
-		double chargingSpeed = min (chargeSetpoint_kW, ev.capacityElectric_kW / ev.vehicleScaling );
-		double ratio_fr = chargingSpeed / (ev.capacityElectric_kW / ev.vehicleScaling);
-		/*if ( ev.getChargingTimeToFull_MIN() > EA.nextEventStartTime_min - energyModel.p_timeStep_h * 60 ){
-			ratio = 1;
-		}*/
-		double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
-		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-		//v_evChargingPowerElectric_kW += ev.electricityConsumption_kW - ev.electricityProduction_kW;
+		else {
+			//traceln("current time: " + energyModel.t_h);
+			//traceln("ev: " + ev);
+			//traceln("dist: " + ev.getTripTracker().v_tripDist_km);
+			double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+			//traceln("chargeNeedForNextTrip_kWh: " + chargeNeedForNextTrip_kWh);
+			double maxChargingPower_kW = ev.getElectricCapacity_kW();
+			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+			
+			//double starttime = ev.tripTracker.v_nextEventStartTime_min / 60;
+			//traceln("starttime: " + starttime);
+			//traceln("chargeDeadline_h: " + chargeDeadline_h);
+			
+			double chargingPower_kW;
+			if ( energyModel.t_h >= chargeDeadline_h && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+				//traceln("Urgency charging! May exceed connection capacity!");
+				chargingPower_kW = maxChargingPower_kW;	
+			}
+			else {
+				chargingPower_kW = remainingChargingPower_kW;
+			}
+			
+			chargingPower_kW = min(chargingPower_kW, maxChargingPower_kW);
+			remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW);
+			double ratio_fr = chargingPower_kW / maxChargingPower_kW;
+			double[] flowsArray = ev.f_updateAllFlows( ratio_fr );
+			//gridConnection.v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+			
+			//double x = flowsArray[4] - flowsArray[0];
+			//traceln("flow: " + x);
+			//traceln("ev: " + ev);
+			
+		}
 	}
 }]]></Body>
 				</Function>
@@ -23035,7 +23046,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995181</Id>
 					<Name><![CDATA[f_chargeOnPrice]]></Name>
-					<X>830</X><Y>440</Y>
+					<X>830</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23230,7 +23241,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	} else if (j_ea instanceof J_EAConversionElectrolyserAte) {
+	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		c_electrolyserAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
@@ -23301,7 +23312,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1695822607494</Id>
 					<Name><![CDATA[f_chargeOnPrice_V2G]]></Name>
-					<X>830</X><Y>460</Y>
+					<X>830</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23455,7 +23466,7 @@ v_allowedCapacity_kW = p_connectionCapacity_kW;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1701956274181</Id>
 					<Name><![CDATA[f_calculateKPIs]]></Name>
-					<X>780</X><Y>560</Y>
+					<X>780</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23689,7 +23700,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[DataSet]]></ReturnType>
 					<Id>1708520215192</Id>
 					<Name><![CDATA[f_getDuurkromme]]></Name>
-					<X>800</X><Y>580</Y>
+					<X>800</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23928,7 +23939,7 @@ if (j_ea instanceof J_EAVehicle) {
 		c_conversionElectricAssets.remove(j_ea);
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = null;
-	} else if (j_ea instanceof J_EAConversionElectrolyserAte) {
+	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		c_electrolyserAssets.remove(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
@@ -24054,7 +24065,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720442672576</Id>
 					<Name><![CDATA[f_curtailment]]></Name>
-					<X>800</X><Y>480</Y>
+					<X>800</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24094,7 +24105,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<Id>1720430481154</Id>
 					<Name><![CDATA[f_nfatoUpdateConnectionCapacity]]></Name>
 					<Description><![CDATA[Updates the Connection Capacity of the GC depending on the time of day / day of week.]]></Description>
-					<X>780</X><Y>630</Y>
+					<X>780</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24130,7 +24141,7 @@ if (timeOfDay == hourOfDay) {
 					<Id>1720431721926</Id>
 					<Name><![CDATA[f_nfatoSetConnectionCapacity]]></Name>
 					<Description><![CDATA[When changing the NFATO settings this function sets the GC capacity to the correct value. When reset is true the capacity is restored back to its original value.]]></Description>
-					<X>780</X><Y>650</Y>
+					<X>780</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24285,7 +24296,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518225504</Id>
 					<Name><![CDATA[f_fillLiveDatasets]]></Name>
-					<X>820</X><Y>520</Y>
+					<X>820</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24370,7 +24381,7 @@ data_windGeneration_kW.update();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518905501</Id>
 					<Name><![CDATA[f_fillAnnualDatasets]]></Name>
-					<X>820</X><Y>540</Y>
+					<X>820</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24657,7 +24668,7 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 					<Id>1722584668566</Id>
 					<Name><![CDATA[f_pause]]></Name>
 					<Description><![CDATA[Function to pause a gridconnection so it is not operated or counted towards totals in the energy model.]]></Description>
-					<X>780</X><Y>690</Y>
+					<X>780</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24679,6 +24690,8 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 	// update GN parents' wind / solar totals
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, false);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, false);
+	energyModel.v_totalInstalledPVPower_kW -= v_totalInstalledPVPower_kW;
+	energyModel.v_totalInstalledWindPower_kW -= v_totalInstalledWindPower_kW;
 	
 	// Reset Connection Capacity to default
 	f_nfatoSetConnectionCapacity(true);
@@ -24723,7 +24736,8 @@ else {
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_totalInstalledPVPower_kW, true);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, true);
-	
+	energyModel.v_totalInstalledPVPower_kW += v_totalInstalledPVPower_kW;
+	energyModel.v_totalInstalledWindPower_kW += v_totalInstalledWindPower_kW;
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -24749,6 +24763,26 @@ adressGC = street_and_additions + ", " + p_postalcode + p_city;
 
 //Return
 return adressGC;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1725455130676</Id>
+					<Name><![CDATA[f_getChargeDeadline]]></Name>
+					<X>850</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[ev]]></Name>
+						<Type><![CDATA[J_EAEV]]></Type>
+					</Parameter>
+					<Body><![CDATA[double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
+double maxChargingPower_kW = ev.getElectricCapacity_kW();
+
+return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
+]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -27373,7 +27407,7 @@ return adressGC;]]></Body>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722585008843</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>760</X><Y>720</Y>
+					<X>760</X><Y>740</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27395,7 +27429,7 @@ f_pause(v_isPaused);]]></ActionCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1722585348154</Id>
 					<Name><![CDATA[button1]]></Name>
-					<X>760</X><Y>770</Y>
+					<X>760</X><Y>790</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -52159,17 +52193,17 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
 		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
 		double difference_kW = capacityElectric_kW - this.capacityElectric_kW;
-		if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {			
+		if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {		
 			((GridConnection) this.parentAgent).v_totalInstalledWindPower_kW += difference_kW;
 			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += difference_kW;
+				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, difference_kW, true);
 			}
 			((GridConnection) this.parentAgent).energyModel.v_totalInstalledWindPower_kW += difference_kW;
 		}
 		else if (this.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && this.parentAgent instanceof GridConnection) {
 			((GridConnection) this.parentAgent).v_totalInstalledPVPower_kW += difference_kW;
 			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += difference_kW;
+				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, difference_kW, true);
 			}
 			((GridConnection) this.parentAgent).energyModel.v_totalInstalledPVPower_kW += difference_kW;
 		}
@@ -53904,18 +53938,18 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			<Id>1659534704067</Id>
 			<Name><![CDATA[J_EAEV]]></Name>
 			<Text><![CDATA[/**
- * J_EAEV
- */
+* J_EAEV
+*/
 public class J_EAEV extends J_EAVehicle implements Serializable {
-
-
+ 
+ 
 	public OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
 	private double stateOfCharge_r;
 	private double initialStateOfCharge_r;
 	private double stateOfChargeStored_r;
 	
 	private double storageCapacity_kWh;
-
+ 
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
 	public OL_EVChargingNeed chargingNeed;
@@ -53927,7 +53961,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
      */
     public J_EAEV() {
     }
-
+ 
     /**
      * Constructor initializing the fields
      */
@@ -53952,8 +53986,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    }
 		registerEnergyAsset();
     }
-
-	@Override 
+ 
+	@Override
 	public double[] operate(double ratioOfChargeCapacity_r) {
 		//traceln( "ratio: " + ratioOfChargeCapacity_r);
 		if (true) {
@@ -53976,16 +54010,16 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		double[] arr = returnEnergyFlows();
 		return arr;		
 	}
-
+ 
 	public void updateStateOfCharge( double power_kW ) {
 		stateOfCharge_r -= ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
 	}
-
+ 
 	@Override
 	public double getCurrentStateOfCharge() {
     	return stateOfCharge_r;
 	}
-
+ 
 	@Override
 	public boolean startTrip() {
 		if (available) {
@@ -53998,7 +54032,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			return false; // Trip not started because EV not available!
 		}
 	}
-
+ 
 	@Override
 	public boolean endTrip(double tripDist_km) {
 	
@@ -54020,8 +54054,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			//traceln("EV energy use at end of trip: %s kWh", tripDist_km * vehicleScaling * energyConsumption_kWhpkm );
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
-				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
+				traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
 				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+								
 				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
 				//stateOfCharge_r = 0;
 			}
@@ -54031,23 +54066,23 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			return true;
 		}
 	}
-
+ 
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
 		discharged_kWh += electricityProduced_kW * timestep_h;
 		charged_kWh += electricityConsumed_kW * timestep_h;
 	}
-
+ 
 	public double getEnergyUsed_kWh() {
 		return energyUsed_kWh;
 	}
-
+ 
 	public double getStorageCapacity_kWh() {
-		return (storageCapacity_kWh * vehicleScaling);
+		return storageCapacity_kWh * vehicleScaling;
 	}
 	
 	@Override
 	public double getElectricCapacity_kW() {
-		return (capacityElectric_kW * vehicleScaling);
+		return capacityElectric_kW * vehicleScaling;
 	}
 	public double getTotalChargeAmount_kWh() {
 		return charged_kWh;
@@ -54055,20 +54090,24 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public double getTotalDischargeAmount_kWh() {
 		return discharged_kWh;
 	}
-
+ 
 	public double getEnergyConsumption_kWhpkm() {
 		return energyConsumption_kWhpkm * vehicleScaling;
 	}
-
+	
+	public double getEnergyNeedForNextTrip_kWh() {
+		return energyNeedForNextTrip_kWh * vehicleScaling;
+	}
+ 
 	public boolean getAvailability() {
 		return available;
 	}
-
+ 
 	public double getChargingTimeToFull_MIN() {
 		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh * vehicleScaling) - (storageCapacity_kWh * vehicleScaling) * stateOfCharge_r) / (capacityElectric_kW * vehicleScaling) ) ;
 		return chargingTime_min;
 	}
-
+ 
 	@Override
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
@@ -54099,15 +54138,15 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return
 			"SOC = " + roundToDecimal( stateOfCharge_r, 2 ) + " " +
 			"storageCapacity_kWh = " + storageCapacity_kWh + " " +
-			"charged_kWh = " + charged_kWh + " " +
-			"mileage = " + mileage_km + " ";
+			"charged_kWh = " + roundToDecimal( charged_kWh, 2 ) + " " +
+			"mileage = " + roundToDecimal( mileage_km, 2 ) + " ";
 	}
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
 	 */
 	private static final long serialVersionUID = 1L;
-
+ 
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
@@ -55678,7 +55717,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return
+			"Number of trips = " + this.nbActivities + " " + 
+			"Row index = " + this.rowIndex + " " + 
+			"Distance Scaling = " + this.distanceScaling_fr + " ";
 	}
 	
 	public double getDistanceScaling_fr( ) {
