@@ -19704,7 +19704,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1724846136897</Id>
 					<Name><![CDATA[v_enableCurtailment]]></Name>
-					<X>250</X><Y>340</Y>
+					<X>250</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19741,6 +19741,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725526147400</Id>
+					<Name><![CDATA[v_hasWind]]></Name>
+					<X>250</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -22502,6 +22514,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_productionAssets.add((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = true;}
+	if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) { v_hasWind = true;}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
@@ -23137,6 +23150,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.remove((J_EAProduction)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) { v_hasPV = false;}
+	if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) { v_hasWind = false;}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
