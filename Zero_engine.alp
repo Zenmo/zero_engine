@@ -24759,7 +24759,7 @@ street_and_additions = p_houseLetter != null ? street_and_additions + "-" + p_ho
 street_and_additions = p_houseAddition != null ? street_and_additions + "-" + p_houseAddition : street_and_additions;
 
 //Define full adress
-adressGC = street_and_additions + ", " + p_postalcode + p_city;	
+adressGC = street_and_additions + ", " + p_postalcode + " " + p_city;	
 
 //Return
 return adressGC;]]></Body>
