@@ -945,6 +945,10 @@
 				<Id>1720602442837</Id>
 				<Name><![CDATA[NODAL_PRICING]]></Name>
 			</Option>
+			<Option>
+				<Id>1725879557284</Id>
+				<Name><![CDATA[SIMPLE]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1668693527447</Id>
@@ -24791,7 +24795,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725629047745</Id>
 					<Name><![CDATA[f_batteryManagementSimple]]></Name>
-					<X>910</X><Y>860</Y>
+					<X>1230</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24814,9 +24818,9 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		power_fr = chargeAvailable_kW / capacityElectric_kW;
 	}
 	
-	traceln("time: " + energyModel.t_h);
-	traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
-	traceln("power_fr: " + power_fr);
+	//traceln("time: " + energyModel.t_h);
+	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
+	//traceln("power_fr: " + power_fr);
 	
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
 }]]></Body>
@@ -27482,6 +27486,37 @@ f_pause(v_isPaused);]]></ActionCode>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
 						<LabelText><![CDATA[unpause]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Control Type="RadioButtons">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1725879486945</Id>
+					<Name><![CDATA[radio]]></Name>
+					<X>1220</X><Y>720</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="150" Height="100">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[switch (radio.getValue()) {
+	case 0:
+		p_batteryOperationMode = OL_BatteryOperationMode.BALANCE;
+		break;
+	case 1:
+		p_batteryOperationMode = OL_BatteryOperationMode.SIMPLE;
+		break;
+}]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<Orientation>VERTICAL</Orientation>
+						<Button><![CDATA[BALANCE]]></Button>
+						<Button><![CDATA[SIMPLE]]></Button>
+						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
 			</Presentation>
@@ -49380,6 +49415,18 @@ public void f_resetSpecificGCStates(){
 						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725879138068</Id>
+					<Name><![CDATA[v_maxHydrogenPower_kW]]></Name>
+					<X>1440</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -49402,10 +49449,18 @@ f_manageCharging();
 if (p_batteryAsset != null){ // TEST CODE
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
 		
-		f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
-		//f_batteryManagementSimple();
+		switch (p_batteryOperationMode) {
+			case BALANCE:
+				f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+				break;
+			case SIMPLE:
+				f_batteryManagementSimple();
+				break;
+			case PRICE:
+				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
+				break;
+		}
 		
-		//f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 		double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 		//traceln("flows:" + Arrays.toString(arr));
 		//v_batteryPowerElectric_kW = arr[4] - arr[0];
@@ -49477,6 +49532,9 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * capacityLimit_fr ||
 			energyModel.EnergyConversionSites.get(0).v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
 			if (energyModel.v_isRapidRun) {
 				v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
+				if (arr[6] > v_maxHydrogenPower_kW) {
+					v_maxHydrogenPower_kW = arr[6];
+				}
 			}
 		}
 	}
@@ -49493,7 +49551,8 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * capacityLimit_fr ||
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Reset variables 
-v_totalHydrogenUsed_MWh = 0;]]></Body>
+v_totalHydrogenUsed_MWh = 0;
+v_maxHydrogenPower_kW = 0;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -55616,7 +55675,7 @@ public class J_ActivityTracker implements Serializable {
  */	
 public class J_ActivityTrackerTrips extends J_ActivityTracker implements Serializable {
 	
-	private ArrayList<Double> distances_km = new ArrayList<>();
+	public ArrayList<Double> distances_km = new ArrayList<>();
 	private int rowIndex;
 	public J_EAVehicle Vehicle;
 	public double v_idleTimeToNextTrip_min;
