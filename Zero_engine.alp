@@ -7238,6 +7238,10 @@ for (J_EA e : c_energyAssets) {
 				electricityProduced_MWh -= EnergyUsed_kWh/1000;
 			}*/
 			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			if ( e instanceof J_EABuilding ) {
+				traceln("Building has produced more energy than it has used?? Is lossfactor too low?");
+				traceln("Lossfactor: %s", ((J_EABuilding)e).lossFactor_WpK);
+			}
 		}
 		if (e instanceof J_EABuilding) {
 			totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
@@ -15131,6 +15135,9 @@ geupdate vanuit
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.0]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -16701,7 +16708,9 @@ if ( p_energyType == OL_EnergyCarrierType.HEAT ) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+					<Body><![CDATA[if (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0) {
+	v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -21814,13 +21823,14 @@ if( myParentNodeHeat instanceof GridNode ) {
 	//p_parentNodeHeat = myParentNodeHeat;
 }
 
-ConnectionOwner myParentConnectionOwner = findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
-if( myParentConnectionOwner instanceof ConnectionOwner) {
-	//p_ownerActor = myParentConnectionOwner;
-	l_ownerActor.connectTo(myParentConnectionOwner);
-	myParentConnectionOwner.f_connectToChild(this);
+if (p_ownerID!=null){
+	ConnectionOwner myParentConnectionOwner = findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
+	if( myParentConnectionOwner instanceof ConnectionOwner) {
+		//p_ownerActor = myParentConnectionOwner;
+		l_ownerActor.connectTo(myParentConnectionOwner);
+		myParentConnectionOwner.f_connectToChild(this);
+	}
 }
-
 /*EnergySupplier myParentEnergySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(p_ownerID)) ;
 if( myParentEnergySupplier instanceof EnergySupplier) {
 	//p_ownerActor = myParentEnergySupplier;
@@ -24143,8 +24153,8 @@ else {
 					</Parameter>
 					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//double willingnessToPayDefault_eurpkWh = 0.3;
-	double WTPfeedbackGain_eurpSOC = 0.5; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
-	double priceGain_kWhpeur = 1.5; // How strongly to ramp up power with price-delta's. Increasing this gain too far leads to instability!
+	double WTPfeedbackGain_eurpSOC = 0.2; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
+	double priceGain_kWhpeur = 1.0; // How strongly to ramp up power with price-delta's. Increasing this gain too far leads to instability!
 	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
 	
 	double chargeSetpoint_kW = 0;	
@@ -24157,7 +24167,7 @@ else {
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 
 	
-	double SOC_setp_fr = 0.9 - 3*GN.v_electricityYieldForecast_fr;	
+	double SOC_setp_fr = 0.9 + (GN.v_totalInstalledPVPower_kW/50_000+GN.v_totalInstalledWindPower_kW/20_000)*(0.2 - 3*GN.v_electricityYieldForecast_fr);	
 	//double SOC_setp_fr = 0.9 - 2*energyModel.v_WindYieldForecast_fr;	
 	//SOC_setp_fr = (0.5 + 0.4 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24))*(1-3*GN.v_electricityYieldForecast_fr); // Sinusoidal setpoint: aim for high SOC at 18:00h		
 	//SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
@@ -42507,15 +42517,17 @@ if (p_BuildingThermalAsset!=null && p_primaryHeatingAsset != null) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double availablePowerAtPrice_kW = p_connectionCapacity_kW;
+					<Body><![CDATA[
+double availablePowerAtPrice_kW = p_connectionCapacity_kW;
 if (l_ownerActor.getConnectedAgent()!=null){
 	v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 	availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( v_currentPowerElectricity_kW );
+	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 } else {
-	v_currentElectricityPriceConsumption_eurpkWh = 0.3;
+	//v_currentElectricityPriceConsumption_eurpkWh = 0.3;
 }
 
-v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
+
 
 f_manageHeatingAssets();
 
@@ -42527,6 +42539,7 @@ if( p_householdEV != null){
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 }
 
+/* // What's this doing here?? Seems like duplicate code.
 if( p_batteryAsset != null){
 	switch (p_batteryOperationMode){
 		case HOUSEHOLD_LOAD:
@@ -42543,6 +42556,7 @@ if( p_batteryAsset != null){
 	//v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
+*/ 
 
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); 
 
@@ -53329,6 +53343,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
 		this.energyAssetType = OL_EnergyAssetType.BUILDINGTHERMALS;
+	    if (lossFactor_WpK < 0) {
+	    	throw new RuntimeException(String.format("Exception: J_EABuilding with negative lossfactor! %s", lossFactor_WpK));	    	
+	    }
 		registerEnergyAsset();
     }
 
