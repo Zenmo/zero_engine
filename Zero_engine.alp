@@ -23579,7 +23579,24 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//
+					<Body><![CDATA[if (p_physicalConnectionCapacity_kW < 0) {
+	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative physical connection capacity!");
+} else if (p_contractedDeliveryCapacity_kW < 0) {
+	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted delivery capacity!");
+} else if (p_contractedFeedinCapacity_kW < 0) {
+	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted feed in capacity!");
+}
+if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0 && p_physicalConnectionCapacity_kW == 0.0) { // If no contracted or physical capacity is given, throw error.
+	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has 0.0 physical and contracted capacity! Not a valid state of for this agent");
+} else {
+	if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
+		p_contractedDeliveryCapacity_kW = p_physicalConnectionCapacity_kW;
+		p_contractedFeedinCapacity_kW = p_physicalConnectionCapacity_kW;
+	} else if ( p_physicalConnectionCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
+		p_physicalConnectionCapacity_kW = max(p_contractedDeliveryCapacity_kW, p_contractedFeedinCapacity_kW);
+	}
+}
+
 if ( c_connectedGISObjects.size()>0) { // can this go into initialisation function?
 	//p_floorSurfaceArea_m2 = totalSurfaceAreaGC_m2;
 	p_longitude = c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
@@ -23595,7 +23612,7 @@ if ( c_connectedGISObjects.size()>0) { // can this go into initialisation functi
 			p_parentNodeElectricID = nearestLVStation.p_gridNodeID;
 		}
 	}		
-} 
+}
 
 if (p_parentNodeElectricID == null) {
 	p_parentNodeElectricID = findFirst(energyModel.pop_gridNodes, GN->GN.p_energyType.equals(OL_EnergyCarrierType.ELECTRICITY)).p_gridNodeID;
