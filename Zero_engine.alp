@@ -10428,9 +10428,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11362,9 +11359,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11581,9 +11575,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11770,9 +11761,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11951,9 +11939,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
@@ -12178,9 +12163,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12361,9 +12343,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12537,9 +12516,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
 					<Parameters>
-						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionCategory]]></Name>
 						</Parameter>
@@ -13069,9 +13045,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -13272,9 +13245,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
@@ -17930,6 +17900,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668359062406</Id>
 					<Name><![CDATA[v_allowedCapacity_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1120</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -17943,7 +17914,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1668370002883</Id>
 					<Name><![CDATA[v_additionalTimeSpreadCharging_MIN]]></Name>
 					<Description><![CDATA[In the charging attitude MAX_SPREAD the vehicles can be planned to be full some time before their actual departure. ]]></Description>
-					<X>250</X><Y>280</Y>
+					<X>250</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18359,7 +18330,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1692972667627</Id>
 					<Name><![CDATA[v_hasPV]]></Name>
-					<X>250</X><Y>300</Y>
+					<X>250</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20506,7 +20477,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720442507543</Id>
 					<Name><![CDATA[v_enableCurtailment]]></Name>
-					<X>250</X><Y>320</Y>
+					<X>250</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20566,9 +20537,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1720435316099</Id>
-					<Name><![CDATA[v_nfatoWeekendCapacity_kW]]></Name>
+					<Name><![CDATA[v_nfatoWeekendDeliveryCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>250</X><Y>250</Y>
+					<X>250</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20582,9 +20553,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1720435335143</Id>
-					<Name><![CDATA[v_nfatoWeekCapacity_kW]]></Name>
+					<Name><![CDATA[v_nfatoWeekDeliveryCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>250</X><Y>230</Y>
+					<X>250</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20599,7 +20570,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720520594279</Id>
 					<Name><![CDATA[v_enableNFato]]></Name>
-					<X>250</X><Y>340</Y>
+					<X>250</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20629,7 +20600,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1721122517382</Id>
-					<Name><![CDATA[acc_summerConnectionCapacity_kW]]></Name>
+					<Name><![CDATA[acc_summerDeliveryCapacity_kW]]></Name>
 					<X>1110</X><Y>1610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20644,7 +20615,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1721122539722</Id>
-					<Name><![CDATA[acc_winterConnectionCapacity_kW]]></Name>
+					<Name><![CDATA[acc_winterDeliveryCapacity_kW]]></Name>
 					<X>1420</X><Y>1610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20660,7 +20631,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721821764640</Id>
 					<Name><![CDATA[v_hasQuarterHourlyValues]]></Name>
-					<X>250</X><Y>360</Y>
+					<X>250</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20672,7 +20643,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1722584654288</Id>
 					<Name><![CDATA[v_isPaused]]></Name>
-					<X>250</X><Y>390</Y>
+					<X>250</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20681,6 +20652,68 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[boolean]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725959590506</Id>
+					<Name><![CDATA[acc_summerFeedinCapacity_kW]]></Name>
+					<X>1110</X><Y>1630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725959604557</Id>
+					<Name><![CDATA[acc_winterFeedinCapacity_kW]]></Name>
+					<X>1420</X><Y>1630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725968910310</Id>
+					<Name><![CDATA[v_nfatoWeekendFeedinCapacity_kW]]></Name>
+					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
+					<X>250</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[24]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725968910312</Id>
+					<Name><![CDATA[v_nfatoWeekFeedinCapacity_kW]]></Name>
+					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
+					<X>250</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[24]]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -20723,28 +20756,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<ParameterEditor>
 							<Id>1658500076240</Id>
 							<Label><![CDATA[p_netConnectionType]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1658500122113</Id>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>250</X><Y>100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1658500122111</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -20911,7 +20922,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1665487815862</Id>
 					<Name><![CDATA[p_heatingType]]></Name>
-					<X>250</X><Y>120</Y>
+					<X>250</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20953,7 +20964,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668693393498</Id>
 					<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-					<X>250</X><Y>140</Y>
+					<X>250</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20977,7 +20988,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668693418082</Id>
 					<Name><![CDATA[p_batteryOperationMode]]></Name>
-					<X>250</X><Y>160</Y>
+					<X>250</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21022,7 +21033,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1671459091954</Id>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-					<X>250</X><Y>180</Y>
+					<X>250</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21473,7 +21484,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1722411169263</Id>
 					<Name><![CDATA[p_curtailmentMode]]></Name>
-					<X>250</X><Y>200</Y>
+					<X>250</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21518,7 +21529,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1725884764193</Id>
 					<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
-					<X>390</X><Y>-140</Y>
+					<X>250</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21539,7 +21550,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1725884780832</Id>
 					<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
-					<X>390</X><Y>-120</Y>
+					<X>250</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21560,7 +21571,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1725884795200</Id>
 					<Name><![CDATA[p_physicalConnectionCapacity_kW]]></Name>
-					<X>390</X><Y>-100</Y>
+					<X>250</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22749,7 +22760,8 @@ acc_summerElectricityProduction_kW.reset();
 acc_summerElectricityConsumption_kW.reset();
 acc_summerHeatProduction_kW.reset();
 
-acc_summerConnectionCapacity_kW.reset();
+acc_summerDeliveryCapacity_kW.reset();
+acc_summerFeedinCapacity_kW.reset();
 
 acc_winterElectricityBalance_kW.reset();
 acc_winterMethaneBalance_kW.reset();
@@ -22766,7 +22778,8 @@ acc_winterElectricityProduction_kW.reset();
 acc_winterElectricityConsumption_kW.reset();
 acc_winterHeatProduction_kW.reset();
 
-acc_winterConnectionCapacity_kW.reset();
+acc_winterDeliveryCapacity_kW.reset();
+acc_winterFeedinCapacity_kW.reset();
 
 /*// Not sure these are still used...
 v_electricityConsumedFixedProfile_kWh = 0;
@@ -22816,10 +22829,11 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double electricitySurplus_kW = - v_currentPowerElectricity_kW; // still excludes battery power
 	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
 	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
-	v_allowedCapacity_kW = p_connectionCapacity_kW*0.9;
-	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-	double availableChargePower_kW = connectionCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
-	double availableDischargePower_kW = electricitySurplus_kW - connectionCapacity_kW; // Max discharging power within grid capacity
+	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.9;
+	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.9;
+	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	double availableChargePower_kW = v_allowedDeliveryCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
+	double availableDischargePower_kW = electricitySurplus_kW - v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
 
 	double SOC_setp_fr = 0.5;
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
@@ -22905,8 +22919,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		if( b_stayWithinConnectionLimits ) {		
 			double electricitySurplus_kW = - v_currentPowerElectricity_kW; 
 			
-			double availableChargePower_kW = electricitySurplus_kW + v_allowedCapacity_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = electricitySurplus_kW - v_allowedCapacity_kW; // Max discharging power within grid capacity
+			double availableChargePower_kW = electricitySurplus_kW + p_contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = electricitySurplus_kW - p_contractedFeedinCapacity_kW; // Max discharging power within grid capacity
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	
@@ -23026,7 +23040,7 @@ else {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = p_connectionCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
 		f_simpleCharging();
@@ -23038,12 +23052,12 @@ switch (p_chargingAttitudeVehicles) {
 		f_maxPowerCharging( max(0, availableChargingCapacity));
 	break;
 	case CHEAP:
-		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_connectionCapacity_kW); 
+		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;
 	case V2G:
-		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_connectionCapacity_kW); 
+		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;
@@ -23612,7 +23626,7 @@ else {
 
 f_setOperatingSwitches();
 f_initializeAccumulators();
-v_allowedCapacity_kW = p_connectionCapacity_kW;
+//v_allowedCapacity_kW = p_connectionCapacity_kW;
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -24153,7 +24167,8 @@ acc_summerEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeStep_
 acc_summerElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_summerElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_summerHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
-acc_summerConnectionCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerDeliveryCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_summerFeedinCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_winterElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_winterMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_winterHydrogenBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
@@ -24167,7 +24182,8 @@ acc_winterEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeStep_
 acc_winterElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_winterElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_winterHeatProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
-acc_winterConnectionCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);]]></Body>
+acc_winterDeliveryCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
+acc_winterFeedinCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -24227,10 +24243,10 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<Body><![CDATA[switch(p_curtailmentMode) {
 	case CAPACITY:
 	// Keep feedin power within connection capacity
-	if (v_currentPowerElectricity_kW < - p_connectionCapacity_kW) { // overproduction!
+	if (v_currentPowerElectricity_kW < - p_contractedFeedinCapacity_kW) { // overproduction!
 		for (J_EAProduction j_ea : c_productionAssets) {
-			j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW - p_connectionCapacity_kW);
-			if (!(v_currentPowerElectricity_kW < - p_connectionCapacity_kW)) {
+			j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW - p_contractedFeedinCapacity_kW);
+			if (!(v_currentPowerElectricity_kW < - p_contractedFeedinCapacity_kW)) {
 				break;
 			}
 		}
@@ -24273,18 +24289,22 @@ if (timeOfDay == hourOfDay) {
 	int previousHour = ((hourOfDay - 1) % 24 + 24) % 24;
 	if (dayOfWeek == 0 || dayOfWeek == 6) {
 		if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
-			p_connectionCapacity_kW += v_nfatoWeekendCapacity_kW[hourOfDay] - v_nfatoWeekCapacity_kW[previousHour];
+			p_contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
+			p_contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
 		}
 		else {
-			p_connectionCapacity_kW += v_nfatoWeekendCapacity_kW[hourOfDay] - v_nfatoWeekendCapacity_kW[previousHour];
+			p_contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
+			p_contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
 		}
 	}
 	else {
 		if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous weekend capacity
-			p_connectionCapacity_kW += v_nfatoWeekCapacity_kW[hourOfDay] - v_nfatoWeekendCapacity_kW[previousHour];
+			p_contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
+			p_contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
 		}
 		else {
-			p_connectionCapacity_kW += v_nfatoWeekCapacity_kW[hourOfDay] - v_nfatoWeekCapacity_kW[previousHour];
+			p_contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
+			p_contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
 		}
 	}
 }]]></Body>
@@ -24312,18 +24332,22 @@ int hourOfDay = (int) timeOfDay;
 
 if (dayOfWeek == 0 || dayOfWeek == 6) {
 	if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
-		p_connectionCapacity_kW += mult * v_nfatoWeekCapacity_kW[hourOfDay];
+		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
+		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
 	}
 	else {
-		p_connectionCapacity_kW += mult * v_nfatoWeekendCapacity_kW[hourOfDay];
+		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
+		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
 	}
 }
 else {
 	if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
-		p_connectionCapacity_kW += mult * v_nfatoWeekendCapacity_kW[hourOfDay];
+		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
+		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
 	}
 	else {
-		p_connectionCapacity_kW += mult * v_nfatoWeekCapacity_kW[hourOfDay];
+		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
+		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
 	}
 }]]></Body>
 				</Function>
@@ -24376,8 +24400,8 @@ else {
 	//p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
 	boolean b_stayWithinConnectionLimits = true;
 	if( b_stayWithinConnectionLimits ) {	
-		double maxBatteryPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
-		double minBatteryPower_kW = - (v_allowedCapacity_kW + v_currentPowerElectricity_kW); // Max discharging power within grid capacity (this number is usually negative!)
+		double maxBatteryPower_kW = p_contractedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
+		double minBatteryPower_kW = - (p_contractedFeedinCapacity_kW + v_currentPowerElectricity_kW); // Max discharging power within grid capacity (this number is usually negative!)
 		chargeSetpoint_kW = min(max(chargeSetpoint_kW, minBatteryPower_kW),maxBatteryPower_kW); // Don't allow too much (dis)charging!
 		/*if (minBatteryPower_kW>0) {
 			traceln("Battery must charge to prevent curtailment! minBatteryPower_kW: %s, chargeSetpoint_kW: %s, battery SOC: %s", minBatteryPower_kW, chargeSetpoint_kW, currentBatteryStateOfCharge_fr);
@@ -24540,7 +24564,7 @@ data_windGeneration_kW.update();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
+					<Body><![CDATA[v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / p_contractedDeliveryCapacity_kW ));
 
 double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW));
 double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW));
@@ -24611,7 +24635,8 @@ if (energyModel.t_h > energyModel.p_startHourSummerWeek & energyModel.t_h < ener
 	acc_summerElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentElectricityConsumption_kW);
 	acc_summerHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek,v_currentEnergyProductionHeat_kW);	
 
-	acc_summerConnectionCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek, p_connectionCapacity_kW);
+	acc_summerDeliveryCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek, p_contractedDeliveryCapacity_kW);
+	acc_summerFeedinCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourSummerWeek, p_contractedFeedinCapacity_kW);
 }	
 
 if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7) {
@@ -24630,7 +24655,8 @@ if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < ener
 	acc_winterElectricityConsumption_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentElectricityConsumption_kW);
 	acc_winterHeatProduction_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek,v_currentEnergyProductionHeat_kW);	
 
-	acc_winterConnectionCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek, p_connectionCapacity_kW);
+	acc_winterDeliveryCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek, p_contractedDeliveryCapacity_kW);
+	acc_winterFeedinCapacity_kW.addStep(energyModel.t_h-energyModel.p_startHourWinterWeek, p_contractedFeedinCapacity_kW);
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26546,7 +26572,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[p_connectionCapacity_kW]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[p_contractedDeliveryCapacity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -26570,7 +26596,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[-p_connectionCapacity_kW]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[-p_contractedFeedinCapacity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -27225,7 +27251,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset6]]></Expression>
 					<Color>-65536</Color>
-					<Expression2><![CDATA[v_allowedCapacity_kW]]></Expression2>
+					<Expression2><![CDATA[p_contractedDeliveryCapacity_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -27235,7 +27261,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset7]]></Expression>
 					<Color>-65536</Color>
-					<Expression2><![CDATA[- v_allowedCapacity_kW]]></Expression2>
+					<Expression2><![CDATA[- p_contractedFeedinCapacity_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -42079,9 +42105,6 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_gridConnectionType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -42905,7 +42928,7 @@ if (p_BuildingThermalAsset!=null && p_primaryHeatingAsset != null) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double availablePowerAtPrice_kW = p_connectionCapacity_kW;
+					<Body><![CDATA[double availablePowerAtPrice_kW = p_contractedDeliveryCapacity_kW;
 if (l_ownerActor.getConnectedAgent()!=null){
 	v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 	availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( v_currentPowerElectricity_kW );
@@ -42919,7 +42942,7 @@ f_manageHeatingAssets();
 
 if( p_householdEV != null){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-	double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+	double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
 	f_manageCharging();
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
@@ -43345,7 +43368,7 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = p_connectionCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge();
 
 switch (p_chargingAttitudeVehicles) {
@@ -43735,8 +43758,8 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 	
 			double electricitySurplus_kW = - v_currentPowerElectricity_kW; 
 			
-			double availableChargePower_kW = electricitySurplus_kW + v_allowedCapacity_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = electricitySurplus_kW - v_allowedCapacity_kW; // Max discharging power within grid capacity
+			double availableChargePower_kW = electricitySurplus_kW + p_contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = electricitySurplus_kW - p_contractedFeedinCapacity_kW; // Max discharging power within grid capacity
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	
@@ -44046,9 +44069,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionType]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
@@ -45153,9 +45173,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_gridConnectionType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -45453,10 +45470,10 @@ if ( p_batteryAsset != null ) {
 					<Body><![CDATA[if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 	
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
-	double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
-	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	double availableElectricPower_kW = p_contractedDeliveryCapacity_kW - v_currentPowerElectricity_kW;
+	double excessElectricPower_kW = -(v_currentPowerElectricity_kW + p_contractedFeedinCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
 	double eta_r = ElektrolyserAsset.getEta_r();
-	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double ProductionSetpoint_kW = ElektrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double elektrolyserSetpointElectric_kW = 0;
 	
@@ -45624,9 +45641,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionType]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
@@ -46526,18 +46540,17 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 						<Name><![CDATA[ElectrolyserAsset]]></Name>
 						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
-					<Body><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;
-
+					<Body><![CDATA[
 if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
-
-	double availableElectricPower_kW = max(0,v_allowedCapacity_kW - v_currentPowerElectricity_kW);
-	double excessElectricPower_kW = max(0, v_currentPowerElectricity_kW - v_allowedCapacity_kW);	
-	//double availableElectricPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW;
-	//double excessElectricPower_kW = -(v_currentPowerElectricity_kW + v_allowedCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	
+	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW;
+	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW;
+	double availableElectricPower_kW = max(0, v_allowedDeliveryCapacity_kW - v_currentPowerElectricity_kW);
+	double excessElectricPower_kW = max(0, - v_currentPowerElectricity_kW - v_allowedFeedinCapacity_kW);
 	
 	double eta_r = ElectrolyserAsset.getEta_r();
-	double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double ProductionSetpoint_kW = ElectrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double electrolyserSetpointElectric_kW = 0;
 	
@@ -46846,9 +46859,7 @@ switch (ElectrolyserAsset.getState()){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_allowedCapacity_kW = p_connectionCapacity_kW;
-
-
+					<Body><![CDATA[
 //if (FuelCellAsset.getElectricCapacity_kW()>0) {
 
 
@@ -47308,9 +47319,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_gridConnectionType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -47750,7 +47758,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset).getCOP();
 		double HP_powerDemand_kW = heatDemand_kW / HP_COP;
 		// Decide to use CHP or HeatPump to fulfill heat demand based on 'SoC' of gasbuffer and current electricity use on site
-		if ( (-v_currentPowerElectricity_kW > 0.5*p_connectionCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
+		if ( (-v_currentPowerElectricity_kW > 0.5*p_contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_secondaryHeatingAsset.v_powerFraction_fr = 0;
 			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getElectricCapacity_kW());
@@ -47770,7 +47778,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		} else { // CHP when there is sufficient biogas
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			if ( p_gasBuffer.getCurrentStateOfCharge() < 0.9 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.
-				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()),(p_connectionCapacity_kW + v_currentPowerElectricity_kW) / p_primaryHeatingAsset.getElectricCapacity_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()),(p_contractedFeedinCapacity_kW + v_currentPowerElectricity_kW) / p_primaryHeatingAsset.getElectricCapacity_kW());
 			} else {
 				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
 				//if ( p_gasBuffer.j_ea.getCurrentStateOfCharge() > 0.98 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.				
@@ -47999,9 +48007,6 @@ public void f_calculateEnergyBalance(){
 				<ClassName><![CDATA[GridConnection]]></ClassName>
 			</ExtendsReference>
 			<Parameters>
-				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
 				</Parameter>
@@ -49324,9 +49329,6 @@ public void f_resetSpecificGCStates(){
 					<Name><![CDATA[p_gridConnectionType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -49551,7 +49553,7 @@ public void f_resetSpecificGCStates(){
 				<Variable Class="PlainVariable">
 					<Id>1721139587618</Id>
 					<Name><![CDATA[v_enableFuelCell]]></Name>
-					<X>250</X><Y>380</Y>
+					<X>250</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -49626,13 +49628,13 @@ if (v_enableFuelCell) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
-if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
+if (v_currentPowerElectricity_kW > p_contractedDeliveryCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
 	J_EAConversionFuelCell fuelCellAsset = (J_EAConversionFuelCell) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
 	else {
-		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
+		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_contractedDeliveryCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
 		double efficiency = 0.5;
 		double ratioOfCapacity = powerNeeded_kW / (1000*efficiency);
@@ -50926,9 +50928,6 @@ public void f_operateFixedAssets(){
 					<Name><![CDATA[p_gridConnectionType]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -51469,9 +51468,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gridConnectionType]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
