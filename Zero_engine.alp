@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -42556,15 +42556,11 @@ if ( p_BuildingThermalAsset!= null ) {
 	v_currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
 }
 
-if( p_BuildingThermalAsset != null ){
-	v_currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
-}		
-
 // CASE: ONE HEATING ASSET --------------------------------------------------------------------------------------------------------------------------------------------
 if ( p_secondaryHeatingAsset == null && p_primaryHeatingAsset != null) {
 	if ( (p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet) && p_BuildingThermalAsset!= null) { // when there is only a gas burner or DH set
 		
-		if (v_currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC && p_BuildingThermalAsset!= null) {
+		if (v_currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 			double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - v_currentIndoorTemp_degC) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 			p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()  );
 			p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();			
@@ -42572,9 +42568,7 @@ if ( p_secondaryHeatingAsset == null && p_primaryHeatingAsset != null) {
 		}
 		else { // Just supply DHW
 			p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
-			if (p_BuildingThermalAsset!=null) {
-				p_BuildingThermalAsset.v_powerFraction_fr = 0;
-			}
+			p_BuildingThermalAsset.v_powerFraction_fr = 0;
 		}
 	}
 	/*
