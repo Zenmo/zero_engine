@@ -7189,7 +7189,7 @@ double totalEnergyUsed_MWh = 0;
 double totalEnergyChargedOutsideModel_MWh = 0;
 double totalHeatProduced_MWh = 0;
 for (J_EA e : c_energyAssets) {
-	if (!((GridConnection) e.getParentAgent()).v_isPaused ) {
+	if (((GridConnection) e.getParentAgent()).v_isActive ) {
 	
 		double EnergyUsed_kWh = e.getEnergyUsed_kWh();
 		//double electricityProduced_kWh = 0;
@@ -8168,16 +8168,16 @@ f_setInitialValues();]]></Body>
 					<Body><![CDATA[v_totalInstalledPVPower_kW = 0;
 v_totalInstalledWindPower_kW = 0;
 for (J_EA ea : c_energyAssets) {
-	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL && !((GridConnection)ea.getParentAgent()).v_isPaused ) {
+	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL && ((GridConnection)ea.getParentAgent()).v_isActive ) {
 		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
 	}
-	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && !((GridConnection)ea.getParentAgent()).v_isPaused ) {
+	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && ((GridConnection)ea.getParentAgent()).v_isActive ) {
 		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
 	}
 }
 
 // Total installed battery capacity
-v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric && !(((GridConnection)j_ea.getParentAgent()).v_isPaused))/1000;
+v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric && (((GridConnection)j_ea.getParentAgent()).v_isActive))/1000;
 traceln("Total installed battery capacity: %s MWh", v_totalBatteryInstalledCapacity_MWh);
 
 // Starting prices
@@ -8195,18 +8195,18 @@ c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridN
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for (GridConnection GC : EnergyProductionSites) {
-	if (GC.v_isPaused) {
-		GC.f_pause(true);
+	if (!GC.v_isActive) {
+		GC.f_setActive(false);
 	}
 }
 for (GridConnection GC : EnergyConversionSites) {
-	if (GC.v_isPaused) {
-		GC.f_pause(true);
+	if (!GC.v_isActive) {
+		GC.f_setActive(false);
 	}
 }
 for (GridConnection GC : GridBatteries) {
-	if (GC.v_isPaused) {
-		GC.f_pause(true);
+	if (!GC.v_isActive) {
+		GC.f_setActive(false);
 	}
 }]]></Body>
 				</Function>
@@ -16730,7 +16730,7 @@ for (GridNode GN : c_connectedGridNodes ) {
 v_totalInstalledPVPower_kW = 0;
 
 for (GridConnection GC : c_connectedGridConnections) {
-	if (!GC.v_isPaused) {
+	if (GC.v_isActive) {
 		v_totalInstalledWindPower_kW += GC.v_totalInstalledWindPower_kW;
 		v_totalInstalledPVPower_kW += GC.v_totalInstalledPVPower_kW;
 	}
@@ -17903,7 +17903,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1666282164534</Id>
 					<Name><![CDATA[v_previousPowerElectricity_kW]]></Name>
-					<X>1120</X><Y>270</Y>
+					<X>1230</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17947,7 +17947,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1668359062406</Id>
 					<Name><![CDATA[v_allowedCapacity_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>140</Y>
+					<X>1230</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17960,7 +17960,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1668370002883</Id>
 					<Name><![CDATA[v_additionalTimeSpreadCharging_MIN]]></Name>
 					<Description><![CDATA[In the charging attitude MAX_SPREAD the vehicles can be planned to be full some time before their actual departure. ]]></Description>
-					<X>250</X><Y>340</Y>
+					<X>270</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18059,7 +18059,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668695288481</Id>
 					<Name><![CDATA[v_electricityPriceLowPassed_eurpkWh]]></Name>
-					<X>1120</X><Y>310</Y>
+					<X>1230</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18074,7 +18074,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668695288483</Id>
 					<Name><![CDATA[v_lowPassFactor_fr]]></Name>
-					<X>1120</X><Y>330</Y>
+					<X>1230</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18089,7 +18089,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668695288485</Id>
 					<Name><![CDATA[v_batterySOC_fr]]></Name>
-					<X>1120</X><Y>350</Y>
+					<X>1230</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18104,7 +18104,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1669725778092</Id>
 					<Name><![CDATA[v_maxConnectionLoad_fr]]></Name>
-					<X>1120</X><Y>160</Y>
+					<X>1230</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18286,7 +18286,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1674329641809</Id>
 					<Name><![CDATA[v_currentElectricityPriceConsumption_eurpkWh]]></Name>
-					<X>1120</X><Y>370</Y>
+					<X>1230</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18298,7 +18298,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1674396166866</Id>
 					<Name><![CDATA[v_WTPCharging_eurpkWh]]></Name>
-					<X>1120</X><Y>390</Y>
+					<X>1230</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18337,7 +18337,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1677585426154</Id>
 					<Name><![CDATA[v_currentAveraged7kWElectricityPrice_eurpkWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>490</Y>
+					<X>1230</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18349,7 +18349,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1678710234324</Id>
 					<Name><![CDATA[v_lowPassFactorLoad_fr]]></Name>
-					<X>1120</X><Y>430</Y>
+					<X>1230</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18364,7 +18364,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1678710234329</Id>
 					<Name><![CDATA[v_currentLoadLowPassed_kW]]></Name>
-					<X>1120</X><Y>450</Y>
+					<X>1230</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18376,7 +18376,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1692972667627</Id>
 					<Name><![CDATA[v_hasPV]]></Name>
-					<X>250</X><Y>360</Y>
+					<X>270</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18388,7 +18388,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1695824940090</Id>
 					<Name><![CDATA[v_WTRV2G_eurpkWh]]></Name>
-					<X>1120</X><Y>410</Y>
+					<X>1230</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20523,7 +20523,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720442507543</Id>
 					<Name><![CDATA[v_enableCurtailment]]></Name>
-					<X>250</X><Y>380</Y>
+					<X>270</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20554,7 +20554,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1719407798845</Id>
 					<Name><![CDATA[v_totalInstalledWindPower_kW]]></Name>
-					<X>470</X><Y>450</Y>
+					<X>580</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20569,7 +20569,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1719407798847</Id>
 					<Name><![CDATA[v_totalInstalledPVPower_kW]]></Name>
-					<X>470</X><Y>470</Y>
+					<X>580</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20585,7 +20585,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1720435316099</Id>
 					<Name><![CDATA[v_nfatoWeekendDeliveryCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>250</X><Y>280</Y>
+					<X>270</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20601,7 +20601,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1720435335143</Id>
 					<Name><![CDATA[v_nfatoWeekDeliveryCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>250</X><Y>260</Y>
+					<X>270</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20616,7 +20616,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720520594279</Id>
 					<Name><![CDATA[v_enableNFato]]></Name>
-					<X>250</X><Y>400</Y>
+					<X>270</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20632,7 +20632,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1721833484396</Id>
 					<Name><![CDATA[v_previousPowerHeat_kW]]></Name>
 					<Description><![CDATA[Heat balance of previous timestep]]></Description>
-					<X>1120</X><Y>290</Y>
+					<X>1230</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20677,7 +20677,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721821764640</Id>
 					<Name><![CDATA[v_hasQuarterHourlyValues]]></Name>
-					<X>250</X><Y>420</Y>
+					<X>270</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20688,8 +20688,8 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1722584654288</Id>
-					<Name><![CDATA[v_isPaused]]></Name>
-					<X>250</X><Y>440</Y>
+					<Name><![CDATA[v_isActive]]></Name>
+					<X>270</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20697,7 +20697,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -20735,7 +20735,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1725968910310</Id>
 					<Name><![CDATA[v_nfatoWeekendFeedinCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>250</X><Y>320</Y>
+					<X>270</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20751,7 +20751,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1725968910312</Id>
 					<Name><![CDATA[v_nfatoWeekFeedinCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>250</X><Y>300</Y>
+					<X>270</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20767,7 +20767,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>250</X><Y>60</Y>
+					<X>270</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20790,7 +20790,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1658500076242</Id>
 					<Name><![CDATA[p_gridConnectionType]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>250</X><Y>80</Y>
+					<X>270</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20875,7 +20875,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1660115328584</Id>
 					<Name><![CDATA[p_BuildingThermalAsset]]></Name>
-					<X>470</X><Y>60</Y>
+					<X>580</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20899,7 +20899,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1660115363643</Id>
 					<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-					<X>470</X><Y>80</Y>
+					<X>580</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20944,7 +20944,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1665486155689</Id>
 					<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-					<X>470</X><Y>100</Y>
+					<X>580</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20968,7 +20968,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1665487815862</Id>
 					<Name><![CDATA[p_heatingType]]></Name>
-					<X>250</X><Y>160</Y>
+					<X>270</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20989,7 +20989,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668180047824</Id>
 					<Name><![CDATA[p_energyAssetList]]></Name>
-					<X>960</X><Y>70</Y>
+					<X>1070</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21010,7 +21010,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668693393498</Id>
 					<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-					<X>250</X><Y>180</Y>
+					<X>270</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21034,7 +21034,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668693418082</Id>
 					<Name><![CDATA[p_batteryOperationMode]]></Name>
-					<X>250</X><Y>200</Y>
+					<X>270</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21058,7 +21058,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668695364192</Id>
 					<Name><![CDATA[p_batteryAsset]]></Name>
-					<X>490</X><Y>380</Y>
+					<X>600</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21079,7 +21079,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1671459091954</Id>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-					<X>250</X><Y>220</Y>
+					<X>270</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21104,7 +21104,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1676965009213</Id>
 					<Name><![CDATA[p_curtailer]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>510</X><Y>240</Y>
+					<X>620</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21125,7 +21125,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1676449763319</Id>
 					<Name><![CDATA[p_heatBuffer]]></Name>
-					<X>490</X><Y>360</Y>
+					<X>600</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21146,7 +21146,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1684919785784</Id>
 					<Name><![CDATA[p_gasBuffer]]></Name>
-					<X>490</X><Y>400</Y>
+					<X>600</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21167,7 +21167,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1692878211840</Id>
 					<Name><![CDATA[p_cookingTracker]]></Name>
-					<X>630</X><Y>220</Y>
+					<X>740</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21209,7 +21209,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1692973005119</Id>
 					<Name><![CDATA[p_DHWAsset]]></Name>
-					<X>631</X><Y>178</Y>
+					<X>741</X><Y>178</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21506,7 +21506,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1722513783034</Id>
 					<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-					<X>470</X><Y>120</Y>
+					<X>580</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21530,7 +21530,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1722411169263</Id>
 					<Name><![CDATA[p_curtailmentMode]]></Name>
-					<X>250</X><Y>240</Y>
+					<X>270</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21575,7 +21575,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1725884764193</Id>
 					<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
-					<X>250</X><Y>140</Y>
+					<X>270</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21596,7 +21596,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1725884780832</Id>
 					<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
-					<X>250</X><Y>120</Y>
+					<X>270</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21617,7 +21617,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1725884795200</Id>
 					<Name><![CDATA[p_physicalConnectionCapacity_kW]]></Name>
-					<X>250</X><Y>100</Y>
+					<X>270</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21638,7 +21638,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626903</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
-					<X>470</X><Y>160</Y>
+					<X>580</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21653,7 +21653,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626907</Id>
 					<Name><![CDATA[c_storageAssets]]></Name>
-					<X>490</X><Y>260</Y>
+					<X>600</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21668,7 +21668,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626909</Id>
 					<Name><![CDATA[c_consumptionAssets]]></Name>
-					<X>490</X><Y>180</Y>
+					<X>600</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21683,7 +21683,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626911</Id>
 					<Name><![CDATA[c_productionAssets]]></Name>
-					<X>490</X><Y>200</Y>
+					<X>600</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21698,7 +21698,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626913</Id>
 					<Name><![CDATA[c_conversionAssets]]></Name>
-					<X>490</X><Y>220</Y>
+					<X>600</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21713,7 +21713,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1667746389220</Id>
 					<Name><![CDATA[c_vehicleAssets]]></Name>
-					<X>490</X><Y>280</Y>
+					<X>600</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21728,7 +21728,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1668359033654</Id>
 					<Name><![CDATA[c_vehiclesAvailableForCharging]]></Name>
-					<X>510</X><Y>300</Y>
+					<X>620</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21743,7 +21743,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1669115948280</Id>
 					<Name><![CDATA[c_dieselVehicles]]></Name>
-					<X>510</X><Y>320</Y>
+					<X>620</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21758,7 +21758,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1692864624612</Id>
 					<Name><![CDATA[c_tripTrackers]]></Name>
-					<X>610</X><Y>280</Y>
+					<X>720</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21773,7 +21773,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1700044359363</Id>
 					<Name><![CDATA[c_profileAssets]]></Name>
-					<X>630</X><Y>160</Y>
+					<X>740</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21803,7 +21803,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1711012701187</Id>
 					<Name><![CDATA[c_hydrogenVehicles]]></Name>
-					<X>510</X><Y>340</Y>
+					<X>620</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21972,7 +21972,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Name><![CDATA[e_initializeLowPassEprice]]></Name>
 					<Description><![CDATA[Make sure this is correct, so after the first official timestep has passed]]></Description>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>60</Y>
+					<X>1230</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -22008,7 +22008,7 @@ v_currentLoadLowPassed_kW = v_currentPowerElectricity_kW;]]></Action>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1658500398176</Id>
 					<Name><![CDATA[f_connectToParents]]></Name>
-					<X>801</X><Y>140</Y>
+					<X>911</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22152,7 +22152,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660212665961</Id>
 					<Name><![CDATA[f_connectionMetering]]></Name>
-					<X>800</X><Y>520</Y>
+					<X>910</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22174,7 +22174,7 @@ if (energyModel.v_isRapidRun){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664961435385</Id>
 					<Name><![CDATA[f_operateFlexAssets]]></Name>
-					<X>800</X><Y>220</Y>
+					<X>910</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22404,7 +22404,7 @@ if( p_energyAssetList != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528273163</Id>
 					<Name><![CDATA[f_calculateEnergyBalance]]></Name>
-					<X>780</X><Y>180</Y>
+					<X>890</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22459,7 +22459,7 @@ f_connectionMetering();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528300576</Id>
 					<Name><![CDATA[f_operateFixedAssets]]></Name>
-					<X>800</X><Y>200</Y>
+					<X>910</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22616,7 +22616,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668983912731</Id>
 					<Name><![CDATA[f_resetStates]]></Name>
-					<X>1120</X><Y>530</Y>
+					<X>1230</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22861,7 +22861,7 @@ f_resetSpecificGCStates();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669022552777</Id>
 					<Name><![CDATA[f_batteryManagementBalance]]></Name>
-					<X>810</X><Y>280</Y>
+					<X>920</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22905,7 +22905,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669022552780</Id>
 					<Name><![CDATA[f_batteryManagementPrice]]></Name>
-					<X>810</X><Y>300</Y>
+					<X>920</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22980,7 +22980,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669025846794</Id>
 					<Name><![CDATA[f_manageHeatingAssets]]></Name>
-					<X>810</X><Y>340</Y>
+					<X>920</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23079,7 +23079,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995172</Id>
 					<Name><![CDATA[f_manageCharging]]></Name>
-					<X>810</X><Y>360</Y>
+					<X>920</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23116,7 +23116,7 @@ switch (p_chargingAttitudeVehicles) {
 					<Id>1671095995175</Id>
 					<Name><![CDATA[f_simpleCharging]]></Name>
 					<Description><![CDATA[Charging when arriving home, not taking grid limits into account]]></Description>
-					<X>830</X><Y>380</Y>
+					<X>940</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23145,7 +23145,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995177</Id>
 					<Name><![CDATA[f_maxSpreadCharging]]></Name>
-					<X>830</X><Y>400</Y>
+					<X>940</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23193,7 +23193,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<Id>1671095995179</Id>
 					<Name><![CDATA[f_maxPowerCharging]]></Name>
 					<Description><![CDATA[Charge at max power taking grid constaints into account]]></Description>
-					<X>830</X><Y>420</Y>
+					<X>940</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23260,7 +23260,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671095995181</Id>
 					<Name><![CDATA[f_chargeOnPrice]]></Name>
-					<X>830</X><Y>460</Y>
+					<X>940</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23342,7 +23342,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1677512714652</Id>
 					<Name><![CDATA[f_setOperatingSwitches]]></Name>
-					<X>800</X><Y>160</Y>
+					<X>910</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23356,7 +23356,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1692799608559</Id>
 					<Name><![CDATA[f_connectToJ_EA_default]]></Name>
-					<X>960</X><Y>90</Y>
+					<X>1070</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23509,7 +23509,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1693307881182</Id>
 					<Name><![CDATA[f_connectToJ_EA]]></Name>
-					<X>801</X><Y>92</Y>
+					<X>911</X><Y>92</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23526,7 +23526,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1695822607494</Id>
 					<Name><![CDATA[f_chargeOnPrice_V2G]]></Name>
-					<X>830</X><Y>480</Y>
+					<X>940</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23620,7 +23620,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698854861644</Id>
 					<Name><![CDATA[f_initialize]]></Name>
-					<X>790</X><Y>50</Y>
+					<X>900</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23632,14 +23632,17 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 } else if (p_contractedFeedinCapacity_kW < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted feed in capacity!");
 }
-if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0 && p_physicalConnectionCapacity_kW == 0.0) { // If no contracted or physical capacity is given, throw error.
+
+if(v_isActive){
+	if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0 && p_physicalConnectionCapacity_kW == 0.0) { // If no contracted or physical capacity is given, throw error.
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has 0.0 physical and contracted capacity! Not a valid state of for this agent");
-} else {
-	if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
+	} else {
+		if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
 		p_contractedDeliveryCapacity_kW = p_physicalConnectionCapacity_kW;
 		p_contractedFeedinCapacity_kW = p_physicalConnectionCapacity_kW;
 	} else if ( p_physicalConnectionCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
-		p_physicalConnectionCapacity_kW = max(p_contractedDeliveryCapacity_kW, p_contractedFeedinCapacity_kW);
+			p_physicalConnectionCapacity_kW = max(p_contractedDeliveryCapacity_kW, p_contractedFeedinCapacity_kW);
+		}
 	}
 }
 
@@ -23697,7 +23700,7 @@ f_initializeAccumulators();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1701956274181</Id>
 					<Name><![CDATA[f_calculateKPIs]]></Name>
-					<X>780</X><Y>580</Y>
+					<X>890</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23872,7 +23875,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1702373771433</Id>
 					<Name><![CDATA[f_addFlows]]></Name>
-					<X>820</X><Y>240</Y>
+					<X>930</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23931,7 +23934,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[DataSet]]></ReturnType>
 					<Id>1708520215192</Id>
 					<Name><![CDATA[f_getDuurkromme]]></Name>
-					<X>800</X><Y>600</Y>
+					<X>910</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24076,7 +24079,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714646521271</Id>
 					<Name><![CDATA[f_removeTheJ_EA]]></Name>
-					<X>800</X><Y>110</Y>
+					<X>910</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24093,7 +24096,7 @@ return data_netbelastingDuurkromme_kW;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1714646913998</Id>
 					<Name><![CDATA[f_removeTheJ_EA_default]]></Name>
-					<X>960</X><Y>110</Y>
+					<X>1070</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24199,7 +24202,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1716282675260</Id>
 					<Name><![CDATA[f_initializeAccumulators]]></Name>
-					<X>800</X><Y>70</Y>
+					<X>910</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24253,7 +24256,7 @@ acc_winterFeedinCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717060111619</Id>
 					<Name><![CDATA[f_resetSpecificGCStates]]></Name>
-					<X>1140</X><Y>550</Y>
+					<X>1250</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24264,7 +24267,7 @@ acc_winterFeedinCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717068094093</Id>
 					<Name><![CDATA[f_resetStatesAfterRapidRun]]></Name>
-					<X>1120</X><Y>570</Y>
+					<X>1230</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24286,7 +24289,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717068167776</Id>
 					<Name><![CDATA[f_resetSpecificGCStatesAfterRapidRun]]></Name>
-					<X>1140</X><Y>590</Y>
+					<X>1250</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24298,7 +24301,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1720442672576</Id>
 					<Name><![CDATA[f_curtailment]]></Name>
-					<X>800</X><Y>500</Y>
+					<X>910</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24338,7 +24341,7 @@ f_resetSpecificGCStatesAfterRapidRun();
 					<Id>1720430481154</Id>
 					<Name><![CDATA[f_nfatoUpdateConnectionCapacity]]></Name>
 					<Description><![CDATA[Updates the Connection Capacity of the GC depending on the time of day / day of week.]]></Description>
-					<X>780</X><Y>650</Y>
+					<X>890</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24378,7 +24381,7 @@ if (timeOfDay == hourOfDay) {
 					<Id>1720431721926</Id>
 					<Name><![CDATA[f_nfatoSetConnectionCapacity]]></Name>
 					<Description><![CDATA[When changing the NFATO settings this function sets the GC capacity to the correct value. When reset is true the capacity is restored back to its original value.]]></Description>
-					<X>780</X><Y>670</Y>
+					<X>890</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24423,7 +24426,7 @@ else {
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-					<X>810.6</X><Y>319.4</Y>
+					<X>920.6</X><Y>319.4</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24482,7 +24485,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722512642645</Id>
 					<Name><![CDATA[f_removeFlows]]></Name>
-					<X>910</X><Y>240</Y>
+					<X>1020</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24537,7 +24540,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518225504</Id>
 					<Name><![CDATA[f_fillLiveDatasets]]></Name>
-					<X>820</X><Y>540</Y>
+					<X>930</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24622,7 +24625,7 @@ data_windGeneration_kW.update();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518905501</Id>
 					<Name><![CDATA[f_fillAnnualDatasets]]></Name>
-					<X>820</X><Y>560</Y>
+					<X>930</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24909,18 +24912,18 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722584668566</Id>
-					<Name><![CDATA[f_pause]]></Name>
+					<Name><![CDATA[f_setActive]]></Name>
 					<Description><![CDATA[Function to pause a gridconnection so it is not operated or counted towards totals in the energy model.]]></Description>
-					<X>780</X><Y>710</Y>
+					<X>890</X><Y>710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[isPaused]]></Name>
+						<Name><![CDATA[setActive]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (isPaused) {
+					<Body><![CDATA[if (!setActive) {
 	energyModel.c_gridConnections.remove(this);
 	energyModel.c_pausedGridConnections.add(this);
 	
@@ -24981,7 +24984,10 @@ else {
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, true);
 	energyModel.v_totalInstalledPVPower_kW += v_totalInstalledPVPower_kW;
 	energyModel.v_totalInstalledWindPower_kW += v_totalInstalledWindPower_kW;
-}]]></Body>
+}
+
+//Update the 'isActive' variable
+v_isActive = setActive;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -25012,7 +25018,7 @@ return adressGC;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725455130676</Id>
 					<Name><![CDATA[f_getChargeDeadline]]></Name>
-					<X>850</X><Y>440</Y>
+					<X>960</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26930,7 +26936,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Line>
 					<Id>1667905636672</Id>
 					<Name><![CDATA[line1]]></Name>
-					<X>230</X><Y>30</Y>
+					<X>250</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26954,7 +26960,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Text>
 					<Id>1667905636674</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>260</X><Y>10</Y>
+					<X>280</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26975,7 +26981,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Line>
 					<Id>1667905687082</Id>
 					<Name><![CDATA[line2]]></Name>
-					<X>460</X><Y>30</Y>
+					<X>570</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -26999,7 +27005,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Text>
 					<Id>1667905687085</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>510</X><Y>10</Y>
+					<X>620</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27020,7 +27026,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Text>
 					<Id>1667905952899</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>820</X><Y>10</Y>
+					<X>930</X><Y>10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27041,7 +27047,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Line>
 					<Id>1667905952903</Id>
 					<Name><![CDATA[line4]]></Name>
-					<X>770</X><Y>30</Y>
+					<X>880</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27065,7 +27071,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Line>
 					<Id>1667915385672</Id>
 					<Name><![CDATA[line5]]></Name>
-					<X>740</X><Y>50</Y>
+					<X>860</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27089,7 +27095,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Text>
 					<Id>1667915403157</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>720</X><Y>86</Y>
+					<X>840</X><Y>86</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27110,7 +27116,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Text>
 					<Id>1667915419987</Id>
 					<Name><![CDATA[text6]]></Name>
-					<X>720</X><Y>290</Y>
+					<X>840</X><Y>290</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27131,7 +27137,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 				<Line>
 					<Id>1667915419990</Id>
 					<Name><![CDATA[line6]]></Name>
-					<X>740</X><Y>170</Y>
+					<X>860</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -27646,50 +27652,6 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1722585008843</Id>
-					<Name><![CDATA[button]]></Name>
-					<X>760</X><Y>740</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[v_isPaused = true;
-f_pause(v_isPaused);]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[pause]]></LabelText>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1722585348154</Id>
-					<Name><![CDATA[button1]]></Name>
-					<X>760</X><Y>790</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[v_isPaused = false;
-f_pause(v_isPaused);]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[unpause]]></LabelText>
-					</ExtendedProperties>
-				</Control>
 			</Presentation>
 
 				</Level>
