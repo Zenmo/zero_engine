@@ -7232,7 +7232,7 @@ for (J_EA e : c_energyAssets) {
 			totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;						
 		}
 		if (e instanceof J_EAEV) {
-			totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
+			totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).getEnergyChargedOutsideModelArea_kWh()/1000;
 		}
 		if (e instanceof J_EAConversionHeatPump) {
 			totalHeatProduced_MWh -= EnergyUsed_kWh/1000;						
@@ -7243,7 +7243,6 @@ traceln("Check energy used from array and from energy assets: %s MWh", ( v_total
 traceln("Check energy producted from array and from energy assets: %s MWh", ( v_totalEnergyProduced_MWh - totalEnergyProduced_MWh) );
 //traceln("Trucks have traveled " + totalDistanceTrucks_km + " km");
 
-traceln("");
 //Total selfconsumption, selfsufficiency
 double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh + deltaThermalEnergySinceStart_MWh; // Positive number means more energy stored at the end of the simulation. 
 
@@ -7263,6 +7262,7 @@ if ( v_totalEnergyProduced_MWh > 0 ){
 
 traceln("Total energy absorbed from environment by buildings: %s MWh", totalAmbientHeating_MWh);
 traceln("Delta thermal stored energy since start: %s MWh", deltaThermalEnergySinceStart_MWh);
+traceln("Total energy from vehicles charging outside the model scope: %s MWh", totalEnergyChargedOutsideModel_MWh);
 
 traceln("Energy selfconsumption: " + v_modelSelfConsumption_fr*100 + "%");
 double totalElectricitySelfConsumption_fr = 0;
@@ -54078,7 +54078,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
 	public OL_EVChargingNeed chargingNeed;
-	public double energyChargedOutsideModelArea_kWh = 0;
+	private double energyChargedOutsideModelArea_kWh = 0;
+	private double energyChargedOutsideModelAreaStored_kWh;
 	public double charged_kWh = 0;
 	public double discharged_kWh = 0;
     /**
@@ -54179,11 +54180,12 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			//traceln("EV energy use at end of trip: %s kWh", tripDist_km * vehicleScaling * energyConsumption_kWhpkm );
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
-				traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
-								
-				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
-				//stateOfCharge_r = 0;
+				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
+				//traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+						
+				energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
+				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
+				stateOfCharge_r = 0;
 			}
 			this.available = true;
 			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
@@ -54233,6 +54235,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return chargingTime_min;
 	}
  
+	public double getEnergyChargedOutsideModelArea_kWh() {
+		return energyChargedOutsideModelArea_kWh;
+	}
 	@Override
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
@@ -54242,6 +54247,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	stateOfCharge_r = initialStateOfCharge_r;
     	availableStored = available;
     	available = true;
+    	energyChargedOutsideModelAreaStored_kWh = energyChargedOutsideModelArea_kWh;
+    	energyChargedOutsideModelArea_kWh = 0;
     	mileage_km = 0;
     	charged_kWh = 0;
     	discharged_kWh = 0;
@@ -54254,6 +54261,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	energyUsed_kWh = energyUsedStored_kWh;    	
     	stateOfCharge_r = stateOfChargeStored_r;
     	available = availableStored;
+    	energyChargedOutsideModelArea_kWh = energyChargedOutsideModelAreaStored_kWh;
     	charged_kWh = 0;
     	discharged_kWh = 0;
     }
