@@ -435,6 +435,7 @@
 		<OptionList>
 			<Id>1659701773383</Id>
 			<Name><![CDATA[OL_AreaType]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659701782496</Id>
 				<Name><![CDATA[NEIGHBORHOOD]]></Name>
