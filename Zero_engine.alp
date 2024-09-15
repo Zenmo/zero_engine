@@ -17663,7 +17663,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212770050</Id>
 					<Name><![CDATA[v_heatDrawn_kWh]]></Name>
-					<X>450</X><Y>1040</Y>
+					<X>450</X><Y>1060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17699,7 +17699,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212876476</Id>
 					<Name><![CDATA[v_heatDelivered_kWh]]></Name>
-					<X>450</X><Y>1060</Y>
+					<X>450</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18145,7 +18145,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1673949346167</Id>
 					<Name><![CDATA[v_hotwaterDemand_kW]]></Name>
-					<X>450</X><Y>1080</Y>
+					<X>450</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18184,7 +18184,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1676468216301</Id>
 					<Name><![CDATA[v_residualHeatGasPit_kW]]></Name>
-					<X>450</X><Y>1100</Y>
+					<X>450</X><Y>1120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20641,6 +20641,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1726238237441</Id>
 					<Name><![CDATA[v_districtHeatDelivery_kW]]></Name>
 					<X>470</X><Y>1010</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726425994811</Id>
+					<Name><![CDATA[v_heatpumpDelivery_kW]]></Name>
+					<X>470</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
