@@ -50200,9 +50200,6 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Parameter>
 					<Name><![CDATA[p_annotation]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -56031,15 +56028,25 @@ public class J_Address implements Serializable {
     }
     
     public String getAddress() {
-		String text = this.streetName + " " + this.houseNumber;
+    	StringBuilder sb = new StringBuilder();
+    	
+    	sb.append(this.streetName);
+    	sb.append(" ");
+    	sb.append(this.houseNumber);
 		if ( this.houseLetter != null ) {
-			text = text + " " + this.houseLetter;
-		}
+	    	sb.append(" ");
+	    	sb.append(this.houseLetter);
+	    }
 		if ( this.houseAddition != null ) {
-			text = text + " " + this.houseAddition;
-		}
-		text = text + ", " + this.postalcode + " " + this.city;
-		return text;
+	    	sb.append(" ");
+	    	sb.append(this.houseAddition);
+	    }
+		sb.append(", ");
+		sb.append(this.postalcode);
+		sb.append(" ");
+		sb.append(this.city);
+		
+		return sb.toString();
     }
     
     
@@ -56083,7 +56090,7 @@ public class J_Address implements Serializable {
 	
 	@Override
 	public String toString() {
-		return getAddress();
+		return "J_Address(" + getAddress() + ")";
 	}
 
 	
