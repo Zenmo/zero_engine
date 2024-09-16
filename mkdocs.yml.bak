@@ -1,6 +1,0 @@
-site_name: Zenmo Zero Model Documentation
-nav:
-  - Home: index.md
-  - Modeling conventions: modeling_conventions.md
-  
-theme: readthedocs
