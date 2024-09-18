@@ -1066,6 +1066,22 @@
 				<Name><![CDATA[PRICE]]></Name>
 			</Option>
 		</OptionList>
+		<OptionList>
+			<Id>1726685111559</Id>
+			<Name><![CDATA[OL_HouseholdCookingMethod]]></Name>
+			<Option>
+				<Id>1726685111560</Id>
+				<Name><![CDATA[ELECTRIC]]></Name>
+			</Option>
+			<Option>
+				<Id>1726685111561</Id>
+				<Name><![CDATA[GAS]]></Name>
+			</Option>
+			<Option>
+				<Id>1726685111562</Id>
+				<Name><![CDATA[NONE]]></Name>
+			</Option>
+		</OptionList>
 	</OptionLists>
 	
 	<Folders>
@@ -11568,6 +11584,9 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_cookingMethod]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -42120,6 +42139,9 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_cookingMethod]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -42692,6 +42714,30 @@ public void f_simpleCharging(){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1726685123865</Id>
+					<Name><![CDATA[p_cookingMethod]]></Name>
+					<X>250</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_HouseholdCookingMethod.NONE]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1726685123863</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -42736,7 +42782,7 @@ public void f_simpleCharging(){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664441996771</Id>
 					<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-					<X>800</X><Y>340</Y>
+					<X>810</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42745,6 +42791,10 @@ public void f_simpleCharging(){
 setHeatingTargetTemp();
  
 switch (p_heatingType) {	
+	case GASBURNER:
+		f_heatWithGasburner( );
+	break;
+	
 	case HEATPUMP_AIR:
 		f_heatWithHeatpump( );
 	break;
@@ -42778,7 +42828,7 @@ if (p_BuildingThermalAsset != null && p_primaryHeatingAsset != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664963959146</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>800</X><Y>240</Y>
+					<X>800</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43216,7 +43266,7 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1675014184707</Id>
 					<Name><![CDATA[f_manageCharging_overwrite]]></Name>
-					<X>800</X><Y>360</Y>
+					<X>810</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43528,7 +43578,7 @@ v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlow
 					<Id>1678708804201</Id>
 					<Name><![CDATA[f_batteryManagementLoad]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>800</X><Y>320</Y>
+					<X>810</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43552,7 +43602,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678709047802</Id>
 					<Name><![CDATA[f_batteryManagementPrice_overwrite]]></Name>
-					<X>800</X><Y>300</Y>
+					<X>810</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -53316,7 +53366,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	private double storageCapacity_kWh;
 	
 	private double stateOfCharge_r;
-	private double lossFactor_WpK;
+	protected double lossFactor_WpK;
 	private double timestep_h;
 	private double temperature_degC;
 	private double temperatureStored_degC;
@@ -53530,7 +53580,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	public OL_EAStorageTypes heatStorageType;
 	//private double storageCapacity_kWh;
 	private double stateOfCharge_r;
-	private double lossFactor_WpK;
+	//private double lossFactor_WpK;
 	private double timestep_h;
 	private double temperature_degC;
 	private double temperatureStored_degC;
@@ -53791,7 +53841,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.ambientTempType = ambientTempType;
 	    this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
 	    this.belowZeroHeatpumpEtaReductionFactor = belowZeroHeatpumpEtaReductionFactor;
-	    this.energyAssetName = "Heatpump";
+	    //this.energyAssetName = "Heatpump";
 		registerEnergyAsset();
 	}
 
