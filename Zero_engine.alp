@@ -18088,7 +18088,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.01)]]></Code>
+							<Code><![CDATA[min(1, 0.005)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -24480,7 +24480,7 @@ else {
 					
 	//chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	//p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
-	boolean b_stayWithinConnectionLimits = true;
+	boolean b_stayWithinConnectionLimits = false;
 	if( b_stayWithinConnectionLimits ) {	
 		double maxBatteryPower_kW = p_contractedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
 		double minBatteryPower_kW = - (p_contractedFeedinCapacity_kW + v_currentPowerElectricity_kW); // Max discharging power within grid capacity (this number is usually negative!)
@@ -24594,11 +24594,9 @@ data_heatPumpElectricityDemand_kW.update();
 
 //data_electricCarsDemand_kW.update();
 v_evChargingPowerElectric_kW = 0;
-for (J_EA j_ea : c_EvAssets) {
-	if (j_ea instanceof J_EAEV) {
-		if (((J_EAEV)j_ea).vehicleScaling == 0) {
-			continue;
-		}
+for (J_EAEV j_ea : c_vehiclesAvailableForCharging) {
+	if (j_ea.vehicleScaling == 0) {
+		continue;
 	}
 	v_evChargingPowerElectric_kW += j_ea.getLastFlows()[4] - j_ea.getLastFlows()[0];
 }
@@ -24632,7 +24630,7 @@ for (J_EA j_ea : c_windAssets) {
 data_windGeneration_kW.update();	
 
 
-
+v_conversionPowerElectric_kW = v_electricHobConsumption_kW + v_heatPumpElectricityConsumption_kW + v_hydrogenElectricityConsumption_kW;
 
 //data_totalNetLoad_kW.update();]]></Body>
 				</Function>
@@ -42027,10 +42025,12 @@ public void f_manageHeatingAssets(){
 	f_manageHeatingAssets_overwrite();
 }
 
+/*
 @Override 
 public void f_manageCharging(){
 	f_manageCharging_overwrite();
 }
+*/
 
 /*@Override 
 public void f_chargeOnPrice(double a, double b){
@@ -42042,11 +42042,12 @@ public void f_batteryManagementPrice(double currentBatteryStateOfCharge) {
 	f_batteryManagementPrice_overwrite(currentBatteryStateOfCharge);
 }
 
+/*
 @Override
 public void f_simpleCharging(){
 	f_simpleCharging_overwrite();
 }
-]]></AdditionalClassCode>
+*/]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -42894,6 +42895,10 @@ if (l_ownerActor.getConnectedAgent()!=null){
 
 
 f_manageHeatingAssets();
+
+
+f_manageCharging();
+
 
 if( p_householdEV != null){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
@@ -43777,6 +43782,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
     }
 }
 
+/*
 
 if (j_ea instanceof J_EAEV) {
 	if (p_householdEV != null){
@@ -43784,6 +43790,8 @@ if (j_ea instanceof J_EAEV) {
 	}
 	p_householdEV = (J_EAEV)j_ea;
 }
+
+*/
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -53274,7 +53282,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.etaCharge_r = Math.sqrt(eta_r);
 		this.etaDischarge_r = Math.sqrt(eta_r);
 		
-		this.WTPfeedbackGain_eurpSOC = max(0, parentAgent.normal(0.125, 0.5));
+		this.WTPfeedbackGain_eurpSOC = max(0, parentAgent.normal(0.0625, 0.15));
 		this.priceGain_kWhpeur = max(0, parentAgent.normal(0.25, 1.0));
 		registerEnergyAsset();
     }
