@@ -24761,20 +24761,17 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double power_fr = 0;
 	double capacityElectric_kW = p_batteryAsset.getCapacityElectric_kW();
 	
-	if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * safetyMargin_fr) {
+	if (v_currentPowerElectricity_kW > p_contractedFeedinCapacity_kW * safetyMargin_fr) {
 		// discharge
-		double dischargeNeeded_kW = v_currentPowerElectricity_kW - p_connectionCapacity_kW * safetyMargin_fr;
+		double dischargeNeeded_kW = v_currentPowerElectricity_kW - p_contractedFeedinCapacity_kW * safetyMargin_fr;
 		power_fr = - dischargeNeeded_kW / capacityElectric_kW;
 	}
-	else if (v_currentPowerElectricity_kW < p_connectionCapacity_kW * safetyMargin_fr) {
+	else if (v_currentPowerElectricity_kW < p_contractedDeliveryCapacity_kW * safetyMargin_fr) {
 		// charge
-		double chargeAvailable_kW = p_connectionCapacity_kW * safetyMargin_fr - v_currentPowerElectricity_kW;
+		double chargeAvailable_kW = p_contractedDeliveryCapacity_kW * safetyMargin_fr - v_currentPowerElectricity_kW;
 		power_fr = chargeAvailable_kW / capacityElectric_kW;
 	}
-	
-	//traceln("time: " + energyModel.t_h);
-	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
-	//traceln("power_fr: " + power_fr);
+
 	
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
 }]]></Body>
@@ -49318,13 +49315,13 @@ if (v_enableFuelCell) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 95% of the GC & GN capacity.
 double capacityLimit_fr = 0.95;
-if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * capacityLimit_fr || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr) {
+if (v_currentPowerElectricity_kW > p_contractedDeliveryCapacity_kW * capacityLimit_fr || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr) {
 	J_EAConversionFuelCell fuelCellAsset = (J_EAConversionFuelCell) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
 	else {
-		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * capacityLimit_fr,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
+		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_contractedDeliveryCapacity_kW * capacityLimit_fr,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
 		double efficiency = fuelCellAsset.getEta_r();
 		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getElectricCapacity_kW()*efficiency);
