@@ -946,6 +946,10 @@
 				<Id>1720602442837</Id>
 				<Name><![CDATA[NODAL_PRICING]]></Name>
 			</Option>
+			<Option>
+				<Id>1725879557284</Id>
+				<Name><![CDATA[SIMPLE]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1668693527447</Id>
@@ -7194,7 +7198,7 @@ for (J_EA e : c_energyAssets) {
 	
 		double EnergyUsed_kWh = e.getEnergyUsed_kWh();
 		//double electricityProduced_kWh = 0;
-		
+
 		//energyConsumed_MWh += max(0,EnergyUsed_kWh)/1000;
 		//energyProduced_MWh +=max(0,-EnergyUsed_kWh)/1000;
 		if (EnergyUsed_kWh > 0) {
@@ -7229,7 +7233,7 @@ for (J_EA e : c_energyAssets) {
 			totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;						
 		}
 		if (e instanceof J_EAEV) {
-			totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
+			totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).getEnergyChargedOutsideModelArea_kWh()/1000;
 		}
 		if (e instanceof J_EAConversionHeatPump) {
 			totalHeatProduced_MWh -= EnergyUsed_kWh/1000;						
@@ -7240,7 +7244,6 @@ traceln("Check energy used from array and from energy assets: %s MWh", ( v_total
 traceln("Check energy producted from array and from energy assets: %s MWh", ( v_totalEnergyProduced_MWh - totalEnergyProduced_MWh) );
 //traceln("Trucks have traveled " + totalDistanceTrucks_km + " km");
 
-traceln("");
 //Total selfconsumption, selfsufficiency
 double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh + deltaThermalEnergySinceStart_MWh; // Positive number means more energy stored at the end of the simulation. 
 
@@ -7260,6 +7263,7 @@ if ( v_totalEnergyProduced_MWh > 0 ){
 
 traceln("Total energy absorbed from environment by buildings: %s MWh", totalAmbientHeating_MWh);
 traceln("Delta thermal stored energy since start: %s MWh", deltaThermalEnergySinceStart_MWh);
+traceln("Total energy from vehicles charging outside the model scope: %s MWh", totalEnergyChargedOutsideModel_MWh);
 
 traceln("Energy selfconsumption: " + v_modelSelfConsumption_fr*100 + "%");
 double totalElectricitySelfConsumption_fr = 0;
@@ -23618,7 +23622,9 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
 					<Body><![CDATA[// This function is called from each energy asset when its method f_updateAllFlows() is called!
-// {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
+// {0: electricityProduction_kW, 1: methaneProduction_kW, 2: hydrogenProduction_kW, 3: heatProduction_kW, 4: electricityConsumption_kW, 5: methaneConsumption_kW,
+// 6: hydrogenConsumption_kW, 7: heatConsumption_kW, 8: dieselConsumption_kW, 9: energyUse_kW };    	
+ 	
 v_currentPowerElectricity_kW += arr[4] - arr[0];
 v_currentPowerMethane_kW += arr[5] - arr[1];
 v_currentPowerHydrogen_kW += arr[6] - arr[2];
@@ -24737,6 +24743,41 @@ double maxChargingPower_kW = ev.getElectricCapacity_kW();
 
 return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1725629047745</Id>
+					<Name><![CDATA[f_batteryManagementSimple]]></Name>
+					<X>1230</X><Y>840</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+
+	double safetyMargin_fr = 0.95; // fraction of connection capacity that we use
+	double power_fr = 0;
+	double capacityElectric_kW = p_batteryAsset.getCapacityElectric_kW();
+	
+	if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * safetyMargin_fr) {
+		// discharge
+		double dischargeNeeded_kW = v_currentPowerElectricity_kW - p_connectionCapacity_kW * safetyMargin_fr;
+		power_fr = - dischargeNeeded_kW / capacityElectric_kW;
+	}
+	else if (v_currentPowerElectricity_kW < p_connectionCapacity_kW * safetyMargin_fr) {
+		// charge
+		double chargeAvailable_kW = p_connectionCapacity_kW * safetyMargin_fr - v_currentPowerElectricity_kW;
+		power_fr = chargeAvailable_kW / capacityElectric_kW;
+	}
+	
+	//traceln("time: " + energyModel.t_h);
+	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
+	//traceln("power_fr: " + power_fr);
+	
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
+}]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -49187,6 +49228,18 @@ public void f_resetSpecificGCStates(){
 						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1725879138068</Id>
+					<Name><![CDATA[v_maxHydrogenPower_kW]]></Name>
+					<X>1440</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -49207,9 +49260,20 @@ public void f_resetSpecificGCStates(){
 f_manageCharging();
 
 if (p_batteryAsset != null){ // TEST CODE
-	if (p_batteryAsset.getStorageCapacity_kWh() > 0) {
-		//f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
-		f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
+	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
+		
+		switch (p_batteryOperationMode) {
+			case BALANCE:
+				f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
+				break;
+			case SIMPLE:
+				f_batteryManagementSimple();
+				break;
+			case PRICE:
+				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
+				break;
+		}
+		
 		double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 		//traceln("flows:" + Arrays.toString(arr));
 		//v_batteryPowerElectric_kW = arr[4] - arr[0];
@@ -49252,17 +49316,18 @@ if (v_enableFuelCell) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 90% of the GN capacity.
-if (v_currentPowerElectricity_kW > p_contractedDeliveryCapacity_kW * 0.9 || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9) {
+					<Body><![CDATA[// Arbitrarely i'm deciding not to use more than 95% of the GC & GN capacity.
+double capacityLimit_fr = 0.95;
+if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * capacityLimit_fr || v_currentPowerElectricity_kW > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr) {
 	J_EAConversionFuelCell fuelCellAsset = (J_EAConversionFuelCell) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
 	else {
-		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_contractedDeliveryCapacity_kW * 0.9,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * 0.9);
+		double powerNeeded_kW = max(v_currentPowerElectricity_kW - p_connectionCapacity_kW * capacityLimit_fr,  v_currentPowerElectricity_kW - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
-		double efficiency = 0.5;
-		double ratioOfCapacity = powerNeeded_kW / (1000*efficiency);
+		double efficiency = fuelCellAsset.getEta_r();
+		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getElectricCapacity_kW()*efficiency);
 		
 		// Check the amount of Hydrogen that has been generated so far
 		// Only works because there is a single energy conversion site
@@ -49275,11 +49340,14 @@ if (v_currentPowerElectricity_kW > p_contractedDeliveryCapacity_kW * 0.9 || v_cu
 			f_addFlows(arr, fuelCellAsset);
 			
 			// updating other variables
-			v_currentPowerHydrogen_kW += arr[0];
+			//v_currentPowerHydrogen_kW += arr[0];
 			//v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
 			energyModel.EnergyConversionSites.get(0).v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
 			if (energyModel.v_isRapidRun) {
 				v_totalHydrogenUsed_MWh += arr[6] * energyModel.p_timeStep_h / 1000;
+				if (arr[6] > v_maxHydrogenPower_kW) {
+					v_maxHydrogenPower_kW = arr[6];
+				}
 			}
 		}
 	}
@@ -49296,7 +49364,8 @@ if (v_currentPowerElectricity_kW > p_contractedDeliveryCapacity_kW * 0.9 || v_cu
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Reset variables 
-v_totalHydrogenUsed_MWh = 0;]]></Body>
+v_totalHydrogenUsed_MWh = 0;
+v_maxHydrogenPower_kW = 0;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -52640,6 +52709,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	private double profileTimestep_h;
 	//protected double outputTemperature_degC;
 	public double loadLoad_kWh = 0;
+	private double profileScaling_fr = 1;
+
 	
     /**
      * Default constructor
@@ -52731,6 +52802,29 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     		ui_energyAsset.f_removeFlows(arr);
     	}
     	return arr;
+    }
+
+    public void scaleEnergyProfile(double scaling_fr) {
+    	if (scaling_fr == 0) {
+    		traceln("Failed to scale J_EAProfile with factor of 0 to prevent loss of information.");
+    		return;
+    	}
+    	this.profileScaling_fr *= scaling_fr;
+    	for (int i = 0; i < a_energyProfile_kWh.length; i++) {
+    		a_energyProfile_kWh[i] = a_energyProfile_kWh[i] * scaling_fr;
+    	}
+    	return;
+    }
+    
+    public void resetEnergyProfile() {
+    	if (this.profileScaling_fr == 1) {
+    		return;
+    	}
+    	for (int i = 0; i < a_energyProfile_kWh.length; i++) {
+    		a_energyProfile_kWh[i] = a_energyProfile_kWh[i] / this.profileScaling_fr;
+    	}
+    	this.profileScaling_fr = 1;
+    	return;
     }
 	
 	@Override
@@ -53653,7 +53747,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
 	public OL_EVChargingNeed chargingNeed;
-	public double energyChargedOutsideModelArea_kWh = 0;
+	private double energyChargedOutsideModelArea_kWh = 0;
+	private double energyChargedOutsideModelAreaStored_kWh;
 	public double charged_kWh = 0;
 	public double discharged_kWh = 0;
     /**
@@ -53754,11 +53849,12 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			//traceln("EV energy use at end of trip: %s kWh", tripDist_km * vehicleScaling * energyConsumption_kWhpkm );
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
-				traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
-								
-				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
-				//stateOfCharge_r = 0;
+				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
+				//traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+						
+				energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
+				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
+				stateOfCharge_r = 0;
 			}
 			this.available = true;
 			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
@@ -53808,6 +53904,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return chargingTime_min;
 	}
  
+	public double getEnergyChargedOutsideModelArea_kWh() {
+		return energyChargedOutsideModelArea_kWh;
+	}
 	@Override
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
@@ -53817,6 +53916,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	stateOfCharge_r = initialStateOfCharge_r;
     	availableStored = available;
     	available = true;
+    	energyChargedOutsideModelAreaStored_kWh = energyChargedOutsideModelArea_kWh;
+    	energyChargedOutsideModelArea_kWh = 0;
     	mileage_km = 0;
     	charged_kWh = 0;
     	discharged_kWh = 0;
@@ -53829,6 +53930,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	energyUsed_kWh = energyUsedStored_kWh;    	
     	stateOfCharge_r = stateOfChargeStored_r;
     	available = availableStored;
+    	energyChargedOutsideModelArea_kWh = energyChargedOutsideModelAreaStored_kWh;
     	charged_kWh = 0;
     	discharged_kWh = 0;
     }
@@ -55250,7 +55352,7 @@ public class J_ActivityTracker implements Serializable {
  */	
 public class J_ActivityTrackerTrips extends J_ActivityTracker implements Serializable {
 	
-	private ArrayList<Double> distances_km = new ArrayList<>();
+	public ArrayList<Double> distances_km = new ArrayList<>();
 	private int rowIndex;
 	public J_EAVehicle Vehicle;
 	public double v_idleTimeToNextTrip_min;
@@ -55766,8 +55868,7 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 
     @Override
     public double[] operate(double ratioOfCapacity) {
-		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
-    	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
+    	ratioOfCapacity=max(0,ratioOfCapacity);
 		this.hydrogenConsumption_kW = capacityElectric_kW * ratioOfCapacity;
     	this.electricityProduction_kW = hydrogenConsumption_kW * eta_r;
     	this.energyUse_kW = (hydrogenConsumption_kW - electricityProduction_kW);
