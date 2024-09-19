@@ -49216,13 +49216,16 @@ public void f_resetSpecificGCStates(){
 				<Variable Class="PlainVariable">
 					<Id>1721139587618</Id>
 					<Name><![CDATA[v_enableFuelCell]]></Name>
-					<X>250</X><Y>440</Y>
+					<X>270</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -49267,6 +49270,9 @@ if (p_batteryAsset != null){ // TEST CODE
 				f_batteryManagementSimple();
 				break;
 			case PRICE:
+				f_batteryManagementPrice(p_batteryAsset.getCurrentStateOfCharge());
+				break;
+			case NODAL_PRICING:
 				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 				break;
 		}
