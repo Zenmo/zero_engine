@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -53847,11 +53847,11 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				//traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
 						
-				energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
+				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
 				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
-				stateOfCharge_r = 0;
+				//stateOfCharge_r = 0;
 			}
 			this.available = true;
 			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
