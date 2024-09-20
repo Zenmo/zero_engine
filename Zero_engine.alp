@@ -19755,6 +19755,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726816926195</Id>
+					<Name><![CDATA[v_linesOperated]]></Name>
+					<X>890</X><Y>930</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[9]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -21958,7 +21973,7 @@ data_annualElectricityConsumption_kW.reset();
 data_annualHeatProduction_kW.reset();*/
 
 v_PVZEffectiveTimeOperated_h = 0;
-
+v_linesOperated = new double[9];
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 ]]></Body>
@@ -23413,6 +23428,7 @@ switch(p_curtailmentMode) {
 				if (linesCurtailed > 8) {
 					traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
 					//pauseSimulation();
+					linesCurtailed = 8;
 					break;
 				}
 				//traceln(" linesCurtailed: " + linesCurtailed);
@@ -23440,6 +23456,7 @@ switch(p_curtailmentMode) {
 // A crude way to implement a single timestep (15 min) delay would be to store a variable v_previousLinesCurtailed and only if it is not 8 do we allow the operationtime to update
 // This would not account for the fact that it might still take additional time to start a new production line.
 if (energyModel.v_isRapidRun) {
+	v_linesOperated[8-linesCurtailed] += energyModel.p_timeStep_h ;
 	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
 }
 ]]></Body>
@@ -47637,8 +47654,8 @@ public void f_operateFixedAssets(){
 			<StopNever>false</StopNever>
 			<ExecutionMode>realTimeScaled</ExecutionMode>
 			<RealTimeScale>10.0</RealTimeScale>
-			<EnableZoomAndPanning>true</EnableZoomAndPanning>
-			<EnableDeveloperPanel>true</EnableDeveloperPanel>
+			<EnableZoomAndPanning>false</EnableZoomAndPanning>
+			<EnableDeveloperPanel>false</EnableDeveloperPanel>
 			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 		</AnimationProperties>
 		<Inputs>
