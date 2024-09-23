@@ -1123,7 +1123,61 @@ startDate.setYear(p_year-1900);
 getExperiment().getEngine().setStartDate(startDate); 
 
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);]]></StartupCode>
+//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
+
+J_profilePointer profilePointer = new J_profilePointer("normalized onshore wind production", tf_p_wind_e_normalized);
+f_addProfile(profilePointer);
+pp_windOnshoreProduction = profilePointer;
+
+profilePointer = new J_profilePointer("normalized_PV_production", tf_p_solar_e_normalized);
+f_addProfile(profilePointer);
+pp_solarPVproduction = profilePointer;
+
+//tf_p_house_e_demand_other.setArgumentsAndValues(a_arguments, a_houseEdemand);
+//TableFunction tf = new TableFunction(a_arguments, a_houseEdemand, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("house_other_electricity_demand", tf_p_house_e_demand_other);
+f_addProfile(profilePointer);
+
+//tf_p_house_h_demand_hot_water.setArgumentsAndValues(a_arguments, a_houseDHWdemand);
+profilePointer = new J_profilePointer("house_hot_water_demand", tf_p_house_h_demand_hot_water);
+f_addProfile(profilePointer);
+
+//tf_p_building_e_demand_other.setArgumentsAndValues(a_arguments, a_buildingEdemand);
+profilePointer = new J_profilePointer("Office_other_electricity", tf_p_building_e_demand_other);
+f_addProfile(profilePointer);
+
+//tf_p_building_h_demand.setArgumentsAndValues(a_arguments, a_buildingHeatDemand);
+profilePointer = new J_profilePointer("Building_heat_demand", tf_p_building_h_demand);
+f_addProfile(profilePointer);
+
+//tf_p_industry_other_e_demand.setArgumentsAndValues(a_arguments, a_industryOtherEdemand);
+profilePointer = new J_profilePointer("Industry_other_electricity", tf_p_industry_other_e_demand);
+f_addProfile(profilePointer);
+
+//tf_p_industry_other_h_demand.setArgumentsAndValues(a_arguments, a_industryOtherHdemand);
+profilePointer = new J_profilePointer("Industry_other_heat", tf_p_industry_other_h_demand);
+f_addProfile(profilePointer);
+
+//tf_p_industry_steel_e_demand.setArgumentsAndValues(a_arguments, a_industrySteelEdemand);
+profilePointer = new J_profilePointer("Industry_steel_electricity", tf_p_industry_steel_e_demand);
+f_addProfile(profilePointer);
+
+//tf_p_industry_steel_h_demand.setArgumentsAndValues(a_arguments, a_industrySteelHdemand);
+profilePointer = new J_profilePointer("Industry_steel_heat", tf_p_industry_steel_h_demand);
+f_addProfile(profilePointer);
+
+//tf_p_logistics_fleet_e_hgv.setArgumentsAndValues(a_arguments, a_logisticsFleetEdemand);
+profilePointer = new J_profilePointer("LOGISTICS_FLEET_HGV_E", tf_p_logistics_fleet_e_hgv);
+f_addProfile(profilePointer);
+
+double[] x = {0, 8760};
+double[] y = {1.0/8760, 1.0/8760};
+TableFunction tf = new TableFunction(x, y, TableFunction.InterpolationType.INTERPOLATION_LINEAR, 2, TableFunction.OutOfRangeAction.OUTOFRANGE_REPEAT, 0.0);
+profilePointer = new J_profilePointer("flat_profile", tf_p_logistics_fleet_e_hgv);
+f_addProfile(profilePointer);
+
+
+traceln("Available profiles in this simulation: %s", c_profiles);]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -1349,15 +1403,15 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1659356181110</Id>
-					<Name><![CDATA[v_currentHouseHoldOtherElectricityDemand_fr]]></Name>
+					<Name><![CDATA[pp_windOnshoreProduction]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>1116</X><Y>80</Y>
+					<X>-670</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[J_profilePointer]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -1387,7 +1441,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1659364131698</Id>
 					<Name><![CDATA[v_currentAmbientTemperature_degC]]></Name>
-					<X>1116</X><Y>200</Y>
+					<X>1120</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1415,6 +1469,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<Id>1664530118871</Id>
 					<Name><![CDATA[v_currentBuildingOtherElectricityDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1427,6 +1482,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1664533236896</Id>
 					<Name><![CDATA[v_currentHouseHoldHotWaterDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1439,6 +1495,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1665499321012</Id>
 					<Name><![CDATA[v_currentIndustrySteelElectricityDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1451,6 +1508,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1665499340739</Id>
 					<Name><![CDATA[v_currentIndustrySteelHeatDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1463,6 +1521,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1665499362356</Id>
 					<Name><![CDATA[v_currentIndustryOtherElectricityDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1475,6 +1534,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1665499375110</Id>
 					<Name><![CDATA[v_currentIndustryOtherHeatDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1651,6 +1711,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1667397284001</Id>
 					<Name><![CDATA[v_currentLogisticsFleetEDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1838,6 +1899,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<Id>1678367724979</Id>
 					<Name><![CDATA[v_currentBuildingHeatDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1116</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4642,6 +4704,33 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<Type><![CDATA[DataSet]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727099762640</Id>
+					<Name><![CDATA[pp_officeOtherElectricity_fr]]></Name>
+					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1400</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[J_profilePointer]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727107003296</Id>
+					<Name><![CDATA[pp_solarPVproduction]]></Name>
+					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+					<X>-670</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[J_profilePointer]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -5543,6 +5632,21 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1727099354305</Id>
+					<Name><![CDATA[c_profiles]]></Name>
+					<X>-670</X><Y>360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_profilePointer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -6020,18 +6124,23 @@ for (GridNode GN : c_gridNodeExecutionListReverse) {
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
 					<Body><![CDATA[
-v_currentHouseHoldOtherElectricityDemand_fr = tf_p_house_e_demand_other(t_h);
-v_currentBuildingOtherElectricityDemand_fr = tf_p_building_e_demand_other(t_h);
+//pp_currentHouseHoldOtherElectricityDemand_fr.value = tf_p_house_e_demand_other(t_h);
+//pp_currentHouseHoldOtherElectricityDemand_fr.updateValue(t_h);
+
+/*v_currentBuildingOtherElectricityDemand_fr = tf_p_building_e_demand_other(t_h);
 v_currentBuildingHeatDemand_fr = tf_p_building_h_demand(t_h);
 v_currentHouseHoldHotWaterDemand_fr = tf_p_house_h_demand_hot_water(t_h);
-v_currentWindPowerNormalized_r = tf_p_wind_e_normalized(t_h);
-v_currentSolarPowerNormalized_r = tf_p_solar_e_normalized(t_h);
-v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
 v_currentIndustrySteelElectricityDemand_fr = tf_p_industry_steel_e_demand(t_h);
 v_currentIndustrySteelHeatDemand_fr = tf_p_industry_steel_h_demand(t_h);
 v_currentIndustryOtherElectricityDemand_fr = tf_p_industry_other_e_demand(t_h);
 v_currentIndustryOtherHeatDemand_fr = tf_p_industry_other_h_demand(t_h);
-v_currentLogisticsFleetEDemand_fr = tf_p_logistics_fleet_e_hgv(t_h);
+v_currentLogisticsFleetEDemand_fr = tf_p_logistics_fleet_e_hgv(t_h);*/
+
+v_currentWindPowerNormalized_r = tf_p_wind_e_normalized(t_h);
+v_currentSolarPowerNormalized_r = tf_p_solar_e_normalized(t_h);
+
+v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
+c_profiles.forEach(p -> p.updateValue(t_h));
 
 if (b_enableDLR) {
 	v_currentDLRfactor_fr = 1 + max(-0.1,v_currentWindPowerNormalized_r * 0.025*(30-v_currentAmbientTemperature_degC) + 0.5 - v_currentSolarPowerNormalized_r);
@@ -8097,7 +8206,9 @@ if (c_gridConnections.size() < 100) {
 }
 
 // set initial values
-f_setInitialValues();]]></Body>
+f_setInitialValues();
+
+]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -8186,7 +8297,9 @@ v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EASto
 traceln("Total installed battery capacity: %s MWh", v_totalBatteryInstalledCapacity_MWh);
 
 // Starting prices
-c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions]]></Body>
+c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions
+
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -8248,6 +8361,22 @@ for(GridNode gn : pop_gridNodes){
 
 traceln("Finished writing trafoloads to excel!");]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727106160366</Id>
+					<Name><![CDATA[f_addProfile]]></Name>
+					<X>-670</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[profile]]></Name>
+						<Type><![CDATA[J_profilePointer]]></Type>
+					</Parameter>
+					<Body><![CDATA[c_profiles.add(profile);]]></Body>
+				</Function>
 			</Functions>
 			<TableFunctions>
 				<TableFunction AccessType="public" StaticFunction="false">
@@ -8257,7 +8386,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-671</X><Y>139</Y>
+					<X>-1000</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8371,7 +8500,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1664529919197</Id>
 					<Name><![CDATA[tf_p_building_e_demand_other]]></Name>
-					<X>-671</X><Y>179</Y>
+					<X>-1000</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8404,7 +8533,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1664533224315</Id>
 					<Name><![CDATA[tf_p_house_h_demand_hot_water]]></Name>
-					<X>-671</X><Y>159</Y>
+					<X>-1000</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8437,7 +8566,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499046358</Id>
 					<Name><![CDATA[tf_p_building_h_demand]]></Name>
-					<X>-671</X><Y>199</Y>
+					<X>-1000</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8470,7 +8599,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499121634</Id>
 					<Name><![CDATA[tf_p_industry_steel_e_demand]]></Name>
-					<X>-671</X><Y>219</Y>
+					<X>-1000</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8503,7 +8632,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499133914</Id>
 					<Name><![CDATA[tf_p_industry_steel_h_demand]]></Name>
-					<X>-671</X><Y>239</Y>
+					<X>-1000</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8536,7 +8665,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499150900</Id>
 					<Name><![CDATA[tf_p_industry_other_e_demand]]></Name>
-					<X>-671</X><Y>259</Y>
+					<X>-1000</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8569,7 +8698,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1665499166838</Id>
 					<Name><![CDATA[tf_p_industry_other_h_demand]]></Name>
-					<X>-671</X><Y>279</Y>
+					<X>-1000</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8602,7 +8731,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 				<TableFunction AccessType="public" StaticFunction="false">
 					<Id>1667396912514</Id>
 					<Name><![CDATA[tf_p_logistics_fleet_e_hgv]]></Name>
-					<X>-671</X><Y>299</Y>
+					<X>-1000</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22197,10 +22326,7 @@ f_connectionMetering();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//v_heatRecievingFromSun_kW = p_irradianceRecievingSurface_m2 * main.v_currentSolarPowerNormalized_r * main.p_solarAbsorptionCoefficient;
-//v_totalHeatRecievedSun_kWh += v_heatRecievingFromSun_kW;
-
-//Update diesel and hydrogen vehicle flows
+					<Body><![CDATA[//Update diesel and hydrogen vehicle flows
 c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
 c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
 
@@ -22220,6 +22346,8 @@ for(J_EAProfile e : c_profileAssets) {
 }
 
 for(J_EAProduction e : c_productionAssets) {
+	e.f_updateAllFlows(0.0); // 0.0 since it has its own profilePointer, but this function still requires a double input
+	/*
 	if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentSolarPowerNormalized_r );
 		//v_pvProductionElectric_kW += flowsArray[0];	
@@ -22241,11 +22369,14 @@ for(J_EAProduction e : c_productionAssets) {
 		e.v_powerFraction_fr = 0;
 		throw new IllegalStateException("ProductionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 	}
+	*/
 }
 
 for(J_EAConsumption e : c_consumptionAssets) {
-	if( e.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) { // TODO: Replace with more descriptive EnergyAssetType, don't switch based on GridConnectionCategory!
-		double[] flowsArray;
+	e.f_updateAllFlows(0.0); 
+	/*if( e.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) { // TODO: Replace with more descriptive EnergyAssetType, don't switch based on GridConnectionCategory!		
+		
+		double[] flowsArray;		
 		if (e.energyAssetName != null) {
 			switch(e.energyAssetName) {
 				case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
@@ -22262,15 +22393,17 @@ for(J_EAConsumption e : c_consumptionAssets) {
 				break;
 				case "House_other_electricity":
 					//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
-					double randomizer = 0.7 + uniform(0.0, 0.6);
-					flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
+					//double randomizer = 0.7 + uniform(0.0, 0.6);
+					//flowsArray = e.f_updateAllFlows( energyModel.pp_currentHouseHoldOtherElectricityDemand_fr.getValue() * randomizer );
+					e.f_updateAllFlows(0.0); // 0.0 since it has its own profilePointer, but this function still requires a double input
 				break;
 				case "Office_other_electricity":
-					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+					//flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+					e.f_updateAllFlows(0.0); // 0.0 since it has its own profilePointer, but this function still requires a double input
 				break;
 				case "Store_other_electricity":
 					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
-				break;				
+				break;
 				default:
 					traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
@@ -22311,9 +22444,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 		}
 		//v_currentPowerHeat_kW += e.v_currentConsumptionHeat_kW - e.v_currentProductionHeat_kW;
 	} 
-	/*	else if( e.p_energyAssetType == OL_EnergyAssetType.HEAT_DEMAND ) { // TODO: Re-introduce steel??
-		e.f_updateAllFlows( main.v_currentIndustrySteelHeatDemand_fr );
-	}*/
+
 	else if( e.energyAssetType == OL_EnergyAssetType.HYDROGEN_DEMAND ) {
 		switch(e.energyAssetName) {
 			case "INDUSTRY_OTHER_HYDROGEN_DEMAND":
@@ -22337,7 +22468,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 		traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 		e.v_powerFraction_fr = 0;
 		throw new IllegalStateException("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
-	} 
+	}*/
 }
 
 
@@ -51939,6 +52070,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	public double yearlyProductionHydrogen_kWh;
 	public double yearlyProductionMethane_kWh;
 	protected double outputTemperature_degC;
+	//private J_profilePointer profile;
     /**
      * Default constructor
      */
@@ -51948,7 +52080,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	/**
      * Constructor initializing the fields
      */
-	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, double capacityElectric_kW ,double capacityHeat_kW, double yearlyProductionMethane_kWh, double yearlyProductionHydrogen_kWh, double timestep_h, double outputTemperature_degC) {
+	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, double capacityElectric_kW ,double capacityHeat_kW, double yearlyProductionMethane_kWh, double yearlyProductionHydrogen_kWh, double timestep_h, double outputTemperature_degC, J_profilePointer profile) {
 	    this.parentAgent = parentAgent;
 	    this.energyAssetType = type;
 	    this.energyAssetName = name;
@@ -51958,6 +52090,11 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 		this.yearlyProductionMethane_kWh = yearlyProductionMethane_kWh;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
+		if (profile == null) {
+			findProfile(name);
+		} else {
+			profilePointer = profile;
+		}
 //	    traceln("I am instantiated! "+this+" owned by "+ownerAsset);
 		registerEnergyAsset();
 	}
@@ -51993,6 +52130,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	
 	@Override
     public double[] operate(double ratioOfCapacity) {
+		if (profilePointer != null) {			
+			ratioOfCapacity = profilePointer.getValue();
+		}
+		
     	this.electricityProduction_kW = ratioOfCapacity * capacityElectric_kW;
     	this.heatProduction_kW = ratioOfCapacity * capacityHeat_kW;
     	this.hydrogenProduction_kW = ratioOfCapacity * yearlyProductionHydrogen_kWh;
@@ -52233,6 +52374,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 	public double yearlyDemandDiesel_kWh;
 	private double consumptionScaling_fr = 1;
 	public double loadLoad_kWh = 0;
+	//private J_profilePointer profilePointer;
 	/**
      * Default constructor
      */
@@ -52242,7 +52384,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemandElectricity_kWh, double yearlyDemandHeat_kWh, double yearlyDemandHydrogen_kWh, double yearlyDemandMethane_kWh, double yearlyDemandDiesel_kWh, double timestep_h) {
+    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemandElectricity_kWh, double yearlyDemandHeat_kWh, double yearlyDemandHydrogen_kWh, double yearlyDemandMethane_kWh, double yearlyDemandDiesel_kWh, double timestep_h, J_profilePointer profile) {
 		this.energyAssetName = name;
 		this.energyAssetType = type;
     	this.parentAgent = parentAgent;
@@ -52252,6 +52394,12 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		this.yearlyDemandMethane_kWh = yearlyDemandMethane_kWh;
 		this.yearlyDemandDiesel_kWh = yearlyDemandDiesel_kWh;
 		this.timestep_h = timestep_h;
+		if (profile == null) {
+			findProfile(name);
+		} else {
+			profilePointer = profile;
+		}
+		
 		registerEnergyAsset();
     }
     
@@ -52269,6 +52417,11 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     
 	@Override
     public double[] operate(double ratioOfCapacity) {
+		
+		if (profilePointer != null) {			
+			ratioOfCapacity = profilePointer.getValue();
+		}
+		
     	this.electricityConsumption_kW = ratioOfCapacity * yearlyDemandElectricity_kWh*consumptionScaling_fr;
     	this.heatConsumption_kW = ratioOfCapacity * yearlyDemandHeat_kWh*consumptionScaling_fr;
     	this.hydrogenConsumption_kW = ratioOfCapacity * yearlyDemandHydrogen_kWh*consumptionScaling_fr;
@@ -52330,6 +52483,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 public class J_EA implements Cloneable {
 
 	 protected Agent parentAgent;
+	 protected J_profilePointer profilePointer;
 	 public OL_EnergyAssetType energyAssetType;
 	 public String energyAssetName;
 	 public double v_powerFraction_fr = 0;
@@ -52394,6 +52548,14 @@ public class J_EA implements Cloneable {
     	
     }
 
+    protected void findProfile(String assetName) {
+    	profilePointer = findFirst(((GridConnection)parentAgent).energyModel.c_profiles, p -> p.name.equals(assetName));
+    	traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
+    	if (profilePointer == null) {    		
+    		throw new RuntimeException(String.format("Consumption asset without valid profile!") );
+    	}
+    }
+    
     public double[] f_updateAllFlows(double powerFraction_fr) {
 
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
@@ -54110,6 +54272,7 @@ public class J_ExperimentSettingsData implements Serializable {
 		<JavaClass>
 			<Id>1661349111073</Id>
 			<Name><![CDATA[DataOut]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Text><![CDATA[/**
  * DataOut
  */
@@ -56207,6 +56370,48 @@ public class J_Address implements Serializable {
 	}
 
 	
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1727097730196</Id>
+			<Name><![CDATA[J_profilePointer]]></Name>
+			<Text><![CDATA[/**
+ * profilePointer
+ */	
+public class J_profilePointer implements Serializable {
+	public String name = "";
+	private double value = 0;
+	private TableFunction tableFunction;
+    /**
+     * Default constructor
+     */
+    public J_profilePointer(String name, TableFunction tableFunction) {
+    	this.name = name;
+    	this.tableFunction = tableFunction;
+    }
+
+    public void updateValue(double t_h) {
+    	value = tableFunction.get(t_h);
+    }
+    
+    public double getValue() {
+    	return value;
+    }
+    
+	@Override
+	public String toString() {
+		String returnString = "profile " + this.name + " current value: " + this.value;
+		return returnString;
+		//return super.toString();
+	}
+
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
