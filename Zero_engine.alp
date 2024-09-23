@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -8210,6 +8210,11 @@ for (GridConnection GC : EnergyConversionSites) {
 	}
 }
 for (GridConnection GC : GridBatteries) {
+	if (!GC.v_isActive) {
+		GC.f_setActive(false);
+	}
+}
+for (GridConnection GC : PublicChargers) {
 	if (!GC.v_isActive) {
 		GC.f_setActive(false);
 	}
@@ -50486,7 +50491,12 @@ v_maxHydrogenPower_kW = 0;]]></Body>
 			<AdditionalClassCode><![CDATA[/*@Override
 public void f_operateFixedAssets(){
 	f_operateFixedAssets_overwrite();
-}*/]]></AdditionalClassCode>
+}*/
+
+@Override
+public void f_operateFlexAssets(){
+	f_operateFlexAssets_overwrite();
+}]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -50693,7 +50703,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="PlainVariable">
 					<Id>1718899895524</Id>
 					<Name><![CDATA[v_isActiveCharger]]></Name>
-					<X>250</X><Y>410</Y>
+					<X>270</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50705,7 +50715,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="PlainVariable">
 					<Id>1720728863554</Id>
 					<Name><![CDATA[v_netBewustLadenActive]]></Name>
-					<X>250</X><Y>430</Y>
+					<X>270</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50826,7 +50836,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1718903294274</Id>
 					<Name><![CDATA[p_isInitialCharger]]></Name>
-					<X>250</X><Y>450</Y>
+					<X>270</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50847,7 +50857,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1720377369145</Id>
 					<Name><![CDATA[p_chargingProfileName]]></Name>
-					<X>250</X><Y>470</Y>
+					<X>270</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50873,7 +50883,7 @@ public void f_operateFixedAssets(){
 					<Id>1717956478582</Id>
 					<Name><![CDATA[f_operateFixedAssets_overwrite]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>800</X><Y>220</Y>
+					<X>910</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50892,6 +50902,19 @@ public void f_operateFixedAssets(){
 	//v_currentPowerElectricity_kW += flowsArray[4];		
 }
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1726749088568</Id>
+					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
+					<X>910</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//Manage charging
+f_manageCharging();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
