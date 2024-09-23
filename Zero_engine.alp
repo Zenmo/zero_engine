@@ -20600,6 +20600,30 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727099238699</Id>
+					<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
+					<X>150</X><Y>2270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727101009735</Id>
+					<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
+					<X>150</X><Y>2290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -22383,7 +22407,11 @@ v_totalEnergyConsumed_MWh = 0;
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
 
+//Overload
+v_totalOverloadDurationDelivery_hr = 0;
+v_totalOverloadDurationFeedin_hr = 0;
 
+//Summer/winter week and day 
 v_summerWeekTotalImport_MWh = 0;
 v_summerWeekTotalExport_MWh = 0;
 v_summerWeekEnergyConsumed_MWh = 0;
@@ -23472,6 +23500,17 @@ v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum() * 
 v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalHeatProduced_MWh = acc_annualHeatProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 
+//Yeartotal overload duration
+for(double electricityBalance_kW : acc_annualElectricityBalance_kW.getTimeSeries()){
+	
+	if(electricityBalance_kW > p_contractedDeliveryCapacity_kW){
+		v_totalOverloadDurationDelivery_hr += energyModel.p_timeStep_h;
+	}
+	else if(electricityBalance_kW < - p_contractedFeedinCapacity_kW){
+		v_totalOverloadDurationFeedin_hr += energyModel.p_timeStep_h;
+	}
+}
+
 // Electricity self consumption
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_electricityDrawnFromGrid_kWh/1000);
 
@@ -23566,6 +23605,13 @@ v_weekendHydrogenExport_MWh = v_hydrogenDelivered_kWh/1000 - v_weekdayHydrogenEx
 
 v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
+
+
+
+
+
+
+
 
 /*v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh)/1000;
 v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh)/1000;
