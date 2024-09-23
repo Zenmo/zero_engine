@@ -19719,7 +19719,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1724854087488</Id>
 					<Name><![CDATA[v_PVZEffectiveTimeOperated_h]]></Name>
-					<X>1080</X><Y>930</Y>
+					<X>1330</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19730,8 +19730,8 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1724918285966</Id>
-					<Name><![CDATA[v_previousLinesCurtailed]]></Name>
-					<X>1080</X><Y>950</Y>
+					<Name><![CDATA[v_previousLinesCurtailedPVZ]]></Name>
+					<X>1080</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19757,7 +19757,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1726816926195</Id>
-					<Name><![CDATA[v_linesOperated]]></Name>
+					<Name><![CDATA[v_linesOperatedPVZ]]></Name>
 					<X>890</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19768,6 +19768,96 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new double[9]]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102080686</Id>
+					<Name><![CDATA[v_linesOperatedKSI]]></Name>
+					<X>890</X><Y>950</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[9]]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102099160</Id>
+					<Name><![CDATA[v_KSIEffectiveTimeOperated_h]]></Name>
+					<X>1330</X><Y>950</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102099162</Id>
+					<Name><![CDATA[v_previousLinesCurtailedKSI]]></Name>
+					<X>1080</X><Y>950</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102505705</Id>
+					<Name><![CDATA[v_totalElectricityDrawnFromGridInsideCapacity_kWh]]></Name>
+					<X>820</X><Y>1640</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102509251</Id>
+					<Name><![CDATA[v_totalElectricityDrawnFromGridOutsideCapacity_kWh]]></Name>
+					<X>820</X><Y>1660</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102692416</Id>
+					<Name><![CDATA[v_totalElectricityDeliveredFromGridInsideCapacity_kWh]]></Name>
+					<X>820</X><Y>1680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727102692418</Id>
+					<Name><![CDATA[v_totalElectricityDeliveredFromGridOutsideCapacity_kWh]]></Name>
+					<X>820</X><Y>1700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -21470,6 +21560,27 @@ if (energyModel.v_isRapidRun){
 	//a_annualElectricityConsumption_kW[energyModel.v_timeStepsElapsed] = v_currentElectricityConsumption_kW;
 	//a_annualHeatProduction_kW[energyModel.v_timeStepsElapsed] = v_currentEnergyProductionHeat_kW;
 	
+	
+	// PREZERO Request for Distinction in Sankey Plot of Imported Electricity within or outside connection capacity
+	if ( v_currentPowerElectricity_kW > 0 ) { 
+		if ( v_currentPowerElectricity_kW > p_connectionCapacity_kW ) {
+			v_totalElectricityDrawnFromGridOutsideCapacity_kWh += energyModel.p_timeStep_h * ( v_currentPowerElectricity_kW - p_connectionCapacity_kW );
+			v_totalElectricityDrawnFromGridInsideCapacity_kWh += energyModel.p_timeStep_h * p_connectionCapacity_kW;
+		}
+		else {
+			v_totalElectricityDrawnFromGridInsideCapacity_kWh += energyModel.p_timeStep_h * v_currentPowerElectricity_kW;
+		}
+	}
+	else {
+		if ( v_currentPowerElectricity_kW < - p_connectionCapacity_kW ) {
+			v_totalElectricityDeliveredFromGridOutsideCapacity_kWh += energyModel.p_timeStep_h * ( - p_connectionCapacity_kW - v_currentPowerElectricity_kW );
+			v_totalElectricityDeliveredFromGridInsideCapacity_kWh += energyModel.p_timeStep_h * p_connectionCapacity_kW;
+		}
+		else {
+			v_totalElectricityDeliveredFromGridInsideCapacity_kWh += energyModel.p_timeStep_h * v_currentPowerElectricity_kW;
+		}
+	}
+
 } else {
 	data_liveElectricityBalance_kW.add(energyModel.t_h, v_currentPowerElectricity_kW);
 	
@@ -21973,7 +22084,18 @@ data_annualElectricityConsumption_kW.reset();
 data_annualHeatProduction_kW.reset();*/
 
 v_PVZEffectiveTimeOperated_h = 0;
-v_linesOperated = new double[9];
+v_linesOperatedPVZ = new double[9];
+
+v_KSIEffectiveTimeOperated_h = 0;
+v_linesOperatedKSI = new double[9];
+
+
+v_totalElectricityDrawnFromGridInsideCapacity_kWh = 0;
+v_totalElectricityDrawnFromGridOutsideCapacity_kWh = 0;
+v_totalElectricityDeliveredFromGridInsideCapacity_kWh = 0;
+v_totalElectricityDeliveredFromGridOutsideCapacity_kWh = 0;
+
+
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 ]]></Body>
@@ -22916,6 +23038,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 //v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
 //- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
 
+
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -23408,9 +23531,7 @@ GN.p_capacity_kW = p_connectionCapacity_kW;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int linesCurtailed = 0;
-
-switch(p_curtailmentMode) {
+					<Body><![CDATA[switch(p_curtailmentMode) {
 	case CAPACITY:
 		// Keep feedin power within connection capacity
 		if (v_currentPowerElectricity_kW < - p_connectionCapacity_kW) { // overproduction!
@@ -23421,45 +23542,15 @@ switch(p_curtailmentMode) {
 				}
 			}
 		}
-		else {
-			//traceln(" p_connectionCapacity_kW: " + p_connectionCapacity_kW);
-			while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
-				linesCurtailed ++;
-				if (linesCurtailed > 8) {
-					traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
-					//pauseSimulation();
-					linesCurtailed = 8;
-					break;
-				}
-				//traceln(" linesCurtailed: " + linesCurtailed);
-				//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
-				for (J_EAProfile j_ea : c_profileAssets) {
-					// curtail the pvz profiles. Done in steps (production lines can't be operated at fractional power)
-					if (j_ea.energyAssetName.contains("PVZ")) {
-						//traceln("energyAssetName: " + j_ea.energyAssetName);
-						double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
-						//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
-						double curtailmentSetpoint_kW = ( 1.0 / (8 + 1 - linesCurtailed)) * currentElectricityConsumption_kW;
-						//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
-						j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
-					}
-				}
-			}
-		}
-		break;
-		
 	default:
 		break;
 }
 
-// TODO: find a way to accomodate for the start up time (approx 30 mins? Or just make it a slider :P) of the production lines when calculating the effective time operated
-// A crude way to implement a single timestep (15 min) delay would be to store a variable v_previousLinesCurtailed and only if it is not 8 do we allow the operationtime to update
-// This would not account for the fact that it might still take additional time to start a new production line.
-if (energyModel.v_isRapidRun) {
-	v_linesOperated[8-linesCurtailed] += energyModel.p_timeStep_h ;
-	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
-}
-]]></Body>
+
+// in some order curtail PVZ & KSI
+// order is determined via input
+// order can change dependant on day of week and/or time of day (day/night)
+f_curtailPVZ();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23527,6 +23618,103 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[data_generatorProfile_kWh.add(energyModel.t_h, max(0, v_currentPowerDieselGenerator_kW * energyModel.p_timeStep_h));]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727100078125</Id>
+					<Name><![CDATA[f_curtailPVZ]]></Name>
+					<X>890</X><Y>860</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int linesCurtailed = 0;
+
+//traceln(" p_connectionCapacity_kW: " + p_connectionCapacity_kW);
+while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
+	linesCurtailed ++;
+	if (linesCurtailed > 8) {
+		traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
+		//pauseSimulation();
+		linesCurtailed = 8;
+		break;
+	}
+	//traceln(" linesCurtailed: " + linesCurtailed);
+	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
+	for (J_EAProfile j_ea : c_profileAssets) {
+		// curtail the pvz profiles. Done in steps (production lines can't be operated at fractional power)
+		if (j_ea.energyAssetName.contains("PVZ")) {
+			//traceln("energyAssetName: " + j_ea.energyAssetName);
+			double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
+			//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
+			double curtailmentSetpoint_kW = ( 1.0 / (8 + 1 - linesCurtailed)) * currentElectricityConsumption_kW;
+			//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
+				j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
+		}
+	}
+}
+
+	
+// TODO: find a way to accomodate for the start up time (approx 30 mins? Or just make it a slider :P) of the production lines when calculating the effective time operated
+// A crude way to implement a single timestep (15 min) delay would be to store a variable v_previousLinesCurtailed and only if it is not 8 do we allow the operationtime to update
+// This would not account for the fact that it might still take additional time to start a new production line.
+
+// Comment from Ard-Jan: startup time is in the order of minutes. So not super relevant. Would be interesting to see how many times the production is turned on/off
+if (energyModel.v_isRapidRun) {
+	v_linesOperatedPVZ[8-linesCurtailed] += energyModel.p_timeStep_h ;
+	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
+}
+		]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1727102066485</Id>
+					<Name><![CDATA[f_curtailKSI]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>890</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int linesCurtailed = 0;
+
+//traceln(" p_connectionCapacity_kW: " + p_connectionCapacity_kW);
+while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
+	linesCurtailed ++;
+	if (linesCurtailed > 8) {
+		traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
+		//pauseSimulation();
+		linesCurtailed = 8;
+		break;
+	}
+	//traceln(" linesCurtailed: " + linesCurtailed);
+	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
+	for (J_EAProfile j_ea : c_profileAssets) {
+		// curtail the pvz profiles. Done in steps (production lines can't be operated at fractional power)
+		if (j_ea.energyAssetName.contains("PVZ")) {
+			//traceln("energyAssetName: " + j_ea.energyAssetName);
+			double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
+			//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
+			double curtailmentSetpoint_kW = ( 1.0 / (8 + 1 - linesCurtailed)) * currentElectricityConsumption_kW;
+			//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
+				j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
+		}
+	}
+}
+
+	
+// TODO: find a way to accomodate for the start up time (approx 30 mins? Or just make it a slider :P) of the production lines when calculating the effective time operated
+// A crude way to implement a single timestep (15 min) delay would be to store a variable v_previousLinesCurtailed and only if it is not 8 do we allow the operationtime to update
+// This would not account for the fact that it might still take additional time to start a new production line.
+
+// Comment from Ard-Jan: startup time is in the order of minutes. So not super relevant. Would be interesting to see how many times the production is turned on/off
+if (energyModel.v_isRapidRun) {
+	v_linesOperatedPVZ[8-linesCurtailed] += energyModel.p_timeStep_h ;
+	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
+}
+		]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
