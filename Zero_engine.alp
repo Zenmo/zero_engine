@@ -22326,28 +22326,20 @@ f_connectionMetering();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Update diesel and hydrogen vehicle flows
-c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
+					<Body><![CDATA[c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
 c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
+c_consumptionAssets.forEach(c -> c.f_updateAllFlows(0));
+c_productionAssets.forEach(p -> p.f_updateAllFlows(0));
+c_profileAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
 
-
-//if (p_energyProfile != null & p_company_connection_id != null) {
+/*
 for(J_EAProfile e : c_profileAssets) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.t_h );		
-		/*if (e.profileType == OL_ProfileAssetType.CHARGING){
-			v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-		} else if( e.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
-			v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
-		} else if( e.profileType == OL_ProfileAssetType.WINDTURBINE){
-			v_windProductionElectric_kW += flowsArray[0];
-		} else {
-			traceln( "Profile type is not registered in GridConnection");
-		}*/
 }
 
 for(J_EAProduction e : c_productionAssets) {
 	e.f_updateAllFlows(0.0); // 0.0 since it has its own profilePointer, but this function still requires a double input
-	/*
+	
 	if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentSolarPowerNormalized_r );
 		//v_pvProductionElectric_kW += flowsArray[0];	
@@ -22369,7 +22361,7 @@ for(J_EAProduction e : c_productionAssets) {
 		e.v_powerFraction_fr = 0;
 		throw new IllegalStateException("ProductionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 	}
-	*/
+	
 }
 
 for(J_EAConsumption e : c_consumptionAssets) {
@@ -22468,9 +22460,9 @@ for(J_EAConsumption e : c_consumptionAssets) {
 		traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 		e.v_powerFraction_fr = 0;
 		throw new IllegalStateException("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
-	}*/
+	}
 }
-
+*/
 
 
 ]]></Body>
