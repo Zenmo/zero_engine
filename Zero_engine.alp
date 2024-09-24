@@ -6885,7 +6885,7 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(v_runStartTime_h));
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(v_runStartTime_h*60));
+	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(v_runStartTime_h*60));
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -23140,7 +23140,7 @@ switch (p_chargingAttitudeVehicles) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Removing items while going through a loop, so we do so in reverse order
+					<Body><![CDATA[// Removing items while going through a loop, so we must accurately keep track of the index.
 
 ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
 int countDeletedItems = 0;
@@ -42904,7 +42904,9 @@ if( p_householdEV != null){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 	double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
-	f_manageCharging();
+	
+	//f_manageCharging();
+	
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 }
 
