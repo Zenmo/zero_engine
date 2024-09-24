@@ -8947,7 +8947,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW))]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> max(0,x.v_evChargingPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -16073,9 +16073,9 @@ if (energyModel.v_isRapidRun){
 		acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW;
 	}*/
 	//acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW);
-	acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricityLowPassed_kW);
-	if ( ((Double)v_currentLoadElectricityLowPassed_kW).isNaN() ){
-		traceln("v_currentLoadElectricityLowPassed_kW is NaN! On GridNode %s, time %s h", this, energyModel.t_h);
+	acc_annualElectricityBalance_kW.addStep(energyModel.t_h, v_currentLoadElectricity_kW);
+	if ( ((Double)v_currentLoadElectricity_kW).isNaN() ){
+		traceln("v_currentLoadElectricity_kW is NaN! On GridNode %s, time %s h", this, energyModel.t_h);
 		pauseSimulation();
 		
 	}
@@ -42139,9 +42139,6 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_cookingMethod]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -52790,6 +52787,13 @@ public class J_EA implements Cloneable {
 		 return energyAssetType;
 	 }
 
+	 public void setEnergyAssetName(String name) {
+		 this.energyAssetName = name;
+	 }
+	 
+	 public void setEnergyAssetType(OL_EnergyAssetType assetType) {
+		 this.energyAssetType = assetType;
+	 }
     
 //    public double getOutputTemperature_degC() {
 //   	return 0;
