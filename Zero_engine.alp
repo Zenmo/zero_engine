@@ -24721,9 +24721,11 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 						<Name><![CDATA[setActive]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
-					<Body><![CDATA[if(v_isActive == setActive){//If already active, 
+					<Body><![CDATA[if((energyModel.c_pausedGridConnections.contains(this) && !setActive) || 
+  (!energyModel.c_pausedGridConnections.contains(this) && setActive)){
 	return;
 }
+
 
 if (!setActive) {
 	energyModel.c_gridConnections.remove(this);
