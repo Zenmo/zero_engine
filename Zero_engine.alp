@@ -1058,6 +1058,10 @@
 				<Id>1718713684483</Id>
 				<Name><![CDATA[SOLARPANELS]]></Name>
 			</Option>
+			<Option>
+				<Id>1727254638101</Id>
+				<Name><![CDATA[HEATDEMAND]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1722411204920</Id>
@@ -23259,8 +23263,10 @@ if (j_ea instanceof J_EAVehicle) {
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
 			//v_windProductionElectric_kW += flowsArray[0];
 			c_windAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
+			//Do nothing
 		} else {
-			traceln( "Profile type is not registered in GridConnection");
+			traceln( "Unrecognized profile type!");
 		}
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
