@@ -1125,6 +1125,7 @@ getExperiment().getEngine().setStartDate(startDate);
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 //traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
 
+/*
 J_profilePointer profilePointer = new J_profilePointer("normalized onshore wind production", tf_p_wind_e_normalized);
 f_addProfile(profilePointer);
 pp_windOnshoreProduction = profilePointer;
@@ -1177,7 +1178,8 @@ profilePointer = new J_profilePointer("flat_profile", tf_p_logistics_fleet_e_hgv
 f_addProfile(profilePointer);
 
 
-traceln("Available profiles in this simulation: %s", c_profiles);]]></StartupCode>
+traceln("Available profiles in this simulation: %s", c_profiles);
+*/]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -6138,8 +6140,8 @@ v_currentLogisticsFleetEDemand_fr = tf_p_logistics_fleet_e_hgv(t_h);*/
 
 v_currentWindPowerNormalized_r = tf_p_wind_e_normalized(t_h);
 v_currentSolarPowerNormalized_r = tf_p_solar_e_normalized(t_h);
-
 v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
+
 c_profiles.forEach(p -> p.updateValue(t_h));
 
 if (b_enableDLR) {
@@ -8376,6 +8378,27 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Type><![CDATA[J_profilePointer]]></Type>
 					</Parameter>
 					<Body><![CDATA[c_profiles.add(profile);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[J_profilePointer]]></ReturnType>
+					<Id>1727193246625</Id>
+					<Name><![CDATA[f_findProfile]]></Name>
+					<X>-670</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[assetName]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[J_profilePointer profilePointer = findFirst(c_profiles, p -> p.name.equals(assetName));
+traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
+if (profilePointer == null) {    		
+	throw new RuntimeException(String.format("Consumption or production asset without valid profile!") );
+}
+return profilePointer;]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -52057,6 +52080,7 @@ if (j_ea instanceof J_EAVehicle) {
  * J_EAProduction
  */
 public class J_EAProduction extends zero_engine.J_EA implements Serializable {
+	protected J_profilePointer profilePointer;
 	//public double yearlyProductionElectricity_kWh;
 	//public double yearlyProductionHeat_kWh;
 	public double yearlyProductionHydrogen_kWh;
@@ -52083,7 +52107,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 		if (profile == null) {
-			findProfile(name);
+			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
 		} else {
 			profilePointer = profile;
 		}
@@ -52359,6 +52383,7 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
  * J_EAConsumption
  */
 public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
+	protected J_profilePointer profilePointer;
 	public double yearlyDemandElectricity_kWh;
 	public double yearlyDemandHeat_kWh;
 	public double yearlyDemandHydrogen_kWh;
@@ -52387,7 +52412,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		this.yearlyDemandDiesel_kWh = yearlyDemandDiesel_kWh;
 		this.timestep_h = timestep_h;
 		if (profile == null) {
-			findProfile(name);
+			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
 		} else {
 			profilePointer = profile;
 		}
@@ -52475,7 +52500,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 public class J_EA implements Cloneable {
 
 	 protected Agent parentAgent;
-	 protected J_profilePointer profilePointer;
+	 
 	 public OL_EnergyAssetType energyAssetType;
 	 public String energyAssetName;
 	 public double v_powerFraction_fr = 0;
@@ -52540,13 +52565,14 @@ public class J_EA implements Cloneable {
     	
     }
 
+    /*
     protected void findProfile(String assetName) {
     	profilePointer = findFirst(((GridConnection)parentAgent).energyModel.c_profiles, p -> p.name.equals(assetName));
     	traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
     	if (profilePointer == null) {    		
-    		throw new RuntimeException(String.format("Consumption asset without valid profile!") );
+    		throw new RuntimeException(String.format("Consumption or production asset without valid profile!") );
     	}
-    }
+    }*/
     
     public double[] f_updateAllFlows(double powerFraction_fr) {
 
@@ -56379,7 +56405,7 @@ public class J_Address implements Serializable {
  */	
 public class J_profilePointer implements Serializable {
 	public String name = "";
-	private double value = 0;
+	private double currentValue = 0;
 	private TableFunction tableFunction;
     /**
      * Default constructor
@@ -56390,16 +56416,16 @@ public class J_profilePointer implements Serializable {
     }
 
     public void updateValue(double t_h) {
-    	value = tableFunction.get(t_h);
+    	currentValue = tableFunction.get(t_h);
     }
     
     public double getValue() {
-    	return value;
+    	return currentValue;
     }
     
 	@Override
 	public String toString() {
-		String returnString = "profile " + this.name + " current value: " + this.value;
+		String returnString = "profile " + this.name + " current value: " + this.currentValue;
 		return returnString;
 		//return super.toString();
 	}
@@ -56417,11 +56443,6 @@ public class J_profilePointer implements Serializable {
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>true</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[ZeroMath.jar]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
