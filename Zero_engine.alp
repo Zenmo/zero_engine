@@ -5107,7 +5107,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="Parameter">
 					<Id>1724587724718</Id>
 					<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
-					<X>1280</X><Y>740</Y>
+					<X>1280</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5536,7 +5536,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -8104,7 +8104,7 @@ f_setInitialValues();]]></Body>
 					<ReturnType><![CDATA[ArrayList<ConnectionOwner>]]></ReturnType>
 					<Id>1716897568717</Id>
 					<Name><![CDATA[f_getConnectionOwners]]></Name>
-					<X>1280</X><Y>540</Y>
+					<X>1280</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8116,7 +8116,7 @@ f_setInitialValues();]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1716899946694</Id>
 					<Name><![CDATA[f_getTopLevelGridCapacity_kW]]></Name>
-					<X>1280</X><Y>560</Y>
+					<X>1280</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8128,7 +8128,7 @@ f_setInitialValues();]]></Body>
 					<ReturnType><![CDATA[ArrayList<J_EA>]]></ReturnType>
 					<Id>1717058801652</Id>
 					<Name><![CDATA[f_getEnergyAssets]]></Name>
-					<X>1280</X><Y>580</Y>
+					<X>1280</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8140,7 +8140,7 @@ f_setInitialValues();]]></Body>
 					<ReturnType><![CDATA[ArrayList<GridNode>]]></ReturnType>
 					<Id>1718289616227</Id>
 					<Name><![CDATA[f_getGridNodesTopLevel]]></Name>
-					<X>1280</X><Y>630</Y>
+					<X>1280</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8152,7 +8152,7 @@ f_setInitialValues();]]></Body>
 					<ReturnType><![CDATA[ArrayList<GridNode>]]></ReturnType>
 					<Id>1718289761647</Id>
 					<Name><![CDATA[f_getGridNodesNotTopLevel]]></Name>
-					<X>1280</X><Y>650</Y>
+					<X>1280</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8226,7 +8226,7 @@ for (GridConnection GC : PublicChargers) {
 					<Id>1724575401400</Id>
 					<Name><![CDATA[f_writeGridNodeTimeseriesToExcel]]></Name>
 					<Description><![CDATA[This function writes the load on each gridnode for each timestep to excel]]></Description>
-					<X>1280</X><Y>720</Y>
+					<X>1280</X><Y>740</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8252,6 +8252,18 @@ for(GridNode gn : pop_gridNodes){
 }
 
 traceln("Finished writing trafoloads to excel!");]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<GridConnection>]]></ReturnType>
+					<Id>1727167397666</Id>
+					<Name><![CDATA[f_getPausedGridConnections]]></Name>
+					<X>1280</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return c_pausedGridConnections;]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -20605,6 +20617,30 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727099238699</Id>
+					<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
+					<X>150</X><Y>2270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727101009735</Id>
+					<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
+					<X>150</X><Y>2290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -22388,7 +22424,11 @@ v_totalEnergyConsumed_MWh = 0;
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
 
+//Overload
+v_totalOverloadDurationDelivery_hr = 0;
+v_totalOverloadDurationFeedin_hr = 0;
 
+//Summer/winter week and day 
 v_summerWeekTotalImport_MWh = 0;
 v_summerWeekTotalExport_MWh = 0;
 v_summerWeekEnergyConsumed_MWh = 0;
@@ -23477,6 +23517,17 @@ v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum() * 
 v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalHeatProduced_MWh = acc_annualHeatProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 
+//Yeartotal overload duration
+for(double electricityBalance_kW : acc_annualElectricityBalance_kW.getTimeSeries()){
+	
+	if(electricityBalance_kW > p_contractedDeliveryCapacity_kW){
+		v_totalOverloadDurationDelivery_hr += energyModel.p_timeStep_h;
+	}
+	else if(electricityBalance_kW < - p_contractedFeedinCapacity_kW){
+		v_totalOverloadDurationFeedin_hr += energyModel.p_timeStep_h;
+	}
+}
+
 // Electricity self consumption
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_electricityDrawnFromGrid_kWh/1000);
 
@@ -23571,6 +23622,13 @@ v_weekendHydrogenExport_MWh = v_hydrogenDelivered_kWh/1000 - v_weekdayHydrogenEx
 
 v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
+
+
+
+
+
+
+
 
 /*v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh)/1000;
 v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh)/1000;
@@ -24663,7 +24721,13 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 						<Name><![CDATA[setActive]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!setActive) {
+					<Body><![CDATA[if((energyModel.c_pausedGridConnections.contains(this) && !setActive) || 
+  (!energyModel.c_pausedGridConnections.contains(this) && setActive)){
+	return;
+}
+
+
+if (!setActive) {
 	energyModel.c_gridConnections.remove(this);
 	energyModel.c_pausedGridConnections.add(this);
 	
