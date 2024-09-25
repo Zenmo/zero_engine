@@ -1071,6 +1071,22 @@
 				<Name><![CDATA[PRICE]]></Name>
 			</Option>
 		</OptionList>
+		<OptionList>
+			<Id>1726685111559</Id>
+			<Name><![CDATA[OL_HouseholdCookingMethod]]></Name>
+			<Option>
+				<Id>1726685111560</Id>
+				<Name><![CDATA[ELECTRIC]]></Name>
+			</Option>
+			<Option>
+				<Id>1726685111561</Id>
+				<Name><![CDATA[GAS]]></Name>
+			</Option>
+			<Option>
+				<Id>1726685111562</Id>
+				<Name><![CDATA[NONE]]></Name>
+			</Option>
+		</OptionList>
 	</OptionLists>
 	
 	<Folders>
@@ -1407,7 +1423,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 					<Id>1659356181110</Id>
 					<Name><![CDATA[pp_windOnshoreProduction]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>-670</X><Y>180</Y>
+					<X>-670</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4604,13 +4620,26 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 					<Id>1727107003296</Id>
 					<Name><![CDATA[pp_solarPVproduction]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>-670</X><Y>200</Y>
+					<X>-670</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[J_profilePointer]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726146654442</Id>
+					<Name><![CDATA[v_currentCookingDemand_fr]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1116</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -5078,7 +5107,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 				<Variable Class="Parameter">
 					<Id>1724587724718</Id>
 					<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
-					<X>1280</X><Y>740</Y>
+					<X>1280</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5507,7 +5536,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -5517,7 +5546,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 				<Variable Class="CollectionVariable">
 					<Id>1727099354305</Id>
 					<Name><![CDATA[c_profiles]]></Name>
-					<X>-670</X><Y>230</Y>
+					<X>-670</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6005,24 +6034,12 @@ for (GridNode GN : c_gridNodeExecutionListReverse) {
 						<Name><![CDATA[t_h]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[
-//pp_currentHouseHoldOtherElectricityDemand_fr.value = tf_p_house_e_demand_other(t_h);
-//pp_currentHouseHoldOtherElectricityDemand_fr.updateValue(t_h);
-
-/*v_currentBuildingOtherElectricityDemand_fr = tf_p_building_e_demand_other(t_h);
-v_currentBuildingHeatDemand_fr = tf_p_building_h_demand(t_h);
-v_currentHouseHoldHotWaterDemand_fr = tf_p_house_h_demand_hot_water(t_h);
-v_currentIndustrySteelElectricityDemand_fr = tf_p_industry_steel_e_demand(t_h);
-v_currentIndustrySteelHeatDemand_fr = tf_p_industry_steel_h_demand(t_h);
-v_currentIndustryOtherElectricityDemand_fr = tf_p_industry_other_e_demand(t_h);
-v_currentIndustryOtherHeatDemand_fr = tf_p_industry_other_h_demand(t_h);
-v_currentLogisticsFleetEDemand_fr = tf_p_logistics_fleet_e_hgv(t_h);*/
-
-v_currentWindPowerNormalized_r = tf_p_wind_e_normalized(t_h);
-v_currentSolarPowerNormalized_r = tf_p_solar_e_normalized(t_h);
-v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
+					<Body><![CDATA[v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
 
 c_profiles.forEach(p -> p.updateValue(t_h));
+v_currentWindPowerNormalized_r = pp_windOnshoreProduction.getValue();
+v_currentSolarPowerNormalized_r = pp_solarPVproduction.getValue();
+//v_currentCookingDemand_fr = tf_cooking_demand(t_h);
 
 if (b_enableDLR) {
 	v_currentDLRfactor_fr = 1 + max(-0.1,v_currentWindPowerNormalized_r * 0.025*(30-v_currentAmbientTemperature_degC) + 0.5 - v_currentSolarPowerNormalized_r);
@@ -7612,6 +7629,8 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	data_batteryDischarging_kW.update();
 	data_V2GSupply_kW.update();
 	data_hydrogenSupply_kW.update();
+	data_districtHeatingDemand_kW.update();
+	data_cookingElectricityDemand_kW.update();
 	
 	data_totalDemand_kW.update();
 	data_totalSupply_kW.update();
@@ -8097,7 +8116,7 @@ f_setInitialValues();
 					<ReturnType><![CDATA[ArrayList<ConnectionOwner>]]></ReturnType>
 					<Id>1716897568717</Id>
 					<Name><![CDATA[f_getConnectionOwners]]></Name>
-					<X>1280</X><Y>540</Y>
+					<X>1280</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8109,7 +8128,7 @@ f_setInitialValues();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1716899946694</Id>
 					<Name><![CDATA[f_getTopLevelGridCapacity_kW]]></Name>
-					<X>1280</X><Y>560</Y>
+					<X>1280</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8121,7 +8140,7 @@ f_setInitialValues();
 					<ReturnType><![CDATA[ArrayList<J_EA>]]></ReturnType>
 					<Id>1717058801652</Id>
 					<Name><![CDATA[f_getEnergyAssets]]></Name>
-					<X>1280</X><Y>580</Y>
+					<X>1280</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8133,7 +8152,7 @@ f_setInitialValues();
 					<ReturnType><![CDATA[ArrayList<GridNode>]]></ReturnType>
 					<Id>1718289616227</Id>
 					<Name><![CDATA[f_getGridNodesTopLevel]]></Name>
-					<X>1280</X><Y>630</Y>
+					<X>1280</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8145,7 +8164,7 @@ f_setInitialValues();
 					<ReturnType><![CDATA[ArrayList<GridNode>]]></ReturnType>
 					<Id>1718289761647</Id>
 					<Name><![CDATA[f_getGridNodesNotTopLevel]]></Name>
-					<X>1280</X><Y>650</Y>
+					<X>1280</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8208,6 +8227,11 @@ for (GridConnection GC : GridBatteries) {
 	if (!GC.v_isActive) {
 		GC.f_setActive(false);
 	}
+}
+for (GridConnection GC : PublicChargers) {
+	if (!GC.v_isActive) {
+		GC.f_setActive(false);
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -8216,7 +8240,7 @@ for (GridConnection GC : GridBatteries) {
 					<Id>1724575401400</Id>
 					<Name><![CDATA[f_writeGridNodeTimeseriesToExcel]]></Name>
 					<Description><![CDATA[This function writes the load on each gridnode for each timestep to excel]]></Description>
-					<X>1280</X><Y>720</Y>
+					<X>1280</X><Y>740</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8258,6 +8282,18 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Type><![CDATA[J_profilePointer]]></Type>
 					</Parameter>
 					<Body><![CDATA[c_profiles.add(profile);]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<GridConnection>]]></ReturnType>
+					<Id>1727167397666</Id>
+					<Name><![CDATA[f_getPausedGridConnections]]></Name>
+					<X>1280</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[return c_pausedGridConnections;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -8398,6 +8434,32 @@ return profilePointer;]]></Body>
 								<PackageName><![CDATA[zero_engine]]></PackageName>
 								<ClassName><![CDATA[profiles]]></ClassName>
 								<ItemName><![CDATA[day_ahead_price_eur_mwh]]></ItemName>
+							</ValueColumnReference>
+					</ValuesQuery>
+// arguments and values
+					<Argument><![CDATA[0.0]]></Argument>
+					<Value><![CDATA[0.0]]></Value>
+				</TableFunction>
+				<TableFunction AccessType="public" StaticFunction="false">
+					<Id>1726146744634</Id>
+					<Name><![CDATA[tf_cooking_demand]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-670</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>LINEAR</InterpolationMethod>
+					<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
+					<OutOfRangeCustomValue><![CDATA[0.0]]></OutOfRangeCustomValue>
+					<ApproximationOrder><![CDATA[1]]></ApproximationOrder>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
+					<ValuesQuery>
+						<TableReference>
+						</TableReference>
+							<ArgumentColumnReference>
+							</ArgumentColumnReference>
+							<ValueColumnReference>
 							</ValueColumnReference>
 					</ValuesQuery>
 // arguments and values
@@ -8643,7 +8705,7 @@ return profilePointer;]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW))]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> max(0,x.v_evChargingPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -9986,6 +10048,54 @@ return profilePointer;]]></Body>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
+    			<DataSet>
+					<Id>1726292585769</Id>
+					<Name><![CDATA[data_districtHeatingDemand_kW]]></Name>
+					<X>80</X><Y>1590</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1717488000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> x.v_districtHeatDelivery_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1726292590669</Id>
+					<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
+					<X>80</X><Y>1610</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x-> x.v_electricHobConsumption_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
@@ -10108,6 +10218,9 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_localNodalPricingTreshold_fr]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_originalCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11229,6 +11342,9 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_cookingMethod]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15284,6 +15400,27 @@ geupdate vanuit
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1726583647250</Id>
+					<Name><![CDATA[p_originalCapacity_kW]]></Name>
+					<X>170</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1726583647248</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1658751320739</Id>
 					<Name><![CDATA[c_electricityFlows]]></Name>
@@ -15694,9 +15831,9 @@ if (energyModel.v_isRapidRun){
 		acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW;
 	}*/
 	//acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricity_kW);
-	acc_annualElectricityBalance_kW.addStep(energyModel.t_h,v_currentLoadElectricityLowPassed_kW);
-	if ( ((Double)v_currentLoadElectricityLowPassed_kW).isNaN() ){
-		traceln("v_currentLoadElectricityLowPassed_kW is NaN! On GridNode %s, time %s h", this, energyModel.t_h);
+	acc_annualElectricityBalance_kW.addStep(energyModel.t_h, v_currentLoadElectricity_kW);
+	if ( ((Double)v_currentLoadElectricity_kW).isNaN() ){
+		traceln("v_currentLoadElectricity_kW is NaN! On GridNode %s, time %s h", this, energyModel.t_h);
 		pauseSimulation();
 		
 	}
@@ -17373,7 +17510,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212770050</Id>
 					<Name><![CDATA[v_heatDrawn_kWh]]></Name>
-					<X>450</X><Y>1010</Y>
+					<X>450</X><Y>1060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17409,7 +17546,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1660212876476</Id>
 					<Name><![CDATA[v_heatDelivered_kWh]]></Name>
-					<X>450</X><Y>1030</Y>
+					<X>450</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17855,7 +17992,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1673949346167</Id>
 					<Name><![CDATA[v_hotwaterDemand_kW]]></Name>
-					<X>450</X><Y>1050</Y>
+					<X>450</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17894,7 +18031,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1676468216301</Id>
 					<Name><![CDATA[v_residualHeatGasPit_kW]]></Name>
-					<X>450</X><Y>1070</Y>
+					<X>450</X><Y>1120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20011,7 +20148,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104519140</Id>
 					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2100</Y>
+					<X>150</X><Y>2150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20023,7 +20160,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104563816</Id>
 					<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
-					<X>150</X><Y>2120</Y>
+					<X>150</X><Y>2170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20035,7 +20172,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104599790</Id>
 					<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2140</Y>
+					<X>150</X><Y>2190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20047,7 +20184,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104616362</Id>
 					<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2160</Y>
+					<X>150</X><Y>2210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20059,7 +20196,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104645642</Id>
 					<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2180</Y>
+					<X>150</X><Y>2230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20071,7 +20208,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104655057</Id>
 					<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2200</Y>
+					<X>150</X><Y>2250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20083,7 +20220,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104682963</Id>
 					<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2220</Y>
+					<X>150</X><Y>2270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20095,7 +20232,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718104746038</Id>
 					<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
-					<X>150</X><Y>2240</Y>
+					<X>150</X><Y>2290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20345,6 +20482,54 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new double[24]]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726238237441</Id>
+					<Name><![CDATA[v_districtHeatDelivery_kW]]></Name>
+					<X>470</X><Y>1010</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727099238699</Id>
+					<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
+					<X>150</X><Y>2270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1726425994811</Id>
+					<Name><![CDATA[v_heatpumpDelivery_kW]]></Name>
+					<X>470</X><Y>1030</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727101009735</Id>
+					<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
+					<X>150</X><Y>2290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -21298,7 +21483,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1715082351013</Id>
 					<Name><![CDATA[c_heatingTypes]]></Name>
-					<X>280</X><Y>530</Y>
+					<X>-200</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22073,7 +22258,10 @@ for(J_EAConsumption e : c_consumptionAssets) {
 	else if( e.energyAssetType == OL_EnergyAssetType.METHANE_DEMAND ) {
 		e.v_powerFraction_fr = 1.0/8760;
 		e.f_updateAllFlows( e.v_powerFraction_fr );	
-	}	
+	}
+	else if (  e.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB || e.energyAssetType == OL_EnergyAssetType.GAS_PIT){
+		e.f_updateAllFlows( energyModel.v_currentCookingDemand_fr );
+	}
 	else {
 		traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 		e.v_powerFraction_fr = 0;
@@ -22124,7 +22312,11 @@ v_totalEnergyConsumed_MWh = 0;
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
 
+//Overload
+v_totalOverloadDurationDelivery_hr = 0;
+v_totalOverloadDurationFeedin_hr = 0;
 
+//Summer/winter week and day 
 v_summerWeekTotalImport_MWh = 0;
 v_summerWeekTotalExport_MWh = 0;
 v_summerWeekEnergyConsumed_MWh = 0;
@@ -22883,6 +23075,9 @@ if (j_ea instanceof J_EAVehicle) {
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
 		c_fixedConsumptionElectricAssets.add(j_ea);
 	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
+		c_electricHobAssets.add(j_ea);
+	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.add((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
@@ -22907,13 +23102,11 @@ if (j_ea instanceof J_EAVehicle) {
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		//traceln("Adding HOB to house" + this);
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 			c_electricHobAssets.add(j_ea);
 			c_conversionElectricAssets.add(j_ea);
 		}
 		if (p_cookingTracker == null) {
-			//traceln("Adding cookingTracker to house" + this);
 			int rowIndex = uniform_discr(2, 300); 
 			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
 		} else {
@@ -23213,6 +23406,17 @@ v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum() * 
 v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalHeatProduced_MWh = acc_annualHeatProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 
+//Yeartotal overload duration
+for(double electricityBalance_kW : acc_annualElectricityBalance_kW.getTimeSeries()){
+	
+	if(electricityBalance_kW > p_contractedDeliveryCapacity_kW){
+		v_totalOverloadDurationDelivery_hr += energyModel.p_timeStep_h;
+	}
+	else if(electricityBalance_kW < - p_contractedFeedinCapacity_kW){
+		v_totalOverloadDurationFeedin_hr += energyModel.p_timeStep_h;
+	}
+}
+
 // Electricity self consumption
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_electricityDrawnFromGrid_kWh/1000);
 
@@ -23307,6 +23511,13 @@ v_weekendHydrogenExport_MWh = v_hydrogenDelivered_kWh/1000 - v_weekdayHydrogenEx
 
 v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
+
+
+
+
+
+
+
 
 /*v_totalImport_MWh=(v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh)/1000;
 v_totalExport_MWh=(v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh)/1000;
@@ -23608,6 +23819,9 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
 		c_fixedConsumptionElectricAssets.remove(j_ea);
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
+		c_electricHobAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
@@ -24040,6 +24254,12 @@ for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
 }
 data_baseloadElectricityDemand_kW.update();
 
+v_electricHobConsumption_kW = 0;
+for (J_EA j_ea : c_electricHobAssets) {
+	v_electricHobConsumption_kW += j_ea.getLastFlows()[4];
+}
+data_electricHobDemand_kW.update();
+
 v_hydrogenElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electrolyserAssets) {
 	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows()[4];
@@ -24091,8 +24311,7 @@ for (J_EA j_ea : c_windAssets) {
 }
 data_windGeneration_kW.update();	
 
-
-
+data_districtHeatDelivery_kW.update();
 
 //data_totalNetLoad_kW.update();]]></Body>
 				</Function>
@@ -24399,7 +24618,13 @@ acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHea
 						<Name><![CDATA[setActive]]></Name>
 						<Type><![CDATA[boolean]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (!setActive) {
+					<Body><![CDATA[if((energyModel.c_pausedGridConnections.contains(this) && !setActive) || 
+  (!energyModel.c_pausedGridConnections.contains(this) && setActive)){
+	return;
+}
+
+
+if (!setActive) {
 	energyModel.c_gridConnections.remove(this);
 	energyModel.c_pausedGridConnections.add(this);
 	
@@ -26150,6 +26375,54 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[-p_contractedFeedinCapacity_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1726222586985</Id>
+					<Name><![CDATA[data_electricHobDemand_kW]]></Name>
+					<X>150</X><Y>2080</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_electricHobConsumption_kW]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1726238177866</Id>
+					<Name><![CDATA[data_districtHeatDelivery_kW]]></Name>
+					<X>150</X><Y>2100</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentPowerHeat_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -41885,7 +42158,7 @@ public void f_simpleCharging(){
 					<Id>1690363061408</Id>
 					<Name><![CDATA[v_electricHobConsumption_kWh]]></Name>
 					<Description><![CDATA[This is part of the v_fixedConsumptionElectric_kW, thus variable only exists for additional information]]></Description>
-					<X>150</X><Y>1490</Y>
+					<X>150</X><Y>1520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41900,7 +42173,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447485797</Id>
 					<Name><![CDATA[v_gasHeatingCost_eurpkWh_TEMPORARY]]></Name>
-					<X>1690</X><Y>110</Y>
+					<X>1460</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41912,7 +42185,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447485799</Id>
 					<Name><![CDATA[v_eHeatingCost_eurpkWh_TEMPORARY]]></Name>
-					<X>1690</X><Y>90</Y>
+					<X>1460</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41924,7 +42197,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447555064</Id>
 					<Name><![CDATA[v_tempSetpoint_degC]]></Name>
-					<X>1690</X><Y>50</Y>
+					<X>1460</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41939,7 +42212,8 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447555067</Id>
 					<Name><![CDATA[v_currentIndoorTemp_degC]]></Name>
-					<X>1690</X><Y>70</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1460</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41954,7 +42228,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447555069</Id>
 					<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
-					<X>1460</X><Y>80</Y>
+					<X>1460</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41969,7 +42243,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447555071</Id>
 					<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
-					<X>1460</X><Y>60</Y>
+					<X>1460</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41984,7 +42258,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447555073</Id>
 					<Name><![CDATA[v_heatingOn_time]]></Name>
-					<X>1460</X><Y>100</Y>
+					<X>1460</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41999,7 +42273,7 @@ public void f_simpleCharging(){
 				<Variable Class="PlainVariable">
 					<Id>1704447555075</Id>
 					<Name><![CDATA[v_heatingOff_time]]></Name>
-					<X>1460</X><Y>120</Y>
+					<X>1460</X><Y>150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42014,7 +42288,7 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1674464900101</Id>
 					<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
-					<X>250</X><Y>400</Y>
+					<X>540</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42059,7 +42333,7 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1675169216646</Id>
 					<Name><![CDATA[p_minChargingPower_kW]]></Name>
-					<X>250</X><Y>420</Y>
+					<X>540</X><Y>660</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42108,7 +42382,8 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1702369144256</Id>
 					<Name><![CDATA[p_hasElectricHob]]></Name>
-					<X>250</X><Y>300</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>540</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42132,7 +42407,7 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1702369144261</Id>
 					<Name><![CDATA[p_smartHeatingEnabled]]></Name>
-					<X>250</X><Y>320</Y>
+					<X>540</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42156,7 +42431,7 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1702369144264</Id>
 					<Name><![CDATA[p_pricelevelLowDifFromAvg_eurpkWh]]></Name>
-					<X>250</X><Y>340</Y>
+					<X>540</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42177,7 +42452,7 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1702369144267</Id>
 					<Name><![CDATA[p_pricelevelHighDifFromAvg_eurpkWh]]></Name>
-					<X>250</X><Y>360</Y>
+					<X>540</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42199,7 +42474,7 @@ public void f_simpleCharging(){
 					<Id>1702369144270</Id>
 					<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 					<Description><![CDATA[[degrees]]]></Description>
-					<X>250</X><Y>280</Y>
+					<X>540</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42283,6 +42558,30 @@ public void f_simpleCharging(){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1726685123865</Id>
+					<Name><![CDATA[p_cookingMethod]]></Name>
+					<X>250</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_HouseholdCookingMethod]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_HouseholdCookingMethod.NONE]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1726685123863</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -42327,89 +42626,45 @@ public void f_simpleCharging(){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664441996771</Id>
 					<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-					<X>800</X><Y>340</Y>
+					<X>810</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if( p_DHWAsset != null){
-	v_hotwaterDemand_kW = p_DHWAsset.heatConsumption_kW;
-}
-else {
-	v_hotwaterDemand_kW = 0;
-}
+					<Body><![CDATA[v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.heatConsumption_kW : 0;
 setHeatingTargetTemp();
-//p_BuildingThermalAsset.j_ea.updateAmbientTemperature(main.v_currentAmbientTemperature_degC);
-if ( p_BuildingThermalAsset!= null ) {
-	v_currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
-}
-
-if( p_BuildingThermalAsset != null ){
-	v_currentIndoorTemp_degC = p_BuildingThermalAsset.getCurrentTemperature();
-}		
-
-// CASE: ONE HEATING ASSET --------------------------------------------------------------------------------------------------------------------------------------------
-if ( p_secondaryHeatingAsset == null && p_primaryHeatingAsset != null) {
-	if ( (p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet) && p_BuildingThermalAsset!= null) { // when there is only a gas burner or DH set
-		
-		if (v_currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC && p_BuildingThermalAsset!= null) {
-			double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - v_currentIndoorTemp_degC) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
-			p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()  );
-			p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();			
-			//traceln("p_primaryHeatingAsset.v_powerFraction_fr: %s, heatDemand: %s, building heat capacity: %s", p_primaryHeatingAsset.v_powerFraction_fr, powerDemand_kW, p_BuildingThermalAsset.getHeatCapacity_JpK());
-		}
-		else { // Just supply DHW
-			p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
-			if (p_BuildingThermalAsset!=null) {
-				p_BuildingThermalAsset.v_powerFraction_fr = 0;
-			}
-		}
-	}
-	/*
-	else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ NEEDS FIX FOR HESSENPOORT HOUSES
-		double powerDemand_kW = v_currentPowerHeat_kW;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
-		//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
-	}
-	*/
-	else if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump){
-			f_heatWithHeatpump( );
-	}
-	else {
-		traceln("House " + p_gridConnectionID + " has a single unsupported heating asset!");
-	}	
-} else if ( p_secondaryHeatingAsset != null && p_primaryHeatingAsset != null) { // CASE: TWO HEATING ASSETS	-------------------------------------------------------------------------------------------------------------------------------------
-	f_heatWithHybridHeatpump();
-}
-
-// Add heat from cooking assets to house
-if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities(energyModel.t_h*60); // also calls f_updateAllFlows in HOB asset	
-	v_electricHobConsumption_kW += p_cookingTracker.HOB.electricityConsumption_kW; // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
-	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
-	v_residualHeatGasPit_kW = p_cookingTracker.HOB.heatProduction_kW;
-	if (p_BuildingThermalAsset!=null) {
-		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getHeatCapacity_kW();
-	}
-	//if ( p_cookingTracker.v_ratio > 0 ) {
-	//	traceln("Cooking session in House " + p_gridConnectionID + " with power fraction: " + p_cookingTracker.v_ratio );
-	//}
-}
-
-if (p_BuildingThermalAsset!=null && p_primaryHeatingAsset != null) {
-	double[] flowsArray = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-	/*v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
-	if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
-		v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
-	}*/
+ 
+switch (p_heatingType) {	
+	case GASBURNER:
+		f_heatWithGasburner( );
+	break;
 	
+	case HEATPUMP_AIR:
+		f_heatWithHeatpump( );
+	break;
+	
+	case HEATPUMP_GASPEAK:
+		f_heatWithHybridHeatpump();
+	break;
+	
+	case HEATPUMP_BOILERPEAK:
+		traceln("House " + p_gridConnectionID + " has anunsupported heating asset!");
+	break;
+	
+	case DISTRICTHEAT:
+		f_heatWithDistrictHeat();
+	break;
+	
+	default:
+		traceln("Ubsupported heatingtype in household");
+	break;
+}
+
+f_manageCookingTracker();
+
+if (p_BuildingThermalAsset != null && p_primaryHeatingAsset != null) {
+	double[] flowsArray = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
 	p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
-
-
-	//traceln("p_primaryHeatingAsset heat production: %s", p_primaryHeatingAsset.heatProduction_kW);
-	//traceln("p_BuildingThermalAsset heat consumption: %s", p_BuildingThermalAsset.heatConsumption_kW);
-
-	//v_currentPowerHeat_kW += p_BuildingThermalAsset.heatConsumption_kW - p_BuildingThermalAsset.heatProduction_kW;
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -42417,7 +42672,7 @@ if (p_BuildingThermalAsset!=null && p_primaryHeatingAsset != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664963959146</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>800</X><Y>240</Y>
+					<X>800</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42855,7 +43110,7 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1675014184707</Id>
 					<Name><![CDATA[f_manageCharging_overwrite]]></Name>
-					<X>800</X><Y>360</Y>
+					<X>810</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42952,7 +43207,7 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1676477303264</Id>
 					<Name><![CDATA[f_heatWithHeatpump]]></Name>
-					<X>1690</X><Y>160</Y>
+					<X>1700</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42994,12 +43249,12 @@ if ( p_heatBuffer != null ){
 
 //heat the house
 if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
-	if (v_currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
+	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
 		powerFraction_heatPump_fr = 1; 
 		p_BuildingThermalAsset.v_powerFraction_fr = hp.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
 	} 
 	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
-		&& v_currentIndoorTemp_degC < v_tempSetpoint_degC + 1) {
+		&& p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC + 1) {
 		//also heat the house if the price is cheap, the the house is colder than desired + 1 and the vehicle does not need charging
 		if( p_householdEV == null ){
 			powerFraction_heatPump_fr = 1;
@@ -43031,7 +43286,7 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1676976246060</Id>
 					<Name><![CDATA[f_heatWithHybridHeatpump]]></Name>
-					<X>1690</X><Y>180</Y>
+					<X>1700</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43039,12 +43294,12 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // Heatpump and gasburner, switch based on heatpump COP)
 	J_EAConversionHeatPump HP = (J_EAConversionHeatPump)p_primaryHeatingAsset;
 	v_copHeatpump = HP.getCOP();
-	if (v_currentIndoorTemp_degC < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
+	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		//HP.updateAmbientTemp(main.v_currentAmbientTemperature_degC); // update heatpump temp levels! <-- waarom dit gebeurt al in de main (peter 21-02-23)
 		boolean gasCheaper = f_calcCheapestHeatingPrice();
 		if ( gasCheaper ) { // heat with gas
 			traceln("gas is cheaper");
-			double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - v_currentIndoorTemp_degC) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
+			double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 			p_primaryHeatingAsset.v_powerFraction_fr = 0;
 			p_secondaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
 			p_BuildingThermalAsset.v_powerFraction_fr = (p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getHeatCapacity_kW() - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();
@@ -43167,7 +43422,7 @@ v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlow
 					<Id>1678708804201</Id>
 					<Name><![CDATA[f_batteryManagementLoad]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>800</X><Y>320</Y>
+					<X>810</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43191,7 +43446,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678709047802</Id>
 					<Name><![CDATA[f_batteryManagementPrice_overwrite]]></Name>
-					<X>800</X><Y>300</Y>
+					<X>810</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43352,7 +43607,7 @@ if (j_ea instanceof J_EAEV) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1702369252216</Id>
 					<Name><![CDATA[setHeatingTargetTemp]]></Name>
-					<X>1690</X><Y>140</Y>
+					<X>1700</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43369,7 +43624,7 @@ else {
 					<ReturnType><![CDATA[boolean]]></ReturnType>
 					<Id>1702369294416</Id>
 					<Name><![CDATA[f_calcCheapestHeatingPrice]]></Name>
-					<X>1710</X><Y>200</Y>
+					<X>1720</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -43384,6 +43639,104 @@ if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 }	
 
 return isGasCheaper;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1726129903799</Id>
+					<Name><![CDATA[f_removeCurrentHeatingSystem]]></Name>
+					<X>970</X><Y>-20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[p_heatingType = OL_GridConnectionHeatingType.NONE;
+p_primaryHeatingAsset.removeEnergyAsset();
+if ( p_secondaryHeatingAsset != null){
+	p_secondaryHeatingAsset.removeEnergyAsset();
+}
+if ( p_tertiaryHeatingAsset != null){
+	p_tertiaryHeatingAsset.removeEnergyAsset();
+}
+if ( p_heatBuffer != null){
+	p_heatBuffer.removeEnergyAsset();
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1726301776809</Id>
+					<Name><![CDATA[f_heatWithGasburner]]></Name>
+					<X>1700</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset != null) { 
+	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
+		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()  );
+		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();			
+	}
+	else { // Just supply DHW
+		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr = 0;
+	}
+}
+else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ 
+	double powerDemand_kW = v_currentPowerHeat_kW; //TODO Where does this v_currentPowerHeat_kW come from? (Peter 14-09-2024), 
+	p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+	traceln("Household is heating with gasburner without thermal building asset, check if this is correct @f_heatWithGasBurner");
+	//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1726301785545</Id>
+					<Name><![CDATA[f_heatWithDistrictHeat]]></Name>
+					<X>1700</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet && p_BuildingThermalAsset != null) { 
+	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
+		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()  );
+		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();			
+	}
+	else { 
+		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr = 0;
+	}
+	v_districtHeatDelivery_kW = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW;
+}
+else {
+	traceln("House " + p_gridConnectionID + " has heatingtype DISTRICT HEAT, but no delivery set or building asset!");
+}	]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1726334759211</Id>
+					<Name><![CDATA[f_manageCookingTracker]]></Name>
+					<X>780</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Add heat from cooking assets to house
+if (p_cookingTracker != null) { // check for presence of cooking asset
+	p_cookingTracker.manageActivities(energyModel.t_h*60); // also calls f_updateAllFlows in HOB asset	
+	v_electricHobConsumption_kW += p_cookingTracker.HOB.electricityConsumption_kW; // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
+	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
+	v_residualHeatGasPit_kW = p_cookingTracker.HOB.heatProduction_kW;
+	if (p_BuildingThermalAsset != null) {
+		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getHeatCapacity_kW();
+	}
+}]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -43533,6 +43886,51 @@ return isGasCheaper;]]></Body>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>dd_MM</LabelFormat>
     			</TimePlot>
+				<Line>
+					<Id>1726301544269</Id>
+					<Name><![CDATA[line3]]></Name>
+					<X>1460</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>310</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Text>
+					<Id>1726301549553</Id>
+					<Name><![CDATA[text3]]></Name>
+					<X>1560</X><Y>30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Heating functionality]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>10</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -50227,7 +50625,12 @@ v_maxHydrogenPower_kW = 0;]]></Body>
 			<AdditionalClassCode><![CDATA[/*@Override
 public void f_operateFixedAssets(){
 	f_operateFixedAssets_overwrite();
-}*/]]></AdditionalClassCode>
+}*/
+
+@Override
+public void f_operateFlexAssets(){
+	f_operateFlexAssets_overwrite();
+}]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -50434,7 +50837,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="PlainVariable">
 					<Id>1718899895524</Id>
 					<Name><![CDATA[v_isActiveCharger]]></Name>
-					<X>250</X><Y>410</Y>
+					<X>270</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50446,7 +50849,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="PlainVariable">
 					<Id>1720728863554</Id>
 					<Name><![CDATA[v_netBewustLadenActive]]></Name>
-					<X>250</X><Y>430</Y>
+					<X>270</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50567,7 +50970,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1718903294274</Id>
 					<Name><![CDATA[p_isInitialCharger]]></Name>
-					<X>250</X><Y>450</Y>
+					<X>270</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50588,7 +50991,7 @@ public void f_operateFixedAssets(){
 				<Variable Class="Parameter">
 					<Id>1720377369145</Id>
 					<Name><![CDATA[p_chargingProfileName]]></Name>
-					<X>250</X><Y>470</Y>
+					<X>270</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50614,7 +51017,7 @@ public void f_operateFixedAssets(){
 					<Id>1717956478582</Id>
 					<Name><![CDATA[f_operateFixedAssets_overwrite]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>800</X><Y>220</Y>
+					<X>910</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50633,6 +51036,19 @@ public void f_operateFixedAssets(){
 	//v_currentPowerElectricity_kW += flowsArray[4];		
 }
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1726749088568</Id>
+					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
+					<X>910</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//Manage charging
+f_manageCharging();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -52039,7 +52455,6 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	this.hydrogenConsumption_kW = ratioOfCapacity * yearlyDemandHydrogen_kWh*consumptionScaling_fr;
     	this.methaneConsumption_kW = ratioOfCapacity * yearlyDemandMethane_kWh*consumptionScaling_fr;
     	this.dieselConsumption_kW = ratioOfCapacity * yearlyDemandDiesel_kWh*consumptionScaling_fr;
-
     	//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
     	energyUse_kW = electricityConsumption_kW + heatConsumption_kW + hydrogenConsumption_kW + methaneConsumption_kW + dieselConsumption_kW;
@@ -52305,6 +52720,13 @@ public class J_EA implements Cloneable {
 		 return energyAssetType;
 	 }
 
+	 public void setEnergyAssetName(String name) {
+		 this.energyAssetName = name;
+	 }
+	 
+	 public void setEnergyAssetType(OL_EnergyAssetType assetType) {
+		 this.energyAssetType = assetType;
+	 }
     
 //    public double getOutputTemperature_degC() {
 //   	return 0;
@@ -52906,7 +53328,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	private double storageCapacity_kWh;
 	
 	private double stateOfCharge_r;
-	private double lossFactor_WpK;
+	protected double lossFactor_WpK;
 	private double timestep_h;
 	private double temperature_degC;
 	private double temperatureStored_degC;
@@ -53067,12 +53489,16 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		return maxTemperature_degC;
 	}
 
-	public double getStorageCapacity() {
+	public double getStorageCapacity_kWh() {
 		return storageCapacity_kWh;
 	}
 
 	public double getHeatCapacity_JpK() {
 		return heatCapacity_JpK;
+	}
+	
+	public double getLossFactor_WpK() {
+		return lossFactor_WpK;
 	}
 
 	/*
@@ -53116,7 +53542,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	public OL_EAStorageTypes heatStorageType;
 	//private double storageCapacity_kWh;
 	private double stateOfCharge_r;
-	public double lossFactor_WpK;
+	//private double lossFactor_WpK;
 	private double timestep_h;
 	private double temperature_degC;
 	private double temperatureStored_degC;
@@ -53148,6 +53574,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.heatStorageType = OL_EAStorageTypes.HEATMODEL_BUILDING;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
+		//traceln(this.getLossFactor_WpK());
+		//traceln(this.lossFactor_WpK);
 		this.timestep_h = timestep_h;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
@@ -53252,6 +53680,12 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	public double getCurrentTemperature() {
 		return temperature_degC;
 	}
+	
+	@Override
+	public double getLossFactor_WpK() {
+		return lossFactor_WpK;
+	}
+	
 
 	/*@Override
 	public double getHeatCapacity_JpK() {
@@ -53369,6 +53803,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.ambientTempType = ambientTempType;
 	    this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
 	    this.belowZeroHeatpumpEtaReductionFactor = belowZeroHeatpumpEtaReductionFactor;
+	    //this.energyAssetName = "Heatpump";
 		registerEnergyAsset();
 	}
 
@@ -53764,7 +54199,6 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 		//traceln("I convert now! HeatDeliverySet @ " + (ratioOfCapacity * 100) + " %");
 		heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		heatConsumption_kW = heatProduction_kW / eta_r;
-		
 		//debugging checks:
 		heatProduced_kWh += heatProduction_kW * timestep_h;
 		heatConsumed_kWh += heatConsumption_kW * timestep_h;
