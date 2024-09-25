@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -21747,7 +21747,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1715082351013</Id>
 					<Name><![CDATA[c_heatingTypes]]></Name>
-					<X>280</X><Y>530</Y>
+					<X>-200</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42652,6 +42652,7 @@ public void f_simpleCharging(){
 				<Variable Class="Parameter">
 					<Id>1702369144256</Id>
 					<Name><![CDATA[p_hasElectricHob]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>540</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
