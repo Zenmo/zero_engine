@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1057,6 +1057,10 @@
 			<Option>
 				<Id>1718713684483</Id>
 				<Name><![CDATA[SOLARPANELS]]></Name>
+			</Option>
+			<Option>
+				<Id>1727254638101</Id>
+				<Name><![CDATA[HEATDEMAND]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -8310,7 +8314,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
 					<Body><![CDATA[J_profilePointer profilePointer = findFirst(c_profiles, p -> p.name.equals(assetName));
-traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
+//traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
 if (profilePointer == null) {    		
 	throw new RuntimeException(String.format("Consumption or production asset without valid profile!") );
 }
@@ -10540,25 +10544,10 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_actorSubgroup]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_houseNumber]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_streetName]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_city]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_houseLetter]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_houseAddition]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_postalcode]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_connectedGridConnection]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -23163,8 +23152,10 @@ if (j_ea instanceof J_EAVehicle) {
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
 			//v_windProductionElectric_kW += flowsArray[0];
 			c_windAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
+			//Do nothing
 		} else {
-			traceln( "Profile type is not registered in GridConnection");
+			traceln( "Unrecognized profile type!");
 		}
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
@@ -28755,7 +28746,7 @@ p_parentAgent = j_ea.parentAgent;
 				<Variable Class="Parameter">
 					<Id>1703256699222</Id>
 					<Name><![CDATA[p_mainTenantID]]></Name>
-					<X>60</X><Y>300</Y>
+					<X>60</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28774,135 +28765,9 @@ p_parentAgent = j_ea.parentAgent;
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1704210595511</Id>
-					<Name><![CDATA[p_houseNumber]]></Name>
-					<X>60</X><Y>170</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704210595509</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1704210595519</Id>
-					<Name><![CDATA[p_streetName]]></Name>
-					<X>60</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704210595517</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1704210595523</Id>
-					<Name><![CDATA[p_city]]></Name>
-					<X>60</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704210595521</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1704210595527</Id>
-					<Name><![CDATA[p_houseLetter]]></Name>
-					<X>60</X><Y>190</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704210595525</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1704210595531</Id>
-					<Name><![CDATA[p_houseAddition]]></Name>
-					<X>60</X><Y>210</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704210595529</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1704210595534</Id>
-					<Name><![CDATA[p_postalcode]]></Name>
-					<X>60</X><Y>230</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1704210595532</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1711030779035</Id>
 					<Name><![CDATA[p_connectedGridConnection]]></Name>
-					<X>60</X><Y>320</Y>
+					<X>60</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -28920,10 +28785,31 @@ p_parentAgent = j_ea.parentAgent;
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1727191476488</Id>
+					<Name><![CDATA[p_address]]></Name>
+					<X>60</X><Y>140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[J_Address]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1727191476486</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1703256699219</Id>
 					<Name><![CDATA[c_GISBuildings]]></Name>
-					<X>60</X><Y>340</Y>
+					<X>60</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -53027,6 +52913,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	return;
     }
 	
+    public double getProfileScaling_fr() {
+    	return profileScaling_fr;
+    }
+    
 	@Override
 	public String toString() {
 		return
