@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -8314,7 +8314,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Type><![CDATA[String]]></Type>
 					</Parameter>
 					<Body><![CDATA[J_profilePointer profilePointer = findFirst(c_profiles, p -> p.name.equals(assetName));
-traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
+//traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
 if (profilePointer == null) {    		
 	throw new RuntimeException(String.format("Consumption or production asset without valid profile!") );
 }
@@ -52913,6 +52913,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	return;
     }
 	
+    public double getProfileScaling_fr() {
+    	return profileScaling_fr;
+    }
+    
 	@Override
 	public String toString() {
 		return
