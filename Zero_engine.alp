@@ -19860,6 +19860,36 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727427695138</Id>
+					<Name><![CDATA[v_enableCurtailmentPVZ]]></Name>
+					<X>850</X><Y>820</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727427698661</Id>
+					<Name><![CDATA[v_enableCurtailmentKSI]]></Name>
+					<X>850</X><Y>840</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -23550,7 +23580,21 @@ GN.p_capacity_kW = p_connectionCapacity_kW;
 // in some order curtail PVZ & KSI
 // order is determined via input
 // order can change dependant on day of week and/or time of day (day/night)
-f_curtailPVZ();]]></Body>
+
+//int dayOfWeek = ((int) (((i*energyModel.p_timeStep_h) % 168) / 24 ) + v_startingDayOfWeek) % 7;
+//double hourOfDay = i*energyModel.p_timeStep_h % 24;
+
+// Dependant on Day of Week
+
+
+// Dependant on Time of Day
+
+
+//KSI_FIRST:
+f_curtailKSI();
+f_curtailPVZ();
+
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23635,7 +23679,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
 	linesCurtailed ++;
 	if (linesCurtailed > 8) {
-		traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
+		traceln("FAILED TO CURTAIL ENOUGH PVZ, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
 		//pauseSimulation();
 		linesCurtailed = 8;
 		break;
@@ -23672,7 +23716,6 @@ if (energyModel.v_isRapidRun) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727102066485</Id>
 					<Name><![CDATA[f_curtailKSI]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>890</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23684,7 +23727,7 @@ if (energyModel.v_isRapidRun) {
 while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
 	linesCurtailed ++;
 	if (linesCurtailed > 8) {
-		traceln("FAILED TO CURTAIL ENOUGH, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
+		traceln("FAILED TO CURTAIL ENOUGH KSI, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
 		//pauseSimulation();
 		linesCurtailed = 8;
 		break;
@@ -23693,7 +23736,7 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
 	for (J_EAProfile j_ea : c_profileAssets) {
 		// curtail the pvz profiles. Done in steps (production lines can't be operated at fractional power)
-		if (j_ea.energyAssetName.contains("PVZ")) {
+		if (j_ea.energyAssetName.contains("KSI")) {
 			//traceln("energyAssetName: " + j_ea.energyAssetName);
 			double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
 			//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
