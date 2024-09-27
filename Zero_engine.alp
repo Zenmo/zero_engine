@@ -19635,7 +19635,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718713696387</Id>
 					<Name><![CDATA[v_totalDieselUsedForGenerator_MWh]]></Name>
-					<X>1110</X><Y>810</Y>
+					<X>2025</X><Y>65</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19650,7 +19650,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718714149030</Id>
 					<Name><![CDATA[v_totalTimeDieselGeneratorOperated_h]]></Name>
-					<X>1110</X><Y>830</Y>
+					<X>2025</X><Y>85</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19665,7 +19665,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1718714173422</Id>
 					<Name><![CDATA[v_maximumDieselGeneratorPowerDelivered_kW]]></Name>
-					<X>1110</X><Y>850</Y>
+					<X>2025</X><Y>105</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19719,7 +19719,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1724854087488</Id>
 					<Name><![CDATA[v_PVZEffectiveTimeOperated_h]]></Name>
-					<X>1330</X><Y>930</Y>
+					<X>2435</X><Y>415</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19731,7 +19731,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1724918285966</Id>
 					<Name><![CDATA[v_previousLinesCurtailedPVZ]]></Name>
-					<X>1080</X><Y>930</Y>
+					<X>2185</X><Y>415</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19758,7 +19758,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1726816926195</Id>
 					<Name><![CDATA[v_linesOperatedPVZ]]></Name>
-					<X>890</X><Y>930</Y>
+					<X>1995</X><Y>415</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19773,7 +19773,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102080686</Id>
 					<Name><![CDATA[v_linesOperatedKSI]]></Name>
-					<X>890</X><Y>950</Y>
+					<X>1995</X><Y>435</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19788,7 +19788,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102099160</Id>
 					<Name><![CDATA[v_KSIEffectiveTimeOperated_h]]></Name>
-					<X>1330</X><Y>950</Y>
+					<X>2435</X><Y>435</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19800,7 +19800,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102099162</Id>
 					<Name><![CDATA[v_previousLinesCurtailedKSI]]></Name>
-					<X>1080</X><Y>950</Y>
+					<X>2185</X><Y>435</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19863,7 +19863,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727427695138</Id>
 					<Name><![CDATA[v_enableCurtailmentPVZ]]></Name>
-					<X>850</X><Y>820</Y>
+					<X>1995</X><Y>205</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19878,7 +19878,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727427698661</Id>
 					<Name><![CDATA[v_enableCurtailmentKSI]]></Name>
-					<X>850</X><Y>840</Y>
+					<X>1995</X><Y>225</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19888,6 +19888,51 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727441495405</Id>
+					<Name><![CDATA[v_curtailmentOrderingDayOfWeek]]></Name>
+					<Description><![CDATA[Index 0 is sunday. True means PVZ is curtailed first (the default). False means KSI is curtailed first]]></Description>
+					<X>2000</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new boolean[7];]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727441502847</Id>
+					<Name><![CDATA[v_curtailmentOrderingTimeOfDay]]></Name>
+					<Description><![CDATA[If the first value is smaller than the second it means PVZ is only curtailed first between those times.. If the first value is bigger than the second it means PVZ is only curtailed first outside those times. ]]></Description>
+					<X>2000</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new double[2];]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1727442057811</Id>
+					<Name><![CDATA[v_curtailmentOrderingBasedOnDayOfWeek]]></Name>
+					<Description><![CDATA[If True we look at the day of the week. If false we look at the time of day when curtailing PVZ or KSI]]></Description>
+					<X>2000</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -21699,9 +21744,8 @@ if (v_hydrogenInStorage_kWh > 0) {
 	f_operateFuelCell();
 }
 
-if (v_enableCurtailment) {
-	f_curtailment();
-}
+f_curtailment();
+
 
 f_connectionMetering();
 
@@ -23484,7 +23528,7 @@ if (v_currentPowerElectricity_kW > p_connectionCapacity_kW * 0.9 || v_currentPow
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1718713696385</Id>
 					<Name><![CDATA[f_operateDieselGenerator]]></Name>
-					<X>1080</X><Y>790</Y>
+					<X>1995</X><Y>45</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23561,40 +23605,76 @@ GN.p_capacity_kW = p_connectionCapacity_kW;
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[switch(p_curtailmentMode) {
-	case CAPACITY:
-		// Keep feedin power within connection capacity
-		if (v_currentPowerElectricity_kW < - p_connectionCapacity_kW) { // overproduction!
-			for (J_EAProduction j_ea : c_productionAssets) {
-				j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW - p_connectionCapacity_kW);
-				if (!(v_currentPowerElectricity_kW < - p_connectionCapacity_kW)) {
-					break;
+					<Body><![CDATA[if (v_enableCurtailment) {
+	switch(p_curtailmentMode) {
+		case CAPACITY:
+			// Keep feedin power within connection capacity
+			if (v_currentPowerElectricity_kW < - p_connectionCapacity_kW) { // overproduction!
+				for (J_EAProduction j_ea : c_productionAssets) {
+					j_ea.curtailElectricityProduction(-v_currentPowerElectricity_kW - p_connectionCapacity_kW);
+					if (!(v_currentPowerElectricity_kW < - p_connectionCapacity_kW)) {
+						break;
+					}
 				}
 			}
-		}
-	default:
-		break;
+		default:
+			break;
+	}
 }
-
 
 // in some order curtail PVZ & KSI
 // order is determined via input
 // order can change dependant on day of week and/or time of day (day/night)
 
-//int dayOfWeek = ((int) (((i*energyModel.p_timeStep_h) % 168) / 24 ) + v_startingDayOfWeek) % 7;
-//double hourOfDay = i*energyModel.p_timeStep_h % 24;
-
-// Dependant on Day of Week
-
-
-// Dependant on Time of Day
-
-
-//KSI_FIRST:
-f_curtailKSI();
-f_curtailPVZ();
-
-]]></Body>
+if (v_enableCurtailmentKSI || v_enableCurtailmentPVZ) {
+	if (v_enableCurtailmentKSI && !v_enableCurtailmentPVZ) {
+		f_curtailKSI();
+	}
+	else if (!v_enableCurtailmentKSI && v_enableCurtailmentPVZ) {
+		f_curtailPVZ();
+	}
+	else {
+		if (v_curtailmentOrderingBasedOnDayOfWeek) {
+			int dayOfWeek = ((int) (((energyModel.v_timeStepsElapsed/4.0) % 168) / 24 ) + energyModel.v_dayOfWeek1jan) % 7;
+			if (v_curtailmentOrderingDayOfWeek[dayOfWeek]) {
+				f_curtailPVZ();
+				f_curtailKSI();
+			}
+			else {
+				f_curtailKSI();			
+				f_curtailPVZ();
+			}
+		}
+		else {
+			double timeOfDay = energyModel.t_h % 24;
+			if  (
+					(
+						( v_curtailmentOrderingTimeOfDay[0] < v_curtailmentOrderingTimeOfDay[1] )
+						&& ( v_curtailmentOrderingTimeOfDay[0] < timeOfDay ) 
+						&& ( timeOfDay <= v_curtailmentOrderingTimeOfDay[1] )
+					)
+					||
+					(
+						( v_curtailmentOrderingTimeOfDay[1] < v_curtailmentOrderingTimeOfDay[0] )
+						&& 
+						(
+							( timeOfDay <= v_curtailmentOrderingTimeOfDay[0] )
+							||
+							( v_curtailmentOrderingTimeOfDay[1] < timeOfDay)
+						)
+					)
+				) {
+				f_curtailPVZ();
+				f_curtailKSI();
+			}
+			else {
+				f_curtailKSI();				
+				f_curtailPVZ();
+			}
+		}
+		
+	}
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -23656,7 +23736,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1724918558721</Id>
 					<Name><![CDATA[f_logGeneratorProfile]]></Name>
-					<X>1080</X><Y>880</Y>
+					<X>1995</X><Y>135</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23668,7 +23748,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727100078125</Id>
 					<Name><![CDATA[f_curtailPVZ]]></Name>
-					<X>890</X><Y>860</Y>
+					<X>2000</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23698,6 +23778,11 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 		}
 	}
 }
+if (linesCurtailed < v_previousLinesCurtailedPVZ) {
+	int temp = linesCurtailed;
+	linesCurtailed = v_previousLinesCurtailedPVZ;
+	v_previousLinesCurtailedPVZ = temp;
+}
 
 	
 // TODO: find a way to accomodate for the start up time (approx 30 mins? Or just make it a slider :P) of the production lines when calculating the effective time operated
@@ -23706,6 +23791,9 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 
 // Comment from Ard-Jan: startup time is in the order of minutes. So not super relevant. Would be interesting to see how many times the production is turned on/off
 if (energyModel.v_isRapidRun) {
+	if (linesCurtailed == 0) {
+		traceln("time: " + energyModel.t_h);
+	}
 	v_linesOperatedPVZ[8-linesCurtailed] += energyModel.p_timeStep_h ;
 	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
 }
@@ -23716,7 +23804,7 @@ if (energyModel.v_isRapidRun) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1727102066485</Id>
 					<Name><![CDATA[f_curtailKSI]]></Name>
-					<X>890</X><Y>880</Y>
+					<X>2000</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23725,9 +23813,10 @@ if (energyModel.v_isRapidRun) {
 
 //traceln(" p_connectionCapacity_kW: " + p_connectionCapacity_kW);
 while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumption!
+	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
 	linesCurtailed ++;
 	if (linesCurtailed > 8) {
-		traceln("FAILED TO CURTAIL ENOUGH KSI, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
+		//traceln("FAILED TO CURTAIL ENOUGH KSI, STILL AN ELECTRIC POWER OF: " + v_currentPowerElectricity_kW);
 		//pauseSimulation();
 		linesCurtailed = 8;
 		break;
@@ -23735,14 +23824,14 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 	//traceln(" linesCurtailed: " + linesCurtailed);
 	//traceln("v_currentPowerElectricity_kW: " + v_currentPowerElectricity_kW);
 	for (J_EAProfile j_ea : c_profileAssets) {
+		//traceln("energyAssetName: " + j_ea.energyAssetName);
 		// curtail the pvz profiles. Done in steps (production lines can't be operated at fractional power)
 		if (j_ea.energyAssetName.contains("KSI")) {
-			//traceln("energyAssetName: " + j_ea.energyAssetName);
 			double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
 			//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
 			double curtailmentSetpoint_kW = ( 1.0 / (8 + 1 - linesCurtailed)) * currentElectricityConsumption_kW;
 			//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
-				j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
+			j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
 		}
 	}
 }
@@ -23753,11 +23842,12 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 // This would not account for the fact that it might still take additional time to start a new production line.
 
 // Comment from Ard-Jan: startup time is in the order of minutes. So not super relevant. Would be interesting to see how many times the production is turned on/off
+/*
 if (energyModel.v_isRapidRun) {
 	v_linesOperatedPVZ[8-linesCurtailed] += energyModel.p_timeStep_h ;
 	v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
 }
-		]]></Body>
+*/	]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -25615,7 +25705,7 @@ if (energyModel.v_isRapidRun) {
     			<DataSet>
 					<Id>1724918606772</Id>
 					<Name><![CDATA[data_generatorProfile_kWh]]></Name>
-					<X>1110</X><Y>900</Y>
+					<X>2025</X><Y>155</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
