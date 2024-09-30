@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - Modelstructuur: modelstructuur.md
   - Modeling conventions: modeling_conventions.md
+  - Lombok in AnyLogic: lombok/lombok.md
   - Rekenregels: rekenregels.md
   - Energy assets: energy_assets.md
   - Prijzen en geldstromen: prijzen_en_geldstromen.md

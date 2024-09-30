@@ -7,5 +7,6 @@ Documentation is hosted at [zerodocs.zenmo.com](https://zerodocs.zenmo.com)
 
 Optionally works together with:
 
+* [Zero interface-loader](https://github.com/Zenmo/zero_Interface-Loader)
 * [Zero Results UI](https://github.com/Zenmo/zero_results_UI)
 * [Zero Configurator](https://github.com/Zenmo/zero)
