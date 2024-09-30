@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -4633,7 +4633,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[J_profilePointer]]></Type>        
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -6906,7 +6906,6 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(v_runStartTime_h));
-	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(v_runStartTime_h*60));
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -24882,7 +24881,7 @@ if (energyModel.t_h == 121*24 ) {
 }
 ]]></Body>
 				</Function>
-					<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1725629047745</Id>
@@ -24892,7 +24891,6 @@ if (energyModel.t_h == 121*24 ) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-
 					<Body><![CDATA[//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 
