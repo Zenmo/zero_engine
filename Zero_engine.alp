@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -25058,7 +25058,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double offset = 1.34 * Math.sin( 2 * Math.PI * energyModel.t_h / 8760.0 + 2 * Math.PI * 3650.0 / 8760.0 );
+					<Body><![CDATA[double offset = 0.5+1.0 * Math.cos( 2 * Math.PI * (energyModel.t_h + 760 - 168) / 8760.0 ) - (v_batterySOC_fr - 0.5);
 double batteryStorageCapacity_kWh = p_batteryAsset.getStorageCapacity_kWh();
 if (batteryStorageCapacity_kWh != 0){
 	double batteryCapacity_kW = p_batteryAsset.getCapacityElectric_kW();
