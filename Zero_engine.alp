@@ -4971,7 +4971,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[8000]]></Code>
+							<Code><![CDATA[8000+168]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1699275323337</Id>
@@ -4995,7 +4995,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[3288+24*7*2]]></Code>
+							<Code><![CDATA[3288+24*7+168]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1699275323345</Id>
@@ -5657,7 +5657,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 						<OccurrenceAtTime>true</OccurrenceAtTime>
 						<OccurrenceDate>1674115200000</OccurrenceDate>
 						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[8168]]></Code>
+							<Code><![CDATA[p_startHourWinterWeek+168]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
@@ -6148,6 +6148,7 @@ for( J_EA e : c_ambientAirDependentAssets ) {
 
 // Update forecasts,  the relevant profile pointers are already updated above
 c_forecasts.forEach(f -> f.updateForecast(t_h));
+
 v_SolarYieldForecast_fr = pf_solarPVproduction.getForecast();
 v_WindYieldForecast_fr = pf_windOnshoreProduction.getForecast();
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
@@ -24832,22 +24833,24 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 //double averageDailyLoad_kWh = averageDailyConsumption_kWh - batteryStorageCapacity_kWh;
 //double averageLoad_kW = averageDailyLoad_kWh / 24;
 
+//traceln("curent consumption forecast: " + pf.getForecast());
 
 // starthourwinterweek: 8000
 // starthoursummerweek: 3288+24*7
-double weeklySummerConsumption_kWh = 211;
-double weeklyWinterConsumption_kWh = 299;
+//double weeklySummerConsumption_kWh = 211;
+//double weeklyWinterConsumption_kWh = 299;
 
-double dailySummerConsumption_kWh = weeklySummerConsumption_kWh / 7;
-double dailyWinterConsumption_kWh = weeklyWinterConsumption_kWh / 7;
+//double dailySummerConsumption_kWh = weeklySummerConsumption_kWh / 7;
+//double dailyWinterConsumption_kWh = weeklyWinterConsumption_kWh / 7;
 
-double averageSummerLoad_kW = dailySummerConsumption_kWh / 24;
-double averageWinterLoad_kW = dailyWinterConsumption_kWh / 24;
+//double averageSummerLoad_kW = dailySummerConsumption_kWh / 24;
+//double averageWinterLoad_kW = dailyWinterConsumption_kWh / 24;
 
 // Robustness against deviations from average? mostly from EV charging
 //averageSummerLoad_kW *= 1.4;
 //averageWinterLoad_kW *= 1.1;
 
+/*
 double averageLoad_kW = 0;
 // linear interpolation between these
 if (energyModel.t_h < energyModel.p_startHourWinterWeek && energyModel.t_h > energyModel.p_startHourSummerWeek ) {
@@ -24860,8 +24863,16 @@ else { // Interpolation outside these
 	double a = - ( averageWinterLoad_kW - averageSummerLoad_kW ) / (energyModel.p_startHourWinterWeek - energyModel.p_startHourSummerWeek );
 	averageLoad_kW = averageWinterLoad_kW + a*x;
 }
+*/
 
-traceln("averageLoad_kW before solar: " + averageLoad_kW);
+J_ProfileForecaster pf = findFirst(energyModel.c_forecasts, f -> f.getName().equals("custom_house_electricity_demand"));
+J_ProfileForecaster pfShortTerm = findFirst(energyModel.c_forecasts, f -> f.getName().equals("custom_house_electricity_demand_short_term"));
+
+traceln("long term: " + pf.getForecast());
+traceln("short term: " + pfShortTerm.getForecast());
+
+double shortTermFactor = 0.2;
+double averageLoad_kW = (1-shortTermFactor)*pf.getForecast() + shortTermFactor*pfShortTerm.getForecast();
 
 // TODO: Add offset based on battery capacity and solar installed!!
 double IncomingPV_kWh = energyModel.p_forecastTime_h * energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW;
@@ -24869,14 +24880,14 @@ traceln("IncomingPV_kWh: " + IncomingPV_kWh);
 
 double batteryStorageCapacity_kWh = p_batteryAsset.getStorageCapacity_kWh();
 
-double energyFromStorage_kWh = min( IncomingPV_kWh, 1.5 * batteryStorageCapacity_kWh);
+double energyFromStorage_kWh = min( IncomingPV_kWh, batteryStorageCapacity_kWh);
 
 averageLoad_kW -= (energyFromStorage_kWh / energyModel.p_forecastTime_h);
 
 traceln("averageLoad_kW after solar: " + averageLoad_kW);
 
 // Battery SOC feedback
-double SOCFeedbackGain = .5;
+double SOCFeedbackGain = 0.3; // should be dependant on average load?
 averageLoad_kW += SOCFeedbackGain * (0.5 - p_batteryAsset.getCurrentStateOfCharge());
 
 
@@ -24921,7 +24932,7 @@ if (batteryStorageCapacity_kWh != 0){
 	
 }
 
-if (energyModel.t_h == 121*24 ) {
+if (energyModel.t_h == energyModel.p_startHourSummerWeek + 168 ) {
 	pauseSimulation();
 }
 ]]></Body>
@@ -42641,8 +42652,11 @@ switch (p_heatingType) {
 		f_heatWithDistrictHeat();
 	break;
 	
+	case NONE:
+	break;
+	
 	default:
-		traceln("Ubsupported heatingtype in household");
+		traceln("Unsupported heatingtype in household");
 	break;
 }
 
