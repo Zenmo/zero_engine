@@ -23787,10 +23787,13 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 		if (j_ea.energyAssetName.contains("PVZ")) {
 			//traceln("energyAssetName: " + j_ea.energyAssetName);
 			double currentElectricityConsumption_kW = j_ea.lastFlowsArray[4];
+			
 			//traceln("currentElectricityConsumption_kW: " + currentElectricityConsumption_kW);
 			double curtailmentSetpoint_kW = ( 1.0 / (8 + 1 - linesCurtailed)) * currentElectricityConsumption_kW;
 			//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
-				j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
+			j_ea.curtailElectricityConsumption(curtailmentSetpoint_kW);
+					
+			v_fixedConsumptionElectric_kW +=  j_ea.getLastFlows()[4] - currentElectricityConsumption_kW;
 		}
 	}
 }
