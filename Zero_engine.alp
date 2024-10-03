@@ -22388,7 +22388,6 @@ for(J_EAConsumption e : c_consumptionAssets) {
 	} 
 	else if( e.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION ){	
 		e.f_updateAllFlows( energyModel.v_currentHouseHoldHotWaterDemand_fr );
-		//v_currentPowerHeat_kW += e.v_currentConsumptionHeat_kW - e.v_currentProductionHeat_kW; // PowerFlows van consumption assets worden al in f_calculateEnergyBalance opgeteld, dus dit is dubbel!
 	}
 	else if( e.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND ) {
 		//traceln("Heat demand asset ID: " + e.getName());
@@ -24028,7 +24027,8 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = null;
 		c_batteryAssets.remove(j_ea);
-		
+	} else if (j_ea.energyAssetType == OL_EnergyAssetType.STORAGE_HEAT){
+		p_heatBuffer = null;
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = null;
@@ -42784,7 +42784,7 @@ public void f_simpleCharging(){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.heatConsumption_kW : 0;
+					<Body><![CDATA[v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.getLastFlows()[7] : 0;
 setHeatingTargetTemp();
  
 switch (p_heatingType) {	
@@ -43675,7 +43675,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1693300820997</Id>
 					<Name><![CDATA[f_connectTo_J_EA_House]]></Name>
-					<X>960</X><Y>90</Y>
+					<X>1140</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
