@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -8257,17 +8257,19 @@ int columnIndex = 2;
 int arraySize = acc_annualElectricityBalance_kW.getTimeSeries().length;
 traceln("ArraySize: %s", arraySize);
 for (int i = 0; i < arraySize ; i++) {
-	p_gridNodeTimeSeriesExcel.setCellValue((i) * p_timeStep_h, "Sheet1", i+2, 1);
+	p_gridNodeTimeSeriesExcel.setCellValue((i) * p_timeStep_h, "TrafoData", i+2, 1);
 }
 
 for(GridNode gn : pop_gridNodes){
-	
+	p_gridNodeTimeSeriesExcel.setCellValue(gn.p_gridNodeID, "TrafoData", 1, columnIndex);
 	double[] loadArray = gn.acc_annualElectricityBalance_kW.getTimeSeries();
 	for (int i = 0; i < arraySize ; i++ ) {		
-		p_gridNodeTimeSeriesExcel.setCellValue(loadArray[i], "Sheet1", i+2, columnIndex);
+		p_gridNodeTimeSeriesExcel.setCellValue(loadArray[i], "TrafoData", i+2, columnIndex);
 	}
 	columnIndex++;
 }
+
+//p_gridNodeTimeSeriesExcel.writeFile(force);;
 
 traceln("Finished writing trafoloads to excel!");]]></Body>
 				</Function>
@@ -23043,6 +23045,7 @@ if (j_ea instanceof J_EAVehicle) {
 		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
 			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
