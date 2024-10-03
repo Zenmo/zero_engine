@@ -23797,6 +23797,8 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 		}
 	}
 }
+
+// Opschalen kost een kwartier
 if (linesCurtailed < v_previousLinesCurtailedPVZ) {
 	int temp = linesCurtailed;
 	linesCurtailed = v_previousLinesCurtailedPVZ;
@@ -23814,7 +23816,6 @@ if (energyModel.v_isRapidRun) {
 	//}
 	
 	// Take the 2 weeks maintenance and downtimes into account
-
 	if ( !c_downTimes.contains(energyModel.v_timeStepsElapsed) ) {
 		v_linesOperatedPVZ[8-linesCurtailed] += energyModel.p_timeStep_h ;
 		v_PVZEffectiveTimeOperated_h += energyModel.p_timeStep_h * (8 - linesCurtailed);
