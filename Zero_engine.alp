@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -17423,7 +17423,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028145282</Id>
 					<Name><![CDATA[v_electricityProducedPV_kWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -17436,7 +17435,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1671028164395</Id>
 					<Name><![CDATA[v_electricityProducedWind_kWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -19815,7 +19813,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102505705</Id>
 					<Name><![CDATA[v_totalElectricityDrawnFromGridInsideCapacity_kWh]]></Name>
-					<X>820</X><Y>1640</Y>
+					<X>820</X><Y>1660</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19827,7 +19825,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102509251</Id>
 					<Name><![CDATA[v_totalElectricityDrawnFromGridOutsideCapacity_kWh]]></Name>
-					<X>820</X><Y>1660</Y>
+					<X>820</X><Y>1680</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19839,7 +19837,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102692416</Id>
 					<Name><![CDATA[v_totalElectricityDeliveredFromGridInsideCapacity_kWh]]></Name>
-					<X>820</X><Y>1680</Y>
+					<X>820</X><Y>1700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19851,7 +19849,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727102692418</Id>
 					<Name><![CDATA[v_totalElectricityDeliveredFromGridOutsideCapacity_kWh]]></Name>
-					<X>820</X><Y>1700</Y>
+					<X>820</X><Y>1720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19933,6 +19931,198 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317245993</Id>
+					<Name><![CDATA[v_totalWindSupply_MWh]]></Name>
+					<X>820</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317267642</Id>
+					<Name><![CDATA[v_totalWindSupplySummer_MWh]]></Name>
+					<X>1050</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317281786</Id>
+					<Name><![CDATA[v_totalWindSupplyWinter_MWh]]></Name>
+					<X>1350</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317299841</Id>
+					<Name><![CDATA[v_totalWindSupplyDay_MWh]]></Name>
+					<X>1610</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317314545</Id>
+					<Name><![CDATA[v_totalWindSupplyNight_MWh]]></Name>
+					<X>1900</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317337099</Id>
+					<Name><![CDATA[v_totalPVSupply_MWh]]></Name>
+					<X>820</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317337101</Id>
+					<Name><![CDATA[v_totalPVSupplySummer_MWh]]></Name>
+					<X>1050</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317337103</Id>
+					<Name><![CDATA[v_totalPVSupplyWinter_MWh]]></Name>
+					<X>1350</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317337105</Id>
+					<Name><![CDATA[v_totalPVSupplyDay_MWh]]></Name>
+					<X>1610</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317337107</Id>
+					<Name><![CDATA[v_totalPVSupplyNight_MWh]]></Name>
+					<X>1900</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317704935</Id>
+					<Name><![CDATA[acc_annualWind_kW]]></Name>
+					<X>820</X><Y>1600</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317723940</Id>
+					<Name><![CDATA[acc_annualPV_kW]]></Name>
+					<X>820</X><Y>1620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317749475</Id>
+					<Name><![CDATA[acc_summerWind_kW]]></Name>
+					<X>1150</X><Y>1600</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317769408</Id>
+					<Name><![CDATA[acc_summerPV_kW]]></Name>
+					<X>1150</X><Y>1620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317804920</Id>
+					<Name><![CDATA[acc_winterWind_kW]]></Name>
+					<X>1490</X><Y>1600</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728317818111</Id>
+					<Name><![CDATA[acc_winterPV_kW]]></Name>
+					<X>1490</X><Y>1620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -21636,6 +21826,9 @@ if (energyModel.v_isRapidRun){
 	acc_annualElectricityConsumption_kW.addStep(energyModel.t_h,v_currentElectricityConsumption_kW);
 	acc_annualHeatProduction_kW.addStep(energyModel.t_h,v_currentEnergyProductionHeat_kW);
 	
+	acc_annualWind_kW.addStep(energyModel.t_h, v_windProductionElectric_kW);
+	acc_annualPV_kW.addStep(energyModel.t_h, v_pvProductionElectric_kW);
+	
 	//a_annualElectricityBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerElectricity_kW;
 	//a_annualMethaneBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerMethane_kW;
 	//a_annualHydrogenBalance_kW[energyModel.v_timeStepsElapsed] = v_currentPowerHydrogen_kW;
@@ -21809,7 +22002,7 @@ for(J_EAProduction e : c_productionAssets) {
 	}
 	else if(e.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double[] flowsArray = e.f_updateAllFlows( energyModel.v_currentWindPowerNormalized_r );
-		v_windProductionElectric_kW += flowsArray[0];	
+		v_windProductionElectric_kW += flowsArray[0];
 	}
 	else if( e.energyAssetType == OL_EnergyAssetType.RESIDUALHEATHT ) {
 		e.v_powerFraction_fr = 1;
@@ -21977,6 +22170,8 @@ v_totalEnergyConsumed_MWh = 0;
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
 
+v_electricityProducedWind_kWh = 0;
+v_electricityProducedPV_kWh = 0;
 
 v_summerWeekTotalImport_MWh = 0;
 v_summerWeekTotalExport_MWh = 0;
@@ -22117,6 +22312,9 @@ acc_annualEnergyCurtailed_kW.reset();
 acc_annualElectricityProduction_kW.reset();
 acc_annualElectricityConsumption_kW.reset();
 acc_annualHeatProduction_kW.reset();
+
+acc_annualWind_kW.reset();
+acc_annualPV_kW.reset();
 
 acc_summerElectricityBalance_kW.reset();
 acc_summerMethaneBalance_kW.reset();
@@ -22950,6 +23148,8 @@ v_heatDelivered_kWh = -acc_annualHeatBalance_kW.getSumNeg() * energyModel.p_time
 v_totalImport_MWh = (v_electricityDrawnFromGrid_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh + v_heatDrawn_kWh)/1000;
 v_totalExport_MWh = (v_electricityDeliveredToGrid_kWh + v_methaneDelivered_kWh+ v_hydrogenDelivered_kWh + v_dieselDelivered_kWh + v_heatDelivered_kWh)/1000;
 
+v_electricityProducedPV_kWh = acc_annualPV_kW.getSum() * energyModel.p_timeStep_h;
+v_electricityProducedWind_kWh = acc_annualWind_kW.getSum() * energyModel.p_timeStep_h;
 
 /*v_methaneDrawn_kWh = Arrays.stream(a_annualMethaneBalance_kW).filter(m -> m > 0).sum() * energyModel.p_timeStep_h;
 v_methaneDelivered_kWh = -Arrays.stream(a_annualMethaneBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
@@ -23428,6 +23628,8 @@ acc_annualDieselBalance_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h
 acc_annualHeatBalance_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 acc_annualTotalImport_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 acc_annualTotalExport_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualWind_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
+acc_annualPV_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 acc_annualEnergyProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 acc_annualEnergyConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h,8760);
 acc_annualEnergyCurtailed_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
