@@ -20125,6 +20125,30 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728395090283</Id>
+					<Name><![CDATA[v_PVZKLineLaunchesRapidRun]]></Name>
+					<X>2150</X><Y>350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728396401420</Id>
+					<Name><![CDATA[v_PVZKLineLaunchesBaseRun]]></Name>
+					<X>2150</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -22377,6 +22401,7 @@ v_linesOperatedPVZ = new double[9];
 v_KSIEffectiveTimeOperated_h = 0;
 v_linesOperatedKSI = new double[9];
 
+v_PVZKLineLaunchesRapidRun = 0;
 
 v_totalElectricityDrawnFromGridInsideCapacity_kWh = 0;
 v_totalElectricityDrawnFromGridOutsideCapacity_kWh = 0;
@@ -24000,8 +24025,17 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 	}
 }
 
+
+
 // Opschalen kost een kwartier
 if (linesCurtailed < v_previousLinesCurtailedPVZ) {
+	traceln("line opschalen na curtailment");
+	if (energyModel.v_isRapidRun){
+		v_PVZKLineLaunchesRapidRun += v_previousLinesCurtailedPVZ - linesCurtailed;
+	}
+	else{
+		v_PVZKLineLaunchesBaseRun +=  v_previousLinesCurtailedPVZ - linesCurtailed;
+	}
 	int temp = linesCurtailed;
 	linesCurtailed = v_previousLinesCurtailedPVZ;
 	v_previousLinesCurtailedPVZ = temp;
@@ -24016,6 +24050,7 @@ if (energyModel.v_isRapidRun) {
 	//if (linesCurtailed == 0) {
 		//traceln("time: " + energyModel.t_h);
 	//}
+	
 	
 	// Take the 2 weeks maintenance and downtimes into account
 	if ( !c_downTimes.contains(energyModel.v_timeStepsElapsed) ) {
