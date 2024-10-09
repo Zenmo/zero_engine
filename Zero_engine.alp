@@ -23105,12 +23105,17 @@ if (j_ea instanceof J_EAVehicle) {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+		if(p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP)
+			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
+		else{
+			p_primaryHeatingAsset = (J_EAConversion)j_ea;
+		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 		c_electricHeatpumpAssets.add(j_ea);
 		c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
+
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
@@ -23849,7 +23854,11 @@ if (j_ea instanceof J_EAVehicle) {
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		p_primaryHeatingAsset = null;
+		if(p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP)
+			p_secondaryHeatingAsset = null;
+		else{
+			p_primaryHeatingAsset = null;
+		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		p_primaryHeatingAsset = null;
 		energyModel.c_ambientAirDependentAssets.remove(j_ea);
@@ -45724,7 +45733,7 @@ FullCapacity.]]></Description>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.05]]></Code>
+							<Code><![CDATA[0.10]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
