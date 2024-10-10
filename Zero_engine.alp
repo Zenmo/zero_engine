@@ -20126,9 +20126,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1728395090283</Id>
+					<Id>1728578903803</Id>
 					<Name><![CDATA[v_PVZKLineLaunchesRapidRun]]></Name>
-					<X>2150</X><Y>350</Y>
+					<X>2670</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20138,9 +20138,33 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1728396401420</Id>
+					<Id>1728578903805</Id>
 					<Name><![CDATA[v_PVZKLineLaunchesBaseRun]]></Name>
-					<X>2150</X><Y>370</Y>
+					<X>2670</X><Y>430</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728578903807</Id>
+					<Name><![CDATA[v_actieveLijnen]]></Name>
+					<X>2900</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1728578903809</Id>
+					<Name><![CDATA[v_vorigeActieveLijnen]]></Name>
+					<X>2900</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24029,13 +24053,6 @@ while (v_currentPowerElectricity_kW > p_connectionCapacity_kW) { // overconsumpt
 
 // Opschalen kost een kwartier
 if (linesCurtailed < v_previousLinesCurtailedPVZ) {
-	traceln("line opschalen na curtailment");
-	if (energyModel.v_isRapidRun){
-		v_PVZKLineLaunchesRapidRun += v_previousLinesCurtailedPVZ - linesCurtailed;
-	}
-	else{
-		v_PVZKLineLaunchesBaseRun +=  v_previousLinesCurtailedPVZ - linesCurtailed;
-	}
 	int temp = linesCurtailed;
 	linesCurtailed = v_previousLinesCurtailedPVZ;
 	v_previousLinesCurtailedPVZ = temp;
