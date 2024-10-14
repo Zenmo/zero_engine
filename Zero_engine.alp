@@ -51473,7 +51473,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1719849166911</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>1000</X><Y>240</Y>
+					<X>910</X><Y>220</Y>
 					<Label><X>20</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51570,7 +51570,7 @@ v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722585552607</Id>
 					<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-					<X>800</X><Y>340</Y>
+					<X>920</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51660,7 +51660,7 @@ return powerDemandDivision; //{Gasburner power request, HP power request, DH pow
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722595238227</Id>
 					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-					<X>960</X><Y>90</Y>
+					<X>1070</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -53989,7 +53989,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+				//traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
 						
 				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
 				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
