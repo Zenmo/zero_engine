@@ -108,6 +108,10 @@
 				<Name><![CDATA[REGION]]></Name>
 			</Option>
 			<Option>
+				<Id>1729007177070</Id>
+				<Name><![CDATA[NEIGHBOURHOOD]]></Name>
+			</Option>
+			<Option>
 				<Id>1659118328423</Id>
 				<Name><![CDATA[PARCEL]]></Name>
 			</Option>
