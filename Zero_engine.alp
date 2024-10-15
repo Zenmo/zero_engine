@@ -34291,7 +34291,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[ZeroAccumulator]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
+							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -37439,7 +37439,6 @@ acc_winterHeatProduction_kW.reset();
 					<Body><![CDATA[v_electricityImported_kWh = acc_annualElectricityBalance_kW.getSumPos() * energyModel.p_timeStep_h;
 v_electricityExported_kWh = -(acc_annualElectricityBalance_kW.getSum() * energyModel.p_timeStep_h - v_electricityImported_kWh);
 //v_electricityExportedToGrid_kWh = -Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
-
 
 v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum()  * energyModel.p_timeStep_h / 1000;
 v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum()  * energyModel.p_timeStep_h / 1000;
@@ -47711,7 +47710,7 @@ public void f_operateFlexAssets(){
 
 @Override
 public void f_batteryManagementBalance( double batterySOC ){
-	f_batteryManagementBalanceGrid( batterySOC );
+	f_batteryManagementNodalPricing( batterySOC );
 }
 
 @Override
