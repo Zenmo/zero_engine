@@ -5,7 +5,6 @@ De basis van het energiemodel is de wet van behoud van energie: energie kan nooi
 
 Energie kan wel het model in of uit stromen. 
 Dat kan via de volgende paden:
-
 * Import van de energiedragers elektriciteit, gas, waterstof en diesel/benzine (nu 1 energiedrager). 
 * Export van de energiedragers elektriciteit, gas, en waterstof. (de aanname is dat in onze modellen nooit diesel of benzine geproduceerd worden)
 * Primaire opwek (winning) van energie zoals energieproductie door windmolens en zonnepanelen, maar ook instraling en convectie van warmte van de buitenwereld naar gebouwen in het model. Hier _onstaat_ geen nieuwe energie, maar wordt als het ware energie _geoogst_ (gewonnen). Deze energiestromen worden in het model bijgehouden als energyProduction_kW.
@@ -26,5 +25,3 @@ Wanneer deze twee berekeningen niet op hetzelfde zelfverbruik uitkomen, geeft da
 ## van vermogen [kW] naar energie [kWh]: p_timestep_h
 Numerieke integratie van vermogens per tijdstap: optellen van vermogen[kW]*tijdstap[h] = energie [kWh].
 De 'solver' hierbij is het zero-order-hold princiepe: we benaderen vermogens als constant gedurende een tijdstap. 
-
-## Nieuwe paragraaf
