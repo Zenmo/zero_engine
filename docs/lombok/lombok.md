@@ -10,16 +10,19 @@ builder classes, value classes, null checks, and getters.
 
 To use it in AnyLogic:
 
-1\. Download [lombok.jar](https://projectlombok.org/downloads/lombok.jar) and place it in the AnyLogic directory, for example
+1\. Download [lombok.jar](https://projectlombok.org/downloads/lombok.jar) and 
+place it in the AnyLogic directory, for example
 `C:\Program Files\AnyLogic 8.9 Personal Learning Edition\lombok.jar`
 
-2\. Add the following line to `AnyLogic.ini` in the same directory:
+2\. Add the line below to `AnyLogic.ini` in the same directory. To do this in 
+Windows, run notepad as Administrator and then navigate to the file via 
+"File" > "Open".
 
 ```
 -javaagent:./lombok.jar
 ```
 
-It should look like this:
+`AnyLogic.ini` should look like this:
 
 ```
 -vmargs
