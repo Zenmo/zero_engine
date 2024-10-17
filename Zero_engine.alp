@@ -22852,7 +22852,7 @@ if ( p_BuildingThermalAsset == null ) {
 		}*/
 	}
 	if (p_primaryHeatingAsset != null) {
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
+		J_FlowsMap flowsMap = p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
 		//v_conversionPowerElectric_kW += flowsArray[4] - flowsArray[0]; //p_primaryHeatingAsset.electricityConsumption_kW - p_primaryHeatingAsset.electricityProduction_kW;
 		/*if (p_primaryHeatingAsset instanceof J_EAConversionHeatPump) {
 			v_heatPumpElectricityConsumption_kW += flowsArray[4] - flowsArray[0];
@@ -23067,7 +23067,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 			chargingPower_kW = min(chargingPower_kW, maxChargingPower_kW);
 			remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW);
 			double ratio_fr = chargingPower_kW / maxChargingPower_kW;
-			EnumMap<OL_FlowsMapKeys, Double> flowsMap = ev.f_updateAllFlows( ratio_fr );
+			J_FlowsMap flowsMap = ev.f_updateAllFlows( ratio_fr );
 			//gridConnection.v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
 			
 			//double x = flowsArray[4] - flowsArray[0];
@@ -23147,7 +23147,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		}
 		//}
 		//traceln("Hello! Charge setpoint: " + chargeSetpoint_kW);
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
+		J_FlowsMap flowsMap = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
 		v_evChargingPowerElectric_kW += flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW) - flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);
 		//v_evChargingPowerElectric_kW += vehicle.electricityConsumption_kW - vehicle.electricityProduction_kW;
 		remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW;
@@ -23429,7 +23429,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 				traceln("remainingChargePower_kW: " + remainingChargePower_kW + "charge setpoint kW: " + chargeSetpoint_kW);
 			}*/
 		}
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
+		J_FlowsMap flowsMap = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
 		v_evChargingPowerElectric_kW += flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW) - flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);
 		//v_evChargingPowerElectric_kW += vehicle.electricityConsumption_kW - vehicle.electricityProduction_kW;
 		remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW;
@@ -23727,7 +23727,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[flowsMap]]></Name>
-						<Type><![CDATA[EnumMap<OL_FlowsMapKeys, Double>]]></Type>
+						<Type><![CDATA[J_FlowsMap]]></Type>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[caller]]></Name>
@@ -24342,7 +24342,7 @@ else {
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[flowsMap]]></Name>
-						<Type><![CDATA[EnumMap<OL_FlowsMapKeys, Double>]]></Type>
+						<Type><![CDATA[J_FlowsMap]]></Type>
 					</Parameter>
 					<Parameter>
 						<Name><![CDATA[caller]]></Name>
@@ -28292,7 +28292,7 @@ v_currentConsumptionDiesel_kW += arr[8];]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[flowsMap]]></Name>
-						<Type><![CDATA[EnumMap<OL_FlowsMapKeys, Double>]]></Type>
+						<Type><![CDATA[J_FlowsMap]]></Type>
 					</Parameter>
 					<Body><![CDATA[v_currentProductionElectricity_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);
 v_currentConsumptionElectricity_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
@@ -28318,7 +28318,7 @@ v_currentConsumptionDiesel_kW = flowsMap.get(OL_FlowsMapKeys.DIESEL_CONSUMPTION_
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[flowsMap]]></Name>
-						<Type><![CDATA[EnumMap<OL_FlowsMapKeys, Double>]]></Type>
+						<Type><![CDATA[J_FlowsMap]]></Type>
 					</Parameter>
 					<Body><![CDATA[v_currentProductionElectricity_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);
 v_currentConsumptionElectricity_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
@@ -42758,7 +42758,7 @@ if( p_batteryAsset != null){
 		default:
 		break;
 	}
-	EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	J_FlowsMap flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	//v_batteryPowerElectric_kW =  arr[4] - arr[0];
 	//v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
@@ -43210,7 +43210,7 @@ if( p_householdEV.getCurrentStateOfCharge() < 1 ) {
 	}//*/
 }
 
-EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_householdEV.f_updateAllFlows(powerFraction_fr);
+J_FlowsMap flowsMap = p_householdEV.f_updateAllFlows(powerFraction_fr);
 //v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_householdEV.electricityConsumption_kW - p_householdEV.electricityProduction_kW;
 ]]></Body>
 				</Function>
@@ -44408,7 +44408,7 @@ if( b_validLocalBuffer ) {
 
 	//traceln("Thermal storage asset heatCapacity: " + p_DHheatStorage.getHeatCapacity_kW());
 	double heatingSetpoint_kW = max(0,(tempSetpoint_degC - v_bufferTemp_degC)) * p_DHheatStorage.getHeatCapacity_JpK() / (3.6e6 * energyModel.p_timeStep_h);
-	EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getHeatCapacity_kW() );
+	J_FlowsMap flowsMap = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getHeatCapacity_kW() );
 	double heatingPower_kW = flowsMap.get(OL_FlowsMapKeys.HEAT_PRODUCTION_KW);
 	
 	//traceln("Heating setpoint: %s kW, heating power: %s kW", heatingSetpoint_kW, heatingPower_kW);	
@@ -44420,7 +44420,7 @@ if( b_validLocalBuffer ) {
 	//traceln("heatTransferToNetwork_kW: " + heatTransferToNetwork_kW);
 	//traceln("District heating system temperature: %s degC", p_DHheatStorage.getCurrentTemperature());
 } else {
-	EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getHeatCapacity_kW()); // heatingasset must be powerful enough every single timestep!
+	J_FlowsMap flowsMap = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getHeatCapacity_kW()); // heatingasset must be powerful enough every single timestep!
 	if ( 0.01 < (heatTransferToNetwork_kW - flowsMap.get(OL_FlowsMapKeys.HEAT_PRODUCTION_KW)) ) {
 		traceln("Warning! District heating primary heating asset not able to fulfill heat demand! Heatdemand: %s kW, heat produced: %s kW", heatTransferToNetwork_kW, flowsMap.get(OL_FlowsMapKeys.HEAT_PRODUCTION_KW) );
 	}	
@@ -45360,7 +45360,7 @@ if ( p_batteryAsset != null ) {
 			f_batteryManagementNodalPricing(v_batterySOC_fr);
 		}
 
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
+		J_FlowsMap flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		v_batteryPowerElectric_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW) - flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
@@ -46491,7 +46491,7 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	
 	//Output
 	//double[] flowsArray = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
-	EnumMap<OL_FlowsMapKeys, Double> flowsMap = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
+	J_FlowsMap flowsMap = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
 	
 	
 	v_conversionPowerElectric_kW += flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
@@ -47595,7 +47595,7 @@ if (p_batteryAsset != null){ // TEST CODE
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0) {
 		//f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
 		f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+		J_FlowsMap flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 		//traceln("flows:" + Arrays.toString(arr));
 		v_batteryPowerElectric_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW) - flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);
 	}
@@ -48218,7 +48218,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 			f_batteryManagementPrice(v_batterySOC_fr);
 		}
 		
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
+		J_FlowsMap flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		v_batteryPowerElectric_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW) - flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
@@ -49475,7 +49475,7 @@ if (p_batteryAsset != null){ // TEST CODE
 				break;
 		}
 		
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+		J_FlowsMap flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 		//traceln("flows:" + Arrays.toString(arr));
 		//v_batteryPowerElectric_kW = arr[4] - arr[0];
 	}
@@ -49534,7 +49534,7 @@ if (v_currentPowerElectricity_kW > p_contractedDeliveryCapacity_kW * capacityLim
 		// Only works because there is a single energy conversion site
 		if (energyModel.EnergyConversionSites.get(0).v_hydrogenInStorage_kWh > 0 ) {
 			// Calling operate directly instead of updateAllFlows, so that it's not bounded
-			EnumMap<OL_FlowsMapKeys, Double> flowsMap = fuelCellAsset.operate(ratioOfCapacity);
+			J_FlowsMap flowsMap = fuelCellAsset.operate(ratioOfCapacity);
 			//traceln("fuel cell operated: " + Arrays.toString(arr));
 			
 			// Since not calling updateAllFlows, have to manually do this
@@ -52149,8 +52149,6 @@ if (j_ea instanceof J_EAVehicle) {
 			<Text><![CDATA[/**
  * J_EAProduction
  */
-import java.util.EnumMap;
-
 public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	//public double yearlyProductionElectricity_kWh;
@@ -52217,7 +52215,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	@Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		if (profilePointer != null) {			
 			ratioOfCapacity = profilePointer.getCurrentValue();
 		}
@@ -52236,14 +52234,14 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	return returnEnergyFlows();
 	}
 
-    public EnumMap<OL_FlowsMapKeys, Double> curtailElectricityProduction(double curtailmentSetpoint_kW) {
+    public J_FlowsMap curtailElectricityProduction(double curtailmentSetpoint_kW) {
     	//double currentElectricityProduction_kW = lastFlowsArray[0];
     	double currentElectricityProduction_kW = lastFlowsMap.get(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW);
 
     	double curtailmentPower_kW = max(0,min(currentElectricityProduction_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	//double[] arr = {-curtailmentPower_kW, 0, 0, 0, 0, 0, 0, 0, 0, curtailmentPower_kW};
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = new EnumMap<>(OL_FlowsMapKeys.class);
+    	J_FlowsMap flowsMap = new J_FlowsMap();
     	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW, -curtailmentPower_kW);
     	flowsMap.put(OL_FlowsMapKeys.ENERGY_USE_KW, curtailmentPower_kW);
 
@@ -52296,8 +52294,6 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAStorage
  */
-import java.util.EnumMap;
-
 public class J_EAStorage extends J_EA implements Serializable {
 
 	protected OL_EnergyCarrierType storageMedium;
@@ -52339,7 +52335,7 @@ public class J_EAStorage extends J_EA implements Serializable {
     	//
     }
 
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfChargeCapacity_r) {
+    public J_FlowsMap operate(double ratioOfChargeCapacity_r) {
     	// traceln("storage operate! ");
     	//double[] arr = {0,0,0,0,0,0,0,0};
     	//return arr;
@@ -52409,8 +52405,6 @@ public class J_EAStorage extends J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversion
  */
-import java.util.EnumMap;
-
 public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 
 	protected OL_EnergyCarrierType energyCarrierProduced;
@@ -52436,10 +52430,10 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	}
 
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+	public J_FlowsMap operate(double ratioOfCapacity) {
 		//
 		//double[] arr = {0,0,0,0,0,0,0,0,0 };
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = new EnumMap<>(OL_FlowsMapKeys.class);
+		J_FlowsMap flowsMap = new J_FlowsMap();
 		//return arr;
 		return flowsMap;
 	}
@@ -52470,8 +52464,6 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConsumption
  */
-import java.util.EnumMap;
-
 public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	public double yearlyDemandElectricity_kWh;
@@ -52523,7 +52515,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     }
     
 	@Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		
 		if (profilePointer != null) {			
 			ratioOfCapacity = profilePointer.getCurrentValue();
@@ -52541,14 +52533,14 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return returnEnergyFlows();
    	}
 	
-    public EnumMap<OL_FlowsMapKeys, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    public J_FlowsMap curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	//double currentElectricityProduction_kW = lastFlowsArray[4];
     	double currentElectricityConsumption_kW = lastFlowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
     	loadLoad_kWh += curtailmentPower_kW * timestep_h;
     	//double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = new EnumMap<>(OL_FlowsMapKeys.class);
+    	J_FlowsMap flowsMap = new J_FlowsMap();
     	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW, -curtailmentPower_kW);
     	flowsMap.put(OL_FlowsMapKeys.ENERGY_USE_KW, -curtailmentPower_kW);
 
@@ -52593,8 +52585,6 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EA
  */
-import java.util.EnumMap;
-
 public class J_EA implements Cloneable {
 
 	 protected Agent parentAgent;
@@ -52644,7 +52634,7 @@ public class J_EA implements Cloneable {
 	 // and optionally in: f_calculateGridConnectionFlows?
 	 
 	 //public double[] lastFlowsArray = new double[10];
-	 public EnumMap<OL_FlowsMapKeys, Double> lastFlowsMap = new EnumMap<>(OL_FlowsMapKeys.class);
+	 public J_FlowsMap lastFlowsMap = new J_FlowsMap();
 	 
 	 
 	 // debugging purposes!
@@ -52694,11 +52684,11 @@ public class J_EA implements Cloneable {
     	}
     }*/
     
-    public EnumMap<OL_FlowsMapKeys, Double> f_updateAllFlows(double powerFraction_fr) {
+    public J_FlowsMap f_updateAllFlows(double powerFraction_fr) {
 
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
     	//double[] arr = operate(powerFractionBounded_fr);
-     	EnumMap<OL_FlowsMapKeys, Double> flowsMap = operate(powerFractionBounded_fr);
+     	J_FlowsMap flowsMap = operate(powerFractionBounded_fr);
     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
     		//((GridConnection)parentAgent).f_addFlows(arr, this);
@@ -52736,15 +52726,15 @@ public class J_EA implements Cloneable {
     	return arr;
     }
    */
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
     	traceln("***Warning*** Parent energyAsset operate! This is a dummy function, doing nothing!");
     	//double[] arr = returnEnergyFlows(); //{electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = returnEnergyFlows();
+    	J_FlowsMap flowsMap = returnEnergyFlows();
     	//return arr;
     	return flowsMap;
     }
 
-    public EnumMap<OL_FlowsMapKeys, Double> returnEnergyFlows() {
+    public J_FlowsMap returnEnergyFlows() {
     	//traceln("returning energy flows from superclass");
     	/*if (parentAgent instanceof GridConnection ) {
     		if(this instanceof J_EAConversionCurtailer) {    			
@@ -52757,7 +52747,7 @@ public class J_EA implements Cloneable {
     	}*/
     	
     	//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW, energyUse_kW };    	
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = new EnumMap<>(OL_FlowsMapKeys.class);
+    	J_FlowsMap flowsMap = new J_FlowsMap();
     	
     	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW, this.electricityProduction_kW);
     	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW, this.electricityConsumption_kW);
@@ -52843,7 +52833,7 @@ public class J_EA implements Cloneable {
     	this.ui_energyAsset = ui_energyAsset;
     }
     
-    public EnumMap<OL_FlowsMapKeys, Double> getLastFlows() {
+    public J_FlowsMap getLastFlows() {
     	//return lastFlowsArray;
     	return lastFlowsMap;
     }
@@ -52887,8 +52877,6 @@ public class J_EA implements Cloneable {
 			<Text><![CDATA[/**
  * J_EAConversionGasBurner
  */
-import java.util.EnumMap;
-
 public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
@@ -52921,7 +52909,7 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		this.methaneConsumption_kW = heatProduction_kW / eta_r;
@@ -52970,8 +52958,6 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 			<Text><![CDATA[/**
  * J_EAConversionBiogasMethane
  */
-import java.util.EnumMap;
-
 public class J_EAConversionBiogasMethane extends zero_engine.J_EAConversion implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.METHANE;
@@ -52996,7 +52982,7 @@ public class J_EAConversionBiogasMethane extends zero_engine.J_EAConversion impl
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	this.methaneProduction_kW = capacityMethane_kW * ratioOfCapacity;
 		this.methaneConsumption_kW = methaneProduction_kW / eta_r;
@@ -53035,8 +53021,6 @@ public class J_EAConversionBiogasMethane extends zero_engine.J_EAConversion impl
 			<Text><![CDATA[/**
  * J_EAProfile
  */
-import java.util.EnumMap;
-
 public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.METHANE;
@@ -53074,10 +53058,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> f_updateAllFlows(double time_h) {
+    public J_FlowsMap f_updateAllFlows(double time_h) {
     	//resetFlows();    	
     	//double[] arr=operate(time_h);
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = operate(time_h);
+    	J_FlowsMap flowsMap = operate(time_h);
     			
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this);
@@ -53091,7 +53075,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     }
     
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double time_h) {
+    public J_FlowsMap operate(double time_h) {
     	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
     		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
     		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
@@ -53117,7 +53101,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		this.energyUsed_kWh += timestep_h * energyUse_kW; 
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = returnEnergyFlows();
+		J_FlowsMap flowsMap = returnEnergyFlows();
 		resetFlows();
 		return flowsMap;
     }
@@ -53126,14 +53110,14 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
-    public EnumMap<OL_FlowsMapKeys, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    public J_FlowsMap curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	//double currentElectricityProduction_kW = lastFlowsArray[4];
     	double currentElectricityConsumption_kW = lastFlowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
     	loadLoad_kWh += curtailmentPower_kW * timestep_h;
     	//double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = new EnumMap<>(OL_FlowsMapKeys.class);
+    	J_FlowsMap flowsMap = new J_FlowsMap();
     	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW, -curtailmentPower_kW);
     	flowsMap.put(OL_FlowsMapKeys.ENERGY_USE_KW, -curtailmentPower_kW);
 
@@ -53203,8 +53187,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAStorageElectric
  */
-import java.util.EnumMap;
-
 public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
@@ -53234,7 +53216,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     }
 
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfChargeCapacity_r) {
+	public J_FlowsMap operate(double ratioOfChargeCapacity_r) {
     	double inputPower_kW = ratioOfChargeCapacity_r * capacityElectric_kW; // Electric power going into battery, before losses.
     	double deltaEnergy_kWh;   // The change in energy stored in the battery this timestep ('internal' energy)
     	
@@ -53356,15 +53338,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		<JavaClass>
 			<Id>1659446215929</Id>
 			<Name><![CDATA[J_EAStorageGas]]></Name>
-			<Text><![CDATA[/*package zero_engine;
-
-import java.io.Serializable;*/
-
-/**
+			<Text><![CDATA[/**
  * J_EAStorageGas
  */
-import java.util.EnumMap;
-
 public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.METHANE;
@@ -53398,7 +53374,7 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	}
 
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfChargeCapacity_r) {
+	public J_FlowsMap operate(double ratioOfChargeCapacity_r) {
     	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
     	double inputPower_kW = ratioOfChargeCapacity_r * capacityGas_kW; // Gas power going into Storage, negative if going out.
 
@@ -53477,8 +53453,6 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 			<Text><![CDATA[/**
  * J_EAStorageHeat
  */
-import java.util.EnumMap;
-
 public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializable {
 
 	private double capacityElectric_kW = 0;
@@ -53546,7 +53520,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	}
 
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfChargeCapacity_r) {
+	public J_FlowsMap operate(double ratioOfChargeCapacity_r) {
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
@@ -53693,8 +53667,6 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 			<Text><![CDATA[/**
  * J_EABuilding
  */
-import java.util.EnumMap;
-
 public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Serializable {
 
 	//EnergyAsset ownerAsset;
@@ -53773,7 +53745,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfChargeCapacity_r) {
+	public J_FlowsMap operate(double ratioOfChargeCapacity_r) {
 		//traceln("Building heatCapacity_JpK: %s", this.heatCapacity_JpK);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
@@ -53798,7 +53770,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 		//double[] arr = returnEnergyFlows();
-		EnumMap<OL_FlowsMapKeys, Double> flowsMap = returnEnergyFlows();
+		J_FlowsMap flowsMap = returnEnergyFlows();
 		//return arr;
 		return flowsMap;
 		
@@ -53931,8 +53903,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			<Text><![CDATA[/**
  * J_EAConversionHeatPump
  */
-import java.util.EnumMap;
-
 public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implements Serializable {
 	private double capacityHeat_kW = 0;
 	private double COP_r;
@@ -54014,7 +53984,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	}
 
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+	public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("this "+ this.toString() + ", " + ratioOfCapacity * this.capacityElectric_kW + " **** " + ratioOfCapacity * this.capacityHeat_kW / this.COP_r);
 		this.electricityConsumption_kW = min(ratioOfCapacity * this.capacityElectric_kW, ratioOfCapacity * this.capacityHeat_kW / this.COP_r);
 		this.totalElectricityConsumed_kWh += electricityConsumption_kW * timestep_h ;
@@ -54112,8 +54082,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			<Text><![CDATA[/**
 * J_EAEV
 */
-import java.util.EnumMap;
-
 public class J_EAEV extends J_EAVehicle implements Serializable {
  
  
@@ -54163,7 +54131,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     }
  
 	@Override
-	public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfChargeCapacity_r) {
+	public J_FlowsMap operate(double ratioOfChargeCapacity_r) {
 		//traceln( "ratio: " + ratioOfChargeCapacity_r);
 		if (true) {
 	    	double discharge_kW = 0;
@@ -54339,8 +54307,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionHeatDeliverySet
  */
-import java.util.EnumMap;
-
 public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
@@ -54365,7 +54331,7 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("I convert now! HeatDeliverySet @ " + (ratioOfCapacity * 100) + " %");
 		heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		heatConsumption_kW = heatProduction_kW / eta_r;
@@ -54659,8 +54625,6 @@ public class J_ActorData implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionGasBurner
  */
-import java.util.EnumMap;
-
 public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
@@ -54687,7 +54651,7 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
 		this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		this.hydrogenConsumption_kW = heatProduction_kW / eta_r;
@@ -54736,8 +54700,6 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 			<Text><![CDATA[/**
  * J_EAConversionElectricHeater
  */
-import java.util.EnumMap;
-
 public class J_EAConversionElectricHeater extends J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
@@ -54757,7 +54719,7 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
     }
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("I convert now! ElectricHeater @ " + (ratioOfCapacity * 100) + " %, capacity: " + capacityElectric_kW);
 		this.heatProduction_kW = capacityElectric_kW * ratioOfCapacity * eta_r;
 		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
@@ -55091,8 +55053,6 @@ public class J_HourlyCurvesData implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionHydrogenVehicle
  */
-import java.util.EnumMap;
-
 public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HYDROGEN;
@@ -55120,10 +55080,10 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	}
     
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> f_updateAllFlows(double powerFraction_fr) {
+    public J_FlowsMap f_updateAllFlows(double powerFraction_fr) {
     	//operateBounded(powerFraction_fr);
     	//double[] arr=returnEnergyFlows();    	
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = returnEnergyFlows();
+    	J_FlowsMap flowsMap = returnEnergyFlows();
     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this);
@@ -55229,8 +55189,6 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionElektrolyser
  */
-import java.util.EnumMap;
-
 public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
@@ -55254,7 +55212,7 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
 		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
@@ -55300,8 +55258,6 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 			<Text><![CDATA[/**
  * J_EAConversionGasCHP
  */
-import java.util.EnumMap;
-
 public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.ELECTRICITY;
@@ -55327,7 +55283,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	}
 
 	@Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
 		//traceln("CHP can produce " + capacityElectric_kW + " kW electricity");
     	this.electricityProduction_kW = capacityElectric_kW * ratioOfCapacity;
 		this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
@@ -55378,8 +55334,6 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 			<Text><![CDATA[/**
  * J_EAElectricHob
  */	
-import java.util.EnumMap;
-
 public class J_EAElectricHob extends J_EAConversion implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
@@ -55401,7 +55355,7 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
     }
 
     @Override 
-    public EnumMap<OL_FlowsMapKeys, Double> operate( double ratioOfCapacity ) {
+    public J_FlowsMap operate( double ratioOfCapacity ) {
     	//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		this.electricityConsumption_kW = heatProduction_kW / eta_r;
@@ -55939,8 +55893,6 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			<Text><![CDATA[/**
  * J_EAVehicle
  */	
-import java.util.EnumMap;
-
 public class J_EAVehicle extends J_EA implements Serializable {
 	public boolean available = true;
 	protected boolean availableStored = true;
@@ -56116,8 +56068,6 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 			<Text><![CDATA[/**
  * J_EAConversionElektrolyser
  */
-import java.util.EnumMap;
-
 public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
@@ -56165,7 +56115,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     }
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
     	
 
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
@@ -56241,8 +56191,6 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 			<Text><![CDATA[/**
  * J_EAConversionFuelCell
  */
-import java.util.EnumMap;
-
 public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.ELECTRICITY;
@@ -56268,7 +56216,7 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 	}
 
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> operate(double ratioOfCapacity) {
+    public J_FlowsMap operate(double ratioOfCapacity) {
     	ratioOfCapacity=max(0,ratioOfCapacity);
 		this.hydrogenConsumption_kW = capacityElectric_kW * ratioOfCapacity;
     	this.electricityProduction_kW = hydrogenConsumption_kW * eta_r;
@@ -56313,8 +56261,6 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 			<Text><![CDATA[/**
  * J_EAConversionDieselVehicle
  */
-import java.util.EnumMap;
-
 public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.DIESEL;
@@ -56345,10 +56291,10 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	}
     
     @Override
-    public EnumMap<OL_FlowsMapKeys, Double> f_updateAllFlows(double powerFraction_fr) {
+    public J_FlowsMap f_updateAllFlows(double powerFraction_fr) {
     	//operateBounded(powerFraction_fr);
     	//double[] arr=returnEnergyFlows();
-    	EnumMap<OL_FlowsMapKeys, Double> flowsMap = returnEnergyFlows();
+    	J_FlowsMap flowsMap = returnEnergyFlows();
     	//return arr;
     	if (parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this);
@@ -56717,6 +56663,49 @@ public class J_ProfilePointer implements Serializable {
 	@Override
 	public String toString() {
 		return "profile: " + this.name + " current value: " + this.currentValue; 
+	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1729171686537</Id>
+			<Name><![CDATA[J_FlowsMap]]></Name>
+			<Text><![CDATA[/**
+ * J_FlowsMap
+ */	
+import java.util.EnumMap;
+
+public class J_FlowsMap extends EnumMap<OL_FlowsMapKeys, Double> {
+
+    /**
+     * Default constructor
+     */
+    public J_FlowsMap() {
+    	super(OL_FlowsMapKeys.class);
+    }
+
+    @Override
+    public Double get(Object key) {
+    	if (super.get(key) == null) {
+    		return 0.0;
+    	}
+    	else {
+        	return super.get(key);
+    	}
+    	
+    }
+    
+    
+    @Override
+	public String toString() {
+		return super.toString();
 	}
 
 	/**
