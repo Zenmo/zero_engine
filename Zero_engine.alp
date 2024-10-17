@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -48260,7 +48260,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
 			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalance(v_batterySOC_fr);
+			f_batteryManagementBalanceGrid(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
 			f_batteryManagementBalanceSupply(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
@@ -51388,15 +51388,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_heatStrategy]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbCompanies]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbHouseholds]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -56845,27 +56836,37 @@ public class J_ProfilePointer implements Serializable {
  * J_FlowsMap
  */	
 import java.util.EnumMap;
+//import it.unimi.dsi.fastutil.ints.AbstractInt2DoubleMap;
+import it.unimi.dsi.fastutil.ints.Int2DoubleArrayMap;
+//import it.unimi.dsi.fastutil.ints.Int2DoubleMaps;
 
-public class J_FlowsMap extends EnumMap<OL_FlowsMapKeys, Double> {
-
+//public class J_FlowsMap extends EnumMap<OL_FlowsMapKeys, Double> {
+public class J_FlowsMap {
+	protected Int2DoubleArrayMap fastflowsMap = new Int2DoubleArrayMap();
+ 
     /**
      * Default constructor
      */
     public J_FlowsMap() {
-    	super(OL_FlowsMapKeys.class);
-    }
-
-    @Override
-    public Double get(Object key) {
-    	if (super.get(key) == null) {
-    		return 0.0;
-    	}
-    	else {
-        	return super.get(key);
-    	}
-    	
+    	//super();
     }
     
+    //public void 
+    public void put(OL_FlowsMapKeys key, double value) {
+    	int idx = key.ordinal();
+    	fastflowsMap.put(idx,value);    	
+    }
+    
+    public Double get(OL_FlowsMapKeys key) {
+    	int idx = key.ordinal();
+    	//flowsMap.
+    	if ( fastflowsMap.containsKey(idx) ) {
+    		return fastflowsMap.get(idx);    	
+    	} else {
+    		return 0.0;
+    	}
+    }
+    	
     
     @Override
 	public String toString() {
@@ -56877,8 +56878,8 @@ public class J_FlowsMap extends EnumMap<OL_FlowsMapKeys, Double> {
 	 * It needs to be changed when this class gets changed
 	 */ 
 	private static final long serialVersionUID = 1L;
-
-}]]></Text>
+}
+]]></Text>
 		</JavaClass>
 	</JavaClasses>
 	<ModelResources>
@@ -56889,6 +56890,16 @@ public class J_FlowsMap extends EnumMap<OL_FlowsMapKeys, Double> {
 		</Resource>
 		<Resource>
 			<Path><![CDATA[ZeroMath.jar]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[fastutil-8.5.11.jar]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[fastutil-core-8.5.14.jar]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
@@ -56903,6 +56914,14 @@ public class J_FlowsMap extends EnumMap<OL_FlowsMapKeys, Double> {
 		<ResourceReference>
 			<PackageName><![CDATA[zero_engine]]></PackageName>
 			<ClassName><![CDATA[ZeroMath.jar]]></ClassName>
+		</ResourceReference>
+		<Imported>true</Imported>
+		<Folder>false</Folder>
+	</ClassPathEntry>
+	<ClassPathEntry>
+		<ResourceReference>
+			<PackageName><![CDATA[zero_engine]]></PackageName>
+			<ClassName><![CDATA[fastutil-core-8.5.14.jar]]></ClassName>
 		</ResourceReference>
 		<Imported>true</Imported>
 		<Folder>false</Folder>
