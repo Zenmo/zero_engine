@@ -108,6 +108,10 @@
 				<Name><![CDATA[REGION]]></Name>
 			</Option>
 			<Option>
+				<Id>1729007177070</Id>
+				<Name><![CDATA[NEIGHBOURHOOD]]></Name>
+			</Option>
+			<Option>
 				<Id>1659118328423</Id>
 				<Name><![CDATA[PARCEL]]></Name>
 			</Option>
@@ -7671,7 +7675,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		data_summerWeekSupply_kW.add(t_h, -sum(c_energyAssets, x->x.electricityProduction_kW)); 
 		data_summerWeekNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel, x->x.v_currentLoadElectricity_kW));
 		
-		data_summerWeekNetLoad_kW.add(t_h, v_totalElectricPower_kW);
+		//data_summerWeekNetLoad_kW.add(t_h, v_totalElectricPower_kW);
 		//v_summerWeekHour++;
 		//v_summerWeekPeakElecImport_kW = max(v_summerWeekPeakElecImport_kW,v_currentElectricityImport_kW);
 		//v_summerWeekPeakElecExport_kW = max(v_summerWeekPeakElecExport_kW,v_currentElectricityExport_kW);	
@@ -7714,7 +7718,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		data_winterWeekSupply_kW.add(t_h, -sum(c_energyAssets, x->x.electricityProduction_kW)); 
 		data_winterWeekNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel, x->x.v_currentLoadElectricity_kW));
 		
-		data_winterWeekNetLoad_kW.add(t_h, v_totalElectricPower_kW);
+		//data_winterWeekNetLoad_kW.add(t_h, v_totalElectricPower_kW);
 		
 		//v_winterWeekHour++;
 		//v_winterWeekPeakElecImport_kW = max(v_winterWeekPeakElecImport_kW,v_currentElectricityImport_kW);
@@ -11838,6 +11842,9 @@ return profilePointer;]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_isSliderGC]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -13218,6 +13225,15 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_heatStrategy]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nbCompanies]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nbHouseholds]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -23271,12 +23287,17 @@ if (j_ea instanceof J_EAVehicle) {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+		if(p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP)
+			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
+		else{
+			p_primaryHeatingAsset = (J_EAConversion)j_ea;
+		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 		c_electricHeatpumpAssets.add(j_ea);
 		c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
+
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
@@ -24015,7 +24036,11 @@ if (j_ea instanceof J_EAVehicle) {
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		p_primaryHeatingAsset = null;
+		if(p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP)
+			p_secondaryHeatingAsset = null;
+		else{
+			p_primaryHeatingAsset = null;
+		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		p_primaryHeatingAsset = null;
 		energyModel.c_ambientAirDependentAssets.remove(j_ea);
@@ -45309,6 +45334,30 @@ public void f_operateFlexAssets(){
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1728385990273</Id>
+					<Name><![CDATA[p_isSliderGC]]></Name>
+					<X>270</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1728385990271</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -45865,7 +45914,7 @@ FullCapacity.]]></Description>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.05]]></Code>
+							<Code><![CDATA[0.10]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -51340,6 +51389,15 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatStrategy]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nbCompanies]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nbHouseholds]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -51588,6 +51646,69 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1729065255969</Id>
+					<Name><![CDATA[p_heatStrategy]]></Name>
+					<X>1680</X><Y>660</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1729065255967</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1729069223731</Id>
+					<Name><![CDATA[p_nbCompanies]]></Name>
+					<X>1680</X><Y>680</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1729069223729</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1729069237070</Id>
+					<Name><![CDATA[p_nbHouseholds]]></Name>
+					<X>1680</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1729069237068</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1722589144737</Id>
 					<Name><![CDATA[c_heatDemandEA]]></Name>
@@ -51610,7 +51731,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1719849166911</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>1000</X><Y>240</Y>
+					<X>910</X><Y>220</Y>
 					<Label><X>20</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51707,7 +51828,7 @@ v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722585552607</Id>
 					<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-					<X>800</X><Y>340</Y>
+					<X>920</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51797,7 +51918,7 @@ return powerDemandDivision; //{Gasburner power request, HP power request, DH pow
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722595238227</Id>
 					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-					<X>960</X><Y>90</Y>
+					<X>1070</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -52055,6 +52176,49 @@ if (j_ea instanceof J_EAVehicle) {
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Battery sliders functionality]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Rectangle>
+					<Id>1729064990067</Id>
+					<Name><![CDATA[rectangle4]]></Name>
+					<X>1650</X><Y>600</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>3</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>430</Width>
+					<Height>350</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-1</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Text>
+					<Id>1729065010495</Id>
+					<Name><![CDATA[txt_AdditionalGCNBHParameters]]></Name>
+					<X>1670</X><Y>620</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Extra specifieke Parameters]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -54199,7 +54363,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			if (stateOfCharge_r < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
+				//traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_r );
 						
 				//energyChargedOutsideModelArea_kWh += -stateOfCharge_r * storageCapacity_kWh;
 				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
