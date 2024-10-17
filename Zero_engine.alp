@@ -10411,9 +10411,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11324,9 +11321,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_minChargingPower_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11519,9 +11513,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11690,9 +11681,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11859,9 +11847,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -12068,9 +12053,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12228,9 +12210,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -12393,9 +12372,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -12887,9 +12863,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -13072,9 +13045,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -20945,28 +20915,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1671459091952</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1676965009213</Id>
-					<Name><![CDATA[p_curtailer]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>620</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[J_EAConversionCurtailer]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1676965009211</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -41724,9 +41672,6 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -43800,9 +43745,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -44887,9 +44829,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -45367,9 +45306,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
@@ -47027,9 +46963,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -47707,9 +47640,6 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -47978,7 +47908,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
 			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalance(v_batterySOC_fr);
+			f_batteryManagementBalanceGrid(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
 			f_batteryManagementBalanceSupply(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
@@ -49008,9 +48938,6 @@ public void f_resetSpecificGCStates(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
@@ -50507,9 +50434,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -51047,9 +50971,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -51105,15 +51026,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_heatStrategy]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbCompanies]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbHouseholds]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
