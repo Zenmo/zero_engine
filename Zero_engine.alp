@@ -1096,50 +1096,6 @@
 			</Option>
 		</OptionList>
 		<OptionList>
-			<Id>1729156884092</Id>
-			<Name><![CDATA[OL_EnergyCarriers]]></Name>
-			<Option>
-				<Id>1729156915262</Id>
-				<Name><![CDATA[ELECTRICITY_PRODUCTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729156933066</Id>
-				<Name><![CDATA[ELECTRICITY_CONSUMPTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729156964772</Id>
-				<Name><![CDATA[HEAT_PRODUCTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729156970810</Id>
-				<Name><![CDATA[HEAT_CONSUMPTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729157614132</Id>
-				<Name><![CDATA[METHANE_PRODUCTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729157636993</Id>
-				<Name><![CDATA[METHANE_CONSUMPTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729159818849</Id>
-				<Name><![CDATA[DIESEL_PRODUCTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729157654433</Id>
-				<Name><![CDATA[DIESEL_CONSUMPTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729157659202</Id>
-				<Name><![CDATA[HYDROGEN_PRODUCTION]]></Name>
-			</Option>
-			<Option>
-				<Id>1729157670889</Id>
-				<Name><![CDATA[HYDROGEN_CONSUMPTION]]></Name>
-			</Option>
-		</OptionList>
-		<OptionList>
 			<Id>1729161119459</Id>
 			<Name><![CDATA[OL_FlowsMapKeys]]></Name>
 			<Option>
@@ -5719,6 +5675,23 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1729238020165</Id>
+					<Name><![CDATA[c_selectedEnergyCarriers]]></Name>
+					<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY_PRODUCTION_KW, ELECTRICITY_CONSUMPTION_KW and ENERGY_USE_KW. Others you may not need for your project e.g. HYDROGEN_PRODUCTION_KW. This collection is passed to all the energy assets, who will only fill their flowsmap with these keys.]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>800</X><Y>430</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[OL_FlowsMapKeys]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -8281,7 +8254,6 @@ if (c_gridConnections.size() < 100) {
 
 // set initial values
 f_setInitialValues();
-
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -13894,6 +13866,51 @@ return profilePointer;]]></Body>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
+				<Text>
+					<Id>1729238026851</Id>
+					<Name><![CDATA[t_selectedEnergyCarriers]]></Name>
+					<X>880</X><Y>390</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Energy Carriers]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>11</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>CENTER</Alignment>
+				</Text>
+				<Line>
+					<Id>1729238050157</Id>
+					<Name><![CDATA[line_selectedEnergyCarriers]]></Name>
+					<X>800</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>190</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
 			</Presentation>
 
 				</Level>
@@ -27758,7 +27775,6 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 			+ v_currentConsumptionMethane_kW - v_currentProductionMethane_kW
 			+ v_currentConsumptionDiesel_kW),2);
 	}*/]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<StartupCode><![CDATA[// f_connectToParentNode() --> made explicit function in main to avoid nested functions for easy profiling
 //if( assetCategory == PRODUCTION){
 //	main.c_productionAssets.add(this);
@@ -41949,7 +41965,6 @@ public void f_simpleCharging(){
 	f_simpleCharging_overwrite();
 }
 ]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -44027,7 +44042,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 	f_connectToJ_EA_default(j_ea);
 	f_connectToJ_EA_DistrictHeating(j_ea);
 }]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -45115,7 +45129,6 @@ p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction
 public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
 }]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -47259,7 +47272,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
 }]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -47940,7 +47952,6 @@ public void f_batteryManagementPrice( double batterySOC ){
 public void f_calculateEnergyBalance(){
 	f_calculateEnergyBalance_overwrite();
 }*/]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -49241,7 +49252,6 @@ public void f_resetSpecificGCStates(){
 	f_resetSpecificGCStates_overwrite();
 }
 ]]></AdditionalClassCode>
-			<Import><![CDATA[import java.util.EnumMap;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -51389,15 +51399,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_heatStrategy]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbCompanies]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbHouseholds]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -52777,30 +52778,21 @@ public class J_EA implements Cloneable {
 	 public double heatConsumption_kW = 0.0;
 	 public double dieselConsumption_kW = 0.0;
 	 
-	 
-	 // FLOWMAP
-	 // define in the j_ea a hashmap for all energy carriers to their variables
-	 
-	 // then get a collection of strings from energymodel for which energycarriers to use in this model?
-	 // (last) flowarray then becomes a hashmap of flows
-	 
-	 
-	 // can we prevent the gridconnection from making datasets / accumulators for the non-relevant energycarriers?
-	 // for example by adding if statements to f_initialiseAccumulators.
-	 // would it become way too many if statements?
-	 // also needed in f_resetStates,
-	 // and for datasets in: f_fillLiveDataSets, f_fillAnnualDatasets
-	 
-	 // also for the energymodel canvas.
-	 // in: f_updateArrays
-	 // maybe make a similar function to initialise the accumulators?
-	 
-	 // and optionally in: f_calculateGridConnectionFlows?
-	 
-	 //public double[] lastFlowsArray = new double[10];
 	 public J_FlowsMap lastFlowsMap = new J_FlowsMap();
-	 
-	 
+
+	 public List<OL_FlowsMapKeys> selectedFlows = Arrays.asList(
+			 OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW,
+			 OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW,
+			 OL_FlowsMapKeys.HEAT_PRODUCTION_KW,
+			 OL_FlowsMapKeys.HEAT_CONSUMPTION_KW,
+			 OL_FlowsMapKeys.METHANE_PRODUCTION_KW,
+			 OL_FlowsMapKeys.METHANE_CONSUMPTION_KW,
+			 OL_FlowsMapKeys.DIESEL_CONSUMPTION_KW,
+			 OL_FlowsMapKeys.HYDROGEN_PRODUCTION_KW,
+			 OL_FlowsMapKeys.HYDROGEN_CONSUMPTION_KW,
+			 OL_FlowsMapKeys.ENERGY_USE_KW
+			 );
+
 	 // debugging purposes!
 	 protected double heatProduced_kWh = 0.0;
 	 protected double heatConsumed_kWh = 0.0;
@@ -52899,33 +52891,42 @@ public class J_EA implements Cloneable {
     }
 
     public J_FlowsMap returnEnergyFlows() {
-    	//traceln("returning energy flows from superclass");
-    	/*if (parentAgent instanceof GridConnection ) {
-    		if(this instanceof J_EAConversionCurtailer) {    			
-	    		((GridConnection)parentAgent).v_currentEnergyProduction_kW -= max(0,energyUse_kW);    			
-	    		((GridConnection)parentAgent).v_currentEnergyCurtailed_kW += max(0,energyUse_kW);    			
-    		} else {
-	    		((GridConnection)parentAgent).v_currentEnergyConsumption_kW += max(0,energyUse_kW);
-	    		((GridConnection)parentAgent).v_currentEnergyProduction_kW += max(0,-energyUse_kW);
-    		}
-    	}*/
-    	
-    	//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW, energyUse_kW };    	
     	J_FlowsMap flowsMap = new J_FlowsMap();
     	
-    	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW, this.electricityProduction_kW);
-    	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW, this.electricityConsumption_kW);
-    	flowsMap.put(OL_FlowsMapKeys.HEAT_PRODUCTION_KW, this.heatProduction_kW);
-    	flowsMap.put(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW, this.heatConsumption_kW);
-    	flowsMap.put(OL_FlowsMapKeys.METHANE_PRODUCTION_KW, this.methaneProduction_kW);
-    	flowsMap.put(OL_FlowsMapKeys.METHANE_CONSUMPTION_KW, this.methaneConsumption_kW);
-    	flowsMap.put(OL_FlowsMapKeys.DIESEL_CONSUMPTION_KW, this.dieselConsumption_kW);
-    	flowsMap.put(OL_FlowsMapKeys.HYDROGEN_PRODUCTION_KW, this.hydrogenProduction_kW);
-    	flowsMap.put(OL_FlowsMapKeys.HYDROGEN_CONSUMPTION_KW, this.hydrogenConsumption_kW);
-    	flowsMap.put(OL_FlowsMapKeys.ENERGY_USE_KW, this.energyUse_kW);
-    	    	  	
+    	// TODO: We want to loop over the selected energy carriers, to do so we must rewrite all energyassets to not use variables like this.electricityProduction_kW ?
+    	// For now there are just if statements when filling the flowsmap
     	
-    	//return arr;
+    	if (selectedFlows.contains(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW)) {
+       	flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_PRODUCTION_KW, this.electricityProduction_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW, this.electricityConsumption_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.HEAT_PRODUCTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.HEAT_PRODUCTION_KW, this.heatProduction_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW, this.heatConsumption_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.METHANE_PRODUCTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.METHANE_PRODUCTION_KW, this.methaneProduction_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.METHANE_CONSUMPTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.METHANE_CONSUMPTION_KW, this.methaneConsumption_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.DIESEL_CONSUMPTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.DIESEL_CONSUMPTION_KW, this.dieselConsumption_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.HYDROGEN_PRODUCTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.HYDROGEN_PRODUCTION_KW, this.hydrogenProduction_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.HYDROGEN_CONSUMPTION_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.HYDROGEN_CONSUMPTION_KW, this.hydrogenConsumption_kW);
+    	}
+    	if (selectedFlows.contains(OL_FlowsMapKeys.ENERGY_USE_KW)) {
+    		flowsMap.put(OL_FlowsMapKeys.ENERGY_USE_KW, this.energyUse_kW);
+    	}
+
     	return flowsMap;
     }
      
