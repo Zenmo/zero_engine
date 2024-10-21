@@ -48046,13 +48046,13 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
 	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent instanceof EnergyCoop ) { // get electricity balance from Coop 			
+		/*if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent instanceof EnergyCoop ) { // get electricity balance from Coop 			
 			currentCoopElectricitySurplus_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_electricitySurplus_kW + v_previousPowerBattery_kW;
 			CoopConnectionCapacity_kW = 0.9*((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay			
-		} else { // Get gridload directly from node
+		} else { // Get gridload directly from node*/
 			currentCoopElectricitySurplus_kW = -GN.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
 			CoopConnectionCapacity_kW = 0.9*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
-		}
+		//}
 	} else { // Get gridload directly from node
 		currentCoopElectricitySurplus_kW = -node.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
 		CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
