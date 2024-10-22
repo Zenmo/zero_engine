@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021032" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -22750,6 +22750,14 @@ if ( p_BuildingThermalAsset == null ) {
 			} else {
 				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
 			}
+		}
+	}
+	else if (p_primaryHeatingAsset== null && p_secondaryHeatingAsset != null && v_hasQuarterHourlyValues){
+		if(p_secondaryHeatingAsset instanceof J_EAConversionGasBurner){
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
+			p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
+		} else {
+				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported secondary heating asset!");
 		}
 	} else { // Two heating assets
 		if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump && p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // Heatpump and gasburner, switch based on heatpump COP)
@@ -51105,15 +51113,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_heatStrategy]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbCompanies]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbHouseholds]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
