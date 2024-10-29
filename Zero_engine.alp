@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -8206,7 +8206,10 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// What if this function is accidently called twice? Need to start with a clean sheet?
-
+c_selectedEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+c_selectedEnergyCarriers.add(OL_EnergyCarriers.HEAT);
+c_selectedEnergyCarriers.add(OL_EnergyCarriers.DIESEL);
+c_selectedEnergyCarriers.add(OL_EnergyCarriers.METHANE);
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 // pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
@@ -8310,10 +8313,10 @@ f_setInitialValues();
 v_totalInstalledWindPower_kW = 0;
 for (J_EA ea : c_energyAssets) {
 	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL && ((GridConnection)ea.getParentAgent()).v_isActive ) {
-		v_totalInstalledWindPower_kW += ea.getElectricCapacity_kW();
+		v_totalInstalledWindPower_kW += ((J_EAProduction)ea).getCapacityElectric_kW();
 	}
 	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && ((GridConnection)ea.getParentAgent()).v_isActive ) {
-		v_totalInstalledPVPower_kW += ea.getElectricCapacity_kW();
+		v_totalInstalledPVPower_kW += ((J_EAProduction)ea).getCapacityElectric_kW();
 	}
 }
 
@@ -23063,13 +23066,13 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	}
 	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
-	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.8; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (electricitySurplus_kW + chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 }]]></Body>
 				</Function>
@@ -23125,11 +23128,11 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		// Choose charging power based on prices and desired SOC level
 		if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) { // if willingness to pay higher than current electricity price
 			//chargeSetpoint_kW = min(p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW)  ;
-			chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
+			chargeSetpoint_kW = p_batteryAsset.getCapacityElectric_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
 			//traceln("WTP charge " + WTP_charge_eurpkWh + " eurpkWh is high than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so charge!") ;
 		} else if (WTP_discharge_eurpkWh < currentElectricityPriceDischarge_eurpkWh) {
 			//chargeSetpoint_kW = -min(p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW);
-			chargeSetpoint_kW = -p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
+			chargeSetpoint_kW = -p_batteryAsset.getCapacityElectric_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
 			//traceln("WTP discharge " + WTP_discharge_eurpkWh + " eurpkWh is lower than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so discharge!") ;
 		}	
 		
@@ -23143,7 +23146,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	}
 }
 ]]></Body>
@@ -23169,7 +23172,7 @@ if ( p_BuildingThermalAsset == null ) {
 			}
 		} else {
 			if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump) { // when there is only a gas burner or DH set
-					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
 					//traceln("Running manageHeatingAsset for single heating asset");
 			} else {
 				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
@@ -23183,10 +23186,10 @@ if ( p_BuildingThermalAsset == null ) {
 			if ( HP_COP < COP_tres ) { // switch to gasburner when HP COP is below treshold
 				//traceln("Hybrid HP: Switching to gas burner");
 				p_primaryHeatingAsset.v_powerFraction_fr = 0;
-				p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
+				p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
 			} else { // heatpump when COP is above treshold
 				//traceln("Hybrid HP: Using heatpump with COP " + HP_COP);
-				p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
 				p_secondaryHeatingAsset.v_powerFraction_fr = 0;//min(1,currentDHWdemand_kW / p_secondaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			}
 		} else {
@@ -23336,7 +23339,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		}
 		else {
 			double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-			double maxChargingPower_kW = ev.getElectricCapacity_kW();
+			double maxChargingPower_kW = ev.getCapacityElectric_kW();
 			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
 			
 			double emptyKWhInBattery = ev.getStorageCapacity_kWh() * (1 - ev.getCurrentStateOfCharge());
@@ -23398,7 +23401,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 			//traceln("dist: " + ev.getTripTracker().v_tripDist_km);
 			double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
 			//traceln("chargeNeedForNextTrip_kWh: " + chargeNeedForNextTrip_kWh);
-			double maxChargingPower_kW = ev.getElectricCapacity_kW();
+			double maxChargingPower_kW = ev.getCapacityElectric_kW();
 			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
 			
 			//double starttime = ev.tripTracker.v_nextEventStartTime_min / 60;
@@ -23466,7 +23469,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
 		double chargeNeedForNextTrip_kWh = max(0, vehicle.energyNeedForNextTrip_kWh - vehicle.getStorageCapacity_kWh()*vehicle.getCurrentStateOfCharge());
 		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-		double maxChargingPower_kW = vehicle.getElectricCapacity_kW();
+		double maxChargingPower_kW = vehicle.getCapacityElectric_kW();
 		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
 		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
 
@@ -23497,8 +23500,8 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		}
 		//}
 		//traceln("Hello! Charge setpoint: " + chargeSetpoint_kW);
-		Pair<J_FlowsMap, Double> flowsPair = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
-		J_FlowsMap flowsMap = flowsPair.getFirst();
+		//Pair<J_FlowsMap, Double> flowsPair = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
+		J_FlowsMap flowsMap = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
 		v_evChargingPowerElectric_kW += flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
 		//v_evChargingPowerElectric_kW += vehicle.electricityConsumption_kW - vehicle.electricityProduction_kW;
 		remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW;
@@ -23593,19 +23596,19 @@ if (j_ea instanceof J_EAVehicle) {
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		v_hasPV = true;
-		v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), true);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
 		}
-		energyModel.v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		energyModel.v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), true);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
 		}
-		energyModel.v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		energyModel.v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
@@ -23742,7 +23745,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
 		double chargeNeedForNextTrip_kWh = vehicle.energyNeedForNextTrip_kWh - vehicle.getStorageCapacity_kWh()*vehicle.getCurrentStateOfCharge();
 		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-		double maxChargingPower_kW = vehicle.getElectricCapacity_kW();
+		double maxChargingPower_kW = vehicle.getCapacityElectric_kW();
 		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
 		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
 
@@ -23785,8 +23788,8 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 				traceln("remainingChargePower_kW: " + remainingChargePower_kW + "charge setpoint kW: " + chargeSetpoint_kW);
 			}*/
 		}
-		Pair<J_FlowsMap, Double> flowsPair = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
-		J_FlowsMap flowsMap = flowsPair.getFirst();
+		//Pair<J_FlowsMap, Double> flowsPair = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
+		J_FlowsMap flowsMap = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
 		v_evChargingPowerElectric_kW += flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
 		//v_evChargingPowerElectric_kW += vehicle.electricityConsumption_kW - vehicle.electricityProduction_kW;
 		remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW;
@@ -23864,10 +23867,10 @@ else {
 	double Wind_kW = 0;
 	for (J_EAProduction j_ea : c_productionAssets) {
 		if (j_ea.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC) {
-			PV_kW += j_ea.getElectricCapacity_kW();
+			PV_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		}
 		else if (j_ea.getEAType() == OL_EnergyAssetType.WINDMILL) {
-			Wind_kW += j_ea.getElectricCapacity_kW();
+			Wind_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		}
 	}
 	l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += PV_kW;
@@ -23973,9 +23976,9 @@ v_summerWeekEnergySelfConsumed_MWh = max(0, v_summerWeekEnergyConsumed_MWh - v_s
 
 double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekEnergyExport_MWh;
 
-if (v_summerWeekEnergySelfConsumed_MWh - v_summerWeekSelfConsumedEnergyCheck_MWh > 0.001) {
+/*if (abs(v_summerWeekEnergySelfConsumed_MWh - v_summerWeekSelfConsumedEnergyCheck_MWh) > 0.01) {
 	throw new RuntimeException("SelfConsumedEnergy Check for Summer Week Failed for GC: " + this.p_ownerID);
-}
+}*/
 
 // Calcs winterweek
 for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
@@ -24377,19 +24380,19 @@ if (j_ea instanceof J_EAVehicle) {
 		if (otherPV == null) {
 			v_hasPV = false;
 		}
-		v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
+		v_totalInstalledPVPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), false);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), false);
 		}
-		energyModel.v_totalInstalledPVPower_kW -= j_ea.getElectricCapacity_kW();
+		energyModel.v_totalInstalledPVPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_pvAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
+		v_totalInstalledWindPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), false);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, ((J_EAProduction)j_ea).getCapacityElectric_kW(), false);
 		}
-		energyModel.v_totalInstalledWindPower_kW -= j_ea.getElectricCapacity_kW();
+		energyModel.v_totalInstalledWindPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
@@ -24714,7 +24717,7 @@ else {
 
 	//double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 1.0*(energyModel.v_epexForecast_eurpkWh - v_electricityPriceLowPassed_eurpkWh) + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
 	double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 0.0*(energyModel.v_epexForecast_eurpkWh - v_electricityPriceLowPassed_eurpkWh) + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-	chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur ;
+	chargeSetpoint_kW = p_batteryAsset.getCapacityElectric_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur ;
 					
 	//chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	//p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
@@ -24728,7 +24731,7 @@ else {
 		}*/
 	}			
 
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 }
 
 //traceln("Hello!");
@@ -24814,25 +24817,25 @@ data_gridCapacitySupply_kW.update();
 // Gather specific electricity flows from corresponding energy assets
 v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
-	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_baseloadElectricityDemand_kW.update();
 
 v_electricHobConsumption_kW = 0;
 for (J_EA j_ea : c_electricHobAssets) {
-	v_electricHobConsumption_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_electricHobConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_electricHobDemand_kW.update();
 
 v_hydrogenElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electrolyserAssets) {
-	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_hydrogenElectricityDemand_kW.update();
 
 v_heatPumpElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electricHeatpumpAssets) {
-	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_heatPumpElectricityDemand_kW.update();
 
@@ -24844,7 +24847,7 @@ for (J_EA j_ea : c_EvAssets) {
 			continue;
 		}
 	}
-	v_evChargingPowerElectric_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_electricVehicleDemand_kW.update();
 data_V2GSupply_kW.update();
@@ -24852,8 +24855,8 @@ data_V2GSupply_kW.update();
 v_batteryPowerElectric_kW = 0;
 
 for (J_EA j_ea : c_batteryAssets) {
-	if (j_ea.getElectricCapacity_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
-		v_batteryPowerElectric_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
+		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 	}
 }
 data_batteryCharging_kW.update();	
@@ -24861,7 +24864,7 @@ data_batteryDischarging_kW.update();
 
 v_pvProductionElectric_kW = 0;
 for (J_EA j_ea : c_pvAssets) {
-	v_pvProductionElectric_kW -= j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 if (v_pvProductionElectric_kW < 0) {
 	traceln("Negative v_pvProductionElectric_kW! Curtailment error? Value: %s", v_pvProductionElectric_kW);
@@ -24871,7 +24874,7 @@ data_PVGeneration_kW.update();
 
 v_windProductionElectric_kW = 0;
 for (J_EA j_ea : c_windAssets) {
-	v_windProductionElectric_kW -= j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_windGeneration_kW.update();	
 
@@ -25013,19 +25016,19 @@ if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < ener
 
 v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
-	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 //data_baseloadElectricityDemand_kW.update();
 
 v_hydrogenElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electrolyserAssets) {
-	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 //data_hydrogenElectricityDemand_kW.update();
 
 v_heatPumpElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electricHeatpumpAssets) {
-	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 //data_heatPumpElectricityDemand_kW.update();
 
@@ -25037,15 +25040,15 @@ for (J_EA j_ea : c_EvAssets) {
 			continue;
 		}
 	}
-	v_evChargingPowerElectric_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 //data_electricTrucksDemand_kW.update();
 //data_V2GSupply_kW.update();
 
 v_batteryPowerElectric_kW = 0;
 for (J_EA j_ea : c_batteryAssets) {
-	if (j_ea.getElectricCapacity_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
-		v_batteryPowerElectric_kW += j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
+		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 	}
 }
 //data_neighborhoodBatteryDemand_kW.update();	
@@ -25053,14 +25056,14 @@ for (J_EA j_ea : c_batteryAssets) {
 
 v_pvProductionElectric_kW = 0;
 for (J_EA j_ea : c_pvAssets) {
-	v_pvProductionElectric_kW -= j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 
 //data_PVGeneration_kW.update();	
 
 v_windProductionElectric_kW = 0;
 for (J_EA j_ea : c_windAssets) {
-	v_windProductionElectric_kW -= j_ea.getLastFlows().getFirst().get(OL_EnergyCarriers.ELECTRICITY);
+	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 //data_windGeneration_kW.update();	
 
@@ -25304,7 +25307,7 @@ v_isActive = setActive;]]></Body>
 						<Type><![CDATA[J_EAEV]]></Type>
 					</Parameter>
 					<Body><![CDATA[double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getStorageCapacity_kWh()*ev.getCurrentStateOfCharge());
-double maxChargingPower_kW = ev.getElectricCapacity_kW();
+double maxChargingPower_kW = ev.getCapacityElectric_kW();
 
 return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
 ]]></Body>
@@ -38065,6 +38068,9 @@ acc_annualElectricityProduction_kW.reset();
 acc_annualElectricityConsumption_kW.reset();
 acc_annualHeatProduction_kW.reset();
 
+acc_annualOwnElectricityProduction_kW.reset();
+acc_annualCustomerFeedIn_kW.reset();
+
 acc_summerElectricityBalance_kW.reset();
 acc_summerMethaneBalance_kW.reset();
 acc_summerHydrogenBalance_kW.reset();
@@ -43581,7 +43587,7 @@ v_copHeatpump = hp.getCOP();
 
 
 if ( p_smartHeatingEnabled ) {
-	avgElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( (v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getElectricCapacity_kW() );
+	avgElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( (v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getCapacityElectric_kW() );
 	//traceln("avg electircity rprice for HP: " + avgElectricityPrice_eurpkWh);
 }
 
@@ -43589,7 +43595,7 @@ if ( p_smartHeatingEnabled ) {
 if ( p_heatBuffer != null ){
 	if ( p_heatBuffer.requiresHeat ){
 		powerFraction_heatPump_fr = 1;
-		powerFraction_heatBuffer_fr = hp.getHeatCapacity_kW() / p_heatBuffer.getHeatCapacity_kW() ;
+		powerFraction_heatBuffer_fr = hp.getCapacityHeat_kW() / p_heatBuffer.getCapacityHeat_kW() ;
 		//traceln(getName() + " heat buffer cus of need");
 	} else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		//also heat the buffer if the price is cheap, the buffer has some room and the vehicle does not need charging
@@ -43597,34 +43603,34 @@ if ( p_heatBuffer != null ){
 	{
 		if( p_householdEV == null ){
 			powerFraction_heatPump_fr = 1;
-			powerFraction_heatBuffer_fr = hp.getHeatCapacity_kW() / p_heatBuffer.getHeatCapacity_kW();
+			powerFraction_heatBuffer_fr = hp.getCapacityHeat_kW() / p_heatBuffer.getCapacityHeat_kW();
 		} else if (p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){
 			powerFraction_heatPump_fr = 1;
 			//traceln("heat buffer cus cheap");
-			powerFraction_heatBuffer_fr = hp.getHeatCapacity_kW() / p_heatBuffer.getHeatCapacity_kW();
+			powerFraction_heatBuffer_fr = hp.getCapacityHeat_kW() / p_heatBuffer.getCapacityHeat_kW();
 		}
 	}
 	//reduce the powerfraction in the buffer with the hot water demand.
-	powerFraction_heatBuffer_fr += -v_hotwaterDemand_kW / p_heatBuffer.getHeatCapacity_kW();
+	powerFraction_heatBuffer_fr += -v_hotwaterDemand_kW / p_heatBuffer.getCapacityHeat_kW();
 }
 
 //heat the house
 if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
 		powerFraction_heatPump_fr = 1; 
-		p_BuildingThermalAsset.v_powerFraction_fr = hp.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr = hp.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 	} 
 	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		&& p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC + 1) {
 		//also heat the house if the price is cheap, the the house is colder than desired + 1 and the vehicle does not need charging
 		if( p_householdEV == null ){
 			powerFraction_heatPump_fr = 1;
-			p_BuildingThermalAsset.v_powerFraction_fr = hp.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
+			p_BuildingThermalAsset.v_powerFraction_fr = hp.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 		} 
 		else if (p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){ // only use heatpump if the vehicle is not about to charge
 			powerFraction_heatPump_fr = 1;
 			//traceln("heat house cus of cheap");
-			p_BuildingThermalAsset.v_powerFraction_fr = hp.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
+			p_BuildingThermalAsset.v_powerFraction_fr = hp.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 		}
 	} 
 	else {
@@ -43662,17 +43668,17 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 			traceln("gas is cheaper");
 			double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 			p_primaryHeatingAsset.v_powerFraction_fr = 0;
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
-			p_BuildingThermalAsset.v_powerFraction_fr = (p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getHeatCapacity_kW() - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
+			p_BuildingThermalAsset.v_powerFraction_fr = (p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getCapacityHeat_kW() - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();
 		} else { // heat with heatpump
 			//double powerDemand_kW = (v_tempSetpoint_degC - houseTemp) * ((J_EAStorageHeat)p_BuildingThermalAsset.j_ea).getHeatCapacity_JpK() / 3.6e6;
 			p_primaryHeatingAsset.v_powerFraction_fr = 1;//min(1,powerDemand_kW / p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,v_hotwaterDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
-			p_BuildingThermalAsset.v_powerFraction_fr = HP.getHeatCapacity_kW() / p_BuildingThermalAsset.getHeatCapacity_kW();
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,v_hotwaterDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
+			p_BuildingThermalAsset.v_powerFraction_fr = HP.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 			traceln("HP is cheaper");
 		}
 	} else { // Just supply DHW demand with gas burner
-		p_secondaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW();
+		p_secondaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW();
 		p_primaryHeatingAsset.v_powerFraction_fr = 0;
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 		traceln("just DHW");
@@ -43699,7 +43705,7 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 	double heatSupplyToBuffer_kW = p_secondaryHeatingAsset.heatProduction_kW;
 		
 	// 2) supply tapwater from local heatbuffer on demand, AND take in heat from the heatpump
-	p_heatBuffer.v_powerFraction_fr = ( - v_hotwaterDemand_kW + heatSupplyToBuffer_kW ) / p_heatBuffer.capacityHeat_kW;
+	p_heatBuffer.v_powerFraction_fr = ( - v_hotwaterDemand_kW + heatSupplyToBuffer_kW ) / p_heatBuffer.getCapacityHeat_kW();
 	p_heatBuffer.f_updateAllFlows( p_heatBuffer.v_powerFraction_fr );
 	
 	// 3) heat the house from heat delivery set directly, and take care to add this heat load to the existing heat flow from w/w heatpump consumption!
@@ -43708,8 +43714,8 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 	p_primaryHeatingAsset.v_powerFraction_fr += b_houseTempBelowSetpoint? 1 : 0;  // maybe cap for maximum 1?
 	//p_primaryHeatingAsset.f_updateAllFlows(	p_primaryHeatingAsset.v_powerFraction_fr );
 	
-	double heatFlowToHouse_kW = p_primaryHeatingAsset.getHeatCapacity_kW() * p_primaryHeatingAsset.v_powerFraction_fr - p_secondaryHeatingAsset.heatConsumption_kW;
-	p_BuildingThermalAsset.v_powerFraction_fr = (heatFlowToHouse_kW / p_BuildingThermalAsset.capacityHeat_kW );
+	double heatFlowToHouse_kW = p_primaryHeatingAsset.getCapacityHeat_kW() * p_primaryHeatingAsset.v_powerFraction_fr - p_secondaryHeatingAsset.heatConsumption_kW;
+	p_BuildingThermalAsset.v_powerFraction_fr = (heatFlowToHouse_kW / p_BuildingThermalAsset.getCapacityHeat_kW() );
 	//p_primaryHeatingAsset.v_powerFraction_fr = p_BuildingThermalAsset.j_ea.getCurrentTemperature() < v_tempSetpoint_degC ? 1 : 0;
 	//traceln("b_primaryOperate = "+ b_primaryOperate + ", GCHouse f_heatWithHybridHeatpump: p_secondaryHeatingAsset.j_ea.capacityHeat_kW = " + p_secondaryHeatingAsset.j_ea.capacityHeat_kW + ". p_secondaryHeatingAsset.j_ea =  "+p_secondaryHeatingAsset.j_ea.toString());
 	
@@ -43854,11 +43860,11 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 		// Choose charging power based on prices and desired SOC level
 		if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) { // if willingness to pay higher than current electricity price
 			//chargeSetpoint_kW = min(p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW)  ;
-			chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain;
+			chargeSetpoint_kW = p_batteryAsset.getCapacityElectric_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain;
 			//traceln("WTP charge " + WTP_charge_eurpkWh + " eurpkWh is high than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so charge!") ;
 		} else if (WTP_discharge_eurpkWh < currentElectricityPriceDischarge_eurpkWh) {
 			//chargeSetpoint_kW = -min(p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW);
-			chargeSetpoint_kW = -p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain;
+			chargeSetpoint_kW = -p_batteryAsset.getCapacityElectric_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain;
 			//traceln("WTP discharge " + WTP_discharge_eurpkWh + " eurpkWh is lower than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so discharge!") ;
 		}
 		
@@ -43873,7 +43879,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	}
 	p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 }]]></Body>
@@ -43995,7 +44001,7 @@ boolean isGasCheaper = false;
 
 if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 	v_gasHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getMethanePrice();
-	v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), p_primaryHeatingAsset.getElectricCapacity_kW() ) / HP_COP;
+	v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), p_primaryHeatingAsset.getCapacityElectric_kW() ) / HP_COP;
 	isGasCheaper = v_gasHeatingCost_eurpkWh_TEMPORARY < v_eHeatingCost_eurpkWh_TEMPORARY ? true:false;
 }	
 
@@ -44036,17 +44042,17 @@ if ( p_heatBuffer != null){
 					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset != null) { 
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()  );
-		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();			
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW()  );
+		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
 	}
 	else { // Just supply DHW
-		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
+		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW();
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 	}
 }
 else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ 
 	double powerDemand_kW = v_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT); //TODO Where does this v_currentPowerHeat_kW come from? (Peter 14-09-2024), 
-	p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+	p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
 	traceln("Household is heating with gasburner without thermal building asset, check if this is correct @f_heatWithGasBurner");
 	//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
 }
@@ -44065,14 +44071,14 @@ else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingT
 					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet && p_BuildingThermalAsset != null) { 
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()  );
-		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getHeatCapacity_kW();			
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW()  );
+		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
 	}
 	else { 
-		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
+		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW();
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 	}
-	v_districtHeatDelivery_kW = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.capacityHeat_kW;
+	v_districtHeatDelivery_kW = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW();
 }
 else {
 	traceln("House " + p_gridConnectionID + " has heatingtype DISTRICT HEAT, but no delivery set or building asset!");
@@ -44095,7 +44101,7 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = p_cookingTracker.HOB.heatProduction_kW;
 	if (p_BuildingThermalAsset != null) {
-		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getHeatCapacity_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW();
 	}
 }]]></Body>
 				</Function>
@@ -44712,12 +44718,12 @@ if( b_validLocalBuffer ) {
 
 	//traceln("Thermal storage asset heatCapacity: " + p_DHheatStorage.getHeatCapacity_kW());
 	double heatingSetpoint_kW = max(0,(tempSetpoint_degC - v_bufferTemp_degC)) * p_DHheatStorage.getHeatCapacity_JpK() / (3.6e6 * energyModel.p_timeStep_h);
-	Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getHeatCapacity_kW() );
-	J_FlowsMap flowsMap = flowsPair.getFirst();
+	//Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getCapacityHeat_kW() );
+	J_FlowsMap flowsMap = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getCapacityHeat_kW() );
 	double heatingPower_kW = -flowsMap.get(OL_EnergyCarriers.HEAT);
 	
 	//traceln("Heating setpoint: %s kW, heating power: %s kW", heatingSetpoint_kW, heatingPower_kW);	
-	p_DHheatStorage.v_powerFraction_fr = ( heatingPower_kW - heatTransferToNetwork_kW ) / p_DHheatStorage.getHeatCapacity_kW();
+	p_DHheatStorage.v_powerFraction_fr = ( heatingPower_kW - heatTransferToNetwork_kW ) / p_DHheatStorage.getCapacityHeat_kW();
 	if ( abs(p_DHheatStorage.v_powerFraction_fr ) > 1) {
 		traceln("p_DHheatStorage.v_powerFraction_fr greater than 1! %s", p_DHheatStorage.v_powerFraction_fr );
 	}
@@ -44725,8 +44731,8 @@ if( b_validLocalBuffer ) {
 	//traceln("heatTransferToNetwork_kW: " + heatTransferToNetwork_kW);
 	//traceln("District heating system temperature: %s degC", p_DHheatStorage.getCurrentTemperature());
 } else {
-	Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getHeatCapacity_kW()); // heatingasset must be powerful enough every single timestep!
-	J_FlowsMap flowsMap = flowsPair.getFirst();
+	//Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getCapacityHeat_kW()); // heatingasset must be powerful enough every single timestep!
+	J_FlowsMap flowsMap = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getCapacityHeat_kW());
 	if ( 0.01 < (heatTransferToNetwork_kW + flowsMap.get(OL_EnergyCarriers.HEAT)) ) {
 		traceln("Warning! District heating primary heating asset not able to fulfill heat demand! Heatdemand: %s kW, heat produced: %s kW", heatTransferToNetwork_kW, -flowsMap.get(OL_EnergyCarriers.HEAT) );
 	}	
@@ -44883,7 +44889,7 @@ b_residualHeatLTSource = p_residualHeatLTSource instanceof J_EAProduction? true 
 
 // Check if buffer is present and has physically correct parameters
 if (p_DHheatStorage instanceof J_EAStorageHeat) {
-	if(p_DHheatStorage.getHeatCapacity_kW() > 0 & p_DHheatStorage.getHeatCapacity_JpK()> 0 ) {
+	if(p_DHheatStorage.getCapacityHeat_kW() > 0 & p_DHheatStorage.getCapacityHeat_kW()> 0 ) {
 		b_validLocalBuffer = true;
 	}
 }
@@ -45041,7 +45047,7 @@ switch (p_heatingType) {
 	//	//traceln("heatingAsset class " + p_spaceHeatingAsset.getClass().toString());
 	if( j_ea instanceof J_EAConversionHeatPump && ((J_EAConversionHeatPump)j_ea).getAmbientTempType().equals("WATER") ) {
 		((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset = p_residualHeatLTSource;
-		((J_EAConversionHeatPump)j_ea).setSourceAssetHeatPower( ((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset.capacityHeat_kW );
+		((J_EAConversionHeatPump)j_ea).setSourceAssetHeatPower( ((J_EAProduction)((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset).getCapacityHeat_kW() );
 	}
 //}
 } else if (j_ea instanceof J_EAStorageHeat ) {
@@ -45684,8 +45690,11 @@ if ( p_batteryAsset != null ) {
 			f_batteryManagementNodalPricing(v_batterySOC_fr);
 		}
 
-		Pair<J_FlowsMap, Double> flowsPair = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		J_FlowsMap flowsMap = flowsPair.getFirst();
+		//Pair<J_FlowsMap, Double> flowsPair = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
+		//J_FlowsMap flowsMap = flowsPair.getFirst();
+		
+		J_FlowsMap flowsMap = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
+		
 		//v_batteryPowerElectric_kW = flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
@@ -45707,14 +45716,14 @@ if ( p_batteryAsset != null ) {
 						<Name><![CDATA[ElektrolyserAsset]]></Name>
 						<Type><![CDATA[J_EAConversionElektrolyser]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
+					<Body><![CDATA[if (ElektrolyserAsset.getCapacityElectric_kW()>0) {
 	
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
 	double availableElectricPower_kW = p_contractedDeliveryCapacity_kW - v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	double excessElectricPower_kW = -(v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + p_contractedFeedinCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
 	double eta_r = ElektrolyserAsset.getEta_r();
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-	double ProductionSetpoint_kW = ElektrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
+	double ProductionSetpoint_kW = ElektrolyserAsset.getCapacityElectric_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double elektrolyserSetpointElectric_kW = 0;
 	
 	if (p_electrolyserOperationMode==OL_ElectrolyserOperationMode.BALANCE) {
@@ -45733,14 +45742,14 @@ if ( p_batteryAsset != null ) {
 		double deficitGain_eurpkWh = 1.0/1000000; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
 		double priceGain_peur = 5; // How strongly to ramp up power with price-delta's	
 		double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + deficitGain_eurpkWh * v_hydrogenProductionDeficit_kWh;
-		elektrolyserSetpointElectric_kW = max(0,ElektrolyserAsset.getElectricCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_peur)  ;
+		elektrolyserSetpointElectric_kW = max(0,ElektrolyserAsset.getCapacityElectric_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_peur)  ;
 		//traceln("WTP hydrogen production is " + roundToDecimal(WTP_eurpkWh,3) + " eurpkWh is higher than electricity price " + roundToDecimal(currentElectricityPriceCharge_eurpkWh,3) + " eurpkWh, so produce! Setpoint power: " + round(elektrolyserSetpointElectric_kW) + " kW");
 	}	
 	
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
 	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
 	
-	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getElectricCapacity_kW());
+	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getCapacityElectric_kW());
 	
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - ElektrolyserAsset.hydrogenProduction_kW;	// Update hydrogen production deficit
 }]]></Body>
@@ -45783,13 +45792,13 @@ if ( p_batteryAsset != null ) {
 			} else {
 				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 			}
-			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 			double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 			double chargeSetpoint_kW = 0;
 			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 			//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 		}
 	}
@@ -46710,13 +46719,13 @@ if (p_curtailer != null){
 			} else {
 				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 			}
-			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 			double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 			double chargeSetpoint_kW = 0;
 			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 			//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 		}
 	}
@@ -46762,7 +46771,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[
-if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
+if (ElectrolyserAsset.getCapacityElectric_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
 	
 	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW;
@@ -46772,7 +46781,7 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	
 	double eta_r = ElectrolyserAsset.getEta_r();
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-	double ProductionSetpoint_kW = ElectrolyserAsset.getElectricCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
+	double ProductionSetpoint_kW = ElectrolyserAsset.getCapacityElectric_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double electrolyserSetpointElectric_kW = 0;
 	
 	
@@ -46811,8 +46820,8 @@ if (ElectrolyserAsset.getElectricCapacity_kW()>0) {
 	
 	//Output
 	//double[] flowsArray = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
-	Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
-	J_FlowsMap flowsMap = flowsPair.getFirst();
+	//Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getCapacityElectric_kW());
+	J_FlowsMap flowsMap = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getCapacityElectric_kW());
 		
 	v_conversionPowerElectric_kW += flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
 	v_hydrogenElectricityConsumption_kW += flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
@@ -46909,8 +46918,8 @@ double wind_forecast_kW;
 double forecast_time_h = ElectrolyserAsset.getstartUpTimeStandby_h()+ 2*energyModel.p_timeStep_h;
 
 //Get current limitation values
-Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.getLastFlows();
-J_FlowsMap flowsMap = flowsPair.getFirst();
+//Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.getLastFlows();
+J_FlowsMap flowsMap = ElectrolyserAsset.getLastFlows();
 double previousElectrolyserConsumption_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
 double currentGridNodePowerFlow_kW = this.l_parentNodeElectric.getConnectedAgent().v_currentLoadElectricity_kW - previousElectrolyserConsumption_kW;
 data_liveWeekGridNoderPowerFlow_kW.add(energyModel.t_h, this.l_parentNodeElectric.getConnectedAgent().v_currentLoadElectricity_kW);
@@ -46957,7 +46966,7 @@ switch (ElectrolyserAsset.getState()){
 	break;
 	
 	case IDLE: 
-		elektrolyserSetpointElectric_kW = 0.025*ElectrolyserAsset.getElectricCapacity_kW(); // 1 - 5 percent of nominal load to keep it warm!
+		elektrolyserSetpointElectric_kW = 0.025*ElectrolyserAsset.getCapacityElectric_kW(); // 1 - 5 percent of nominal load to keep it warm!
 		
 		if(energyModel.v_isRapidRun){
 			v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
@@ -46969,14 +46978,14 @@ switch (ElectrolyserAsset.getState()){
 		switch (p_electrolyserOperationMode){
 		
 			case PRICE:
-				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getElectricCapacity_kW()*p_minProductionRatio;
+				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getCapacityElectric_kW()*p_minProductionRatio;
 			break;
 			
 			case BALANCE:
-				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getElectricCapacity_kW()*p_minProductionRatio;
+				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getCapacityElectric_kW()*p_minProductionRatio;
 			break;
 			case ALWAYS_IDLE:
-				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getElectricCapacity_kW()*p_minProductionRatio;
+				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getCapacityElectric_kW()*p_minProductionRatio;
 			break;
 		}
 	break;
@@ -46985,14 +46994,14 @@ switch (ElectrolyserAsset.getState()){
 		switch (p_electrolyserOperationMode){
 		
 			case PRICE:
-				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getElectricCapacity_kW();
+				elektrolyserSetpointElectric_kW = ElectrolyserAsset.getCapacityElectric_kW();
 			break;
 			
 			case BALANCE:
-				elektrolyserSetpointElectric_kW = min(ElectrolyserAsset.getElectricCapacity_kW(), abs(v_gridNodeCongestionLimit_kW - currentGridNodePowerFlow_kW));
+				elektrolyserSetpointElectric_kW = min(ElectrolyserAsset.getCapacityElectric_kW(), abs(v_gridNodeCongestionLimit_kW - currentGridNodePowerFlow_kW));
 			break;
 			case ALWAYS_IDLE:
-				elektrolyserSetpointElectric_kW = min(ElectrolyserAsset.getElectricCapacity_kW(), abs(v_gridNodeCongestionLimit_kW - currentGridNodePowerFlow_kW));
+				elektrolyserSetpointElectric_kW = min(ElectrolyserAsset.getCapacityElectric_kW(), abs(v_gridNodeCongestionLimit_kW - currentGridNodePowerFlow_kW));
 			break;
 		}
 	break;
@@ -47953,7 +47962,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		traceln("No heating assets for industry gridconnection " + p_gridConnectionID);
 	} else {
 		if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner) { // when there is only a gas burner or DH set
-				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
 				//traceln("Running manageHeatingAsset for single heating asset");
 		} else {
 			traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
@@ -47968,38 +47977,38 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		if ( (-(v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)) > 0.5*p_contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_secondaryHeatingAsset.v_powerFraction_fr = 0;
-			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getElectricCapacity_kW());
+			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getCapacityElectric_kW());
 		} else { // CHP when there is no electricity surpluss or when gas tank is overfilling
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
 			//p_primaryHeatingAsset.v_powerFraction_fr = 0;//min(1,currentDHWdemand_kW / p_secondaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			// Let heatpump fill heatdemand gap if it exists
-			p_primaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_secondaryHeatingAsset.v_powerFraction_fr*p_secondaryHeatingAsset.getHeatCapacity_kW()) / p_primaryHeatingAsset.getHeatCapacity_kW())); // Let gas burner fill the heatdemandgap
+			p_primaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_secondaryHeatingAsset.v_powerFraction_fr*p_secondaryHeatingAsset.getCapacityHeat_kW()) / p_primaryHeatingAsset.getCapacityHeat_kW())); // Let gas burner fill the heatdemandgap
 		}
 	} else if ( p_primaryHeatingAsset instanceof J_EAConversionGasCHP & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // CHP & gas burner
 		if ( p_gasBuffer.getCurrentStateOfCharge() < 0.05) { // Use regular gas burner when biogas buffer is nearly empty
 //		if ( (-v_currentPowerElectricity_kW > 0.5*p_connectionCapacity_kW*2*(p_gasBuffer.j_ea.getCurrentStateOfCharge()-0.5) | p_gasBuffer.j_ea.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.j_ea.getCurrentStateOfCharge() < 0.9) { // Use gas burner when biogas is depleted or when there is too much PV and CHP would lead to curtailment
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_primaryHeatingAsset.v_powerFraction_fr = 0;
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
 		} else { // CHP when there is sufficient biogas
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			if ( p_gasBuffer.getCurrentStateOfCharge() < 0.9 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.
-				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW()),(p_contractedFeedinCapacity_kW + (v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getElectricCapacity_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW()),(p_contractedFeedinCapacity_kW + (v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getCapacityElectric_kW());
 			} else {
-				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
 				//if ( p_gasBuffer.j_ea.getCurrentStateOfCharge() > 0.98 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.				
 				//	traceln("Biogas tank 98% full! must run CHP! Heat demand: " + heatDemand_kW + " kW");
 				//}
 			}
-			p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getHeatCapacity_kW()) / p_secondaryHeatingAsset.getHeatCapacity_kW())); // Let gas burner fill the heatdemandgap
+			p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getCapacityHeat_kW()) / p_secondaryHeatingAsset.getCapacityHeat_kW())); // Let gas burner fill the heatdemandgap
 		}
 	} else if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // Heatpump and gasburner, switch based on heatpump COP)
 		//((J_EAConversionHeatPump)p_primaryHeatingAsset.j_ea).updateAmbientTemp(main.v_currentAmbientTemperature_degC); // update heatpump temp levels! <-- waarom dit gebeurt al in de main (peter 21-02-23)
 		//double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset.j_ea).getCOP();
 		//double HP_powerDemand_kW = heatDemand_kW / HP_COP;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
-		p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getHeatCapacity_kW()) / p_secondaryHeatingAsset.getHeatCapacity_kW())); // Let gas burner fill the heatdemandgap
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
+		p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getCapacityHeat_kW()) / p_secondaryHeatingAsset.getCapacityHeat_kW())); // Let gas burner fill the heatdemandgap
 	} else {
 		traceln("**** EXCEPTION ****: Unsupported combination of heatings systems in GridConnection " + p_gridConnectionID);
 		p_primaryHeatingAsset.v_powerFraction_fr = 0;
@@ -48017,10 +48026,10 @@ if (p_gasBuffer != null) {
 //		p_gasBuffer.v_powerFraction_fr = (biogasSupply_kW - p_primaryHeatingAsset.v_currentConsumptionMethane_kW - p_secondaryHeatingAsset.v_currentConsumptionMethane_kW)/p_gasBuffer.j_ea.getGasCapacity_kW();
 //	} else {
 	if (p_primaryHeatingAsset instanceof J_EAConversionGasCHP) {
-		p_gasBuffer.v_powerFraction_fr = (biogasSupply_kW - p_primaryHeatingAsset.methaneConsumption_kW) / p_gasBuffer.getGasCapacity_kW();
+		p_gasBuffer.v_powerFraction_fr = (biogasSupply_kW - p_primaryHeatingAsset.methaneConsumption_kW) / p_gasBuffer.getCapacityGas_kW();
 	} else if (p_secondaryHeatingAsset != null) {
 		if (p_secondaryHeatingAsset instanceof J_EAConversionGasCHP) {
-			p_gasBuffer.v_powerFraction_fr = (biogasSupply_kW - p_secondaryHeatingAsset.methaneConsumption_kW) / p_gasBuffer.getGasCapacity_kW();
+			p_gasBuffer.v_powerFraction_fr = (biogasSupply_kW - p_secondaryHeatingAsset.methaneConsumption_kW) / p_gasBuffer.getCapacityGas_kW();
 		}
 	}
 //	}
@@ -48631,10 +48640,10 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	
 	//double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + 1.0*(energyModel.v_epexForecast_eurpkWh - v_electricityPriceLowPassed_eurpkWh) + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
 	double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-	chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
+	chargeSetpoint_kW = p_batteryAsset.getCapacityElectric_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
 					
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -48678,7 +48687,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		
 	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
-	double FeedbackGain_kWpSOC = 3 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedbackGain_kWpSOC = 3 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
@@ -48703,7 +48712,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	// p_forecastTime_h = 10
 	//traceln("availableDischargePower_kW: %s", availableDischargePower_kW);
 	if (availableChargePower_kW < 0) { // prevent congestion
-		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getElectricCapacity_kW());
+		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getCapacityElectric_kW());
 		return;
 	}
 	double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
@@ -48851,7 +48860,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 	
-	double FeedbackGain_kWpSOC = 5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedbackGain_kWpSOC = 5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
@@ -48860,7 +48869,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 	//traceln("hello?");
 }
@@ -49835,19 +49844,19 @@ if (v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > p_contractedDe
 		double powerNeeded_kW = max(v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - p_contractedDeliveryCapacity_kW * capacityLimit_fr,  v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
 		double efficiency = fuelCellAsset.getEta_r();
-		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getElectricCapacity_kW()*efficiency);
+		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getCapacityElectric_kW()*efficiency);
 		
 		// Check the amount of Hydrogen that has been generated so far
 		// Only works because there is a single energy conversion site
 		if (energyModel.EnergyConversionSites.get(0).v_hydrogenInStorage_kWh > 0 ) {
 			// Calling operate directly instead of updateAllFlows, so that it's not bounded
-			Pair<J_FlowsMap, Double> flowsPair = fuelCellAsset.operate(ratioOfCapacity);
-			J_FlowsMap flowsMap = flowsPair.getFirst();
+			//Pair<J_FlowsMap, Double> flowsPair = fuelCellAsset.operate(ratioOfCapacity);
+			J_FlowsMap flowsMap = fuelCellAsset.f_updateAllFlows(ratioOfCapacity);
 			//traceln("fuel cell operated: " + Arrays.toString(arr));
 			
 			// Since not calling updateAllFlows, have to manually do this
 			//double energyUse_kW = - flowsMap.values().stream().mapToDouble(Double::doubleValue).sum();
-			f_addFlows(flowsMap, flowsPair.getSecond(), fuelCellAsset);
+			//f_addFlows(flowsMap, flowsPair.getSecond(), fuelCellAsset);
 			
 			// updating other variables
 			//v_currentPowerHydrogen_kW += arr[0];
@@ -52076,9 +52085,9 @@ v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
 double powerDemandDivision[] = f_dividePowerDemandHeatingAssets();
 
 //Split the power fractions (powerDemandDivision[] = {Gasburner power request, HP power request, DH power request}
-double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatingAsset.getHeatCapacity_kW()); 
-double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getHeatCapacity_kW());
-double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getHeatCapacity_kW());
+double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatingAsset.getCapacityHeat_kW()); 
+double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getCapacityHeat_kW());
+double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getCapacityHeat_kW());
 
 //p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
 //p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
@@ -52113,8 +52122,8 @@ double powerDemand_kW = v_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
 //Demanded heating power for companies and household seperatly the current time step
 
-double powerDemand_companies_kW = c_heatDemandEA.get("COMPANIES").getLastFlows().getFirst().get(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW);
-double powerDemand_households_kW = c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().getFirst().get(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW);
+double powerDemand_companies_kW = c_heatDemandEA.get("COMPANIES").getLastFlows().get(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW);
+double powerDemand_households_kW = c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().get(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW);
 
 
 //Get the current Heatpump COP
@@ -52208,18 +52217,18 @@ if (j_ea instanceof J_EAVehicle) {
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		v_hasPV = true;
-		v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+			l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		}
-		energyModel.v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		energyModel.v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+			l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		}
-		energyModel.v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		energyModel.v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
@@ -52550,12 +52559,14 @@ if (j_ea instanceof J_EAVehicle) {
  */
 public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	protected J_ProfilePointer profilePointer;
+	protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	//public double yearlyProductionElectricity_kWh;
 	//public double yearlyProductionHeat_kWh;
-	public double yearlyProductionHydrogen_kWh;
-	public double yearlyProductionMethane_kWh;
+	//public double yearlyProductionHydrogen_kWh;
+	//public double yearlyProductionMethane_kWh;
 	protected double outputTemperature_degC;
-	//private J_profilePointer profile;
+	protected double capacity_kW;
+
     /**
      * Default constructor
      */
@@ -52569,10 +52580,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    this.parentAgent = parentAgent;
 	    this.energyAssetType = type;
 	    this.energyAssetName = name;
-	    this.capacityElectric_kW = capacityElectric_kW;
-	    this.capacityHeat_kW = capacityHeat_kW;
-		this.yearlyProductionHydrogen_kWh = yearlyProductionHydrogen_kWh;
-		this.yearlyProductionMethane_kWh = yearlyProductionMethane_kWh;
+	    this.capacity_kW = capacityElectric_kW;
+	    //this.capacityHeat_kW = capacityHeat_kW;
+		//this.yearlyProductionHydrogen_kWh = yearlyProductionHydrogen_kWh;
+		//this.yearlyProductionMethane_kWh = yearlyProductionMethane_kWh;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 		if (profile == null) {
@@ -52580,33 +52591,52 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 		} else {
 			profilePointer = profile;
 		}
+		if (profile == null) {			
+			throw new RuntimeException("J_EAProduction needs to have valid profilePointer!");
+		}
 //	    traceln("I am instantiated! "+this+" owned by "+ownerAsset);
 		registerEnergyAsset();
 	}
 	
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
 		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
-		double difference_kW = capacityElectric_kW - this.capacityElectric_kW;
-		if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {		
-			((GridConnection) this.parentAgent).v_totalInstalledWindPower_kW += difference_kW;
-			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, difference_kW, true);
+		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+			double difference_kW = capacityElectric_kW - this.capacity_kW;
+			if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {		
+				((GridConnection) this.parentAgent).v_totalInstalledWindPower_kW += difference_kW;
+				if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
+					((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, difference_kW, true);
+				}
+				((GridConnection) this.parentAgent).energyModel.v_totalInstalledWindPower_kW += difference_kW;
 			}
-			((GridConnection) this.parentAgent).energyModel.v_totalInstalledWindPower_kW += difference_kW;
-		}
-		else if (this.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && this.parentAgent instanceof GridConnection) {
-			((GridConnection) this.parentAgent).v_totalInstalledPVPower_kW += difference_kW;
-			if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-				((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, difference_kW, true);
+			else if (this.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && this.parentAgent instanceof GridConnection) {
+				((GridConnection) this.parentAgent).v_totalInstalledPVPower_kW += difference_kW;
+				if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
+					((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, difference_kW, true);
+				}
+				((GridConnection) this.parentAgent).energyModel.v_totalInstalledPVPower_kW += difference_kW;
 			}
-			((GridConnection) this.parentAgent).energyModel.v_totalInstalledPVPower_kW += difference_kW;
+	
+			this.capacity_kW = capacityElectric_kW;
+		} else {			
+			throw new RuntimeException("Production assets energy carrier is not electricity!");
 		}
-
-		this.capacityElectric_kW = capacityElectric_kW;
 	}
 	
 	public double getCapacityElectric_kW() {
-		return this.capacityElectric_kW;
+		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+			return this.capacity_kW;
+		} else {			
+			throw new RuntimeException("J_EAProduction is not electric!");
+		}
+	}
+	
+	public double getCapacityHeat_kW() {
+		if (energyCarrier == OL_EnergyCarriers.HEAT) {
+			return capacity_kW;			
+		} else {			
+			throw new RuntimeException("J_EAProduction is not thermal!");
+		}
 	}
 	
 	public String getName() {
@@ -52614,34 +52644,33 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	@Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
-		if (profilePointer != null) {			
-			ratioOfCapacity = profilePointer.getCurrentValue();
-		}
+    public void operate(double ratioOfCapacity) {
+	//public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+		ratioOfCapacity = profilePointer.getCurrentValue();
 		
-    	this.electricityProduction_kW = ratioOfCapacity * capacityElectric_kW;
-    	this.heatProduction_kW = ratioOfCapacity * capacityHeat_kW;
-    	this.hydrogenProduction_kW = ratioOfCapacity * yearlyProductionHydrogen_kWh;
-    	this.methaneProduction_kW = ratioOfCapacity * yearlyProductionMethane_kWh;
-    	energyUse_kW = -(electricityProduction_kW + heatProduction_kW + hydrogenProduction_kW + methaneProduction_kW);
-    	energyUsed_kWh += energyUse_kW * timestep_h;
-    	//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
-    	//return arr;
-    	// debugging checks:
-    	this.heatProduced_kWh += this.heatProduction_kW * timestep_h;
+		double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
+		
+    	this.energyUse_kW = -currentProduction_kW;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+
+    	//return returnEnergyFlows();
+    	//J_FlowsMap flowsMap = new J_FlowsMap();    	    	    	
+       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);    	    	
+    	//return this.flowsMap;
     	
-    	return returnEnergyFlows();
 	}
 
-    public Pair<J_FlowsMap, Double> curtailElectricityProduction(double curtailmentSetpoint_kW) {
+    //public Pair<J_FlowsMap, Double> curtailElectricityProduction(double curtailmentSetpoint_kW) {
+    public void curtailElectricityProduction(double curtailmentSetpoint_kW) {
     	//double currentElectricityProduction_kW = lastFlowsArray[0];
-    	double currentElectricityProduction_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
+    	//double currentProduction_kW = this.lastFlowsMap.get(this.energyCarrier);
+    	double currentProduction_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
 
-    	double curtailmentPower_kW = max(0,min(currentElectricityProduction_kW, curtailmentSetpoint_kW));
+    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	//double[] arr = {-curtailmentPower_kW, 0, 0, 0, 0, 0, 0, 0, 0, curtailmentPower_kW};
-    	J_FlowsMap flowsMap = new J_FlowsMap();
-    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
+    	J_FlowsMap temporaryFlowsMap = new J_FlowsMap();
+    	temporaryFlowsMap.put(this.energyCarrier, -curtailmentPower_kW);
     	this.energyUse_kW = curtailmentPower_kW;
 
     	//lastFlowsArray[0] -= curtailmentPower_kW;
@@ -52651,12 +52680,13 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(temporaryFlowsMap, this.energyUse_kW, this);
     	}
     	//if (ui_energyAsset!= null) {
     	//	ui_energyAsset.f_removeFlows(flowsMap);
     	//}
-    	return new Pair(flowsMap, this.energyUse_kW);
+    	//return new Pair(temporaryFlowsMap, this.energyUse_kW);
+    	// does the flowmap need to be reset affter this??
     }
 	
 	@Override
@@ -52664,10 +52694,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 		return
 			"type = " + this.getClass().toString() + " " +
 			"parentAgent = " + parentAgent +" " +
-			"capacityElectricity_kW = " + capacityElectric_kW +" "+
-			"capacityHeat_kW = " + capacityHeat_kW +" "+
-			"outputTemperature_degC = " + outputTemperature_degC + " "+
-			"heatProduced_kWh = "+ this.heatProduced_kWh +  " ";
+			"capacity_kW = " + capacity_kW +" "+
+			"energyCarrier = " + energyCarrier +" ";
+			//"outputTemperature_degC = " + outputTemperature_degC + " "+
+			//"heatProduced_kWh = "+ this.heatProduced_kWh +  " ";
 	}
 
 	public String getOwnerAgent() {
@@ -52682,8 +52712,9 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	 * It needs to be changed when this class gets changed
 	 */
 	private static final long serialVersionUID = 1L;
+}
 
-}]]></Text>
+]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
@@ -52692,7 +52723,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAStorage
  */
-public class J_EAStorage extends J_EA implements Serializable {
+public abstract class J_EAStorage extends J_EA implements Serializable {
 
 	protected OL_EnergyCarriers storageMedium;
 	protected double storageCapacity_kWh;
@@ -52717,8 +52748,8 @@ public class J_EAStorage extends J_EA implements Serializable {
      */
     public J_EAStorage(Agent parentAgent, double chargeCapacityElectric_kW, double chargeCapacityHeat_kW, OL_EnergyCarriers storageMedium, double storageCapacity_kWh, double stateOfCharge, double lossFactor, double timestep_h, String ambientTempType) {
 		this.parentAgent = parentAgent;
-		this.capacityElectric_kW = chargeCapacityElectric_kW;  // capacity for charging/discharging in kW
-		this.capacityHeat_kW = chargeCapacityHeat_kW;				// capacity for charging/discharging in kW
+		//this.capacityElectric_kW = chargeCapacityElectric_kW;  // capacity for charging/discharging in kW
+		//this.capacityHeat_kW = chargeCapacityHeat_kW;				// capacity for charging/discharging in kW
 		this.storageMedium = storageMedium;
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialStateOfCharge_r = stateOfCharge;
@@ -52733,12 +52764,7 @@ public class J_EAStorage extends J_EA implements Serializable {
     	//
     }
 
-    public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
-    	// traceln("storage operate! ");
-    	//double[] arr = {0,0,0,0,0,0,0,0};
-    	//return arr;
-    	return returnEnergyFlows();
-    }
+    //public abstract Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r);
 
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
@@ -52803,10 +52829,12 @@ public class J_EAStorage extends J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversion
  */
-public class J_EAConversion extends zero_engine.J_EA implements Serializable {
+public abstract class J_EAConversion extends zero_engine.J_EA implements Serializable {
 
 	protected OL_EnergyCarriers energyCarrierProduced;
 	protected OL_EnergyCarriers energyCarrierConsumed;
+	protected double eta_r;
+	protected double inputCapacity_kW;
 	/**
      * Default constructor
      */
@@ -52818,8 +52846,8 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
      */
     public J_EAConversion(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, double timestep_h) {
 	    this.parentAgent = parentAgent;
-	    this.capacityElectric_kW = capacityElectric_kW;
-	    this.capacityHeat_kW = capacityHeat_kW;
+	    //this.capacityElectric_kW = capacityElectric_kW;
+	    //this.capacityHeat_kW = capacityHeat_kW;
 	    this.eta_r = efficiency_r;
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
@@ -52827,10 +52855,10 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 		registerEnergyAsset();
 	}
 
-	@Override
+	/*@Override
 	public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
 		return new Pair(new J_FlowsMap(), 0.0);
-	}
+	}*/
 
     @Override
 	public String toString() {
@@ -52841,7 +52869,25 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 		return parentAgent.agentInfo();
 	}
 	
+	public double getCapacityHeat_kW() {
+		if (energyCarrierProduced == OL_EnergyCarriers.HEAT) {
+			return inputCapacity_kW * eta_r;			
+		} else if (energyCarrierConsumed == OL_EnergyCarriers.HEAT) {
+			return inputCapacity_kW ;			
+		} else {
+			return 0.0;
+		}
+	}
 
+	public double getCapacityElectric_kW() {
+		if (energyCarrierProduced == OL_EnergyCarriers.ELECTRICITY) {
+			return inputCapacity_kW * eta_r;			
+		} else if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
+			return inputCapacity_kW ;			
+		} else {
+			return 0.0;
+		}
+	}
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>
@@ -52865,6 +52911,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 	public double yearlyDemandHydrogen_kWh;
 	public double yearlyDemandMethane_kWh;
 	public double yearlyDemandDiesel_kWh;
+	protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	private double consumptionScaling_fr = 1;
 	public double loadLoad_kWh = 0;
 	//private J_profilePointer profilePointer;
@@ -52909,22 +52956,26 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     }
     
 	@Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    //public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+	public void operate(double ratioOfCapacity) {
 		
 		if (profilePointer != null) {			
 			ratioOfCapacity = profilePointer.getCurrentValue();
 		}
 		
-    	this.electricityConsumption_kW = ratioOfCapacity * yearlyDemandElectricity_kWh*consumptionScaling_fr;
+    	/*this.electricityConsumption_kW = ratioOfCapacity * yearlyDemandElectricity_kWh*consumptionScaling_fr;
     	this.heatConsumption_kW = ratioOfCapacity * yearlyDemandHeat_kWh*consumptionScaling_fr;
     	this.hydrogenConsumption_kW = ratioOfCapacity * yearlyDemandHydrogen_kWh*consumptionScaling_fr;
     	this.methaneConsumption_kW = ratioOfCapacity * yearlyDemandMethane_kWh*consumptionScaling_fr;
     	this.dieselConsumption_kW = ratioOfCapacity * yearlyDemandDiesel_kWh*consumptionScaling_fr;
-    	//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
-    	//return arr;
-    	this.energyUse_kW = electricityConsumption_kW + heatConsumption_kW + hydrogenConsumption_kW + methaneConsumption_kW + dieselConsumption_kW;
+    	*/
+    	double consumption_kW = ratioOfCapacity * yearlyDemandElectricity_kWh*consumptionScaling_fr;
+		
+    	this.energyUse_kW = consumption_kW;
     	this.energyUsed_kWh += this.energyUse_kW * timestep_h;
-    	return returnEnergyFlows();
+
+		flowsMap.put(energyCarrier, consumption_kW);		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
    	}
 	
     public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
@@ -52981,25 +53032,30 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EA
  */
-public class J_EA implements Cloneable {
+abstract public class J_EA implements Cloneable {
 	
 	 protected Agent parentAgent;
 	 
 	 public OL_EnergyAssetType energyAssetType;
 	 public String energyAssetName;
-	 public double v_powerFraction_fr = 0;
+	 protected double v_powerFraction_fr = 0; // Better to make this one protected?
+	 protected J_FlowsMap flowsMap = new J_FlowsMap();
+	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
+	 protected double lastEnergyUse_kW = 0.0;
+	 //public List<OL_EnergyCarriers> selectedEnergyCarriers; // Is this needed?
+
+	 
 	 //public UI_EnergyAsset ui_energyAsset = null;
 
-	 protected double capacityElectric_kW;
-	 protected double capacityHeat_kW;
-	 protected double capacityGas_kW;
+	 //protected double capacityElectric_kW;
+	 //protected double capacityHeat_kW;
+	 //protected double capacityGas_kW;
 	 protected double energyUsed_kWh = 0.0;
 	 protected double energyUse_kW = 0.0;
 	 protected double energyUsedStored_kWh = 0.0;
   	 protected double timestep_h;
-  	 public double eta_r;
-  	 
-  	 
+  	 //public double eta_r;
+  	   	 
 	 public double electricityProduction_kW = 0.0;
 	 public double heatProduction_kW = 0.0;
 	 public double methaneProduction_kW = 0.0;
@@ -53009,17 +53065,13 @@ public class J_EA implements Cloneable {
 	 public double hydrogenConsumption_kW = 0.0;
 	 public double heatConsumption_kW = 0.0;
 	 public double dieselConsumption_kW = 0.0;
-	 
-	 
-	 public J_FlowsMap lastFlowsMap = new J_FlowsMap();
-	 public double lastEnergyUse_kW = 0.0;
-	 
-	 public List<OL_EnergyCarriers> selectedEnergyCarriers;
 
 	 // debugging purposes!
+	 
 	 protected double heatProduced_kWh = 0.0;
 	 protected double heatConsumed_kWh = 0.0;
 	 protected double electricityProduced_kWh = 0.0;
+	 
     /**
      * Default constructor
      */
@@ -53031,19 +53083,19 @@ public class J_EA implements Cloneable {
      */
     public J_EA(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double capacityGas_kW) {
 		this.parentAgent = parentAgent;
-		this.capacityElectric_kW = capacityElectric_kW;
-		this.capacityHeat_kW = capacityHeat_kW;
-		this.capacityGas_kW = capacityGas_kW;
+		//this.capacityElectric_kW = capacityElectric_kW;
+		//this.capacityHeat_kW = capacityHeat_kW;
+		//this.capacityGas_kW = capacityGas_kW;
 		registerEnergyAsset();
     }
     
     protected void registerEnergyAsset() {
-		if (parentAgent instanceof GridConnection) {
+		/*if (parentAgent instanceof GridConnection) {
 			this.selectedEnergyCarriers = ((GridConnection)parentAgent).energyModel.c_selectedEnergyCarriers;
 		}
 		else if (parentAgent instanceof GridNode) {
 			this.selectedEnergyCarriers = ((GridNode)parentAgent).energyModel.c_selectedEnergyCarriers;
-		}
+		}*/
 		
 		// TODO: check if EA is using an energycarrier that is not in the selectedenergycarriers. If so, throw an error!
     	if ( parentAgent instanceof GridConnection) {
@@ -53061,22 +53113,14 @@ public class J_EA implements Cloneable {
     	}
     	
     }
-
-    /*
-    protected void findProfile(String assetName) {
-    	profilePointer = findFirst(((GridConnection)parentAgent).energyModel.c_profiles, p -> p.name.equals(assetName));
-    	traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
-    	if (profilePointer == null) {    		
-    		throw new RuntimeException(String.format("Consumption or production asset without valid profile!") );
-    	}
-    }*/
-    
-    public Pair<J_FlowsMap, Double> f_updateAllFlows(double powerFraction_fr) {
+   
+    //public Pair<J_FlowsMap, Double> f_updateAllFlows(double powerFraction_fr) {
+    public J_FlowsMap f_updateAllFlows(double powerFraction_fr) {
 
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
-    	//double[] arr = operate(powerFractionBounded_fr);
-     	Pair<J_FlowsMap, Double> flowsPair = operate(powerFractionBounded_fr);
-     	J_FlowsMap flowsMap = flowsPair.getFirst();
+     	//Pair<J_FlowsMap, Double> flowsPair = operate(powerFractionBounded_fr);
+     	operate(powerFractionBounded_fr);
+     	//J_FlowsMap flowsMap = flowsPair.getFirst();
      	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
     		//((GridConnection)parentAgent).f_addFlows(arr, this);
@@ -53088,17 +53132,24 @@ public class J_EA implements Cloneable {
     		ui_energyAsset.f_addFlows(flowsMap);
     	}
     	*/
-    	//this.lastFlowsArray = arr;
-    	this.lastFlowsMap = flowsMap;
+
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	resetFlows();
-    	//return arr;
-    	return flowsPair;
+    	/*traceln("flowsMap: %s", flowsMap);
+    	flowsMap.resetFlows();
+    	traceln("flowsMap after reset: %s", flowsMap);
+    	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);
+    	//return arr;*/
+    	return this.flowsMap;
     }
     
-    public void resetFlows() {
+   public void resetFlows() {
     	//traceln("parent energyAsset reset ");
-    	electricityProduction_kW = 0;
+    	//flowsMap.resetFlows();
+	    flowsMap.clear();
+    	
+	    electricityProduction_kW = 0;
     	heatProduction_kW = 0;
     	methaneProduction_kW = 0;
     	hydrogenProduction_kW = 0;
@@ -53107,6 +53158,7 @@ public class J_EA implements Cloneable {
     	hydrogenConsumption_kW = 0;
     	heatConsumption_kW = 0;
     	dieselConsumption_kW = 0;
+    	  	
     	energyUse_kW = 0;
     	v_powerFraction_fr = 0;
     }
@@ -53117,16 +53169,18 @@ public class J_EA implements Cloneable {
     	return arr;
     }
    */
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
-    	traceln("***Warning*** Parent energyAsset operate! This is a dummy function, doing nothing!");
+     //public abstract Pair<J_FlowsMap, Double> operate(double ratioOfCapacity); /
+   public abstract void operate(double ratioOfCapacity);
+    /*
+    	//traceln("***Warning*** Parent energyAsset operate! This is a dummy function, doing nothing!");
     	//double[] arr = returnEnergyFlows(); //{electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
     	//return arr;
-    	return returnEnergyFlows();
-    }
+    	//return returnEnergyFlows();
+    }*/
     
 
-    public Pair<J_FlowsMap, Double> returnEnergyFlows() {
-    	J_FlowsMap flowsMap = new J_FlowsMap();
+    /*public Pair<J_FlowsMap, Double> returnEnergyFlows() {
+    	
     	
     	// TODO: We want to loop over the selected energy carriers, to do so we must rewrite all energyassets to not use variables like this.electricityProduction_kW ?
     	// For now there are just if statements when filling the flowsmap
@@ -53152,7 +53206,7 @@ public class J_EA implements Cloneable {
     	}
     	
     	return new Pair(flowsMap, this.energyUse_kW);
-    }
+    }*/
      
     public double getCurrentStateOfCharge() {
     	return 0;
@@ -53178,6 +53232,7 @@ public class J_EA implements Cloneable {
     	// only for storage agents. Does it belong in this superclass?
     }
 
+    /*
     public double getHeatCapacity_kW() {
     	return capacityHeat_kW;
     }
@@ -53192,7 +53247,7 @@ public class J_EA implements Cloneable {
 
     public double getGasCapacity_kW() {
     	return capacityGas_kW;
-    }
+    }*/
     
     public double getEnergyUsed_kWh() {
     	return energyUsed_kWh;
@@ -53222,9 +53277,10 @@ public class J_EA implements Cloneable {
     	//this.ui_energyAsset = ui_energyAsset;
     //}
     
-    public Pair<J_FlowsMap, Double> getLastFlows() {
+    public J_FlowsMap getLastFlows() {
     	//return lastFlowsArray;
-    	return new Pair(this.lastFlowsMap, this.lastEnergyUse_kW);
+    	//return new Pair(this.lastFlowsMap, this.lastEnergyUse_kW);
+    	return this.lastFlowsMap;
     }
     
 	 public OL_EnergyAssetType getEAType() {
@@ -53256,8 +53312,7 @@ public class J_EA implements Cloneable {
 		return
 			"ownerAgent = " + parentAgent.getIndex() +" ";
 	}
-}
-]]></Text>
+}]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
@@ -53268,9 +53323,8 @@ public class J_EA implements Cloneable {
  */
 public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implements Serializable {
 
-	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
-	//private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.METHANE;
 	protected double outputTemperature_degC;
+	protected double capacityHeat_kW;
     /**
      * Default constructor
      */
@@ -53281,10 +53335,13 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
      * Constructor initializing the fields
      */
     public J_EAConversionGasBurner(Agent parentAgent, OL_EnergyAssetType assetType, double capacityThermal_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
-	    this.parentAgent = parentAgent;
+    	this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
+    	this.energyCarrierConsumed= OL_EnergyCarriers.METHANE;    
+    	this.parentAgent = parentAgent;
 	    this.energyAssetType = assetType;
 	    this.capacityHeat_kW = capacityThermal_kW;
 	    this.eta_r = efficiency;
+	    this.inputCapacity_kW = capacityThermal_kW / eta_r;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    //this.energyAssetType = OL_EnergyAssetType.GAS_BURNER;
@@ -53298,16 +53355,25 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	}
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
-		this.methaneConsumption_kW = heatProduction_kW / eta_r;
+		this.methaneConsumption_kW = heatProduction_kW / this.eta_r;
 		this.energyUse_kW = (methaneConsumption_kW - heatProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
 		this.heatProduced_kWh += heatProduction_kW * timestep_h;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
+		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW);	
+		
+		/*if (Double.isNaN(this.energyUse_kW)) {
+			traceln("Gasburner eta_r: %s", this.eta_r);
+			traceln("ratioOfCapacity: %s", ratioOfCapacity);
+			traceln("methaneConsumption_kW: %s", methaneConsumption_kW);
+    		throw new RuntimeException("Gasburner energyUse_kW is NaN!");
+    	}*/
+		//return new Pair(flowsMap, this.energyUse_kW);
     }
 
 	public double getEnergyUsed_kWh() {
@@ -53319,7 +53385,6 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 		return
 			"AssetType = " + energyAssetType + 
 			" parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
-			" capacityElectric_kW = " + this.capacityElectric_kW +" "+
 			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"eta_r = " + this.eta_r+" " +
 			"outputTemperature_degC = " + this.outputTemperature_degC + " "+
@@ -53337,13 +53402,13 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	 * It needs to be changed when this class gets changed
 	 */
 	private static final long serialVersionUID = 1L;
-
 }]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
 			<Id>1659117174457</Id>
 			<Name><![CDATA[J_EAConversionBiogasMethane]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Text><![CDATA[/**
  * J_EAConversionBiogasMethane
  */
@@ -53413,7 +53478,7 @@ public class J_EAConversionBiogasMethane extends zero_engine.J_EAConversion impl
 public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 
 	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.METHANE;
-	public OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
+	public OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
 	public OL_ProfileAssetType profileType;
@@ -53434,7 +53499,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
      */
     public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_ProfileAssetType profileType, double profileTimestep_h) {
 	    this.parentAgent= parentAgent;
-	    this.energyCarrierConsumed = energyCarrier;
+	    this.energyCarrier = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
 	    this.profileType = profileType;
 	    this.profileTimestep_h = profileTimestep_h;
@@ -53447,11 +53512,13 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	}
 
     @Override
-    public Pair<J_FlowsMap, Double> f_updateAllFlows(double time_h) {
+    //public Pair<J_FlowsMap, Double> f_updateAllFlows(double time_h) {
+    public J_FlowsMap f_updateAllFlows(double time_h) {
     	//resetFlows();    	
     	//double[] arr=operate(time_h);
-    	Pair<J_FlowsMap, Double> flowsPair = operate(time_h);
-    	J_FlowsMap flowsMap = flowsPair.getFirst();
+    	//Pair<J_FlowsMap, Double> flowsPair = operate(time_h);
+    	operate(time_h);
+    	//J_FlowsMap flowsMap = flowsPair.getFirst();
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
     	}
@@ -53459,19 +53526,25 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     		//ui_energyAsset.f_addFlows(flowsMap);
     	//}
     	//this.lastFlowsArray = arr;
-    	this.lastFlowsMap = flowsMap;
+    	this.lastFlowsMap.cloneMap(flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	resetFlows();
-    	return flowsPair;
+    	/*traceln("flowsMap: %s", flowsMap);
+    	flowsMap.resetFlows();
+    	traceln("flowsMap after reset: %s", flowsMap);
+    	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);*/
+    	
+    	return flowsMap;
     }
     
     @Override
-    public Pair<J_FlowsMap, Double> operate(double time_h) {
+    //public Pair<J_FlowsMap, Double> operate(double time_h) {
+    public void operate(double time_h) {
     	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
     		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
     		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
     	}
-    	if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
+    	/*if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
     		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
         	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);        	
     	} else if (energyCarrierConsumed == OL_EnergyCarriers.METHANE) {
@@ -53486,15 +53559,12 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
         	//traceln("Current heat consumption: %s", this.heatConsumption_kW);
     	} else if  (energyCarrierConsumed == OL_EnergyCarriers.DIESEL) {
     		this.dieselConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-    	}
+    	}*/
 		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_energyProfile_kWh.length);	
-    	this.energyUse_kW = (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW);
+    	double currentPower_kW = a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h;
+    	this.energyUse_kW = currentPower_kW;
 		this.energyUsed_kWh += timestep_h * energyUse_kW; 
-		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
-    	//return arr;
-		Pair<J_FlowsMap, Double> flowsPair = returnEnergyFlows();
-		//resetFlows();
-		return flowsPair;
+		this.flowsMap.put(this.energyCarrier, currentPower_kW);		
     }
 
 	public double getEnergyUsed_kWh() {
@@ -53561,7 +53631,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return
 			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
 			"current power = " + (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW) +" "+
-			"eta_r = " + this.eta_r+" " +
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
 	}
 	
@@ -53570,8 +53639,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	 * It needs to be changed when this class gets changed
 	 */
 	private static final long serialVersionUID = 1L;
-
-}]]></Text>
+}
+]]></Text>
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
@@ -53586,6 +53655,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	
 	private double etaCharge_r; // charging efficiency
 	private double etaDischarge_r;
+	protected double capacityElectric_kW;
     /**
      * Default constructor
      */
@@ -53609,7 +53679,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     }
     
 	@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
+	public void operate(double ratioOfChargeCapacity_r) {
     	double inputPower_kW = ratioOfChargeCapacity_r * capacityElectric_kW; // Electric power going into battery, before losses.
     	double deltaEnergy_kWh;   // The change in energy stored in the battery this timestep ('internal' energy)
     	
@@ -53642,7 +53712,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("Battery SoC: %s", stateOfCharge_r);
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.electricityConsumption_kW-this.electricityProduction_kW);		
+				
+		//return new Pair(this.flowsMap, this.energyUse_kW);
 	}
 	
 	public void setBatteryEfficiency_r(double eta_r) {
@@ -53664,7 +53736,6 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 			"stateOfCharge_r = " + this.stateOfCharge_r+" "+
 			"storageCapacity_kWh = " + this.storageCapacity_kWh +" "+
 			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"discharged_kWh " + this.discharged_kWh+" "+
 			"charged_kWh " + this.charged_kWh+" ";
 	}
@@ -53736,9 +53807,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
  */
 public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializable {
 
-	private OL_EnergyCarriers storageMedium = OL_EnergyCarriers.METHANE;
+	private OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.METHANE;
 	private double lossFactor_r = 0;
-
+	protected double capacityGas_kW;
 	//public double capacityGas_kW = 0;
 
     /**
@@ -53767,7 +53838,8 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	}
 
 	@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
+	//public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
+	public void operate(double ratioOfChargeCapacity_r) {
     	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
     	double inputPower_kW = ratioOfChargeCapacity_r * capacityGas_kW; // Gas power going into Storage, negative if going out.
 
@@ -53785,7 +53857,10 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		updateStateOfCharge( deltaEnergy_kWh );
 		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
     	//return arr;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.METHANE, this.methaneConsumption_kW-this.methaneProduction_kW);		
+		
+		//return this.flowsMap;
+
 	}
 
 	@Override
@@ -53821,6 +53896,10 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		return availableCapacity_kW;
 	}
 	
+    public double getCapacityGas_kW() {
+    	return capacityGas_kW;
+    }
+	
 	public double getTotalChargeAmount_kWh() {
 		return charged_kWh;
 	}
@@ -53855,6 +53934,8 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	
 	private double stateOfCharge_r;
 	protected double lossFactor_WpK;
+	protected double capacityHeat_kW;
+	
 	private double timestep_h;
 	private double temperature_degC;
 	private double temperatureStored_degC;
@@ -53913,7 +53994,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	}
 
 	@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
+	public void operate(double ratioOfChargeCapacity_r) {
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
@@ -53933,9 +54014,9 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 
-		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
-    	//return arr;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.HEAT, this.heatConsumption_kW-this.heatProduction_kW);		
+		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
 	}
 	
 	@Override
@@ -54019,6 +54100,10 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		return storageCapacity_kWh;
 	}
 
+	public double getCapacityHeat_kW() {
+		return this.capacityHeat_kW;
+	}
+	
 	public double getHeatCapacity_JpK() {
 		return heatCapacity_JpK;
 	}
@@ -54141,7 +54226,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 
 	@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
+	public void operate(double ratioOfChargeCapacity_r) {
 		//traceln("Building heatCapacity_JpK: %s", this.heatCapacity_JpK);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
@@ -54165,10 +54250,13 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
-		//double[] arr = returnEnergyFlows();
 		//J_FlowsMap flowsMap = returnEnergyFlows();
-		//return arr;
-		return returnEnergyFlows();
+
+		flowsMap.put(OL_EnergyCarriers.HEAT, inputPower_kW);
+		if (Double.isNaN(this.energyUse_kW)) {
+    		throw new RuntimeException("Building thermal model energyUse_kW is NaN!");
+    	}
+		//return new Pair(flowsMap, this.energyUse_kW);
 		
 	}
 
@@ -54301,6 +54389,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
  */
 public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implements Serializable {
 	private double capacityHeat_kW = 0;
+	protected double capacityElectric_kW;
 	private double COP_r;
 	private double belowZeroHeatpumpEtaReductionFactor;
 	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
@@ -54380,7 +54469,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	}
 
 	@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+	public void operate(double ratioOfCapacity) {
 		//traceln("this "+ this.toString() + ", " + ratioOfCapacity * this.capacityElectric_kW + " **** " + ratioOfCapacity * this.capacityHeat_kW / this.COP_r);
 		this.electricityConsumption_kW = min(ratioOfCapacity * this.capacityElectric_kW, ratioOfCapacity * this.capacityHeat_kW / this.COP_r);
 		this.totalElectricityConsumed_kWh += electricityConsumption_kW * timestep_h ;
@@ -54395,7 +54484,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
     		
     		this.heatConsumption_kW = this.heatProduction_kW - this.electricityConsumption_kW;
     		//update effective energy production of source asset!
-    		this.p_linkedSourceEnergyAsset.v_powerFraction_fr += ( this.heatConsumption_kW / this.p_linkedSourceEnergyAsset.capacityHeat_kW );
+    		this.p_linkedSourceEnergyAsset.v_powerFraction_fr += ( this.heatConsumption_kW / ((J_EAProduction)this.p_linkedSourceEnergyAsset).getCapacityHeat_kW() );
 //    		this.ownerAsset.p_linkedSourceEnergyAsset.j_ea.heatProduction_kW += this.heatConsumption_kW;
        	}
     	this.energyUse_kW = (this.electricityConsumption_kW - ( this.heatProduction_kW - this.heatConsumption_kW ) ); 
@@ -54406,11 +54495,13 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
     	//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
     	//traceln("J_EAConversionHeatPump operate function debug | operating @ "+ratioOfCapacity*100+" % capacity ** capacityElectric_kW = "+capacityElectric_kW+", eta_r = "+eta_r+", baseTemperature_degC = "+baseTemperature_degC+", deliveryTemp_degC = "+outputTemperature_degC+", COP_r = "+COP_r+", capacityHeat_kW = "+capacityHeat_kW+". ");
-    	return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
 	}
 
 	@Override
-    public double getHeatCapacity_kW() {
+    public double getCapacityHeat_kW() {
     	return this.capacityHeat_kW;
     }
 
@@ -54485,7 +54576,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	private double stateOfCharge_r;
 	private double initialStateOfCharge_r;
 	private double stateOfChargeStored_r;
-	
+	protected double capacityElectric_kW;
 	private double storageCapacity_kWh;
  
 	// Should this be in here?	
@@ -54527,7 +54618,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     }
  
 	@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
+	public void operate(double ratioOfChargeCapacity_r) {
 		//traceln( "ratio: " + ratioOfChargeCapacity_r);
 		if (true) {
 	    	double discharge_kW = 0;
@@ -54546,9 +54637,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			//traceln("new state of charge: " + stateOfCharge_r * storageCapacity_kWh);
 			updateChargingHistory( electricityProduction_kW, electricityConsumption_kW );
 		}
-		//double[] arr = returnEnergyFlows();
-		//return arr;		
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.electricityConsumption_kW - this.electricityProduction_kW);				
+		//return new Pair(this.flowsMap, this.energyUse_kW);
 	}
  
 	public void updateStateOfCharge( double power_kW ) {
@@ -54621,8 +54711,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return storageCapacity_kWh * vehicleScaling;
 	}
 	
-	@Override
-	public double getElectricCapacity_kW() {
+	public double getCapacityElectric_kW() {
 		return capacityElectric_kW * vehicleScaling;
 	}
 	public double getTotalChargeAmount_kWh() {
@@ -54719,17 +54808,17 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
      */
     public J_EAConversionHeatDeliverySet(Agent parentAgent, double capacityThermal_kW, double efficiency, double outputTemperature_degC, double timestep_h) {
 	    this.parentAgent = parentAgent;
-	    this.capacityHeat_kW = capacityThermal_kW;
 	    this.eta_r = efficiency;
+	    this.inputCapacity_kW = capacityThermal_kW * eta_r;	 
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.timestep_h = timestep_h;
 		registerEnergyAsset();
 	}
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
 		//traceln("I convert now! HeatDeliverySet @ " + (ratioOfCapacity * 100) + " %");
-		heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
+		heatProduction_kW = inputCapacity_kW * eta_r * ratioOfCapacity;
 		heatConsumption_kW = heatProduction_kW / eta_r;
 		//debugging checks:
 		heatProduced_kWh += heatProduction_kW * timestep_h;
@@ -54738,15 +54827,16 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 		energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.HEAT, this.heatConsumption_kW-this.heatProduction_kW);				
+		//return new Pair(this.flowsMap, this.energyUse_kW);
+
     }
 
 	@Override
 	public String toString() {
 		return
 			"parentAgent = " + parentAgent +" " +
-			"capacityElectric_kW = " + capacityElectric_kW +" "+
-			"capacityHeat_kW = " + capacityHeat_kW +" "+
+			"capacityHeat_kW = " + inputCapacity_kW * eta_r +" "+
 			"eta_r = " + eta_r+" "+
 			"outputTemperature_degC = "+ outputTemperature_degC+" "+
 			"heatProduced_kWh = "+ heatProduced_kWh+" "+
@@ -55026,6 +55116,7 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.HYDROGEN;
 	protected double outputTemperature_degC;
+	protected double capacityHeat_kW;
     /**
      * Default constructor
      */
@@ -55047,7 +55138,7 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	}
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
 		this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
 		this.hydrogenConsumption_kW = heatProduction_kW / eta_r;
@@ -55056,7 +55147,11 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
 		this.heatProduced_kWh += heatProduction_kW * timestep_h;
-		return returnEnergyFlows();
+
+		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
+		flowsMap.put(OL_EnergyCarriers.HYDROGEN, hydrogenConsumption_kW);		
+		//return new Pair(flowsMap, this.energyUse_kW);
+
     }
 
 	public double getEnergyUsed_kWh() {
@@ -55068,7 +55163,6 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 		return
 			"AssetType = " + energyAssetType + 
 			" parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
-			" capacityElectric_kW = " + this.capacityElectric_kW +" "+
 			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"eta_r = " + this.eta_r+" " +
 			"outputTemperature_degC = " + this.outputTemperature_degC + " "+
@@ -55106,25 +55200,28 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
      */
     public J_EAConversionElectricHeater(Agent parentAgent, double capacityElectric_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
 	    this.parentAgent = parentAgent;
-	    this.capacityElectric_kW = capacityElectric_kW;
+	    this.inputCapacity_kW = capacityElectric_kW;
 	    this.eta_r = efficiency;
-	    this.capacityHeat_kW = this.capacityElectric_kW * this.eta_r;
+	    //this.capacityHeat_kW = this.capacityElectric_kW * this.eta_r;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 		registerEnergyAsset();
     }
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
 		//traceln("I convert now! ElectricHeater @ " + (ratioOfCapacity * 100) + " %, capacity: " + capacityElectric_kW);
-		this.heatProduction_kW = capacityElectric_kW * ratioOfCapacity * eta_r;
-		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+		this.heatProduction_kW = inputCapacity_kW * ratioOfCapacity * eta_r;
+		this.electricityConsumption_kW = inputCapacity_kW * ratioOfCapacity;
 		this.energyUse_kW = (electricityConsumption_kW - heatProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW;  // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
 		this.heatProduced_kWh += timestep_h * heatProduction_kW;
-		return returnEnergyFlows();
+		
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.electricityConsumption_kW);		
+		flowsMap.put(OL_EnergyCarriers.HEAT, -this.heatProduction_kW);		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
     }
 
 	public double getEnergyUsed_kWh() {
@@ -55135,8 +55232,8 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	public String toString() {
 		return 
 			"parentAgent = " + parentAgent +" " +
-			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			"capacityElectric_kW = " + this.inputCapacity_kW +" "+
+			"capacityHeat_kW = " + this.inputCapacity_kW * this.eta_r +" "+
 			"eta_r = " + this.eta_r+" "+
 			"energyUsed_kWh"+ this.energyUsed_kWh+" "+
 			"heatProduced_kWh = " + this.heatProduced_kWh + " ";
@@ -55476,19 +55573,18 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	}
     
     @Override
-    public Pair<J_FlowsMap, Double> f_updateAllFlows(double powerFraction_fr) {
-    	//operateBounded(powerFraction_fr);
-    	//double[] arr=returnEnergyFlows();    	
-    	Pair<J_FlowsMap, Double> flowsPair = returnEnergyFlows();
-    	J_FlowsMap flowsMap = flowsPair.getFirst();
-    	//return arr;
-    	if (parentAgent instanceof GridConnection) {    		
+    public J_FlowsMap f_updateAllFlows(double powerFraction_fr) {
+    	
+    	flowsMap.put(OL_EnergyCarriers.HYDROGEN, this.hydrogenConsumption_kW);
+    	    	
+    	if (parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
     	}
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;
+    	//Pair<J_FlowsMap, Double> flowspair = new Pair(this.flowsMap, this.energyUse_kW);
     	resetFlows();
-    	return flowsPair;
+    	return this.flowsMap;
     }
     
     /*public double[] operate(double ratioOfChargeCapacity_r) {
@@ -55592,6 +55688,7 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 
 	private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HYDROGEN;
 	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
+	protected double capacityElectric_kW;
     /**
 	/**
      * Default constructor
@@ -55611,7 +55708,7 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	}
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
 		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
@@ -55619,7 +55716,10 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
     	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses! Optionally, this could also be a waste-heat source
     	//return arr;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.electricityConsumption_kW);		
+		flowsMap.put(OL_EnergyCarriers.HYDROGEN, -this.hydrogenProduction_kW);
+		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
     }
 
 	public double getEnergyUsed_kWh() {
@@ -55635,7 +55735,6 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 		return
 			"parentAgent = " + parentAgent +" " +
 			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"eta_r = " + this.eta_r+" ";
 	}
 
@@ -55662,6 +55761,8 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.ELECTRICITY;
 	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.METHANE;
 	protected double outputTemperature_degC;
+	protected double capacityHeat_kW;
+	protected double capacityElectric_kW;
     /**
      * Default constructor
      */
@@ -55682,7 +55783,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	}
 
 	@Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
 		//traceln("CHP can produce " + capacityElectric_kW + " kW electricity");
     	this.electricityProduction_kW = capacityElectric_kW * ratioOfCapacity;
 		this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
@@ -55696,7 +55797,13 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 		this.electricityProduced_kWh += this.electricityProduction_kW * timestep_h;
 		//this.electricityProduced_kWh = this.electricityProduction_kW * timestep_h;
 				
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -electricityProduction_kW);
+		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW);
+
+		
+		//return new Pair(flowsMap, this.energyUse_kW);
+
     }
 
 	public double getEnergyUsed_kWh() {
@@ -55738,13 +55845,14 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	//private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	protected double outputTemperature_degC;
+	protected double capacityElectric_kW;
 
     /**
      * Default constructor
      */
     public J_EAElectricHob(Agent ownerAgent, double capacityThermal_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
     	this.parentAgent= ownerAgent;
-	    this.capacityHeat_kW = capacityThermal_kW;
+	    //this.capacityHeat_kW = capacityThermal_kW;
 	    this.eta_r = efficiency;
 	    //this.capacityElectric_kW = capacityThermal_kW / eta_r;
 	    this.timestep_h = timestep_h;
@@ -55754,16 +55862,21 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
     }
 
     @Override 
-    public Pair<J_FlowsMap, Double> operate( double ratioOfCapacity ) {
+    public void operate( double ratioOfCapacity ) {
     	//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
-    	this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
-		this.electricityConsumption_kW = heatProduction_kW / eta_r;
+    	this.heatProduction_kW = capacityElectric_kW * ratioOfCapacity * eta_r;
+		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
 		this.energyUse_kW = (electricityConsumption_kW - heatProduction_kW);
 		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW - heatProduction_kW); // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
 		this.heatProduced_kWh += heatProduction_kW * timestep_h;
-		return returnEnergyFlows();
+
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.electricityConsumption_kW);		
+		flowsMap.put(OL_EnergyCarriers.HEAT, -this.heatProduction_kW);		
+		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
+
     }
     
 	@Override
@@ -55772,7 +55885,7 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 			"AssetType = " + energyAssetType + 
 			" parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
 			" capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			//"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"eta_r = " + this.eta_r+" " +
 			"outputTemperature_degC = " + this.outputTemperature_degC + " "+
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " "+
@@ -56264,7 +56377,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				nextTripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex+1 );
 				nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
 			}
-			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
+			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.getCapacityElectric_kW());
 			//if (additionalChargingNeededForNextTrip_kWh>0) {
 			//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
 			//}
@@ -56304,7 +56417,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			<Text><![CDATA[/**
  * J_EAVehicle
  */	
-public class J_EAVehicle extends J_EA implements Serializable {
+public abstract class J_EAVehicle extends J_EA implements Serializable {
 	public boolean available = true;
 	protected boolean availableStored = true;
 	protected double energyConsumption_kWhpkm;
@@ -56324,6 +56437,11 @@ public class J_EAVehicle extends J_EA implements Serializable {
     
     public boolean endTrip(double tripDist_km) {
     	return false;
+    }
+    
+    public void operate(double ratioOfCapacity) {
+    	traceln("***Warning*** abstract J_EAVehicle operate! This is a dummy function, doing nothing!");
+		//return null;
     }
     
     public void setVehicleScaling(double vehicleScaling) {
@@ -56391,7 +56509,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     		starttimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
     		endtimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
     		
-    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getHeatCapacity_kW();
+    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getCapacityHeat_kW();
     		powerFractions_fr.add(ratio);
     	}
 
@@ -56486,6 +56604,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     private OL_ElectrolyserState state;
     private int remaining_power_up_duration; // amount of time steps left in power up mode
     private double startUpTimeStandby_h;
+    
 	/**
 	/**
      * Default constructor
@@ -56498,7 +56617,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
      */
     public J_EAConversionElectrolyser(Agent parentAgent, OL_ElectrolyserState state, double capacityElectric_kW, double efficiency_r, double  timestep_h, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
 	    this.parentAgent = parentAgent;
-	    this.capacityElectric_kW = capacityElectric_kW;
+	    this.inputCapacity_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
 	    this.state = state;
@@ -56518,7 +56637,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     }
     
     public void setCapacityElectric_kW(double capacityElectric_kW) { // Used for regime control
-    	this.capacityElectric_kW = capacityElectric_kW;
+    	this.inputCapacity_kW = capacityElectric_kW;
     }
     
     public void setRemaining_power_up_duration(int remaining_power_up_duration) {
@@ -56526,12 +56645,12 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     }
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
     	
 
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
     	ratioOfCapacity=max(0,ratioOfCapacity); // Prevent negative elektrolyser power. This is not a fuel cell! ^^
-		this.electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+		this.electricityConsumption_kW = inputCapacity_kW * ratioOfCapacity;
 		
 		if (state == OL_ElectrolyserState.POWER_UP) {
 			this.remaining_power_up_duration--;
@@ -56547,7 +56666,10 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses! Optionally, this could also be a waste-heat source
     	//return arr;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.electricityConsumption_kW);		
+		flowsMap.put(OL_EnergyCarriers.HYDROGEN, -this.hydrogenProduction_kW);
+		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
     }
 
 	public double getEnergyUsed_kWh() {
@@ -56559,7 +56681,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	}
 	
 	public double getCapacityElectric_kW( ) {
-		return this.capacityElectric_kW;
+		return this.inputCapacity_kW;
 	}
 	
 	public OL_ElectrolyserState getState() { // Used for regime control
@@ -56579,8 +56701,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	public String toString() {
 		return
 			"parentAgent = " + parentAgent +" " +
-			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			"capacityElectric_kW = " + this.inputCapacity_kW +" "+
 			"eta_r = " + this.eta_r+" ";
 	}
 
@@ -56619,7 +56740,7 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
      */
     public J_EAConversionFuelCell(Agent parentAgent, double capacityElectric_kW, double efficiency_r, double  timestep_h) {
 	    this.parentAgent = parentAgent;
-	    this.capacityElectric_kW = capacityElectric_kW;
+	    this.inputCapacity_kW = capacityElectric_kW/eta_r;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
 	    this.energyAssetType = OL_EnergyAssetType.FUEL_CELL;
@@ -56627,14 +56748,18 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 	}
 
     @Override
-    public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {
     	ratioOfCapacity=max(0,ratioOfCapacity);
-		this.hydrogenConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+		this.hydrogenConsumption_kW = inputCapacity_kW * ratioOfCapacity;
     	this.electricityProduction_kW = hydrogenConsumption_kW * eta_r;
     	this.energyUse_kW = (hydrogenConsumption_kW - electricityProduction_kW);
 		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses! Optionally, this could also be a waste-heat source
     	//return arr;
-		return returnEnergyFlows();
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -this.electricityProduction_kW);		
+		flowsMap.put(OL_EnergyCarriers.HYDROGEN, this.hydrogenConsumption_kW);		
+		
+		//return new Pair(this.flowsMap, this.energyUse_kW);
+
     }
 
 	public double getEnergyUsed_kWh() {
@@ -56649,8 +56774,7 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 	public String toString() {
 		return
 			"parentAgent = " + parentAgent +" " +
-			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			"capacityElectric_kW = " + this.inputCapacity_kW * this.eta_r +" "+
 			"eta_r = " + this.eta_r+" ";
 	}
 
@@ -56702,19 +56826,21 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	}
     
     @Override
-    public Pair<J_FlowsMap, Double> f_updateAllFlows(double powerFraction_fr) {
-    	//operateBounded(powerFraction_fr);
-    	//double[] arr=returnEnergyFlows();
-    	Pair<J_FlowsMap, Double> flowsPair = returnEnergyFlows();
-    	J_FlowsMap flowsMap = flowsPair.getFirst();
-    	//return arr;
+    public J_FlowsMap f_updateAllFlows(double powerFraction_fr) {
+    	
+    	flowsMap.put(OL_EnergyCarriers.DIESEL, this.dieselConsumption_kW);
+    	    	
     	if (parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
     	}
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;
-    	resetFlows();
-    	return flowsPair;
+    	/*if (Double.isNaN(this.energyUse_kW)) {
+    		throw new RuntimeException("Diesel vehicle energyUse_kW is NaN!");
+    	}*/
+    	//Pair<J_FlowsMap, Double> flowspair = new Pair(this.flowsMap, this.energyUse_kW);
+    	resetFlows(); 
+    	return this.flowsMap;
     }
     
     /*public double[] operate(double ratioOfChargeCapacity_r) {
@@ -57135,6 +57261,15 @@ public class J_FlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
     	return this;
     }
     
+    public J_FlowsMap cloneMap(J_FlowsMap flowsMap) {
+    	//J_FlowsMap flowsMap = new J_FlowsMap();
+    	//this.resetFlows();
+    	this.clear();
+    	this.addFlows(flowsMap);
+    	return this;
+    	
+    }
+    	
     /*
     public J_FlowsMap addReducedFlows( J_FlowsMap f) {
     	for (OL_EnergyCarriers key : f.keySet()) {
