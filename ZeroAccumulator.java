@@ -3,6 +3,7 @@ package zeroPackage;
 import zeroPackage.ZeroMath;
 import java.lang.Math;
 import java.util.Arrays;
+import java.lang.RuntimeException;
 
 public class ZeroAccumulator {
     public boolean hasTimeSeries = false;
@@ -138,5 +139,31 @@ public class ZeroAccumulator {
         else {
             return timeSeries[i];
         }
+    }
+
+    public ZeroAccumulator add(ZeroAccumulator acc) {
+        if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h) && (this.signalResolution_h == acc.signalResolution_h)) {
+            for (int i = 0; i < timeSeries.length; i++) {
+                this.timeSeries[i] += acc.timeSeries[i];
+            }
+        }
+        else {
+            throw new RuntimeException("Impossible to add these incompatible accumulators");
+            // throw some error? or make some assumptions?
+        }
+        return this;
+    }
+
+    public ZeroAccumulator subtract(ZeroAccumulator acc) {
+        if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h) && (this.signalResolution_h == acc.signalResolution_h)) {
+            for (int i = 0; i < timeSeries.length; i++) {
+                this.timeSeries[i] -= acc.timeSeries[i];
+            }
+        }
+        else {
+            throw new RuntimeException("Impossible to subtract these incompatible accumulators");
+            // throw some error? or make some assumptions?
+        }
+        return this;
     }
 }
