@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021042" AlpVersion="8.9.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1256,9 +1256,7 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -10314,7 +10312,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10330,12 +10328,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[p_latitude]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[p_longitude]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10479,7 +10471,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10495,12 +10487,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10551,7 +10537,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10567,12 +10553,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10636,7 +10616,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10652,12 +10632,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10771,7 +10745,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10787,12 +10761,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10870,7 +10838,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10886,12 +10854,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10978,7 +10940,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10994,12 +10956,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11068,7 +11024,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[1]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11084,12 +11040,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11144,7 +11094,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 					</InitialSpeedCode>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11160,12 +11110,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11218,7 +11162,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11234,12 +11178,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11422,7 +11360,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11438,12 +11376,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11593,7 +11525,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11609,12 +11541,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11761,7 +11687,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11777,12 +11703,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11968,7 +11888,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11984,12 +11904,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12133,7 +12047,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12149,12 +12063,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12298,7 +12206,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12314,12 +12222,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12463,7 +12365,7 @@ return profilePointer;]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12479,12 +12381,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12593,7 +12489,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12609,12 +12505,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12687,7 +12577,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12703,12 +12593,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12784,7 +12668,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12800,12 +12684,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12971,7 +12849,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12987,12 +12865,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -13152,7 +13024,7 @@ return profilePointer;]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<InitialLocationType>XYZ</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -13168,12 +13040,6 @@ return profilePointer;]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -13908,9 +13774,7 @@ if (p_energyType.equals(OL_EnergyCarrierType.HEAT)) {
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -17478,9 +17342,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -27607,9 +27469,7 @@ f_setCoordinatesUIElements();
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -28815,9 +28675,7 @@ p_parentAgent = j_ea.parentAgent;
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -29074,9 +28932,7 @@ p_parentAgent = j_ea.parentAgent;
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -30196,9 +30052,7 @@ energyModel.c_connectionOwners.add(this);]]></StartupCode>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -32726,9 +32580,7 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -32899,9 +32751,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -39791,9 +39641,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -40824,9 +40672,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -41499,9 +41345,7 @@ else {
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -41847,9 +41691,7 @@ public void f_simpleCharging(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -43923,9 +43765,7 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -45010,9 +44850,7 @@ public void f_operateFlexAssets(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -45489,9 +45327,7 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -47150,9 +46986,7 @@ public void f_operateFlexAssets(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -47830,9 +47664,7 @@ public void f_calculateEnergyBalance(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -48554,9 +48386,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -49130,9 +48960,7 @@ public void f_resetSpecificGCStates(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -49456,9 +49284,7 @@ v_maxHydrogenPower_kW = 0;]]></Body>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -49803,9 +49629,7 @@ v_maxHydrogenPower_kW = 0;]]></Body>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -50306,9 +50130,7 @@ v_maxHydrogenPower_kW = 0;]]></Body>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -50627,9 +50449,7 @@ public void f_operateFlexAssets(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -51167,9 +50987,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
-					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
-					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
