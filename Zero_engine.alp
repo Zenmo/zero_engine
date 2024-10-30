@@ -5652,7 +5652,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1729238020165</Id>
-					<Name><![CDATA[c_selectedEnergyCarriers]]></Name>
+					<Name><![CDATA[c_activeEnergyCarriers]]></Name>
 					<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
 					<X>800</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -8206,10 +8206,10 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// What if this function is accidently called twice? Need to start with a clean sheet?
-c_selectedEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
-c_selectedEnergyCarriers.add(OL_EnergyCarriers.HEAT);
-c_selectedEnergyCarriers.add(OL_EnergyCarriers.DIESEL);
-c_selectedEnergyCarriers.add(OL_EnergyCarriers.METHANE);
+/*c_activeEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+c_activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
+c_activeEnergyCarriers.add(OL_EnergyCarriers.DIESEL);
+c_activeEnergyCarriers.add(OL_EnergyCarriers.METHANE);*/
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 // pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
@@ -22212,6 +22212,22 @@ import javax.management.RuntimeErrorException;]]></Import>
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1730283362170</Id>
+					<Name><![CDATA[c_activeEnergyCarriers]]></Name>
+					<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
+					<X>835</X><Y>806</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[OL_EnergyCarriers]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -22951,7 +22967,7 @@ acc_totalElectricityProduction_kW.reset();
 acc_totalElectricityConsumption_kW.reset();
 acc_totalPrimaryEnergyProductionHeatpumps_kW.reset();
 
-v_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.c_selectedEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+v_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.c_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
 v_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
 
 //v_summerWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
@@ -22960,7 +22976,7 @@ v_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumu
 //v_summerWeekProductionAccumulators_kW = new J_AccumulatorMap();
 //v_summerWeekProductionAccumulators_kW.createEmptyAccumulators(true, energyModel.p_timeStep_h, 24*7);
 
-v_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_selectedEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+v_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 //acc_summerElectricityBalance_kW.reset();
 //acc_summerMethaneBalance_kW.reset();
@@ -22983,7 +22999,7 @@ acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.reset();
 acc_summerWeekDeliveryCapacity_kW.reset();
 acc_summerWeekFeedinCapacity_kW.reset();
 
-v_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_selectedEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+v_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 //acc_winterElectricityBalance_kW.reset();
 //acc_winterMethaneBalance_kW.reset();
@@ -23879,7 +23895,11 @@ else {
 
 f_setOperatingSwitches();
 f_initializeAccumulators();
-//v_allowedCapacity_kW = p_connectionCapacity_kW;
+for (OL_EnergyCarriers EC : c_activeEnergyCarriers){
+	if ( !energyModel.c_activeEnergyCarriers.contains(EC) ) {
+		energyModel.c_activeEnergyCarriers.add(EC);
+	}
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -23897,7 +23917,7 @@ f_initializeAccumulators();
 
 // Get import/export from balance arrays. This is apparently quite costly to calculate with the .filter operator! Minimize use!
 
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_totalImports_MWh.put( energyCarrier, v_totalBalanceAccumulators_kW.get(energyCarrier).getSumPos() * energyModel.p_timeStep_h / 1000 );
 	v_totalExports_MWh.put( energyCarrier, -v_totalBalanceAccumulators_kW.get(energyCarrier).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
@@ -23958,7 +23978,7 @@ v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_t
 //// Winter/summer week totals
 
 // Calcs summerweek
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_summerWeekImports_MWh.put( energyCarrier, v_summerWeekBalanceAccumulators_kW.get(energyCarrier).getSumPos() * energyModel.p_timeStep_h / 1000 );
 	v_summerWeekExports_MWh.put( energyCarrier, -v_summerWeekBalanceAccumulators_kW.get(energyCarrier).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
@@ -23981,7 +24001,7 @@ double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh 
 }*/
 
 // Calcs winterweek
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_winterWeekImports_MWh.put( energyCarrier, v_winterWeekBalanceAccumulators_kW.get(energyCarrier).getSumPos() * energyModel.p_timeStep_h / 1000 );
 	v_winterWeekExports_MWh.put( energyCarrier, -v_winterWeekBalanceAccumulators_kW.get(energyCarrier).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
@@ -24032,7 +24052,7 @@ v_nighttimeHydrogenImport_MWh = v_hydrogenDrawn_kWh/1000 - v_daytimeHydrogenImpo
 v_nighttimeHydrogenExport_MWh = v_hydrogenDelivered_kWh/1000 - v_daytimeHydrogenExport_MWh;
 */
 
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_nighttimeImports_MWh.put( energyCarrier, v_totalImports_MWh.get(energyCarrier) - v_daytimeImports_MWh.get(energyCarrier) );
 	v_nighttimeExports_MWh.put( energyCarrier, v_totalExports_MWh.get(energyCarrier) - v_daytimeExports_MWh.get(energyCarrier) );
 }
@@ -24065,7 +24085,7 @@ v_weekendHydrogenExport_MWh = v_hydrogenDelivered_kWh/1000 - v_weekdayHydrogenEx
 
 
 
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_weekendImports_MWh.put( energyCarrier, v_totalImports_MWh.get(energyCarrier) - v_weekdayImports_MWh.get(energyCarrier) );
 	v_weekendExports_MWh.put( energyCarrier, v_totalExports_MWh.get(energyCarrier) - v_weekdayExports_MWh.get(energyCarrier) );
 }
@@ -24138,7 +24158,7 @@ v_totalEnergyProduced_MWh = totalEnergyProduced_MWh;*/
 						<Name><![CDATA[caller]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+					<Body><![CDATA[for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_currentBalanceFlows_kW.addFlow(energyCarrier, flowsMap.get(energyCarrier));
 	
 	if (flowsMap.get(energyCarrier) < 0) {
@@ -24464,13 +24484,13 @@ acc_totalElectricityProduction_kW = new ZeroAccumulator(false, energyModel.p_tim
 acc_totalElectricityConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 
-v_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.c_selectedEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+v_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.c_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
 v_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
 
 //v_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(true, energyModel.p_timeStep_h, 24*7);
 //v_summerWeekProductionAccumulators_kW.createEmptyAccumulators(true, energyModel.p_timeStep_h, 24*7);
 
-v_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_selectedEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+v_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 //acc_summerElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 //acc_summerMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
@@ -24490,7 +24510,7 @@ acc_summerWeekEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeS
 acc_summerWeekDeliveryCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_summerWeekFeedinCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 
-v_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_selectedEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+v_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 //acc_winterElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 //acc_winterMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
@@ -24761,7 +24781,7 @@ else {
 						<Name><![CDATA[caller]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+					<Body><![CDATA[for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_currentBalanceFlows_kW.addFlow(energyCarrier, flowsMap.get(energyCarrier));
 	
 	if (flowsMap.get(energyCarrier) < 0) {
@@ -24896,7 +24916,7 @@ data_districtHeatDelivery_kW.update();
 
 double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	double netFlow_kW = v_currentBalanceFlows_kW.get(energyCarrier);
 	currentImport_kW += max( 0, netFlow_kW );
 	currentExport_kW += max( 0, -netFlow_kW );
@@ -24925,7 +24945,7 @@ if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) {
 	}
 	*/
 	
-	for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+	for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 		v_daytimeImports_MWh.addFlow( energyCarrier, max( 0, v_currentConsumptionFlows_kW.get(energyCarrier) - v_currentProductionFlows_kW.get(energyCarrier) ) * energyModel.p_timeStep_h / 1000 );
 		v_daytimeExports_MWh.addFlow( energyCarrier, max( 0, v_currentProductionFlows_kW.get(energyCarrier) - v_currentConsumptionFlows_kW.get(energyCarrier) ) * energyModel.p_timeStep_h / 1000 );
 	}
@@ -24957,7 +24977,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 	//v_weekdayHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
 	//v_weekdayHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
 		
-	for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+	for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 		v_weekdayImports_MWh.addFlow( energyCarrier, max( 0, v_currentConsumptionFlows_kW.get(energyCarrier) - v_currentProductionFlows_kW.get(energyCarrier) ) * energyModel.p_timeStep_h / 1000 );
 		v_weekdayExports_MWh.addFlow( energyCarrier, max( 0, v_currentProductionFlows_kW.get(energyCarrier) - v_currentConsumptionFlows_kW.get(energyCarrier) ) * energyModel.p_timeStep_h / 1000 );
 		
@@ -24978,7 +24998,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 
 if (energyModel.t_h > energyModel.p_startHourSummerWeek & energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7) {
 
-	for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+	for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 		v_summerWeekBalanceAccumulators_kW.get(energyCarrier).addStep( energyModel.t_h-energyModel.p_startHourSummerWeek, v_currentConsumptionFlows_kW.get(energyCarrier) - v_currentProductionFlows_kW.get(energyCarrier) );
 	}
 	
@@ -24998,7 +25018,7 @@ if (energyModel.t_h > energyModel.p_startHourSummerWeek & energyModel.t_h < ener
 
 if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7) {
 	
-	for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+	for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 		v_winterWeekBalanceAccumulators_kW.get(energyCarrier).addStep( energyModel.t_h-energyModel.p_startHourWinterWeek,  v_currentConsumptionFlows_kW.get(energyCarrier) - v_currentProductionFlows_kW.get(energyCarrier) );
 	}
 	
@@ -25167,7 +25187,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 
 // Store time series in arrays
 
-for (OL_EnergyCarriers energyCarrier : energyModel.c_selectedEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : energyModel.c_activeEnergyCarriers) {
 	v_totalBalanceAccumulators_kW.get(energyCarrier).addStep( energyModel.t_h,  v_currentConsumptionFlows_kW.get(energyCarrier) - v_currentProductionFlows_kW.get(energyCarrier) );
 }
 
@@ -52595,6 +52615,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 			throw new RuntimeException("J_EAProduction needs to have valid profilePointer!");
 		}
 //	    traceln("I am instantiated! "+this+" owned by "+ownerAsset);
+	    activeEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
 	
@@ -52852,6 +52873,8 @@ public abstract class J_EAConversion extends zero_engine.J_EA implements Seriali
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
 	    this.timestep_h = timestep_h;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -52939,7 +52962,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		} else {
 			profilePointer = profile;
 		}
-		
+		activeEnergyCarriers.add(energyCarrier);
 		registerEnergyAsset();
     }
     
@@ -53041,13 +53064,14 @@ abstract public class J_EA implements Cloneable {
 	 protected J_FlowsMap flowsMap = new J_FlowsMap();
 	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
 	 protected double lastEnergyUse_kW = 0.0;
-	 protected List<OL_EnergyCarriers> activeEnergyCarriers; // Is this needed?
+	 protected List<OL_EnergyCarriers> activeEnergyCarriers = new ArrayList<OL_EnergyCarriers>(); // To fill activeEnergyCarriers in GridConnections and EnergyModel
 
 	 protected double energyUsed_kWh = 0.0;
 	 protected double energyUse_kW = 0.0;
 	 protected double energyUsedStored_kWh = 0.0;
   	 protected double timestep_h;
  
+  	 // Are these needed?
 	 protected double heatProduced_kWh = 0.0;
 	 protected double heatConsumed_kWh = 0.0;
 	 protected double electricityProduced_kWh = 0.0;
@@ -53080,6 +53104,12 @@ abstract public class J_EA implements Cloneable {
 		// TODO: check if EA is using an energycarrier that is not in the selectedenergycarriers. If so, throw an error!
     	if ( parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_connectToJ_EA(this);
+    		for (OL_EnergyCarriers EC : this.activeEnergyCarriers) {
+        		if ( !((GridConnection)parentAgent).c_activeEnergyCarriers.contains(EC) ) {
+        			((GridConnection)parentAgent).c_activeEnergyCarriers.add(EC);
+        		}
+    		}
+
     	} else {    		
     		traceln("Energy asset %s doesn't have a valid parent agent! Will not be operated!", this);
     	}
@@ -53209,6 +53239,7 @@ abstract public class J_EA implements Cloneable {
 //    public double getOutputTemperature_degC() {
 //   	return 0;
 //    }
+	/* 
     @Override    
     public Object clone() { 
     	try {
@@ -53217,7 +53248,8 @@ abstract public class J_EA implements Cloneable {
     		throw new RuntimeException(e);
     	}
     } 
-    
+    */
+	 
 	@Override
 	public String toString() {
 		return
@@ -53262,6 +53294,8 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
 	    	
 	    }
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -53419,6 +53453,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    } else {
 	    	this.timestep_h = profileTimestep_h;
 	    }
+	    activeEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
 
@@ -53585,6 +53620,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
 		this.etaCharge_r = Math.sqrt(eta_r);
 		this.etaDischarge_r = Math.sqrt(eta_r);
+	    activeEnergyCarriers.add(this.storageMedium);
 		registerEnergyAsset();
     }
     
@@ -53739,6 +53775,7 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
+	    activeEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
     }
 
@@ -53885,6 +53922,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.ambientTempType = ambientTempType;
 		this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.stateOfCharge_r = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
+	    activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		registerEnergyAsset();
     }
 
@@ -54109,6 +54147,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    if (lossFactor_WpK < 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EABuilding with negative lossfactor! %s", lossFactor_WpK));	    	
 	    }
+	    activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		registerEnergyAsset();
     }
 
@@ -54303,8 +54342,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	protected double capacityElectric_kW;
 	private double COP_r;
 	private double belowZeroHeatpumpEtaReductionFactor;
-	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
-	//private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	protected double outputTemperature_degC;
 	private double baseTemperature_degC;
 	private double sourceAssetHeatPower_kW; // for water-water heatpump functionality
@@ -54335,6 +54372,10 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
 	    this.belowZeroHeatpumpEtaReductionFactor = belowZeroHeatpumpEtaReductionFactor;
 	    //this.energyAssetName = "Heatpump";
+    	this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
+    	this.energyCarrierConsumed= OL_EnergyCarriers.ELECTRICITY;   
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -54525,6 +54566,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
 	    	
 	    }
+	    activeEnergyCarriers.add(this.storageMedium);
 		registerEnergyAsset();
     }
  
@@ -54724,7 +54766,8 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    this.inputCapacity_kW = capacityThermal_kW * eta_r;	 
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.timestep_h = timestep_h;
-		registerEnergyAsset();
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    registerEnergyAsset();
 	}
 
     @Override
@@ -55047,6 +55090,8 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    //this.energyAssetType = OL_EnergyAssetType.HYDROGEN_FURNACE;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -55118,6 +55163,8 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	    //this.capacityHeat_kW = this.capacityElectric_kW * this.eta_r;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
     }
 
@@ -55461,7 +55508,7 @@ public class J_HourlyCurvesData implements Serializable {
  */
 public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 
-	//private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.HYDROGEN;
+	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.HYDROGEN;
 
 	/**
      * Default constructor
@@ -55482,6 +55529,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;	    	
 	    }
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
@@ -55617,6 +55665,8 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	    this.capacityElectric_kW = capacityElectric_kW;
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -55692,6 +55742,9 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	    this.capacityHeat_kW = capacityHeat_kW; 
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		registerEnergyAsset();
 	}
 
@@ -55751,8 +55804,8 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
  */	
 public class J_EAElectricHob extends J_EAConversion implements Serializable {
 
-	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
-	//private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
+	private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
+	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	protected double outputTemperature_degC;
 	protected double capacityElectric_kW;
 
@@ -55767,6 +55820,8 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
     }
 
@@ -56538,6 +56593,8 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	    double loadChangeTime_h = loadChangeTime_s/3600;
 	    double startUpTimeShutdown_h = startUpTimeShutdown_s/3600;
 	    double startUpTimeIdle_h = startUpTimeIdle_s/3600;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
@@ -56653,6 +56710,8 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 	    this.eta_r = efficiency_r;
 	    this.timestep_h = timestep_h;
 	    this.energyAssetType = OL_EnergyAssetType.FUEL_CELL;
+	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -56707,7 +56766,7 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
  */
 public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 
-	//private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.DIESEL;
+	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.DIESEL;
 
 	/**
      * Default constructor
@@ -56731,6 +56790,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;
 	    }
+	    activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
