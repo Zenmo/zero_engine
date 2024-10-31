@@ -51451,8 +51451,9 @@ return powerDemandDivision; //{Gasburner power request, HP power request, DH pow
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722595238227</Id>
-					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-					<X>1070</X><Y>90</Y>
+					<Name><![CDATA[f_connectToJ_EA_default_overwrite_OUD]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1110</X><Y>-20</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51571,6 +51572,160 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
 	c_profileAssets.add((J_EAProfile)j_ea);
+} else {
+	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1730370456790</Id>
+					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
+					<X>1070</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[j_ea]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[energyModel.c_energyAssets.add(j_ea);
+c_energyAssets.add(j_ea);
+
+if (j_ea instanceof J_EAVehicle) {
+	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
+	if (vehicle instanceof J_EADieselVehicle) {
+		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );		
+	} else if (vehicle instanceof J_EAHydrogenVehicle) {
+		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
+	} else if (vehicle instanceof J_EAEV) {
+		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
+		energyModel.c_EVs.add((J_EAEV)vehicle);	
+		c_EvAssets.add(j_ea);
+	}
+	c_vehicleAssets.add(vehicle);		
+	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
+	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
+		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker.setAnnualDistance_km(30_000);
+		} else {
+			//traceln("Adding passenger vehicle to gridconnection %s", this);
+			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
+			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
+		}
+		
+		vehicle.tripTracker = tripTracker;	
+	}
+	c_tripTrackers.add( tripTracker );
+	v_vehicleIndex ++;
+} else if (j_ea instanceof J_EAConsumption) {
+	c_consumptionAssets.add((J_EAConsumption)j_ea);	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+		p_DHWAsset = (J_EAConsumption)j_ea;	
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
+		c_fixedConsumptionElectricAssets.add(j_ea);
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
+		c_electricHobAssets.add(j_ea);
+	}
+} else if (j_ea instanceof J_EAProduction) {
+	c_productionAssets.add((J_EAProduction)j_ea);
+	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
+	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		v_hasPV = true;
+		v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		if (l_parentNodeElectric.getConnectedAgent() != null) {
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), true);
+		}
+		energyModel.v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		c_pvAssets.add(j_ea);
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		if (l_parentNodeElectric.getConnectedAgent() != null) {
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), true);
+		}
+		energyModel.v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		c_windAssets.add(j_ea);
+	}
+} else if (j_ea instanceof J_EAConversion) {
+	c_conversionAssets.add((J_EAConversion)j_ea);
+	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
+			c_electricHobAssets.add(j_ea);
+			c_conversionElectricAssets.add(j_ea);
+		}
+		if (p_cookingTracker == null) {
+			int rowIndex = uniform_discr(2, 300); 
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
+		} else {
+			p_cookingTracker.HOB = (J_EAConversion)j_ea;
+		}
+	} else if (j_ea instanceof J_EAConversionGasBurner) {
+		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+	} else if (j_ea instanceof J_EAConversionHeatPump) {
+		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		c_electricHeatpumpAssets.add(j_ea);
+		c_conversionElectricAssets.add(j_ea);
+		p_secondaryHeatingAsset = (J_EAConversion)j_ea;
+	} else if (j_ea instanceof J_EAConversionHeatDeliverySet) {
+		p_tertiaryHeatingAsset = (J_EAConversion)j_ea;
+	}
+} else if  (j_ea instanceof J_EAStorage) {
+	c_storageAssets.add((J_EAStorage)j_ea);
+	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
+	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+		//traceln("Adding buildingThermals to gridconnection");	
+		p_BuildingThermalAsset = (J_EABuilding)j_ea;
+			/*if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
+				double lossFactor_WpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("lossFactor_WpK").doubleValue();
+				double heatCapacity_JpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("heatCapacity_JpK").doubleValue();
+				p_BuildingThermalAsset.lossFactor_WpK = lossFactor_WpK2;
+				p_BuildingThermalAsset.heatCapacity_JpK = heatCapacity_JpK2;
+				traceln("House thermal model updated!");
+				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_energyLabel);
+				traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
+			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
+		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
+		//v_tempSetpoint_degC = p_BuildingThermalAsset.setTemperature_degC;		
+		energyModel.c_ambientAirDependentAssets.add(p_BuildingThermalAsset);
+	} else if (j_ea instanceof J_EAStorageGas) {
+		p_gasBuffer = (J_EAStorageGas)j_ea;
+	} else if (j_ea instanceof J_EAStorageElectric) {
+		p_batteryAsset = (J_EAStorageElectric)j_ea;
+		c_batteryAssets.add(j_ea);
+	} else if (j_ea instanceof J_EAStorageHeat) {
+		energyModel.c_ambientAirDependentAssets.add(j_ea);
+	}
+} else if  (j_ea instanceof J_EAProfile) {
+	//p_energyProfile = (J_EAProfile)j_ea;
+	c_profileAssets.add((J_EAProfile)j_ea);
+	if (((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHARGING){
+			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+			c_EvAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
+			//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
+			c_fixedConsumptionElectricAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
+			//v_windProductionElectric_kW += flowsArray[0];
+			c_windAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
+			//Do nothing
+		} else {
+			traceln( "Unrecognized profile type!");
+		}
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
