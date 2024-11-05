@@ -149,11 +149,19 @@
 			</Option>
 			<Option>
 				<Id>1725026204865</Id>
-				<Name><![CDATA[LV_GRID]]></Name>
+				<Name><![CDATA[LV_CABLE]]></Name>
 			</Option>
 			<Option>
 				<Id>1725026212801</Id>
-				<Name><![CDATA[MV_GRID]]></Name>
+				<Name><![CDATA[MV_CABLE]]></Name>
+			</Option>
+			<Option>
+				<Id>1730812719301</Id>
+				<Name><![CDATA[REMAINING_BUILDING]]></Name>
+			</Option>
+			<Option>
+				<Id>1730812264440</Id>
+				<Name><![CDATA[GN_SERVICE_AREA]]></Name>
 			</Option>
 			<Option>
 				<Id>1724849181274</Id>
