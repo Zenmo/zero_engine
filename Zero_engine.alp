@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -13025,6 +13025,9 @@ return profilePointer;]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_nbHouseholds]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_municipality]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -22483,7 +22486,7 @@ f_resetSpecificGCStates();
 					<X>920</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[batterySOC]]></Name>
@@ -47895,7 +47898,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW+100.0); // query price at 100kW charging
 		//currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW-100.0); // query price at -100kW charging
 	} else { // Get EPEX price plus nodal price of GridNode
-		currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
+		//currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
 		currentElectricityPriceCharge_eurpkWh = GN.v_currentTotalNodalPrice_eurpkWh;
 		//currentElectricityPriceCharge_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;		
 	}
@@ -50942,6 +50945,9 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_municipality]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -51251,6 +51257,28 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1730911077796</Id>
+					<Name><![CDATA[p_municipality]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1680</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[GZ_Municipality]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1730911077794</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1722589144737</Id>
 					<Name><![CDATA[c_heatDemandEA]]></Name>
@@ -51279,9 +51307,8 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Manage the heating assets
+
 f_manageHeatingAssets();
-
-
 
 /*for ( J_EAStorage e : c_storageAssets ) {
 	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
@@ -51290,7 +51317,9 @@ f_manageHeatingAssets();
 f_manageCharging();
 
 //Electric Storage
+/*
 List<J_EAStorage> batteries = findAll(c_storageAssets, storage -> storage.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC);
+
 for(int i = 0; i < batteries.size() ; i++){
 	if (batteries.get(i).getStorageCapacity_kWh() != 0){
 	f_batteryManagementBalance(batteries.get(i).getCurrentStateOfCharge());
@@ -51736,6 +51765,129 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1730897215443</Id>
+					<Name><![CDATA[f_batteryManagementBalance1]]></Name>
+					<X>1060</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[batterySOC]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	double currentLoadDeviation_kW = v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW; // still excludes battery power
+	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
+	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
+	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.9;
+	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.9;
+	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
+	double availableDischargePower_kW = - v_currentPowerElectricity_kW - v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
+
+	double SOC_setp_fr = 0.5;
+	//TODO: Verander in iets specifieks voor project - overwrite in GC Neighborhood
+	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
+	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	
+	//TODO forecast keer installed cap per buurt genormaliseerd.
+	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
+	SOC_setp_fr =  0.9 - 0.8 * energyModel.v_WindYieldForecast_fr - 0.8 * energyModel.v_SolarYieldForecast_fr;
+	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+	
+	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
+	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop
+	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1730897215446</Id>
+					<Name><![CDATA[f_batteryManagementPrice1]]></Name>
+					<X>1060</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[currentBatteryStateOfCharge]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	//double willingnessToPayDefault_eurpkWh = 0.3;
+	double chargeDischarge_offset_eurpkWh = 0.0;
+	double WTPfeedbackGain_eurpSOC = 0.5; //Gelijk aan de gem marktprijs -  When SOC-error is 100%, adjust WTP price by 1 eurpkWh
+	double priceGain_kWhpeur = 2; // How strongly to ramp up power with price-delta's
+	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
+	
+	double chargeSetpoint_kW = 0;
+	
+	//if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+		//ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
+		//traceln("Initial Mappings are: " + ((ConnectionOwner)p_ownerActor).v_currentPriceBands);
+		double currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;//double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
+
+		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
+		
+		//double currentPricePowerBandPos_kW = ownerActor.v_priceBandsDelivery.ceilingKey(100.0); // Up to what power does this price hold?
+		//double currentPricePowerBandNeg_kW = ownerActor.v_priceBandsDelivery.floorKey(100.0); // Down to what power does this price hold?
+		
+		double SOC_setp_fr = 0.5;
+		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
+		/*if (!c_vehicleAssets.isEmpty()) {
+			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { 
+			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
+			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+		}*/
+		double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge; // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
+		
+		// Define WTP price for charging and discharging!
+		double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+		double WTP_discharge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+		
+		//traceln("WTP charge is " + WTP_charge_eurpkWh + " eurpkWh, discharge is " + WTP_discharge_eurpkWh + " eurpkWh");
+		// Choose charging power based on prices and desired SOC level
+		if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) { // if willingness to pay higher than current electricity price
+			//chargeSetpoint_kW = min(p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW)  ;
+			chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
+			//traceln("WTP charge " + WTP_charge_eurpkWh + " eurpkWh is high than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so charge!") ;
+		} else if (WTP_discharge_eurpkWh < currentElectricityPriceCharge_eurpkWh) {
+			//chargeSetpoint_kW = -min(p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW);
+			chargeSetpoint_kW = -p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceCharge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
+			//traceln("WTP discharge " + WTP_discharge_eurpkWh + " eurpkWh is lower than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so discharge!") ;
+		}	
+		
+		// limit charging power to available connection capacity
+		boolean b_stayWithinConnectionLimits = true;
+		if( b_stayWithinConnectionLimits ) {		
+			double electricitySurplus_kW = - v_currentPowerElectricity_kW; 
+			
+			double availableChargePower_kW = electricitySurplus_kW + p_contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = electricitySurplus_kW - p_contractedFeedinCapacity_kW; // Max discharging power within grid capacity
+			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		}			
+	
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//}
+	
 }
 ]]></Body>
 				</Function>
