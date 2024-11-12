@@ -4844,6 +4844,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1731439789360</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -4865,6 +4868,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[8760]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1731439835896</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
