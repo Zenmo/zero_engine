@@ -5805,7 +5805,7 @@ for(GridNode n : c_gridNodesTopLevel) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051962956</Id>
-					<Name><![CDATA[f_calculateFinancialFlows]]></Name>
+					<Name><![CDATA[f_calculateActorFlows]]></Name>
 					<X>557</X><Y>292</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5826,11 +5826,11 @@ if (b_parallelizeConnectionOwners) {
 */
 
 for (EnergyCoop h : pop_energyCoops) {
-	h.f_updateFinances();
+	h.f_calculateEnergyBalance();
 }
-for (EnergySupplier e : pop_energySuppliers) {
+/*for (EnergySupplier e : pop_energySuppliers) {
 	e.f_updateFinances();
-}
+}*/
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -6505,7 +6505,7 @@ for(t_h = v_runStartTime_h; t_h < v_runEndTime_h; t_h += p_timeStep_h){
 	
 	// Financial accounting of energy flows
 	startTime = System.currentTimeMillis();
-	f_calculateFinancialFlows(t_h);
+	f_calculateActorFlows(t_h);
 	v_financialsRuntime_ms += (System.currentTimeMillis()-startTime);
 	
 	// Update elektriciteitsprijzen
@@ -7502,7 +7502,7 @@ f_calculateGridConnectionFlows(t_h);
 f_calculateGridnodeFlows(t_h);
 
 // Financial accounting of energy flows
-f_calculateFinancialFlows(t_h);
+f_calculateActorFlows(t_h);
 
 // Update elektriciteitsprijzen
 f_updatePricesForNextTimestep(t_h);
@@ -23009,7 +23009,14 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 
 if (caller instanceof J_EAStorageElectric) { 
 	// Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need an element in flowsmap indicating power into storage??
-	//v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
+	
+	if (flowsMap.get(OL_EnergyCarriers.ELECTRICITY) < 0) {
+		v_currentProductionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
+	}
+	else if (flowsMap.get(OL_EnergyCarriers.ELECTRICITY) > 0){
+		v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, -flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
+	}
+	v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
 	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
 } else {
 	v_currentPrimaryEnergyProduction_kW += max(0, -energyUse_kW);
@@ -33547,7 +33554,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101570992</Id>
 					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1693.333</Y>
+					<X>61.333</X><Y>1713.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33559,7 +33566,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101570994</Id>
 					<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
-					<X>61.333</X><Y>1713.333</Y>
+					<X>61.333</X><Y>1733.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33571,7 +33578,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101570996</Id>
 					<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1733.333</Y>
+					<X>61.333</X><Y>1753.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33583,7 +33590,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101570998</Id>
 					<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1753.333</Y>
+					<X>61.333</X><Y>1773.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33595,7 +33602,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101571000</Id>
 					<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1773.333</Y>
+					<X>61.333</X><Y>1793.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33607,7 +33614,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101571002</Id>
 					<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1793.333</Y>
+					<X>61.333</X><Y>1813.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33619,7 +33626,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101571004</Id>
 					<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1813.333</Y>
+					<X>61.333</X><Y>1833.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33631,7 +33638,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1723101571006</Id>
 					<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
-					<X>61.333</X><Y>1833.333</Y>
+					<X>61.333</X><Y>1853.333</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35606,7 +35613,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730133371154</Id>
 					<Name><![CDATA[v_currentCustomerFeedIn_kW]]></Name>
-					<X>40</X><Y>880</Y>
+					<X>40</X><Y>900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35618,7 +35625,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730133390778</Id>
 					<Name><![CDATA[acc_annualCustomerFeedIn_kW]]></Name>
-					<X>60</X><Y>1406</Y>
+					<X>60</X><Y>1426</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37289,6 +37296,57 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731400569232</Id>
+					<Name><![CDATA[acc_annualCustomerDelivery_kW]]></Name>
+					<X>60</X><Y>1407</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[ZeroAccumulator]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760)]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731400607488</Id>
+					<Name><![CDATA[v_currentCustomerDelivery_kW]]></Name>
+					<X>40</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731404179099</Id>
+					<Name><![CDATA[v_customerFeedIn_MWh]]></Name>
+					<X>40</X><Y>922</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731404179102</Id>
+					<Name><![CDATA[v_customerDelivery_MWh]]></Name>
+					<X>40</X><Y>942</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1669037234222</Id>
 					<Name><![CDATA[p_actorContractList]]></Name>
@@ -37830,15 +37888,17 @@ if ( v_contractEnergySupplier.equals("VARIABLE")) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660806150226</Id>
 					<Name><![CDATA[f_updateFinances]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>660</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// get current energy flows
-f_gatherEnergyFlows();
+//f_gatherEnergyFlows();
 
-double currentPowerDrawn_kW = v_electricityVolume_kWh / energyModel.p_timeStep_h;
+/*
+double currentPowerDrawn_kW = -v_electricitySurplus_kW;
 
 // trigger transaction with supplier/Coop
 
@@ -37890,7 +37950,8 @@ v_balanceElectricityTransport_eur -= transactionCostTransport_eur;
 v_balanceElectricity_eur -= transactionCostTransport_eur;
 
 
-// TODO: Also needs to include congestion tariffs! So Coop needs to know to which GridNode it's connected! How should that work?]]></Body>
+// TODO: Also needs to include congestion tariffs! So Coop needs to know to which GridNode it's connected! How should that work?
+*/]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -37979,7 +38040,7 @@ if (myGridoperator != null) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1667983361355</Id>
-					<Name><![CDATA[f_gatherEnergyFlows]]></Name>
+					<Name><![CDATA[f_calculateEnergyBalance]]></Name>
 					<X>670</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -38001,6 +38062,7 @@ v_currentElectricityConsumption_kW = 0;
 
 v_currentOwnElectricityProduction_kW = 0; // Only electricity production from 'members' as opposed to 'customers'.
 v_currentCustomerFeedIn_kW = 0; // Feedin from customers (self-consumption behind-the-meter is not counted for customers)
+v_currentCustomerDelivery_kW = 0; // Delivery to customers (self-consumption behind-the-meter is not counted for customers)
 
 // Categorical power flows
 v_fixedConsumptionElectric_kW = 0;
@@ -38114,6 +38176,7 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 				v_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
 				if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 					v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
+					v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
 				}
 			}
 						
@@ -38158,6 +38221,7 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 		}
 		
 		v_currentCustomerFeedIn_kW += EC.v_currentCustomerFeedIn_kW;
+		v_currentCustomerDelivery_kW += EC.v_currentCustomerDelivery_kW;
 		/*
 		v_electricityVolume_kWh += EC.v_electricityVolume_kWh;
 		double electricityConsumption_kW = max(0,EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
@@ -39823,6 +39887,7 @@ acc_totalElectricityConsumption_kW.addStep(energyModel.t_h,v_currentConsumptionF
 acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(energyModel.t_h,v_currentPrimaryEnergyProductionHeatpumps_kW);
 
 acc_annualOwnElectricityProduction_kW.addStep(energyModel.t_h, v_currentOwnElectricityProduction_kW);
+acc_annualCustomerDelivery_kW.addStep(energyModel.t_h, v_currentCustomerDelivery_kW);
 acc_annualCustomerFeedIn_kW.addStep(energyModel.t_h, v_currentCustomerFeedIn_kW);
 
 ]]></Body>
@@ -39865,6 +39930,9 @@ v_totalEnergySelfConsumed_MWh = max(0, v_totalEnergyConsumed_MWh - v_totalEnergy
 v_totalPrimaryEnergyProductionHeatpumps_MWh = acc_totalPrimaryEnergyProductionHeatpumps_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalEnergyCurtailed_MWh = acc_totalEnergyCurtailed_kW.getSum() * energyModel.p_timeStep_h / 1000;
 
+//Costumer delivery and feedin
+v_customerFeedIn_MWh = acc_annualCustomerFeedIn_kW.getIntegral() / 1000;
+v_customerDelivery_MWh = acc_annualCustomerDelivery_kW.getIntegral() / 1000;
 
 //// Winter/summer week totals
 // Calcs summerweek
@@ -39958,14 +40026,16 @@ for (OL_EnergyCarriers EC : c_selectedEnergyCarriers) {
 }
 
 v_weekendEnergySelfConsumed_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendEnergyExport_MWh);
-v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));]]></Body>
+v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
 					<Id>1709636537267</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
-					<X>60</X><Y>1430</Y>
+					<X>60</X><Y>1450</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39989,7 +40059,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537281</Id>
 					<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
-					<X>60</X><Y>1510</Y>
+					<X>60</X><Y>1530</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40013,7 +40083,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537291</Id>
 					<Name><![CDATA[data_windGeneration_kW]]></Name>
-					<X>60</X><Y>1590</Y>
+					<X>60</X><Y>1610</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40037,7 +40107,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537301</Id>
 					<Name><![CDATA[data_V2GSupply_kW]]></Name>
-					<X>60</X><Y>1630</Y>
+					<X>60</X><Y>1650</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40061,7 +40131,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537311</Id>
 					<Name><![CDATA[data_PVGeneration_kW]]></Name>
-					<X>60</X><Y>1570</Y>
+					<X>60</X><Y>1590</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40085,7 +40155,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537321</Id>
 					<Name><![CDATA[data_batteryCharging_kW]]></Name>
-					<X>60</X><Y>1550</Y>
+					<X>60</X><Y>1570</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40109,7 +40179,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537330</Id>
 					<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
-					<X>60</X><Y>1490</Y>
+					<X>60</X><Y>1510</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40133,7 +40203,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537340</Id>
 					<Name><![CDATA[data_totalDemand_kW]]></Name>
-					<X>60</X><Y>1650</Y>
+					<X>60</X><Y>1670</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40157,7 +40227,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537350</Id>
 					<Name><![CDATA[data_dieselDemand_kW]]></Name>
-					<X>60</X><Y>1449</Y>
+					<X>60</X><Y>1469</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40181,7 +40251,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537360</Id>
 					<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
-					<X>60</X><Y>1530</Y>
+					<X>60</X><Y>1550</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40205,7 +40275,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537369</Id>
 					<Name><![CDATA[data_batteryDischarging_kW]]></Name>
-					<X>60</X><Y>1610</Y>
+					<X>60</X><Y>1630</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40229,7 +40299,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537379</Id>
 					<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
-					<X>60</X><Y>1470</Y>
+					<X>60</X><Y>1490</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40253,7 +40323,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
     			<DataSet>
 					<Id>1709636537389</Id>
 					<Name><![CDATA[data_totalSupply_kW]]></Name>
-					<X>60</X><Y>1670</Y>
+					<X>60</X><Y>1690</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
