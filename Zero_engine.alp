@@ -1189,22 +1189,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import zeroPackage.ZeroMath;
 import zeroPackage.ZeroAccumulator;]]></Import>
-			<StartupCode><![CDATA[//v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
-
-LocalDate localDate = LocalDate.of(p_year, 1, 1);
-v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-
-Date startDate = date();
-
-startDate.setYear(p_year-1900);
-startDate.set
-
-//startDate.set
-getExperiment().getEngine().setStartDate(startDate); 
-
-
-//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
-
+			<StartupCode><![CDATA[
 ]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -3140,21 +3125,6 @@ getExperiment().getEngine().setStartDate(startDate);
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1724919837645</Id>
-					<Name><![CDATA[v_runStartTime_h]]></Name>
-					<X>790</X><Y>162</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1727107003296</Id>
 					<Name><![CDATA[pp_solarPVproduction]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
@@ -3165,21 +3135,6 @@ getExperiment().getEngine().setStartDate(startDate);
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[J_ProfilePointer]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1724919837647</Id>
-					<Name><![CDATA[v_runEndTime_h]]></Name>
-					<X>790</X><Y>182</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[8760.0]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -4877,6 +4832,48 @@ getExperiment().getEngine().setStartDate(startDate);
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1731439789362</Id>
+					<Name><![CDATA[p_runStartTime_h]]></Name>
+					<X>790</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1731439789360</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1731439835898</Id>
+					<Name><![CDATA[p_runEndTime_h]]></Name>
+					<X>790</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1731439835896</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -6557,8 +6554,8 @@ for (J_EA EA : c_energyAssets) {
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
-	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(v_runStartTime_h));
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(v_runStartTime_h*60));
+	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(p_runStartTime_h));
+	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(p_runStartTime_h*60));
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -6581,8 +6578,8 @@ for (EnergyCoop EC : pop_energyCoops) {
 int v_timeStepsElapsed_live = v_timeStepsElapsed;
 v_timeStepsElapsed=0;
 
-c_profiles.forEach(p -> p.updateValue(v_runStartTime_h));  
-c_forecasts.forEach(p -> p.initializeForecast(v_runStartTime_h)); 
+c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));  
+c_forecasts.forEach(p -> p.initializeForecast(p_runStartTime_h)); 
 
 // When adding actors, also reset their states! Not used yet for Drechtsteden...
 
@@ -6590,7 +6587,7 @@ v_isRapidRun = true;
 f_resetAnnualValues();
 
 //Run energy calculations loop
-for(t_h = v_runStartTime_h; t_h < v_runEndTime_h; t_h += p_timeStep_h){
+for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
 	// Update time-series for model-wide variables (such as temps, wind, etc.)
 	double startTime = System.currentTimeMillis();
 	f_updateTimeseries(t_h);
@@ -6651,7 +6648,7 @@ traceln("---FINISHED YEAR MODEL RUN----");
 
 //Return model to previous state to continue simulation run
 v_timeStepsElapsed = v_timeStepsElapsed_live;
-t_h = v_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
+t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
 
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
@@ -6663,7 +6660,7 @@ for (GridConnection GC : c_gridConnections) {
 	//GC.f_resetStates();
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-v_runStartTime_h)*60));
+	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
 }
 f_setInitialValues();
 
@@ -7413,8 +7410,8 @@ v_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int runStartIdx = (int)(v_runStartTime_h/p_timeStep_h);
-int runEndIdx = (int)(v_runEndTime_h/p_timeStep_h);
+					<Body><![CDATA[int runStartIdx = (int)(p_runStartTime_h/p_timeStep_h);
+int runEndIdx = (int)(p_runEndTime_h/p_timeStep_h);
 if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, get load duration curves from that one!
 	data_netbelastingDuurkromme_kW = c_gridNodesTopLevel.get(0).f_getDuurkromme();
 	
@@ -7441,11 +7438,11 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 		if (data_netbelastingDuurkrommeVorige_kW != null) { // Not second run either!
 			data_netbelastingDuurkrommeVorige_kW.reset();
 		} else {
-			data_netbelastingDuurkrommeVorige_kW = new DataSet(roundToInt((v_runEndTime_h-v_runStartTime_h)/p_timeStep_h));
+			data_netbelastingDuurkrommeVorige_kW = new DataSet(roundToInt((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h));
 		}
 		firstRun = false;
 	} else {
-		data_netbelastingDuurkromme_kW = new DataSet(roundToInt((v_runEndTime_h-v_runStartTime_h)/p_timeStep_h));
+		data_netbelastingDuurkromme_kW = new DataSet(roundToInt((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h));
 		data_summerWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/p_timeStep_h));
 		data_winterWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/p_timeStep_h));
 		data_daytimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/2/p_timeStep_h));
@@ -7460,7 +7457,7 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 	*/
 	
 	double[] a_annualNetLoad_kW = v_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().clone();
-	int arraySize = roundToInt((v_runEndTime_h-v_runStartTime_h)/p_timeStep_h);// a_annualNetLoad_kW.length;
+	int arraySize = roundToInt((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h);// a_annualNetLoad_kW.length;
 	/*for (int i = 0; i < 5; i++) {
 		a_annualNetLoad_kW[i] = 0;
 	}*/
@@ -7597,7 +7594,7 @@ data_HSMScapacitySupply_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1),
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Update tijdreeksen in leesbare variabelen
-t_h = v_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;// + v_hourOfYearStart);// % 8760;
+t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;// + v_hourOfYearStart);// % 8760;
 
 f_updateTimeseries(t_h);
 
@@ -7700,13 +7697,41 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// What if this function is accidently called twice? Need to start with a clean sheet?
-/*c_activeEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
-c_activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
-c_activeEnergyCarriers.add(OL_EnergyCarriers.DIESEL);
-c_activeEnergyCarriers.add(OL_EnergyCarriers.METHANE);*/
-// Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
-t_h = v_runStartTime_h;
 
+// Initialize time and date
+//v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+t_h = p_runStartTime_h;
+
+LocalDate localDate = LocalDate.of(p_year, 1, 1);
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+
+Date startDate = date();
+
+startDate.setYear(p_year-1900);
+
+int monthIdx = 0;
+while ( t_h > hourOfYearPerMonth[monthIdx] ) {
+	monthIdx++;
+	if (monthIdx==hourOfYearPerMonth.length){
+		break;
+	}	
+}
+
+int dayOfMonth = 1+(int)((t_h - hourOfYearPerMonth[monthIdx])/24.0);
+traceln("Day of month start: %s", dayOfMonth);
+traceln("Month of year start: %s", monthIdx);
+startDate.setMonth(monthIdx);
+startDate.setDate(dayOfMonth);
+traceln("Startdate: %s", startDate);
+//startDate.set
+getExperiment().getEngine().setStartDate(startDate); 
+
+
+//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
+
+
+
+// Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 // pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 
@@ -7970,7 +7995,7 @@ data_cookingElectricityDemand_kW.update();
 
 data_totalDemand_kW.update();
 data_totalSupply_kW.update();
-data_totalNetLoad_kW.update();
+data_totalGridLoad_kW.update();
 
 data_gridCapacityDemand_kW.update();
 data_gridCapacitySupply_kW.update();
@@ -8172,7 +8197,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8196,7 +8221,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections,x->x.v_windProductionElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8220,7 +8245,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections,x->max(0,-x.v_evChargingPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8244,7 +8269,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_pvProductionElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8268,7 +8293,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> max(0, x.v_batteryPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8292,7 +8317,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8316,7 +8341,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentFinalEnergyConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8364,7 +8389,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> max(0,x.v_evChargingPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8388,7 +8413,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> max(0, -x.v_batteryPowerElectric_kW))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -8412,13 +8437,13 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentPrimaryEnergyProduction_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
 					<Id>1699275048440</Id>
-					<Name><![CDATA[data_totalNetLoad_kW]]></Name>
+					<Name><![CDATA[data_totalGridLoad_kW]]></Name>
 					<X>80</X><Y>1570</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8436,7 +8461,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridNodesTopLevel.stream().filter(x -> x.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY).toList(), x -> x.v_currentLoad_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -9584,7 +9609,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x-> x.v_currentProductionFlows_kW.get(OL_EnergyCarriers.HYDROGEN))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -9608,7 +9633,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -9632,7 +9657,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x->x.v_currentEnergyCurtailed_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -9748,7 +9773,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x -> x.v_districtHeatDelivery_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -9772,7 +9797,7 @@ data_gridCapacitySupply_kW.update();
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x-> x.v_electricHobConsumption_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -15420,8 +15445,8 @@ v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int runStartIdx = (int)(energyModel.v_runStartTime_h/energyModel.p_timeStep_h);
-int runEndIdx = (int)(energyModel.v_runEndTime_h/energyModel.p_timeStep_h);
+					<Body><![CDATA[int runStartIdx = (int)(energyModel.p_runStartTime_h/energyModel.p_timeStep_h);
+int runEndIdx = (int)(energyModel.p_runEndTime_h/energyModel.p_timeStep_h);
 int nRunIdxs = runEndIdx - runStartIdx;
 
 boolean firstRun = true;
@@ -15478,11 +15503,11 @@ for(int i=0; i<nRunIdxs; i++) {
 		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
 	}
 	// summer/winter
-	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 		i_summer++;
 	}
-	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
 		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 		i_winter++;
 	}
@@ -15495,7 +15520,7 @@ for(int i=0; i<nRunIdxs; i++) {
 		i_night++;
 	}
 	//Weekday/weekend
-	if (((energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if (((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
 		i_weekday++;
 	} else {
@@ -19614,7 +19639,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727099238699</Id>
 					<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
-					<X>150</X><Y>2270</Y>
+					<X>150</X><Y>2315</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19638,7 +19663,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727101009735</Id>
 					<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
-					<X>150</X><Y>2290</Y>
+					<X>150</X><Y>2335</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21833,7 +21858,7 @@ if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
 }
 
-c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.v_runStartTime_h)*60));
+c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60));
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -22614,15 +22639,15 @@ if (j_ea instanceof J_EAVehicle) {
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
 		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
 		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
 			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
 			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
@@ -22673,7 +22698,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, (J_EAConversion)j_ea );			
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, (J_EAConversion)j_ea );			
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
@@ -23189,11 +23214,11 @@ for(int i=0; i<arraySize ; i++) {
 		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
 	}
 	// summer/winter
-	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 		i_summer++;
 	}
-	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
 		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 		i_winter++;
 	}
@@ -23206,7 +23231,7 @@ for(int i=0; i<arraySize ; i++) {
 		i_night++;
 	}
 	//Weekday/weekend
-	if (((energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if (((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
 		i_weekday++;
 	} else {
@@ -45555,7 +45580,7 @@ else {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.v_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
+	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
 	v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
 	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
