@@ -1189,15 +1189,20 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import zeroPackage.ZeroMath;
 import zeroPackage.ZeroAccumulator;]]></Import>
-			<StartupCode><![CDATA[v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+			<StartupCode><![CDATA[//v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+
 Date startDate = date();
+
 startDate.setYear(p_year-1900);
+startDate.set
+
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
 
-v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+
 //traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
 
 ]]></StartupCode>
@@ -1794,6 +1799,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1690290329902</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>556</X><Y>423</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5816,8 +5822,9 @@ b_isSummerWeek = t_h >= p_startHourSummerWeek && t_h < p_startHourSummerWeek + 2
 b_isWinterWeek = t_h >= p_startHourWinterWeek && t_h < p_startHourWinterWeek + 24*7;
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
-v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
 
+
+v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
 c_profiles.forEach(p -> p.updateValue(t_h));
 v_currentWindPowerNormalized_r = pp_windOnshoreProduction.getCurrentValue();
 v_currentSolarPowerNormalized_r = pp_solarPVproduction.getCurrentValue();
@@ -6570,12 +6577,12 @@ for (EnergyCoop EC : pop_energyCoops) {
 }
 
 
-t_h=v_runStartTime_h;
+//t_h=v_runStartTime_h;
 int v_timeStepsElapsed_live = v_timeStepsElapsed;
 v_timeStepsElapsed=0;
 
-c_profiles.forEach(p -> p.updateValue(0.0)); // replace 0.0 with sim starttime!
-c_forecasts.forEach(p -> p.initializeForecast(0.0)); // replace 0.0 with sim starttime!
+c_profiles.forEach(p -> p.updateValue(v_runStartTime_h));  
+c_forecasts.forEach(p -> p.initializeForecast(v_runStartTime_h)); 
 
 // When adding actors, also reset their states! Not used yet for Drechtsteden...
 
@@ -6644,6 +6651,7 @@ traceln("---FINISHED YEAR MODEL RUN----");
 
 //Return model to previous state to continue simulation run
 v_timeStepsElapsed = v_timeStepsElapsed_live;
+t_h = v_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
 
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
@@ -6655,7 +6663,7 @@ for (GridConnection GC : c_gridConnections) {
 	//GC.f_resetStates();
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(time(MINUTE)));
+	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-v_runStartTime_h)*60));
 }
 f_setInitialValues();
 
@@ -6665,7 +6673,9 @@ double duration = System.currentTimeMillis() - startTime1;
 
 traceln("*** headless run duration: "+ duration/1000 + " s ***");
 
-t_h = time(HOUR) + v_hourOfYearStart;
+//t_h = time(HOUR) + v_hourOfYearStart;
+
+
 traceln("Live-sim t_h after rapidRun: %s", t_h);
 c_profiles.forEach(p -> p.updateValue(t_h)); 
 c_forecasts.forEach(p -> p.initializeForecast(t_h)); 
@@ -7587,7 +7597,7 @@ data_HSMScapacitySupply_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1),
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Update tijdreeksen in leesbare variabelen
-t_h = (v_timeStepsElapsed * p_timeStep_h + v_hourOfYearStart);// % 8760;
+t_h = v_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;// + v_hourOfYearStart);// % 8760;
 
 f_updateTimeseries(t_h);
 
@@ -7695,6 +7705,8 @@ c_activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 c_activeEnergyCarriers.add(OL_EnergyCarriers.DIESEL);
 c_activeEnergyCarriers.add(OL_EnergyCarriers.METHANE);*/
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
+t_h = v_runStartTime_h;
+
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 // pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 
@@ -15460,17 +15472,17 @@ int i_weekend=0;
 
 //double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
 
-for(int i=runStartIdx; i<runEndIdx; i++) {
+for(int i=0; i<nRunIdxs; i++) {
 	if (!firstRun) {
 		// First we make sure to store our previous Load Curve
-		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i-runStartIdx));		
+		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
 	}
 	// summer/winter
-	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 		i_summer++;
 	}
-	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
 		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 		i_winter++;
 	}
@@ -15483,7 +15495,7 @@ for(int i=runStartIdx; i<runEndIdx; i++) {
 		i_night++;
 	}
 	//Weekday/weekend
-	if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if (((energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
 		i_weekday++;
 	} else {
@@ -21821,7 +21833,7 @@ if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
 }
 
-c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h*60));
+c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.v_runStartTime_h)*60));
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -22103,7 +22115,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	}
-	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
+	//traceln("SOC setpoint at " + energyModel.t_hourOfDay + " h is " + SOC_setp_fr*100 + "%");
 	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.8; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
@@ -22602,15 +22614,15 @@ if (j_ea instanceof J_EAVehicle) {
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
 		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, vehicle);
 		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, vehicle);
 			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
 			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, vehicle);
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
@@ -22661,7 +22673,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, (energyModel.t_h-energyModel.v_runStartTime_h)*60, (J_EAConversion)j_ea );			
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
@@ -23177,11 +23189,11 @@ for(int i=0; i<arraySize ; i++) {
 		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
 	}
 	// summer/winter
-	if (i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 		i_summer++;
 	}
-	if (i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+	if (energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
 		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 		i_winter++;
 	}
@@ -23194,7 +23206,7 @@ for(int i=0; i<arraySize ; i++) {
 		i_night++;
 	}
 	//Weekday/weekend
-	if (((i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if (((energyModel.v_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
 		i_weekday++;
 	} else {
@@ -45543,7 +45555,7 @@ else {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities(energyModel.t_h*60); // also calls f_updateAllFlows in HOB asset	
+	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.v_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
 	v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
 	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
@@ -54855,6 +54867,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	public double[] a_energyProfile_kWh;
 	public OL_ProfileAssetType profileType;
 	private double profileTimestep_h;
+    private double profileStarTime_h = 0;
 	//protected double outputTemperature_degC;
 	public double loadLoad_kWh = 0;
 	private double profileScaling_fr = 1;
@@ -54875,6 +54888,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    this.a_energyProfile_kWh = profile_kWh;
 	    this.profileType = profileType;
 	    this.profileTimestep_h = profileTimestep_h;
+
 	    if (parentAgent instanceof GridConnection) {
 	    	this.timestep_h = ((GridConnection)parentAgent).energyModel.p_timeStep_h;
 	    } else {
@@ -54883,6 +54897,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    activeEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
+    
+    public void setStartTime_h(double startTime_h) {    	
+    	this.profileStarTime_h = startTime_h;
+    }
 
     @Override
     //public Pair<J_FlowsMap, Double> f_updateAllFlows(double time_h) {
@@ -54890,7 +54908,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	//clear();    	
     	//double[] arr=operate(time_h);
     	//Pair<J_FlowsMap, Double> flowsPair = operate(time_h);
-    	operate(time_h);
+    	operate(time_h-this.profileStarTime_h);
     	//J_FlowsMap flowsMap = flowsPair.getFirst();
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
@@ -54901,7 +54919,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	//this.lastFlowsArray = arr;
     	this.lastFlowsMap.cloneMap(flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
-    	clear();
+    	//clear();
     	/*traceln("flowsMap: %s", flowsMap);
     	flowsMap.clear();
     	traceln("flowsMap after reset: %s", flowsMap);
@@ -54914,8 +54932,14 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     //public Pair<J_FlowsMap, Double> operate(double time_h) {
     public void operate(double time_h) {
     	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
-    		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
-    		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
+    		traceln("Time out of upper bound for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
+//    		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
+    		throw new RuntimeException("Time out of upper bound for evaluating J_EAProfile power");
+    	}
+    	if ( time_h < 0 ) {
+    		traceln("Time out of lower bound for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
+    		//time_h = 0;
+    		throw new RuntimeException("Time out of lower bound for evaluating J_EAProfile power");
     	}
     	/*if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
     		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
@@ -54944,7 +54968,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
-    public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    //public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    public void curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	//double currentElectricityProduction_kW = lastFlowsArray[4];
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
@@ -54969,7 +54994,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	//if (ui_energyAsset!= null) {
     		//ui_energyAsset.f_removeFlows(flowsMap);
     	//}
-    	return new Pair(flowsMap, this.energyUse_kW);
+    	//return new Pair(flowsMap, this.energyUse_kW);
     }
 
     public void scaleEnergyProfile(double scaling_fr) {
