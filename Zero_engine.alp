@@ -54128,13 +54128,6 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	@Override
-	public void f_updateAllFlows(double powerFraction_fr) {
-		if (powerFraction_fr > 0) {
-			super.f_updateAllFlows(powerFraction_fr);
-		}		
-	}
-	
-	@Override
     public void operate(double ratioOfCapacity) {
 	//public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
 		ratioOfCapacity = profilePointer.getCurrentValue();
