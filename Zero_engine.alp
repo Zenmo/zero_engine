@@ -50945,9 +50945,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_municipality]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -51802,7 +51799,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
-	SOC_setp_fr =  0.9 - 0.8 * energyModel.v_WindYieldForecast_fr - 0.8 * energyModel.v_SolarYieldForecast_fr;
+	SOC_setp_fr =  0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24) - 0.8 * windEnergyExpectedNormalized_fr - 0.8 * solarEnergyExpectedNormalized_fr;
 	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	
 	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
