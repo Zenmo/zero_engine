@@ -1150,6 +1150,7 @@
 		<OptionList>
 			<Id>1729686050861</Id>
 			<Name><![CDATA[OL_EAFlowKeys]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 		</OptionList>
 	</OptionLists>
 	
@@ -1189,8 +1190,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import zeroPackage.ZeroMath;
 import zeroPackage.ZeroAccumulator;]]></Import>
-			<StartupCode><![CDATA[
-]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1658477103138</Id>
@@ -6732,8 +6731,8 @@ f_duurkrommes();
 
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIsFromGC()); // Must go after f_sumGridNodeLoads() because it uses total electricity export!
 
-v_totalEnergyImport_MWh = v_totalImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_totalEnergyExport_MWh = v_totalExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_totalEnergyImport_MWh = v_totalImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_totalEnergyExport_MWh = v_totalExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 
 // Electricity self consumption
@@ -6763,8 +6762,8 @@ for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
 	v_summerWeekImports_MWh.put( EC, v_summerWeekBalanceAccumulators_kW.get(EC).getSumPos() * p_timeStep_h / 1000 );
 	v_summerWeekExports_MWh.put( EC, -v_summerWeekBalanceAccumulators_kW.get(EC).getSumNeg() * p_timeStep_h / 1000 );
 }
-v_summerWeekEnergyImport_MWh = v_summerWeekImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_summerWeekEnergyExport_MWh = v_summerWeekExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_summerWeekEnergyImport_MWh = v_summerWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_summerWeekEnergyExport_MWh = v_summerWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 // Electricity / Energy
 v_summerWeekElectricityProduced_MWh = acc_summerWeekElectricityProduction_kW.getIntegral() / 1000;
@@ -6791,8 +6790,8 @@ for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
 	v_winterWeekImports_MWh.put( EC, v_winterWeekBalanceAccumulators_kW.get(EC).getSumPos() * p_timeStep_h / 1000 );
 	v_winterWeekExports_MWh.put( EC, -v_winterWeekBalanceAccumulators_kW.get(EC).getSumNeg() * p_timeStep_h / 1000 );
 }
-v_winterWeekEnergyImport_MWh = v_winterWeekImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_winterWeekEnergyExport_MWh = v_winterWeekExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_winterWeekEnergyImport_MWh = v_winterWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_winterWeekEnergyExport_MWh = v_winterWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 // Electricity / Energy
 v_winterWeekElectricityProduced_MWh = acc_winterWeekElectricityProduction_kW.getIntegral() / 1000;
@@ -22991,8 +22990,8 @@ for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
 }
 
 // Sum up the import / export totals
-v_totalEnergyImport_MWh = v_totalImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_totalEnergyExport_MWh = v_totalExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_totalEnergyImport_MWh = v_totalImports_MWh.totalSum();//values().stream().mapToDouble(Double::doubleValue).sum();
+v_totalEnergyExport_MWh = v_totalExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 // Electricity totals from production / consumption accumulators and selfconsumption
 v_totalElectricityConsumed_MWh = acc_totalElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
@@ -23026,8 +23025,8 @@ for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
 	v_summerWeekExports_MWh.put( EC, -v_summerWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
 
-v_summerWeekEnergyImport_MWh = v_summerWeekImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_summerWeekEnergyExport_MWh = v_summerWeekExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_summerWeekEnergyImport_MWh = v_summerWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_summerWeekEnergyExport_MWh = v_summerWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 v_summerWeekElectricityProduced_MWh = acc_summerWeekElectricityProduction_kW.getIntegral() / 1000;
 v_summerWeekElectricityConsumed_MWh = acc_summerWeekElectricityConsumption_kW.getIntegral() / 1000;
@@ -23052,8 +23051,8 @@ for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
 	v_winterWeekExports_MWh.put( EC, -v_winterWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
 
-v_winterWeekEnergyImport_MWh = v_winterWeekImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_winterWeekEnergyExport_MWh = v_winterWeekExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_winterWeekEnergyImport_MWh = v_winterWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_winterWeekEnergyExport_MWh = v_winterWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 v_winterWeekElectricityConsumed_MWh = acc_winterWeekElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekElectricityProduced_MWh = acc_winterWeekElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
@@ -23135,29 +23134,23 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Name><![CDATA[caller]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[for (OL_EnergyCarriers EC : flowsMap.keySet()) {
-	v_currentBalanceFlows_kW.addFlow(EC, flowsMap.get(EC));
-	
-	if (flowsMap.get(EC) < 0) {
-		v_currentProductionFlows_kW.addFlow(EC, -flowsMap.get(EC));
-	}
-	else if (flowsMap.get(EC) > 0){
-		v_currentConsumptionFlows_kW.addFlow(EC, flowsMap.get(EC));
-	}
-}
+					<Body><![CDATA[if (caller instanceof J_EAStorageElectric) { 
+	v_currentBalanceFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
 
-if (caller instanceof J_EAStorageElectric) { 
 	// Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need an element in flowsmap indicating power into storage??
-	
-	if (flowsMap.get(OL_EnergyCarriers.ELECTRICITY) < 0) {
-		v_currentProductionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
-	}
-	else if (flowsMap.get(OL_EnergyCarriers.ELECTRICITY) > 0){
-		v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, -flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
-	}
 	v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
 	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
 } else {
+	for (OL_EnergyCarriers EC : flowsMap.keySet()) {
+		v_currentBalanceFlows_kW.addFlow(EC, flowsMap.get(EC));
+		
+		if (flowsMap.get(EC) < 0) {
+			v_currentProductionFlows_kW.addFlow(EC, -flowsMap.get(EC));
+		}
+		else if (flowsMap.get(EC) > 0){
+			v_currentConsumptionFlows_kW.addFlow(EC, flowsMap.get(EC));
+		}
+	}
 	v_currentPrimaryEnergyProduction_kW += max(0, -energyUse_kW);
 	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
 }
@@ -23745,7 +23738,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722512642645</Id>
 					<Name><![CDATA[f_removeFlows]]></Name>
-					<X>1020</X><Y>240</Y>
+					<X>1040</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -23775,7 +23768,7 @@ else {
 
 if (caller instanceof J_EAStorageElectric) { 
 	// Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need an element in flowsmap indicating power into storage??
-	//v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
+	v_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
 	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
 } else {
 	double curtailment_kW = max(0, -energyUse_kW);
@@ -40052,8 +40045,8 @@ for (OL_EnergyCarriers EC : c_selectedEnergyCarriers) {
 }
 
 // Sum up the import / export totals
-v_totalEnergyImport_MWh = v_totalImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_totalEnergyExport_MWh = v_totalExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_totalEnergyImport_MWh = v_totalImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_totalEnergyExport_MWh = v_totalExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 // Electricity totals from production / consumption accumulators and selfconsumption
 v_totalElectricityConsumed_MWh = acc_totalElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
@@ -40081,8 +40074,8 @@ for (OL_EnergyCarriers EC : c_selectedEnergyCarriers) {
 	v_summerWeekExports_MWh.put( EC, -v_summerWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
 
-v_summerWeekEnergyImport_MWh = v_summerWeekImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_summerWeekEnergyExport_MWh = v_summerWeekExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_summerWeekEnergyImport_MWh = v_summerWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_summerWeekEnergyExport_MWh = v_summerWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 v_summerWeekElectricityProduced_MWh = acc_summerWeekElectricityProduction_kW.getIntegral() / 1000;
 v_summerWeekElectricityConsumed_MWh = acc_summerWeekElectricityConsumption_kW.getIntegral() / 1000;
@@ -40107,8 +40100,8 @@ for (OL_EnergyCarriers EC : c_selectedEnergyCarriers) {
 	v_winterWeekExports_MWh.put( EC, -v_winterWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
 
-v_winterWeekEnergyImport_MWh = v_winterWeekImports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
-v_winterWeekEnergyExport_MWh = v_winterWeekExports_MWh.values().stream().mapToDouble(Double::doubleValue).sum();
+v_winterWeekEnergyImport_MWh = v_winterWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
+v_winterWeekEnergyExport_MWh = v_winterWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 
 v_winterWeekElectricityConsumed_MWh = acc_winterWeekElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_winterWeekElectricityProduced_MWh = acc_winterWeekElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
@@ -48410,7 +48403,7 @@ double forecast_time_h = ElectrolyserAsset.getstartUpTimeStandby_h()+ 2*energyMo
 //Get current limitation values
 //Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.getLastFlows();
 J_FlowsMap flowsMap = ElectrolyserAsset.getLastFlows();
-double previousElectrolyserConsumption_kW = flowsMap.get(OL_FlowsMapKeys.ELECTRICITY_CONSUMPTION_KW);
+double previousElectrolyserConsumption_kW = max(0,flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
 double currentGridNodePowerFlow_kW = this.l_parentNodeElectric.getConnectedAgent().v_currentLoad_kW - previousElectrolyserConsumption_kW;
 data_liveWeekGridNoderPowerFlow_kW.add(energyModel.t_h, this.l_parentNodeElectric.getConnectedAgent().v_currentLoad_kW);
 
@@ -53612,8 +53605,8 @@ double powerDemand_kW = v_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
 //Demanded heating power for companies and household seperatly the current time step
 
-double powerDemand_companies_kW = c_heatDemandEA.get("COMPANIES").getLastFlows().get(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW);
-double powerDemand_households_kW = c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().get(OL_FlowsMapKeys.HEAT_CONSUMPTION_KW);
+double powerDemand_companies_kW = max(0,c_heatDemandEA.get("COMPANIES").getLastFlows().get(OL_EnergyCarriers.HEAT));
+double powerDemand_households_kW = max(0,c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().get(OL_EnergyCarriers.HEAT));
 
 
 //Get the current Heatpump COP
@@ -58669,18 +58662,19 @@ public class J_ProfilePointer implements Serializable {
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
 			<Id>1729171686537</Id>
-			<Name><![CDATA[J_FlowsMap]]></Name>
+			<Name><![CDATA[J_FlowsMapEnumMap]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Text><![CDATA[/**
  * J_FlowsMap
  */	
 import java.util.EnumMap;
 
-public class J_FlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
+public class J_FlowsMapEnumMap extends EnumMap<OL_EnergyCarriers, Double> {
 
     /**
      * Default constructor
      */
-    public J_FlowsMap() {
+    public J_FlowsMapEnumMap() {
     	super(OL_EnergyCarriers.class);
     }
 
@@ -58709,7 +58703,7 @@ public class J_FlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
     }
     
     public J_FlowsMap cloneMap(J_FlowsMap flowsMap) {
-    	//J_FlowsMap flowsMap = new J_FlowsMap();
+    	//J_FlowsMap flowsMap = new J_FlowsMapEnumMap();
     	this.clear();
     	//this.addFlows(flowsMap);
     	this.putAll(flowsMap);
@@ -58749,7 +58743,7 @@ public class J_FlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
     /**
      * Default constructor
      */
- /*   public J_FlowsMap() {
+ /*   public J_FlowsMapEnumMap() {
     	super(OL_FlowsMapKeys.class);
     }
 
@@ -58835,7 +58829,7 @@ public class J_FlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
     }
     
     public J_FlowsMap getProductionFlows() {
-    	J_FlowsMap flowsMap = new J_FlowsMap();
+    	J_FlowsMap flowsMap = new J_FlowsMapEnumMap();
     	for (OL_EnergyCarriers energyCarrier : OL_EnergyCarriers.values()) {
     		OL_FlowsMapKeys key = translateMapKeys(energyCarrier, false);
     		flowsMap.put(energyCarrier, this.get(key));
@@ -58844,7 +58838,7 @@ public class J_FlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
     }
     
     public J_FlowsMap getConsumptionFlows() {
-    	J_FlowsMap flowsMap = new J_FlowsMap();
+    	J_FlowsMap flowsMap = new J_FlowsMapEnumMap();
     	for (OL_EnergyCarriers energyCarrier : OL_EnergyCarriers.values()) {
     		OL_FlowsMapKeys key = translateMapKeys(energyCarrier, true);
     		flowsMap.put(energyCarrier, this.get(key));
@@ -58994,6 +58988,94 @@ public class J_ReducedFlowsMap extends EnumMap<OL_EnergyCarriers, Double> {
     	return this;
     }
     
+    @Override
+	public String toString() {
+		return super.toString();
+	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1731483284975</Id>
+			<Name><![CDATA[J_FlowsMap]]></Name>
+			<Text><![CDATA[/**
+ * J_FlowsMap
+ */	
+import zeroPackage.ZeroMath;
+import java.util.EnumSet;
+
+public class J_FlowsMap implements Serializable {
+	
+	private double[] valuesArray = new double[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
+    /**
+     * Default constructor
+     */
+    public J_FlowsMap() {
+    	
+    }
+
+    public double get(OL_EnergyCarriers key) {
+		return valuesArray[key.ordinal()];
+	}
+    	
+
+	public void put(OL_EnergyCarriers key, double value) {
+		valuesArray[key.ordinal()] = value;
+		//if (!energyCarrierList.contains(key)) {
+			energyCarrierList.add(key);
+		//}
+	}
+	
+	public void clear() {
+		energyCarrierList.clear();
+		for(int i=0; i<valuesArray.length; i++) {
+			valuesArray[i]=0.0;
+		}
+	}
+    
+    public J_FlowsMap addFlows( J_FlowsMap f) {
+    	for (OL_EnergyCarriers key : f.energyCarrierList) {
+    		this.addFlow(key, f.get(key));
+    	}
+    	return this;
+    }
+    
+    public J_FlowsMap addToExistingFlows( J_FlowsMap f) {
+    	// Careful, assumes keys are already identical in both maps! Then this is faster.
+		for(int i=0; i<valuesArray.length; i++) {
+			this.valuesArray[i]=this.valuesArray[i]+f.valuesArray[i];
+		}
+    	return this;
+    }
+    
+    public J_FlowsMap addFlow( OL_EnergyCarriers key, double value) {
+    	double currentValue = this.get(key);
+    	this.put(key, currentValue + value);
+    	return this;
+    }
+    
+    public J_FlowsMap cloneMap(J_FlowsMap flowMap) {
+    	this.clear();
+    	this.addFlows(flowMap);
+    	return this;    	
+    }
+    
+    public double totalSum() {
+    	return ZeroMath.arraySum(valuesArray);
+    }
+    
+    public EnumSet<OL_EnergyCarriers> keySet(){
+    	return energyCarrierList;
+    }
+        
     @Override
 	public String toString() {
 		return super.toString();
