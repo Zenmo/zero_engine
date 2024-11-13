@@ -47497,7 +47497,7 @@ public void f_operateFlexAssets(){
 
 @Override
 public void f_batteryManagementBalance( double batterySOC ){
-	f_batteryManagementNodalPricing( batterySOC );
+	f_batteryManagementBalanceGrid( batterySOC );
 }
 
 @Override
@@ -56277,7 +56277,13 @@ public class J_Address implements Serializable {
     public String getAddress() {
     	StringBuilder sb = new StringBuilder();
     	
-    	sb.append(this.streetName);
+    	if ( this.streetName != null ) {
+    		sb.append(this.streetName);
+    	}
+    	else {
+    		sb.append("Onbekend adres");
+    		return sb.toString();
+    	}
     	sb.append(" ");
     	sb.append(this.houseNumber);
 		if ( this.houseLetter != null ) {
@@ -56288,10 +56294,17 @@ public class J_Address implements Serializable {
 	    	sb.append(" ");
 	    	sb.append(this.houseAddition);
 	    }
-		sb.append(", ");
-		sb.append(this.postalcode);
-		sb.append(" ");
-		sb.append(this.city);
+		if ( this.postalcode != null || this.city != null) {
+			sb.append(",");
+		}
+		if ( this.postalcode != null ){
+			sb.append(" ");
+			sb.append(this.postalcode);
+		}
+		if ( this.postalcode != null ){
+			sb.append(" ");
+			sb.append(this.city);
+		}
 		
 		return sb.toString();
     }
