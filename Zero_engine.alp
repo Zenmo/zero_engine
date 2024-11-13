@@ -54128,6 +54128,13 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	@Override
+	public void f_updateAllFlows(double powerFraction_fr) {
+		if (powerFraction_fr > 0) {
+			super.f_updateAllFlows(powerFraction_fr);
+		}		
+	}
+	
+	@Override
     public void operate(double ratioOfCapacity) {
 	//public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
 		ratioOfCapacity = profilePointer.getCurrentValue();
@@ -54606,7 +54613,7 @@ abstract public class J_EA implements Cloneable {
     	*/
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
-    	clear();
+    	this.clear();
     	/*traceln("flowsMap: %s", flowsMap);
     	flowsMap.clear();
     	traceln("flowsMap after reset: %s", flowsMap);
@@ -54762,6 +54769,13 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 		registerEnergyAsset();
 	}
 
+	@Override
+	public void f_updateAllFlows(double powerFraction_fr) {
+		if (powerFraction_fr > 0) {
+			super.f_updateAllFlows(powerFraction_fr);
+		}		
+	}
+    
     @Override
     public void operate(double ratioOfCapacity) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
@@ -54943,7 +54957,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	//this.lastFlowsArray = arr;
     	this.lastFlowsMap.cloneMap(flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
-    	//clear();
+    	this.clear();
     	/*traceln("flowsMap: %s", flowsMap);
     	flowsMap.clear();
     	traceln("flowsMap after reset: %s", flowsMap);
@@ -55897,6 +55911,13 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 
 	}
 
+	@Override
+	public void f_updateAllFlows(double powerFraction_fr) {
+		if (powerFraction_fr > 0) {
+			super.f_updateAllFlows(powerFraction_fr);
+		}		
+	}
+	
 	@Override
 	public void operate(double ratioOfCapacity) {
 		//traceln("this "+ this.toString() + ", " + ratioOfCapacity * this.capacityElectric_kW + " **** " + ratioOfCapacity * this.capacityHeat_kW / this.COP_r);
