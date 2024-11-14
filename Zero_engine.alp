@@ -2804,7 +2804,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315939</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
-					<X>20</X><Y>3010</Y>
+					<X>20</X><Y>3030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2816,7 +2816,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315941</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
-					<X>20</X><Y>3030</Y>
+					<X>20</X><Y>3050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2828,7 +2828,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315943</Id>
 					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
-					<X>20</X><Y>3050</Y>
+					<X>20</X><Y>3070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2840,7 +2840,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315945</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
-					<X>20</X><Y>3070</Y>
+					<X>20</X><Y>3090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2905,7 +2905,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715246315959</Id>
 					<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3130</Y>
+					<X>20</X><Y>3150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2918,7 +2918,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715246315961</Id>
 					<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3090</Y>
+					<X>20</X><Y>3110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2931,7 +2931,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715671218524</Id>
 					<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3110</Y>
+					<X>20</X><Y>3130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4141,7 +4141,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866329</Id>
 					<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
-					<X>20</X><Y>3180</Y>
+					<X>20</X><Y>3210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4156,7 +4156,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866331</Id>
 					<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
-					<X>20</X><Y>3200</Y>
+					<X>20</X><Y>3230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4171,7 +4171,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866333</Id>
 					<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
-					<X>390</X><Y>3180</Y>
+					<X>390</X><Y>3210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4186,7 +4186,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866335</Id>
 					<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
-					<X>390</X><Y>3200</Y>
+					<X>390</X><Y>3230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4346,6 +4346,63 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731573420951</Id>
+					<Name><![CDATA[dsm_liveDemand_kW]]></Name>
+					<X>80</X><Y>1650</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[J_DataSetMap]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new J_DataSetMap()]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731573454382</Id>
+					<Name><![CDATA[dsm_liveSupply_kW]]></Name>
+					<X>80</X><Y>1670</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[J_DataSetMap]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new J_DataSetMap()]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731576444065</Id>
+					<Name><![CDATA[v_activeEnergyCarriers]]></Name>
+					<X>800</X><Y>610</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731590299824</Id>
+					<Name><![CDATA[v_dailyAverageElectrolyserDemand_kW]]></Name>
+					<X>20</X><Y>2990</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -4879,6 +4936,30 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1731588224262</Id>
+					<Name><![CDATA[b_isInitialized]]></Name>
+					<X>-420</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1731588224260</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -5331,6 +5412,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1729238020165</Id>
 					<Name><![CDATA[c_activeEnergyCarriers]]></Name>
 					<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -5995,7 +6077,7 @@ for(GridNode h : c_gridNodesTopLevel ) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Get import/export from balance arrays.
 
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_totalImports_MWh.put( EC, am_totalBalanceAccumulators_kW.get(EC).getSumPos() * p_timeStep_h / 1000 );
 	fm_totalExports_MWh.put( EC, -am_totalBalanceAccumulators_kW.get(EC).getSumNeg() * p_timeStep_h / 1000 );
 }
@@ -6119,7 +6201,7 @@ for (GridConnection gc : c_subGridConnections) {
 
 v_currentEnergyImport_kW = 0.0;
 v_currentEnergyExport_kW = 0.0;
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	double netFlow_kW = fm_currentBalanceFlows_kW.get(EC);
 	v_currentEnergyImport_kW += max( 0, netFlow_kW );
 	v_currentEnergyExport_kW += max( 0, -netFlow_kW );
@@ -6758,7 +6840,7 @@ v_winterWeekElectricityPeakExport_kW = max(0, -data_winterWeekNetLoad_kW.getYMin
 
 //// Calcs summerweek
 // Import / Export
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_summerWeekImports_MWh.put( EC, am_summerWeekBalanceAccumulators_kW.get(EC).getSumPos() * p_timeStep_h / 1000 );
 	fm_summerWeekExports_MWh.put( EC, -am_summerWeekBalanceAccumulators_kW.get(EC).getSumNeg() * p_timeStep_h / 1000 );
 }
@@ -6786,7 +6868,7 @@ if (abs(v_summerWeekEnergySelfConsumed_MWh - v_summerWeekSelfConsumedEnergyCheck
 
 //// Calcs winterweek
 // Import / Export
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_winterWeekImports_MWh.put( EC, am_winterWeekBalanceAccumulators_kW.get(EC).getSumPos() * p_timeStep_h / 1000 );
 	fm_winterWeekExports_MWh.put( EC, -am_winterWeekBalanceAccumulators_kW.get(EC).getSumNeg() * p_timeStep_h / 1000 );
 }
@@ -6821,7 +6903,7 @@ v_weekdayElectricitySelfConsumed_MWh = max(0, v_weekdayElectricityConsumed_MWh -
 
 
 // Nighttime totals: yearly totays minus daytime totals & selfconsumption
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_nighttimeImports_MWh.put( EC, fm_totalImports_MWh.get(EC) - fm_daytimeImports_MWh.get(EC) );
 	fm_nighttimeExports_MWh.put( EC, fm_totalExports_MWh.get(EC) - fm_daytimeExports_MWh.get(EC) );
 }
@@ -6837,7 +6919,7 @@ v_nighttimeEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_daytimeEnergyConsu
 v_nighttimeEnergySelfConsumed_MWh = max(0, v_nighttimeEnergyConsumed_MWh - v_nighttimeEnergyImport_MWh);
 
 // Weekend totals: yearly totals minus weekday totals & selfconsumption
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_weekendImports_MWh.put( EC, fm_totalImports_MWh.get(EC) - fm_weekdayImports_MWh.get(EC) );
 	fm_weekendExports_MWh.put( EC, fm_totalExports_MWh.get(EC) - fm_weekdayExports_MWh.get(EC) );
 }
@@ -6958,7 +7040,7 @@ double totalSelfSufficiency_fr_check = v_totalSelfConsumedEnergyCheck_MWh / v_to
 traceln("Energy selfsufficiency (via export calc): %s %%", totalSelfSufficiency_fr_check*100);
 // Remaining difference due to different temps of houses start vs end?
 
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	traceln("Import " + EC.toString() + ": " + fm_totalImports_MWh.get(EC) + " MWh");
 	traceln("Export " + EC.toString() + ": " + fm_totalExports_MWh.get(EC) + " MWh");
 }
@@ -7005,7 +7087,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Total Accumulators
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	am_totalBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC));
 }	
 	
@@ -7018,7 +7100,7 @@ acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProdu
 
 // Daytime totals
 if (b_isDaytime) {
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		fm_daytimeImports_MWh.addFlow(EC, max( 0, fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
 		fm_daytimeExports_MWh.addFlow(EC, max( 0, -fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
 	}
@@ -7042,7 +7124,7 @@ else {
 
 // Weekday totals
 if (b_isWeekday) {	
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		fm_weekdayImports_MWh.addFlow(EC, max( 0, fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
 		fm_weekdayExports_MWh.addFlow(EC, max( 0, -fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
 	}
@@ -7073,6 +7155,7 @@ double v_currentBatteriesDemand_kW = sum(c_gridConnections, x->max(0,x.v_battery
 double v_currentNaturalGasDemand_kW = sum(c_gridConnections, x -> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.METHANE));
 double v_currentDieselDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.DIESEL));
 double v_currentHydrogenDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN));
+double v_currentElectrolyserDemand_kW = sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW);
 
 double v_currentPVGeneration_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 double v_currentWindGeneration_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
@@ -7084,7 +7167,7 @@ double v_currentHydrogenSupply_kW = sum(c_gridConnections, x-> x.fm_currentProdu
 
 //Summer week accumulators & dataSets
 if (b_isSummerWeek){
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		am_summerWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC));
 	}
 	
@@ -7095,7 +7178,7 @@ if (b_isSummerWeek){
 	acc_summerWeekElectricityConsumption_kW.addStep( fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 	acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep( v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		dsm_summerWeekDemandDataSets_kW.get(EC).add( t_h, fm_currentConsumptionFlows_kW.get(EC) );
 		dsm_summerWeekSupplyDataSets_kW.get(EC).add( t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
@@ -7104,6 +7187,7 @@ if (b_isSummerWeek){
 	data_summerWeekHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
 	data_summerWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 	data_summerWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
+	data_summerWeekElectrolyserDemand_kW.add(t_h, v_currentElectrolyserDemand_kW);
 	
 	data_summerWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_summerWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -7118,7 +7202,7 @@ if (b_isSummerWeek){
 
 //Winter week accumulators & dataSets
 if (b_isWinterWeek){
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		am_winterWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC));
 	}
 
@@ -7129,7 +7213,7 @@ if (b_isWinterWeek){
 	acc_winterWeekElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 	acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		dsm_winterWeekDemandDataSets_kW.get(EC).add( t_h, fm_currentConsumptionFlows_kW.get(EC) );
 		dsm_winterWeekSupplyDataSets_kW.get(EC).add( t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
@@ -7138,6 +7222,7 @@ if (b_isWinterWeek){
 	data_winterWeekHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
 	data_winterWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 	data_winterWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
+	data_winterWeekElectrolyserDemand_kW.add(t_h, v_currentElectrolyserDemand_kW);
 	
 	data_winterWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_winterWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -7155,6 +7240,7 @@ v_dailyBaseloadElectricityDemand_kW += v_currentBaseloadElectricityDemand_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_currentHeatPumpElectricityDemand_kW;
 v_dailyElectricVehicleDemand_kW += v_currentElectricVehicleDemand_kW;
 v_dailyBatteriesDemand_kW += v_currentBatteriesDemand_kW;
+v_dailyAverageElectrolyserDemand_kW += v_currentElectrolyserDemand_kW;
 
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
 
@@ -7165,19 +7251,20 @@ v_dailyV2GSupply_kW += v_currentV2GSupply_kW;
 	
 if (b_isLastTimeStepOfDay){
 	double timeStepsInOneDay = 24 / p_timeStep_h;
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		dsm_dailyAverageDemandDataSets_kW.get(EC).add( t_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
 		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( t_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
 	}
 	
-	data_annualBaseloadElectricityDemand_kW.add(t_h, v_dailyBaseloadElectricityDemand_kW/(24 / p_timeStep_h));
-	data_annualHeatPumpElectricityDemand_kW.add(t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / p_timeStep_h));
-	data_annualElectricVehicleDemand_kW.add(t_h, v_dailyElectricVehicleDemand_kW/(24 / p_timeStep_h));
-	data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW/(24 / p_timeStep_h));
-	data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW/(24 / p_timeStep_h));
-	data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW/(24 / p_timeStep_h));
-	data_annualBatteriesSupply_kW.add(t_h, v_dailyBatteriesSupply_kW/(24 / p_timeStep_h));
-	data_annualV2GSupply_kW.add(t_h, v_dailyV2GSupply_kW/(24 / p_timeStep_h));
+	data_annualBaseloadElectricityDemand_kW.add(t_h, v_dailyBaseloadElectricityDemand_kW / timeStepsInOneDay);
+	data_annualHeatPumpElectricityDemand_kW.add(t_h, v_dailyHeatPumpElectricityDemand_kW / timeStepsInOneDay);
+	data_annualElectricVehicleDemand_kW.add(t_h, v_dailyElectricVehicleDemand_kW / timeStepsInOneDay);
+	data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW / timeStepsInOneDay);
+	data_annualElectrolyserDemand_kW.add(t_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
+	data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
+	data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
+	data_annualBatteriesSupply_kW.add(t_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
+	data_annualV2GSupply_kW.add(t_h, v_dailyV2GSupply_kW / timeStepsInOneDay);
 	
 	//// Daily totals
 	// Demand
@@ -7186,6 +7273,7 @@ if (b_isLastTimeStepOfDay){
 	v_dailyHeatPumpElectricityDemand_kW = 0;
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
+	v_dailyAverageElectrolyserDemand_kW = 0;
 	
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
@@ -7226,7 +7314,7 @@ v_totalEnergyCurtailed_MWh = 0;
 v_totalPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( c_activeEnergyCarriers, false, p_timeStep_h, 8760 );
+am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, p_timeStep_h, 8760 );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, p_timeStep_h, 8760) );
 
 acc_totalElectricityProduction_kW.reset();
@@ -7263,7 +7351,7 @@ v_summerWeekEnergyCurtailed_MWh = 0;
 v_summerWeekPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(c_activeEnergyCarriers, true, p_timeStep_h, 24*7);
+am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, p_timeStep_h, 24*7);
 
 acc_summerWeekElectricityProduction_kW.reset();
 acc_summerWeekElectricityConsumption_kW.reset();
@@ -7295,7 +7383,7 @@ v_winterWeekEnergyCurtailed_MWh = 0;
 v_winterWeekPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(c_activeEnergyCarriers, true, p_timeStep_h, 24*7);
+am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, p_timeStep_h, 24*7);
 
 acc_winterWeekElectricityProduction_kW.reset();
 acc_winterWeekElectricityConsumption_kW.reset();
@@ -7398,13 +7486,13 @@ v_dailyNetLoadAvg_kW = 0;
 // DataSets
 
 
-dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, 365);
-dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, 365);
+dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
+dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
 
-dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
-dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
-dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
-dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
+dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
+dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
+dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
+dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / p_timeStep_h));
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -7704,7 +7792,9 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// What if this function is accidently called twice? Need to start with a clean sheet?
-
+if (b_isInitialized) {
+	throw new RuntimeException("Error: Engine was initalized a second time.");
+}
 // Initialize time and date
 //v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 t_h = p_runStartTime_h;
@@ -7754,6 +7844,8 @@ for (GridNode GN : c_gridNodeExecutionList) {
 
 f_initializeForecasts();
 
+f_initializeLiveDataSets();
+
 // Use parallelisation?
 if (pop_connectionOwners.size() > 500 && b_parallelizeGridConnections) {
 	b_parallelizeConnectionOwners = true;
@@ -7764,7 +7856,8 @@ if (c_gridConnections.size() < 100) {
 
 // set initial values
 f_setInitialValues();
-]]></Body>
+
+b_isInitialized = true;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -7983,9 +8076,14 @@ return profilePointer;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[data_naturalGasDemand_kW.update();
-data_dieselDemand_kW.update();
-data_hydrogenDemand_kW.update();
+					<Body><![CDATA[for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+	dsm_liveDemand_kW.get(EC).add( t_h, fm_currentConsumptionFlows_kW.get(EC) );
+	dsm_liveSupply_kW.get(EC).add( t_h, fm_currentProductionFlows_kW.get(EC) );
+}
+
+//data_naturalGasDemand_kW.update();
+//data_dieselDemand_kW.update();
+//data_hydrogenDemand_kW.update();
 data_baseloadElectricityDemand_kW.update();
 data_hydrogenElectricityDemand_kW.update();
 data_heatPumpElectricityDemand_kW.update();
@@ -7996,7 +8094,7 @@ data_PVGeneration_kW.update();
 data_windGeneration_kW.update();	
 data_batteryDischarging_kW.update();
 data_V2GSupply_kW.update();
-data_hydrogenSupply_kW.update();
+//data_hydrogenSupply_kW.update();
 data_districtHeatingDemand_kW.update();
 data_cookingElectricityDemand_kW.update();
 
@@ -8007,6 +8105,19 @@ data_totalGridLoad_kW.update();
 data_gridCapacityDemand_kW.update();
 data_gridCapacitySupply_kW.update();
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1731573713521</Id>
+					<Name><![CDATA[f_initializeLiveDataSets]]></Name>
+					<X>560</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_timeStep_h));
+dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_timeStep_h));]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -8163,6 +8274,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1699275048264</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>1250</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8355,6 +8467,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1699275048383</Id>
 					<Name><![CDATA[data_dieselDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>1269</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8657,6 +8770,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1708507900127</Id>
 					<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>1290</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8703,7 +8817,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1715246336413</Id>
 					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-					<X>390</X><Y>3030</Y>
+					<X>390</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8725,7 +8839,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1715246336419</Id>
 					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-					<X>390</X><Y>3070</Y>
+					<X>390</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8747,7 +8861,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1715246336425</Id>
 					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-					<X>390</X><Y>3010</Y>
+					<X>390</X><Y>3030</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8835,7 +8949,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1715246336451</Id>
 					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-					<X>390</X><Y>3050</Y>
+					<X>390</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8927,7 +9041,7 @@ data_gridCapacitySupply_kW.update();
 					<Id>1715246336493</Id>
 					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3090</Y>
+					<X>390</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8950,7 +9064,7 @@ data_gridCapacitySupply_kW.update();
 					<Id>1715246336499</Id>
 					<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3130</Y>
+					<X>390</X><Y>3150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9531,7 +9645,7 @@ data_gridCapacitySupply_kW.update();
 					<Id>1715671189730</Id>
 					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3110</Y>
+					<X>390</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9599,6 +9713,7 @@ data_gridCapacitySupply_kW.update();
     			<DataSet>
 					<Id>1715671336391</Id>
 					<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>80</X><Y>1510</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9806,6 +9921,72 @@ data_gridCapacitySupply_kW.update();
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h-p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x-> x.v_electricHobConsumption_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1731590299827</Id>
+					<Name><![CDATA[data_annualElectrolyserDemand_kW]]></Name>
+					<X>390</X><Y>2990</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>365</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1731590299832</Id>
+					<Name><![CDATA[data_summerWeekElectrolyserDemand_kW]]></Name>
+					<X>830</X><Y>2970</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1731590299839</Id>
+					<Name><![CDATA[data_winterWeekElectrolyserDemand_kW]]></Name>
+					<X>1280</X><Y>2970</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -18068,7 +18249,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715086685651</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
-					<X>740</X><Y>2490</Y>
+					<X>740</X><Y>2510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18080,7 +18261,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715086685653</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
-					<X>740</X><Y>2510</Y>
+					<X>740</X><Y>2530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18092,7 +18273,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715086685655</Id>
 					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
-					<X>740</X><Y>2530</Y>
+					<X>740</X><Y>2550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18104,7 +18285,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715086685657</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
-					<X>740</X><Y>2550</Y>
+					<X>740</X><Y>2570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18195,7 +18376,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1715241688653</Id>
 					<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>740</X><Y>2610</Y>
+					<X>740</X><Y>2630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18208,7 +18389,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1715241757962</Id>
 					<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>740</X><Y>2570</Y>
+					<X>740</X><Y>2590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18221,7 +18402,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1715673589196</Id>
 					<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>740</X><Y>2590</Y>
+					<X>740</X><Y>2610</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19202,7 +19383,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730726947778</Id>
 					<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
-					<X>740</X><Y>2670</Y>
+					<X>740</X><Y>2690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19217,7 +19398,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730727024714</Id>
 					<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
-					<X>740</X><Y>2690</Y>
+					<X>740</X><Y>2710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19232,7 +19413,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730727333815</Id>
 					<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
-					<X>1070</X><Y>2670</Y>
+					<X>1070</X><Y>2690</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19247,7 +19428,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730727398733</Id>
 					<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
-					<X>1070</X><Y>2690</Y>
+					<X>1070</X><Y>2710</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19262,7 +19443,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730729164023</Id>
 					<Name><![CDATA[dsm_summerWeekDemandDataSets_kW]]></Name>
-					<X>1490</X><Y>2770</Y>
+					<X>1490</X><Y>2820</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19277,7 +19458,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730729202069</Id>
 					<Name><![CDATA[dsm_summerWeekSupplyDataSets_kW]]></Name>
-					<X>1490</X><Y>2790</Y>
+					<X>1490</X><Y>2840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19292,7 +19473,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730729205882</Id>
 					<Name><![CDATA[dsm_winterWeekDemandDataSets_kW]]></Name>
-					<X>1490</X><Y>2830</Y>
+					<X>1490</X><Y>2880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19307,7 +19488,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730729207173</Id>
 					<Name><![CDATA[dsm_winterWeekSupplyDataSets_kW]]></Name>
-					<X>1490</X><Y>2850</Y>
+					<X>1490</X><Y>2900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19316,6 +19497,51 @@ import javax.management.RuntimeErrorException;]]></Import>
 						<Type><![CDATA[J_DataSetMap]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new J_DataSetMap()]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731574001253</Id>
+					<Name><![CDATA[dsm_liveDemand_kW]]></Name>
+					<X>-120</X><Y>1900</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[J_DataSetMap]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new J_DataSetMap()]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731574001255</Id>
+					<Name><![CDATA[dsm_liveSupply_kW]]></Name>
+					<X>-120</X><Y>1920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[J_DataSetMap]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new J_DataSetMap()]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731576190939</Id>
+					<Name><![CDATA[v_activeEnergyCarriers]]></Name>
+					<X>835</X><Y>785</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -20399,6 +20625,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1730283362170</Id>
 					<Name><![CDATA[c_activeEnergyCarriers]]></Name>
 					<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>835</X><Y>806</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -20614,9 +20841,9 @@ else {
 }
 
 if (energyModel.v_isRapidRun){
-	f_fillAnnualDatasets();
+	f_fillAnnualDataSets();
 } else {
-	f_fillLiveDatasets();
+	f_fillLiveDataSets();
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -20967,7 +21194,7 @@ v_totalEnergyCurtailed_MWh = 0;
 v_totalPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( c_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
 
 acc_totalElectricityProduction_kW.reset();
@@ -21002,7 +21229,7 @@ v_summerWeekEnergyCurtailed_MWh = 0;
 v_summerWeekPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 acc_summerWeekElectricityProduction_kW.reset();
 acc_summerWeekElectricityConsumption_kW.reset();
@@ -21034,7 +21261,7 @@ v_winterWeekEnergyCurtailed_MWh = 0;
 v_winterWeekPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 acc_winterWeekElectricityProduction_kW.reset();
 acc_winterWeekElectricityConsumption_kW.reset();
@@ -21124,13 +21351,13 @@ v_dailyBatteriesSupply_kW = 0;
 v_dailyV2GSupply_kW = 0;
 
 // DataSets
-dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, 365);
-dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, 365);
+dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
+dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
 
-dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
 
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
@@ -21649,7 +21876,30 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 						<Name><![CDATA[j_ea]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[energyModel.c_energyAssets.add(j_ea);
+					<Body><![CDATA[for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
+	if (!v_activeEnergyCarriers.contains(EC)) {
+		v_activeEnergyCarriers.add(EC);
+		
+		if (energyModel.b_isInitialized) {
+			DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+			for (double t = startTime; t < endTime; t += energyModel.p_timeStep_h) {
+				ds.add( t, 0);
+			}
+			dsm_liveDemand_kW.put( EC, ds);
+			dsm_liveSupply_kW.put( EC, ds);
+			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
+			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
+			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+		}
+	}
+}
+
+energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
@@ -21986,10 +22236,8 @@ else {
 f_setOperatingSwitches();
 f_initializeAccumulators();
 f_initializeDataSets();
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers){
-	if ( !energyModel.c_activeEnergyCarriers.contains(EC) ) {
-		energyModel.c_activeEnergyCarriers.add(EC);
-	}
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers){
+	energyModel.v_activeEnergyCarriers.add(EC);
 }
 ]]></Body>
 				</Function>
@@ -22008,7 +22256,7 @@ for (OL_EnergyCarriers EC : c_activeEnergyCarriers){
 
 //// TOTALS
 // Get import / export from balance accumulators.
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_totalImports_MWh.put( EC, am_totalBalanceAccumulators_kW.get(EC).getSumPos() * energyModel.p_timeStep_h / 1000 );
 	fm_totalExports_MWh.put( EC, -am_totalBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
@@ -22044,7 +22292,7 @@ for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_Energy
 
 //// Winter/summer week totals
 // Calcs summerweek
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_summerWeekImports_MWh.put( EC, am_summerWeekBalanceAccumulators_kW.get(EC).getSumPos() * energyModel.p_timeStep_h / 1000 );
 	fm_summerWeekExports_MWh.put( EC, -am_summerWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
@@ -22070,7 +22318,7 @@ v_summerWeekEnergyCurtailed_MWh = acc_summerWeekEnergyCurtailed_kW.getSum() * en
 }*/
 
 // Calcs winterweek
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_winterWeekImports_MWh.put( EC, am_winterWeekBalanceAccumulators_kW.get(EC).getSumPos() * energyModel.p_timeStep_h / 1000 );
 	fm_winterWeekExports_MWh.put( EC, -am_winterWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
 }
@@ -22105,7 +22353,7 @@ v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProdu
 v_nighttimeElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_daytimeElectricityConsumed_MWh;
 v_nighttimeElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_daytimeElectricityProduced_MWh;
 
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_nighttimeImports_MWh.put( EC, fm_totalImports_MWh.get(EC) - fm_daytimeImports_MWh.get(EC) );
 	fm_nighttimeExports_MWh.put( EC, fm_totalExports_MWh.get(EC) - fm_daytimeExports_MWh.get(EC) );
 }
@@ -22128,7 +22376,7 @@ v_weekendElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_weekdayEle
 v_weekendElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_weekdayElectricityProduced_MWh;
 
 
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	fm_weekendImports_MWh.put( EC, fm_totalImports_MWh.get(EC) - fm_weekdayImports_MWh.get(EC) );
 	fm_weekendExports_MWh.put( EC, fm_totalExports_MWh.get(EC) - fm_weekdayExports_MWh.get(EC) );
 }
@@ -22482,13 +22730,13 @@ acc_totalElectricityProduction_kW = new ZeroAccumulator(false, energyModel.p_tim
 acc_totalElectricityConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760);
 
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( c_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
 
 //v_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(true, energyModel.p_timeStep_h, 24*7);
 //v_summerWeekProductionAccumulators_kW.createEmptyAccumulators(true, energyModel.p_timeStep_h, 24*7);
 
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators( c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 //acc_summerElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 //acc_summerMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
@@ -22508,7 +22756,7 @@ acc_summerWeekEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeS
 acc_summerWeekDeliveryCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 acc_summerWeekFeedinCapacity_kW =  new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators( c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 //acc_winterElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
 //acc_winterMethaneBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7);
@@ -22810,18 +23058,23 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518225504</Id>
-					<Name><![CDATA[f_fillLiveDatasets]]></Name>
+					<Name><![CDATA[f_fillLiveDataSets]]></Name>
 					<X>930</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[data_liveElectricityBalance_kW.add(energyModel.t_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+					<Body><![CDATA[for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+	dsm_liveDemand_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
+	dsm_liveSupply_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
+}
 
-data_naturalGasDemand_kW.update();
-data_dieselDemand_kW.update();
-data_hydrogenDemand_kW.update();
-data_hydrogenSupply_kW.update();
+data_liveElectricityBalance_kW.add(energyModel.t_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+
+//data_naturalGasDemand_kW.update();
+//data_dieselDemand_kW.update();
+//data_hydrogenDemand_kW.update();
+//data_hydrogenSupply_kW.update();
 
 data_totalDemand_kW.update();
 data_totalSupply_kW.update();
@@ -22900,7 +23153,7 @@ data_districtHeatDelivery_kW.update();
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518905501</Id>
-					<Name><![CDATA[f_fillAnnualDatasets]]></Name>
+					<Name><![CDATA[f_fillAnnualDataSets]]></Name>
 					<X>930</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -22910,7 +23163,7 @@ data_districtHeatDelivery_kW.update();
 
 double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	double netFlow_kW = fm_currentBalanceFlows_kW.get(EC);
 	currentImport_kW += max( 0, netFlow_kW );
 	currentExport_kW += max( 0, -netFlow_kW );
@@ -22921,7 +23174,7 @@ if(energyModel.b_isDaytime) {
 	v_daytimeEnergyImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 	v_daytimeEnergyExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 	
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		fm_daytimeImports_MWh.addFlow( EC, max( 0, fm_currentConsumptionFlows_kW.get(EC) - fm_currentProductionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
 		fm_daytimeExports_MWh.addFlow( EC, max( 0, fm_currentProductionFlows_kW.get(EC) - fm_currentConsumptionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
 	}
@@ -22938,7 +23191,7 @@ if (energyModel.b_isWeekday) { // Simulation starts on a Thursday, hence the +3 
 	v_weekdayEnergyImport_MWh += currentImport_kW/1000 * energyModel.p_timeStep_h;
 	v_weekdayEnergyExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		fm_weekdayImports_MWh.addFlow( EC, max( 0, fm_currentConsumptionFlows_kW.get(EC) - fm_currentProductionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
 		fm_weekdayExports_MWh.addFlow( EC, max( 0, fm_currentProductionFlows_kW.get(EC) - fm_currentConsumptionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
 		
@@ -22952,7 +23205,7 @@ if (energyModel.b_isWeekday) { // Simulation starts on a Thursday, hence the +3 
 }
 // SummerWeek Accumulators
 if (energyModel.b_isSummerWeek) {
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		am_summerWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC) );
 	}
 	
@@ -22970,7 +23223,7 @@ if (energyModel.b_isSummerWeek) {
 }	
 // WinterWeek Accumulators
 if (energyModel.b_isWinterWeek) {
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		am_winterWeekBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
 	}
 
@@ -22988,7 +23241,7 @@ if (energyModel.b_isWinterWeek) {
 
 }
 // Total Accumulators
-for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	am_totalBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
 }
 
@@ -23047,7 +23300,7 @@ for (J_EA j_ea : c_windAssets) {
 //Summer week dataSets
 if (energyModel.b_isSummerWeek){
 	
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		dsm_summerWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
 		dsm_summerWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
@@ -23066,7 +23319,7 @@ if (energyModel.b_isSummerWeek){
 //Winter week dataSets
 if (energyModel.b_isWinterWeek){
 	
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		dsm_winterWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
 		dsm_winterWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
@@ -23102,7 +23355,7 @@ v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
 if (energyModel.b_isLastTimeStepOfDay) {
 	// Demand
 	double timeStepsInOneDay = 24 / energyModel.p_timeStep_h;
-	for (OL_EnergyCarriers EC : c_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		dsm_dailyAverageDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
 		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
 	}
@@ -23153,7 +23406,6 @@ if (energyModel.b_isLastTimeStepOfDay) {
   (!energyModel.c_pausedGridConnections.contains(this) && setActive)){
 	return;
 }
-
 
 if (!setActive) {
 	energyModel.c_gridConnections.remove(this);
@@ -23405,14 +23657,16 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[
-dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, 365);
-dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, 365);
+					<Body><![CDATA[dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 
-dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));]]></Body>
+dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
+dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
+
+dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -23694,6 +23948,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1708508013814</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1760</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23886,6 +24141,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1708508013902</Id>
 					<Name><![CDATA[data_dieselDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1779</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24028,7 +24284,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715086040034</Id>
 					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-					<X>1070</X><Y>2510</Y>
+					<X>1070</X><Y>2530</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24050,7 +24306,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715086040041</Id>
 					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-					<X>1070</X><Y>2550</Y>
+					<X>1070</X><Y>2570</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24072,7 +24328,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715086040046</Id>
 					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-					<X>1070</X><Y>2490</Y>
+					<X>1070</X><Y>2510</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24160,7 +24416,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715086040072</Id>
 					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-					<X>1070</X><Y>2530</Y>
+					<X>1070</X><Y>2550</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24250,7 +24506,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715088549918</Id>
 					<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
-					<X>1490</X><Y>2330</Y>
+					<X>1490</X><Y>2340</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24272,7 +24528,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715088549924</Id>
 					<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
-					<X>1490</X><Y>2370</Y>
+					<X>1490</X><Y>2380</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24294,7 +24550,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715088549928</Id>
 					<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
-					<X>1490</X><Y>2310</Y>
+					<X>1490</X><Y>2320</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24382,7 +24638,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715088549958</Id>
 					<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
-					<X>1490</X><Y>2350</Y>
+					<X>1490</X><Y>2360</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24474,7 +24730,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715242546547</Id>
 					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1070</X><Y>2570</Y>
+					<X>1070</X><Y>2590</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24497,7 +24753,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715242548516</Id>
 					<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1070</X><Y>2610</Y>
+					<X>1070</X><Y>2630</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24612,7 +24868,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715244217843</Id>
 					<Name><![CDATA[data_summerWeekNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2390</Y>
+					<X>1490</X><Y>2400</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24634,7 +24890,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361092</Id>
 					<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
-					<X>1490</X><Y>2471</Y>
+					<X>1490</X><Y>2501</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24656,7 +24912,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361101</Id>
 					<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
-					<X>1490</X><Y>2641</Y>
+					<X>1490</X><Y>2681</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24678,7 +24934,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361108</Id>
 					<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
-					<X>1490</X><Y>2681</Y>
+					<X>1490</X><Y>2721</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24700,7 +24956,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361117</Id>
 					<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
-					<X>1490</X><Y>2621</Y>
+					<X>1490</X><Y>2661</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24722,7 +24978,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361125</Id>
 					<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
-					<X>1490</X><Y>2511</Y>
+					<X>1490</X><Y>2541</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24744,7 +25000,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361131</Id>
 					<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
-					<X>1490</X><Y>2451</Y>
+					<X>1490</X><Y>2481</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24766,7 +25022,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361139</Id>
 					<Name><![CDATA[data_winterWeekElectricVehicleDemand_kW]]></Name>
-					<X>1490</X><Y>2491</Y>
+					<X>1490</X><Y>2521</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24788,7 +25044,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715244361147</Id>
 					<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
-					<X>1490</X><Y>2661</Y>
+					<X>1490</X><Y>2701</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24811,7 +25067,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715244361154</Id>
 					<Name><![CDATA[data_winterWeekNaturalGasDemand_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2531</Y>
+					<X>1490</X><Y>2561</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24834,7 +25090,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715244361162</Id>
 					<Name><![CDATA[data_winterWeekDieselDemand_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2551</Y>
+					<X>1490</X><Y>2581</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24857,7 +25113,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715244361171</Id>
 					<Name><![CDATA[data_winterWeekHydrogenDemand_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2571</Y>
+					<X>1490</X><Y>2601</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24880,7 +25136,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715244361177</Id>
 					<Name><![CDATA[data_winterWeekNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2701</Y>
+					<X>1490</X><Y>2741</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24903,7 +25159,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715673606961</Id>
 					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1070</X><Y>2590</Y>
+					<X>1070</X><Y>2610</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24926,7 +25182,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715673624817</Id>
 					<Name><![CDATA[data_summerWeekHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2410</Y>
+					<X>1490</X><Y>2420</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24949,7 +25205,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
 					<Id>1715673637590</Id>
 					<Name><![CDATA[data_winterWeekHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1490</X><Y>2720</Y>
+					<X>1490</X><Y>2760</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -24971,6 +25227,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1715675213282</Id>
 					<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>330</X><Y>2000</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -24995,6 +25252,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(c_activeEnergyCarriers, (int
     			<DataSet>
 					<Id>1717414711416</Id>
 					<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>150</X><Y>1900</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -35930,7 +36188,7 @@ v_totalCustomerFeedIn_MWh = 0;
 v_totalCustomerDelivery_MWh = 0;
 
 // Accumulators
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.c_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
 
 acc_totalElectricityProduction_kW.reset();
@@ -35964,7 +36222,7 @@ v_summerWeekEnergyCurtailed_MWh = 0;
 v_summerWeekPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 acc_summerWeekElectricityProduction_kW.reset();
 acc_summerWeekElectricityConsumption_kW.reset();
@@ -35993,7 +36251,7 @@ v_winterWeekEnergyCurtailed_MWh = 0;
 v_winterWeekPrimaryEnergyProductionHeatpumps_MWh = 0;
 
 // Accumulators
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.c_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
 acc_winterWeekElectricityProduction_kW.reset();
 acc_winterWeekElectricityConsumption_kW.reset();
@@ -36080,13 +36338,13 @@ v_dailyBatteriesSupply_kW = 0;
 v_dailyV2GSupply_kW = 0;
 
 // DataSets
-dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, 365);
-dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, 365);
+dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, 365);
+dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, 365);
 
-dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
-dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.c_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
+dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCarriers, (int)(24*7 / energyModel.p_timeStep_h));
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -44204,17 +44462,23 @@ if ( p_batteryAsset != null ) {
 			<Name><![CDATA[GCEnergyConversion]]></Name>
 			<AdditionalClassCode><![CDATA[@Override
 public void f_operateFlexAssets(){
-	f_operateFlexAssets_overwrite();
+	f_operateFlexAssets_override();
 }
 
 @Override
 public void f_resetSpecificGCStates(){
-	f_resetSpecificGCStates_overwrite();
+	f_resetSpecificGCStates_override();
 }
 
 @Override
 public void f_resetSpecificGCStatesAfterRapidRun(){
-	f_resetSpecificGCStatesAfterRapidRun_overwrite();
+	f_resetSpecificGCStatesAfterRapidRun_override();
+}
+
+@Override
+public void f_fillAnnualDataSets() {
+	super.f_fillAnnualDataSets();
+	f_fillAnnualDatasets_electrolyser();
 }]]></AdditionalClassCode>
 			<Import><![CDATA[import java.util.*;]]></Import>
 			<ExtendsReference>
@@ -44563,6 +44827,18 @@ FullCapacity.]]></Description>
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731589115767</Id>
+					<Name><![CDATA[v_dailyAverageElectrolyserDemand_kW]]></Name>
+					<X>740</X><Y>2470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -45183,7 +45459,7 @@ if (ElectrolyserAsset.getCapacityElectric_kW()>0) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1708089644411</Id>
-					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
+					<Name><![CDATA[f_operateFlexAssets_override]]></Name>
 					<X>800</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -45576,7 +45852,7 @@ switch (ElectrolyserAsset.getState()){
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717066943639</Id>
-					<Name><![CDATA[f_resetSpecificGCStates_overwrite]]></Name>
+					<Name><![CDATA[f_resetSpecificGCStates_override]]></Name>
 					<X>1140</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -45594,7 +45870,7 @@ v_hydrogenInStorage_kWh = 0;
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717068271650</Id>
-					<Name><![CDATA[f_resetSpecificGCStatesAfterRapidRun_overwrite]]></Name>
+					<Name><![CDATA[f_resetSpecificGCStatesAfterRapidRun_override]]></Name>
 					<X>1140</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -45670,6 +45946,33 @@ v_hydrogenInStorage_kWh = 0;]]></Body>
 }
 ]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1731589202880</Id>
+					<Name><![CDATA[f_fillAnnualDatasets_electrolyser]]></Name>
+					<X>960</X><Y>560</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (energyModel.b_isSummerWeek) {
+	data_summerWeekElectrolyserDemand_kW.add(energyModel.t_h, max(0, v_hydrogenElectricityConsumption_kW));
+}
+
+if (energyModel.b_isWinterWeek) {
+	data_winterWeekElectrolyserDemand_kW.add(energyModel.t_h, max(0, v_hydrogenElectricityConsumption_kW));
+}
+
+v_dailyAverageElectrolyserDemand_kW += v_hydrogenElectricityConsumption_kW;
+
+if (energyModel.b_isLastTimeStepOfDay) {
+	data_annualElectrolyserDemand_kW.add(energyModel.t_h, v_dailyAverageElectrolyserDemand_kW / (24 / energyModel.p_timeStep_h));
+	v_dailyAverageElectrolyserDemand_kW = 0;
+}
+
+]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
@@ -45705,6 +46008,72 @@ v_hydrogenInStorage_kWh = 0;]]></Body>
 					<AutoUpdate>false</AutoUpdate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1717142400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1731589115771</Id>
+					<Name><![CDATA[data_annualElectrolyserDemand_kW]]></Name>
+					<X>1070</X><Y>2470</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>365</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1731589115777</Id>
+					<Name><![CDATA[data_summerWeekElectrolyserDemand_kW]]></Name>
+					<X>1490</X><Y>2280</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1731589115784</Id>
+					<Name><![CDATA[data_winterWeekElectrolyserDemand_kW]]></Name>
+					<X>1490</X><Y>2620</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
@@ -51371,6 +51740,8 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EA
  */
+import java.util.EnumSet;
+
 abstract public class J_EA implements Cloneable {
 	
 	 protected Agent parentAgent;
@@ -51380,7 +51751,7 @@ abstract public class J_EA implements Cloneable {
 	 protected J_FlowsMap flowsMap = new J_FlowsMap();
 	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
 	 protected double lastEnergyUse_kW = 0.0;
-	 protected List<OL_EnergyCarriers> activeEnergyCarriers = new ArrayList<OL_EnergyCarriers>(); // To fill activeEnergyCarriers in GridConnections and EnergyModel
+	 protected EnumSet<OL_EnergyCarriers> activeEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeEnergyCarriers in GridConnections and EnergyModel
 
 	 protected double energyUsed_kWh = 0.0;
 	 protected double energyUse_kW = 0.0;
@@ -51420,13 +51791,7 @@ abstract public class J_EA implements Cloneable {
 		// TODO: check if EA is using an energycarrier that is not in the selectedenergycarriers. If so, throw an error!
     	if ( parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_connectToJ_EA(this);
-    		for (OL_EnergyCarriers EC : this.activeEnergyCarriers) {
-        		if ( !((GridConnection)parentAgent).c_activeEnergyCarriers.contains(EC) ) {
-        			((GridConnection)parentAgent).c_activeEnergyCarriers.add(EC);
-        		}
-    		}
-
-    	} else {    		
+    	} else {
     		traceln("Energy asset %s doesn't have a valid parent agent! Will not be operated!", this);
     	}
     }
@@ -51527,9 +51892,10 @@ abstract public class J_EA implements Cloneable {
     	return parentAgent;
     }
     
-    public List<OL_EnergyCarriers> getActiveEnergyCarriers(){
-    	return activeEnergyCarriers;
-    }
+	public EnumSet<OL_EnergyCarriers> getActiveEnergyCarriers() {
+		return this.activeEnergyCarriers;
+	}
+	
     //public void setUI_EnergyAsset(UI_EnergyAsset ui_energyAsset) {
     	//this.ui_energyAsset = ui_energyAsset;
     //}
@@ -51551,6 +51917,8 @@ abstract public class J_EA implements Cloneable {
 	 public void setEnergyAssetType(OL_EnergyAssetType assetType) {
 		 this.energyAssetType = assetType;
 	 }
+	 
+
     
 //    public double getOutputTemperature_degC() {
 //   	return 0;
@@ -55741,6 +56109,7 @@ public class J_FlowsMapEnumMap extends EnumMap<OL_EnergyCarriers, Double> {
  * J_DataSetMap
  */	
 import java.util.EnumMap;
+import java.util.EnumSet;
 
 public class J_DataSetMap extends EnumMap<OL_EnergyCarriers, DataSet> {
 
@@ -55751,7 +56120,7 @@ public class J_DataSetMap extends EnumMap<OL_EnergyCarriers, DataSet> {
     	super(OL_EnergyCarriers.class);
     }
 
-    public void createEmptyDataSets(List<OL_EnergyCarriers> selectedFlows, int size) {
+    public void createEmptyDataSets(EnumSet<OL_EnergyCarriers> selectedFlows, int size) {
     	for (OL_EnergyCarriers key : selectedFlows) {
     		this.put(key, new DataSet(size));
     	}
@@ -55778,6 +56147,7 @@ public class J_DataSetMap extends EnumMap<OL_EnergyCarriers, DataSet> {
  * J_AccumulatorMap
  */	
 import java.util.EnumMap;
+import java.util.EnumSet;
 import zeroPackage.ZeroAccumulator;
 
 public class J_AccumulatorMap extends EnumMap<OL_EnergyCarriers, ZeroAccumulator> {
@@ -55789,7 +56159,7 @@ public class J_AccumulatorMap extends EnumMap<OL_EnergyCarriers, ZeroAccumulator
     	super(OL_EnergyCarriers.class);
     }
 
-    public void createEmptyAccumulators(List<OL_EnergyCarriers> selectedFlows, boolean hasTimeSeries, double signalResolution_h, double duration_h) {
+    public void createEmptyAccumulators(EnumSet<OL_EnergyCarriers> selectedFlows, boolean hasTimeSeries, double signalResolution_h, double duration_h) {
     	for (OL_EnergyCarriers key : selectedFlows) {
     		this.put(key, new ZeroAccumulator(hasTimeSeries, signalResolution_h, duration_h));
     	}
@@ -55944,10 +56314,23 @@ public class J_FlowsMap implements Serializable {
     	return energyCarrierList;
     }
         
-    @Override
-	public String toString() {
-		return super.toString();
-	}
+    public String toString() {
+        if (this.energyCarrierList.size() == 0) {
+            return "{}";        	
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (OL_EnergyCarriers key : this.energyCarrierList) {
+        	double value = this.get(key);
+            sb.append(key);
+            sb.append(" = ");
+            sb.append(value);
+            sb.append(", ");
+        }
+        sb.delete(sb.length()-2, sb.length());
+        sb.append('}');
+        return sb.toString();
+    }
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>
