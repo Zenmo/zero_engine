@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -4704,6 +4704,30 @@ traceln("Available profiles in this simulation: %s", c_profiles);
 						<Type><![CDATA[J_ProfilePointer]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731589790564</Id>
+					<Name><![CDATA[v_totalEnergyConsumptionForDistrictHeating_MWh]]></Name>
+					<X>-480</X><Y>1300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731593323269</Id>
+					<Name><![CDATA[v_totalElectricityConsumptionHeatpumps_MWh]]></Name>
+					<X>-480</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -7130,12 +7154,27 @@ v_individualSelfConsumption_fr = sum(c_gridConnections, gc -> gc.v_totalElectric
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_totalElectricityImport_MWh);
 v_collectiveSelfConsumption_fr = v_totalElectricitySelfConsumed_MWh / v_totalElectricityProduced_MWh;
 
+
+//Heat grid
+v_totalEnergyConsumptionForDistrictHeating_MWh = sum(DistrictHeatingSystems, DH -> DH.v_totalImport_MWh); //Does not work if there is production at the GCDistrictHeating!!
+
+//Heatpump totals
+v_totalElectricityConsumptionHeatpumps_MWh = 0;
+for(GridConnection GC : c_gridConnections){
+	for(int i = 0; i < GC.data_annualHeatPumpElectricityDemand_kW.size(); i++){
+		v_totalElectricityConsumptionHeatpumps_MWh += (GC.data_annualHeatPumpElectricityDemand_kW.getY(i)*24)/1000;
+	}
+}
+
+//Tracelns
 traceln("");
 traceln("__--** Totals **--__");
 traceln("Energy consumed: "+ v_totalEnergyUsed_MWh + " MWh");
 traceln("Energy produced: "+ v_totalEnergyProduced_MWh + " MWh");
 traceln("Energy import: "+ v_totalImportedEnergy_MWh + " MWh");
 traceln("Energy export: "+ v_totalExportedEnergy_MWh + " MWh");
+
+
 
 // Peak model-wide electricity grid loads
 v_peakElecExport_kW=Arrays.stream(acc_annualElectricityBalance_kW.getTimeSeries()).min().orElse(-1);
@@ -51313,40 +51352,31 @@ f_manageHeatingAssets();
 
 f_manageCharging();
 
-//Electric Storage
-/*
-List<J_EAStorage> batteries = findAll(c_storageAssets, storage -> storage.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC);
-
-for(int i = 0; i < batteries.size() ; i++){
-	if (batteries.get(i).getStorageCapacity_kWh() != 0){
-	f_batteryManagementBalance(batteries.get(i).getCurrentStateOfCharge());
-	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	//traceln("flows:" + Arrays.toString(arr));
-	}
-}
 
 
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 }*/
 
-v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
+v_currentLoadLowPassed_kW += 0.003 * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do determine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
 
-/*if( p_batteryAsset != null){
+//Battery
+if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 	switch (p_batteryOperationMode){
-		case HOUSEHOLD_LOAD:
-			f_batteryManagementBalance(v_batterySOC_fr);
+		case BALANCE:
+			f_batteryManagementBalance_NBH(v_batterySOC_fr);
 		break;
 		case PRICE:
-			f_batteryManagementPrice_overwrite(v_batterySOC_fr);
+			f_batteryManagementPrice_NBH(v_batterySOC_fr);
 		break;
 		default:
 		break;
 	}
+	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	v_batteryPowerElectric_kW =  p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 	v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-}*/
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -51769,8 +51799,8 @@ if (j_ea instanceof J_EAVehicle) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1730897215443</Id>
-					<Name><![CDATA[f_batteryManagementBalance1]]></Name>
-					<X>1060</X><Y>280</Y>
+					<Name><![CDATA[f_batteryManagementBalance_NBH]]></Name>
+					<X>920</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -51784,11 +51814,11 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double currentLoadDeviation_kW = v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW; // still excludes battery power
 	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
 	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
-	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.9;
-	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.9;
+	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.95;
+	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.95;
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
-	double availableDischargePower_kW = - v_currentPowerElectricity_kW - v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
+	double availableDischargePower_kW = v_currentPowerElectricity_kW + v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
 
 	double SOC_setp_fr = 0.5;
 	//TODO: Verander in iets specifieks voor project - overwrite in GC Neighborhood
@@ -51799,17 +51829,20 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
-	SOC_setp_fr =  0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24) - 0.8 * windEnergyExpectedNormalized_fr - 0.8 * solarEnergyExpectedNormalized_fr;
+	SOC_setp_fr =  0.6 + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
 	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	
+	//traceln("SOC_setp_fr" + SOC_setp_fr);
+	
 	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
-	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
-	double FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop
+	double FeedbackGain_kWpSOC = 0.4 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
 	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
-	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//traceln("v_powerFraction_fr" + p_batteryAsset.v_powerFraction_fr);
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 }]]></Body>
 				</Function>
@@ -51817,8 +51850,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1730897215446</Id>
-					<Name><![CDATA[f_batteryManagementPrice1]]></Name>
-					<X>1060</X><Y>300</Y>
+					<Name><![CDATA[f_batteryManagementPrice_NBH]]></Name>
+					<X>920</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51875,11 +51908,10 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		// limit charging power to available connection capacity
 		boolean b_stayWithinConnectionLimits = true;
 		if( b_stayWithinConnectionLimits ) {		
-			double electricitySurplus_kW = - v_currentPowerElectricity_kW; 
 			
-			double availableChargePower_kW = electricitySurplus_kW + p_contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = electricitySurplus_kW - p_contractedFeedinCapacity_kW; // Max discharging power within grid capacity
-			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+			double availableChargePower_kW = p_contractedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = p_contractedFeedinCapacity_kW + v_currentPowerElectricity_kW; // Max discharging power within grid capacity
+			chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
