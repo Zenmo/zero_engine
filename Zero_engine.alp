@@ -20494,7 +20494,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727099238699</Id>
 					<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
-					<X>150</X><Y>2270</Y>
+					<X>150</X><Y>2320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20518,7 +20518,31 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727101009735</Id>
 					<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
-					<X>150</X><Y>2290</Y>
+					<X>150</X><Y>2340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731679457487</Id>
+					<Name><![CDATA[v_maxPeakDelivery_kW]]></Name>
+					<X>150</X><Y>2360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731679470154</Id>
+					<Name><![CDATA[v_maxPeakFeedin_kW]]></Name>
+					<X>150</X><Y>2380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22311,6 +22335,11 @@ v_totalElectricityProduced_MWh = 0;
 v_totalOverloadDurationDelivery_hr = 0;
 v_totalOverloadDurationFeedin_hr = 0;
 
+//Max peaks
+v_maxPeakDelivery_kW = 0;
+v_maxPeakFeedin_kW = 0;
+
+
 //Summer/winter week and day 
 v_summerWeekTotalImport_MWh = 0;
 v_summerWeekTotalExport_MWh = 0;
@@ -23417,14 +23446,23 @@ v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum() * 
 v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalHeatProduced_MWh = acc_annualHeatProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 
-//Yeartotal overload duration
+//Yeartotal overload duration + maximum peaks
 for(double electricityBalance_kW : acc_annualElectricityBalance_kW.getTimeSeries()){
 	
+	//Duration
 	if(electricityBalance_kW > p_contractedDeliveryCapacity_kW){
 		v_totalOverloadDurationDelivery_hr += energyModel.p_timeStep_h;
 	}
 	else if(electricityBalance_kW < - p_contractedFeedinCapacity_kW){
 		v_totalOverloadDurationFeedin_hr += energyModel.p_timeStep_h;
+	}
+	
+	//Max Peaks
+	if(electricityBalance_kW > v_maxPeakDelivery_kW){
+		v_maxPeakDelivery_kW = electricityBalance_kW;
+	}
+	else if(electricityBalance_kW < - v_maxPeakFeedin_kW){
+		v_maxPeakFeedin_kW = abs(electricityBalance_kW);
 	}
 }
 
