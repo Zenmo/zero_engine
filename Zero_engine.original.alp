@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172123" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.1.202408021040" AlpVersion="8.9.1">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -1187,7 +1187,9 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -6105,9 +6107,9 @@ for( J_EA e : c_ambientAirDependentAssets ) {
 	} else if (e instanceof J_EAConversionHeatPump) {
 		((J_EAConversionHeatPump)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
 	//e.updateAmbientTemperature( e.p_baseTemperatureReference );
-	}
-	if( e instanceof J_EABuilding ) {
+	}else if( e instanceof J_EABuilding ) {
 		((J_EABuilding)e).updateSolarRadiation(v_currentSolarPowerNormalized_r*1000);
+		((J_EABuilding)e).updateAmbientTemperature(v_currentAmbientTemperature_degC);
 	}
 }
 
@@ -10502,7 +10504,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10518,6 +10520,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[p_latitude]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[p_longitude]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10664,7 +10672,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10680,6 +10688,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10730,7 +10744,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[0]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10746,6 +10760,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10824,7 +10844,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10840,6 +10860,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -10953,7 +10979,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -10969,6 +10995,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11046,7 +11078,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11062,6 +11094,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11148,7 +11186,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11164,6 +11202,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11232,7 +11276,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[1]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11248,6 +11292,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11302,7 +11352,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 					</InitialSpeedCode>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11318,6 +11368,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11370,7 +11426,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11386,6 +11442,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11571,7 +11633,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11587,6 +11649,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11739,7 +11807,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11755,6 +11823,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -11901,7 +11975,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -11917,6 +11991,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12105,7 +12185,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12121,6 +12201,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12267,7 +12353,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12283,6 +12369,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12429,7 +12521,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12445,6 +12537,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12591,7 +12689,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12607,6 +12705,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12715,7 +12819,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12731,6 +12835,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12803,7 +12913,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12819,6 +12929,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -12894,7 +13010,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -12910,6 +13026,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -13087,7 +13209,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -13103,6 +13225,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -13256,7 +13384,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
 					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>XYZ</InitialLocationType>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</XCode>
@@ -13272,6 +13400,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<RowCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
 					</LocationNameCode>
@@ -14006,7 +14140,9 @@ if (p_energyType.equals(OL_EnergyCarrierType.HEAT)) {
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -17662,7 +17798,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -22346,7 +22484,6 @@ if( p_energyAssetList != null) {
 					<Body><![CDATA[v_previousPowerElectricity_kW = v_currentPowerElectricity_kW;
 v_previousPowerHeat_kW = v_currentPowerHeat_kW;
 v_currentPowerElectricity_kW = 0;
-v_methaneDelivered_kWh +=  v_currentPowerMethane_kW / 4.0;
 v_currentPowerMethane_kW = 0;
 v_currentPowerHydrogen_kW = 0;
 v_currentPowerHeat_kW = 0;
@@ -22487,9 +22624,6 @@ for(J_EAConsumption e : c_consumptionAssets) {
 	else if( e.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION ){	
 		e.f_updateAllFlows( energyModel.v_currentHouseHoldHotWaterDemand_fr );
 	}
-	else if (  e.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB || e.energyAssetType == OL_EnergyAssetType.GAS_PIT){
-		e.f_updateAllFlows( energyModel.v_currentCookingDemand_fr );
-	}
 	else if( e.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND ) {
 		//traceln("Heat demand asset ID: " + e.getName());
 		switch(e.energyAssetName) {
@@ -22536,6 +22670,9 @@ for(J_EAConsumption e : c_consumptionAssets) {
 	else if( e.energyAssetType == OL_EnergyAssetType.METHANE_DEMAND ) {
 		e.v_powerFraction_fr = 1.0/8760;
 		e.f_updateAllFlows( e.v_powerFraction_fr );	
+	}
+	else if (  e.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB || e.energyAssetType == OL_EnergyAssetType.GAS_PIT){
+		e.f_updateAllFlows( energyModel.v_currentCookingDemand_fr );
 	}
 	else {
 		traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
@@ -23831,7 +23968,6 @@ v_currentPowerHydrogen_kW += arr[6] - arr[2];
 v_currentPowerHeat_kW += arr[7] - arr[3];
 v_currentPowerDiesel_kW += arr[8];
 
-
 if (caller instanceof J_EAStorageElectric) { // Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need a 10th element in arr indicating power into storage??
 	v_currentEnergyConsumption_kW += max(0,arr[9]);
 	v_currentElectricityConsumption_kW += max(0,arr[9]);
@@ -24201,7 +24337,6 @@ acc_winterFeedinCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// to be overwritten by child GCs!]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -27758,7 +27893,9 @@ f_setCoordinatesUIElements();
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -28964,7 +29101,9 @@ p_parentAgent = j_ea.parentAgent;
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -29326,7 +29465,9 @@ p_parentAgent = j_ea.parentAgent;
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -30446,7 +30587,9 @@ energyModel.c_connectionOwners.add(this);]]></StartupCode>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -32974,7 +33117,9 @@ traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -33145,7 +33290,9 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -40224,7 +40371,9 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -41255,7 +41404,9 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -41928,7 +42079,9 @@ else {
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -42277,7 +42430,9 @@ public void f_simpleCharging(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -42939,7 +43094,6 @@ if( p_batteryAsset != null){
 	switch (p_batteryOperationMode){
 		case HOUSEHOLD_LOAD:
 			f_batteryManagementBalance(v_batterySOC_fr);
-			//f_batteryManagementLoad();
 		break;
 		case PRICE:
 			f_batteryManagementPrice(v_batterySOC_fr);
@@ -42955,7 +43109,25 @@ if( p_batteryAsset != null){
 
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); 
 
+if ( p_batteryAsset != null ) {
+	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
+		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
+		if( p_batteryOperationMode == OL_BatteryOperationMode.HOUSEHOLD_LOAD){
+			f_batteryManagementBalance(v_batterySOC_fr);
+//		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
+//			f_batteryManagementBalanceSupply(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
+			f_batteryManagementPrice(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
+			f_batteryManagementNodalPricing(v_batterySOC_fr);
+		}
 
+		double[] flowsArray = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
+		//v_batteryPowerElectric_kW = flowsArray[4] - flowsArray[0];//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
+	}
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -43642,19 +43814,20 @@ v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlow
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678708804201</Id>
 					<Name><![CDATA[f_batteryManagementLoad]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>810</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double powerfraction_fr = 0;
-if ( v_currentPowerElectricity_kW < 0 && p_batteryAsset.getCurrentStateOfCharge() < 1 ){
+if ( v_currentPowerElectricity_kW < 0 && p_batteryAsset.getCurrentStateOfCharge() < 1 && v_currentPriceLevel !=  OL_priceLevels.HIGH ){
 	powerfraction_fr = 1;
 }
-else if( v_currentPowerElectricity_kW > 2 && p_batteryAsset.getCurrentStateOfCharge() > 0){
+else if( v_currentPowerElectricity_kW > v_currentLoadLowPassed_kW && p_batteryAsset.getCurrentStateOfCharge() > 0){
 	powerfraction_fr = -1;
 }
-else if ( v_batterySOC_fr < 0.6 && v_currentPowerElectricity_kW < 1 ){
+else if ( v_batterySOC_fr < 0.6 && v_currentPowerElectricity_kW < 1 && v_currentPriceLevel !=  OL_priceLevels.HIGH){
 	powerfraction_fr = min( 1, p_batteryAsset.capacityElectric_kW / 2.5);
 }
 p_batteryAsset.v_powerFraction_fr = powerfraction_fr;
@@ -44387,7 +44560,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -45475,7 +45650,9 @@ public void f_operateFlexAssets(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -45931,7 +46108,9 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -47593,7 +47772,9 @@ public void f_operateFlexAssets(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -48274,7 +48455,9 @@ public void f_calculateEnergyBalance(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -48996,7 +49179,9 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -49573,7 +49758,9 @@ public void f_resetSpecificGCStates(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -49863,7 +50050,9 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -50208,7 +50397,9 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -50709,7 +50900,9 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -50859,19 +51052,6 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 			<AdditionalClassCode><![CDATA[@Override
 public void f_operateFixedAssets(){
 	f_operateChargerNew();
-}
-
-@Override
-public void f_resetSpecificGCStates(){
-	v_sessionIndexStored = v_sessionIndex;
-	v_sessionIndex = 0;
-	f_getNextSessionInfo();
-}
-
-@Override
-public void f_resetSpecificGCStatesAfterRapidRun(){
-	v_sessionIndex = v_sessionIndexStored;
-	f_getNextSessionInfo();
 }]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero_engine]]></PackageName>
@@ -51039,7 +51219,9 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -51207,21 +51389,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1730379804105</Id>
-					<Name><![CDATA[v_sessionIndexStored]]></Name>
-					<X>610</X><Y>720</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -51875,7 +52042,9 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<RowsCountCode><![CDATA[100]]></RowsCountCode>
 					<NeigborhoodType>MOORE</NeigborhoodType>
 					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
 					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
 					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
 					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
 					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
@@ -54062,13 +54231,16 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	//public double setTemperature_degC;
 	//private double heatCapacity_JpK;
 	private double ambientTemperature_degC;
-	private double effectiveSolarAbsorptionSurface_m2;
+	private double solarAbsorptionFactor_m2;
+	private double solarRadiation_Wpm2=0;
 	public double energyAbsorbed_kWh=0;
 	public double energyAbsorbedStored_kWh=0;
-	private double solarRadiation_Wpm2;	
+	
 	//public boolean requiresHeat = false;
-	public J_EAStorageHeatSink wallAndRoofHeatSink;
-	public J_EAStorageHeatSink interiorHeatSink;
+	public J_EAStorageHeatSink wallHeatStorage;
+	public J_EAStorageHeatSink radiator;
+	public J_EAStorageHeatSink floorHeating;
+
 
     /**
      * Default constructor
@@ -54079,7 +54251,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     /**
      * Constructor initializing the fields
      */
-    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double effectiveSolarAbsorptionSurface_m2 ) {
+    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
 		this.parentAgent = parentAgent;
 		this.heatStorageType = OL_EAStorageTypes.HEATMODEL_BUILDING;
 		this.capacityHeat_kW = capacityHeat_kW;
@@ -54092,7 +54264,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.heatCapacity_JpK = heatCapacity_JpK;
 		this.ambientTempType = "AIR";
 		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
-		this.effectiveSolarAbsorptionSurface_m2 = effectiveSolarAbsorptionSurface_m2;
+		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
 		this.energyAssetType = OL_EnergyAssetType.BUILDINGTHERMALS;
 		registerEnergyAsset();
     }
@@ -54111,25 +54283,19 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		updateStateOfCharge( deltaEnergy_kWh );
 	}
 
-	public void solarHeating(double solarRadiation_Wpm2) {
-		
-		if( wallAndRoofHeatSink != null) {
-			double solarHeating_W = effectiveSolarAbsorptionSurface_m2 * solarRadiation_Wpm2;
-			double wallAndRoofHeatAbsorption_kWh = ( solarHeating_W / 1000 ) * timestep_h; // Is always positive
-			double deltaEnergy_kWh = wallAndRoofHeatSink.getHeatRelease( wallAndRoofHeatAbsorption_kWh );
+	public void solarHeating() {
+		if( wallHeatStorage != null) {
+			double solarHeating_W = solarAbsorptionFactor_m2 * solarRadiation_Wpm2;
+			double deltaEnergy_kWh = ( solarHeating_W / 1000 ) * timestep_h; // Is always positive
 			energyAbsorbed_kWh += deltaEnergy_kWh;
 			updateStateOfCharge( deltaEnergy_kWh );
 		}
 	}
 	
-	public void addExteriorHeatSink(double delayTime, double lossFactor) {
-		wallAndRoofHeatSink = new J_EAStorageHeatSink(parentAgent, delayTime, lossFactor, timestep_h);
+	public void addWallHeatSink(double capacity_kWh, double delayTime, double lossFactor) {
+		wallHeatStorage = new J_EAStorageHeatSink(parentAgent, capacity_kWh, delayTime, lossFactor);
 	}
 
-	public void addInteriorHeatSink(double delayTime, double lossFactor) {
-		interiorHeatSink = new J_EAStorageHeatSink(parentAgent, delayTime, lossFactor, timestep_h);
-	}
-	
 	@Override
 	public double[] operate(double ratioOfChargeCapacity_r) {
 		//traceln("Building heatCapacity_JpK: %s", this.heatCapacity_JpK);
@@ -54138,16 +54304,12 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 
 		calculateLoss(); // Heat exchange with environment through convection
-		solarHeating( solarRadiation_Wpm2); // Heat influx from sunlight
+		solarHeating(); // Heat influx from sunlight
+  		
 		
 		double inputPower_kW = ratioOfChargeCapacity_r * capacityHeat_kW; // positive power means lowering the buffer temperature!
-		double deltaEnergy_kWh;
-		if (interiorHeatSink != null) {
-			deltaEnergy_kWh = interiorHeatSink.getHeatRelease( inputPower_kW * timestep_h );
-    	}
-		else {
-			deltaEnergy_kWh = inputPower_kW * timestep_h; // to check the request with the energy currently in storage
-		}
+    	double deltaEnergy_kWh = inputPower_kW * timestep_h; // to check the request with the energy currently in storage
+    	
 		heatProduction_kW = max(-inputPower_kW, 0);
 		heatConsumption_kW = max(inputPower_kW, 0);
 		heatProduced_kWh += heatProduction_kW * timestep_h;
@@ -54347,15 +54509,8 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		else {
 				this.capacityHeat_kW = this.capacityElectric_kW * this.COP_r; 
 				//traceln("heatpump updating temp: " + baseTemperature_degC);
-				//Set defrosting COP reductions
-				if( baseTemperature_degC < 5 ) {
-					COP_r = COP_r / 1.3;
-				}
-				if (baseTemperature_degC < 2) {
-					COP_r = COP_r / 1.65;
-				}
-				if (baseTemperature_degC < -1) {
-					COP_r = COP_r / 2;
+				if( baseTemperature_degC < 0 ) {
+					COP_r = COP_r / belowZeroHeatpumpEtaReductionFactor;
 				}
 		}
     	//traceln("J_EAConversionHeatpump capacityHeat_kW = "+ this.capacityHeat_kW + ", sourceAssetHeatPower_kW " + this.sourceAssetHeatPower_kW );
@@ -57198,49 +57353,37 @@ public class J_EAAirco extends zero_engine.J_EAEV implements Serializable {
 public class J_EAStorageHeatSink extends zero_engine.J_EAStorageHeat implements Serializable {
 	
 	double delayTime_hr;
-	double lossFactor_fr;
-	public double[] releaseSchedule_kWh;
-	double timeStep_hr;
+	double lossFacter_fr;
 	
-    public J_EAStorageHeatSink(Agent parentAgent, double delayTime_hr, double lossFactor_fr, double timeStep_hr) {
+    /**
+     * Default constructor
+     */
+    public J_EAStorageHeatSink(Agent parentAgent, double storageCapacity_kWh, double delayTime_hr, double lossFacter_fr) {
     	this.parentAgent = parentAgent;
+    	this.storageCapacity_kWh = storageCapacity_kWh;
     	this.delayTime_hr = delayTime_hr;
-    	this.lossFactor_fr = lossFactor_fr;
-    	this.timeStep_hr = timeStep_hr;
-    	releaseSchedule_kWh = new double[ (int)(delayTime_hr / timeStep_hr) ];
+    	this.lossFacter_fr = lossFacter_fr;
     }
 
-    public double getHeatRelease(double heatAbsorbed_kWh) {
-    	operate(heatAbsorbed_kWh);
-    	updateReleaseSchedule();
-    	return releaseSchedule_kWh[0];
-    }
-    
     @Override
-	public double[] operate(double heatAbsorbed_kWh) {
+	public double[] operate(double ratioOfChargeCapacity_r) {
 		
-    	double effectiveHeatAbsorbed = heatAbsorbed_kWh * ( 1- lossFactor_fr);    	
-    	for (int x = 0; x < releaseSchedule_kWh.length; x++) {
-    	    releaseSchedule_kWh[x] += effectiveHeatAbsorbed / (delayTime_hr / timeStep_hr);
-    	}
-    	double heatReleased_kWh = releaseSchedule_kWh[0];
-    	
-		heatProduced_kWh += effectiveHeatAbsorbed;
-		heatConsumed_kWh += heatReleased_kWh;
+		double inputPower_kW = ratioOfChargeCapacity_r * capacityHeat_kW; // positive power means adding heat to the buffer
+    	double deltaEnergy_kWh = inputPower_kW * timestep_h; // to check the request with the energy currently in storage
+
+		heatProduction_kW = max(-inputPower_kW, 0);
+		heatConsumption_kW = max(inputPower_kW, 0);
+		heatProduced_kWh += heatProduction_kW * timestep_h;
+		heatConsumed_kWh += heatConsumption_kW * timestep_h;
+
+		updateStateOfCharge( deltaEnergy_kWh );
 
 		return returnEnergyFlows();
 	}
-
-    public void updateReleaseSchedule() {
-        for (int i = 1; i < releaseSchedule_kWh.length; i++) {
-        	releaseSchedule_kWh[i - 1] = releaseSchedule_kWh[i];
-        }
-        releaseSchedule_kWh[releaseSchedule_kWh.length - 1] = 0;
-    }
     
 	@Override
 	public String toString() {
-		return "Heat sink, delayTime = " + delayTime_hr + " hr";
+		return super.toString();
 	}
 
 	/**
@@ -57260,6 +57403,11 @@ public class J_EAStorageHeatSink extends zero_engine.J_EAStorageHeat implements 
 		</Resource>
 		<Resource>
 			<Path><![CDATA[ZeroMath.jar]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[C:/Users/hogev/OneDrive/Documenten/GitHub/Interface-Hessenpoort/zero_loader/data_Scale/chargingSessions - kopie.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
