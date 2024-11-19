@@ -6176,7 +6176,9 @@ c_forecasts.forEach(f -> f.updateForecast(t_h));
 v_SolarYieldForecast_fr = pf_solarPVproduction.getForecast();
 v_WindYieldForecast_fr = pf_windOnshoreProduction.getForecast();
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
-v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
+	v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}
 
 v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
 
@@ -10450,9 +10452,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11309,9 +11308,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_minChargingPower_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11498,9 +11494,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11663,9 +11656,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -11826,9 +11816,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -12029,9 +12016,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12183,9 +12167,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -12342,9 +12323,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -12812,9 +12790,6 @@ return profilePointer;]]></Body>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12991,9 +12966,6 @@ return profilePointer;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_curtailer]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_heatBuffer]]></Name>
@@ -16483,7 +16455,9 @@ if ( p_energyType == OL_EnergyCarrierType.HEAT ) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
-v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
+	v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -20881,28 +20855,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1671459091952</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1676965009213</Id>
-					<Name><![CDATA[p_curtailer]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>620</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[J_EAConversionCurtailer]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1676965009211</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -41664,9 +41616,6 @@ public void f_simpleCharging(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -43738,9 +43687,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -44823,9 +44769,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -45301,9 +45244,6 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
@@ -46959,9 +46899,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -47637,9 +47574,6 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -47906,11 +47840,13 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
 			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalance(v_batterySOC_fr);
+			f_batteryManagementBalanceGrid(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
 			f_batteryManagementBalanceSupply(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
 			f_batteryManagementPrice(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
+			f_batteryManagementPriceGrid(v_batterySOC_fr);
 		}
 		
 		double[] flowsArray = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
@@ -47970,17 +47906,18 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	double currentElectricityPriceCharge_eurpkWh;
 	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	//double currentElectricityPriceDischarge_eurpkWh;
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+	/*if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 		currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW+100.0); // query price at 100kW charging
 		//currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW-100.0); // query price at -100kW charging
 	} else { // Get EPEX price plus nodal price of GridNode
+	*/
 		//currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
 		currentElectricityPriceCharge_eurpkWh = GN.v_currentTotalNodalPrice_eurpkWh;
 		//currentElectricityPriceCharge_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;		
-	}
+	//}
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-	
+	//traceln("v_electricityPriceLowPassed_eurpkWh: %s kW", v_electricityPriceLowPassed_eurpkWh);
 	double currentCoopElectricitySurplus_kW = -GN.v_currentLoadElectricity_kW + v_previousPowerElectricity_kW;			
 	double CoopConnectionCapacity_kW = 0.95*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	
@@ -48016,6 +47953,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 					
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//traceln("Charge setpoint: %s kW", chargeSetpoint_kW);
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -48044,13 +47982,13 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
 	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent instanceof EnergyCoop ) { // get electricity balance from Coop 			
+		/*if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent instanceof EnergyCoop ) { // get electricity balance from Coop 			
 			currentCoopElectricitySurplus_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_electricitySurplus_kW + v_previousPowerBattery_kW;
 			CoopConnectionCapacity_kW = 0.9*((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay			
-		} else { // Get gridload directly from node
+		} else { // Get gridload directly from node*/
 			currentCoopElectricitySurplus_kW = -GN.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
 			CoopConnectionCapacity_kW = 0.9*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
-		}
+		//}
 	} else { // Get gridload directly from node
 		currentCoopElectricitySurplus_kW = -node.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
 		CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
@@ -48941,9 +48879,6 @@ public void f_resetSpecificGCStates(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
@@ -50432,9 +50367,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
 				</Parameter>
 				<Parameter>
@@ -50968,9 +50900,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_curtailer]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_heatBuffer]]></Name>
