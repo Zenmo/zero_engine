@@ -48087,14 +48087,21 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getElectricCapacity_kW());
 		return;
 	}
-	double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
-	double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
-	double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
-	double SOC_setp_fr = 1 - incomingPower_fr;
-
-	chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
-	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) {
+		if (GN.v_currentLoadElectricity_kW < 0) {
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, -GN.v_currentLoadElectricity_kW / p_batteryAsset.getCapacityElectric_kW()));
+		}
+	}
+	else {
+		double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
+		double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
+		double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
+		double SOC_setp_fr = 1 - incomingPower_fr;
+	
+		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
+		chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+	}
 }
 ]]></Body>
 				</Function>
