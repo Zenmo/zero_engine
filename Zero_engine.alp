@@ -6146,7 +6146,9 @@ c_forecasts.forEach(f -> f.updateForecast(t_h));
 v_SolarYieldForecast_fr = pf_solarPVproduction.getForecast();
 v_WindYieldForecast_fr = pf_windOnshoreProduction.getForecast();
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
-v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
+	v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}
 
 v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
 
@@ -16539,7 +16541,9 @@ if ( p_energyType == OL_EnergyCarrierType.HEAT ) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
-v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
+	v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -47913,6 +47917,8 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 			f_batteryManagementBalanceSupply(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
 			f_batteryManagementPrice(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
+			f_batteryManagementPriceGrid(v_batterySOC_fr);
 		}
 		
 		double[] flowsArray = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
@@ -47972,17 +47978,18 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	double currentElectricityPriceCharge_eurpkWh;
 	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	//double currentElectricityPriceDischarge_eurpkWh;
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+	/*if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 		currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW+100.0); // query price at 100kW charging
 		//currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW-100.0); // query price at -100kW charging
 	} else { // Get EPEX price plus nodal price of GridNode
-		currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
+	*/
+		//currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
 		currentElectricityPriceCharge_eurpkWh = GN.v_currentTotalNodalPrice_eurpkWh;
 		//currentElectricityPriceCharge_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;		
-	}
+	//}
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-	
+	//traceln("v_electricityPriceLowPassed_eurpkWh: %s kW", v_electricityPriceLowPassed_eurpkWh);
 	double currentCoopElectricitySurplus_kW = -GN.v_currentLoadElectricity_kW + v_previousPowerElectricity_kW;			
 	double CoopConnectionCapacity_kW = 0.95*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	
@@ -48018,6 +48025,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 					
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//traceln("Charge setpoint: %s kW", chargeSetpoint_kW);
 }]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
