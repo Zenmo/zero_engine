@@ -149,11 +149,19 @@
 			</Option>
 			<Option>
 				<Id>1725026204865</Id>
-				<Name><![CDATA[LV_GRID]]></Name>
+				<Name><![CDATA[LV_CABLE]]></Name>
 			</Option>
 			<Option>
 				<Id>1725026212801</Id>
-				<Name><![CDATA[MV_GRID]]></Name>
+				<Name><![CDATA[MV_CABLE]]></Name>
+			</Option>
+			<Option>
+				<Id>1730812719301</Id>
+				<Name><![CDATA[REMAINING_BUILDING]]></Name>
+			</Option>
+			<Option>
+				<Id>1730812264440</Id>
+				<Name><![CDATA[GN_SERVICE_AREA]]></Name>
 			</Option>
 			<Option>
 				<Id>1724849181274</Id>
@@ -3338,6 +3346,19 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1730453322393</Id>
 					<Name><![CDATA[v_daytimeEnergyImport_MWh]]></Name>
 					<X>2020</X><Y>1465</Y>
+						<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+
+				<Variable Class="PlainVariable">
+					<Id>1731589790564</Id>
+					<Name><![CDATA[v_totalEnergyConsumptionForDistrictHeating_MWh]]></Name>
+					<X>-480</X><Y>1300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3346,6 +3367,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+
 				<Variable Class="PlainVariable">
 					<Id>1730453322395</Id>
 					<Name><![CDATA[v_daytimeEnergyExport_MWh]]></Name>
@@ -4397,6 +4419,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1731590299824</Id>
 					<Name><![CDATA[v_dailyAverageElectrolyserDemand_kW]]></Name>
 					<X>20</X><Y>2990</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731593323269</Id>
+					<Name><![CDATA[v_totalElectricityConsumptionHeatpumps_MWh]]></Name>
+					<X>-480</X><Y>1320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5948,7 +5982,9 @@ c_forecasts.forEach(f -> f.updateForecast(t_h));
 v_SolarYieldForecast_fr = pf_solarPVproduction.getForecast();
 v_WindYieldForecast_fr = pf_windOnshoreProduction.getForecast();
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
-v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
+	v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+}
 
 v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
 
@@ -6823,12 +6859,27 @@ v_individualSelfConsumption_fr = sum(c_gridConnections, gc -> gc.v_totalElectric
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - fm_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
 v_collectiveSelfConsumption_fr = v_totalElectricitySelfConsumed_MWh / v_totalElectricityProduced_MWh;
 
+
+//Heat grid
+v_totalEnergyConsumptionForDistrictHeating_MWh = sum(DistrictHeatingSystems, DH -> DH.v_totalImport_MWh); //Does not work if there is production at the GCDistrictHeating!!
+
+//Heatpump totals
+v_totalElectricityConsumptionHeatpumps_MWh = 0;
+for(GridConnection GC : c_gridConnections){
+	for(int i = 0; i < GC.data_annualHeatPumpElectricityDemand_kW.size(); i++){
+		v_totalElectricityConsumptionHeatpumps_MWh += (GC.data_annualHeatPumpElectricityDemand_kW.getY(i)*24)/1000;
+	}
+}
+
+//Tracelns
 traceln("");
 traceln("__--** Totals **--__");
 traceln("Energy consumed: "+ v_totalEnergyConsumed_MWh + " MWh");
 traceln("Energy produced: "+ v_totalEnergyProduced_MWh + " MWh");
 traceln("Energy import: "+ v_totalEnergyImport_MWh + " MWh");
 traceln("Energy export: "+ v_totalEnergyExport_MWh + " MWh");
+
+
 
 // Peak model-wide electricity grid loads
 v_totalElectricityPeakImport_kW = max(0, Arrays.stream(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()).max().orElse(-1) );
@@ -12145,6 +12196,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_isSliderGC]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12796,6 +12850,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nbHouseholds]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_municipality]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15888,7 +15945,8 @@ if ( p_energyType == OL_EnergyCarriers.HEAT ) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0) {
+					<Body><![CDATA[// The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
+if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
 	v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
 }
 ]]></Body>
@@ -18942,7 +19000,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1727099238699</Id>
 					<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
-					<X>150</X><Y>2315</Y>
+					<X>150</X><Y>2320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -18967,6 +19025,30 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1727101009735</Id>
 					<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
 					<X>150</X><Y>2335</Y>
+								<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731679457487</Id>
+					<Name><![CDATA[v_maxPeakDelivery_kW]]></Name>
+					<X>150</X><Y>2360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1731679470154</Id>
+					<Name><![CDATA[v_maxPeakFeedin_kW]]></Name>
+					<X>150</X><Y>2380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21210,6 +21292,13 @@ acc_totalPrimaryEnergyProductionHeatpumps_kW.reset();
 v_totalOverloadDurationDelivery_hr = 0;
 v_totalOverloadDurationFeedin_hr = 0;
 
+// Energy / Electricity
+//Max peaks
+v_maxPeakDelivery_kW = 0;
+v_maxPeakFeedin_kW = 0;
+
+//Summer/winter week and day 
+
 //// Summer week
 // Imports / Exports
 fm_summerWeekImports_MWh.clear();
@@ -21217,7 +21306,6 @@ fm_summerWeekExports_MWh.clear();
 v_summerWeekEnergyImport_MWh = 0;
 v_summerWeekEnergyExport_MWh = 0;
 
-// Energy / Electricity
 v_summerWeekElectricityProduced_MWh = 0;
 v_summerWeekElectricityConsumed_MWh = 0;
 v_summerWeekElectricitySelfConsumed_MWh = 0;
@@ -21371,7 +21459,7 @@ f_resetSpecificGCStates();
 					<X>920</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
 						<Name><![CDATA[batterySOC]]></Name>
@@ -21508,6 +21596,14 @@ if ( p_BuildingThermalAsset == null ) {
 			} else {
 				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
 			}
+		}
+	}
+	else if (p_primaryHeatingAsset== null && p_secondaryHeatingAsset != null && v_hasQuarterHourlyValues){
+		if(p_secondaryHeatingAsset instanceof J_EAConversionGasBurner){
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getHeatCapacity_kW());
+			p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
+		} else {
+				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported secondary heating asset!");
 		}
 	} else { // Two heating assets
 		if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump && p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // Heatpump and gasburner, switch based on heatpump COP)
@@ -22282,11 +22378,20 @@ v_totalEnergyCurtailed_MWh = acc_totalEnergyCurtailed_kW.getSum() * energyModel.
 // Total overload duration
 for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()) {
 	
+	//Duration
 	if(electricityBalance_kW > p_contractedDeliveryCapacity_kW){
 		v_totalOverloadDurationDelivery_hr += energyModel.p_timeStep_h;
 	}
 	else if(electricityBalance_kW < - p_contractedFeedinCapacity_kW){
 		v_totalOverloadDurationFeedin_hr += energyModel.p_timeStep_h;
+	}
+	
+	//Max Peaks
+	if(electricityBalance_kW > v_maxPeakDelivery_kW){
+		v_maxPeakDelivery_kW = electricityBalance_kW;
+	}
+	else if(electricityBalance_kW < - v_maxPeakFeedin_kW){
+		v_maxPeakFeedin_kW = abs(electricityBalance_kW);
 	}
 }
 
@@ -46912,7 +47017,7 @@ public void f_operateFlexAssets(){
 
 @Override
 public void f_batteryManagementBalance( double batterySOC ){
-	f_batteryManagementNodalPricing( batterySOC );
+	f_batteryManagementBalanceGrid( batterySOC );
 }
 
 @Override
@@ -47030,6 +47135,9 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_isSliderGC]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -47153,6 +47261,30 @@ public void f_calculateEnergyBalance(){
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1732029220158</Id>
+					<Name><![CDATA[p_isSliderGC]]></Name>
+					<X>270</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1732029220156</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -47243,6 +47375,8 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 			f_batteryManagementBalanceSupply(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
 			f_batteryManagementPrice(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
+			f_batteryManagementPriceGrid(v_batterySOC_fr);
 		}
 		
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
@@ -47304,15 +47438,16 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	double currentElectricityPriceCharge_eurpkWh;
 	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	//double currentElectricityPriceDischarge_eurpkWh;
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+	/*if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
 		currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)+100.0); // query price at 100kW charging
 		//currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(v_currentPowerElectricity_kW-100.0); // query price at -100kW charging
 	} else { // Get EPEX price plus nodal price of GridNode
-		currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
+	*/
+		//currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
 		currentElectricityPriceCharge_eurpkWh = GN.v_currentTotalNodalPrice_eurpkWh;
 		//currentElectricityPriceCharge_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;		
-	}
+	//}
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 	
 	double currentCoopElectricitySurplus_kW = -GN.v_currentLoad_kW + v_previousPowerElectricity_kW;			
@@ -47421,14 +47556,21 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getCapacityElectric_kW());
 		return;
 	}
-	double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
-	double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
-	double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
-	double SOC_setp_fr = 1 - incomingPower_fr;
-
-	chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
-	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) {
+		if (GN.v_currentLoadElectricity_kW < 0) {
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, -GN.v_currentLoadElectricity_kW / p_batteryAsset.getCapacityElectric_kW()));
+		}
+	}
+	else {
+		double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
+		double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
+		double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
+		double SOC_setp_fr = 1 - incomingPower_fr;
+	
+		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
+		chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+	}
 }
 ]]></Body>
 				</Function>
@@ -50659,6 +50801,28 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1730911077796</Id>
+					<Name><![CDATA[p_municipality]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1680</X><Y>730</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[GZ_Municipality]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1730911077794</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1722589144737</Id>
 					<Name><![CDATA[c_heatDemandEA]]></Name>
@@ -50687,9 +50851,8 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//Manage the heating assets
+
 f_manageHeatingAssets();
-
-
 
 /*for ( J_EAStorage e : c_storageAssets ) {
 	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
@@ -50697,38 +50860,31 @@ f_manageHeatingAssets();
 
 f_manageCharging();
 
-//Electric Storage
-List<J_EAStorage> batteries = findAll(c_storageAssets, storage -> storage.getEAType() == OL_EnergyAssetType.STORAGE_ELECTRIC);
-for(int i = 0; i < batteries.size() ; i++){
-	if (batteries.get(i).getStorageCapacity_kWh() != 0){
-	f_batteryManagementBalance(batteries.get(i).getCurrentStateOfCharge());
-	//double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	//traceln("flows:" + Arrays.toString(arr));
-	}
-}
 
 
 /*for( J_EAVehicle v: c_vehicleAssets) {
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
 }*/
 
-v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
+v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); //you want to do determine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
 
-/*if( p_batteryAsset != null){
+//Battery
+if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 	switch (p_batteryOperationMode){
-		case HOUSEHOLD_LOAD:
-			f_batteryManagementBalance(v_batterySOC_fr);
+		case BALANCE:
+			f_batteryManagementBalance_NBH(v_batterySOC_fr);
 		break;
 		case PRICE:
-			f_batteryManagementPrice_overwrite(v_batterySOC_fr);
+			f_batteryManagementPrice_NBH(v_batterySOC_fr);
 		break;
 		default:
 		break;
 	}
+	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	v_batteryPowerElectric_kW =  p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 	v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-}*/
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -50867,8 +51023,9 @@ return powerDemandDivision; //{Gasburner power request, HP power request, DH pow
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722595238227</Id>
-					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-					<X>1070</X><Y>90</Y>
+					<Name><![CDATA[f_connectToJ_EA_default_overwrite_OUD]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>1110</X><Y>-20</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50989,6 +51146,285 @@ if (j_ea instanceof J_EAVehicle) {
 	c_profileAssets.add((J_EAProfile)j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1730370456790</Id>
+					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
+					<X>1070</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[j_ea]]></Name>
+						<Type><![CDATA[J_EA]]></Type>
+					</Parameter>
+					<Body><![CDATA[energyModel.c_energyAssets.add(j_ea);
+c_energyAssets.add(j_ea);
+
+if (j_ea instanceof J_EAVehicle) {
+	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
+	if (vehicle instanceof J_EADieselVehicle) {
+		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );		
+	} else if (vehicle instanceof J_EAHydrogenVehicle) {
+		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
+	} else if (vehicle instanceof J_EAEV) {
+		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
+		energyModel.c_EVs.add((J_EAEV)vehicle);	
+		c_EvAssets.add(j_ea);
+	}
+	c_vehicleAssets.add(vehicle);		
+	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
+	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
+		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker.setAnnualDistance_km(30_000);
+		} else {
+			//traceln("Adding passenger vehicle to gridconnection %s", this);
+			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
+			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
+		}
+		
+		vehicle.tripTracker = tripTracker;	
+	}
+	c_tripTrackers.add( tripTracker );
+	v_vehicleIndex ++;
+} else if (j_ea instanceof J_EAConsumption) {
+	c_consumptionAssets.add((J_EAConsumption)j_ea);	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+		p_DHWAsset = (J_EAConsumption)j_ea;	
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
+		c_fixedConsumptionElectricAssets.add(j_ea);
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
+		c_electricHobAssets.add(j_ea);
+	}
+} else if (j_ea instanceof J_EAProduction) {
+	c_productionAssets.add((J_EAProduction)j_ea);
+	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
+	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		v_hasPV = true;
+		v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		if (l_parentNodeElectric.getConnectedAgent() != null) {
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, j_ea.getElectricCapacity_kW(), true);
+		}
+		energyModel.v_totalInstalledPVPower_kW += j_ea.getElectricCapacity_kW();
+		c_pvAssets.add(j_ea);
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		if (l_parentNodeElectric.getConnectedAgent() != null) {
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, j_ea.getElectricCapacity_kW(), true);
+		}
+		energyModel.v_totalInstalledWindPower_kW += j_ea.getElectricCapacity_kW();
+		c_windAssets.add(j_ea);
+	}
+} else if (j_ea instanceof J_EAConversion) {
+	c_conversionAssets.add((J_EAConversion)j_ea);
+	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
+			c_electricHobAssets.add(j_ea);
+			c_conversionElectricAssets.add(j_ea);
+		}
+		if (p_cookingTracker == null) {
+			int rowIndex = uniform_discr(2, 300); 
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
+		} else {
+			p_cookingTracker.HOB = (J_EAConversion)j_ea;
+		}
+	} else if (j_ea instanceof J_EAConversionGasBurner) {
+		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+	} else if (j_ea instanceof J_EAConversionHeatPump) {
+		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		c_electricHeatpumpAssets.add(j_ea);
+		c_conversionElectricAssets.add(j_ea);
+		p_secondaryHeatingAsset = (J_EAConversion)j_ea;
+	} else if (j_ea instanceof J_EAConversionHeatDeliverySet) {
+		p_tertiaryHeatingAsset = (J_EAConversion)j_ea;
+	}
+} else if  (j_ea instanceof J_EAStorage) {
+	c_storageAssets.add((J_EAStorage)j_ea);
+	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
+	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+		//traceln("Adding buildingThermals to gridconnection");	
+		p_BuildingThermalAsset = (J_EABuilding)j_ea;
+			/*if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
+				double lossFactor_WpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("lossFactor_WpK").doubleValue();
+				double heatCapacity_JpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("heatCapacity_JpK").doubleValue();
+				p_BuildingThermalAsset.lossFactor_WpK = lossFactor_WpK2;
+				p_BuildingThermalAsset.heatCapacity_JpK = heatCapacity_JpK2;
+				traceln("House thermal model updated!");
+				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_energyLabel);
+				traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
+			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
+		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
+		//v_tempSetpoint_degC = p_BuildingThermalAsset.setTemperature_degC;		
+		energyModel.c_ambientAirDependentAssets.add(p_BuildingThermalAsset);
+	} else if (j_ea instanceof J_EAStorageGas) {
+		p_gasBuffer = (J_EAStorageGas)j_ea;
+	} else if (j_ea instanceof J_EAStorageElectric) {
+		p_batteryAsset = (J_EAStorageElectric)j_ea;
+		c_batteryAssets.add(j_ea);
+	} else if (j_ea instanceof J_EAStorageHeat) {
+		energyModel.c_ambientAirDependentAssets.add(j_ea);
+	}
+} else if  (j_ea instanceof J_EAProfile) {
+	//p_energyProfile = (J_EAProfile)j_ea;
+	c_profileAssets.add((J_EAProfile)j_ea);
+	if (((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHARGING){
+			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+			c_EvAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
+			//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
+			c_fixedConsumptionElectricAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
+			//v_windProductionElectric_kW += flowsArray[0];
+			c_windAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
+			//Do nothing
+		} else {
+			traceln( "Unrecognized profile type!");
+		}
+} else {
+	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+}
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1730897215443</Id>
+					<Name><![CDATA[f_batteryManagementBalance_NBH]]></Name>
+					<X>920</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[batterySOC]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	double currentLoadDeviation_kW = v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW; // still excludes battery power
+	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
+	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
+	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.95;
+	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.95;
+	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
+	double availableDischargePower_kW = v_currentPowerElectricity_kW + v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
+
+	double SOC_setp_fr = 0.5;
+	//TODO: Verander in iets specifieks voor project - overwrite in GC Neighborhood
+	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
+	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	
+	//TODO forecast keer installed cap per buurt genormaliseerd.
+	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
+	SOC_setp_fr =  0.6 + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
+	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+	
+	//traceln("SOC_setp_fr" + SOC_setp_fr);
+	
+	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
+	double FeedbackGain_kWpSOC = 0.4 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
+	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//traceln("v_powerFraction_fr" + p_batteryAsset.v_powerFraction_fr);
+	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1730897215446</Id>
+					<Name><![CDATA[f_batteryManagementPrice_NBH]]></Name>
+					<X>920</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[currentBatteryStateOfCharge]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	//double willingnessToPayDefault_eurpkWh = 0.3;
+	double chargeDischarge_offset_eurpkWh = 0.0;
+	double WTPfeedbackGain_eurpSOC = 0.5; //Gelijk aan de gem marktprijs -  When SOC-error is 100%, adjust WTP price by 1 eurpkWh
+	double priceGain_kWhpeur = 2; // How strongly to ramp up power with price-delta's
+	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
+	
+	double chargeSetpoint_kW = 0;
+	
+	//if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+		//ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
+		//traceln("Initial Mappings are: " + ((ConnectionOwner)p_ownerActor).v_currentPriceBands);
+		double currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;//double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
+
+		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
+		
+		//double currentPricePowerBandPos_kW = ownerActor.v_priceBandsDelivery.ceilingKey(100.0); // Up to what power does this price hold?
+		//double currentPricePowerBandNeg_kW = ownerActor.v_priceBandsDelivery.floorKey(100.0); // Down to what power does this price hold?
+		
+		double SOC_setp_fr = 0.5;
+		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
+		/*if (!c_vehicleAssets.isEmpty()) {
+			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { 
+			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
+			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+		}*/
+		double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge; // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
+		
+		// Define WTP price for charging and discharging!
+		double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+		double WTP_discharge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+		
+		//traceln("WTP charge is " + WTP_charge_eurpkWh + " eurpkWh, discharge is " + WTP_discharge_eurpkWh + " eurpkWh");
+		// Choose charging power based on prices and desired SOC level
+		if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) { // if willingness to pay higher than current electricity price
+			//chargeSetpoint_kW = min(p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW)  ;
+			chargeSetpoint_kW = p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
+			//traceln("WTP charge " + WTP_charge_eurpkWh + " eurpkWh is high than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so charge!") ;
+		} else if (WTP_discharge_eurpkWh < currentElectricityPriceCharge_eurpkWh) {
+			//chargeSetpoint_kW = -min(p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW);
+			chargeSetpoint_kW = -p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceCharge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
+			//traceln("WTP discharge " + WTP_discharge_eurpkWh + " eurpkWh is lower than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so discharge!") ;
+		}	
+		
+		// limit charging power to available connection capacity
+		boolean b_stayWithinConnectionLimits = true;
+		if( b_stayWithinConnectionLimits ) {		
+			
+			double availableChargePower_kW = p_contractedDeliveryCapacity_kW - v_currentPowerElectricity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = p_contractedFeedinCapacity_kW + v_currentPowerElectricity_kW; // Max discharging power within grid capacity
+			chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		}			
+	
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//}
+	
 }
 ]]></Body>
 				</Function>
@@ -55711,7 +56147,13 @@ public class J_Address implements Serializable {
     public String getAddress() {
     	StringBuilder sb = new StringBuilder();
     	
-    	sb.append(this.streetName);
+    	if ( this.streetName != null ) {
+    		sb.append(this.streetName);
+    	}
+    	else {
+    		sb.append("Onbekend adres");
+    		return sb.toString();
+    	}
     	sb.append(" ");
     	sb.append(this.houseNumber);
 		if ( this.houseLetter != null ) {
@@ -55722,10 +56164,17 @@ public class J_Address implements Serializable {
 	    	sb.append(" ");
 	    	sb.append(this.houseAddition);
 	    }
-		sb.append(", ");
-		sb.append(this.postalcode);
-		sb.append(" ");
-		sb.append(this.city);
+		if ( this.postalcode != null || this.city != null) {
+			sb.append(",");
+		}
+		if ( this.postalcode != null ){
+			sb.append(" ");
+			sb.append(this.postalcode);
+		}
+		if ( this.postalcode != null ){
+			sb.append(" ");
+			sb.append(this.city);
+		}
 		
 		return sb.toString();
     }
