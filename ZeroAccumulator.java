@@ -3,6 +3,7 @@ package zeroPackage;
 import zeroPackage.ZeroMath;
 import java.lang.Math;
 import java.util.Arrays;
+import java.lang.RuntimeException;
 
 public class ZeroAccumulator {
     public boolean hasTimeSeries = false;
@@ -16,6 +17,8 @@ public class ZeroAccumulator {
     private double sum = 0;
     private double posSum = 0;
     private double negSum = 0;
+
+    private int numStepsAdded = 0;
 
     /**
      * Default constructor
@@ -47,12 +50,14 @@ public class ZeroAccumulator {
         sum = 0;
         posSum = 0;
         negSum = 0;
+        numStepsAdded = 0;
         if (hasTimeSeries) { // Allocate memory for timeSeries, only when timeSeries is used.
             timeSeries = new double[(int) Math.round(duration_h / signalResolution_h)];
         }
     }
 
-    public void addStep(double t_h, double value) {
+    // public void addStep(double t_h, double value) {
+    public void addValue(double t_h, double value) {
         if (hasTimeSeries) {
             timeSeries[(int) Math.floor(t_h / signalResolution_h)] += value; // averages
                                                                              // multiple
@@ -69,6 +74,26 @@ public class ZeroAccumulator {
             posSum += Math.max(0.0, value);
             negSum += Math.min(0.0, value);
         }
+    }
+
+    public void addStep(double value) {
+        if (hasTimeSeries) {
+            timeSeries[numStepsAdded] += value; // averages
+                                                // multiple
+                                                // timesteps
+                                                // when
+                                                // timeSeries
+                                                // has
+                                                // longer
+                                                // resolution
+                                                // than
+                                                // timestep.
+        } else {
+            sum += value;
+            posSum += Math.max(0.0, value);
+            negSum += Math.min(0.0, value);
+        }
+        numStepsAdded++;
     }
 
     public double getSum() {
@@ -134,9 +159,34 @@ public class ZeroAccumulator {
     public Double getY(int i) {
         if (!hasTimeSeries) {
             return null;
-        }
-        else {
+        } else {
             return timeSeries[i];
         }
+    }
+
+    public ZeroAccumulator add(ZeroAccumulator acc) {
+        if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
+                && (this.signalResolution_h == acc.signalResolution_h)) {
+            for (int i = 0; i < timeSeries.length; i++) {
+                this.timeSeries[i] += acc.timeSeries[i];
+            }
+        } else {
+            throw new RuntimeException("Impossible to add these incompatible accumulators");
+            // throw some error? or make some assumptions?
+        }
+        return this;
+    }
+
+    public ZeroAccumulator subtract(ZeroAccumulator acc) {
+        if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
+                && (this.signalResolution_h == acc.signalResolution_h)) {
+            for (int i = 0; i < timeSeries.length; i++) {
+                this.timeSeries[i] -= acc.timeSeries[i];
+            }
+        } else {
+            throw new RuntimeException("Impossible to subtract these incompatible accumulators");
+            // throw some error? or make some assumptions?
+        }
+        return this;
     }
 }
