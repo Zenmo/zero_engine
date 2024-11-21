@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -21975,6 +21975,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		v_activeEnergyCarriers.add(EC);
 		
 		if (energyModel.b_isInitialized) {
+			energyModel.v_activeEnergyCarriers.add(EC);
 			DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
@@ -42586,7 +42587,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1693300820997</Id>
 					<Name><![CDATA[f_connectTo_J_EA_House]]></Name>
-					<X>960</X><Y>90</Y>
+					<X>1070</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50934,7 +50935,7 @@ double powerDemandDivision[] = f_dividePowerDemandHeatingAssets();
 //Split the power fractions (powerDemandDivision[] = {Gasburner power request, HP power request, DH power request}
 double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatingAsset.getCapacityHeat_kW()); 
 double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getCapacityHeat_kW());
-double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getCapacityHeat_kW());
+//double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getCapacityHeat_kW());
 
 //p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
 //p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
@@ -50948,7 +50949,7 @@ p_primaryHeatingAsset.f_updateAllFlows(powerFraction_GASBURNER);
 p_secondaryHeatingAsset.f_updateAllFlows(powerFraction_HEATPUMP);
 
 //Heat delivery set control (always assigned to tertiary heating asset)
-p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
+//p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -51139,7 +51140,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1730370456790</Id>
 					<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-					<X>1070</X><Y>90</Y>
+					<X>1070</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51148,7 +51149,31 @@ if (j_ea instanceof J_EAVehicle) {
 						<Name><![CDATA[j_ea]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[energyModel.c_energyAssets.add(j_ea);
+					<Body><![CDATA[for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
+	if (!v_activeEnergyCarriers.contains(EC)) {
+		v_activeEnergyCarriers.add(EC);
+		
+		if (energyModel.b_isInitialized) {
+			energyModel.v_activeEnergyCarriers.add(EC);
+			DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+			for (double t = startTime; t < endTime; t += energyModel.p_timeStep_h) {
+				ds.add( t, 0);
+			}
+			dsm_liveDemand_kW.put( EC, ds);
+			dsm_liveSupply_kW.put( EC, ds);
+			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
+			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
+			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+		}
+	}
+}
+
+energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
@@ -52052,9 +52077,9 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
      * Constructor initializing the fields
      */
     public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, double timestep_h, J_ProfilePointer profile) {
-		if (yearlyDemand_kWh == 0.0) {
+		/*if (yearlyDemand_kWh == 0.0) {
 			throw new RuntimeException("Unable to construct J_EAConsumption: " + name + " because consumption is zero." );
-		}
+		}*/
     	
     	this.energyAssetName = name;
 		this.energyAssetType = type;
