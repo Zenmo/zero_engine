@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -2812,7 +2812,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315939</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
-					<X>20</X><Y>3030</Y>
+					<X>20</X><Y>3040</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2824,7 +2824,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315941</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
-					<X>20</X><Y>3050</Y>
+					<X>20</X><Y>3060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2836,7 +2836,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315943</Id>
 					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
-					<X>20</X><Y>3070</Y>
+					<X>20</X><Y>3080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2848,7 +2848,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315945</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
-					<X>20</X><Y>3090</Y>
+					<X>20</X><Y>3100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2913,7 +2913,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715246315959</Id>
 					<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3150</Y>
+					<X>20</X><Y>3160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2926,7 +2926,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715246315961</Id>
 					<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3110</Y>
+					<X>20</X><Y>3120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2939,7 +2939,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715671218524</Id>
 					<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3130</Y>
+					<X>20</X><Y>3140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4161,7 +4161,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866329</Id>
 					<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
-					<X>20</X><Y>3210</Y>
+					<X>20</X><Y>3220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4176,7 +4176,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866331</Id>
 					<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
-					<X>20</X><Y>3230</Y>
+					<X>20</X><Y>3240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4191,7 +4191,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866333</Id>
 					<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
-					<X>390</X><Y>3210</Y>
+					<X>390</X><Y>3220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4206,7 +4206,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866335</Id>
 					<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
-					<X>390</X><Y>3230</Y>
+					<X>390</X><Y>3240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4429,6 +4429,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1731593323269</Id>
 					<Name><![CDATA[v_totalElectricityConsumptionHeatpumps_MWh]]></Name>
 					<X>-480</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732191713843</Id>
+					<Name><![CDATA[v_dailyFinalEnergyConsumption_kW]]></Name>
+					<X>20</X><Y>3010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7297,6 +7309,7 @@ v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
 v_dailyWindGeneration_kW += v_currentWindGeneration_kW;
 v_dailyBatteriesSupply_kW += v_currentBatteriesSupply_kW;
 v_dailyV2GSupply_kW += v_currentV2GSupply_kW;
+v_dailyFinalEnergyConsumption_kW += v_currentFinalEnergyConsumption_kW;
 	
 if (b_isLastTimeStepOfDay){
 	double timeStepsInOneDay = 24 / p_timeStep_h;
@@ -7310,10 +7323,13 @@ if (b_isLastTimeStepOfDay){
 	data_annualElectricVehicleDemand_kW.add(t_h, v_dailyElectricVehicleDemand_kW / timeStepsInOneDay);
 	data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW / timeStepsInOneDay);
 	data_annualElectrolyserDemand_kW.add(t_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
+	data_totalFinalEnergyConsumption_kW.add(t_h, v_dailyFinalEnergyConsumption_kW/timeStepsInOneDay);
 	data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
 	data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
 	data_annualBatteriesSupply_kW.add(t_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
 	data_annualV2GSupply_kW.add(t_h, v_dailyV2GSupply_kW / timeStepsInOneDay);
+	
+
 	
 	//// Daily totals
 	// Demand
@@ -7323,6 +7339,7 @@ if (b_isLastTimeStepOfDay){
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
 	v_dailyAverageElectrolyserDemand_kW = 0;
+	v_dailyFinalEnergyConsumption_kW = 0;
 	
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
@@ -8866,7 +8883,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336413</Id>
 					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-					<X>390</X><Y>3050</Y>
+					<X>390</X><Y>3060</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8888,7 +8905,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336419</Id>
 					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-					<X>390</X><Y>3090</Y>
+					<X>390</X><Y>3100</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8910,7 +8927,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336425</Id>
 					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-					<X>390</X><Y>3030</Y>
+					<X>390</X><Y>3040</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8998,7 +9015,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336451</Id>
 					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-					<X>390</X><Y>3070</Y>
+					<X>390</X><Y>3080</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9090,7 +9107,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715246336493</Id>
 					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3110</Y>
+					<X>390</X><Y>3120</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9113,7 +9130,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715246336499</Id>
 					<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3150</Y>
+					<X>390</X><Y>3160</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9694,7 +9711,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715671189730</Id>
 					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3130</Y>
+					<X>390</X><Y>3140</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10037,6 +10054,28 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732191711327</Id>
+					<Name><![CDATA[data_totalFinalEnergyConsumption_kW]]></Name>
+					<X>390</X><Y>3010</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>365</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
