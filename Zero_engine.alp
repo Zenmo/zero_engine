@@ -71,6 +71,10 @@
 				<Id>1668600528877</Id>
 				<Name><![CDATA[DIESEL]]></Name>
 			</Option>
+			<Option>
+				<Id>1732270713158</Id>
+				<Name><![CDATA[IRON_POWDER]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659118262286</Id>
@@ -2812,7 +2816,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315939</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
-					<X>20</X><Y>3030</Y>
+					<X>20</X><Y>3050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2824,7 +2828,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315941</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
-					<X>20</X><Y>3050</Y>
+					<X>20</X><Y>3070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2836,7 +2840,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315943</Id>
 					<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
-					<X>20</X><Y>3070</Y>
+					<X>20</X><Y>3090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2848,7 +2852,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1715246315945</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
-					<X>20</X><Y>3090</Y>
+					<X>20</X><Y>3110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2913,7 +2917,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715246315959</Id>
 					<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3150</Y>
+					<X>20</X><Y>3170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2926,7 +2930,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715246315961</Id>
 					<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3110</Y>
+					<X>20</X><Y>3130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2939,7 +2943,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1715671218524</Id>
 					<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>20</X><Y>3130</Y>
+					<X>20</X><Y>3150</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4161,7 +4165,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866329</Id>
 					<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
-					<X>20</X><Y>3210</Y>
+					<X>20</X><Y>3230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4176,7 +4180,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866331</Id>
 					<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
-					<X>20</X><Y>3230</Y>
+					<X>20</X><Y>3250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4191,7 +4195,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866333</Id>
 					<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
-					<X>390</X><Y>3210</Y>
+					<X>390</X><Y>3230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4206,7 +4210,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968866335</Id>
 					<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
-					<X>390</X><Y>3230</Y>
+					<X>390</X><Y>3250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4221,7 +4225,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968880670</Id>
 					<Name><![CDATA[dsm_summerWeekDemandDataSets_kW]]></Name>
-					<X>830</X><Y>3180</Y>
+					<X>830</X><Y>3200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4236,7 +4240,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968880672</Id>
 					<Name><![CDATA[dsm_summerWeekSupplyDataSets_kW]]></Name>
-					<X>830</X><Y>3200</Y>
+					<X>830</X><Y>3220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4251,7 +4255,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968880674</Id>
 					<Name><![CDATA[dsm_winterWeekDemandDataSets_kW]]></Name>
-					<X>1280</X><Y>3180</Y>
+					<X>1280</X><Y>3200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4266,7 +4270,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1730968880676</Id>
 					<Name><![CDATA[dsm_winterWeekSupplyDataSets_kW]]></Name>
-					<X>1280</X><Y>3200</Y>
+					<X>1280</X><Y>3220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4429,6 +4433,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 					<Id>1731593323269</Id>
 					<Name><![CDATA[v_totalElectricityConsumptionHeatpumps_MWh]]></Name>
 					<X>-480</X><Y>1320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732272248176</Id>
+					<Name><![CDATA[v_dailyCookingElectricityDemand_kW]]></Name>
+					<X>20</X><Y>3010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7205,6 +7221,7 @@ double v_currentNaturalGasDemand_kW = sum(c_gridConnections, x -> x.fm_currentCo
 double v_currentDieselDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.DIESEL));
 double v_currentHydrogenDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN));
 double v_currentElectrolyserDemand_kW = sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW);
+double v_currentElectricHobConsumption_kW = sum(c_gridConnections, x->x.v_electricHobConsumption_kW);
 
 double v_currentPVGeneration_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 double v_currentWindGeneration_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
@@ -7237,6 +7254,7 @@ if (b_isSummerWeek){
 	data_summerWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 	data_summerWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 	data_summerWeekElectrolyserDemand_kW.add(t_h, v_currentElectrolyserDemand_kW);
+	data_summerWeekCookingElectricityDemand_kW.add(t_h, v_currentElectricHobConsumption_kW);
 	
 	data_summerWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_summerWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -7272,6 +7290,7 @@ if (b_isWinterWeek){
 	data_winterWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 	data_winterWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 	data_winterWeekElectrolyserDemand_kW.add(t_h, v_currentElectrolyserDemand_kW);
+	data_winterWeekCookingElectricityDemand_kW.add(t_h, v_currentElectricHobConsumption_kW);
 	
 	data_winterWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_winterWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -7290,6 +7309,7 @@ v_dailyHeatPumpElectricityDemand_kW += v_currentHeatPumpElectricityDemand_kW;
 v_dailyElectricVehicleDemand_kW += v_currentElectricVehicleDemand_kW;
 v_dailyBatteriesDemand_kW += v_currentBatteriesDemand_kW;
 v_dailyAverageElectrolyserDemand_kW += v_currentElectrolyserDemand_kW;
+v_dailyCookingElectricityDemand_kW += v_currentElectricHobConsumption_kW;
 
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
 
@@ -7310,6 +7330,8 @@ if (b_isLastTimeStepOfDay){
 	data_annualElectricVehicleDemand_kW.add(t_h, v_dailyElectricVehicleDemand_kW / timeStepsInOneDay);
 	data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW / timeStepsInOneDay);
 	data_annualElectrolyserDemand_kW.add(t_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
+	data_annualCookingElectricityDemand_kW.add(t_h, v_dailyCookingElectricityDemand_kW / timeStepsInOneDay);
+	
 	data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
 	data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
 	data_annualBatteriesSupply_kW.add(t_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
@@ -7518,7 +7540,7 @@ v_dailyBaseloadElectricityDemand_kW = 0;
 v_dailyHeatPumpElectricityDemand_kW = 0;
 v_dailyElectricVehicleDemand_kW = 0;
 v_dailyBatteriesDemand_kW = 0;
-
+v_dailyCookingElectricityDemand_kW = 0;
 
 // Supply
 fm_dailyAverageSupply_kW.clear();
@@ -8866,7 +8888,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336413</Id>
 					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-					<X>390</X><Y>3050</Y>
+					<X>390</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8888,7 +8910,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336419</Id>
 					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-					<X>390</X><Y>3090</Y>
+					<X>390</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8910,7 +8932,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336425</Id>
 					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-					<X>390</X><Y>3030</Y>
+					<X>390</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8998,7 +9020,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246336451</Id>
 					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-					<X>390</X><Y>3070</Y>
+					<X>390</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9090,7 +9112,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715246336493</Id>
 					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3110</Y>
+					<X>390</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9113,7 +9135,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715246336499</Id>
 					<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3150</Y>
+					<X>390</X><Y>3170</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9180,7 +9202,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378188</Id>
 					<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
-					<X>830</X><Y>3030</Y>
+					<X>830</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9202,7 +9224,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378194</Id>
 					<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
-					<X>830</X><Y>3070</Y>
+					<X>830</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9224,7 +9246,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378199</Id>
 					<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
-					<X>830</X><Y>3010</Y>
+					<X>830</X><Y>3030</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9312,7 +9334,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378219</Id>
 					<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
-					<X>830</X><Y>3050</Y>
+					<X>830</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9403,7 +9425,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378239</Id>
 					<Name><![CDATA[data_summerWeekNaturalGasSupply_kW]]></Name>
-					<X>830</X><Y>3090</Y>
+					<X>830</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9447,7 +9469,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378248</Id>
 					<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
-					<X>1280</X><Y>3030</Y>
+					<X>1280</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9469,7 +9491,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378254</Id>
 					<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
-					<X>1280</X><Y>3070</Y>
+					<X>1280</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9491,7 +9513,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378259</Id>
 					<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
-					<X>1280</X><Y>3010</Y>
+					<X>1280</X><Y>3030</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9579,7 +9601,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1715246378279</Id>
 					<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
-					<X>1280</X><Y>3050</Y>
+					<X>1280</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9671,7 +9693,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715246378299</Id>
 					<Name><![CDATA[data_winterWeekNaturalGasSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1280</X><Y>3090</Y>
+					<X>1280</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9694,7 +9716,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715671189730</Id>
 					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3130</Y>
+					<X>390</X><Y>3150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9717,7 +9739,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715671280183</Id>
 					<Name><![CDATA[data_winterWeekHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1280</X><Y>3110</Y>
+					<X>1280</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9740,7 +9762,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1715671308107</Id>
 					<Name><![CDATA[data_summerWeekHydrogenSupply_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>830</X><Y>3110</Y>
+					<X>830</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9883,7 +9905,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1721134096132</Id>
 					<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
-					<X>830</X><Y>3140</Y>
+					<X>830</X><Y>3160</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9905,7 +9927,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
     			<DataSet>
 					<Id>1721134140759</Id>
 					<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
-					<X>1280</X><Y>3140</Y>
+					<X>1280</X><Y>3160</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10020,6 +10042,72 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 					<Id>1731590299839</Id>
 					<Name><![CDATA[data_winterWeekElectrolyserDemand_kW]]></Name>
 					<X>1280</X><Y>2970</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732272248179</Id>
+					<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
+					<X>390</X><Y>3010</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>365</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732272248187</Id>
+					<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
+					<X>830</X><Y>2990</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732272248193</Id>
+					<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+					<X>1280</X><Y>2990</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19625,6 +19713,18 @@ import javax.management.RuntimeErrorException;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732271999147</Id>
+					<Name><![CDATA[v_dailyCookingElectricityDemand_kW]]></Name>
+					<X>740</X><Y>2470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -21427,7 +21527,7 @@ v_dailyBaseloadElectricityDemand_kW = 0;
 v_dailyHeatPumpElectricityDemand_kW = 0;
 v_dailyElectricVehicleDemand_kW = 0;
 v_dailyBatteriesDemand_kW = 0;
-
+v_dailyCookingElectricityDemand_kW = 0;
 
 // Supply
 fm_dailyAverageSupply_kW.clear();
@@ -21589,7 +21689,7 @@ if ( p_BuildingThermalAsset == null ) {
 			}
 		} else {
 			if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump) { // when there is only a gas burner or DH set
-					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
+					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
 					//traceln("Running manageHeatingAsset for single heating asset");
 			} else {
 				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
@@ -21598,7 +21698,7 @@ if ( p_BuildingThermalAsset == null ) {
 	}
 	else if (p_primaryHeatingAsset== null && p_secondaryHeatingAsset != null && v_hasQuarterHourlyValues){
 		if(p_secondaryHeatingAsset instanceof J_EAConversionGasBurner){
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
 			p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
 		} else {
 				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported secondary heating asset!");
@@ -21611,10 +21711,10 @@ if ( p_BuildingThermalAsset == null ) {
 			if ( HP_COP < COP_tres ) { // switch to gasburner when HP COP is below treshold
 				//traceln("Hybrid HP: Switching to gas burner");
 				p_primaryHeatingAsset.v_powerFraction_fr = 0;
-				p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
+				p_secondaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
 			} else { // heatpump when COP is above treshold
 				//traceln("Hybrid HP: Using heatpump with COP " + HP_COP);
-				p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
 				p_secondaryHeatingAsset.v_powerFraction_fr = 0;//min(1,currentDHWdemand_kW / p_secondaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			}
 		} else {
@@ -23195,7 +23295,7 @@ v_electricHobConsumption_kW = 0;
 for (J_EA j_ea : c_electricHobAssets) {
 	v_electricHobConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_electricHobDemand_kW.update();
+data_cookingElectricityDemand_kW.update();
 
 v_hydrogenElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electrolyserAssets) {
@@ -23412,6 +23512,7 @@ if (energyModel.b_isSummerWeek){
 	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
 	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
 	
 	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
@@ -23431,6 +23532,7 @@ if (energyModel.b_isWinterWeek){
 	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
 	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
 	
 	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
@@ -23446,6 +23548,7 @@ v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
+v_dailyCookingElectricityDemand_kW += max(0, v_electricHobConsumption_kW);
 
 // Supply
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
@@ -23466,6 +23569,8 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualCookingElectricityDemand_kW.add(energyModel.t_h, v_dailyCookingElectricityDemand_kW / timeStepsInOneDay);
+	
 	// Supply
 	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
 	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
@@ -23479,6 +23584,7 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	v_dailyHeatPumpElectricityDemand_kW = 0;
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
+	v_dailyCookingElectricityDemand_kW = 0;
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
 	v_dailyPVGeneration_kW = 0;
@@ -25427,7 +25533,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 				</DataSet>
     			<DataSet>
 					<Id>1726222586985</Id>
-					<Name><![CDATA[data_electricHobDemand_kW]]></Name>
+					<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
 					<X>150</X><Y>2080</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -25471,6 +25577,72 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732272034840</Id>
+					<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
+					<X>1070</X><Y>2470</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>365</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732272071070</Id>
+					<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
+					<X>1490</X><Y>2280</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1732272081511</Id>
+					<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+					<X>1490</X><Y>2620</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -41726,8 +41898,10 @@ switch (p_heatingType) {
 
 f_manageCookingTracker();
 
-if (p_BuildingThermalAsset != null && p_primaryHeatingAsset != null) {
+if (p_primaryHeatingAsset != null) {
 	p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
+}
+if (p_BuildingThermalAsset != null) {
 	p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
 }]]></Body>
 				</Function>
@@ -42280,11 +42454,14 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 double powerFraction_heatPump_fr = 0;
 double avgElectricityPrice_eurpkWh = 10;
 J_EAConversionHeatPump hp = (J_EAConversionHeatPump)p_primaryHeatingAsset;
+if (hp == null) {
+	traceln("HP is null: " + this.getIndex());
+}
 v_copHeatpump = hp.getCOP();
 
 
 if ( p_smartHeatingEnabled ) {
-	avgElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getCapacityElectric_kW() );
+	avgElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getInputCapacity_kW() );
 	//traceln("avg electircity rprice for HP: " + avgElectricityPrice_eurpkWh);
 }
 
@@ -42292,7 +42469,7 @@ if ( p_smartHeatingEnabled ) {
 if ( p_heatBuffer != null ){
 	if ( p_heatBuffer.requiresHeat ){
 		powerFraction_heatPump_fr = 1;
-		powerFraction_heatBuffer_fr = hp.getCapacityHeat_kW() / p_heatBuffer.getCapacityHeat_kW() ;
+		powerFraction_heatBuffer_fr = hp.getOutputCapacity_kW() / p_heatBuffer.getCapacityHeat_kW() ;
 		//traceln(getName() + " heat buffer cus of need");
 	} else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		//also heat the buffer if the price is cheap, the buffer has some room and the vehicle does not need charging
@@ -42300,11 +42477,11 @@ if ( p_heatBuffer != null ){
 	{
 		if( p_householdEV == null ){
 			powerFraction_heatPump_fr = 1;
-			powerFraction_heatBuffer_fr = hp.getCapacityHeat_kW() / p_heatBuffer.getCapacityHeat_kW();
+			powerFraction_heatBuffer_fr = hp.getOutputCapacity_kW() / p_heatBuffer.getCapacityHeat_kW();
 		} else if (p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){
 			powerFraction_heatPump_fr = 1;
 			//traceln("heat buffer cus cheap");
-			powerFraction_heatBuffer_fr = hp.getCapacityHeat_kW() / p_heatBuffer.getCapacityHeat_kW();
+			powerFraction_heatBuffer_fr = hp.getOutputCapacity_kW() / p_heatBuffer.getCapacityHeat_kW();
 		}
 	}
 	//reduce the powerfraction in the buffer with the hot water demand.
@@ -42315,19 +42492,19 @@ if ( p_heatBuffer != null ){
 if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
 		powerFraction_heatPump_fr = 1; 
-		p_BuildingThermalAsset.v_powerFraction_fr = hp.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr = hp.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 	} 
 	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		&& p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC + 1) {
 		//also heat the house if the price is cheap, the the house is colder than desired + 1 and the vehicle does not need charging
 		if( p_householdEV == null ){
 			powerFraction_heatPump_fr = 1;
-			p_BuildingThermalAsset.v_powerFraction_fr = hp.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
+			p_BuildingThermalAsset.v_powerFraction_fr = hp.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 		} 
 		else if (p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){ // only use heatpump if the vehicle is not about to charge
 			powerFraction_heatPump_fr = 1;
 			//traceln("heat house cus of cheap");
-			p_BuildingThermalAsset.v_powerFraction_fr = hp.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
+			p_BuildingThermalAsset.v_powerFraction_fr = hp.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 		}
 	} 
 	else {
@@ -42365,17 +42542,17 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 			traceln("gas is cheaper");
 			double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 			p_primaryHeatingAsset.v_powerFraction_fr = 0;
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
-			p_BuildingThermalAsset.v_powerFraction_fr = (p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getCapacityHeat_kW() - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
+			p_BuildingThermalAsset.v_powerFraction_fr = (p_secondaryHeatingAsset.v_powerFraction_fr * p_secondaryHeatingAsset.getOutputCapacity_kW() - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();
 		} else { // heat with heatpump
 			//double powerDemand_kW = (v_tempSetpoint_degC - houseTemp) * ((J_EAStorageHeat)p_BuildingThermalAsset.j_ea).getHeatCapacity_JpK() / 3.6e6;
 			p_primaryHeatingAsset.v_powerFraction_fr = 1;//min(1,powerDemand_kW / p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,v_hotwaterDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
-			p_BuildingThermalAsset.v_powerFraction_fr = HP.getCapacityHeat_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,v_hotwaterDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
+			p_BuildingThermalAsset.v_powerFraction_fr = HP.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 			traceln("HP is cheaper");
 		}
 	} else { // Just supply DHW demand with gas burner
-		p_secondaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW();
+		p_secondaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW();
 		p_primaryHeatingAsset.v_powerFraction_fr = 0;
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 		traceln("just DHW");
@@ -42411,7 +42588,7 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 	p_primaryHeatingAsset.v_powerFraction_fr += b_houseTempBelowSetpoint? 1 : 0;  // maybe cap for maximum 1?
 	//p_primaryHeatingAsset.f_updateAllFlows(	p_primaryHeatingAsset.v_powerFraction_fr );
 	
-	double heatFlowToHouse_kW = p_primaryHeatingAsset.getCapacityHeat_kW() * p_primaryHeatingAsset.v_powerFraction_fr - p_secondaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT);
+	double heatFlowToHouse_kW = p_primaryHeatingAsset.getOutputCapacity_kW() * p_primaryHeatingAsset.v_powerFraction_fr - p_secondaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	p_BuildingThermalAsset.v_powerFraction_fr = (heatFlowToHouse_kW / p_BuildingThermalAsset.getCapacityHeat_kW() );
 	//p_primaryHeatingAsset.v_powerFraction_fr = p_BuildingThermalAsset.j_ea.getCurrentTemperature() < v_tempSetpoint_degC ? 1 : 0;
 	//traceln("b_primaryOperate = "+ b_primaryOperate + ", GCHouse f_heatWithHybridHeatpump: p_secondaryHeatingAsset.j_ea.capacityHeat_kW = " + p_secondaryHeatingAsset.j_ea.capacityHeat_kW + ". p_secondaryHeatingAsset.j_ea =  "+p_secondaryHeatingAsset.j_ea.toString());
@@ -42698,7 +42875,7 @@ boolean isGasCheaper = false;
 
 if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 	v_gasHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getMethanePrice();
-	v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), p_primaryHeatingAsset.getCapacityElectric_kW() ) / HP_COP;
+	v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), p_primaryHeatingAsset.getInputCapacity_kW() ) / HP_COP;
 	isGasCheaper = v_gasHeatingCost_eurpkWh_TEMPORARY < v_eHeatingCost_eurpkWh_TEMPORARY ? true:false;
 }	
 
@@ -42739,17 +42916,17 @@ if ( p_heatBuffer != null){
 					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset != null) { 
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW()  );
-		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()  );
+		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
 	}
 	else { // Just supply DHW
-		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW();
+		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 	}
 }
 else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingThermalAsset == null){ 
 	double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT); //TODO Where does this v_currentPowerHeat_kW come from? (Peter 14-09-2024), 
-	p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
+	p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
 	traceln("Household is heating with gasburner without thermal building asset, check if this is correct @f_heatWithGasBurner");
 	//p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW();
 }
@@ -42765,21 +42942,28 @@ else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingT
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if ( p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet && p_BuildingThermalAsset != null) { 
+					<Body><![CDATA[if ( p_BuildingThermalAsset != null) { 
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW()  );
-		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
+		if (p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet) {
+			p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()  );
+			p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
+		}
+		else {
+			p_BuildingThermalAsset.v_powerFraction_fr = powerDemand_kW / p_BuildingThermalAsset.getCapacityHeat_kW();					
+		}
 	}
 	else { 
-		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW();
+		if (p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet) {
+			p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();
+		}
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 	}
-	v_districtHeatDelivery_kW = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW();
+	//v_districtHeatDelivery_kW = p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getCapacityHeat_kW();
 }
 else {
 	traceln("House " + p_gridConnectionID + " has heatingtype DISTRICT HEAT, but no delivery set or building asset!");
-}	]]></Body>
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -43416,7 +43600,7 @@ if( b_validLocalBuffer ) {
 	//traceln("Thermal storage asset heatCapacity: " + p_DHheatStorage.getHeatCapacity_kW());
 	double heatingSetpoint_kW = max(0,(tempSetpoint_degC - v_bufferTemp_degC)) * p_DHheatStorage.getHeatCapacity_JpK() / (3.6e6 * energyModel.p_timeStep_h);
 	//Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getCapacityHeat_kW() );
-	p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getCapacityHeat_kW() );
+	p_primaryHeatingAsset.f_updateAllFlows( heatingSetpoint_kW / p_primaryHeatingAsset.getOutputCapacity_kW() );
 	double heatingPower_kW = -p_primaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	
 	//traceln("Heating setpoint: %s kW, heating power: %s kW", heatingSetpoint_kW, heatingPower_kW);	
@@ -43429,7 +43613,7 @@ if( b_validLocalBuffer ) {
 	//traceln("District heating system temperature: %s degC", p_DHheatStorage.getCurrentTemperature());
 } else {
 	//Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getCapacityHeat_kW()); // heatingasset must be powerful enough every single timestep!
-	p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getCapacityHeat_kW());
+	p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getOutputCapacity_kW());
 	if ( 0.01 < (heatTransferToNetwork_kW + p_primaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT)) ) {
 		traceln("Warning! District heating primary heating asset not able to fulfill heat demand! Heatdemand: %s kW, heat produced: %s kW", heatTransferToNetwork_kW, -p_primaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) );
 	}	
@@ -44413,14 +44597,14 @@ if ( p_batteryAsset != null ) {
 						<Name><![CDATA[ElektrolyserAsset]]></Name>
 						<Type><![CDATA[J_EAConversionElektrolyser]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (ElektrolyserAsset.getCapacityElectric_kW()>0) {
+					<Body><![CDATA[if (ElektrolyserAsset.getInputCapacity_kW()>0) {
 	
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
 	double availableElectricPower_kW = p_contractedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	double excessElectricPower_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + p_contractedFeedinCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
 	double eta_r = ElektrolyserAsset.getEta_r();
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-	double ProductionSetpoint_kW = ElektrolyserAsset.getCapacityElectric_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
+	double ProductionSetpoint_kW = ElektrolyserAsset.getInputCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
 	double elektrolyserSetpointElectric_kW = 0;
 	
 	if (p_electrolyserOperationMode==OL_ElectrolyserOperationMode.BALANCE) {
@@ -44439,14 +44623,14 @@ if ( p_batteryAsset != null ) {
 		double deficitGain_eurpkWh = 1.0/1000000; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
 		double priceGain_peur = 5; // How strongly to ramp up power with price-delta's	
 		double WTP_eurpkWh = v_electricityPriceLowPassed_eurpkWh + deficitGain_eurpkWh * v_hydrogenProductionDeficit_kWh;
-		elektrolyserSetpointElectric_kW = max(0,ElektrolyserAsset.getCapacityElectric_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_peur)  ;
+		elektrolyserSetpointElectric_kW = max(0,ElektrolyserAsset.getInputCapacity_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_peur)  ;
 		//traceln("WTP hydrogen production is " + roundToDecimal(WTP_eurpkWh,3) + " eurpkWh is higher than electricity price " + roundToDecimal(currentElectricityPriceCharge_eurpkWh,3) + " eurpkWh, so produce! Setpoint power: " + round(elektrolyserSetpointElectric_kW) + " kW");
 	}	
 	
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
 	elektrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(elektrolyserSetpointElectric_kW,excessElectricPower_kW));
 	
-	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getCapacityElectric_kW());
+	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getInputCapacity_kW());
 	
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - max(0,-ElektrolyserAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN));	// Update hydrogen production deficit
 }]]></Body>
@@ -46771,7 +46955,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		traceln("No heating assets for industry gridconnection " + p_gridConnectionID);
 	} else {
 		if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner) { // when there is only a gas burner or DH set
-				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
 				//traceln("Running manageHeatingAsset for single heating asset");
 		} else {
 			traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
@@ -46786,38 +46970,38 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		if ( (-(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)) > 0.5*p_contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_secondaryHeatingAsset.v_powerFraction_fr = 0;
-			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getCapacityElectric_kW());
+			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getInputCapacity_kW());
 		} else { // CHP when there is no electricity surpluss or when gas tank is overfilling
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
 			//p_primaryHeatingAsset.v_powerFraction_fr = 0;//min(1,currentDHWdemand_kW / p_secondaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			// Let heatpump fill heatdemand gap if it exists
-			p_primaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_secondaryHeatingAsset.v_powerFraction_fr*p_secondaryHeatingAsset.getCapacityHeat_kW()) / p_primaryHeatingAsset.getCapacityHeat_kW())); // Let gas burner fill the heatdemandgap
+			p_primaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_secondaryHeatingAsset.v_powerFraction_fr*p_secondaryHeatingAsset.getOutputCapacity_kW()) / p_primaryHeatingAsset.getOutputCapacity_kW())); // Let gas burner fill the heatdemandgap
 		}
 	} else if ( p_primaryHeatingAsset instanceof J_EAConversionGasCHP & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // CHP & gas burner
 		if ( p_gasBuffer.getCurrentStateOfCharge() < 0.05) { // Use regular gas burner when biogas buffer is nearly empty
 //		if ( (-v_currentPowerElectricity_kW > 0.5*p_connectionCapacity_kW*2*(p_gasBuffer.j_ea.getCurrentStateOfCharge()-0.5) | p_gasBuffer.j_ea.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.j_ea.getCurrentStateOfCharge() < 0.9) { // Use gas burner when biogas is depleted or when there is too much PV and CHP would lead to curtailment
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_primaryHeatingAsset.v_powerFraction_fr = 0;
-			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getCapacityHeat_kW());
+			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
 		} else { // CHP when there is sufficient biogas
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			if ( p_gasBuffer.getCurrentStateOfCharge() < 0.9 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.
-				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW()),(p_contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getCapacityElectric_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()),(p_contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getInputCapacity_kW());
 			} else {
-				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
 				//if ( p_gasBuffer.j_ea.getCurrentStateOfCharge() > 0.98 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.				
 				//	traceln("Biogas tank 98% full! must run CHP! Heat demand: " + heatDemand_kW + " kW");
 				//}
 			}
-			p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getCapacityHeat_kW()) / p_secondaryHeatingAsset.getCapacityHeat_kW())); // Let gas burner fill the heatdemandgap
+			p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getOutputCapacity_kW()) / p_secondaryHeatingAsset.getOutputCapacity_kW())); // Let gas burner fill the heatdemandgap
 		}
 	} else if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // Heatpump and gasburner, switch based on heatpump COP)
 		//((J_EAConversionHeatPump)p_primaryHeatingAsset.j_ea).updateAmbientTemp(main.v_currentAmbientTemperature_degC); // update heatpump temp levels! <-- waarom dit gebeurt al in de main (peter 21-02-23)
 		//double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset.j_ea).getCOP();
 		//double HP_powerDemand_kW = heatDemand_kW / HP_COP;
-		p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getCapacityHeat_kW());
-		p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getCapacityHeat_kW()) / p_secondaryHeatingAsset.getCapacityHeat_kW())); // Let gas burner fill the heatdemandgap
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
+		p_secondaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_primaryHeatingAsset.v_powerFraction_fr*p_primaryHeatingAsset.getOutputCapacity_kW()) / p_secondaryHeatingAsset.getOutputCapacity_kW())); // Let gas burner fill the heatdemandgap
 	} else {
 		traceln("**** EXCEPTION ****: Unsupported combination of heatings systems in GridConnection " + p_gridConnectionID);
 		p_primaryHeatingAsset.v_powerFraction_fr = 0;
@@ -48686,8 +48870,7 @@ if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > p_contractedD
 	else {
 		double powerNeeded_kW = max(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - p_contractedDeliveryCapacity_kW * capacityLimit_fr,  fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
-		double efficiency = fuelCellAsset.getEta_r();
-		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getCapacityElectric_kW()*efficiency);
+		double ratioOfCapacity = powerNeeded_kW / fuelCellAsset.getOutputCapacity_kW();
 		
 		// Check the amount of Hydrogen that has been generated so far
 		// Only works because there is a single energy conversion site
@@ -50932,9 +51115,9 @@ v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
 double powerDemandDivision[] = f_dividePowerDemandHeatingAssets();
 
 //Split the power fractions (powerDemandDivision[] = {Gasburner power request, HP power request, DH power request}
-double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatingAsset.getCapacityHeat_kW()); 
-double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getCapacityHeat_kW());
-double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getCapacityHeat_kW());
+double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatingAsset.getOutputCapacity_kW()); 
+double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getOutputCapacity_kW());
+double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getOutputCapacity_kW());
 
 //p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
 //p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
@@ -51958,7 +52141,7 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversion
  */
-public abstract class J_EAConversion extends zero_engine.J_EA implements Serializable {
+public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 
 	protected OL_EnergyCarriers energyCarrierProduced;
 	protected OL_EnergyCarriers energyCarrierConsumed;
@@ -51973,10 +52156,9 @@ public abstract class J_EAConversion extends zero_engine.J_EA implements Seriali
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversion(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, double timestep_h) {
+    public J_EAConversion(Agent parentAgent, double inputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, double timestep_h) {
 	    this.parentAgent = parentAgent;
-	    //this.capacityElectric_kW = capacityElectric_kW;
-	    //this.capacityHeat_kW = capacityHeat_kW;
+	    this.inputCapacity_kW = inputCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
@@ -51986,10 +52168,14 @@ public abstract class J_EAConversion extends zero_engine.J_EA implements Seriali
 		registerEnergyAsset();
 	}
 
-	/*@Override
-	public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
-		return new Pair(new J_FlowsMap(), 0.0);
-	}*/
+	@Override
+	public void operate(double ratioOfCapacity) {
+		if (ratioOfCapacity < 0) {
+			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");
+		}
+    	this.flowsMap.put(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
+    	this.flowsMap.put(this.energyCarrierProduced, -ratioOfCapacity * this.inputCapacity_kW * this.eta_r);
+	}
 
     @Override
 	public String toString() {
@@ -51997,27 +52183,15 @@ public abstract class J_EAConversion extends zero_engine.J_EA implements Seriali
 	}
 
 	public String getOwnerAgent() {
-		return parentAgent.agentInfo();
+		return this.parentAgent.agentInfo();
 	}
 	
-	public double getCapacityHeat_kW() {
-		if (energyCarrierProduced == OL_EnergyCarriers.HEAT) {
-			return inputCapacity_kW * eta_r;			
-		} else if (energyCarrierConsumed == OL_EnergyCarriers.HEAT) {
-			return inputCapacity_kW ;			
-		} else {
-			return 0.0;
-		}
+	public double getInputCapacity_kW() {
+		return this.inputCapacity_kW;
 	}
-
-	public double getCapacityElectric_kW() {
-		if (energyCarrierProduced == OL_EnergyCarriers.ELECTRICITY) {
-			return inputCapacity_kW * eta_r;			
-		} else if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
-			return inputCapacity_kW ;			
-		} else {
-			return 0.0;
-		}
+	
+	public double getOutputCapacity_kW() {
+		return this.inputCapacity_kW * this.eta_r;
 	}
 
 	/**
@@ -53585,11 +53759,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
 		//return new Pair(this.flowsMap, this.energyUse_kW);
 	}
-
-	@Override
-    public double getCapacityHeat_kW() {
-    	return this.capacityHeat_kW;
-    }
 
 	@Override
 	public String toString() {
@@ -55607,7 +55776,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     		starttimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
     		endtimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
     		
-    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getCapacityHeat_kW();
+    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getOutputCapacity_kW();
     		powerFractions_fr.add(ratio);
     	}
 
