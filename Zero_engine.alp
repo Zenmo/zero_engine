@@ -4482,7 +4482,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1658752734131</Id>
@@ -6674,9 +6674,15 @@ for (J_EA EA : c_energyAssets) {
 
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
-	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
-	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(p_runStartTime_h));
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(p_runStartTime_h*60));
+	//GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
+	//GC.c_tripTrackers.forEach(tt->tt.setStartIndex(p_runStartTime_h));
+	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(p_runStartTime_h*60));
+	
+	GC.c_tripTrackers.forEach(tt->{
+		tt.storeAndResetState();
+		tt.setStartIndex(p_runStartTime_h);
+		tt.prepareNextActivity(p_runStartTime_h*60);
+		});
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -6701,6 +6707,7 @@ v_timeStepsElapsed=0;
 
 c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));  
 c_forecasts.forEach(p -> p.initializeForecast(p_runStartTime_h)); 
+//c_forecasts.parallelStream().forEach(p -> p.initializeForecast(p_runStartTime_h)); 
 
 // When adding actors, also reset their states! Not used yet for Drechtsteden...
 
@@ -6780,8 +6787,11 @@ for (GridNode GN : pop_gridNodes) {
 for (GridConnection GC : c_gridConnections) {
 	//GC.f_resetStates();
 	GC.f_resetStatesAfterRapidRun();
-	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
-	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
+	GC.c_tripTrackers.forEach(tt->{
+		tt.restoreState();
+		tt.prepareNextActivity((t_h-p_runStartTime_h)*60);
+		});	
+	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
 }
 f_setInitialValues();
 
@@ -6797,6 +6807,7 @@ traceln("*** headless run duration: "+ duration/1000 + " s ***");
 traceln("Live-sim t_h after rapidRun: %s", t_h);
 c_profiles.forEach(p -> p.updateValue(t_h)); 
 c_forecasts.forEach(p -> p.initializeForecast(t_h)); 
+//c_forecasts.parallelStream().forEach(p -> p.initializeForecast(t_h)); 
 
 ]]></Body>
 				</Function>
@@ -7150,8 +7161,9 @@ acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProdu
 // Daytime totals
 if (b_isDaytime) {
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		fm_daytimeImports_MWh.addFlow(EC, max( 0, fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
-		fm_daytimeExports_MWh.addFlow(EC, max( 0, -fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
+		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
+		fm_daytimeImports_MWh.addFlow(EC, max( 0, currentBalance_kW) * p_timeStep_h / 1000);
+		fm_daytimeExports_MWh.addFlow(EC, max( 0, -currentBalance_kW) * p_timeStep_h / 1000);
 	}
 	
 	v_daytimeEnergyImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
@@ -7174,8 +7186,9 @@ else {
 // Weekday totals
 if (b_isWeekday) {	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		fm_weekdayImports_MWh.addFlow(EC, max( 0, fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
-		fm_weekdayExports_MWh.addFlow(EC, max( 0, -fm_currentBalanceFlows_kW.get(EC)) * p_timeStep_h / 1000);
+		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
+		fm_weekdayImports_MWh.addFlow(EC, max( 0, currentBalance_kW) * p_timeStep_h / 1000);
+		fm_weekdayExports_MWh.addFlow(EC, max( 0, -currentBalance_kW) * p_timeStep_h / 1000);
 	}
 	
 	v_weekdayEnergyImport_MWh += v_currentEnergyImport_kW / 1000 * p_timeStep_h;
@@ -7297,7 +7310,8 @@ v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
 v_dailyWindGeneration_kW += v_currentWindGeneration_kW;
 v_dailyBatteriesSupply_kW += v_currentBatteriesSupply_kW;
 v_dailyV2GSupply_kW += v_currentV2GSupply_kW;
-	
+
+
 if (b_isLastTimeStepOfDay){
 	double timeStepsInOneDay = 24 / p_timeStep_h;
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
@@ -20921,7 +20935,7 @@ else {
 }
 
 if (energyModel.v_isRapidRun){
-	f_fillAnnualDataSets();
+	f_fillTotalDataSets();
 } else {
 	f_fillLiveDataSets();
 }]]></Body>
@@ -23257,7 +23271,7 @@ data_districtHeatDelivery_kW.update();
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722518905501</Id>
-					<Name><![CDATA[f_fillAnnualDataSets]]></Name>
+					<Name><![CDATA[f_fillTotalDataSets]]></Name>
 					<X>930</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -23279,8 +23293,11 @@ if(energyModel.b_isDaytime) {
 	v_daytimeEnergyExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		fm_daytimeImports_MWh.addFlow( EC, max( 0, fm_currentConsumptionFlows_kW.get(EC) - fm_currentProductionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
-		fm_daytimeExports_MWh.addFlow( EC, max( 0, fm_currentProductionFlows_kW.get(EC) - fm_currentConsumptionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
+		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
+		//fm_daytimeImports_MWh.addFlow( EC, max( 0, fm_currentConsumptionFlows_kW.get(EC) - fm_currentProductionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
+		//fm_daytimeExports_MWh.addFlow( EC, max( 0, fm_currentProductionFlows_kW.get(EC) - fm_currentConsumptionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
+		fm_daytimeImports_MWh.addFlow( EC, max( 0, currentBalance_kW ) * energyModel.p_timeStep_h / 1000 );
+		fm_daytimeExports_MWh.addFlow( EC, max( 0, -currentBalance_kW ) * energyModel.p_timeStep_h / 1000 );
 	}
 	
 	v_daytimeElectricityProduced_MWh += fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / 1000 * energyModel.p_timeStep_h;		
@@ -23296,8 +23313,9 @@ if (energyModel.b_isWeekday) { // Simulation starts on a Thursday, hence the +3 
 	v_weekdayEnergyExport_MWh += currentExport_kW/1000 * energyModel.p_timeStep_h;
 
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		fm_weekdayImports_MWh.addFlow( EC, max( 0, fm_currentConsumptionFlows_kW.get(EC) - fm_currentProductionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
-		fm_weekdayExports_MWh.addFlow( EC, max( 0, fm_currentProductionFlows_kW.get(EC) - fm_currentConsumptionFlows_kW.get(EC) ) * energyModel.p_timeStep_h / 1000 );
+		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
+		fm_weekdayImports_MWh.addFlow( EC, max( 0, currentBalance_kW ) * energyModel.p_timeStep_h / 1000 );
+		fm_weekdayExports_MWh.addFlow( EC, max( 0,-currentBalance_kW ) * energyModel.p_timeStep_h / 1000 );
 		
 	}
 	
@@ -44580,8 +44598,8 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 }
 
 @Override
-public void f_fillAnnualDataSets() {
-	super.f_fillAnnualDataSets();
+public void f_fillTotalDataSets() {
+	super.f_fillTotalDataSets();
 	f_fillAnnualDatasets_electrolyser();
 }]]></AdditionalClassCode>
 			<Import><![CDATA[import java.util.*;]]></Import>
@@ -51801,17 +51819,41 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	//public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
 		ratioOfCapacity = profilePointer.getCurrentValue();
 		
-		double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
-		
-    	this.energyUse_kW = -currentProduction_kW;
-    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
-
-    	//return returnEnergyFlows();
-    	//J_FlowsMap flowsMap = new J_FlowsMap();    	    	    	
-       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
-    	//return this.flowsMap;
-    	
+		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
+			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
+			
+	    	this.energyUse_kW = -currentProduction_kW;
+	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
+	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
+	    	
+		}
 	}
+	
+	@Override
+	public void f_updateAllFlows(double powerFraction_fr) {
+		double ratioOfCapacity = profilePointer.getCurrentValue();
+		
+		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
+			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
+			
+	    	this.energyUse_kW = -currentProduction_kW;
+	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
+	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
+	       	if (parentAgent instanceof GridConnection) {    		
+	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
+	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+	    	}
+	    	/*
+	    	if (ui_energyAsset!= null) {
+	    		//ui_energyAsset.f_addFlows(arr);
+	    		ui_energyAsset.f_addFlows(flowsMap);
+	    	}
+	    	*/
+	    	this.lastFlowsMap.cloneMap(this.flowsMap);
+	    	this.lastEnergyUse_kW = this.energyUse_kW;
+	    	this.clear();
+		}
+    }
 
     //public Pair<J_FlowsMap, Double> curtailElectricityProduction(double curtailmentSetpoint_kW) {
     public void curtailElectricityProduction(double curtailmentSetpoint_kW) {  // This variable is called curtailmentSetpoint, but maybe its better to call it curtailment amount? it represents the amount of production we need to curtail, not the amount we want to produce.
@@ -56567,16 +56609,18 @@ public class J_FlowsMapEnumMap extends EnumMap<OL_EnergyCarriers, Double> {
 			<Text><![CDATA[/**
  * J_DataSetMap
  */	
-import java.util.EnumMap;
+//import java.util.EnumMap;
 import java.util.EnumSet;
 
-public class J_DataSetMap extends EnumMap<OL_EnergyCarriers, DataSet> {
+public class J_DataSetMap implements Serializable {
+	private DataSet[] datasetArray = new DataSet[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
 
     /**
      * Default constructor
      */
     public J_DataSetMap() {
-    	super(OL_EnergyCarriers.class);
+    	//super(OL_EnergyCarriers.class);
     }
 
     public void createEmptyDataSets(EnumSet<OL_EnergyCarriers> selectedFlows, int size) {
@@ -56584,6 +56628,21 @@ public class J_DataSetMap extends EnumMap<OL_EnergyCarriers, DataSet> {
     		this.put(key, new DataSet(size));
     	}
     }
+    
+    public DataSet get(OL_EnergyCarriers key) {
+		return datasetArray[key.ordinal()];
+	}
+    	
+
+	public void put(OL_EnergyCarriers key, DataSet ds) {
+		datasetArray[key.ordinal()] = ds;
+		energyCarrierList.add(key);		
+	}
+	
+	public void clear() {
+		datasetArray = new DataSet[OL_EnergyCarriers.values().length];
+		energyCarrierList.clear();
+	}
     
 	@Override
 	public String toString() {
@@ -56605,17 +56664,20 @@ public class J_DataSetMap extends EnumMap<OL_EnergyCarriers, DataSet> {
 			<Text><![CDATA[/**
  * J_AccumulatorMap
  */	
-import java.util.EnumMap;
+//import java.util.EnumMap;
 import java.util.EnumSet;
 import zeroPackage.ZeroAccumulator;
 
-public class J_AccumulatorMap extends EnumMap<OL_EnergyCarriers, ZeroAccumulator> {
+public class J_AccumulatorMap implements Serializable {
+	
+	private ZeroAccumulator[] accumulatorArray = new ZeroAccumulator[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
 
     /**
      * Default constructor
      */
     public J_AccumulatorMap() {
-    	super(OL_EnergyCarriers.class);
+    	//super(OL_EnergyCarriers.class);
     }
 
     public void createEmptyAccumulators(EnumSet<OL_EnergyCarriers> selectedFlows, boolean hasTimeSeries, double signalResolution_h, double duration_h) {
@@ -56623,6 +56685,23 @@ public class J_AccumulatorMap extends EnumMap<OL_EnergyCarriers, ZeroAccumulator
     		this.put(key, new ZeroAccumulator(hasTimeSeries, signalResolution_h, duration_h));
     	}
     }
+    
+    public ZeroAccumulator get(OL_EnergyCarriers key) {
+		return accumulatorArray[key.ordinal()];
+	}
+    	
+
+	public void put(OL_EnergyCarriers key, ZeroAccumulator acc) {
+		accumulatorArray[key.ordinal()] = acc;
+		energyCarrierList.add(key);		
+	}
+    
+	public void clear() {
+		accumulatorArray = new ZeroAccumulator[OL_EnergyCarriers.values().length];
+		energyCarrierList.clear();
+	}
+
+	
 	@Override
 	public String toString() {
 		return super.toString();
