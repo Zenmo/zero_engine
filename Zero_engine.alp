@@ -10409,6 +10409,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11295,6 +11298,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_cookingMethod]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11457,6 +11463,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11615,6 +11624,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isSliderGC]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11814,6 +11826,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11970,6 +11985,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12125,6 +12143,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12284,6 +12305,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isSliderGC]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12765,6 +12789,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12939,6 +12966,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_municipality]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -20464,6 +20494,27 @@ import javax.management.RuntimeErrorException;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1726146956843</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1732541320415</Id>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+					<X>270</X><Y>-30</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1732541320413</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -41223,6 +41274,9 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -42950,7 +43004,7 @@ else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingT
 			p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
 		}
 		else {
-			p_BuildingThermalAsset.v_powerFraction_fr = powerDemand_kW / p_BuildingThermalAsset.getCapacityHeat_kW();					
+			p_BuildingThermalAsset.v_powerFraction_fr = min( p_physicalHeatConnectionCapacity_kW, powerDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();					
 		}
 	}
 	else { 
@@ -42979,6 +43033,7 @@ else {
 if (p_cookingTracker != null) { // check for presence of cooking asset
 	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
 	v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
+	//traceln("At time: " + energyModel.t_h + " the electric HOB used: " + v_electricHobConsumption_kW + " kW");
 	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	if (p_BuildingThermalAsset != null) {
@@ -43306,6 +43361,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -43593,6 +43651,10 @@ if (l_ownerActor.getConnectedAgent() instanceof EnergyCoop){
 //		((J_EAConversionHeatPump)e.j_ea).updateParameters(main.p_undergroundTemperature_degC, storageTemp_degC); // update heatpump temp levels!
 double heatTransferToNetwork_kW = l_parentNodeHeat.getConnectedAgent().v_currentLoad_kW - v_previousPowerHeat_kW;// max( storageTemp_degC - DHnetworkTemp_degC, 0 ) * heatTransferToNetworkCoefficient_kWpK;
 
+if (heatTransferToNetwork_kW < 0) {
+	traceln("Warning! District heating power demand is negative. heatTransferToNetwork_kW: " + heatTransferToNetwork_kW + " kW");
+	return;
+}
 if( b_validLocalBuffer ) {
 	tempSetpoint_degC = p_DHheatStorage.getSetTemperature_degC();
 	v_bufferTemp_degC = p_DHheatStorage.getCurrentTemperature();
@@ -44390,6 +44452,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -44874,6 +44939,9 @@ public void f_fillAnnualDataSets() {
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -46641,6 +46709,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -47317,6 +47388,9 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -48646,6 +48720,9 @@ public void f_resetSpecificGCStates(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -50135,6 +50212,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -50669,6 +50749,9 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_physicalHeatConnectionCapacity_kW]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -52187,11 +52270,11 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	}
 	
 	public double getInputCapacity_kW() {
-		return this.inputCapacity_kW;
+		return this.inputCapacity_kW; 
 	}
 	
 	public double getOutputCapacity_kW() {
-		return this.inputCapacity_kW * this.eta_r;
+		return this.inputCapacity_kW * this.eta_r ;
 	}
 
 	/**
@@ -55107,21 +55190,22 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
  */	
 public class J_EAElectricHob extends J_EAConversion implements Serializable {
 
-	private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.HEAT;
-	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	protected double outputTemperature_degC;
-	protected double capacityElectric_kW;
+	//protected double capacityElectric_kW;
 
     /**
      * Default constructor
      */
-    public J_EAElectricHob(Agent ownerAgent, double capacityThermal_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
+	// The efficiency is the amount of heat that is retained within the building
+    public J_EAElectricHob(Agent ownerAgent, double inputCapacity_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
     	this.parentAgent= ownerAgent;
-	    //this.capacityHeat_kW = capacityThermal_kW;
+	    this.inputCapacity_kW = inputCapacity_kW;
 	    this.eta_r = efficiency;
 	    //this.capacityElectric_kW = capacityThermal_kW / eta_r;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
+		this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
+		this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
 	    activeEnergyCarriers.add(this.energyCarrierProduced);
 	    activeEnergyCarriers.add(this.energyCarrierConsumed);
@@ -55131,8 +55215,8 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
     @Override 
     public void operate( double ratioOfCapacity ) {
     	//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
-    	double heatProduction_kW = capacityElectric_kW * ratioOfCapacity * eta_r;
-		double electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
+    	double heatProduction_kW = this.inputCapacity_kW * ratioOfCapacity * eta_r;
+		double electricityConsumption_kW = this.inputCapacity_kW * ratioOfCapacity;
 		this.energyUse_kW = (electricityConsumption_kW - heatProduction_kW);
 		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW - heatProduction_kW); // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
@@ -55151,7 +55235,7 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 		return
 			"AssetType = " + energyAssetType + 
 			" parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
-			" capacityElectric_kW = " + this.capacityElectric_kW +" "+
+			" capacityElectric_kW = " + this.inputCapacity_kW +" "+
 			//"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"eta_r = " + this.eta_r+" " +
 			"outputTemperature_degC = " + this.outputTemperature_degC + " "+
@@ -55757,6 +55841,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 	public double powerFraction_fr=0;
 	private int rowIndex;
 	private boolean cooking = false;
+	private double timeStep_min;
     /**
      * Default constructor
      */
@@ -55767,8 +55852,12 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	//this.energyModel = main;
     	this.rowIndex = rowIndex;
     	this.HOB=HOB;
-    	
     	//int rowIndex = uniform_discr(2, 300); 
+    	//traceln("RowIndex: %s", this.rowIndex);
+    	//traceln(this.HOB.getParentAgent());
+    	
+    	this.timeStep_min = 60 * this.HOB.timestep_h;
+    	
     	double v_cookingPatternIndex = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 1);
     	int nbOfCookingSessions = (int)(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 2));
 
@@ -55788,18 +55877,28 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     			v_eventIndex = 0;
     		}
     	}
-
+    	
+    	
     	//traceln("Current model time in minutes: " + energyModel.t_h*60 + ", nb sessions: " + nbOfCookingSessions);
+    	//traceln("Starttimes: %s", starttimes_min);
+    	//traceln("Endtimes: %s", endtimes_min);
     }
     
     public void manageActivities(double time_min) {
     	//traceln("Cooking tracker current time: " + time_min);
+    	//traceln("Event index: " + v_eventIndex);
+    	//traceln("startTimes: " + starttimes_min);
+    	//traceln("endTimes: " + endtimes_min);
+    	//traceln("powerFractions_fr: "  + powerFractions_fr);
+    	
     	if (cooking) {
 	    	if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
 
 	    		//main.v_activeCookingSessions.decrementAndGet();
 	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
-	    		powerFraction_fr = 0;
+				// factor to compensate for the fact that you might not be cooking for the entire timestep.
+				double fr = (time_min - this.endtimes_min.get(this.v_eventIndex)) / this.timeStep_min;
+				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);
 	    		
 				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
 				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
@@ -55810,25 +55909,33 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 				cooking=false;
 				
 				if (time_min >= starttimes_min.get(v_eventIndex)) {
-					powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
+					// factor to compensate for the fact that you might not be cooking for the entire timestep.
+					fr = (time_min - this.starttimes_min.get(this.v_eventIndex)) / this.timeStep_min;
+					this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);	    		
 					//main.v_activeCookingSessions.incrementAndGet();
 					cooking=true;
 					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, v_eventIndex");
 				}
 	    	}
+	    	else {
+	    		this.powerFraction_fr = this.starttimes_min.get(this.v_eventIndex);
+	    	}
     	} else if (time_min >= starttimes_min.get(v_eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
     		/*if (endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) > 100) {
 			traceln("Cooking event longer than 100 minutes!! Rowindex %s, eventIndex %s.", rowIndex, v_eventIndex);
 			}*/
-   		
-			powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
+    		
+			// factor to compensate for the fact that you might not be cooking for the entire timestep.
+			double fr = (time_min - this.starttimes_min.get(this.v_eventIndex)) / this.timeStep_min;
+			this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);	    		
 			//main.v_activeCookingSessions.incrementAndGet();
 			cooking=true;
 			if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session in the same timestep? Still need to fix energy use for this case!! 
 	    	
 	    		//main.v_activeCookingSessions.decrementAndGet();
 	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
-	    		powerFraction_fr = 0;
+				fr = (this.endtimes_min.get(this.v_eventIndex) - this.starttimes_min.get(this.v_eventIndex)) / this.timeStep_min;	    		
+				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);	    		
 	    		
 				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
 				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
@@ -55838,7 +55945,10 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 				}
 				cooking=false;
 			}
-    	} 
+    	}
+    	else {
+    		this.powerFraction_fr = 0;
+    	}
     	//if (powerFraction_fr > 0 ) { traceln("Cooking event in progress!"); }
     	HOB.f_updateAllFlows(powerFraction_fr);
     }
