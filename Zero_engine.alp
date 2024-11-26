@@ -803,10 +803,6 @@
 				<Name><![CDATA[HEATPUMP_AIR]]></Name>
 			</Option>
 			<Option>
-				<Id>1665486897604</Id>
-				<Name><![CDATA[DISTRICTHEAT]]></Name>
-			</Option>
-			<Option>
 				<Id>1665486901407</Id>
 				<Name><![CDATA[NONE]]></Name>
 			</Option>
@@ -849,6 +845,10 @@
 			<Option>
 				<Id>1665501223992</Id>
 				<Name><![CDATA[HYDROGENBURNER]]></Name>
+			</Option>
+			<Option>
+				<Id>1665486897604</Id>
+				<Name><![CDATA[DISTRICTHEAT]]></Name>
 			</Option>
 			<Option>
 				<Id>1711395650860</Id>
@@ -12939,7 +12939,7 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 							<Name><![CDATA[p_heatStrategy]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nbCompanies]]></Name>
+							<Name><![CDATA[p_nbCompaniesTotal]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nbHouseholds]]></Name>
@@ -12949,6 +12949,15 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nbCompanies]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nbIndustry]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nbAgriculture]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -50669,6 +50678,15 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nbCompanies]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nbIndustry]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nbAgriculture]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -50763,7 +50781,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514794122</Id>
 					<Name><![CDATA[v_amountOfGasBurners_companies_fr]]></Name>
-					<X>1690</X><Y>60</Y>
+					<X>1690</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50775,7 +50793,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514798317</Id>
 					<Name><![CDATA[v_amountOfHybridHeatpump_companies_fr]]></Name>
-					<X>1690</X><Y>80</Y>
+					<X>1690</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50787,7 +50805,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514800696</Id>
 					<Name><![CDATA[v_amountOfElectricHeatpumps_companies_fr]]></Name>
-					<X>1690</X><Y>100</Y>
+					<X>1690</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50799,7 +50817,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514802997</Id>
 					<Name><![CDATA[v_amountOfDistrictHeating_companies_fr]]></Name>
-					<X>1690</X><Y>120</Y>
+					<X>1690</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50811,7 +50829,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514805108</Id>
 					<Name><![CDATA[v_amountOfGasBurners_houses_fr]]></Name>
-					<X>1690</X><Y>170</Y>
+					<X>1690</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50823,7 +50841,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514809527</Id>
 					<Name><![CDATA[v_amountOfHybridHeatpump_houses_fr]]></Name>
-					<X>1690</X><Y>190</Y>
+					<X>1690</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50835,7 +50853,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514811890</Id>
 					<Name><![CDATA[v_amountOfElectricHeatpumps_houses_fr]]></Name>
-					<X>1690</X><Y>210</Y>
+					<X>1690</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50847,7 +50865,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514815083</Id>
 					<Name><![CDATA[v_amountOfDistrictHeating_houses_fr]]></Name>
-					<X>1690</X><Y>230</Y>
+					<X>1690</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50869,9 +50887,57 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1732535845737</Id>
-					<Name><![CDATA[v_amountOfHydrogenUseForHeating_companies_fr]]></Name>
-					<X>1690</X><Y>140</Y>
+					<Id>1732636587634</Id>
+					<Name><![CDATA[v_amountOfGasBurners_industry_fr]]></Name>
+					<X>2170</X><Y>60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636587636</Id>
+					<Name><![CDATA[v_amountOfHybridHeatpump_industry_fr]]></Name>
+					<X>2170</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636587638</Id>
+					<Name><![CDATA[v_amountOfElectricHeatpumps_industry_fr]]></Name>
+					<X>2170</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636587640</Id>
+					<Name><![CDATA[v_amountOfDistrictHeating_industry_fr]]></Name>
+					<X>2170</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636587642</Id>
+					<Name><![CDATA[v_amountOfHydrogenUseForHeating_industry_fr]]></Name>
+					<X>2170</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50881,6 +50947,54 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636647667</Id>
+					<Name><![CDATA[v_amountOfGasBurners_agriculture_fr]]></Name>
+					<X>2170</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636647669</Id>
+					<Name><![CDATA[v_amountOfHybridHeatpump_agriculture_fr]]></Name>
+					<X>2170</X><Y>230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636647671</Id>
+					<Name><![CDATA[v_amountOfElectricHeatpumps_agriculture_fr]]></Name>
+					<X>2170</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1732636647673</Id>
+					<Name><![CDATA[v_amountOfDistrictHeating_agriculture_fr]]></Name>
+					<X>2170</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -50909,7 +51023,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<Id>1722588367044</Id>
 					<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 					<Description><![CDATA[Threshold for when the gas burner needs to kick in in a hybrid heatpump system]]></Description>
-					<X>1720</X><Y>360</Y>
+					<X>1720</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50953,8 +51067,8 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1729069223731</Id>
-					<Name><![CDATA[p_nbCompanies]]></Name>
-					<X>1680</X><Y>680</Y>
+					<Name><![CDATA[p_nbCompaniesTotal]]></Name>
+					<X>1680</X><Y>700</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50975,7 +51089,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="Parameter">
 					<Id>1729069237070</Id>
 					<Name><![CDATA[p_nbHouseholds]]></Name>
-					<X>1680</X><Y>700</Y>
+					<X>1680</X><Y>680</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50997,7 +51111,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<Id>1730911077796</Id>
 					<Name><![CDATA[p_municipality]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1680</X><Y>730</Y>
+					<X>1670</X><Y>830</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51008,6 +51122,69 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1730911077794</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1732637253709</Id>
+					<Name><![CDATA[p_nbCompanies]]></Name>
+					<X>1700</X><Y>720</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1732637253707</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1732637257024</Id>
+					<Name><![CDATA[p_nbIndustry]]></Name>
+					<X>1700</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1732637257022</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1732637259177</Id>
+					<Name><![CDATA[p_nbAgriculture]]></Name>
+					<X>1700</X><Y>760</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1732637259175</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -51074,7 +51251,7 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722514612938</Id>
 					<Name><![CDATA[f_setHeatingMethodPct_companies]]></Name>
-					<X>1690</X><Y>270</Y>
+					<X>1690</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51083,13 +51260,10 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 						<Name><![CDATA[pctArray]]></Name>
 						<Type><![CDATA[double[]]]></Type>
 					</Parameter>
-					<Body><![CDATA[//Calculate actual space heating 
-double actualHeatingDemandSpaceHeating_fr =  (1 - v_amountOfHydrogenUseForHeating_companies_fr);
-
-v_amountOfGasBurners_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[0]/100;
-v_amountOfElectricHeatpumps_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[1]/100;
-v_amountOfHybridHeatpump_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[2]/100;
-v_amountOfDistrictHeating_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[3]/100;
+					<Body><![CDATA[v_amountOfGasBurners_companies_fr = pctArray[0]/100;
+v_amountOfElectricHeatpumps_companies_fr = pctArray[1]/100;
+v_amountOfHybridHeatpump_companies_fr = pctArray[2]/100;
+v_amountOfDistrictHeating_companies_fr = pctArray[3]/100;
 
 ]]></Body>
 				</Function>
@@ -51098,7 +51272,7 @@ v_amountOfDistrictHeating_companies_fr = actualHeatingDemandSpaceHeating_fr * pc
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722514620314</Id>
 					<Name><![CDATA[f_setHeatingMethodPct_houses]]></Name>
-					<X>1690</X><Y>290</Y>
+					<X>1690</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51160,7 +51334,7 @@ p_quaternaryHeatingAsset.f_updateAllFlows(powerFraction_HYDROGENBURNER);
 					<ReturnType><![CDATA[double[]]]></ReturnType>
 					<Id>1722587530130</Id>
 					<Name><![CDATA[f_dividePowerDemandHeatingAssets]]></Name>
-					<X>1690</X><Y>340</Y>
+					<X>1690</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51648,8 +51822,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1732550952237</Id>
-					<Name><![CDATA[f_setH2HeatingFr_companies]]></Name>
-					<X>1690</X><Y>310</Y>
+					<Name><![CDATA[f_setH2HeatingFr_industry]]></Name>
+					<X>2170</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51658,9 +51832,54 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 						<Name><![CDATA[amountOfHydrogenUseForHeating]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[double maximumHydrogenUsedForHeating_companies_fr = 1; // For now
+					<Body><![CDATA[double maximumHydrogenUsedForHeating_industry_fr = 1; // For now
 
-v_amountOfHydrogenUseForHeating_companies_fr = max(0,min(maximumHydrogenUsedForHeating_companies_fr,amountOfHydrogenUseForHeating));
+v_amountOfHydrogenUseForHeating_industry_fr = max(0,min(maximumHydrogenUsedForHeating_industry_fr,amountOfHydrogenUseForHeating));
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1732636739570</Id>
+					<Name><![CDATA[f_setHeatingMethodPct_industry]]></Name>
+					<X>2170</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[pctArray]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Calculate actual space heating 
+double actualHeatingDemandSpaceHeating_fr =  (1 - v_amountOfHydrogenUseForHeating_industry_fr);
+
+v_amountOfGasBurners_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[0]/100;
+v_amountOfElectricHeatpumps_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[1]/100;
+v_amountOfHybridHeatpump_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[2]/100;
+v_amountOfDistrictHeating_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[3]/100;
+
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1732636773704</Id>
+					<Name><![CDATA[f_setHeatingMethodPct_agriculture]]></Name>
+					<X>2170</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[pctArray]]></Name>
+						<Type><![CDATA[double[]]]></Type>
+					</Parameter>
+					<Body><![CDATA[v_amountOfGasBurners_agriculture_fr = pctArray[0]/100;
+v_amountOfElectricHeatpumps_agriculture_fr = pctArray[1]/100;
+v_amountOfHybridHeatpump_agriculture_fr = pctArray[2]/100;
+v_amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
+
 ]]></Body>
 				</Function>
 			</Functions>
@@ -51734,7 +51953,7 @@ v_amountOfHydrogenUseForHeating_companies_fr = max(0,min(maximumHydrogenUsedForH
 					<LineColor>-65536</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>470</Width>
+					<Width>960</Width>
 					<Height>400</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -56326,7 +56545,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgEfficiencyHydrogenBurner;
 	public double p_avgOutputTemperatureHydrogenBurner_degC;
 	public double p_avgPVPower_kWpm2;
-	public double p_avgRatioRoofPotentialPV;
+	public double p_avgAnnualProductionPV_kWhpWp;
 	public double p_avgRatioBatteryCapacity_v_Power;
 
 	/**
