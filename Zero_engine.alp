@@ -6693,6 +6693,11 @@ for (GridConnection GC : c_gridConnections) {
 	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	GC.c_tripTrackers.forEach(tt->tt.setStartIndex(p_runStartTime_h));
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(p_runStartTime_h*60));
+	if (GC instanceof GCHouse) {
+		if (((GCHouse)GC).p_cookingTracker != null ) {
+			((GCHouse)GC).p_cookingTracker.storeAndResetState();
+		}
+	}
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -6798,6 +6803,11 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
+	if (GC instanceof GCHouse) {
+		if (((GCHouse)GC).p_cookingTracker != null ) {
+			((GCHouse)GC).p_cookingTracker.restoreState();
+		}
+	}
 }
 f_setInitialValues();
 
@@ -55520,7 +55530,7 @@ public class J_ActivityTracker implements Serializable {
 	//private ArrayList<Double> eventMagnitude = new ArrayList<>();
     public int nbActivities = 0;
 	public int v_eventIndex = 0;
-	private int v_eventIndexStored =0;
+	protected int v_eventIndexStored =0;
 
 	
     /**
@@ -55842,7 +55852,12 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 	private int rowIndex;
 	private boolean cooking = false;
 	private double timeStep_min;
-    /**
+	private ArrayList<Double> initalStarttimes_min;
+	private ArrayList<Double> initalEndtimes_min;
+	private ArrayList<Double> storedStarttimes_min;
+	private ArrayList<Double> storedEndtimes_min;
+
+	/**
      * Default constructor
      */
     public J_ActivityTrackerCooking() {
@@ -55879,6 +55894,8 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	}
     	
     	
+    	initalStarttimes_min = new ArrayList<>(starttimes_min);
+    	initalEndtimes_min = new ArrayList<>(endtimes_min);
     	//traceln("Current model time in minutes: " + energyModel.t_h*60 + ", nb sessions: " + nbOfCookingSessions);
     	//traceln("Starttimes: %s", starttimes_min);
     	//traceln("Endtimes: %s", endtimes_min);
@@ -55952,6 +55969,24 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	//if (powerFraction_fr > 0 ) { traceln("Cooking event in progress!"); }
     	HOB.f_updateAllFlows(powerFraction_fr);
     }
+    
+    @Override
+    public void storeAndResetState() {
+    	v_eventIndexStored = v_eventIndex;
+    	storedStarttimes_min = new ArrayList<>(starttimes_min);
+    	storedEndtimes_min = new ArrayList<>(endtimes_min);    	
+		starttimes_min = new ArrayList<>(initalStarttimes_min);
+		endtimes_min = new ArrayList<>(initalEndtimes_min);
+    	v_eventIndex = 0;
+
+    }
+    
+    @Override
+    public void restoreState() {
+    	v_eventIndex = v_eventIndexStored;
+		starttimes_min = new ArrayList<>(storedStarttimes_min);
+		endtimes_min = new ArrayList<>(storedEndtimes_min);
+	}
     
     @Override
 	public String toString() {
