@@ -53177,9 +53177,6 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
      */
 
     public J_EAConversionGasBurner(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
-	    if (outputCapacity_kW == 0) {
-	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
-	    }
     	this.parentAgent = parentAgent;
 	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
@@ -53194,7 +53191,12 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    
 	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
 	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+	    
+	    if (outputHeatCapacity_kW == 0) {
+	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
+	    }
+	    
+	    registerEnergyAsset();
 	}
     
 	@Override
@@ -54642,9 +54644,7 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
      */
     
     public J_EAConversionHeatDeliverySet(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
-	    if (outputCapacity_kW == 0) {
-	    	throw new RuntimeException(String.format("Exception: J_EAConversionHeatDeliverySet with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
-	    }
+
     	this.parentAgent = parentAgent;
 	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
@@ -54659,6 +54659,11 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    
 	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
 	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    
+	    if (outputHeatCapacity_kW == 0) {
+	    	throw new RuntimeException(String.format("Exception: J_EAConversionHeatDeliverySet with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
+	    }
+	    
 		registerEnergyAsset();
 	}
 
