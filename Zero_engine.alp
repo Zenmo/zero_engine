@@ -10389,9 +10389,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11278,9 +11275,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_cookingMethod]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11443,9 +11437,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11604,9 +11595,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isSliderGC]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -11806,9 +11794,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11965,9 +11950,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12123,9 +12105,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12285,9 +12264,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isSliderGC]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12769,9 +12745,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12948,9 +12921,6 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 							<Name><![CDATA[p_municipality]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_nbCompanies]]></Name>
 						</Parameter>
 						<Parameter>
@@ -12958,6 +12928,9 @@ dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_tim
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nbAgriculture]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -20495,30 +20468,6 @@ import javax.management.RuntimeErrorException;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1726146956843</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1732536517365</Id>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-					<X>580</X><Y>140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[J_EAConversion]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[null]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1732536517363</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -41215,9 +41164,6 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -43289,9 +43235,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -44376,9 +44319,6 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -44863,9 +44803,6 @@ public void f_fillAnnualDataSets() {
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -46633,9 +46570,6 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -47312,9 +47246,6 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -48644,9 +48575,6 @@ public void f_resetSpecificGCStates(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -50137,9 +50065,6 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -50675,18 +50600,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbCompanies]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbIndustry]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_nbAgriculture]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -50829,7 +50742,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514805108</Id>
 					<Name><![CDATA[v_amountOfGasBurners_houses_fr]]></Name>
-					<X>1690</X><Y>210</Y>
+					<X>1690</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50841,7 +50754,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514809527</Id>
 					<Name><![CDATA[v_amountOfHybridHeatpump_houses_fr]]></Name>
-					<X>1690</X><Y>230</Y>
+					<X>1690</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50853,7 +50766,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514811890</Id>
 					<Name><![CDATA[v_amountOfElectricHeatpumps_houses_fr]]></Name>
-					<X>1690</X><Y>250</Y>
+					<X>1690</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50865,7 +50778,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1722514815083</Id>
 					<Name><![CDATA[v_amountOfDistrictHeating_houses_fr]]></Name>
-					<X>1690</X><Y>270</Y>
+					<X>1690</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50877,6 +50790,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1724397994084</Id>
 					<Name><![CDATA[v_nbCurrentHouseholdsWithBattery]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1680</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -50937,7 +50851,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1732636587642</Id>
 					<Name><![CDATA[v_amountOfHydrogenUseForHeating_industry_fr]]></Name>
-					<X>2170</X><Y>140</Y>
+					<X>2170</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50952,7 +50866,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1732636647667</Id>
 					<Name><![CDATA[v_amountOfGasBurners_agriculture_fr]]></Name>
-					<X>2170</X><Y>210</Y>
+					<X>2170</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50964,7 +50878,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1732636647669</Id>
 					<Name><![CDATA[v_amountOfHybridHeatpump_agriculture_fr]]></Name>
-					<X>2170</X><Y>230</Y>
+					<X>2170</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50976,7 +50890,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1732636647671</Id>
 					<Name><![CDATA[v_amountOfElectricHeatpumps_agriculture_fr]]></Name>
-					<X>2170</X><Y>250</Y>
+					<X>2170</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50988,7 +50902,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				<Variable Class="PlainVariable">
 					<Id>1732636647673</Id>
 					<Name><![CDATA[v_amountOfDistrictHeating_agriculture_fr]]></Name>
-					<X>2170</X><Y>270</Y>
+					<X>2170</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51023,7 +50937,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<Id>1722588367044</Id>
 					<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 					<Description><![CDATA[Threshold for when the gas burner needs to kick in in a hybrid heatpump system]]></Description>
-					<X>1720</X><Y>340</Y>
+					<X>1720</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51192,6 +51106,30 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1732697933587</Id>
+					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
+					<X>580</X><Y>140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[J_EAConversion]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[null]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1732697933585</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1722589144737</Id>
 					<Name><![CDATA[c_heatDemandEA]]></Name>
@@ -51272,7 +51210,7 @@ v_amountOfDistrictHeating_companies_fr = pctArray[3]/100;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722514620314</Id>
 					<Name><![CDATA[f_setHeatingMethodPct_houses]]></Name>
-					<X>1690</X><Y>190</Y>
+					<X>1690</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51334,7 +51272,7 @@ p_quaternaryHeatingAsset.f_updateAllFlows(powerFraction_HYDROGENBURNER);
 					<ReturnType><![CDATA[double[]]]></ReturnType>
 					<Id>1722587530130</Id>
 					<Name><![CDATA[f_dividePowerDemandHeatingAssets]]></Name>
-					<X>1690</X><Y>320</Y>
+					<X>1690</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51346,20 +51284,38 @@ double powerDemandDivision[] = {0, 0, 0, 0}; // {Gasburner power request, HP pow
 double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
 //Demanded heating power for companies and household seperatly the current time step
-double powerDemand_companies_kW = max(0,c_heatDemandEA.get("COMPANIES").getLastFlows().get(OL_EnergyCarriers.HEAT));
 double powerDemand_households_kW = max(0,c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().get(OL_EnergyCarriers.HEAT));
+double powerDemand_companies_kW = max(0,c_heatDemandEA.get("COMPANIES").getLastFlows().get(OL_EnergyCarriers.HEAT));
+double powerDemand_industry_kW = max(0,c_heatDemandEA.get("INDUSTRY").getLastFlows().get(OL_EnergyCarriers.HEAT));
+double powerDemand_agriculture_kW = max(0,c_heatDemandEA.get("AGRICULTURE").getLastFlows().get(OL_EnergyCarriers.HEAT));
+
+//Divide the powerdemand per heating type
+double gasBurnerPowerDemand 		= powerDemand_households_kW*v_amountOfGasBurners_houses_fr + 
+									  powerDemand_companies_kW*v_amountOfGasBurners_companies_fr + 
+									  powerDemand_industry_kW*v_amountOfGasBurners_companies_fr + 
+									  powerDemand_agriculture_kW*v_amountOfGasBurners_agriculture_fr;
+									  
+double electricHPPowerDemand 		= powerDemand_households_kW*v_amountOfElectricHeatpumps_houses_fr + 
+									  powerDemand_companies_kW*v_amountOfElectricHeatpumps_companies_fr + 
+									  powerDemand_industry_kW*v_amountOfElectricHeatpumps_industry_fr + 
+									  powerDemand_agriculture_kW*v_amountOfElectricHeatpumps_agriculture_fr;
+									  
+double hybridHPPowerDemand 	   		= powerDemand_households_kW*v_amountOfHybridHeatpump_houses_fr +
+									  powerDemand_companies_kW*v_amountOfHybridHeatpump_companies_fr +
+									  powerDemand_industry_kW*v_amountOfHybridHeatpump_industry_fr + 
+									  powerDemand_agriculture_kW*v_amountOfHybridHeatpump_agriculture_fr;
+									  
+double districtHeatingPowerDemand   = powerDemand_households_kW*v_amountOfDistrictHeating_houses_fr +
+									  powerDemand_companies_kW*v_amountOfDistrictHeating_companies_fr + 
+									  powerDemand_industry_kW*v_amountOfDistrictHeating_industry_fr + 
+									  powerDemand_agriculture_kW*v_amountOfDistrictHeating_agriculture_fr;
+									  
+//double hydrogenBurnerPowerDemand	= powerDemand_industry_kW*v_amountOfHydrogenUseForHeating_industry_fr;
+double hydrogenBurnerPowerDemand 	= (powerDemand_households_kW + powerDemand_companies_kW + powerDemand_industry_kW + powerDemand_agriculture_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand; // To make sure all power demand is met
 
 
 //Get the current Heatpump COP
 double HP_COP = ((J_EAConversionHeatPump)p_secondaryHeatingAsset).getCOP();
-
-//Divide the powerdemand per heating type
-double gasBurnerPowerDemand 		= powerDemand_companies_kW*v_amountOfGasBurners_companies_fr		 + powerDemand_households_kW*v_amountOfGasBurners_houses_fr;
-double electricHPPowerDemand 		= powerDemand_companies_kW*v_amountOfElectricHeatpumps_companies_fr + powerDemand_households_kW*v_amountOfElectricHeatpumps_houses_fr;
-double hybridHPPowerDemand 	   		= powerDemand_companies_kW*v_amountOfHybridHeatpump_companies_fr	 + powerDemand_households_kW*v_amountOfHybridHeatpump_houses_fr;
-double districtHeatingPowerDemand   = powerDemand_companies_kW*v_amountOfDistrictHeating_companies_fr	 + powerDemand_households_kW*v_amountOfDistrictHeating_houses_fr;
-//double hydrogenBurnerPowerDemand	= powerDemand_companies_kW*v_amountOfHydrogenUseForHeating_companies_fr;
-double hydrogenBurnerPowerDemand 	= (powerDemand_companies_kW+powerDemand_households_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand; // To make sure all power demand is met
 
 if ( HP_COP < p_thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
 	powerDemandDivision[0] = gasBurnerPowerDemand + hybridHPPowerDemand;
@@ -51823,7 +51779,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1732550952237</Id>
 					<Name><![CDATA[f_setH2HeatingFr_industry]]></Name>
-					<X>2170</X><Y>330</Y>
+					<X>2170</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51866,7 +51822,7 @@ v_amountOfDistrictHeating_industry_fr = actualHeatingDemandSpaceHeating_fr * pct
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1732636773704</Id>
 					<Name><![CDATA[f_setHeatingMethodPct_agriculture]]></Name>
-					<X>2170</X><Y>190</Y>
+					<X>2170</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
