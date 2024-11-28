@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -46280,7 +46280,7 @@ if (p_batteryAsset != null){
 					<Body><![CDATA[double solar_forecast_kW;
 double wind_forecast_kW;
 
-double forecast_time_h = ElectrolyserAsset.getstartUpTimeStandby_h()+ 2*energyModel.p_timeStep_h;
+double forecast_time_h = ElectrolyserAsset.getStartUpTimeStandby_h()+ 2*energyModel.p_timeStep_h;
 
 //Get current limitation values
 //Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.getLastFlows();
@@ -46552,7 +46552,7 @@ switch (ElectrolyserAsset.getState()){
 		//Check if electrolyser will be able to be functional at least two time steps when powering up, if so: power_up = true.
 		if (c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/energyModel.p_timeStep_h)-2) < v_gridNodeCongestionLimit_kW && c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/energyModel.p_timeStep_h)-1) < v_gridNodeCongestionLimit_kW){
 			ElectrolyserAsset.setElectrolyserState(OL_ElectrolyserState.POWER_UP);
-			ElectrolyserAsset.setRemainingPowerUpDuration_timesteps(roundToInt(ElectrolyserAsset.getstartUpTimeStandby_h()/energyModel.p_timeStep_h));
+			ElectrolyserAsset.setRemainingPowerUpDuration_timesteps(roundToInt(ElectrolyserAsset.getStartUpTimeStandby_h()/energyModel.p_timeStep_h));
 		}
 	break;
 	
@@ -52745,23 +52745,42 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 		registerEnergyAsset();
 	}
 
+    @Override
+    public void f_updateAllFlows(double powerFraction_fr) {
+    	if ( powerFraction_fr < 0 ) {
+			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
+    	}
+    	else if ( powerFraction_fr == 0 ) {
+    		this.lastFlowsMap.clear();
+    		this.lastEnergyUse_kW = 0;
+    		return;
+    	}
+    	else {
+    		super.f_updateAllFlows( powerFraction_fr );
+    	}
+    }
+    
 	@Override
 	public void operate(double ratioOfCapacity) {
-		if (ratioOfCapacity < 0) {
-			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");
-		}
 		this.energyUse_kW = ratioOfCapacity * this.inputCapacity_kW * (1 - this.eta_r);
 		this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
     	this.flowsMap.put(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
-    	this.flowsMap.put(this.energyCarrierProduced, -ratioOfCapacity * this.outputCapacity_kW);
+    	this.flowsMap.addFlow(this.energyCarrierProduced, -ratioOfCapacity * this.outputCapacity_kW); // We don't put here, in case the energy carrier is the same
 	}
 	
 	public void setInputCapacity_kW ( double inputCapacity_kW ) {
 		this.inputCapacity_kW = inputCapacity_kW;
+		this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
 	}
 	
 	public void setOutputCapacity_kW ( double outputCapacity_kW ) {
 		this.outputCapacity_kW = outputCapacity_kW;
+		this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
+	}
+	
+	public void setEta_r( double efficiency_r) {
+		this.eta_r = efficiency_r;
+		this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	}
 	
 	public double getInputCapacity_kW() {
@@ -52775,9 +52794,6 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	public double getEta_r() {
 		return this.eta_r;
 	}
-    
-
-
 	
 	@Override
 	public String toString() {	
@@ -53171,13 +53187,6 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
 	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
-	}
-	
-	@Override
-	public void f_updateAllFlows(double powerFraction_fr) {
-		if (powerFraction_fr > 0) {
-			super.f_updateAllFlows(powerFraction_fr);
-		}
 	}
     
 	@Override
@@ -54364,6 +54373,13 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		this.updateParameters( this.baseTemperature_degC, this.outputTemperature_degC);
 	}
 
+    @Override
+	public void setEta_r( double efficiency_r) {
+		this.eta_r = efficiency_r;
+		this.COP_r = this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
+		this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r;
+	}
+    
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
@@ -54619,7 +54635,7 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
     
     public J_EAConversionHeatDeliverySet(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
 	    if (outputCapacity_kW == 0) {
-	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
+	    	throw new RuntimeException(String.format("Exception: J_EAConversionHeatDeliverySet with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
 	    }
     	this.parentAgent = parentAgent;
 	    this.outputCapacity_kW = outputCapacity_kW;
@@ -54915,52 +54931,23 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
  
     /**
      * Constructor initializing the fields
-     */
-    public J_EAConversionHydrogenBurner(Agent parentAgent, OL_EnergyAssetType assetType, double capacityThermal_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
-	    this.parentAgent = parentAgent;
-	    this.energyAssetType = assetType;
-	    this.eta_r = efficiency;
-	    this.inputCapacity_kW = capacityThermal_kW / this.eta_r;
-	    this.timestep_h = timestep_h;
+     */    
+    public J_EAConversionHydrogenBurner(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    	this.parentAgent = parentAgent;
+	    this.outputCapacity_kW = outputCapacity_kW;
+	    this.eta_r = efficiency_r;
+	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
+	    this.timestep_h = timestep_h;	    
 	    this.outputTemperature_degC = outputTemperature_degC;
+
+	    this.energyAssetType = OL_EnergyAssetType.HYDROGEN_BURNER;
+
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.HYDROGEN;
-	    activeEnergyCarriers.add(this.energyCarrierProduced);
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    
+	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
+	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
-	}
- 
-    @Override
-    public void operate(double ratioOfCapacity) {
-		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
-    	double hydrogenConsumption_kW = ratioOfCapacity * this.inputCapacity_kW;
-    	double heatProduction_kW = hydrogenConsumption_kW * this.eta_r;
-		
-		this.energyUse_kW = (hydrogenConsumption_kW - heatProduction_kW);
-		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses!
-		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
-    	//return arr;
-		this.heatProduced_kWh += heatProduction_kW * timestep_h;
- 
-		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
-		flowsMap.put(OL_EnergyCarriers.HYDROGEN, hydrogenConsumption_kW);		
-		//return new Pair(flowsMap, this.energyUse_kW);
- 
-    }
- 
-	public double getEnergyUsed_kWh() {
-		return energyUsed_kWh;
-	}
-	
-	@Override
-	public String toString() {
-		return
-			"AssetType = " + energyAssetType +
-			" parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
-			"eta_r = " + this.eta_r+" " +
-			"outputTemperature_degC = " + this.outputTemperature_degC + " "+
-			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " "+
-			"heatProducted_kWh = " +this.heatProduced_kWh + " ";
 	}
 	
 	@Override
@@ -55482,7 +55469,13 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
-
+    
+    @Override
+	public void setEta_r( double efficiency_r) {
+		this.eta_r = efficiency_r;
+		this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
+	}
+    
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
@@ -55547,10 +55540,6 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW);
 
     }
-
-	public double getEnergyUsed_kWh() {
-		return energyUsed_kWh;
-	}
 
 	@Override
 	public String toString() {
@@ -56381,19 +56370,8 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 		registerEnergyAsset();
 	}
     
-    public void setElectrolyserState(OL_ElectrolyserState electrolyserState) { // Used for regime control
-    	this.electrolyserState = electrolyserState;
-    }
-    
-    public void setRemainingPowerUpDuration_timesteps(int remainingPowerUpDuration_timesteps) {
-    	this.remainingPowerUpDuration_timesteps = remainingPowerUpDuration_timesteps;
-    }
-
     @Override
     public void operate(double ratioOfCapacity) {
-		if (ratioOfCapacity < 0) {
-			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");
-		}
 		double electricityConsumption_kW = inputCapacity_kW * ratioOfCapacity;
 		double hydrogenProduction_kW = 0;
 		if (electrolyserState == OL_ElectrolyserState.POWER_UP) {
@@ -56411,7 +56389,37 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
 		flowsMap.put(OL_EnergyCarriers.HYDROGEN, -hydrogenProduction_kW);
     }
+    
+    public void setElectrolyserState(OL_ElectrolyserState electrolyserState) { // Used for regime control
+    	this.electrolyserState = electrolyserState;
+    }
+    
+    public void setRemainingPowerUpDuration_timesteps(int remainingPowerUpDuration_timesteps) {
+    	this.remainingPowerUpDuration_timesteps = remainingPowerUpDuration_timesteps;
+    }
+    
+    public void setStartUpTimeStandby_h( double startUpTimeStandby_h ) { 
+        this.startUpTimeStandby_h = startUpTimeStandby_h;
+	}
+	
+    public void setLoadChangeTime_h( double loadChangeTime_h ) {
+    	this.loadChangeTime_h = loadChangeTime_h;
+	}
+	
+    public void setStartUpTimeShutdown_h( double startUpTimeShutdown_h ) {
+    	this.startUpTimeShutdown_h = startUpTimeShutdown_h;
+	}
+	
+    public void setStartUpTimeIdle_h( double startUpTimeIdle_h ) {
+    	this.startUpTimeIdle_h = startUpTimeIdle_h;
+	}
 
+    @Override
+	public void setEta_r( double efficiency_r) {
+		this.eta_r = efficiency_r;
+		this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
+	}
+    
 	public OL_ElectrolyserState getState() { // Used for regime control
     	return this.electrolyserState;
     }
@@ -56419,19 +56427,31 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     public int getRemainingPowerUpDuration_timesteps() {
     	return this.remainingPowerUpDuration_timesteps;
     }
+
+    public double getStartUpTimeStandby_h() { 
+        return this.startUpTimeStandby_h;
+	}
     
-    public double getstartUpTimeStandby_h() {
-    	return this.startUpTimeStandby_h;
-    }
- 
-	@Override
-	public String toString() {
-		return
-			"parentAgent = " + parentAgent +" " +
-			"capacityElectric_kW = " + this.inputCapacity_kW +" "+
-			"eta_r = " + this.eta_r+" ";
+	public double getLoadChangeTime_h() { 
+		return this.loadChangeTime_h;
+	}
+	
+	public double getStartUpTimeShutdown_h() {
+		return this.startUpTimeShutdown_h;
+	}
+	
+	public double getStartUpTimeIdle_h() {
+		return this.startUpTimeIdle_h;
 	}
 
+	@Override
+	public String toString() {	
+		return  this.energyAssetType + " in GC: " + ((GridConnection)this.parentAgent).p_gridConnectionID + ", "				
+				+ "InputCapacity: " + this.inputCapacity_kW + " kW, " 
+				+ "with efficiency: " + this.eta_r + ", "
+				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
+	}
+	
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
