@@ -52795,9 +52795,17 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 		return this.eta_r;
 	}
 	
+	public OL_EnergyCarriers getEnergyCarrierProduced() {
+		return this.energyCarrierProduced;
+	}
+	
+	public OL_EnergyCarriers getEnergyCarrierConsumed() {
+		return this.energyCarrierConsumed;
+	}
+	
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + ((GridConnection)this.parentAgent).p_gridConnectionID + ", "				
+		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "			
 				+ this.energyCarrierConsumed + " -> " + this.energyCarrierProduced + ", "
 				+ "OutputCapacity: " + this.outputCapacity_kW + " kW, " 
 				+ "with efficiency: " + this.eta_r + ", "
@@ -53168,12 +53176,12 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
      * Constructor initializing the fields
      */
 
-    public J_EAConversionGasBurner(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    public J_EAConversionGasBurner(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
 	    if (outputCapacity_kW == 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
 	    }
     	this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputCapacity_kW;
+	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.timestep_h = timestep_h;	    
@@ -54225,9 +54233,9 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionHeatPump(Agent parentAgent, double inputCapacity_kW, double eta_r, double timestep_h, double outputTemperature_degC, double baseTemperature_degC, double sourceAssetHeatPower_kW, double belowZeroHeatpumpEtaReductionFactor ) {
+    public J_EAConversionHeatPump(Agent parentAgent, double inputElectricCapacity_kW, double eta_r, double timestep_h, double outputTemperature_degC, double baseTemperature_degC, double sourceAssetHeatPower_kW, double belowZeroHeatpumpEtaReductionFactor ) {
 	    this.parentAgent = parentAgent;
-	    this.inputCapacity_kW = inputCapacity_kW;
+	    this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.timestep_h = timestep_h;
 	    this.eta_r = eta_r;
 	    this.outputTemperature_degC = outputTemperature_degC;
@@ -54633,12 +54641,12 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
      * Constructor initializing the fields
      */
     
-    public J_EAConversionHeatDeliverySet(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    public J_EAConversionHeatDeliverySet(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
 	    if (outputCapacity_kW == 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAConversionHeatDeliverySet with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
 	    }
     	this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputCapacity_kW;
+	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.timestep_h = timestep_h;	    
@@ -54932,9 +54940,9 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
     /**
      * Constructor initializing the fields
      */    
-    public J_EAConversionHydrogenBurner(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    public J_EAConversionHydrogenBurner(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
     	this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputCapacity_kW;
+	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.timestep_h = timestep_h;	    
@@ -54977,9 +54985,9 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
      * Default constructor
      */
 
-    public J_EAConversionElectricHeater(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    public J_EAConversionElectricHeater(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
 	    this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputCapacity_kW;
+	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.timestep_h = timestep_h;	    
@@ -55453,9 +55461,9 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
      * Constructor initializing the fields
      */
     
-    public J_EAConversionElektrolyser(Agent parentAgent, double inputCapacity_kW, double efficiency_r, double timestep_h) {
+    public J_EAConversionElektrolyser(Agent parentAgent, double inputElectricCapacity_kW, double efficiency_r, double timestep_h) {
     	this.parentAgent = parentAgent;
-	    this.inputCapacity_kW = inputCapacity_kW;
+	    this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
 	    this.timestep_h = timestep_h;	    
@@ -55494,68 +55502,98 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements Serializable {
 
 	protected double outputTemperature_degC;
-	protected double capacityHeat_kW;
-	protected double capacityElectric_kW;
-    /**
+	protected double outputHeatCapacity_kW;
+	protected double outputElectricCapacity_kW;
+	protected List<OL_EnergyCarriers> energyCarriersProduced = new ArrayList<>();
+    
+	/**
      * Default constructor
      */
+	
     public J_EAConversionGasCHP() {
     }
 
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionGasCHP(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double efficiency, double timestep_h, double outputTemperature_degC ) {
-	    this.parentAgent = parentAgent;
-	    this.capacityElectric_kW = capacityElectric_kW;
+    public J_EAConversionGasCHP(Agent parentAgent, double outputElectricCapacity_kW, double outputHeatCapacity_kW, double efficiency, double timestep_h, double outputTemperature_degC ) {
+	    if (outputElectricCapacity_kW < 0 || outputHeatCapacity_kW < 0 || (outputElectricCapacity_kW == 0 && outputHeatCapacity_kW == 0)) {
+	    	throw new RuntimeException("Impossible capacities for J_EAConversionGasCHP. outputElectricCapacity_kW: " + outputElectricCapacity_kW + ", outputHeatCapacity_kW: " + outputHeatCapacity_kW);
+	    }
+    	this.parentAgent = parentAgent;
+	    this.outputElectricCapacity_kW = outputElectricCapacity_kW;
+	    this.outputHeatCapacity_kW = outputHeatCapacity_kW; 
 	    this.eta_r = efficiency;
-	    this.capacityHeat_kW = capacityHeat_kW; 
+	    this.inputCapacity_kW = (outputElectricCapacity_kW + outputHeatCapacity_kW) / this.eta_r ;
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
-    	this.energyCarrierProduced = OL_EnergyCarriers.ELECTRICITY;
+	    
+	    this.energyAssetType = OL_EnergyAssetType.METHANE_CHP;
+	    
+    	this.energyCarriersProduced.add( OL_EnergyCarriers.ELECTRICITY );
+    	this.energyCarriersProduced.add( OL_EnergyCarriers.HEAT );
     	this.energyCarrierConsumed= OL_EnergyCarriers.METHANE;        
-	    activeEnergyCarriers.add(this.energyCarrierProduced);
+	    activeEnergyCarriers.addAll(this.energyCarriersProduced);
 	    activeEnergyCarriers.add(this.energyCarrierConsumed);
-	    activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
-		registerEnergyAsset();
+		
+	    registerEnergyAsset();
 	}
 
 	@Override
     public void operate(double ratioOfCapacity) {
-		//traceln("CHP can produce " + capacityElectric_kW + " kW electricity");
-    	double electricityProduction_kW = capacityElectric_kW * ratioOfCapacity;
-		double heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
+    	double electricityProduction_kW = this.outputElectricCapacity_kW * ratioOfCapacity;
+		double heatProduction_kW = this.outputHeatCapacity_kW * ratioOfCapacity;
+		double methaneConsumption_kW = this.inputCapacity_kW * ratioOfCapacity;
 		
-		double methaneConsumption_kW = (electricityProduction_kW  + heatProduction_kW )/ eta_r ;
-		this.energyUse_kW = (methaneConsumption_kW - heatProduction_kW - electricityProduction_kW)  ;
-		this.energyUsed_kWh += timestep_h * energyUse_kW; // This represents losses!
-		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
-    	//return arr;
+		this.energyUse_kW = methaneConsumption_kW - heatProduction_kW - electricityProduction_kW ;
+		this.energyUsed_kWh += energyUse_kW * timestep_h;
+
 		this.heatProduced_kWh += heatProduction_kW * timestep_h;
 		this.electricityProduced_kWh += electricityProduction_kW * timestep_h;
-		//this.electricityProduced_kWh = this.electricityProduction_kW * timestep_h;
-				
+		
 		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -electricityProduction_kW);
 		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW);
-
     }
 
 	@Override
-	public String toString() {
-		return
-			"parentAgent = " + parentAgent +" " +
-			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
-			"eta_r = " + this.eta_r+" "+
-			"energyUsed_kWh"+ this.energyUsed_kWh+" "+
-			"heatProduced_kWh = " + this.heatProduced_kWh + " ";
+	public void setInputCapacity_kW( double inputCapacity_kW) {
+		double scaling_fr = inputCapacity_kW / this.inputCapacity_kW;
+		this.inputCapacity_kW = inputCapacity_kW;
+		this.outputHeatCapacity_kW = scaling_fr * this.outputHeatCapacity_kW;
+		this.outputElectricCapacity_kW = scaling_fr * this.outputElectricCapacity_kW;
+	}
+	
+	@Override
+	public void setEta_r( double efficiency) {
+	    this.eta_r = efficiency;
+	    this.inputCapacity_kW = (this.outputElectricCapacity_kW + this.outputHeatCapacity_kW) / this.eta_r ;
+	}
+	
+	@Override
+	public OL_EnergyCarriers getEnergyCarrierProduced() {
+		throw new RuntimeException("Can not get EnergyCarrierProduced from J_EAConversionGasCHP, use getEnergyCarriersProduced() instead.");
+	}
+	
+	public List<OL_EnergyCarriers> getEnergyCarriersProduced() {
+		return this.energyCarriersProduced;
+	}
+	
+	@Override
+	public String toString() {	
+		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "				
+				+ "OutputElectricCapacity: " + this.outputElectricCapacity_kW + " kW, " 
+				+ "OutputHeatCapacity: " + this.outputHeatCapacity_kW + " kW, "
+				+ "with efficiency: " + this.eta_r + ", "
+				+ "Current electric output: " + -this.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY) + " kW, "
+				+ "Current heat output: " + -this.getLastFlows().get(OL_EnergyCarriers.HEAT) + " kW";
 	}
 	
 	@Override
 	public double getCurrentTemperature() {
 		return outputTemperature_degC;
 	}
+	
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
@@ -56347,10 +56385,10 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionElectrolyser(Agent parentAgent, double inputCapacity_kW, double efficiency_r, double  timestep_h, OL_ElectrolyserState electrolyserState, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
+    public J_EAConversionElectrolyser(Agent parentAgent, double inputElectricCapacity_kW, double efficiency_r, double  timestep_h, OL_ElectrolyserState electrolyserState, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
 	    this.parentAgent = parentAgent;
 	    this.electrolyserState = electrolyserState;
-	    this.inputCapacity_kW = inputCapacity_kW;
+	    this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
 	    this.timestep_h = timestep_h;
@@ -56446,7 +56484,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + ((GridConnection)this.parentAgent).p_gridConnectionID + ", "				
+		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "				
 				+ "InputCapacity: " + this.inputCapacity_kW + " kW, " 
 				+ "with efficiency: " + this.eta_r + ", "
 				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
@@ -56480,9 +56518,9 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
      * Constructor initializing the fields
      */
 
-    public J_EAConversionFuelCell(Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h) {
+    public J_EAConversionFuelCell(Agent parentAgent, double outputElectricCapacity_kW, double efficiency_r, double timestep_h) {
     	this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputCapacity_kW;
+	    this.outputCapacity_kW = outputElectricCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.timestep_h = timestep_h;	    
