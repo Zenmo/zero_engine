@@ -52531,10 +52531,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    		ui_energyAsset.f_addFlows(flowsMap);
 	    	}
 	    	*/
-	    	this.lastFlowsMap.cloneMap(this.flowsMap);
-	    	this.lastEnergyUse_kW = this.energyUse_kW;
-	    	this.clear();
 		}
+		this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
     }
 
     //public Pair<J_FlowsMap, Double> curtailElectricityProduction(double curtailmentSetpoint_kW) {
@@ -53166,11 +53166,10 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
 	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
 	    	}
-
-	    	this.lastFlowsMap.cloneMap(this.flowsMap);
-	    	this.lastEnergyUse_kW = this.energyUse_kW;
-	    	this.clear();
 		}		
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
 	}
     
     @Override
