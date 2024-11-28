@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -7728,8 +7728,8 @@ acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.reset();
 
 //// Daytime
 // Imports / Exports
-am_daytimeImports_kW.reset();
-am_daytimeExports_kW.reset();
+am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, p_timeStep_h, 0.5 * (p_runEndTime_h - p_runStartTime_h));
+am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, p_timeStep_h, 0.5 * (p_runEndTime_h - p_runStartTime_h));
 fm_daytimeImports_MWh.clear();
 fm_daytimeExports_MWh.clear();
 v_daytimeEnergyImport_MWh = 0;
@@ -7786,8 +7786,8 @@ v_weekdayEnergySelfConsumed_MWh = 0;
 
 //// Weekend
 // Imports / Exports
-am_weekendImports_kW.reset();
-am_weekendExports_kW.reset();
+am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, p_timeStep_h, 2 / 7  * (p_runEndTime_h - p_runStartTime_h) + 48);
+am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, p_timeStep_h, 2 / 7 * (p_runEndTime_h - p_runStartTime_h) + 48);
 fm_weekendImports_MWh.clear();
 fm_weekendExports_MWh.clear();
 v_weekendEnergyImport_MWh = 0;
@@ -21978,8 +21978,8 @@ acc_winterWeekDeliveryCapacity_kW.reset();
 
 //// Daytime
 // Imports / Exports
-am_daytimeImports_kW.reset();
-am_daytimeExports_kW.reset();
+am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
+am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
 v_daytimeEnergyImport_MWh = 0;
 v_daytimeEnergyExport_MWh = 0;
 
@@ -22028,8 +22028,8 @@ v_weekdayEnergySelfConsumed_MWh = 0;
 
 //// Weekend
 // Imports / Exports
-am_weekendImports_kW.reset();
-am_weekendExports_kW.reset();
+am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
+am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 2 / 7 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
 v_weekendEnergyImport_MWh = 0;
 v_weekendEnergyExport_MWh = 0;
 
