@@ -10699,9 +10699,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11588,9 +11585,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_cookingMethod]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11753,9 +11747,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11914,9 +11905,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isSliderGC]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12116,9 +12104,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12275,9 +12260,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12433,9 +12415,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12595,9 +12574,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_isSliderGC]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -13079,9 +13055,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
 						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -13265,9 +13238,6 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nbAgriculture]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -20961,30 +20931,6 @@ import javax.management.RuntimeErrorException;]]></Import>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1726146956843</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1732536517365</Id>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-					<X>580</X><Y>140</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[J_EAConversion]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[null]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1732536517363</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -41690,9 +41636,6 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -43766,9 +43709,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -44859,9 +44799,6 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -45346,9 +45283,6 @@ public void f_rapidRunDataLogging() {
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -47116,9 +47050,6 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -47795,9 +47726,6 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -49127,9 +49055,6 @@ public void f_resetSpecificGCStates(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -50620,9 +50545,6 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
 				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -51157,9 +51079,6 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_address]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -51759,13 +51678,10 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 						<Name><![CDATA[pctArray]]></Name>
 						<Type><![CDATA[double[]]]></Type>
 					</Parameter>
-					<Body><![CDATA[//Calculate actual space heating 
-double actualHeatingDemandSpaceHeating_fr =  (1 - v_amountOfHydrogenUseForHeating_companies_fr);
-
-v_amountOfGasBurners_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[0]/100;
-v_amountOfElectricHeatpumps_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[1]/100;
-v_amountOfHybridHeatpump_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[2]/100;
-v_amountOfDistrictHeating_companies_fr = actualHeatingDemandSpaceHeating_fr * pctArray[3]/100;
+					<Body><![CDATA[v_amountOfGasBurners_companies_fr = pctArray[0]/100;
+v_amountOfElectricHeatpumps_companies_fr = pctArray[1]/100;
+v_amountOfHybridHeatpump_companies_fr = pctArray[2]/100;
+v_amountOfDistrictHeating_companies_fr = pctArray[3]/100;
 
 ]]></Body>
 				</Function>
