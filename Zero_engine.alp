@@ -13239,6 +13239,9 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 						<Parameter>
 							<Name><![CDATA[p_nbAgriculture]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
