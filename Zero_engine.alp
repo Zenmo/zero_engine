@@ -52922,10 +52922,10 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 
     @Override
     public void f_updateAllFlows(double powerFraction_fr) {
-    	if ( powerFraction_fr < 0 ) {
+    	if ( powerFraction_fr < -0.00000000001 ) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
     	}
-    	else if ( powerFraction_fr == 0 ) {
+    	else if ( powerFraction_fr <= 0 ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
     		return;
