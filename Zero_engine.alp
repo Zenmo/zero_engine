@@ -52929,6 +52929,10 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return this.consumptionScaling_fr;
     }
     
+    public J_ProfilePointer getProfilePointer() {
+    	return this.profilePointer;
+    }
+    
 	@Override
     //public Pair<J_FlowsMap, Double> operate(double ratioOfCapacity) {
 	public void operate(double ratioOfCapacity) {
@@ -57024,6 +57028,10 @@ public class J_ProfilePointer implements Serializable {
     
     public double getValue(double t_h) {
     	return this.tableFunction.get(t_h);
+    }
+    
+    public TableFunction getTableFunction() {
+    	return this.tableFunction;
     }
     
 	@Override
