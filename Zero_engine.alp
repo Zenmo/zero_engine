@@ -22601,14 +22601,16 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		
 		if (energyModel.b_isInitialized) {
 			energyModel.v_activeEnergyCarriers.add(EC);
-			DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-			for (double t = startTime; t < endTime; t += energyModel.p_timeStep_h) {
-				ds.add( t, 0);
+			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+				dsDemand.add( t, 0);
+				dsSupply.add( t, 0);
 			}
-			dsm_liveDemand_kW.put( EC, ds);
-			dsm_liveSupply_kW.put( EC, ds);
+			dsm_liveDemand_kW.put( EC, dsDemand);
+			dsm_liveSupply_kW.put( EC, dsSupply);
 			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
@@ -23820,10 +23822,11 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 	dsm_liveSupply_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
 }
 
+
 data_liveElectricityBalance_kW.add(energyModel.t_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 
 //data_naturalGasDemand_kW.update();
-//data_dieselDemand_kW.update();
+//data_dieselDemand_kW.update(); 
 //data_hydrogenDemand_kW.update();
 //data_hydrogenSupply_kW.update();
 
@@ -57297,8 +57300,23 @@ public class J_DataSetMap implements Serializable {
     
 	@Override
 	public String toString() {
-		return super.toString();
-	}
+        if (this.energyCarrierList.size() == 0) {
+            return "{}";        	
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (OL_EnergyCarriers key : this.energyCarrierList) {
+        	DataSet value = this.get(key);
+        	int len = value.toString().length();
+            sb.append(key);
+            sb.append(" = ");
+            sb.append(value.toString().substring(0,min(400, len)));
+            sb.append(", \n");
+        }
+        sb.delete(sb.length()-4, sb.length());
+        sb.append('}');
+        return sb.toString();
+    }
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>
