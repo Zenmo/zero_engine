@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -8176,10 +8176,11 @@ getExperiment().getEngine().setStartDate(startDate);
 
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
-// pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
+pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 
 f_buildGridNodeTree();
 c_gridConnections.forEach(GC -> GC.f_initialize());
+
 
 // Loop over populations to check v_ispaused
 f_initializePause();
@@ -36641,7 +36642,7 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 					<Body><![CDATA[if ( p_actorContractList != null) {
 	f_setContractValues();	
 }
-f_connectToParentActor();
+//f_connectToParentActor();
 
 if (p_gridNodeUnderResponsibility != null){
 	GridNode myParentNodeElectric = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_gridNodeUnderResponsibility)) ;
@@ -36659,6 +36660,9 @@ if (p_gridNodeUnderResponsibility != null){
 }
 
 v_allowedCapacity_kW = p_connectionCapacity_kW;
+
+dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 /*if(!v_enable_nfATO_b){
 	e_startNonFirmATO.reset();
 	e_endNonFirmATO.reset();
@@ -57289,8 +57293,23 @@ public class J_DataSetMap implements Serializable {
     
 	@Override
 	public String toString() {
-		return super.toString();
-	}
+        if (this.energyCarrierList.size() == 0) {
+            return "{}";        	
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (OL_EnergyCarriers key : this.energyCarrierList) {
+        	DataSet value = this.get(key);
+        	int len = value.toString().length();
+            sb.append(key);
+            sb.append(" = ");
+            sb.append(value.toString().substring(0,min(400, len)));
+            sb.append(", \n");
+        }
+        sb.delete(sb.length()-4, sb.length());
+        sb.append('}');
+        return sb.toString();
+    }
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>
