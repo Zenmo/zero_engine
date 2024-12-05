@@ -13231,7 +13231,7 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 							<Name><![CDATA[p_municipality]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_nbCompanies]]></Name>
+							<Name><![CDATA[p_nbServices]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_nbIndustry]]></Name>
@@ -51176,7 +51176,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1722514794122</Id>
-					<Name><![CDATA[v_amountOfGasBurners_companies_fr]]></Name>
+					<Name><![CDATA[v_amountOfGasBurners_services_fr]]></Name>
 					<X>1690</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -51188,7 +51188,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1722514798317</Id>
-					<Name><![CDATA[v_amountOfHybridHeatpump_companies_fr]]></Name>
+					<Name><![CDATA[v_amountOfHybridHeatpump_services_fr]]></Name>
 					<X>1690</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -51200,7 +51200,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1722514800696</Id>
-					<Name><![CDATA[v_amountOfElectricHeatpumps_companies_fr]]></Name>
+					<Name><![CDATA[v_amountOfElectricHeatpumps_services_fr]]></Name>
 					<X>1690</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -51212,7 +51212,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1722514802997</Id>
-					<Name><![CDATA[v_amountOfDistrictHeating_companies_fr]]></Name>
+					<Name><![CDATA[v_amountOfDistrictHeating_services_fr]]></Name>
 					<X>1690</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -51528,7 +51528,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1732637253709</Id>
-					<Name><![CDATA[p_nbCompanies]]></Name>
+					<Name><![CDATA[p_nbServices]]></Name>
 					<X>1700</X><Y>720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -51671,7 +51671,7 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1722514612938</Id>
-					<Name><![CDATA[f_setHeatingMethodPct_companies]]></Name>
+					<Name><![CDATA[f_setHeatingMethodPct_services]]></Name>
 					<X>1690</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -51681,10 +51681,10 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0){
 						<Name><![CDATA[pctArray]]></Name>
 						<Type><![CDATA[double[]]]></Type>
 					</Parameter>
-					<Body><![CDATA[v_amountOfGasBurners_companies_fr = pctArray[0]/100;
-v_amountOfElectricHeatpumps_companies_fr = pctArray[1]/100;
-v_amountOfHybridHeatpump_companies_fr = pctArray[2]/100;
-v_amountOfDistrictHeating_companies_fr = pctArray[3]/100;
+					<Body><![CDATA[v_amountOfGasBurners_services_fr = pctArray[0]/100;
+v_amountOfElectricHeatpumps_services_fr = pctArray[1]/100;
+v_amountOfHybridHeatpump_services_fr = pctArray[2]/100;
+v_amountOfDistrictHeating_services_fr = pctArray[3]/100;
 
 ]]></Body>
 				</Function>
@@ -51768,33 +51768,33 @@ double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
 //Demanded heating power for companies and household seperatly the current time step
 double powerDemand_households_kW = max(0,c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().get(OL_EnergyCarriers.HEAT));
-double powerDemand_companies_kW = max(0,c_heatDemandEA.get("COMPANIES").getLastFlows().get(OL_EnergyCarriers.HEAT));
-double powerDemand_industry_kW = max(0,c_heatDemandEA.get("INDUSTRY").getLastFlows().get(OL_EnergyCarriers.HEAT));
 double powerDemand_agriculture_kW = max(0,c_heatDemandEA.get("AGRICULTURE").getLastFlows().get(OL_EnergyCarriers.HEAT));
+double powerDemand_industry_kW = max(0,c_heatDemandEA.get("INDUSTRY").getLastFlows().get(OL_EnergyCarriers.HEAT));
+double powerDemand_services_kW = max(0,c_heatDemandEA.get("SERVICES").getLastFlows().get(OL_EnergyCarriers.HEAT));
 
 //Divide the powerdemand per heating type
 double gasBurnerPowerDemand 		= powerDemand_households_kW*v_amountOfGasBurners_houses_fr + 
-									  powerDemand_companies_kW*v_amountOfGasBurners_companies_fr + 
-									  powerDemand_industry_kW*v_amountOfGasBurners_companies_fr + 
-									  powerDemand_agriculture_kW*v_amountOfGasBurners_agriculture_fr;
+									  powerDemand_agriculture_kW*v_amountOfGasBurners_agriculture_fr +
+									  powerDemand_industry_kW*v_amountOfGasBurners_industry_fr + 
+									  powerDemand_services_kW*v_amountOfGasBurners_services_fr;
 									  
 double electricHPPowerDemand 		= powerDemand_households_kW*v_amountOfElectricHeatpumps_houses_fr + 
-									  powerDemand_companies_kW*v_amountOfElectricHeatpumps_companies_fr + 
+									  powerDemand_agriculture_kW*v_amountOfElectricHeatpumps_agriculture_fr + 
 									  powerDemand_industry_kW*v_amountOfElectricHeatpumps_industry_fr + 
-									  powerDemand_agriculture_kW*v_amountOfElectricHeatpumps_agriculture_fr;
+									  powerDemand_services_kW*v_amountOfElectricHeatpumps_services_fr;
 									  
 double hybridHPPowerDemand 	   		= powerDemand_households_kW*v_amountOfHybridHeatpump_houses_fr +
-									  powerDemand_companies_kW*v_amountOfHybridHeatpump_companies_fr +
+									  powerDemand_agriculture_kW*v_amountOfHybridHeatpump_agriculture_fr +
 									  powerDemand_industry_kW*v_amountOfHybridHeatpump_industry_fr + 
-									  powerDemand_agriculture_kW*v_amountOfHybridHeatpump_agriculture_fr;
+									  powerDemand_services_kW*v_amountOfHybridHeatpump_services_fr;
 									  
 double districtHeatingPowerDemand   = powerDemand_households_kW*v_amountOfDistrictHeating_houses_fr +
-									  powerDemand_companies_kW*v_amountOfDistrictHeating_companies_fr + 
+									  powerDemand_agriculture_kW*v_amountOfDistrictHeating_agriculture_fr + 
 									  powerDemand_industry_kW*v_amountOfDistrictHeating_industry_fr + 
-									  powerDemand_agriculture_kW*v_amountOfDistrictHeating_agriculture_fr;
+									  powerDemand_services_kW*v_amountOfDistrictHeating_services_fr;
 									  
 //double hydrogenBurnerPowerDemand	= powerDemand_industry_kW*v_amountOfHydrogenUseForHeating_industry_fr;
-double hydrogenBurnerPowerDemand 	= (powerDemand_households_kW + powerDemand_companies_kW + powerDemand_industry_kW + powerDemand_agriculture_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand; // To make sure all power demand is met
+double hydrogenBurnerPowerDemand 	= (powerDemand_households_kW + powerDemand_agriculture_kW + powerDemand_industry_kW + powerDemand_services_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand; // To make sure all power demand is met
 
 
 //Get the current Heatpump COP
