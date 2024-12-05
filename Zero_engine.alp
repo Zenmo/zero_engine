@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -44054,7 +44054,7 @@ if (l_ownerActor.getConnectedAgent() instanceof EnergyCoop){
 	//traceln("DH function! Electricity surpluss in Coop: " + electricitySurplussCoop_kW + ", own power " + v_previousPowerElectricity_kW,1 );
 }	
 //		((J_EAConversionHeatPump)e.j_ea).updateParameters(main.p_undergroundTemperature_degC, storageTemp_degC); // update heatpump temp levels!
-double heatTransferToNetwork_kW = l_parentNodeHeat.getConnectedAgent().v_currentLoad_kW - v_previousPowerHeat_kW;// max( storageTemp_degC - DHnetworkTemp_degC, 0 ) * heatTransferToNetworkCoefficient_kWpK;
+double heatTransferToNetwork_kW = max(0,l_parentNodeHeat.getConnectedAgent().v_currentLoad_kW - v_previousPowerHeat_kW);// max( storageTemp_degC - DHnetworkTemp_degC, 0 ) * heatTransferToNetworkCoefficient_kWpK;
 
 if( b_validLocalBuffer ) {
 	tempSetpoint_degC = p_DHheatStorage.getSetTemperature_degC();
@@ -44077,7 +44077,7 @@ if( b_validLocalBuffer ) {
 } else {
 	//Pair<J_FlowsMap, Double> flowsPair = p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getCapacityHeat_kW()); // heatingasset must be powerful enough every single timestep!
 	p_primaryHeatingAsset.f_updateAllFlows(heatTransferToNetwork_kW/p_primaryHeatingAsset.getOutputCapacity_kW());
-	if ( 0.01 < (heatTransferToNetwork_kW + p_primaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT)) ) {
+	if ( 0.00001 < (heatTransferToNetwork_kW + p_primaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT)) ) {
 		traceln("Warning! District heating primary heating asset not able to fulfill heat demand! Heatdemand: %s kW, heat produced: %s kW", heatTransferToNetwork_kW, -p_primaryHeatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) );
 	}	
 	//traceln("Primary heating system powerFraction: %s", p_primaryHeatingAsset.v_powerFraction_fr);
@@ -51784,27 +51784,34 @@ v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
 double powerDemandDivision[] = f_dividePowerDemandHeatingAssets(); 
 
 //Split the power fractions (powerDemandDivision[] = {Gasburner power request, HP power request, DH power request}
-double powerFraction_GASBURNER = min(1, powerDemandDivision[0] / p_primaryHeatingAsset.getOutputCapacity_kW()); 
-double powerFraction_HEATPUMP  = min(1, powerDemandDivision[1] / p_secondaryHeatingAsset.getOutputCapacity_kW());
-double powerFraction_HEATDELIVERYSET = min(1, powerDemandDivision[2] / p_tertiaryHeatingAsset.getOutputCapacity_kW());
-double powerFraction_HYDROGENBURNER = min(1, powerDemandDivision[3] / p_quaternaryHeatingAsset.getOutputCapacity_kW());
+if(p_primaryHeatingAsset.getOutputCapacity_kW() != 0){
+	double powerFraction_GASBURNER = powerDemandDivision[0] / p_primaryHeatingAsset.getOutputCapacity_kW();
+	p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
+	
+	//Gas burner control (always assigned to primary heating asset)	
+	p_primaryHeatingAsset.f_updateAllFlows(powerFraction_GASBURNER);
+}
+if(p_secondaryHeatingAsset.getOutputCapacity_kW() != 0){
+	double powerFraction_HEATPUMP  = powerDemandDivision[1] / p_secondaryHeatingAsset.getOutputCapacity_kW();
+	p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
+	
+	//Heatpump control (always assigned to secondary heating asset)
+	p_secondaryHeatingAsset.f_updateAllFlows(powerFraction_HEATPUMP);
+}
+if(p_tertiaryHeatingAsset.getOutputCapacity_kW() != 0){
+	double powerFraction_HEATDELIVERYSET = powerDemandDivision[2] / p_tertiaryHeatingAsset.getOutputCapacity_kW();
+	p_tertiaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATDELIVERYSET;
+	
+	//Heat delivery set control (always assigned to tertiary heating asset)
+	p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
+}
+if(p_quaternaryHeatingAsset.getOutputCapacity_kW() != 0){
+	double powerFraction_HYDROGENBURNER = powerDemandDivision[3] / p_quaternaryHeatingAsset.getOutputCapacity_kW();
+	p_quaternaryHeatingAsset.v_powerFraction_fr = powerFraction_HYDROGENBURNER;	
 
-p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
-p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
-p_tertiaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATDELIVERYSET;			
-p_quaternaryHeatingAsset.v_powerFraction_fr = powerFraction_HYDROGENBURNER;	
-		
-//Gas burner control (always assigned to primary heating asset)	
-p_primaryHeatingAsset.f_updateAllFlows(powerFraction_GASBURNER);
-
-//Heatpump control (always assigned to secondary heating asset)
-p_secondaryHeatingAsset.f_updateAllFlows(powerFraction_HEATPUMP);
-
-//Heat delivery set control (always assigned to tertiary heating asset)
-p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
-
-//Hydrogen burner(always assigned to quaternary heating asset)
-p_quaternaryHeatingAsset.f_updateAllFlows(powerFraction_HYDROGENBURNER);
+	//Hydrogen burner(always assigned to quaternary heating asset)
+	p_quaternaryHeatingAsset.f_updateAllFlows(powerFraction_HYDROGENBURNER);
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -51853,30 +51860,28 @@ double districtHeatingPowerDemand   = powerDemand_households_kW*v_amountOfDistri
 //double hydrogenBurnerPowerDemand	= powerDemand_industry_kW*v_amountOfHydrogenUseForHeating_industry_fr;
 double hydrogenBurnerPowerDemand 	= (powerDemand_households_kW + powerDemand_agriculture_kW + powerDemand_industry_kW + powerDemand_services_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand; // To make sure all power demand is met
 
-
 //Get the current Heatpump COP
 double HP_COP = ((J_EAConversionHeatPump)p_secondaryHeatingAsset).getCOP();
 
 if ( HP_COP < p_thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
-	powerDemandDivision[0] = gasBurnerPowerDemand + hybridHPPowerDemand;
-	powerDemandDivision[1] = electricHPPowerDemand;
-	powerDemandDivision[2] = districtHeatingPowerDemand;
-	powerDemandDivision[3] = hydrogenBurnerPowerDemand;
+	powerDemandDivision[0] = max(0, gasBurnerPowerDemand + hybridHPPowerDemand);
+	powerDemandDivision[1] = max(0, electricHPPowerDemand);
+	powerDemandDivision[2] = max(0, districtHeatingPowerDemand);
+	powerDemandDivision[3] = max(0, hydrogenBurnerPowerDemand);
 }
 else{
-	powerDemandDivision[0] = gasBurnerPowerDemand;
-	powerDemandDivision[1] = electricHPPowerDemand + hybridHPPowerDemand;
-	powerDemandDivision[2] = districtHeatingPowerDemand;
-	powerDemandDivision[3] = hydrogenBurnerPowerDemand;
+	powerDemandDivision[0] = max(0, gasBurnerPowerDemand);
+	powerDemandDivision[1] = max(0, electricHPPowerDemand + hybridHPPowerDemand);
+	powerDemandDivision[2] = max(0, districtHeatingPowerDemand);
+	powerDemandDivision[3] = max(0, hydrogenBurnerPowerDemand);
 }
-
 /*
 //TESTER
 	powerDemandDivision[0] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
 	powerDemandDivision[1] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
 	powerDemandDivision[2] = 0;
+	powerDemandDivision[3] = 0;
 */
-
 return powerDemandDivision; //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -52325,12 +52330,23 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Parameter>
-						<Name><![CDATA[amountOfHydrogenUseForHeating]]></Name>
+						<Name><![CDATA[amountOfHydrogenUseForHeating_fr]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[double maximumHydrogenUsedForHeating_industry_fr = 1; // For now
+					<Body><![CDATA[
+//Get current values
+double actualHeatingDemandSpaceHeating_fr =  (1 - v_amountOfHydrogenUseForHeating_industry_fr);
+double[] currentPctArray = {v_amountOfGasBurners_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
+							v_amountOfHybridHeatpump_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
+							v_amountOfElectricHeatpumps_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
+							v_amountOfDistrictHeating_industry_fr*100/actualHeatingDemandSpaceHeating_fr};
 
-v_amountOfHydrogenUseForHeating_industry_fr = max(0,min(maximumHydrogenUsedForHeating_industry_fr,amountOfHydrogenUseForHeating));
+//Set new hydrogen use for heating fr
+v_amountOfHydrogenUseForHeating_industry_fr = min(1, amountOfHydrogenUseForHeating_fr);
+
+
+//Set new values
+f_setHeatingMethodPct_industry(currentPctArray);
 ]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -52979,10 +52995,10 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 
     @Override
     public void f_updateAllFlows(double powerFraction_fr) {
-    	if ( powerFraction_fr < -0.00000000001 ) {
+    	if ( powerFraction_fr < 0 ) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
     	}
-    	else if ( powerFraction_fr <= 0 ) {
+    	else if ( powerFraction_fr == 0 ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
     		return;
