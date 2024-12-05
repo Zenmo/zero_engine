@@ -144,6 +144,10 @@
 				<Name><![CDATA[ELECTROLYSER]]></Name>
 			</Option>
 			<Option>
+				<Id>1733394870793</Id>
+				<Name><![CDATA[WKK]]></Name>
+			</Option>
+			<Option>
 				<Id>1659118344195</Id>
 				<Name><![CDATA[ANTI_LAYER]]></Name>
 			</Option>
@@ -46278,6 +46282,10 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	if (v instanceof J_EAConversionElectrolyser) {
 		f_manageElectrolyser((J_EAConversionElectrolyser)v);
 	}
+	
+	if (v instanceof J_EAConversionGasCHP) {
+		f_manageCHP((J_EAConversionGasCHP)v);
+	}
 	//if (v instanceof J_EAConversionCurtailer) {
 		// Must go last! 
 	//} 
@@ -46781,6 +46789,31 @@ if (energyModel.b_isLastTimeStepOfDay) {
 }
 
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1733389474878</Id>
+					<Name><![CDATA[f_manageCHP]]></Name>
+					<X>1550</X><Y>820</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[j_ea]]></Name>
+						<Type><![CDATA[J_EAConversionGasCHP]]></Type>
+					</Parameter>
+					<Body><![CDATA[GridNode GN = l_parentNodeElectric.getConnectedAgent();
+double trafoLoadPreviousTimeStep_kW = GN.v_currentLoad_kW;
+double trafoLimit_kW = GN.p_capacity_kW;
+double surplus_kW = trafoLoadPreviousTimeStep_kW - trafoLimit_kW * 0.9;
+double power_fr = 0;
+if ( surplus_kW > 0) {
+	double output_kW = j_ea.getOutputElectricCapacity_kW();
+	power_fr = surplus_kW / output_kW;
+}
+j_ea.f_updateAllFlows(power_fr);]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -55642,6 +55675,14 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	
 	public List<OL_EnergyCarriers> getEnergyCarriersProduced() {
 		return this.energyCarriersProduced;
+	}
+	
+	public double getOutputElectricCapacity_kW() {
+		return this.outputElectricCapacity_kW;
+	}
+	
+	public double getOutputHeatCapacity_kW() {
+		return this.outputHeatCapacity_kW;
 	}
 	
 	@Override
