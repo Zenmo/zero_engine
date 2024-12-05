@@ -7851,8 +7851,8 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int runStartIdx = (int)(p_runStartTime_h/p_timeStep_h);
-int runEndIdx = (int)(p_runEndTime_h/p_timeStep_h);
+					<Body><![CDATA[int runStartIdx = 0; //(int)(p_runStartTime_h/p_timeStep_h);
+int runEndIdx = (int)((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h);
 if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, get load duration curves from that one!
 	data_netbelastingDuurkromme_kW = c_gridNodesTopLevel.get(0).f_getDuurkromme();
 	
@@ -7929,11 +7929,11 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 			data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
 		}
 		// summer/winter
-		if (i*p_timeStep_h > p_startHourSummerWeek && i*p_timeStep_h<= p_startHourSummerWeek+24*7) {
+		if ((p_runStartTime_h + i*p_timeStep_h) % 8760 > p_startHourSummerWeek && (p_runStartTime_h + i*p_timeStep_h) % 8760<= p_startHourSummerWeek+24*7) {
 			netLoadArraySummer_kW[i_summer]=-a_annualNetLoad_kW[i];
 			i_summer++;
 		}
-		if (i*p_timeStep_h > p_startHourWinterWeek && i*p_timeStep_h<= p_startHourWinterWeek+24*7) {
+		if ((p_runStartTime_h + i*p_timeStep_h) % 8760 > p_startHourWinterWeek && (p_runStartTime_h + i*p_timeStep_h) % 8760<= p_startHourWinterWeek+24*7) {
 			netLoadArrayWinter_kW[i_winter]=-a_annualNetLoad_kW[i];
 			i_winter++;
 		}
@@ -7947,7 +7947,7 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 		}
 		
 		//Weekday/weekend
-		if ((i*p_timeStep_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+		if ((p_runStartTime_h + i*p_timeStep_h+3*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 			netLoadArrayWeekday_kW[i_weekday]=-a_annualNetLoad_kW[i];
 			i_weekday++;
 		} else {
@@ -16097,8 +16097,8 @@ v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int runStartIdx = (int)(energyModel.p_runStartTime_h/energyModel.p_timeStep_h);
-int runEndIdx = (int)(energyModel.p_runEndTime_h/energyModel.p_timeStep_h);
+					<Body><![CDATA[int runStartIdx = 0;// (int)(energyModel.p_runStartTime_h/energyModel.p_timeStep_h);
+int runEndIdx = (int)((energyModel.p_runEndTime_h-energyModel.p_runStartTime_h)/energyModel.p_timeStep_h);
 int nRunIdxs = runEndIdx - runStartIdx;
 
 boolean firstRun = true;
@@ -16155,11 +16155,11 @@ for(int i=0; i<nRunIdxs; i++) {
 		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
 	}
 	// summer/winter
-	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+	if ((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h) % 8760 > energyModel.p_startHourSummerWeek && (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h) % 8760 <= energyModel.p_startHourSummerWeek+24*7) {
 		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 		i_summer++;
 	}
-	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+	if ((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h) % 8760 > energyModel.p_startHourWinterWeek && (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h) % 8760 <= energyModel.p_startHourWinterWeek+24*7) {
 		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 		i_winter++;
 	}
@@ -16224,7 +16224,7 @@ netLoadArrayAnnual_kW[netLoadArrayAnnual_kW.length-1] = 0;
 //traceln("annaualElectricityBalance first element: %s, last element: %s", netLoadArrayAnnual_kW[0], netLoadArrayAnnual_kW[arraySize-1]);
 for(int i=0; i< arraySize; i++) {
 	//traceln("netloadloop iterator: %s", i);
-	data_netbelastingDuurkromme_kW.add((i+runStartIdx)*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
+	data_netbelastingDuurkromme_kW.add((i)*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
 }
 // Netbelastingduurkromme summer / winter
 
@@ -23817,8 +23817,8 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	dsm_liveDemand_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
-	dsm_liveSupply_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
+	dsm_liveDemand_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+	dsm_liveSupply_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
 }
 
 data_liveElectricityBalance_kW.add(energyModel.t_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
@@ -24724,7 +24724,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0, v_heatPumpElectricityConsumption_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24748,7 +24748,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_windProductionElectric_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24772,7 +24772,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0, -v_evChargingPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24796,7 +24796,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_pvProductionElectric_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24820,7 +24820,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0, v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24844,7 +24844,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_fixedConsumptionElectric_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24868,7 +24868,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentFinalEnergyConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24917,7 +24917,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0,v_evChargingPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24941,7 +24941,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0, -v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24965,7 +24965,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0, v_hydrogenElectricityConsumption_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -24989,7 +24989,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentPrimaryEnergyProduction_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -26028,7 +26028,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[p_contractedDeliveryCapacity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -26052,7 +26052,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[-p_contractedFeedinCapacity_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -26076,7 +26076,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_electricHobConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -26100,7 +26100,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -37822,38 +37822,38 @@ acc_totalCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW);
 if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
 	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_summerWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
-		dsm_summerWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
+		dsm_summerWeekDemandDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+		dsm_summerWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
 	}
 	
-	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
-	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
-	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
-	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_fixedConsumptionElectric_kW);
+	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_heatPumpElectricityConsumption_kW);
+	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,v_evChargingPowerElectric_kW));
+	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,v_batteryPowerElectric_kW));
 	
-	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
-	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
-	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
+	data_summerWeekPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_pvProductionElectric_kW);
+	data_summerWeekWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_windProductionElectric_kW);
+	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,-v_batteryPowerElectric_kW));
+	data_summerWeekV2GSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, -v_evChargingPowerElectric_kW));
 }
 
 //Winter week dataSets
 if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
 	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_winterWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
-		dsm_winterWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
+		dsm_winterWeekDemandDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+		dsm_winterWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
 	}
 	
-	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
-	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
-	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
-	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_fixedConsumptionElectric_kW);
+	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_heatPumpElectricityConsumption_kW);
+	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, v_evChargingPowerElectric_kW));
+	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, v_batteryPowerElectric_kW));
 	
-	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
-	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
-	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
+	data_winterWeekPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_pvProductionElectric_kW);
+	data_winterWeekWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_windProductionElectric_kW);
+	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, -v_batteryPowerElectric_kW));
+	data_winterWeekV2GSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, -v_evChargingPowerElectric_kW));
 }
 
 // Daily Averages
@@ -37877,18 +37877,18 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	// Demand
 	double timeStepsInOneDay = 24 / energyModel.p_timeStep_h;
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_dailyAverageDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
-		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
+		dsm_dailyAverageDemandDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
+		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
 	}
-	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
 	// Supply
-	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
-	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
-	data_annualBatteriesSupply_kW.add(energyModel.t_h, v_dailyBatteriesSupply_kW/(24 / energyModel.p_timeStep_h));
-	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
+	data_annualWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBatteriesSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBatteriesSupply_kW/(24 / energyModel.p_timeStep_h));
+	data_annualV2GSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
 
 	// Resetting the daily values
 	// Demand
@@ -38093,7 +38093,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_heatPumpElectricityConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38117,7 +38117,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_windProductionElectric_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38141,7 +38141,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0,-v_evChargingPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38165,7 +38165,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_pvProductionElectric_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38189,7 +38189,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0,v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38213,7 +38213,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_fixedConsumptionElectric_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38237,7 +38237,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentFinalEnergyConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38286,7 +38286,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0,v_evChargingPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38310,7 +38310,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[max(0,-v_batteryPowerElectric_kW)]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
@@ -38359,7 +38359,7 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
-					<HorizontalAxisExpression><![CDATA[energyModel.t_h]]></HorizontalAxisExpression>
+					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[v_currentPrimaryEnergyProduction_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
