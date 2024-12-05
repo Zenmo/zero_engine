@@ -7575,20 +7575,20 @@ v_dailyFinalEnergyConsumption_kW += v_currentFinalEnergyConsumption_kW;
 if (b_isLastTimeStepOfDay){
 	double timeStepsInOneDay = 24 / p_timeStep_h;
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_dailyAverageDemandDataSets_kW.get(EC).add( t_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
-		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( t_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
+		dsm_dailyAverageDemandDataSets_kW.get(EC).add( t_h-p_runStartTime_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
+		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( t_h-p_runStartTime_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
 	}
 	
-	data_annualBaseloadElectricityDemand_kW.add(t_h, v_dailyBaseloadElectricityDemand_kW / timeStepsInOneDay);
-	data_annualHeatPumpElectricityDemand_kW.add(t_h, v_dailyHeatPumpElectricityDemand_kW / timeStepsInOneDay);
-	data_annualElectricVehicleDemand_kW.add(t_h, v_dailyElectricVehicleDemand_kW / timeStepsInOneDay);
-	data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW / timeStepsInOneDay);
-	data_annualElectrolyserDemand_kW.add(t_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
-	data_totalFinalEnergyConsumption_kW.add(t_h, v_dailyFinalEnergyConsumption_kW/timeStepsInOneDay);
-	data_annualPVGeneration_kW.add(t_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
-	data_annualWindGeneration_kW.add(t_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
-	data_annualBatteriesSupply_kW.add(t_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
-	data_annualV2GSupply_kW.add(t_h, v_dailyV2GSupply_kW / timeStepsInOneDay);
+	data_annualBaseloadElectricityDemand_kW.add(t_h-p_runStartTime_h, v_dailyBaseloadElectricityDemand_kW / timeStepsInOneDay);
+	data_annualHeatPumpElectricityDemand_kW.add(t_h-p_runStartTime_h, v_dailyHeatPumpElectricityDemand_kW / timeStepsInOneDay);
+	data_annualElectricVehicleDemand_kW.add(t_h-p_runStartTime_h, v_dailyElectricVehicleDemand_kW / timeStepsInOneDay);
+	data_annualBatteriesDemand_kW.add(t_h-p_runStartTime_h, v_dailyBatteriesDemand_kW / timeStepsInOneDay);
+	data_annualElectrolyserDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
+	data_totalFinalEnergyConsumption_kW.add(t_h-p_runStartTime_h, v_dailyFinalEnergyConsumption_kW/timeStepsInOneDay);
+	data_annualPVGeneration_kW.add(t_h-p_runStartTime_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
+	data_annualWindGeneration_kW.add(t_h-p_runStartTime_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
+	data_annualBatteriesSupply_kW.add(t_h-p_runStartTime_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
+	data_annualV2GSupply_kW.add(t_h-p_runStartTime_h, v_dailyV2GSupply_kW / timeStepsInOneDay);
 	
 		//Yearly totals
 	v_totalPVGeneration_MWh += (v_dailyPVGeneration_kW/1000)*p_timeStep_h;
@@ -53414,12 +53414,12 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
     		traceln("Time out of upper bound for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
 //    		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
-    		throw new RuntimeException("Time out of upper bound for evaluating J_EAProfile power");
+    		throw new RuntimeException(String.format("Time out of upper bound for evaluating J_EAProfile power! Time is: %s", time_h));
     	}
     	if ( time_h < 0 ) {
     		traceln("Time out of lower bound for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
     		//time_h = 0;
-    		throw new RuntimeException("Time out of lower bound for evaluating J_EAProfile power");
+    		throw new RuntimeException(String.format("Time out of lower bound for evaluating J_EAProfile power! Time is: %s", time_h));
     	}
     	/*if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
     		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
