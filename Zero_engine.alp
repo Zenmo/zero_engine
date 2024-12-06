@@ -4629,6 +4629,36 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733478626642</Id>
+					<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
+					<X>820</X><Y>650</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733478626644</Id>
+					<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
+					<X>820</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -7061,7 +7091,7 @@ v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - fm_
 v_collectiveSelfConsumption_fr = v_totalElectricitySelfConsumed_MWh / v_totalElectricityProduced_MWh;
 
 //Heat grid
-v_totalEnergyConsumptionForDistrictHeating_MWh = sum(DistrictHeatingSystems, DH -> DH.v_totalEnergyImport_MWh); //Does not work if there is production at the GCDistrictHeating!!
+v_totalEnergyConsumptionForDistrictHeating_MWh = fm_totalImports_MWh.get(OL_EnergyCarriers.HEAT) + sum(DistrictHeatingSystems, DH -> DH.v_totalEnergyImport_MWh);
 
 //Heatpump totals
 v_totalElectricityConsumptionHeatpumps_MWh = 0;
@@ -15280,7 +15310,7 @@ geupdate vanuit
 				<Variable Class="Parameter">
 					<Id>1707680312891</Id>
 					<Name><![CDATA[p_realCapacityAvailable]]></Name>
-					<Description><![CDATA[This value is set at 'true' if the provided input file of the trafos has a postitive value. If the real world capacity is unknown, the excel input should denote -1. And p_capacity_kW is set at a default value provided bij de excel list.]]></Description>
+					<Description><![CDATA[This value is set as true in the loader if the capacity of the grid node is available, if not, it should be set as false!]]></Description>
 					<X>50</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15290,6 +15320,9 @@ geupdate vanuit
 						<Type><![CDATA[boolean]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1707680312889</Id>
 							<EditorContolType>CHECK_BOX</EditorContolType>
@@ -17346,7 +17379,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1668370002883</Id>
 					<Name><![CDATA[v_additionalTimeSpreadCharging_MIN]]></Name>
 					<Description><![CDATA[In the charging attitude MAX_SPREAD the vehicles can be planned to be full some time before their actual departure. ]]></Description>
-					<X>270</X><Y>340</Y>
+					<X>270</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -17740,7 +17773,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1692972667627</Id>
 					<Name><![CDATA[v_hasPV]]></Name>
-					<X>270</X><Y>360</Y>
+					<X>270</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19134,7 +19167,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720442507543</Id>
 					<Name><![CDATA[v_enableCurtailment]]></Name>
-					<X>270</X><Y>380</Y>
+					<X>270</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19196,7 +19229,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1720435316099</Id>
 					<Name><![CDATA[v_nfatoWeekendDeliveryCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>270</X><Y>280</Y>
+					<X>270</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19212,7 +19245,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1720435335143</Id>
 					<Name><![CDATA[v_nfatoWeekDeliveryCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>270</X><Y>260</Y>
+					<X>270</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19227,7 +19260,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1720520594279</Id>
 					<Name><![CDATA[v_enableNFato]]></Name>
-					<X>270</X><Y>400</Y>
+					<X>270</X><Y>460</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19288,7 +19321,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1721821764640</Id>
 					<Name><![CDATA[v_hasQuarterHourlyValues]]></Name>
-					<X>270</X><Y>420</Y>
+					<X>270</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19300,7 +19333,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1722584654288</Id>
 					<Name><![CDATA[v_isActive]]></Name>
-					<X>270</X><Y>440</Y>
+					<X>270</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19346,7 +19379,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1725968910310</Id>
 					<Name><![CDATA[v_nfatoWeekendFeedinCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>270</X><Y>320</Y>
+					<X>270</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -19362,7 +19395,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Id>1725968910312</Id>
 					<Name><![CDATA[v_nfatoWeekFeedinCapacity_kW]]></Name>
 					<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-					<X>270</X><Y>300</Y>
+					<X>270</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20196,6 +20229,81 @@ import javax.management.RuntimeErrorException;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733478609497</Id>
+					<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
+					<X>855</X><Y>825</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733478609500</Id>
+					<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
+					<X>855</X><Y>805</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733497235035</Id>
+					<Name><![CDATA[b_isRealDeliveryCapacityAvailable]]></Name>
+					<X>290</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733497405303</Id>
+					<Name><![CDATA[b_isRealFeedinCapacityAvailable]]></Name>
+					<X>290</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733497422487</Id>
+					<Name><![CDATA[b_isRealPhysicalCapacityAvailable]]></Name>
+					<X>290</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -20401,7 +20509,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1665487815862</Id>
 					<Name><![CDATA[p_heatingType]]></Name>
-					<X>270</X><Y>160</Y>
+					<X>270</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20443,7 +20551,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668693393498</Id>
 					<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-					<X>270</X><Y>180</Y>
+					<X>270</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20467,7 +20575,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1668693418082</Id>
 					<Name><![CDATA[p_batteryOperationMode]]></Name>
-					<X>270</X><Y>200</Y>
+					<X>270</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20512,7 +20620,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1671459091954</Id>
 					<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-					<X>270</X><Y>220</Y>
+					<X>270</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -20815,7 +20923,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1722411169263</Id>
 					<Name><![CDATA[p_curtailmentMode]]></Name>
-					<X>270</X><Y>240</Y>
+					<X>270</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -21277,7 +21385,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 					<Name><![CDATA[c_activeEnergyCarriers]]></Name>
 					<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>835</X><Y>806</Y>
+					<X>835</X><Y>760</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22560,14 +22668,16 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		
 		if (energyModel.b_isInitialized) {
 			energyModel.v_activeEnergyCarriers.add(EC);
-			DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-			for (double t = startTime; t < endTime; t += energyModel.p_timeStep_h) {
-				ds.add( t, 0);
+			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+				dsDemand.add( t, 0);
+				dsSupply.add( t, 0);
 			}
-			dsm_liveDemand_kW.put( EC, ds);
-			dsm_liveSupply_kW.put( EC, ds);
+			dsm_liveDemand_kW.put( EC, dsDemand);
+			dsm_liveSupply_kW.put( EC, dsSupply);
 			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
@@ -22577,6 +22687,18 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		}
 	}
 }
+
+//Production EC
+for(OL_EnergyCarriers EC_production : j_ea.getActiveProductionEnergyCarriers()){
+	v_activeProductionEnergyCarriers.add(EC_production);
+}
+
+//Consumption EC
+for(OL_EnergyCarriers EC_consumption : j_ea.getActiveConsumptionEnergyCarriers()){
+	v_activeConsumptionEnergyCarriers.add(EC_consumption);
+}
+
+
 
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
@@ -22917,6 +23039,12 @@ f_initializeAccumulators();
 f_initializeDataSets();
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers){
 	energyModel.v_activeEnergyCarriers.add(EC);
+}
+for (OL_EnergyCarriers EC_production : v_activeProductionEnergyCarriers){
+	energyModel.v_activeProductionEnergyCarriers.add(EC_production);
+}
+for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
+	energyModel.v_activeConsumptionEnergyCarriers.add(EC_consumption);
 }
 ]]></Body>
 				</Function>
@@ -44031,7 +44159,7 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1663773953770</Id>
 					<Name><![CDATA[f_operateAssetsDistrictHeating]]></Name>
-					<X>800</X><Y>240</Y>
+					<X>930</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -44040,6 +44168,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 //traceln("Operating District Heating agent = "+ this + " -> DH primary heating asset = " + p_primaryHeatingAsset.j_ea.ownerAsset.toString());
 //traceln("Operating District Heating agent = "+ this + " -> DH secondary heating asset = " + p_secondaryHeatingAsset.j_ea.ownerAsset.toString());
 //traceln("DistrictHeating Active!");
+if(p_primaryHeatingAsset == null){
+	return;
+}
 
 double tempSetpoint_degC = 0;
 double minBufferTemp_degC = 0;
@@ -52034,14 +52165,16 @@ if (j_ea instanceof J_EAVehicle) {
 		
 		if (energyModel.b_isInitialized) {
 			energyModel.v_activeEnergyCarriers.add(EC);
-			DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-			for (double t = startTime; t < endTime; t += energyModel.p_timeStep_h) {
-				ds.add( t, 0);
+			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+				dsDemand.add( t, 0);
+				dsSupply.add( t, 0);
 			}
-			dsm_liveDemand_kW.put( EC, ds);
-			dsm_liveSupply_kW.put( EC, ds);
+			dsm_liveDemand_kW.put( EC, dsDemand);
+			dsm_liveSupply_kW.put( EC, dsSupply);
 			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
@@ -52051,6 +52184,17 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 	}
 }
+
+//Production EC
+for(OL_EnergyCarriers EC_production : j_ea.getActiveProductionEnergyCarriers()){
+	v_activeProductionEnergyCarriers.add(EC_production);
+}
+
+//Consumption EC
+for(OL_EnergyCarriers EC_consumption : j_ea.getActiveConsumptionEnergyCarriers()){
+	v_activeConsumptionEnergyCarriers.add(EC_consumption);
+}
+
 
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
@@ -52703,7 +52847,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 			throw new RuntimeException("J_EAProduction needs to have valid profilePointer!");
 		}
 //	    traceln("I am instantiated! "+this+" owned by "+ownerAsset);
-	    activeEnergyCarriers.add(this.energyCarrier);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
 	
@@ -52988,8 +53132,8 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
 	    this.timestep_h = timestep_h;	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
@@ -53107,11 +53251,11 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
 		} else {
 			profilePointer = profile;
-		}
-		activeEnergyCarriers.add(this.energyCarrier);
+		}		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
     }
-    
+
     public String getAssetName() {
     	return this.energyAssetName;
     }
@@ -53212,7 +53356,9 @@ abstract public class J_EA implements Cloneable {
 	 protected J_FlowsMap flowsMap = new J_FlowsMap();
 	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
 	 protected double lastEnergyUse_kW = 0.0;
-	 protected EnumSet<OL_EnergyCarriers> activeEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeEnergyCarriers in GridConnections and EnergyModel
+	 
+	 protected EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeProductionEnergyCarriers in GridConnections and EnergyModel	
+	 protected EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeConsumptionEnergyCarriers in GridConnections and EnergyModel
 
 	 protected double energyUsed_kWh = 0.0;
 	 protected double energyUse_kW = 0.0;
@@ -53353,8 +53499,18 @@ abstract public class J_EA implements Cloneable {
     	return parentAgent;
     }
     
+	public EnumSet<OL_EnergyCarriers> getActiveProductionEnergyCarriers() {
+		return this.activeProductionEnergyCarriers;
+	}
+    
+    public EnumSet<OL_EnergyCarriers> getActiveConsumptionEnergyCarriers() {
+		return this.activeConsumptionEnergyCarriers;
+	}
+	
 	public EnumSet<OL_EnergyCarriers> getActiveEnergyCarriers() {
-		return this.activeEnergyCarriers;
+		EnumSet<OL_EnergyCarriers> allActiveEnergyCarriers = EnumSet.copyOf(this.activeProductionEnergyCarriers);
+		allActiveEnergyCarriers.addAll(this.activeConsumptionEnergyCarriers);
+		return allActiveEnergyCarriers;
 	}
 	
     //public void setUI_EnergyAsset(UI_EnergyAsset ui_energyAsset) {
@@ -53437,8 +53593,8 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.METHANE;
 	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 	    
 	    if (outputHeatCapacity_kW == 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAGasBurner with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
@@ -53565,7 +53721,9 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    } else {
 	    	this.timestep_h = profileTimestep_h;
 	    }
-	    activeEnergyCarriers.add(this.energyCarrier);
+	    
+	    //this.activeProductionEnergyCarriers.add(this.energyCarrier);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
     
@@ -53743,7 +53901,8 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
 		this.etaCharge_r = Math.sqrt(eta_r);
 		this.etaDischarge_r = Math.sqrt(eta_r);
-	    activeEnergyCarriers.add(this.storageMedium);
+	    this.activeProductionEnergyCarriers.add(this.storageMedium);		
+		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
 		registerEnergyAsset();
     }
     
@@ -53898,7 +54057,8 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
-	    activeEnergyCarriers.add(this.energyCarrier);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrier);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
     }
 
@@ -54046,7 +54206,8 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.ambientTempType = ambientTempType;
 		this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.stateOfCharge_r = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
-	    activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
+	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
+		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		registerEnergyAsset();
     }
 
@@ -54271,7 +54432,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    if (lossFactor_WpK < 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EABuilding with negative lossfactor! %s", lossFactor_WpK));	    	
 	    }
-	    activeEnergyCarriers.add(OL_EnergyCarriers.HEAT);
+	    
+	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
+		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		registerEnergyAsset();
     }
 
@@ -54497,9 +54660,11 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.belowZeroHeatpumpEtaReductionFactor = belowZeroHeatpumpEtaReductionFactor;
 
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
-    	this.energyCarrierConsumed= OL_EnergyCarriers.ELECTRICITY;   
-	    activeEnergyCarriers.add(this.energyCarrierProduced);
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+    	this.energyCarrierConsumed= OL_EnergyCarriers.ELECTRICITY;  
+    	
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);   	
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
+
 		registerEnergyAsset();
 	}
 
@@ -54698,7 +54863,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
 	    	
 	    }
-	    activeEnergyCarriers.add(this.storageMedium);
+	    this.activeProductionEnergyCarriers.add(this.storageMedium);   	
+		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
 		registerEnergyAsset();
     }
  
@@ -54905,8 +55071,8 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.HEAT;
 	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 	    
 	    if (outputHeatCapacity_kW == 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAConversionHeatDeliverySet with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
@@ -55206,8 +55372,8 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.HYDROGEN;
 	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 	
@@ -55251,8 +55417,8 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 	
@@ -55584,8 +55750,8 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	    this.tripTracker = tripTracker;
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;	    	
-	    }
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    }	
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
@@ -55726,8 +55892,8 @@ public class J_EAConversionElektrolyser extends zero_engine.J_EAConversion imple
 	    this.energyCarrierProduced = OL_EnergyCarriers.HYDROGEN;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
@@ -55785,10 +55951,10 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	    
     	this.energyCarriersProduced.add( OL_EnergyCarriers.ELECTRICITY );
     	this.energyCarriersProduced.add( OL_EnergyCarriers.HEAT );
-    	this.energyCarrierConsumed= OL_EnergyCarriers.METHANE;        
-	    activeEnergyCarriers.addAll(this.energyCarriersProduced);
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
-		
+    	this.energyCarrierConsumed= OL_EnergyCarriers.METHANE;
+    	
+        this.activeProductionEnergyCarriers.addAll(energyCarriersProduced);
+    	this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 	    registerEnergyAsset();
 	}
 
@@ -55879,8 +56045,8 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
-	    activeEnergyCarriers.add(this.energyCarrierProduced);
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
     }
 
@@ -56654,10 +56820,10 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 		this.energyAssetType = OL_EnergyAssetType.ELECTROLYSER;
 
 	    this.energyCarrierProduced = OL_EnergyCarriers.HYDROGEN;
-	    this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;	    
-		
-	    activeEnergyCarriers.add(this.energyCarrierProduced);
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;	   
+	    
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
@@ -56782,9 +56948,8 @@ public class J_EAConversionFuelCell extends zero_engine.J_EAConversion implement
 
 	    this.energyCarrierProduced = OL_EnergyCarriers.ELECTRICITY;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.HYDROGEN;
-	    
-	    this.activeEnergyCarriers.add(this.energyCarrierProduced);
-	    this.activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
@@ -56828,8 +56993,8 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	    this.tripTracker = tripTracker; 
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;
-	    }
-	    activeEnergyCarriers.add(this.energyCarrierConsumed);
+	    }		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
     
