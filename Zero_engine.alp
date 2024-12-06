@@ -24212,6 +24212,92 @@ else {
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, true);
 	energyModel.v_totalInstalledPVPower_kW += v_totalInstalledPVPower_kW;
 	energyModel.v_totalInstalledWindPower_kW += v_totalInstalledWindPower_kW;
+
+	// TODO: Find a more elegant solution for this
+	// Update live plots
+	double startTime = max(0.0,  energyModel.t_h - 168);
+	double endTime = energyModel.t_h;
+	
+	DataSet emptyDataSetLiveWeek = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	
+	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		emptyDataSetLiveWeek.add(t, 0);
+	}
+	
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+		dsm_liveDemand_kW.get(EC).fillFrom(emptyDataSetLiveWeek);
+		dsm_liveSupply_kW.get(EC).fillFrom(emptyDataSetLiveWeek);
+	}
+	
+	data_baseloadElectricityDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_hydrogenElectricityDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_heatPumpElectricityDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_electricVehicleDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_batteryCharging_kW.fillFrom(emptyDataSetLiveWeek);
+	data_PVGeneration_kW.fillFrom(emptyDataSetLiveWeek);
+	data_windGeneration_kW.fillFrom(emptyDataSetLiveWeek);
+	data_batteryDischarging_kW.fillFrom(emptyDataSetLiveWeek);
+	data_V2GSupply_kW.fillFrom(emptyDataSetLiveWeek);
+	data_totalDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_totalSupply_kW.fillFrom(emptyDataSetLiveWeek);
+	data_liveElectricityBalance_kW.fillFrom(emptyDataSetLiveWeek);
+	data_gridCapacityDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_gridCapacitySupply_kW.fillFrom(emptyDataSetLiveWeek);
+	data_electricHobDemand_kW.fillFrom(emptyDataSetLiveWeek);
+	data_districtHeatDelivery_kW.fillFrom(emptyDataSetLiveWeek);
+	
+	DataSet emptyDataSetAnnual = new DataSet(365);
+	
+	for (int t = 0; t < 365; t++) {
+		emptyDataSetAnnual.add(t, 0);
+	}
+	
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+		dsm_dailyAverageDemandDataSets_kW.get(EC).fillFrom(emptyDataSetAnnual);
+		dsm_dailyAverageSupplyDataSets_kW.get(EC).fillFrom(emptyDataSetAnnual);
+	}
+		
+	data_annualBaseloadElectricityDemand_kW.fillFrom(emptyDataSetAnnual);
+	data_annualBatteriesDemand_kW.fillFrom(emptyDataSetAnnual);
+	data_annualBatteriesSupply_kW.fillFrom(emptyDataSetAnnual);
+	data_annualElectricVehicleDemand_kW.fillFrom(emptyDataSetAnnual);
+	data_annualHeatPumpElectricityDemand_kW.fillFrom(emptyDataSetAnnual);
+	data_annualPVGeneration_kW.fillFrom(emptyDataSetAnnual);
+	data_annualV2GSupply_kW.fillFrom(emptyDataSetAnnual);
+	data_annualWindGeneration_kW.fillFrom(emptyDataSetAnnual);
+	
+	DataSet emptyDataSetSummerWeek = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	DataSet emptyDataSetWinterWeek = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	
+	for (int t = 0; t < (int)(168 / energyModel.p_timeStep_h); t++) {
+		emptyDataSetSummerWeek.add(energyModel.p_startHourSummerWeek + t, 0);
+		emptyDataSetWinterWeek.add(energyModel.p_startHourWinterWeek + t, 0);
+	}
+	
+	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+		dsm_summerWeekDemandDataSets_kW.get(EC).fillFrom(emptyDataSetSummerWeek);
+		dsm_winterWeekDemandDataSets_kW.get(EC).fillFrom(emptyDataSetWinterWeek);
+		dsm_summerWeekSupplyDataSets_kW.get(EC).fillFrom(emptyDataSetSummerWeek);
+		dsm_winterWeekSupplyDataSets_kW.get(EC).fillFrom(emptyDataSetWinterWeek);
+	}
+		
+	data_summerWeekBaseloadElectricityDemand_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekHeatPumpElectricityDemand_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekElectricVehicleDemand_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekBatteriesDemand_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekPVGeneration_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekWindGeneration_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekBatteriesSupply_kW.fillFrom(emptyDataSetSummerWeek);
+	data_summerWeekV2GSupply_kW.fillFrom(emptyDataSetSummerWeek);
+	data_winterWeekBaseloadElectricityDemand_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekHeatPumpElectricityDemand_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekElectricVehicleDemand_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekBatteriesDemand_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekPVGeneration_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekWindGeneration_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekBatteriesSupply_kW.fillFrom(emptyDataSetWinterWeek);
+	data_winterWeekV2GSupply_kW.fillFrom(emptyDataSetWinterWeek);	
+	
 }
 
 //Update the 'isActive' variable
