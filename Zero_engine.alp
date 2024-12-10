@@ -26187,7 +26187,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[energyModel.t_h-energyModel.p_runStartTime_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT)]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT))]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -51935,6 +51935,9 @@ if(p_tertiaryHeatingAsset.getOutputCapacity_kW() != 0){
 	
 	//Heat delivery set control (always assigned to tertiary heating asset)
 	p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
+	
+	//Update districtheating variable
+	v_districtHeatDelivery_kW = powerDemandDivision[2]/p_tertiaryHeatingAsset.getEta_r();
 }
 if(p_quaternaryHeatingAsset.getOutputCapacity_kW() != 0){
 	double powerFraction_HYDROGENBURNER = powerDemandDivision[3] / p_quaternaryHeatingAsset.getOutputCapacity_kW();
