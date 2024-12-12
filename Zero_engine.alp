@@ -51462,7 +51462,7 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<Id>1724397994084</Id>
 					<Name><![CDATA[v_nbCurrentHouseholdsWithBattery]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1680</X><Y>470</Y>
+					<X>1670</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51580,6 +51580,66 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733992320729</Id>
+					<Name><![CDATA[v_SOC_setp_fr_offset_balance]]></Name>
+					<X>1680</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.6]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733992537947</Id>
+					<Name><![CDATA[v_FeedbackGain_kWpSOC_factor_balance]]></Name>
+					<X>1680</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.4]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733992922419</Id>
+					<Name><![CDATA[v_SOC_setp_fr_price]]></Name>
+					<X>2120</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.5]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1733993584071</Id>
+					<Name><![CDATA[v_priceGain_kWhpeur]]></Name>
+					<X>2120</X><Y>510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[2]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -52366,7 +52426,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
 	double availableDischargePower_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
 
-	double SOC_setp_fr = 0.5;
+	double SOC_setp_fr_offset = v_SOC_setp_fr_offset_balance; // default: 0.6
 	//TODO: Verander in iets specifieks voor project - overwrite in GC Neighborhood
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
@@ -52375,13 +52435,14 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
-	SOC_setp_fr =  0.6 + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
+	double SOC_setp_fr =  SOC_setp_fr_offset + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
 	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	
 	//traceln("SOC_setp_fr" + SOC_setp_fr);
 	
 	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
-	double FeedbackGain_kWpSOC = 0.4 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
+	double FeedbackGain_kWpSOC_factor = v_FeedbackGain_kWpSOC_factor_balance; // default: 0.4
+	double FeedbackGain_kWpSOC = FeedbackGain_kWpSOC_factor * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
@@ -52410,7 +52471,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//double willingnessToPayDefault_eurpkWh = 0.3;
 	double chargeDischarge_offset_eurpkWh = 0.0;
 	double WTPfeedbackGain_eurpSOC = 0.5; //Gelijk aan de gem marktprijs -  When SOC-error is 100%, adjust WTP price by 1 eurpkWh
-	double priceGain_kWhpeur = 2; // How strongly to ramp up power with price-delta's
+	double priceGain_kWhpeur = v_priceGain_kWhpeur; // default: 2; // How strongly to ramp up power with price-delta's
 	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
 	
 	double chargeSetpoint_kW = 0;
@@ -52425,7 +52486,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		//double currentPricePowerBandPos_kW = ownerActor.v_priceBandsDelivery.ceilingKey(100.0); // Up to what power does this price hold?
 		//double currentPricePowerBandNeg_kW = ownerActor.v_priceBandsDelivery.floorKey(100.0); // Down to what power does this price hold?
 		
-		double SOC_setp_fr = 0.5;
+		double SOC_setp_fr = v_SOC_setp_fr_price; // Default: 0.5
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		/*if (!c_vehicleAssets.isEmpty()) {
 			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
@@ -52655,7 +52716,7 @@ v_amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
 					<LineColor>-16711936</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>430</Width>
+					<Width>960</Width>
 					<Height>170</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -52674,7 +52735,7 @@ v_amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Battery sliders functionality]]></Text>
+					<Text><![CDATA[Battery control]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
@@ -52721,6 +52782,48 @@ v_amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>14</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1733992649922</Id>
+					<Name><![CDATA[txt_batteryBalance]]></Name>
+					<X>1670</X><Y>460</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Balance]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1733993648205</Id>
+					<Name><![CDATA[txt_batteryPrice]]></Name>
+					<X>2110</X><Y>460</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Prijs]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
 						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
