@@ -379,6 +379,7 @@
 		<OptionList>
 			<Id>1659525726440</Id>
 			<Name><![CDATA[OL_EAProductionTypes]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659535893345</Id>
 				<Name><![CDATA[PHOTOVOLTAIC]]></Name>
@@ -1085,10 +1086,6 @@
 			<Option>
 				<Id>1734018498969</Id>
 				<Name><![CDATA[METHANEDEMAND]]></Name>
-			</Option>
-			<Option>
-				<Id>1734094573659</Id>
-				<Name><![CDATA[CHPELECTRICITYPRODUCTION]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
@@ -22934,9 +22931,6 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.add(j_ea);
 	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
-		c_chpAssets.add(j_ea);
-	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
@@ -22965,8 +22959,11 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	} else if (j_ea instanceof J_EAConversionElectrolyser) {
+	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
 		c_electrolyserAssets.add(j_ea);
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
+		c_chpAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -23010,8 +23007,6 @@ if (j_ea instanceof J_EAVehicle) {
 			//Do nothing
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
 			//Do nothing
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHPELECTRICITYPRODUCTION){
-			c_chpAssets.add(j_ea);	
 		} else {
 			traceln( "Unrecognized profile type!");
 		}
@@ -23676,9 +23671,6 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_totalInstalledWindPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.remove(j_ea);
 	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
-		c_chpAssets.remove(j_ea);
-	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
@@ -23702,6 +23694,9 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = null;
 	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		c_electrolyserAssets.remove(j_ea);
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
+		c_chpAssets.remove(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
@@ -52613,9 +52608,6 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.add(j_ea);
 	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
-		c_chpAssets.add(j_ea);
-	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
@@ -52640,6 +52632,9 @@ if (j_ea instanceof J_EAVehicle) {
 		p_tertiaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_quaternaryHeatingAsset = (J_EAConversion)j_ea;
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
+		c_chpAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -52681,8 +52676,6 @@ if (j_ea instanceof J_EAVehicle) {
 			c_windAssets.add(j_ea);
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
 			//Do nothing
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHPELECTRICITYPRODUCTION){
-			c_chpAssets.add(j_ea);
 		} else {
 			traceln( "Unrecognized profile type!");
 		}
@@ -54117,13 +54110,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    } else {
 	    	this.timestep_h = profileTimestep_h;
 	    }
-	    
-	    if(this.profileType == OL_ProfileAssetType.CHPELECTRICITYPRODUCTION ) {
-	    	this.activeProductionEnergyCarriers.add(this.energyCarrier);
-    	}
-    	else {
-    		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
-    	}
+
 		registerEnergyAsset();
 	}
     
