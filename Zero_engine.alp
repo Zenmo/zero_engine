@@ -21424,6 +21424,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1722516515981</Id>
 					<Name><![CDATA[c_conversionElectricAssets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-120</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -22936,7 +22937,7 @@ if (j_ea instanceof J_EAVehicle) {
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 			c_electricHobAssets.add(j_ea);
-			c_conversionElectricAssets.add(j_ea);
+			//c_conversionElectricAssets.add(j_ea);
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
@@ -22953,7 +22954,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 		c_electricHeatpumpAssets.add(j_ea);
-		c_conversionElectricAssets.add(j_ea);
+		//c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
 
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
@@ -23675,7 +23676,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 		c_electricHobAssets.remove(j_ea);
-		c_conversionElectricAssets.remove(j_ea);
+		//c_conversionElectricAssets.remove(j_ea);
 	}	
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
@@ -23689,7 +23690,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = null;
 		energyModel.c_ambientAirDependentAssets.remove(j_ea);
 		c_electricHeatpumpAssets.remove(j_ea);
-		c_conversionElectricAssets.remove(j_ea);
+		//c_conversionElectricAssets.remove(j_ea);
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = null;
 	} else if (j_ea instanceof J_EAConversionElectrolyser) {
@@ -52613,7 +52614,7 @@ if (j_ea instanceof J_EAVehicle) {
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 			c_electricHobAssets.add(j_ea);
-			c_conversionElectricAssets.add(j_ea);
+			//c_conversionElectricAssets.add(j_ea);
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
@@ -52626,7 +52627,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 		c_electricHeatpumpAssets.add(j_ea);
-		c_conversionElectricAssets.add(j_ea);
+		//c_conversionElectricAssets.add(j_ea);
 		p_secondaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatDeliverySet) {
 		p_tertiaryHeatingAsset = (J_EAConversion)j_ea;
