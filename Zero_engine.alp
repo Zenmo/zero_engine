@@ -54111,7 +54111,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    } else {
 	    	this.timestep_h = profileTimestep_h;
 	    }
-
+	    
+	    //this.activeProductionEnergyCarriers.add(this.energyCarrier);
+	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
+	    
 		registerEnergyAsset();
 	}
     
