@@ -53445,6 +53445,9 @@ abstract public class J_EA implements Cloneable {
     	this.f_updateAllFlows(this.v_powerFraction_fr);
     }
     
+    public void f_setPowerFraction_fr(double powerFraction_fr) {
+    	this.v_powerFraction_fr = powerFraction_fr;
+    }
     
     public void clear() {
 	    flowsMap.clear();   	  	
