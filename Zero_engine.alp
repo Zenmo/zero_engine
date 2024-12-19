@@ -16588,6 +16588,28 @@ else{
 }
 ]]></Body>
 				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ArrayList<GridConnection>]]></ReturnType>
+					<Id>1734617656602</Id>
+					<Name><![CDATA[f_getAllLowerLVLConnectedGridConnections]]></Name>
+					<Description><![CDATA[Function that gets all the directly connected grid connections]]></Description>
+					<X>1110</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[ArrayList<GridConnection> AllLowerLVLConnectedGridConnections = new ArrayList<GridConnection>();
+
+for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
+	AllLowerLVLConnectedGridConnections.addAll(GN.f_getConnectedGridConnections());
+}
+
+AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
+
+
+return AllLowerLVLConnectedGridConnections;]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
