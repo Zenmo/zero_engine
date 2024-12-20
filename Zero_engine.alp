@@ -22615,12 +22615,38 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 			}
 			dsm_liveDemand_kW.put( EC, dsDemand);
 			dsm_liveSupply_kW.put( EC, dsSupply);
-			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
-			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
-			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			DataSet annualDataSet = new DataSet(365);
+			for (int i = 0; i < 365; i++) {
+				annualDataSet.add( i*24 - energyModel.p_timeStep_h, 0);
+			}
+			DataSet annualDemandDataSet = new DataSet(365);
+			annualDemandDataSet.fillFrom(annualDataSet);
+			DataSet annualSupplyDataSet = new DataSet(365);
+			annualSupplyDataSet.fillFrom(annualDataSet);
+			dsm_dailyAverageDemandDataSets_kW.put( EC, annualDemandDataSet);
+			dsm_dailyAverageSupplyDataSets_kW.put( EC, annualSupplyDataSet);
+			
+			int weekSize = (int)(168 / energyModel.p_timeStep_h);
+			DataSet summerWeekDataSet = new DataSet( weekSize );
+			DataSet winterWeekDataSet = new DataSet( weekSize );
+			for (int i = 0; i < weekSize; i++) {
+				summerWeekDataSet.add( energyModel.p_startHourSummerWeek + i * energyModel.p_timeStep_h, 0.0);
+				winterWeekDataSet.add( energyModel.p_startHourWinterWeek + i * energyModel.p_timeStep_h, 0.0);
+			}
+			
+			DataSet summerWeekDemandDataSet = new DataSet( weekSize );
+			summerWeekDemandDataSet.fillFrom(summerWeekDataSet);
+			DataSet summerWeekSupplyDataSet = new DataSet( weekSize );
+			summerWeekSupplyDataSet.fillFrom(summerWeekDataSet);
+			DataSet winterWeekDemandDataSet = new DataSet( weekSize );
+			winterWeekDemandDataSet.fillFrom(winterWeekDataSet);
+			DataSet winterWeekSupplyDataSet = new DataSet( weekSize );
+			winterWeekSupplyDataSet.fillFrom(winterWeekDataSet);
+						
+			dsm_summerWeekDemandDataSets_kW.put( EC, summerWeekDemandDataSet);
+			dsm_summerWeekSupplyDataSets_kW.put( EC, summerWeekSupplyDataSet);
+			dsm_winterWeekDemandDataSets_kW.put( EC, winterWeekDemandDataSet);
+			dsm_winterWeekSupplyDataSets_kW.put( EC, winterWeekSupplyDataSet);
 		}
 	}
 }
