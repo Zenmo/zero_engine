@@ -56627,6 +56627,23 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	}
     
     @Override
+    public void f_updateAllFlows(double powerFraction_fr) {
+    	if ( powerFraction_fr < 0 ) {
+			throw new RuntimeException("Impossible to operate electrolyser asset with negative powerfraction.");    		
+    	}
+    	else {
+         	double powerFractionBounded_fr = min(1, powerFraction_fr);
+         	this.operate(powerFractionBounded_fr);
+        	if (this.parentAgent instanceof GridConnection) {    		
+        		((GridConnection)this.parentAgent).f_addFlows(this.flowsMap, this.energyUse_kW, this);
+        	}
+        	this.lastFlowsMap.cloneMap(this.flowsMap);
+        	this.lastEnergyUse_kW = this.energyUse_kW;
+        	this.clear();
+    	}
+    }
+    
+    @Override
     public void operate(double ratioOfCapacity) {
 		double electricityConsumption_kW = inputCapacity_kW * ratioOfCapacity;
 		double hydrogenProduction_kW = 0;
