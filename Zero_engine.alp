@@ -46823,7 +46823,7 @@ return elektrolyserSetpointElectric_kW;]]></Body>
 						<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 					</Parameter>
 					<Body><![CDATA[ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
-double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
+//double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
 double currentElectricityPriceEPEX_eurpkWh = energyModel.v_epexForecast_eurpkWh;
 
 switch (ElectrolyserAsset.getState()){
