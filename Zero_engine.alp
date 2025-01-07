@@ -46301,7 +46301,7 @@ FullCapacity.]]></Description>
 					<Id>1709733732105</Id>
 					<Name><![CDATA[p_minProductionRatio]]></Name>
 					<Description><![CDATA[ratio of the nominal power of the electrolyser for minimum production]]></Description>
-					<X>1610</X><Y>150</Y>
+					<X>1610</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46492,7 +46492,7 @@ if (p_curtailer != null){
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-					<X>1350</X><Y>100</Y>
+					<X>1230</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46563,7 +46563,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1708089250229</Id>
 					<Name><![CDATA[f_manageElectrolyser]]></Name>
-					<X>1610</X><Y>70</Y>
+					<X>1610</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46650,7 +46650,7 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1708089644411</Id>
 					<Name><![CDATA[f_operateFlexAssets_override]]></Name>
-					<X>800</X><Y>240</Y>
+					<X>910</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46697,7 +46697,7 @@ if (p_batteryAsset != null){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1708447959640</Id>
 					<Name><![CDATA[f_electrolyserRegime]]></Name>
-					<X>1620</X><Y>90</Y>
+					<X>1620</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46726,15 +46726,6 @@ double previousElectrolyserConsumption_kW = max(0,flowsMap.get(OL_EnergyCarriers
 double currentGridNodePowerFlow_kW = this.l_parentNodeElectric.getConnectedAgent().v_currentLoad_kW - previousElectrolyserConsumption_kW;
 data_liveWeekGridNoderPowerFlow_kW.add(energyModel.t_h, this.l_parentNodeElectric.getConnectedAgent().v_currentLoad_kW);
 
-switch (p_electrolyserOperationMode){
-
-	case PRICE:
-		f_electrolyserRegimeControl_Price(excessElectricPower_kW, ElectrolyserAsset);
-	break;
-	case BALANCE:
-		f_electrolyserRegimeControl_Balance(currentGridNodePowerFlow_kW, forecast_time_h, ElectrolyserAsset);
-	break;
-}
 
 switch (p_electrolyserOperationMode){
 
@@ -46755,7 +46746,7 @@ switch (ElectrolyserAsset.getState()){
 		elektrolyserSetpointElectric_kW = 0;
 		
 		if(energyModel.v_isRapidRun){
-		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
+		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + energyModel.p_timeStep_h;
 		}
 	break;
 	
@@ -46763,7 +46754,7 @@ switch (ElectrolyserAsset.getState()){
 		elektrolyserSetpointElectric_kW = 0;
 		
 		if(energyModel.v_isRapidRun){
-		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
+		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + energyModel.p_timeStep_h;
 		}
 	break;
 	
@@ -46771,8 +46762,8 @@ switch (ElectrolyserAsset.getState()){
 		elektrolyserSetpointElectric_kW = 0.025*ElectrolyserAsset.getInputCapacity_kW(); // 1 - 5 percent of nominal load to keep it warm!
 		
 		if(energyModel.v_isRapidRun){
-			v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + 0.25;
-			v_totalEnergyLossIdle_kWh = v_totalEnergyLossIdle_kWh + elektrolyserSetpointElectric_kW*0.25;
+			v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + energyModel.p_timeStep_h;
+			v_totalEnergyLossIdle_kWh = v_totalEnergyLossIdle_kWh + elektrolyserSetpointElectric_kW*energyModel.p_timeStep_h;
 		}
 	break;
 	
@@ -46818,7 +46809,7 @@ return elektrolyserSetpointElectric_kW;]]></Body>
 					<Id>1708448673879</Id>
 					<Name><![CDATA[f_electrolyserRegimeControl_Price]]></Name>
 					<Description><![CDATA[Function that defines the regime of the hydrogen plant of the next timestep. ]]></Description>
-					<X>1630</X><Y>110</Y>
+					<X>1630</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46912,7 +46903,7 @@ switch (ElectrolyserAsset.getState()){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1715611921617</Id>
 					<Name><![CDATA[f_electrolyserRegimeControl_Balance]]></Name>
-					<X>1630</X><Y>130</Y>
+					<X>1630</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47043,7 +47034,7 @@ switch (ElectrolyserAsset.getState()){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717066943639</Id>
 					<Name><![CDATA[f_resetSpecificGCStates_override]]></Name>
-					<X>1140</X><Y>550</Y>
+					<X>1230</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47061,7 +47052,7 @@ v_hydrogenInStorage_kWh = 0;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1717068271650</Id>
 					<Name><![CDATA[f_resetSpecificGCStatesAfterRapidRun_override]]></Name>
-					<X>1140</X><Y>590</Y>
+					<X>1250</X><Y>590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47141,7 +47132,7 @@ v_hydrogenInStorage_kWh = 0;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1731589202880</Id>
 					<Name><![CDATA[f_fillAnnualDatasets_electrolyser]]></Name>
-					<X>960</X><Y>560</Y>
+					<X>930</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -47346,7 +47337,7 @@ if (energyModel.b_isLastTimeStepOfDay) {
 					<LineColor>-14774017</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
-					<Width>280</Width>
+					<Width>350</Width>
 					<Height>490</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
