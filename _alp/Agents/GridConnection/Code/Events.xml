@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Events>
+	<Event>
+		<Id>1675011317461</Id>
+		<Name><![CDATA[e_initializeLowPassEprice]]></Name>
+		<Description><![CDATA[Make sure this is correct, so after the first official timestep has passed]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1230</X>
+		<Y>60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties TriggerType="timeout" Mode="occuresOnce">
+			<Timeout Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</Timeout>
+			<Rate Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="RateUnits">PER_HOUR</Unit>
+			</Rate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1675065600000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[energyModel.p_timeStep_h*60+1]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<Condition>false</Condition>
+		</Properties>
+		<Action xmlns:al="http://anylogic.com"/>
+	</Event>
+</Events>
