@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -27132,7 +27132,7 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[NET LOAD]]></Title>
+						<Title><![CDATA[GRID LOAD]]></Title>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset5]]></Expression>
 					<Color>-16776961</Color>
@@ -43342,7 +43342,7 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1676477303264</Id>
@@ -43421,7 +43421,7 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 //traceln( "heatpumpt power fraction: " + powerFraction_heatPump_fr);
 ]]></Body>
 				</Function>
-				<Function AccessType="public" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1676976246060</Id>
@@ -43804,7 +43804,7 @@ if ( p_heatBuffer != null){
 	p_heatBuffer.removeEnergyAsset();
 }]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726301776809</Id>
@@ -43833,7 +43833,7 @@ else if (p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingT
 }
 ]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726301785545</Id>
@@ -43859,7 +43859,7 @@ else {
 	traceln("House " + p_gridConnectionID + " has heatingtype DISTRICT HEAT, but no delivery set or building asset!");
 }	]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
+				<Function AccessType="protected" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1726334759211</Id>
@@ -53851,6 +53851,14 @@ abstract public class J_EA implements Cloneable {
     	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);
     	//return arr;*/
     	//return this.flowsMap;
+    }
+    
+    public void f_updateAllFlows() {
+    	this.f_updateAllFlows(this.v_powerFraction_fr);
+    }
+    
+    public void f_setPowerFraction_fr(double powerFraction_fr) {
+    	this.v_powerFraction_fr = powerFraction_fr;
     }
     
     public void clear() {
