@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Variables>
+	<Variable Class="PlainVariable">
+		<Id>1658750229384</Id>
+		<Name><![CDATA[v_currentProductionElectricity_kW]]></Name>
+		<X>90</X>
+		<Y>340</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1658750229388</Id>
+		<Name><![CDATA[v_currentPowerElectricLost_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>90</X>
+		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659092523267</Id>
+		<Name><![CDATA[v_currentProductionHeat_kW]]></Name>
+		<X>90</X>
+		<Y>460</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659092541428</Id>
+		<Name><![CDATA[v_currentConsumptionElectricity_kW]]></Name>
+		<X>90</X>
+		<Y>360</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659092596831</Id>
+		<Name><![CDATA[v_currentConsumptionHeat_kW]]></Name>
+		<X>90</X>
+		<Y>480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659092615449</Id>
+		<Name><![CDATA[v_currentConsumptionMethane_kW]]></Name>
+		<X>90</X>
+		<Y>400</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659342082106</Id>
+		<Name><![CDATA[v_powerFraction_fr]]></Name>
+		<X>90</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659345815346</Id>
+		<Name><![CDATA[v_currentProductionMethane_kW]]></Name>
+		<X>90</X>
+		<Y>380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659365919790</Id>
+		<Name><![CDATA[v_currentStateOfCharge_r]]></Name>
+		<X>90</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659513282177</Id>
+		<Name><![CDATA[v_currentProductionHydrogen_kW]]></Name>
+		<X>90</X>
+		<Y>420</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659513295338</Id>
+		<Name><![CDATA[v_currentConsumptionHydrogen_kW]]></Name>
+		<X>90</X>
+		<Y>440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1668601315863</Id>
+		<Name><![CDATA[v_currentConsumptionDiesel_kW]]></Name>
+		<X>90</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1659090642877</Id>
+		<Name><![CDATA[j_ea]]></Name>
+		<X>90</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_EA]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1659090642875</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1660130635726</Id>
+		<Name><![CDATA[p_parentAgent]]></Name>
+		<X>90</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[Agent]]></Type>
+			<UnitType>NONE</UnitType>
+			<UnitOfValue Class="AccelerationUnits">MPS_SQ</UnitOfValue>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1660130635724</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1659347079551</Id>
+		<Name><![CDATA[p_energyAssetType]]></Name>
+		<X>90</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1659347079549</Id>
+				<Label><![CDATA[p_energyAssetType]]></Label>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1666983925485</Id>
+		<Name><![CDATA[p_assetName]]></Name>
+		<X>90</X>
+		<Y>130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1666983925483</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1715953134119</Id>
+		<Name><![CDATA[c_EAs]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>310</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EA</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+</Variables>

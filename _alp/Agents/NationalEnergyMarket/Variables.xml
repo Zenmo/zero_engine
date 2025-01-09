@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Variables>
+	<Variable Class="PlainVariable">
+		<Id>1660752725660</Id>
+		<Name><![CDATA[v_currentVariableElectricityPrice_eurpMWh]]></Name>
+		<X>60</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+</Variables>

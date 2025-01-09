@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation>
+	<Line>
+		<Id>1674662718508</Id>
+		<Name><![CDATA[line]]></Name>
+		<X>20</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>140</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
+	<Text>
+		<Id>1674662718511</Id>
+		<Name><![CDATA[text]]></Name>
+		<X>50</X>
+		<Y>20</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[ID & connections]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>11</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+</Presentation>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation>
+	<Line>
+		<Id>1667917035332</Id>
+		<Name><![CDATA[line1]]></Name>
+		<X>920</X>
+		<Y>60</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>140</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
+	<Text>
+		<Id>1667917035334</Id>
+		<Name><![CDATA[text1]]></Name>
+		<X>950</X>
+		<Y>40</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Contracts]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>11</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Rectangle>
+		<Id>1674921588187</Id>
+		<Name><![CDATA[rectangle5]]></Name>
+		<X>510</X>
+		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>2</LineWidth>
+		<LineColor>-4144960</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>DASHED</LineStyle>
+		<Width>709.199</Width>
+		<Height>189.967</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Text>
+		<Id>1674921588189</Id>
+		<Name><![CDATA[text12]]></Name>
+		<X>730</X>
+		<Y>580</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-8355712</Color>
+		<Text><![CDATA[Current consumption volumes]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>11</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1674921619300</Id>
+		<Name><![CDATA[text13]]></Name>
+		<X>970</X>
+		<Y>580</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-8355712</Color>
+		<Text><![CDATA[Electricity financial accounting]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>11</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1675071708039</Id>
+		<Name><![CDATA[button]]></Name>
+		<X>660</X>
+		<Y>350</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="140" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor/>
+			<Enabled>true</Enabled>
+			<ActionCode>traceln("f_getAveragedElectricityPrice(-5, 10): " + f_getAveragedElectricityPrice(-5, 10));
+traceln("f_getAveragedElectricityPrice(-5, 5): " + f_getAveragedElectricityPrice(-5, 5));
+traceln("f_getAveragedElectricityPrice(-5, 4): " + f_getAveragedElectricityPrice(-5, 4));
+
+/*
+traceln("f_getAvailablePowerAtPrice(5) " + f_getAvailablePowerAtPrice(5));
+traceln("f_getElectricityPrice(5) " + f_getElectricityPrice(5));
+traceln("f_getAvailablePowerAtPrice(0) " + f_getAvailablePowerAtPrice(0));
+traceln("f_getElectricityPrice(0) " + f_getElectricityPrice(0));
+traceln("f_getAvailablePowerAtPrice(-1) " + f_getAvailablePowerAtPrice(-1));
+traceln("f_getElectricityPrice(-1) " + f_getElectricityPrice(-1));
+traceln("f_getAvailablePowerAtPrice(-10) " + f_getAvailablePowerAtPrice(-10));
+traceln("f_getElectricityPrice(-10) " + f_getElectricityPrice(-10));
+*/
+</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>test avg price function</LabelText>
+		</ExtendedProperties>
+	</Control>
+	<Text>
+		<Id>1676900973459</Id>
+		<Name><![CDATA[text14]]></Name>
+		<X>540</X>
+		<Y>580</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-8355712</Color>
+		<Text><![CDATA[Total consumption]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>11</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+</Presentation>

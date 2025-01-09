@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Functions>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660736411309</Id>
+		<Name><![CDATA[f_connectToChild]]></Name>
+		<X>700</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[ConnectingChildNode]]></Name>
+			<Type><![CDATA[GridNode]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[energyType]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660736411312</Id>
+		<Name><![CDATA[f_connectToParentActor]]></Name>
+		<Description><![CDATA[Creates an agentLink in superConnection if a parentActorID is designated in the config-excel. Called from f_configureBackBone() in main for profiling reasons, so no parameters are given.
+
+@param: none
+@return: none
+@since: Sprint 6
+@author: HOUJ]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-220</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1664465199508</Id>
+		<Name><![CDATA[f_updateCongestionTariff]]></Name>
+		<X>700</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+</Functions>

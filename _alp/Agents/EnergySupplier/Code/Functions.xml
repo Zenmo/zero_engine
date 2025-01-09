@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Functions>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660736336138</Id>
+		<Name><![CDATA[f_connectToChild]]></Name>
+		<X>790</X>
+		<Y>80</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[ConnectingChildNode]]></Name>
+			<Type><![CDATA[Agent]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660736336141</Id>
+		<Name><![CDATA[f_connectToParentActor]]></Name>
+		<Description><![CDATA[Creates an agentLink in superConnection if a parentActorID is designated in the config-excel. Called from f_configureBackBone() in main for profiling reasons, so no parameters are given.
+
+@param: none
+@return: none
+@since: Sprint 6
+@author: HOUJ]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>780</X>
+		<Y>-40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660743197178</Id>
+		<Name><![CDATA[f_doEnergyTransaction]]></Name>
+		<X>790</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[transactionVolume_kWh]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[contractType]]></Name>
+			<Type><![CDATA[OL_ContractType]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660746864022</Id>
+		<Name><![CDATA[f_getVariableEnergyPrice]]></Name>
+		<X>790</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660746926252</Id>
+		<Name><![CDATA[f_updateEnergyPrice]]></Name>
+		<X>790</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1660806140354</Id>
+		<Name><![CDATA[f_updateFinances]]></Name>
+		<X>790</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+</Functions>

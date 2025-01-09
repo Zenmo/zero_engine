@@ -1,0 +1,6130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Variables>
+	<Variable Class="PlainVariable">
+		<Id>1659356181110</Id>
+		<Name><![CDATA[pp_windOnshoreProduction]]></Name>
+		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+		<X>-670</X>
+		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfilePointer]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659356201846</Id>
+		<Name><![CDATA[v_currentWindPowerNormalized_r]]></Name>
+		<X>1120</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659356216131</Id>
+		<Name><![CDATA[v_currentSolarPowerNormalized_r]]></Name>
+		<X>1120</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1659364131698</Id>
+		<Name><![CDATA[v_currentAmbientTemperature_degC]]></Name>
+		<X>1120</X>
+		<Y>80</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1663238634515</Id>
+		<Name><![CDATA[v_timeStepsElapsed]]></Name>
+		<X>557</X>
+		<Y>382</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1666879575045</Id>
+		<Name><![CDATA[v_gridNodePeakLoadElectricityMSLS_kW]]></Name>
+		<Description><![CDATA[Absolute piekbelastingen MSLS-nodes over de modelrun opgeteld voor externe berekening netinfrastructuurkosten.
+
+@author: JorritvandenHouten
+@since: 27-10-2022]]></Description>
+		<X>-480</X>
+		<Y>540</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1666879592543</Id>
+		<Name><![CDATA[v_gridNodePeakLoadElectricityHSMS_kW]]></Name>
+		<Description><![CDATA[Absolute piekbelasting(en) HSMS-node(s) over de modelrun opgeteld voor externe berekening netinfrastructuurkosten.
+
+@author: JorritvandenHouten
+@since: 27-10-2022]]></Description>
+		<X>-480</X>
+		<Y>560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1666979598282</Id>
+		<Name><![CDATA[v_totalBatteryChargeAmount_MWh]]></Name>
+		<X>-480</X>
+		<Y>760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1666979615893</Id>
+		<Name><![CDATA[v_totalBatteryDischargeAmount_MWh]]></Name>
+		<X>-480</X>
+		<Y>780</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1666979627442</Id>
+		<Name><![CDATA[v_totalBatteryInstalledCapacity_MWh]]></Name>
+		<X>1120</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1669026980656</Id>
+		<Name><![CDATA[v_totalBatteryEnergyUsed_MWh]]></Name>
+		<X>-480</X>
+		<Y>820</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1671636172718</Id>
+		<Name><![CDATA[v_WindYieldForecast_fr]]></Name>
+		<X>800</X>
+		<Y>430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1671636200983</Id>
+		<Name><![CDATA[v_SolarYieldForecast_fr]]></Name>
+		<X>800</X>
+		<Y>450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1671638019875</Id>
+		<Name><![CDATA[v_epexForecast_eurpkWh]]></Name>
+		<X>800</X>
+		<Y>490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1672229241505</Id>
+		<Name><![CDATA[v_totalInstalledWindPower_kW]]></Name>
+		<X>1120</X>
+		<Y>202</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1672229257384</Id>
+		<Name><![CDATA[v_totalInstalledPVPower_kW]]></Name>
+		<X>1120</X>
+		<Y>222</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1674039544084</Id>
+		<Name><![CDATA[v_MSLSnodePeakPositiveLoadElectricity_kW]]></Name>
+		<Description><![CDATA[Absolute piekbelastingen MSLS-nodes over de modelrun opgeteld voor externe berekening netinfrastructuurkosten.
+
+@author: JorritvandenHouten
+@since: 27-10-2022]]></Description>
+		<X>-480</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1674039545764</Id>
+		<Name><![CDATA[v_MSLSnodePeakNegativeLoadElectricity_kW]]></Name>
+		<Description><![CDATA[Absolute piekbelastingen MSLS-nodes over de modelrun opgeteld voor externe berekening netinfrastructuurkosten.
+
+@author: JorritvandenHouten
+@since: 27-10-2022]]></Description>
+		<X>-480</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1676968233773</Id>
+		<Name><![CDATA[v_totalEnergyCurtailed_MWh]]></Name>
+		<X>610</X>
+		<Y>1330</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1678980412868</Id>
+		<Name><![CDATA[v_cumulativeGridCapacityMSLS_kW]]></Name>
+		<X>-480</X>
+		<Y>900</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1678980423977</Id>
+		<Name><![CDATA[v_cumulativeGridCapacityHSMS_kW]]></Name>
+		<X>-480</X>
+		<Y>920</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1678980746805</Id>
+		<Name><![CDATA[v_gridOverloadKPI_pct]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-480</X>
+		<Y>940</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1683718894234</Id>
+		<Name><![CDATA[v_timeSeriesRuntime_ms]]></Name>
+		<X>557</X>
+		<Y>472</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1683718916458</Id>
+		<Name><![CDATA[v_gridNodesRuntime_ms]]></Name>
+		<X>557</X>
+		<Y>512</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1683718921466</Id>
+		<Name><![CDATA[v_gridConnectionsRuntime_ms]]></Name>
+		<X>557</X>
+		<Y>492</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1683718924632</Id>
+		<Name><![CDATA[v_incentivesRuntime_ms]]></Name>
+		<X>557</X>
+		<Y>552</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1683718924634</Id>
+		<Name><![CDATA[v_financialsRuntime_ms]]></Name>
+		<X>557</X>
+		<Y>532</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1690290329895</Id>
+		<Name><![CDATA[hourOfYearPerMonth]]></Name>
+		<X>556</X>
+		<Y>402</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int[]]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new int[] {0, 744, 1392, 2136, 2856, 3600, 4320, 5064, 5808, 6528, 7272, 7992}]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1690290329902</Id>
+		<Name><![CDATA[v_hourOfYearStart]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>556</X>
+		<Y>423</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1695655479591</Id>
+		<Name><![CDATA[v_totalEnergyChargedOutsideModel_MWh]]></Name>
+		<X>-480</X>
+		<Y>860</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1696863807573</Id>
+		<Name><![CDATA[v_modelSelfSufficiency_fr]]></Name>
+		<X>-480</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1696863821721</Id>
+		<Name><![CDATA[v_modelSelfConsumption_fr]]></Name>
+		<X>-480</X>
+		<Y>1210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1697554735224</Id>
+		<Name><![CDATA[v_isRapidRun]]></Name>
+		<X>790</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1698924487994</Id>
+		<Name><![CDATA[v_batteryStoredEnergyDeltaSinceStart_MWh]]></Name>
+		<X>-480</X>
+		<Y>880</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1698929546080</Id>
+		<Name><![CDATA[v_totalEnergyProduced_MWh]]></Name>
+		<X>610</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1699277193134</Id>
+		<Name><![CDATA[t_h]]></Name>
+		<X>557</X>
+		<Y>212</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1699278542893</Id>
+		<Name><![CDATA[v_dailyElectricityConsumptionAvg_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-60</X>
+		<Y>2760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1699278542896</Id>
+		<Name><![CDATA[v_dailyElectricityProductionAvg_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-60</X>
+		<Y>2780</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1699278542898</Id>
+		<Name><![CDATA[v_dailyNetLoadAvg_kW]]></Name>
+		<X>20</X>
+		<Y>2800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700556115968</Id>
+		<Name><![CDATA[v_totalEnergySelfConsumed_MWh]]></Name>
+		<X>610</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700668472639</Id>
+		<Name><![CDATA[v_summerWeekEnergyConsumed_MWh]]></Name>
+		<X>1040</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700668495328</Id>
+		<Name><![CDATA[v_summerWeekEnergyProduced_MWh]]></Name>
+		<X>1040</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700669484040</Id>
+		<Name><![CDATA[v_summerWeekEnergySelfConsumed_MWh]]></Name>
+		<X>1040</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700670131984</Id>
+		<Name><![CDATA[v_winterWeekEnergyConsumed_MWh]]></Name>
+		<X>1550</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700670131986</Id>
+		<Name><![CDATA[v_winterWeekEnergyProduced_MWh]]></Name>
+		<X>1550</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700670131988</Id>
+		<Name><![CDATA[v_winterWeekEnergySelfConsumed_MWh]]></Name>
+		<X>1550</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700725227193</Id>
+		<Name><![CDATA[v_currentFinalEnergyConsumption_kW]]></Name>
+		<X>80</X>
+		<Y>1020</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700725244568</Id>
+		<Name><![CDATA[v_currentPrimaryEnergyProduction_kW]]></Name>
+		<X>80</X>
+		<Y>1000</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1700725502196</Id>
+		<Name><![CDATA[v_currentEnergyCurtailed_kW]]></Name>
+		<X>80</X>
+		<Y>1060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701699259425</Id>
+		<Name><![CDATA[v_currentEnergyImport_kW]]></Name>
+		<X>80</X>
+		<Y>1121</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701699273727</Id>
+		<Name><![CDATA[v_currentEnergyExport_kW]]></Name>
+		<X>80</X>
+		<Y>1141</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701782531465</Id>
+		<Name><![CDATA[v_totalElectricityPeakImport_kW]]></Name>
+		<X>610</X>
+		<Y>1530</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701782538616</Id>
+		<Name><![CDATA[v_totalElectricityPeakExport_kW]]></Name>
+		<X>610</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786170797</Id>
+		<Name><![CDATA[v_daytimeElectricityPeakImport_kW]]></Name>
+		<X>2020</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786170799</Id>
+		<Name><![CDATA[v_daytimeElectricityPeakExport_kW]]></Name>
+		<X>2020</X>
+		<Y>1570</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786186276</Id>
+		<Name><![CDATA[v_winterWeekElectricityPeakImport_kW]]></Name>
+		<X>1550</X>
+		<Y>1530</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786186278</Id>
+		<Name><![CDATA[v_winterWeekElectricityPeakExport_kW]]></Name>
+		<X>1550</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786190557</Id>
+		<Name><![CDATA[v_summerWeekElectricityPeakImport_kW]]></Name>
+		<X>1040</X>
+		<Y>1530</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786190559</Id>
+		<Name><![CDATA[v_summerWeekElectricityPeakExport_kW]]></Name>
+		<X>1040</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786316417</Id>
+		<Name><![CDATA[v_currentElectricityImport_kW]]></Name>
+		<X>80</X>
+		<Y>1160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701786316419</Id>
+		<Name><![CDATA[v_currentElectricityExport_kW]]></Name>
+		<X>80</X>
+		<Y>1180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1701965985318</Id>
+		<Name><![CDATA[v_gridOverloadDuration_h]]></Name>
+		<X>-480</X>
+		<Y>960</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1702377382300</Id>
+		<Name><![CDATA[v_deltaThermalEnergySinceStart_MWh]]></Name>
+		<X>-480</X>
+		<Y>1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1702536957687</Id>
+		<Name><![CDATA[v_avgGridLoad_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-480</X>
+		<Y>980</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1704795167515</Id>
+		<Name><![CDATA[v_totalElectricityConsumed_MWh]]></Name>
+		<X>610</X>
+		<Y>1170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1704795167517</Id>
+		<Name><![CDATA[v_totalElectricityProduced_MWh]]></Name>
+		<X>610</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1704815333011</Id>
+		<Name><![CDATA[v_totalElectricitySelfConsumed_MWh]]></Name>
+		<X>610</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1705337817926</Id>
+		<Name><![CDATA[v_totalPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>610</X>
+		<Y>1390</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1705422009185</Id>
+		<Name><![CDATA[v_currentPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<X>80</X>
+		<Y>1080</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1706602796822</Id>
+		<Name><![CDATA[v_summerWeekElectricityConsumed_MWh]]></Name>
+		<X>1040</X>
+		<Y>1170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1706602804494</Id>
+		<Name><![CDATA[v_summerWeekElectricitySelfConsumed_MWh]]></Name>
+		<X>1040</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1706602819866</Id>
+		<Name><![CDATA[v_winterWeekElectricityConsumed_MWh]]></Name>
+		<X>1550</X>
+		<Y>1170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1706602819868</Id>
+		<Name><![CDATA[v_winterWeekElectricitySelfConsumed_MWh]]></Name>
+		<X>1550</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1707233056349</Id>
+		<Name><![CDATA[v_individualSelfConsumption_fr]]></Name>
+		<X>-480</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1708951590474</Id>
+		<Name><![CDATA[v_collectiveSelfConsumption_fr]]></Name>
+		<X>-480</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1708951616508</Id>
+		<Name><![CDATA[v_individualSelfSufficiency_fr]]></Name>
+		<X>-480</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1712842800772</Id>
+		<Name><![CDATA[v_dayOfWeek1jan]]></Name>
+		<X>560</X>
+		<Y>700</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715074195578</Id>
+		<Name><![CDATA[v_kpiCalcsRuntime_ms]]></Name>
+		<X>557</X>
+		<Y>572</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481324</Id>
+		<Name><![CDATA[acc_totalEnergyProduction_kW]]></Name>
+		<X>610</X>
+		<Y>1090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(false, p_timeStep_h, 8760)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481326</Id>
+		<Name><![CDATA[acc_totalEnergyConsumption_kW]]></Name>
+		<X>610</X>
+		<Y>1110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(false, p_timeStep_h, 8760)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481328</Id>
+		<Name><![CDATA[acc_totalEnergyCurtailed_kW]]></Name>
+		<X>610</X>
+		<Y>1310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(false, p_timeStep_h, 8760)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481330</Id>
+		<Name><![CDATA[acc_totalElectricityProduction_kW]]></Name>
+		<X>610</X>
+		<Y>1050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(false, p_timeStep_h, 8760)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481332</Id>
+		<Name><![CDATA[acc_totalElectricityConsumption_kW]]></Name>
+		<X>610</X>
+		<Y>1070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(false, p_timeStep_h, 8760)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481334</Id>
+		<Name><![CDATA[acc_totalPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<X>610</X>
+		<Y>1370</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(false, p_timeStep_h, 8760)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481350</Id>
+		<Name><![CDATA[acc_summerWeekEnergyProduction_kW]]></Name>
+		<X>1040</X>
+		<Y>1090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481352</Id>
+		<Name><![CDATA[acc_summerWeekEnergyConsumption_kW]]></Name>
+		<X>1040</X>
+		<Y>1110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481354</Id>
+		<Name><![CDATA[acc_summerWeekEnergyCurtailed_kW]]></Name>
+		<X>1040</X>
+		<Y>1310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481356</Id>
+		<Name><![CDATA[acc_summerWeekElectricityProduction_kW]]></Name>
+		<X>1040</X>
+		<Y>1050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481358</Id>
+		<Name><![CDATA[acc_summerWeekElectricityConsumption_kW]]></Name>
+		<X>1040</X>
+		<Y>1070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481360</Id>
+		<Name><![CDATA[acc_summerWeekPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<X>1040</X>
+		<Y>1370</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481376</Id>
+		<Name><![CDATA[acc_winterWeekEnergyProduction_kW]]></Name>
+		<X>1550</X>
+		<Y>1090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481378</Id>
+		<Name><![CDATA[acc_winterWeekEnergyConsumption_kW]]></Name>
+		<X>1550</X>
+		<Y>1110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481380</Id>
+		<Name><![CDATA[acc_winterWeekEnergyCurtailed_kW]]></Name>
+		<X>1550</X>
+		<Y>1310</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481382</Id>
+		<Name><![CDATA[acc_winterWeekElectricityProduction_kW]]></Name>
+		<X>1550</X>
+		<Y>1050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481384</Id>
+		<Name><![CDATA[acc_winterWeekElectricityConsumption_kW]]></Name>
+		<X>1550</X>
+		<Y>1070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715864481386</Id>
+		<Name><![CDATA[acc_winterWeekPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<X>1550</X>
+		<Y>1370</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 24*7)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715865981755</Id>
+		<Name><![CDATA[v_summerWeekElectricityProduced_MWh]]></Name>
+		<X>1040</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315931</Id>
+		<Name><![CDATA[v_dailyBaseloadElectricityDemand_kW]]></Name>
+		<X>20</X>
+		<Y>2830</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715866006028</Id>
+		<Name><![CDATA[v_winterWeekElectricityProduced_MWh]]></Name>
+		<X>1550</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315933</Id>
+		<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kW]]></Name>
+		<X>20</X>
+		<Y>2850</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315935</Id>
+		<Name><![CDATA[v_dailyElectricVehicleDemand_kW]]></Name>
+		<X>20</X>
+		<Y>2870</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315937</Id>
+		<Name><![CDATA[v_dailyBatteriesDemand_kW]]></Name>
+		<X>20</X>
+		<Y>2890</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315939</Id>
+		<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
+		<X>20</X>
+		<Y>3040</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315941</Id>
+		<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
+		<X>20</X>
+		<Y>3060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315943</Id>
+		<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
+		<X>20</X>
+		<Y>3080</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315945</Id>
+		<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
+		<X>20</X>
+		<Y>3100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315951</Id>
+		<Name><![CDATA[v_dailyDieselDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>2930</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315953</Id>
+		<Name><![CDATA[v_dailyHydrogenDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>2950</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315955</Id>
+		<Name><![CDATA[v_dailyNaturalGasDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>2910</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315957</Id>
+		<Name><![CDATA[v_dailyDistrictHeatDemand_kWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>2970</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315959</Id>
+		<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>3160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715246315961</Id>
+		<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>3120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1715671218524</Id>
+		<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>20</X>
+		<Y>3140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1716899850820</Id>
+		<Name><![CDATA[v_topLevelGridCapacity_kW]]></Name>
+		<X>1119</X>
+		<Y>250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1718883144081</Id>
+		<Name><![CDATA[v_electricityYieldForecast_fr]]></Name>
+		<X>800</X>
+		<Y>470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1721228298986</Id>
+		<Name><![CDATA[v_currentDLRfactor_fr]]></Name>
+		<X>1120</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[1.0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1721228965491</Id>
+		<Name><![CDATA[v_minDLRfactor_fr]]></Name>
+		<X>1334</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[2]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1721228970137</Id>
+		<Name><![CDATA[v_maxDLRfactor_fr]]></Name>
+		<X>1504</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[1]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722498503201</Id>
+		<Name><![CDATA[acc_totalDLRfactor_f]]></Name>
+		<X>610</X>
+		<Y>940</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new ZeroAccumulator(true, p_timeStep_h, 8760);]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764057</Id>
+		<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1740</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764059</Id>
+		<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+		<X>100</X>
+		<Y>1760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764061</Id>
+		<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1780</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764063</Id>
+		<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764065</Id>
+		<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1820</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764067</Id>
+		<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1840</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764069</Id>
+		<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1860</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1722862764071</Id>
+		<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
+		<X>100</X>
+		<Y>1880</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1727107003296</Id>
+		<Name><![CDATA[pp_solarPVproduction]]></Name>
+		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+		<X>-670</X>
+		<Y>190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfilePointer]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1727784890604</Id>
+		<Name><![CDATA[pf_windOnshoreProduction]]></Name>
+		<X>-670</X>
+		<Y>230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfileForecaster]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1727784892429</Id>
+		<Name><![CDATA[pf_solarPVproduction]]></Name>
+		<X>-670</X>
+		<Y>250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfileForecaster]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1729088545879</Id>
+		<Name><![CDATA[pf_dayAheadElectricityPricing_eurpMWh]]></Name>
+		<X>-670</X>
+		<Y>270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfileForecaster]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1729088545881</Id>
+		<Name><![CDATA[pp_dayAheadElectricityPricing_eurpMWh]]></Name>
+		<X>-670</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfilePointer]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730452058177</Id>
+		<Name><![CDATA[am_summerWeekBalanceAccumulators_kW]]></Name>
+		<X>1040</X>
+		<Y>1010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap();]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730452122313</Id>
+		<Name><![CDATA[fm_currentBalanceFlows_kW]]></Name>
+		<X>80</X>
+		<Y>940</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730452924090</Id>
+		<Name><![CDATA[am_winterWeekBalanceAccumulators_kW]]></Name>
+		<X>1550</X>
+		<Y>1010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap();]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730452955298</Id>
+		<Name><![CDATA[am_totalBalanceAccumulators_kW]]></Name>
+		<X>610</X>
+		<Y>1010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453222265</Id>
+		<Name><![CDATA[fm_totalImports_MWh]]></Name>
+		<X>610</X>
+		<Y>1430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453222267</Id>
+		<Name><![CDATA[fm_totalExports_MWh]]></Name>
+		<X>610</X>
+		<Y>1450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453237529</Id>
+		<Name><![CDATA[fm_summerWeekImports_MWh]]></Name>
+		<X>1040</X>
+		<Y>1430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453237531</Id>
+		<Name><![CDATA[fm_summerWeekExports_MWh]]></Name>
+		<X>1040</X>
+		<Y>1450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453249361</Id>
+		<Name><![CDATA[fm_winterWeekImports_MWh]]></Name>
+		<X>1550</X>
+		<Y>1430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453249363</Id>
+		<Name><![CDATA[fm_winterWeekExports_MWh]]></Name>
+		<X>1550</X>
+		<Y>1450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453322393</Id>
+		<Name><![CDATA[v_daytimeEnergyImport_MWh]]></Name>
+		<X>2020</X>
+		<Y>1455</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731589790564</Id>
+		<Name><![CDATA[v_totalEnergyConsumptionForDistrictHeating_MWh]]></Name>
+		<X>-480</X>
+		<Y>1300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453322395</Id>
+		<Name><![CDATA[v_daytimeEnergyExport_MWh]]></Name>
+		<X>2020</X>
+		<Y>1475</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453322409</Id>
+		<Name><![CDATA[fm_daytimeImports_MWh]]></Name>
+		<X>2020</X>
+		<Y>1415</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730453322411</Id>
+		<Name><![CDATA[fm_daytimeExports_MWh]]></Name>
+		<X>2020</X>
+		<Y>1435</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730454951405</Id>
+		<Name><![CDATA[v_daytimeEnergyConsumed_MWh]]></Name>
+		<X>2020</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730454951407</Id>
+		<Name><![CDATA[v_daytimeEnergyProduced_MWh]]></Name>
+		<X>2020</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730454951409</Id>
+		<Name><![CDATA[v_daytimeEnergySelfConsumed_MWh]]></Name>
+		<X>2020</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730454951441</Id>
+		<Name><![CDATA[v_daytimeElectricityConsumed_MWh]]></Name>
+		<X>2020</X>
+		<Y>1170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730454951449</Id>
+		<Name><![CDATA[v_daytimeElectricityProduced_MWh]]></Name>
+		<X>2020</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730454951451</Id>
+		<Name><![CDATA[v_daytimeElectricitySelfConsumed_MWh]]></Name>
+		<X>2020</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216290</Id>
+		<Name><![CDATA[v_nighttimeEnergyImport_MWh]]></Name>
+		<X>2380</X>
+		<Y>1460</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216292</Id>
+		<Name><![CDATA[v_nighttimeEnergyExport_MWh]]></Name>
+		<X>2380</X>
+		<Y>1480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216294</Id>
+		<Name><![CDATA[v_nighttimeEnergyConsumed_MWh]]></Name>
+		<X>2380</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216296</Id>
+		<Name><![CDATA[v_nighttimeEnergyProduced_MWh]]></Name>
+		<X>2380</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216298</Id>
+		<Name><![CDATA[v_nighttimeEnergySelfConsumed_MWh]]></Name>
+		<X>2380</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216300</Id>
+		<Name><![CDATA[v_weekdayEnergyImport_MWh]]></Name>
+		<X>2750</X>
+		<Y>1455</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216302</Id>
+		<Name><![CDATA[v_weekdayEnergyExport_MWh]]></Name>
+		<X>2750</X>
+		<Y>1475</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216304</Id>
+		<Name><![CDATA[v_weekdayEnergyConsumed_MWh]]></Name>
+		<X>2750</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216306</Id>
+		<Name><![CDATA[v_weekdayEnergyProduced_MWh]]></Name>
+		<X>2750</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216308</Id>
+		<Name><![CDATA[v_weekdayEnergySelfConsumed_MWh]]></Name>
+		<X>2750</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216310</Id>
+		<Name><![CDATA[v_weekendEnergyImport_MWh]]></Name>
+		<X>3100</X>
+		<Y>1455</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216312</Id>
+		<Name><![CDATA[v_weekendEnergyExport_MWh]]></Name>
+		<X>3100</X>
+		<Y>1475</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216314</Id>
+		<Name><![CDATA[v_weekendEnergyConsumed_MWh]]></Name>
+		<X>3100</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216316</Id>
+		<Name><![CDATA[v_weekendEnergyProduced_MWh]]></Name>
+		<X>3100</X>
+		<Y>1230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216318</Id>
+		<Name><![CDATA[v_weekendEnergySelfConsumed_MWh]]></Name>
+		<X>3100</X>
+		<Y>1270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216320</Id>
+		<Name><![CDATA[v_nighttimeElectricityConsumed_MWh]]></Name>
+		<X>2380</X>
+		<Y>1169</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216322</Id>
+		<Name><![CDATA[v_weekdayElectricityConsumed_MWh]]></Name>
+		<X>2750</X>
+		<Y>1170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216324</Id>
+		<Name><![CDATA[v_weekendElectricityConsumed_MWh]]></Name>
+		<X>3100</X>
+		<Y>1170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216326</Id>
+		<Name><![CDATA[v_nighttimeElectricityProduced_MWh]]></Name>
+		<X>2380</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216328</Id>
+		<Name><![CDATA[v_nighttimeElectricitySelfConsumed_MWh]]></Name>
+		<X>2380</X>
+		<Y>1187</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216330</Id>
+		<Name><![CDATA[v_weekdayElectricityProduced_MWh]]></Name>
+		<X>2750</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216332</Id>
+		<Name><![CDATA[v_weekdayElectricitySelfConsumed_MWh]]></Name>
+		<X>2750</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216334</Id>
+		<Name><![CDATA[v_weekendElectricityProduced_MWh]]></Name>
+		<X>3100</X>
+		<Y>1150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216336</Id>
+		<Name><![CDATA[v_weekendElectricitySelfConsumed_MWh]]></Name>
+		<X>3100</X>
+		<Y>1190</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216338</Id>
+		<Name><![CDATA[fm_nighttimeImports_MWh]]></Name>
+		<X>2380</X>
+		<Y>1420</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216340</Id>
+		<Name><![CDATA[fm_nighttimeExports_MWh]]></Name>
+		<X>2380</X>
+		<Y>1440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216342</Id>
+		<Name><![CDATA[fm_weekdayImports_MWh]]></Name>
+		<X>2750</X>
+		<Y>1415</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216344</Id>
+		<Name><![CDATA[fm_weekdayExports_MWh]]></Name>
+		<X>2750</X>
+		<Y>1435</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216346</Id>
+		<Name><![CDATA[fm_weekendImports_MWh]]></Name>
+		<X>3100</X>
+		<Y>1415</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455216348</Id>
+		<Name><![CDATA[fm_weekendExports_MWh]]></Name>
+		<X>3100</X>
+		<Y>1435</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455240745</Id>
+		<Name><![CDATA[v_nighttimeElectricityPeakImport_kW]]></Name>
+		<X>2380</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455240747</Id>
+		<Name><![CDATA[v_nighttimeElectricityPeakExport_kW]]></Name>
+		<X>2380</X>
+		<Y>1570</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455272583</Id>
+		<Name><![CDATA[v_weekdayElectricityPeakImport_kW]]></Name>
+		<X>2750</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455272585</Id>
+		<Name><![CDATA[v_weekdayElectricityPeakExport_kW]]></Name>
+		<X>2750</X>
+		<Y>1570</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455277210</Id>
+		<Name><![CDATA[v_weekendElectricityPeakImport_kW]]></Name>
+		<X>3100</X>
+		<Y>1550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730455277212</Id>
+		<Name><![CDATA[v_weekendElectricityPeakExport_kW]]></Name>
+		<X>3100</X>
+		<Y>1570</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730456769184</Id>
+		<Name><![CDATA[v_summerWeekEnergyImport_MWh]]></Name>
+		<X>1040</X>
+		<Y>1470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730456769186</Id>
+		<Name><![CDATA[v_summerWeekEnergyExport_MWh]]></Name>
+		<X>1040</X>
+		<Y>1490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730456769188</Id>
+		<Name><![CDATA[v_winterWeekEnergyImport_MWh]]></Name>
+		<X>1550</X>
+		<Y>1470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730456769190</Id>
+		<Name><![CDATA[v_winterWeekEnergyExport_MWh]]></Name>
+		<X>1550</X>
+		<Y>1490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730457670958</Id>
+		<Name><![CDATA[v_totalEnergyImport_MWh]]></Name>
+		<X>610</X>
+		<Y>1470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730457670960</Id>
+		<Name><![CDATA[v_totalEnergyExport_MWh]]></Name>
+		<X>610</X>
+		<Y>1490</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730459808621</Id>
+		<Name><![CDATA[v_totalEnergyConsumed_MWh]]></Name>
+		<X>610</X>
+		<Y>1250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730479615156</Id>
+		<Name><![CDATA[fm_currentConsumptionFlows_kW]]></Name>
+		<X>80</X>
+		<Y>920</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730479616638</Id>
+		<Name><![CDATA[fm_currentProductionFlows_kW]]></Name>
+		<X>80</X>
+		<Y>900</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730724750523</Id>
+		<Name><![CDATA[v_summerWeekEnergyCurtailed_MWh]]></Name>
+		<X>1040</X>
+		<Y>1330</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730724750525</Id>
+		<Name><![CDATA[v_winterWeekEnergyCurtailed_MWh]]></Name>
+		<X>1550</X>
+		<Y>1330</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730724750527</Id>
+		<Name><![CDATA[v_summerWeekPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>1040</X>
+		<Y>1390</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730724750529</Id>
+		<Name><![CDATA[v_winterWeekPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>1550</X>
+		<Y>1390</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968866329</Id>
+		<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
+		<X>20</X>
+		<Y>3220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968866331</Id>
+		<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
+		<X>20</X>
+		<Y>3240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_FlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_FlowsMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968866333</Id>
+		<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
+		<X>390</X>
+		<Y>3220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968866335</Id>
+		<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
+		<X>390</X>
+		<Y>3240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968880670</Id>
+		<Name><![CDATA[dsm_summerWeekDemandDataSets_kW]]></Name>
+		<X>830</X>
+		<Y>3205</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968880672</Id>
+		<Name><![CDATA[dsm_summerWeekSupplyDataSets_kW]]></Name>
+		<X>830</X>
+		<Y>3225</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968880674</Id>
+		<Name><![CDATA[dsm_winterWeekDemandDataSets_kW]]></Name>
+		<X>1280</X>
+		<Y>3200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1730968880676</Id>
+		<Name><![CDATA[dsm_winterWeekSupplyDataSets_kW]]></Name>
+		<X>1280</X>
+		<Y>3220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731422680250</Id>
+		<Name><![CDATA[b_isDaytime]]></Name>
+		<X>560</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731422698257</Id>
+		<Name><![CDATA[b_isWeekday]]></Name>
+		<X>560</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731422704613</Id>
+		<Name><![CDATA[b_isSummerWeek]]></Name>
+		<X>560</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731422714256</Id>
+		<Name><![CDATA[b_isWinterWeek]]></Name>
+		<X>560</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731422900385</Id>
+		<Name><![CDATA[b_isLastTimeStepOfDay]]></Name>
+		<X>560</X>
+		<Y>830</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731423522698</Id>
+		<Name><![CDATA[t_hourOfDay]]></Name>
+		<X>610</X>
+		<Y>212</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731573420951</Id>
+		<Name><![CDATA[dsm_liveDemand_kW]]></Name>
+		<X>80</X>
+		<Y>1670</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731573454382</Id>
+		<Name><![CDATA[dsm_liveSupply_kW]]></Name>
+		<X>80</X>
+		<Y>1690</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_DataSetMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_DataSetMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731576444065</Id>
+		<Name><![CDATA[v_activeEnergyCarriers]]></Name>
+		<X>800</X>
+		<Y>610</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731590299824</Id>
+		<Name><![CDATA[v_dailyAverageElectrolyserDemand_kW]]></Name>
+		<X>20</X>
+		<Y>2990</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1731593323269</Id>
+		<Name><![CDATA[v_totalElectricityConsumptionHeatpumps_MWh]]></Name>
+		<X>-480</X>
+		<Y>1320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732191713843</Id>
+		<Name><![CDATA[v_dailyFinalEnergyConsumption_kW]]></Name>
+		<X>20</X>
+		<Y>3010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732293125692</Id>
+		<Name><![CDATA[v_totalPVGeneration_MWh]]></Name>
+		<X>-480</X>
+		<Y>1360</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732293138744</Id>
+		<Name><![CDATA[v_totalWindGeneration_MWh]]></Name>
+		<X>-480</X>
+		<Y>1380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845576</Id>
+		<Name><![CDATA[acc_daytimeEnergyProduction_kW]]></Name>
+		<X>2020</X>
+		<Y>1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845578</Id>
+		<Name><![CDATA[acc_daytimeEnergyConsumption_kW]]></Name>
+		<X>2020</X>
+		<Y>1120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845580</Id>
+		<Name><![CDATA[acc_daytimeElectricityProduction_kW]]></Name>
+		<X>2020</X>
+		<Y>1060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845582</Id>
+		<Name><![CDATA[acc_daytimeElectricityConsumption_kW]]></Name>
+		<X>2020</X>
+		<Y>1080</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845584</Id>
+		<Name><![CDATA[acc_weekendEnergyProduction_kW]]></Name>
+		<X>3098</X>
+		<Y>1100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845586</Id>
+		<Name><![CDATA[acc_weekendEnergyConsumption_kW]]></Name>
+		<X>3098</X>
+		<Y>1120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845588</Id>
+		<Name><![CDATA[acc_weekendElectricityProduction_kW]]></Name>
+		<X>3098</X>
+		<Y>1060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549845590</Id>
+		<Name><![CDATA[acc_weekendElectricityConsumption_kW]]></Name>
+		<X>3098</X>
+		<Y>1080</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[ZeroAccumulator]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549899617</Id>
+		<Name><![CDATA[am_weekendExports_kW]]></Name>
+		<X>3100</X>
+		<Y>1514</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549899619</Id>
+		<Name><![CDATA[am_weekendImports_kW]]></Name>
+		<X>3100</X>
+		<Y>1494</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549899621</Id>
+		<Name><![CDATA[am_daytimeExports_kW]]></Name>
+		<X>2021</X>
+		<Y>1514</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1732549899623</Id>
+		<Name><![CDATA[am_daytimeImports_kW]]></Name>
+		<X>2021</X>
+		<Y>1494</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AccumulatorMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1733478626642</Id>
+		<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
+		<X>820</X>
+		<Y>650</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1733478626644</Id>
+		<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
+		<X>820</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1734092339930</Id>
+		<Name><![CDATA[v_dailyCHPElectricityProduction_kW]]></Name>
+		<X>20</X>
+		<Y>3180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1658496701675</Id>
+		<Name><![CDATA[p_timeStep_h]]></Name>
+		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
+
+@since: Sprint 6
+@author: Gillis]]></Description>
+		<X>-421</X>
+		<Y>79</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0.25]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1658496701673</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1658752734133</Id>
+		<Name><![CDATA[b_parallelizeConnectionOwners]]></Name>
+		<Description><![CDATA[Schakelaar om optionele visualisatie-agent te creëren.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+		<X>-421</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[true]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1658752734131</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1659521098545</Id>
+		<Name><![CDATA[p_undergroundTemperature_degC]]></Name>
+		<Description><![CDATA[Constante ondergrondtemperatuur voor gebruik in bijv. loss-functions voor heatStorage en efficientieberekeningen van bodemwarmtepompen. Per modelrun ingelezen vanuit externe database en gelinkte excelsheet.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+		<X>-421</X>
+		<Y>99</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1659521098543</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1663239405341</Id>
+		<Name><![CDATA[j_dataOut]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-820</X>
+		<Y>730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[DataOut]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1663239405339</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1663242364390</Id>
+		<Name><![CDATA[j_experimentSettingsData]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-820</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_ExperimentSettingsData]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1663242364388</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1663577621793</Id>
+		<Name><![CDATA[b_parallelizeGridConnections]]></Name>
+		<Description><![CDATA[Boolean om paralelle berekening van gridconnections aan te zetten.
+
+@since: Sprint 6
+@author: Gillis]]></Description>
+		<X>-421</X>
+		<Y>119</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[true]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1663577621791</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1666880315951</Id>
+		<Name><![CDATA[j_simulationResults]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-820</X>
+		<Y>770</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_SimulationResults]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1666880315949</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1671636582218</Id>
+		<Name><![CDATA[p_forecastTime_h]]></Name>
+		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
+
+@since: Sprint 6
+@author: Gillis]]></Description>
+		<X>800</X>
+		<Y>510</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1671636582216</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1672910307060</Id>
+		<Name><![CDATA[j_hourlyCurvesData]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-820</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_HourlyCurvesData]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1672910307058</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1682945119357</Id>
+		<Name><![CDATA[b_anylogicCostsForAllContracts]]></Name>
+		<Description><![CDATA[Switch om HS en MS netload op 0 als output te geven wanneer er geen overbelasting plaats heeft gevonden. (workaround om geen greenfield kosten te hebben wanneer er geen overbelasting is!)
+
+@author: GillisHommen
+@since: 01/03/2023]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-819</X>
+		<Y>669</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[true]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1682945119355</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1699275323339</Id>
+		<Name><![CDATA[p_startHourWinterWeek]]></Name>
+		<X>560</X>
+		<Y>610</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[8000]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1699275323337</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1699275323347</Id>
+		<Name><![CDATA[p_startHourSummerWeek]]></Name>
+		<X>560</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[3288+24*7]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1699275323345</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1699290370683</Id>
+		<Name><![CDATA[p_plotInterval_h]]></Name>
+		<X>560</X>
+		<Y>650</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[168]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1699290370681</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1701855537716</Id>
+		<Name><![CDATA[p_truckTripsExcel]]></Name>
+		<X>-420</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ExcelFile]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1701855537714</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1701855572858</Id>
+		<Name><![CDATA[p_householdTripsExcel]]></Name>
+		<X>-420</X>
+		<Y>230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ExcelFile]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1701855572856</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1701855585052</Id>
+		<Name><![CDATA[p_cookingPatternExcel]]></Name>
+		<X>-420</X>
+		<Y>250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ExcelFile]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1701855585050</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1712844009289</Id>
+		<Name><![CDATA[p_year]]></Name>
+		<X>560</X>
+		<Y>680</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[int]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[2023]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1712844009287</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1715864755905</Id>
+		<Name><![CDATA[avgc_data]]></Name>
+		<X>-420</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_AVGC_data]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1715864755903</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1721289658523</Id>
+		<Name><![CDATA[b_enableDLR]]></Name>
+		<Description><![CDATA[Schakelaar om optionele visualisatie-agent te creëren.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+		<X>-421</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1721289658521</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1724587724718</Id>
+		<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
+		<X>1280</X>
+		<Y>760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[ExcelFile]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1724587724716</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1731439789362</Id>
+		<Name><![CDATA[p_runStartTime_h]]></Name>
+		<X>790</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1731439789360</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1731439835898</Id>
+		<Name><![CDATA[p_runEndTime_h]]></Name>
+		<X>790</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[8760]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1731439835896</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1731588224262</Id>
+		<Name><![CDATA[b_isInitialized]]></Name>
+		<X>-420</X>
+		<Y>320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1731588224260</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1663238323139</Id>
+		<Name><![CDATA[c_connectionOwners]]></Name>
+		<X>90</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>ConnectionOwner</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1663251681035</Id>
+		<Name><![CDATA[c_gridNodesTopLevel]]></Name>
+		<X>299</X>
+		<Y>108</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1663252052482</Id>
+		<Name><![CDATA[c_gridNodesNotTopLevel]]></Name>
+		<X>299</X>
+		<Y>128</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1663312177330</Id>
+		<Name><![CDATA[c_gridConnections]]></Name>
+		<X>90</X>
+		<Y>260</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridConnection</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1663336485480</Id>
+		<Name><![CDATA[c_gridNodesHeat]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>299</X>
+		<Y>148</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1664953351408</Id>
+		<Name><![CDATA[c_productionAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>299</X>
+		<Y>208</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EAProduction</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1665492426842</Id>
+		<Name><![CDATA[c_ambientAirDependentAssets]]></Name>
+		<X>299</X>
+		<Y>248</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EA</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1666884023719</Id>
+		<Name><![CDATA[c_globalElectricityImportProfile_MW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>950</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>Integer</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1666884311850</Id>
+		<Name><![CDATA[c_globalElectricityExportProfile_MW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>970</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>Integer</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1666978650654</Id>
+		<Name><![CDATA[c_energyAssets]]></Name>
+		<X>299</X>
+		<Y>186</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EA</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1666981403077</Id>
+		<Name><![CDATA[c_totalBatteryChargeAmount_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>1050</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1666984250257</Id>
+		<Name><![CDATA[c_totalBatteryDischargeAmount_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>1070</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1666984296429</Id>
+		<Name><![CDATA[c_totalBatteryInstalledCapacity_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>1090</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1667300034779</Id>
+		<Name><![CDATA[c_totalBatteryUnitsInstalled]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>1110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1667553304068</Id>
+		<Name><![CDATA[c_timesOfNodePeakLoads_h]]></Name>
+		<X>-480</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1668007771830</Id>
+		<Name><![CDATA[c_globalEVChargingProfile_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>990</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>Integer</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1668007790848</Id>
+		<Name><![CDATA[c_globalEHGVChargingProfile_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>1010</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>Integer</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1668007805687</Id>
+		<Name><![CDATA[c_globalBatteryChargingProfile_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-840</X>
+		<Y>1030</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>Integer</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1669725679330</Id>
+		<Name><![CDATA[c_gridConnectionOverload_fr]]></Name>
+		<X>-480</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>LinkedHashMap</CollectionClass>
+			<ElementClass>String</ElementClass>
+			<ValueElementClass>Double</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1692799535493</Id>
+		<Name><![CDATA[c_storageAssets]]></Name>
+		<X>299</X>
+		<Y>228</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EAStorage</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1692871551713</Id>
+		<Name><![CDATA[c_EVs]]></Name>
+		<X>299</X>
+		<Y>268</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EAEV</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1703256089183</Id>
+		<Name><![CDATA[c_actors]]></Name>
+		<X>91</X>
+		<Y>518</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>Actor</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1716453161218</Id>
+		<Name><![CDATA[c_subGridConnections]]></Name>
+		<Description><![CDATA[A subGridConnections are a subset of (children of) of GridConnections that are "part" of another GC and thus are not counted towards the totals.]]></Description>
+		<X>90</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridConnection</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1716885030303</Id>
+		<Name><![CDATA[c_gridNodeExecutionList]]></Name>
+		<X>300</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1717756420421</Id>
+		<Name><![CDATA[c_GISBuildingClusters]]></Name>
+		<X>300</X>
+		<Y>450</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GIS_Building</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1718895986988</Id>
+		<Name><![CDATA[c_gridNodeExecutionListReverse]]></Name>
+		<X>300</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1722584740368</Id>
+		<Name><![CDATA[c_pausedGridConnections]]></Name>
+		<Description><![CDATA[A paused GridConnection is removed from the collection c_gridConnections and stored in here. Paused GridConnections are not operated or counted towards totals.]]></Description>
+		<X>90</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridConnection</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1727099354305</Id>
+		<Name><![CDATA[c_profiles]]></Name>
+		<X>-670</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_ProfilePointer</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1727779411251</Id>
+		<Name><![CDATA[c_forecasts]]></Name>
+		<X>-670</X>
+		<Y>320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_ProfileForecaster</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1729238020165</Id>
+		<Name><![CDATA[c_activeEnergyCarriers]]></Name>
+		<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>800</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>OL_EnergyCarriers</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+</Variables>

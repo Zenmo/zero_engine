@@ -1,0 +1,2697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActiveObjectClass>
+	<Id>1658477103140</Id>
+	<Name><![CDATA[EnergyModel]]></Name>
+	<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+import com.fasterxml.jackson.databind.node.NumericNode;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.FileOutputStream;
+import java.util.stream.Stream;
+import java.util.stream.IntStream;
+import java.util.Dictionary.*;
+import java.util.Hashtable.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import java.io.*;
+import java.io.File;
+import java.io.IOException;
+//import java.util.Date;  
+import java.text.SimpleDateFormat;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import zeroPackage.ZeroMath;
+import zeroPackage.ZeroAccumulator;]]></Import>
+	<Generic>false</Generic>
+	<GenericParameter>
+		<Id>1658477103138</Id>
+		<Name><![CDATA[1658477103138]]></Name>
+		<GenericParameterValue Class="CodeValue">
+			<Code><![CDATA[T extends Agent]]></Code>
+		</GenericParameterValue>
+		<GenericParameterLabel>Generic parameter:</GenericParameterLabel>
+	</GenericParameter>
+	<FlowChartsUsage>ENTITY</FlowChartsUsage>
+	<SamplesToKeep>100</SamplesToKeep>
+	<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+	<ElementsLimitValue>100</ElementsLimitValue>
+	<MakeDefaultViewArea>true</MakeDefaultViewArea>
+	<SceneGridColor/>
+	<SceneBackgroundColor/>
+	<SceneSkybox>null</SceneSkybox>
+	<AgentProperties>
+		<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+		<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+		<RotateAnimationVertically>false</RotateAnimationVertically>
+		<VelocityCode Class="CodeUnitValue">
+			<Code><![CDATA[10]]></Code>
+			<Unit Class="SpeedUnits">MPS</Unit>
+		</VelocityCode>
+		<PhysicalLength Class="CodeUnitValue">
+			<Code><![CDATA[1]]></Code>
+			<Unit Class="LengthUnits">METER</Unit>
+		</PhysicalLength>
+		<PhysicalWidth Class="CodeUnitValue">
+			<Code><![CDATA[1]]></Code>
+			<Unit Class="LengthUnits">METER</Unit>
+		</PhysicalWidth>
+		<PhysicalHeight Class="CodeUnitValue">
+			<Code><![CDATA[1]]></Code>
+			<Unit Class="LengthUnits">METER</Unit>
+		</PhysicalHeight>
+	</AgentProperties>
+	<EnvironmentProperties>
+		<EnableSteps>false</EnableSteps>
+		<StepDurationCode Class="CodeUnitValue">
+			<Code><![CDATA[1.0]]></Code>
+			<Unit Class="TimeUnits">SECOND</Unit>
+		</StepDurationCode>
+		<SpaceType>CONTINUOUS</SpaceType>
+		<WidthCode>500</WidthCode>
+		<HeightCode>500</HeightCode>
+		<ZHeightCode>0</ZHeightCode>
+		<ColumnsCountCode>100</ColumnsCountCode>
+		<RowsCountCode>100</RowsCountCode>
+		<NeigborhoodType>MOORE</NeigborhoodType>
+		<LayoutType>USER_DEF</LayoutType>
+		<NetworkType>USER_DEF</NetworkType>
+		<ConnectionsPerAgentCode>2</ConnectionsPerAgentCode>
+		<ConnectionsRangeCode>50</ConnectionsRangeCode>
+		<NeighborLinkFractionCode>0.95</NeighborLinkFractionCode>
+		<MCode>10</MCode>
+	</EnvironmentProperties>
+	<DatasetsCreationProperties>
+		<AutoCreate>false</AutoCreate>
+		<OccurrenceAtTime>true</OccurrenceAtTime>
+		<OccurrenceDate>1658563200000</OccurrenceDate>
+		<OccurrenceTime Class="CodeUnitValue">
+			<Code><![CDATA[0]]></Code>
+			<Unit Class="TimeUnits">HOUR</Unit>
+		</OccurrenceTime>
+		<RecurrenceCode Class="CodeUnitValue">
+			<Code><![CDATA[p_timeStep_h]]></Code>
+			<Unit Class="TimeUnits">HOUR</Unit>
+		</RecurrenceCode>
+	</DatasetsCreationProperties>
+	<ScaleRuler>
+		<Id>1658477103136</Id>
+		<Name><![CDATA[scale]]></Name>
+		<X>0</X>
+		<Y>-150</Y>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>false</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<Length>100</Length>
+		<Rotation>0</Rotation>
+		<ScaleType>BASED_ON_LENGTH</ScaleType>
+		<ModelLength>10</ModelLength>
+		<LengthUnits>METER</LengthUnits>
+		<Scale>10</Scale>
+		<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+	</ScaleRuler>
+	<CurrentLevel>1658477103139</CurrentLevel>
+	<ConnectionsId>1658477103135</ConnectionsId>
+	<Outputs>
+		<Output>
+			<Id>1661516161016</Id>
+			<Name><![CDATA[o_outputActorData]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>810</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<ComputationMoment>MANUALLY</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1661587200000</ComputationDate>
+		</Output>
+		<Output>
+			<Id>1661529224106</Id>
+			<Name><![CDATA[o_outputExceptions]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>830</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<ComputationMoment>MANUALLY</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1661587200000</ComputationDate>
+		</Output>
+		<Output>
+			<Id>1663238746791</Id>
+			<Name><![CDATA[o_outputSettings]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>850</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<ComputationMoment>MANUALLY</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1663315200000</ComputationDate>
+		</Output>
+		<Output>
+			<Id>1663255244236</Id>
+			<Name><![CDATA[o_outputTrigger]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>930</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<Value Class="CodeValue">
+				<Code><![CDATA[//f_returnKPIData(false)]]></Code>
+			</Value>
+			<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1663315200000</ComputationDate>
+		</Output>
+		<Output>
+			<Id>1666880542545</Id>
+			<Name><![CDATA[o_simulationResults]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>870</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<ComputationMoment>MANUALLY</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1666944000000</ComputationDate>
+		</Output>
+		<Output>
+			<Id>1672910222316</Id>
+			<Name><![CDATA[o_hourlyCurvesData]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>890</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<ComputationMoment>MANUALLY</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1666944000000</ComputationDate>
+		</Output>
+		<Output>
+			<Id>1679503183018</Id>
+			<Name><![CDATA[o_contractData]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-840</X>
+			<Y>910</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<ComputationMoment>MANUALLY</ComputationMoment>
+			<ComputationTimeCode Class="CodeUnitValue">
+				<Code/>
+				<Unit Class="TimeUnits">SECOND</Unit>
+			</ComputationTimeCode>
+			<ComputationDate>1666944000000</ComputationDate>
+		</Output>
+	</Outputs>
+	<Variables xmlns:al="http://anylogic.com"/>
+	<Events xmlns:al="http://anylogic.com"/>
+	<Functions xmlns:al="http://anylogic.com"/>
+	<TableFunctions>
+		<TableFunction AccessType="public" StaticFunction="false">
+			<Id>1659337941636</Id>
+			<Name><![CDATA[tf_p_wind_e_normalized]]></Name>
+			<Description><![CDATA[Genormaliseerde tijdreeksdata per uur voor productie van wind-energie, ingelezen vanuit externe (aanpasbare) database.
+
+@source: ETM-curves genormaliseerd met opgesteld vermogen
+@since: Sprint 6
+@author: Jorrit]]></Description>
+			<X>-671</X>
+			<Y>79</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<InterpolationMethod>LINEAR</InterpolationMethod>
+			<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
+			<ApproximationOrder>1</ApproximationOrder>
+			<LoadFromDatabase>false</LoadFromDatabase>
+			<ValuesQuery>
+				<TableReference/>
+				<ArgumentColumnReference/>
+				<ValueColumnReference/>
+			</ValuesQuery>
+// arguments and values
+					<Argument>0.0</Argument>
+			<Value>0.0</Value>
+		</TableFunction>
+		<TableFunction AccessType="public" StaticFunction="false">
+			<Id>1659337995740</Id>
+			<Name><![CDATA[tf_p_solar_e_normalized]]></Name>
+			<Description><![CDATA[Genormaliseerde tijdreeksdata per uur voor productie van zonne-energie (pv en thermisch), ingelezen vanuit externe (aanpasbare) database.
+
+@source: ETM-curves genormaliseerd met opgesteld vermogen
+@since: Sprint 6
+@author: Jorrit]]></Description>
+			<X>-671</X>
+			<Y>99</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<InterpolationMethod>LINEAR</InterpolationMethod>
+			<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
+			<ApproximationOrder>1</ApproximationOrder>
+			<LoadFromDatabase>false</LoadFromDatabase>
+			<ValuesQuery>
+				<TableReference/>
+				<ArgumentColumnReference/>
+				<ValueColumnReference/>
+			</ValuesQuery>
+// arguments and values
+					<Argument>0.0</Argument>
+			<Value>0.0</Value>
+		</TableFunction>
+		<TableFunction AccessType="public" StaticFunction="false">
+			<Id>1659364114491</Id>
+			<Name><![CDATA[tf_ambientTemperature_degC]]></Name>
+			<Description><![CDATA[Genormaliseerde tijdreeksdata per uur voor buitentemperatuur.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+			<X>-671</X>
+			<Y>119</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<InterpolationMethod>LINEAR</InterpolationMethod>
+			<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
+			<ApproximationOrder>1</ApproximationOrder>
+			<LoadFromDatabase>false</LoadFromDatabase>
+			<ValuesQuery>
+				<TableReference/>
+				<ArgumentColumnReference/>
+				<ValueColumnReference/>
+			</ValuesQuery>
+// arguments and values
+					<Argument>0.0</Argument>
+			<Value>0.0</Value>
+		</TableFunction>
+		<TableFunction AccessType="public" StaticFunction="false">
+			<Id>1706010064113</Id>
+			<Name><![CDATA[tf_dayAheadElectricityPricing_eurpMWh]]></Name>
+			<X>-670</X>
+			<Y>140</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<InterpolationMethod>LINEAR</InterpolationMethod>
+			<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
+			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
+			<ApproximationOrder>1</ApproximationOrder>
+			<LoadFromDatabase>false</LoadFromDatabase>
+			<ValuesQuery>
+				<TableReference>
+					<PackageName>zero_engine</PackageName>
+					<ClassName>profiles</ClassName>
+				</TableReference>
+				<ArgumentColumnReference>
+					<PackageName>zero_engine</PackageName>
+					<ClassName>profiles</ClassName>
+					<ItemName>t_h</ItemName>
+				</ArgumentColumnReference>
+				<ValueColumnReference>
+					<PackageName>zero_engine</PackageName>
+					<ClassName>profiles</ClassName>
+					<ItemName>day_ahead_price_eur_mwh</ItemName>
+				</ValueColumnReference>
+			</ValuesQuery>
+// arguments and values
+					<Argument>0.0</Argument>
+			<Value>0.0</Value>
+		</TableFunction>
+		<TableFunction AccessType="public" StaticFunction="false">
+			<Id>1726146744634</Id>
+			<Name><![CDATA[tf_cooking_demand]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-670</X>
+			<Y>340</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<InterpolationMethod>LINEAR</InterpolationMethod>
+			<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
+			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
+			<ApproximationOrder>1</ApproximationOrder>
+			<LoadFromDatabase>false</LoadFromDatabase>
+			<ValuesQuery>
+				<TableReference/>
+				<ArgumentColumnReference/>
+				<ValueColumnReference/>
+			</ValuesQuery>
+// arguments and values
+					<Argument>0.0</Argument>
+			<Value>0.0</Value>
+		</TableFunction>
+	</TableFunctions>
+	<AnalysisData>
+		<DataSet>
+			<Id>1699275048264</Id>
+			<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>80</X>
+			<Y>1250</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.METHANE))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048281</Id>
+			<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1330</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.v_heatPumpElectricityConsumption_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048295</Id>
+			<Name><![CDATA[data_windGeneration_kW]]></Name>
+			<X>80</X>
+			<Y>1450</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections,x-&gt;x.v_windProductionElectric_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048309</Id>
+			<Name><![CDATA[data_V2GSupply_kW]]></Name>
+			<X>80</X>
+			<Y>1490</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections,x-&gt;max(0,-x.v_evChargingPowerElectric_kW))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048324</Id>
+			<Name><![CDATA[data_PVGeneration_kW]]></Name>
+			<X>80</X>
+			<Y>1430</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.v_pvProductionElectric_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048339</Id>
+			<Name><![CDATA[data_batteryCharging_kW]]></Name>
+			<X>80</X>
+			<Y>1390</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x -&gt; max(0, x.v_batteryPowerElectric_kW))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048354</Id>
+			<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1310</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.v_fixedConsumptionElectric_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048369</Id>
+			<Name><![CDATA[data_totalDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1550</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>v_currentFinalEnergyConsumption_kW</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048383</Id>
+			<Name><![CDATA[data_dieselDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>80</X>
+			<Y>1269</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.DIESEL))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048398</Id>
+			<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1370</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x -&gt; max(0,x.v_evChargingPowerElectric_kW))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048412</Id>
+			<Name><![CDATA[data_batteryDischarging_kW]]></Name>
+			<X>80</X>
+			<Y>1470</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x -&gt; max(0, -x.v_batteryPowerElectric_kW))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048425</Id>
+			<Name><![CDATA[data_totalSupply_kW]]></Name>
+			<X>80</X>
+			<Y>1570</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>v_currentPrimaryEnergyProduction_kW</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048440</Id>
+			<Name><![CDATA[data_totalGridLoad_kW]]></Name>
+			<X>80</X>
+			<Y>1590</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridNodesTopLevel.stream().filter(x -&gt; x.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY).toList(), x -&gt; x.v_currentLoad_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048551</Id>
+			<Name><![CDATA[data_summerWeekDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>830</X>
+			<Y>2790</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048605</Id>
+			<Name><![CDATA[data_summerWeekSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>830</X>
+			<Y>2810</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048713</Id>
+			<Name><![CDATA[data_winterWeekDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>2790</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048768</Id>
+			<Name><![CDATA[data_winterWeekSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>2810</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048878</Id>
+			<Name><![CDATA[data_annualElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>2790</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1699275048932</Id>
+			<Name><![CDATA[data_annualElectricitySupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>2810</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1700478038239</Id>
+			<Name><![CDATA[data_HSMScapacity_kW]]></Name>
+			<X>80</X>
+			<Y>2530</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>2</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1702537713723</Id>
+			<Name><![CDATA[data_HSMScapacitySupply_kW]]></Name>
+			<X>260</X>
+			<Y>2530</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>2</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1708507900127</Id>
+			<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>80</X>
+			<Y>1290</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt; x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336405</Id>
+			<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
+			<X>390</X>
+			<Y>2850</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336413</Id>
+			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
+			<X>390</X>
+			<Y>3060</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336419</Id>
+			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
+			<X>390</X>
+			<Y>3100</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336425</Id>
+			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
+			<X>390</X>
+			<Y>3040</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336432</Id>
+			<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
+			<X>390</X>
+			<Y>2890</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336438</Id>
+			<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
+			<X>390</X>
+			<Y>2830</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336445</Id>
+			<Name><![CDATA[data_annualElectricVehicleDemand_kW]]></Name>
+			<X>390</X>
+			<Y>2870</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336451</Id>
+			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
+			<X>390</X>
+			<Y>3080</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336473</Id>
+			<Name><![CDATA[data_annualDieselDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>2930</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336480</Id>
+			<Name><![CDATA[data_annualHydrogenDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>2950</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336486</Id>
+			<Name><![CDATA[data_annualDisctricHeatDemand_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>2970</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336493</Id>
+			<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>3120</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336499</Id>
+			<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>3160</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246336506</Id>
+			<Name><![CDATA[data_annualNaturalGasDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>2910</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378181</Id>
+			<Name><![CDATA[data_summerWeekHeatPumpElectricityDemand_kW]]></Name>
+			<X>830</X>
+			<Y>2850</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378188</Id>
+			<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
+			<X>830</X>
+			<Y>3030</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378194</Id>
+			<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
+			<X>830</X>
+			<Y>3070</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378199</Id>
+			<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
+			<X>830</X>
+			<Y>3010</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378204</Id>
+			<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
+			<X>830</X>
+			<Y>2890</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378210</Id>
+			<Name><![CDATA[data_summerWeekBaseloadElectricityDemand_kW]]></Name>
+			<X>830</X>
+			<Y>2830</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378214</Id>
+			<Name><![CDATA[data_summerWeekElectricVehicleDemand_kW]]></Name>
+			<X>830</X>
+			<Y>2870</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378219</Id>
+			<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
+			<X>830</X>
+			<Y>3050</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378224</Id>
+			<Name><![CDATA[data_summerWeekNaturalGasDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>830</X>
+			<Y>2910</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378229</Id>
+			<Name><![CDATA[data_summerWeekDieselDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>830</X>
+			<Y>2930</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378234</Id>
+			<Name><![CDATA[data_summerWeekHydrogenDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>830</X>
+			<Y>2950</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378239</Id>
+			<Name><![CDATA[data_summerWeekNaturalGasSupply_kW]]></Name>
+			<X>830</X>
+			<Y>3090</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378244</Id>
+			<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
+			<X>1280</X>
+			<Y>2850</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378248</Id>
+			<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
+			<X>1280</X>
+			<Y>3030</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378254</Id>
+			<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
+			<X>1280</X>
+			<Y>3070</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378259</Id>
+			<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
+			<X>1280</X>
+			<Y>3010</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378264</Id>
+			<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
+			<X>1280</X>
+			<Y>2890</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378269</Id>
+			<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
+			<X>1280</X>
+			<Y>2830</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378274</Id>
+			<Name><![CDATA[data_winterWeekElectricVehicleDemand_kW]]></Name>
+			<X>1280</X>
+			<Y>2870</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378279</Id>
+			<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
+			<X>1280</X>
+			<Y>3050</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378283</Id>
+			<Name><![CDATA[data_winterWeekNaturalGasDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>2910</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378290</Id>
+			<Name><![CDATA[data_winterWeekDieselDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>2930</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378295</Id>
+			<Name><![CDATA[data_winterWeekHydrogenDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>2950</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715246378299</Id>
+			<Name><![CDATA[data_winterWeekNaturalGasSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>3090</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715671189730</Id>
+			<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>390</X>
+			<Y>3140</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1715673600000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715671280183</Id>
+			<Name><![CDATA[data_winterWeekHydrogenSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1280</X>
+			<Y>3110</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715671308107</Id>
+			<Name><![CDATA[data_summerWeekHydrogenSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>830</X>
+			<Y>3110</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1715671336391</Id>
+			<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>80</X>
+			<Y>1510</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt; x.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HYDROGEN))</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1717417117555</Id>
+			<Name><![CDATA[data_hydrogenElectricityDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1350</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1717488000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.v_hydrogenElectricityConsumption_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1720447715226</Id>
+			<Name><![CDATA[data_electricityCurtailment_kW]]></Name>
+			<X>80</X>
+			<Y>1410</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.v_currentEnergyCurtailed_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1721120077353</Id>
+			<Name><![CDATA[data_gridCapacityDemand_kW]]></Name>
+			<X>560</X>
+			<Y>2530</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1712736000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridNodesTopLevel, x -&gt; x.p_capacity_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1721120077360</Id>
+			<Name><![CDATA[data_gridCapacitySupply_kW]]></Name>
+			<X>840</X>
+			<Y>2530</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1712736000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridNodesTopLevel, x -&gt; -x.p_capacity_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1721134096132</Id>
+			<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
+			<X>830</X>
+			<Y>3165</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1721134140759</Id>
+			<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
+			<X>1280</X>
+			<Y>3160</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1726292585769</Id>
+			<Name><![CDATA[data_districtHeatingDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1610</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1717488000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x -&gt; x.v_districtHeatDelivery_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1726292590669</Id>
+			<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
+			<X>80</X>
+			<Y>1630</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt; x.v_electricHobConsumption_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1731590299827</Id>
+			<Name><![CDATA[data_annualElectrolyserDemand_kW]]></Name>
+			<X>390</X>
+			<Y>2990</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1731590299832</Id>
+			<Name><![CDATA[data_summerWeekElectrolyserDemand_kW]]></Name>
+			<X>830</X>
+			<Y>2970</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1731590299839</Id>
+			<Name><![CDATA[data_winterWeekElectrolyserDemand_kW]]></Name>
+			<X>1280</X>
+			<Y>2970</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1732191711327</Id>
+			<Name><![CDATA[data_totalFinalEnergyConsumption_kW]]></Name>
+			<X>390</X>
+			<Y>3010</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1734092249487</Id>
+			<Name><![CDATA[data_annualCHPElectricityProduction_kW]]></Name>
+			<X>390</X>
+			<Y>3180</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1734092276192</Id>
+			<Name><![CDATA[data_summerWeekCHPElectricityProduction_kW]]></Name>
+			<X>830</X>
+			<Y>3130</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1734092294449</Id>
+			<Name><![CDATA[data_winterWeekCHPElectricityProduction_kW]]></Name>
+			<X>1280</X>
+			<Y>3130</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1734098799357</Id>
+			<Name><![CDATA[data_CHPElectricityProductionLiveWeek_kW]]></Name>
+			<X>80</X>
+			<Y>1530</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections,x-&gt;x.v_CHPProductionElectric_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+	</AnalysisData>
+	<AgentLinks>
+		<AgentLink>
+			<Id>1658477103135</Id>
+			<Name><![CDATA[connections]]></Name>
+			<X>50</X>
+			<Y>-50</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<HandleReceiveInConnections>false</HandleReceiveInConnections>
+			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+			<AgentLinkBidirectional>true</AgentLinkBidirectional>
+			<MessageType>Object</MessageType>
+			<LineStyle>SOLID</LineStyle>
+			<LineWidth>1</LineWidth>
+			<LineColor>-16777216</LineColor>
+			<LineZOrder>UNDER_AGENTS</LineZOrder>
+			<LineArrow>NONE</LineArrow>
+			<LineArrowPosition>END</LineArrowPosition>
+		</AgentLink>
+		<AgentLink>
+			<Id>1696520909218</Id>
+			<Name><![CDATA[connections1]]></Name>
+			<X>40</X>
+			<Y>-180</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<HandleReceiveInConnections>false</HandleReceiveInConnections>
+			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+			<AgentLinkBidirectional>false</AgentLinkBidirectional>
+			<MessageType>Object</MessageType>
+			<LineStyle>SOLID</LineStyle>
+			<LineWidth>1</LineWidth>
+			<LineColor>-16777216</LineColor>
+			<LineZOrder>UNDER_AGENTS</LineZOrder>
+			<LineArrow>NONE</LineArrow>
+			<LineArrowPosition>END</LineArrowPosition>
+		</AgentLink>
+	</AgentLinks>
+	<EmbeddedObjects xmlns:al="http://anylogic.com"/>
+	<Presentation>
+		<Level>
+			<Id>1658477103139</Id>
+			<Name><![CDATA[level]]></Name>
+			<X>0</X>
+			<Y>0</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>true</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>false</ShowLabel>
+			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+			<Z>0</Z>
+			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+			<Presentation xmlns:al="http://anylogic.com"/>
+		</Level>
+		<Level>
+			<Id>1699290897134</Id>
+			<Name><![CDATA[level1]]></Name>
+			<X>0</X>
+			<Y>0</Y>
+			<Label>
+				<X>10</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>true</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>false</ShowLabel>
+			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+			<Z>0</Z>
+			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+		</Level>
+	</Presentation>
+	<Areas>
+		<Area>
+			<Id>1696520909213</Id>
+			<Name><![CDATA[va_engine]]></Name>
+			<X>0</X>
+			<Y>0</Y>
+			<Label>
+				<X>0</X>
+				<Y>-10</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>false</ShowLabel>
+			<Title/>
+			<Width>1920</Width>
+			<Height>980</Height>
+		</Area>
+	</Areas>
+</ActiveObjectClass>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelResources>
+	<Resource>
+		<Path>AlbatrossProcessedVehicleTrips.xlsx</Path>
+		<ReferencedFromUserCode>true</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+	<Resource>
+		<Path>ZeroMath.jar</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
+</ModelResources>
