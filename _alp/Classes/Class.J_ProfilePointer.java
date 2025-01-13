@@ -22,8 +22,17 @@ public class J_ProfilePointer implements Serializable {
     	return this.currentValue;
     }
     
+    
     public double getValue(double t_h) {
     	return this.tableFunction.get(t_h);
+    }
+    
+    public double[] getValues() {
+    	return this.tableFunction.getValues();
+    }
+    
+    public TableFunction getTablefunction() {
+    	return this.tableFunction;
     }
     
 	@Override

@@ -169,6 +169,14 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	return profileScaling_fr;
     }
     
+    public double[] getProfile_kW(double t_h, double timeWindow_h) {
+    	double[] profile_kW = new double[roundToInt(timeWindow_h / timestep_h)];
+    	for (int i = 0; i * timestep_h < timeWindow_h; i++) {
+    		profile_kW[i] = a_energyProfile_kWh[roundToInt(t_h/timestep_h) + i] / timestep_h;
+    	}
+    	return profile_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return

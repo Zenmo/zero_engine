@@ -104,6 +104,15 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return new Pair(flowsMap, this.energyUse_kW);
     }
 
+    public double[] getProfile_kW(double t_h, double timeWindow_h) {
+    	double[] profile_kW = new double[roundToInt(timeWindow_h / timestep_h)];
+    	TableFunction tf = this.profilePointer.getTablefunction();
+    	for (int i = 0; i * timestep_h < timeWindow_h; i++) {
+    		profile_kW[i] = this.yearlyDemand_kWh * tf.get( t_h + i * timestep_h);
+    	}
+    	return profile_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return

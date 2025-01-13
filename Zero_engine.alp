@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172110" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -4684,6 +4684,21 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1736783740231</Id>
+					<Name><![CDATA[b_isFirstTimeStepOfDay]]></Name>
+					<X>560</X><Y>850</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -6184,6 +6199,7 @@ b_isWeekday = (t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5);
 b_isSummerWeek = t_h >= p_startHourSummerWeek && t_h < p_startHourSummerWeek + 24*7;
 b_isWinterWeek = t_h >= p_startHourWinterWeek && t_h < p_startHourWinterWeek + 24*7;
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
+b_isFirstTimeStepOfDay = t_h % 24 == 0;
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
 
@@ -53413,7 +53429,16 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	//return new Pair(temporaryFlowsMap, this.energyUse_kW);
     	// does the flowmap need to be reset affter this??
     }
-	
+    
+    public double[] getProfile_kW(double t_h, double timeWindow_h) {
+    	double[] profile_kW = new double[roundToInt(timeWindow_h / timestep_h)];
+    	TableFunction tf = this.profilePointer.getTablefunction();
+    	for (int i = 0; i * timestep_h < timeWindow_h; i++) {
+    		profile_kW[i] = this.capacity_kW * tf.get( t_h + i * timestep_h);
+    	}
+    	return profile_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return
@@ -53769,6 +53794,15 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return new Pair(flowsMap, this.energyUse_kW);
     }
 
+    public double[] getProfile_kW(double t_h, double timeWindow_h) {
+    	double[] profile_kW = new double[roundToInt(timeWindow_h / timestep_h)];
+    	TableFunction tf = this.profilePointer.getTablefunction();
+    	for (int i = 0; i * timestep_h < timeWindow_h; i++) {
+    		profile_kW[i] = this.yearlyDemand_kWh * tf.get( t_h + i * timestep_h);
+    	}
+    	return profile_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return
@@ -53863,12 +53897,8 @@ abstract public class J_EA implements Cloneable {
     public void f_updateAllFlows(double powerFraction_fr) {
 
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
-     	//Pair<J_FlowsMap, Double> flowsPair = operate(powerFractionBounded_fr);
      	operate(powerFractionBounded_fr);
-     	//J_FlowsMap flowsMap = flowsPair.getFirst();
-     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
-    		//((GridConnection)parentAgent).f_addFlows(arr, this);
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
     	}
     	/*
@@ -53880,12 +53910,7 @@ abstract public class J_EA implements Cloneable {
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
-    	/*traceln("flowsMap: %s", flowsMap);
-    	flowsMap.clear();
-    	traceln("flowsMap after reset: %s", flowsMap);
-    	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);
-    	//return arr;*/
-    	//return this.flowsMap;
+
     }
     
     public void f_updateAllFlows() {
@@ -54307,6 +54332,14 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	
     public double getProfileScaling_fr() {
     	return profileScaling_fr;
+    }
+    
+    public double[] getProfile_kW(double t_h, double timeWindow_h) {
+    	double[] profile_kW = new double[roundToInt(timeWindow_h / timestep_h)];
+    	for (int i = 0; i * timestep_h < timeWindow_h; i++) {
+    		profile_kW[i] = a_energyProfile_kWh[roundToInt(t_h/timestep_h) + i] / timestep_h;
+    	}
+    	return profile_kW;
     }
     
 	@Override
@@ -57839,8 +57872,17 @@ public class J_ProfilePointer implements Serializable {
     	return this.currentValue;
     }
     
+    
     public double getValue(double t_h) {
     	return this.tableFunction.get(t_h);
+    }
+    
+    public double[] getValues() {
+    	return this.tableFunction.getValues();
+    }
+    
+    public TableFunction getTablefunction() {
+    	return this.tableFunction;
     }
     
 	@Override
@@ -58382,6 +58424,343 @@ public class J_FlowsMap implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1736771873432</Id>
+			<Name><![CDATA[J_EAFlexConsumption]]></Name>
+			<Text><![CDATA[/**
+ * J_EAFlexConsumption
+ */	
+public class J_EAFlexConsumption extends J_EA implements Serializable {
+
+	double dailyDemand_kWh;
+	protected OL_EnergyCarriers energyCarrier;
+	int scheduleLength;
+	boolean[] allowedOperatingIndices;
+	double[] profile_kW;
+	int currentIndex = 0;
+	double capacity_kW;
+	int powerSteps_n = 10;
+
+    /**
+     * Default constructor
+     */
+    public J_EAFlexConsumption() {
+    }
+    
+    public J_EAFlexConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double dailyDemand_kWh, double capacity_kW, OL_EnergyCarriers energyCarrier, boolean[] allowedOperatingIndices, double timeStep_h) {
+    	
+    	this.energyAssetName = name;
+		this.energyAssetType = type;
+    	this.parentAgent = parentAgent;
+    	this.dailyDemand_kWh = dailyDemand_kWh;
+		this.capacity_kW = capacity_kW;
+    	this.timestep_h = timeStep_h;
+		
+		this.scheduleLength = roundToInt( 24 / timeStep_h );		
+		if (allowedOperatingIndices.length != this.scheduleLength) {
+			throw new RuntimeException("Error in length of allowedOperatingTimes of J_EAFlexConsumption: " + name);
+		}
+		this.allowedOperatingIndices = allowedOperatingIndices;
+		this.profile_kW = new double[this.scheduleLength];
+
+		this.energyCarrier =  energyCarrier;
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
+		registerEnergyAsset();
+    }
+    
+    public void updateDailyDemand_kWh(double dailyDemand_kWh) {
+    	this.dailyDemand_kWh = dailyDemand_kWh;    	
+    }
+    
+    public double getDailyDemand_kWh() {
+    	return this.dailyDemand_kWh;
+    }
+    public void resetProfile() {
+		this.profile_kW = new double[this.scheduleLength]; // Don't make a new array but set all values to 0?
+		this.currentIndex = 0;
+    }
+    
+    public double[] getProfile_kW() {
+    	return this.profile_kW;
+    }
+
+    public double getCapacity_kW() {
+    	return this.capacity_kW;
+    }
+    public void updatePowerSteps_n(int powerSteps_n) {
+    	this.powerSteps_n = powerSteps_n;
+    }
+    
+    public int getPowerSteps_n() {
+    	return this.powerSteps_n;
+    }
+    
+    public boolean[] getAllowedOperatingIndices() {
+    	return this.allowedOperatingIndices;
+    }
+
+    @Override
+    public void f_updateAllFlows() {
+    	double powerFraction_fr = this.profile_kW[this.currentIndex] / this.capacity_kW;
+     	operate(this.v_powerFraction_fr);
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+    	}
+
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
+    }
+    
+    @Override
+    public void operate(double powerFraction_fr) {
+    	double consumption_kW = powerFraction_fr * this.capacity_kW;
+    	this.energyUse_kW = consumption_kW;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+		flowsMap.put(this.energyCarrier, consumption_kW);
+    	this.currentIndex++;
+    }
+
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1736775429723</Id>
+			<Name><![CDATA[J_EMS]]></Name>
+			<Text><![CDATA[/**
+ * J_EMS
+ */	
+public class J_EMS implements Serializable {
+
+	Agent parentAgent;
+	double timeStep_h;
+	List<J_EA> baseLoadAssets = new ArrayList<>();
+	List<J_EAFlexConsumption> schedulableAssets = new ArrayList<>();
+	J_LocalPrices j_lp;
+	
+    /**
+     * Default constructor
+     */
+    public J_EMS() {
+    }
+    
+    public J_EMS(Agent parentAgent, J_LocalPrices j_lp, double timeStep_h) {
+    	this.parentAgent = parentAgent;
+    	this.j_lp = j_lp;
+    	this.timeStep_h = timeStep_h;
+    }
+
+    public void addBaseLoadAsset( J_EA baseLoadAsset) {
+    	this.baseLoadAssets.add(baseLoadAsset);
+    }
+    
+    public List<J_EA> getBaseLoadAssets() {
+    	return this.baseLoadAssets;
+    }
+    
+    public J_LocalPrices getLocalPrices() {
+    	return this.j_lp;
+    }
+    
+    public void addSchedulableAsset( J_EAFlexConsumption schedulableAsset) {
+    	this.schedulableAssets.add(schedulableAsset);
+    }
+    
+    public double[] scheduleDay(double[] previousLoadProfile_kW, J_EAFlexConsumption j_ea) {
+    	double[] loadProfile_kW = Arrays.copyOf(previousLoadProfile_kW, previousLoadProfile_kW.length);
+    	double workRemaining_kWh = j_ea.getDailyDemand_kWh();
+    	Pair<double[], Double> pair;
+    	while (workRemaining_kWh > 0) {
+    		pair = scheduleIteration(loadProfile_kW, j_ea, workRemaining_kWh);
+    		loadProfile_kW = pair.getFirst();
+    		workRemaining_kWh = pair.getSecond();
+    	}	
+    	return loadProfile_kW;
+    }
+    
+    private Pair<double[], Double> scheduleIteration(double[] loadProfile_kW, J_EAFlexConsumption j_ea, double workRemaining_kWh) {
+    	double[] localMarginalPriceCurve_eurpMWh = this.j_lp.getMarginalPriceCurveUpwards(loadProfile_kW);
+    	int[] cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
+    	
+    	int i = 0;
+    	while ( j_ea.getProfile_kW()[cheapestTimeIdxsSorted[i]] >= j_ea.getCapacity_kW()
+    			|| !(j_ea.getAllowedOperatingIndices()[cheapestTimeIdxsSorted[i]]) ) {
+    		
+    		i++;
+    	}
+    	
+    	double addedPower_kW;
+    	if (j_ea.getProfile_kW()[cheapestTimeIdxsSorted[i]] < 0) {
+    		// First only selfconsumption
+    		addedPower_kW = min(min(j_ea.getCapacity_kW() / j_ea.getPowerSteps_n(), workRemaining_kWh / this.timeStep_h), -loadProfile_kW[cheapestTimeIdxsSorted[i]]);
+    	}
+    	else {
+    		// If no more own production available, gradually add power (hence the powersteps)
+    		addedPower_kW = min(j_ea.getCapacity_kW() / j_ea.getPowerSteps_n(), workRemaining_kWh / this.timeStep_h);
+    	}
+    	
+    	loadProfile_kW[cheapestTimeIdxsSorted[i]] += addedPower_kW;
+    	j_ea.getProfile_kW()[cheapestTimeIdxsSorted[i]] += addedPower_kW;
+    	workRemaining_kWh -= addedPower_kW * this.timeStep_h;
+    	
+    	return new Pair(loadProfile_kW, workRemaining_kWh);
+    }
+    
+    
+    // Methods for arg sort
+    private int[] argsort(final double[] a) {
+        return argsort(a, true);
+    }
+ 
+    private int[] argsort(final double[] a, final boolean ascending) {
+        Integer[] indexes = new Integer[a.length];
+        for (int i = 0; i < indexes.length; i++) {
+            indexes[i] = i;
+        }
+        Arrays.sort(indexes, new Comparator<Integer>() {
+            @Override
+            public int compare(final Integer i1, final Integer i2) {
+                return (ascending ? 1 : -1) * Double.compare(a[i1], a[i2]);
+            }
+        });
+        return asArray(indexes);
+    }
+    
+    private <T extends Number> int[] asArray(final T... a) {
+        int[] b = new int[a.length];
+        for (int i = 0; i < b.length; i++) {
+            b[i] = a[i].intValue();
+        }
+        return b;
+    }
+    
+    
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1736776575193</Id>
+			<Name><![CDATA[J_LocalPrices]]></Name>
+			<Text><![CDATA[/**
+ * J_LocalPrices
+ */	
+public class J_LocalPrices implements Serializable {
+
+	private J_ProfilePointer pp_dayAheadElectricityPricing_eurpMWh;
+	private double congestionFactor_eurpMWhpkW;
+	private double selfConsumptionSaving_eurpMWh;
+	private double congestionDeadzone_kW;
+	private double timeStep_h;
+	private double[] dailyPriceCurve_eurpMWh;
+	
+    /**
+     * Default constructor
+     */
+    public J_LocalPrices() {
+    }
+
+    public J_LocalPrices(J_ProfilePointer pp_dayAheadElectricityPricing_eurpMWh , double congestionFactor_eurpMWhpkW, double selfConsumptionSaving_eurpMWh, double congestionDeadzone_kW, double timeStep_h) {
+    	this.pp_dayAheadElectricityPricing_eurpMWh = pp_dayAheadElectricityPricing_eurpMWh;
+    	this.congestionFactor_eurpMWhpkW = congestionFactor_eurpMWhpkW;
+    	this.selfConsumptionSaving_eurpMWh = selfConsumptionSaving_eurpMWh;
+    	this.congestionDeadzone_kW = congestionDeadzone_kW;
+    	this.timeStep_h = timeStep_h; 
+    }
+
+    public void updateDailyPriceCurve( double startTime_h, double timeWindow_h ) {
+    	this.dailyPriceCurve_eurpMWh = new double[roundToInt(timeWindow_h / this.timeStep_h)];
+    	for (int i = 0; i * this.timeStep_h < timeWindow_h; i++) {
+    		this.dailyPriceCurve_eurpMWh[i] = this.pp_dayAheadElectricityPricing_eurpMWh.getValue( startTime_h + i * this.timeStep_h);
+    	}
+    }
+
+    public double[] getMarginalPriceCurveUpwards(double[] loadProfile_kW) {
+        double[] marginalPriceCurveUpwards = new double[loadProfile_kW.length];
+
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            double load_kW = loadProfile_kW[i];
+            double loadProfileSign = (load_kW >= this.congestionDeadzone_kW ? 1 : 0) - ((-load_kW) > this.congestionDeadzone_kW ? 1 : 0);
+            double marginalPrice = this.dailyPriceCurve_eurpMWh[i]
+                                   + loadProfileSign * (( 2*Math.abs(load_kW) - this.congestionDeadzone_kW) * this.congestionFactor_eurpMWhpkW )
+                                   + (this.selfConsumptionSaving_eurpMWh * (load_kW >= 0 ? 1 : 0));
+
+            marginalPriceCurveUpwards[i] = marginalPrice;
+        }
+
+        return marginalPriceCurveUpwards;
+    }
+    
+    public double[] getMarginalPriceCurveDownwards(double[] loadProfile_kW) {
+        double[] marginalPriceCurveDownwards = new double[loadProfile_kW.length];
+
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            double load_kW = loadProfile_kW[i];
+            double loadProfileSign = (load_kW > this.congestionDeadzone_kW ? 1 : 0) - ((-load_kW) >= this.congestionDeadzone_kW ? 1 : 0);
+            double marginalPrice = this.dailyPriceCurve_eurpMWh[i]
+                                   + loadProfileSign * (( 2*Math.abs(load_kW) - this.congestionDeadzone_kW) * this.congestionFactor_eurpMWhpkW )
+                                   + (this.selfConsumptionSaving_eurpMWh * (load_kW > 0 ? 1 : 0));
+
+            marginalPriceCurveDownwards[i] = marginalPrice;
+        }
+
+        return marginalPriceCurveDownwards;
+    }
+    
+    public double[] getActualPriceCurve(double[] loadProfile_kW) {
+        double[] actualPriceCurve = new double[loadProfile_kW.length];
+
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            double load_kW = loadProfile_kW[i];
+            double loadProfileSign = (load_kW >= this.congestionDeadzone_kW ? 1 : 0) - ((-load_kW) > this.congestionDeadzone_kW ? 1 : 0);
+            double actualPrice = this.dailyPriceCurve_eurpMWh[i]
+                                   + loadProfileSign * (( Math.abs(load_kW) - this.congestionDeadzone_kW) * this.congestionFactor_eurpMWhpkW )
+                                   + (this.selfConsumptionSaving_eurpMWh * (load_kW >= 0 ? 1 : 0));
+
+            actualPriceCurve[i] = actualPrice;
+        }
+
+        return actualPriceCurve;
+    }
+    
+    
+    @Override
+	public String toString() {
+		return super.toString();
+	}
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.2.202410172110"
+                   AnyLogicVersion="8.9.2.202410172112"
                    AlpVersion="8.9.2">
 	<Model>
 		<Id>1658477103134</Id>
@@ -1444,6 +1444,18 @@
 			<JavaClass>
 				<Id>1731483284975</Id>
 				<Name><![CDATA[J_FlowsMap]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1736771873432</Id>
+				<Name><![CDATA[J_EAFlexConsumption]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1736775429723</Id>
+				<Name><![CDATA[J_EMS]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1736776575193</Id>
+				<Name><![CDATA[J_LocalPrices]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

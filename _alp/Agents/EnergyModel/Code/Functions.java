@@ -404,6 +404,7 @@ b_isWeekday = (t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5);
 b_isSummerWeek = t_h >= p_startHourSummerWeek && t_h < p_startHourSummerWeek + 24*7;
 b_isWinterWeek = t_h >= p_startHourWinterWeek && t_h < p_startHourWinterWeek + 24*7;
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
+b_isFirstTimeStepOfDay = t_h % 24 == 0;
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
 
@@ -654,9 +655,6 @@ pf_windOnshoreProduction = new J_ProfileForecaster(null, pp_windOnshoreProductio
 c_forecasts.add(pf_windOnshoreProduction);
 pf_solarPVproduction = new J_ProfileForecaster(null, pp_solarPVproduction, p_forecastTime_h, t_h, p_timeStep_h);
 c_forecasts.add(pf_solarPVproduction);
-
-pp_dayAheadElectricityPricing_eurpMWh = new J_ProfilePointer("Day ahead electricity pricing [eur/MWh]", tf_dayAheadElectricityPricing_eurpMWh);
-c_profiles.add(pp_dayAheadElectricityPricing_eurpMWh);
 pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_forecastTime_h, t_h, p_timeStep_h);
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
 

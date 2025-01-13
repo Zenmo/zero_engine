@@ -158,7 +158,16 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	//return new Pair(temporaryFlowsMap, this.energyUse_kW);
     	// does the flowmap need to be reset affter this??
     }
-	
+    
+    public double[] getProfile_kW(double t_h, double timeWindow_h) {
+    	double[] profile_kW = new double[roundToInt(timeWindow_h / timestep_h)];
+    	TableFunction tf = this.profilePointer.getTablefunction();
+    	for (int i = 0; i * timestep_h < timeWindow_h; i++) {
+    		profile_kW[i] = this.capacity_kW * tf.get( t_h + i * timestep_h);
+    	}
+    	return profile_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return

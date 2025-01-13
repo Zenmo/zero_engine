@@ -72,12 +72,8 @@ abstract public class J_EA implements Cloneable {
     public void f_updateAllFlows(double powerFraction_fr) {
 
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
-     	//Pair<J_FlowsMap, Double> flowsPair = operate(powerFractionBounded_fr);
      	operate(powerFractionBounded_fr);
-     	//J_FlowsMap flowsMap = flowsPair.getFirst();
-     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
-    		//((GridConnection)parentAgent).f_addFlows(arr, this);
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
     	}
     	/*
@@ -89,12 +85,7 @@ abstract public class J_EA implements Cloneable {
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
-    	/*traceln("flowsMap: %s", flowsMap);
-    	flowsMap.clear();
-    	traceln("flowsMap after reset: %s", flowsMap);
-    	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);
-    	//return arr;*/
-    	//return this.flowsMap;
+
     }
     
     public void f_updateAllFlows() {
