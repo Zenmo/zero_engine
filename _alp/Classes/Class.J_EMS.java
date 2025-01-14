@@ -207,7 +207,7 @@ public class J_EMS implements Serializable {
     	double[] remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iDischarge], this.batterySOC_kWh.length);
     	double roomToDischarge_kWh = min(remainingSOCProfile_kWh);
     	
-    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iDischarge]] <= battery.getCapacityElectric_kW() || roundToDecimal(roomToDischarge_kWh, 6) <= 0.0 ) {
+    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iDischarge]] <= -battery.getCapacityElectric_kW() || roundToDecimal(roomToDischarge_kWh, 6) <= 0.0 ) {
     		if (iDischarge == (int)(loadProfile_kW.length / 2) - 1) {
     			break;
     		}
