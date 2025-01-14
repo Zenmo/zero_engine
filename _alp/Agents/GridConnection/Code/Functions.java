@@ -2145,6 +2145,10 @@ for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
 }
 data_baseloadElectricityDemand_kW.update();
 
+for (J_EA j_ea : c_conversionElectricAssets) {
+	v_conversionPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
 v_electricHobConsumption_kW = 0;
 for (J_EA j_ea : c_electricHobAssets) {
 	v_electricHobConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);

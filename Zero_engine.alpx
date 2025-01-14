@@ -1457,6 +1457,10 @@
 				<Id>1736776575193</Id>
 				<Name><![CDATA[J_LocalPrices]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1736853374877</Id>
+				<Name><![CDATA[J_Triple]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

@@ -5953,7 +5953,6 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516515981</Id>
 		<Name><![CDATA[c_conversionElectricAssets]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-120</X>
 		<Y>1030</Y>
 		<Label>

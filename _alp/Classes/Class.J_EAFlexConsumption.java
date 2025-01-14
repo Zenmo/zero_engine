@@ -70,6 +70,10 @@ public class J_EAFlexConsumption extends J_EA implements Serializable {
     	return this.allowedOperatingIndices;
     }
 
+    public String getName() {
+    	return this.energyAssetName;
+    }
+    
     @Override
     public void f_updateAllFlows() {
     	this.v_powerFraction_fr = this.profile_kW[this.currentIndex] / this.capacity_kW;

@@ -84,6 +84,14 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		}		
 	}
 
+	public double getBatteryChargeEfficiency_r() {
+		return this.etaCharge_r;
+	}
+	
+	public double getBatteryDischargeEfficiency_r() {
+		return this.etaDischarge_r;
+	}
+	
 	@Override
 	public String toString() {
 		return 
