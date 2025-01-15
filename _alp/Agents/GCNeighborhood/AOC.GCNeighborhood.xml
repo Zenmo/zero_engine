@@ -110,6 +110,9 @@
 		<Parameter>
 			<Name><![CDATA[p_address]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_chpAsset]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>
