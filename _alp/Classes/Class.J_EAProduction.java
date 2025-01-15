@@ -4,6 +4,7 @@
 public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+	protected double totalEnergyCurtailed_kWh=0;
 	//public double yearlyProductionElectricity_kWh;
 	//public double yearlyProductionHeat_kWh;
 	//public double yearlyProductionHydrogen_kWh;
@@ -138,6 +139,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
     	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
+    	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	//double[] arr = {-curtailmentPower_kW, 0, 0, 0, 0, 0, 0, 0, 0, curtailmentPower_kW};
     	this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
     	this.energyUse_kW = -curtailmentPower_kW;
@@ -158,6 +160,16 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	//return new Pair(temporaryFlowsMap, this.energyUse_kW);
     	// does the flowmap need to be reset affter this??
     }
+    
+    public double getEnergyCurtailed_kWh() {
+    	return this.totalEnergyCurtailed_kWh;
+    }
+    
+    @Override
+    public void storeStatesAndReset() {
+    	this.totalEnergyCurtailed_kWh = 0;
+    	super.storeStatesAndReset();
+	}
 	
 	@Override
 	public String toString() {
