@@ -1337,6 +1337,7 @@
 			<JavaClass>
 				<Id>1666879973865</Id>
 				<Name><![CDATA[J_HourlyCurvesData]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</JavaClass>
 			<JavaClass>
 				<Id>1668600448637</Id>
@@ -1444,6 +1445,10 @@
 			<JavaClass>
 				<Id>1731483284975</Id>
 				<Name><![CDATA[J_FlowsMap]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1737025326025</Id>
+				<Name><![CDATA[J_LoadDurationCurves]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

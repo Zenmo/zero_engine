@@ -1983,8 +1983,8 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 
 double f_duurkrommes()
 {/*ALCODESTART::1700560766579*/
-int runStartIdx = 0; //(int)(p_runStartTime_h/p_timeStep_h);
-int runEndIdx = (int)((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h);
+//int runStartIdx = 0; //(int)(p_runStartTime_h/p_timeStep_h);
+//int runEndIdx = (int)((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h);
 if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, get load duration curves from that one!
 	data_netbelastingDuurkromme_kW = c_gridNodesTopLevel.get(0).f_getDuurkromme();
 	
@@ -2005,7 +2005,17 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 	data_weekendNetbelastingDuurkromme_kW = c_gridNodesTopLevel.get(0).data_weekendNetbelastingDuurkromme_kW;
 	
 } else {
+	J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries(), this);
+
+	data_netbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveTotal_kW;
+	data_summerWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveSummer_kW;
+	data_winterWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWinter_kW;
+	data_daytimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveDaytime_kW;
+	data_nighttimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveNighttime_kW;
+	data_weekdayNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekday_kW;
+	data_weekendNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekend_kW;
 	
+	/*
 	boolean firstRun = true;
 	if (data_netbelastingDuurkromme_kW != null) {	
 		if (data_netbelastingDuurkrommeVorige_kW != null) { // Not second run either!
@@ -2024,16 +2034,11 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 		data_weekendNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/7*2/p_timeStep_h)+100);
 	}
 	
-	/* Obsolete?
-	data_netbelastingDuurkrommeVorige_kW.reset();
-	boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
-	*/
+
 	
 	double[] a_annualNetLoad_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().clone();
 	int arraySize = roundToInt((p_runEndTime_h-p_runStartTime_h)/p_timeStep_h);// a_annualNetLoad_kW.length;
-	/*for (int i = 0; i < 5; i++) {
-		a_annualNetLoad_kW[i] = 0;
-	}*/
+
 	//double[] netLoadArray_kW = new double[arraySize];
 	//double[] netLoadArrayWinter_kW = new double[data_winterWeekNetbelastingDuurkromme_kW.size()];
 	//double[] netLoadArraySummer_kW = new double[data_winterWeekNetbelastingDuurkromme_kW.size()];
@@ -2045,10 +2050,7 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 	double[] netLoadArraySummer_kW = new double[roundToInt(24*7 / p_timeStep_h)];
 	double[] netLoadArrayWinter_kW = new double[roundToInt(24*7 / p_timeStep_h)];
 	
-	
-	/*a_annualNetLoad_kW = Arrays.copyOfRange(a_annualNetLoad_kW, 500, 8759);
-	arraySize = a_annualNetLoad_kW.length;*/
-	
+
 	int i_winter=0;
 	int i_summer=0;
 	int i_day=0;
@@ -2147,7 +2149,7 @@ if (c_gridNodesTopLevel.size() == 1) { // If there is one top-level gridNode, ge
 	for(int i=0; i< arraySize; i++) {
 		data_weekendNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWeekend_kW[i]);
 	}
-
+	*/
 }
 int arraySize = data_netbelastingDuurkromme_kW.size();
 data_HSMScapacity_kW.add(0, v_topLevelGridCapacity_kW);
