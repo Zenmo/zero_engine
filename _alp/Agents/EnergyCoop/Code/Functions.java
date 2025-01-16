@@ -1326,6 +1326,19 @@ if (energyModel.v_isRapidRun){
 
 DataSet f_getDuurkromme()
 {/*ALCODESTART::1723101436982*/
+J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries(), energyModel);
+
+data_netbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveTotal_kW;
+data_summerWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveSummer_kW;
+data_winterWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWinter_kW;
+data_daytimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveDaytime_kW;
+data_nighttimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveNighttime_kW;
+data_weekdayNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekday_kW;
+data_weekendNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekend_kW;
+ 
+return data_netbelastingDuurkromme_kW;
+
+/*
 boolean firstRun = true;
 if (data_netbelastingDuurkromme_kW != null) {	
 	if (data_netbelastingDuurkrommeVorige_kW != null) { // Not second run either!
@@ -1460,6 +1473,7 @@ for(int i=0; i< arraySize; i++) {
 }
  
 return data_netbelastingDuurkromme_kW;
+*/
 /*ALCODEEND*/}
 
 double f_fillAnnualDatasetsOLD()
