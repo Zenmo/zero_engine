@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
-                   WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.2.202410172110"
-                   AlpVersion="8.9.2">
+	WorkspaceVersion="1.9"
+	AnyLogicVersion="8.9.2.202410172110"
+	AlpVersion="8.9.2">
 	<Model>
 		<Id>1658477103134</Id>
 		<Name><![CDATA[Zero_engine]]></Name>
@@ -1172,8 +1172,8 @@
 				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</OptionList>
 		</OptionLists>
-		<Folders/>
-		<ActiveObjectClasses/>
+		<Folders />
+		<ActiveObjectClasses />
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 		<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
 		<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
@@ -1189,8 +1189,8 @@
 			<Logging>false</Logging>
 			<AutoExport>false</AutoExport>
 			<ShutdownCompact>false</ShutdownCompact>
-			<ImportSettings/>
-			<ExportSettings/>
+			<ImportSettings />
+			<ExportSettings />
 		</Database>
 		<RunConfiguration ActiveObjectClassId="1658477103140">
 			<Id>1658477103163</Id>
@@ -1240,7 +1240,7 @@
 					</InputReference>
 				</RunConfigurationInput>
 			</Inputs>
-			<Outputs/>
+			<Outputs />
 		</RunConfiguration>
 		<JavaClasses>
 			<JavaClass>
@@ -1337,6 +1337,7 @@
 			<JavaClass>
 				<Id>1666879973865</Id>
 				<Name><![CDATA[J_HourlyCurvesData]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</JavaClass>
 			<JavaClass>
 				<Id>1668600448637</Id>
@@ -1459,7 +1460,10 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1736853374877</Id>
-				<Name><![CDATA[J_Triple]]></Name>
+				<Name><![CDATA[J_Triple]]></Name> ======= </JavaClass>
+			<JavaClass>
+				<Id>1737025326025</Id>
+				<Name><![CDATA[J_LoadDurationCurves]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

@@ -388,6 +388,18 @@ v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh
 
 DataSet f_getDuurkromme()
 {/*ALCODESTART::1718111675053*/
+J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries(), energyModel);
+
+data_netbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveTotal_kW;
+data_summerWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveSummer_kW;
+data_winterWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWinter_kW;
+data_daytimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveDaytime_kW;
+data_nighttimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveNighttime_kW;
+data_weekdayNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekday_kW;
+data_weekendNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekend_kW;
+ 
+return data_netbelastingDuurkromme_kW;
+/*
 int runStartIdx = 0;// (int)(energyModel.p_runStartTime_h/energyModel.p_timeStep_h);
 int runEndIdx = (int)((energyModel.p_runEndTime_h-energyModel.p_runStartTime_h)/energyModel.p_timeStep_h);
 int nRunIdxs = runEndIdx - runStartIdx;
@@ -550,8 +562,7 @@ arraySize = netLoadArrayWeekend_kW.length;
 for(int i=0; i< arraySize; i++) {
 	data_weekendNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
 }
-
-return data_netbelastingDuurkromme_kW;
+*/
 /*ALCODEEND*/}
 
 ArrayList<GridNode> f_getConnectedGridNodes()
