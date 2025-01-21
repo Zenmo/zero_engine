@@ -93,6 +93,13 @@ public class J_LocalPrices implements Serializable {
     	return getActualPriceCurve(loadProfile_kW, 0);
     }
     
+    /*public DataSet getDayAheadPrice_eurpMWh(double startTime_h, double timeWindow_h) {
+    	DataSet data_dayAhead_eurpMWh = new DataSet(roundToInt(timeWindow_h/timeStep_h));
+    	for (int i=0; i<roundToInt(timeWindow_h/timeStep_h); i++) {
+    		data_dayAhead_eurpMWh.add(startTime_h + i*timeStep_h, this.pp_dayAheadElectricityPricing_eurpMWh.getValue( startTime_h + i * this.timeStep_h));
+    	}
+    	return data_dayAhead_eurpMWh;
+    }*/
     
     @Override
 	public String toString() {

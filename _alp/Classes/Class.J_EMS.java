@@ -138,39 +138,53 @@ public class J_EMS implements Serializable {
     
     public double[] scheduleBattery(double[] previousLoadProfile_kW, J_EAStorageElectric battery) {
     	double[] loadProfile_kW = Arrays.copyOf(previousLoadProfile_kW, previousLoadProfile_kW.length);
+    	int[] charge_discharge_division = new int[previousLoadProfile_kW.length];
     	int i = 0;
     	while (i < 500) {
     		// Charging iteration    		
-    		double[] localMarginalPriceCurve_eurpMWh = this.j_lp.getMarginalPriceCurveUpwards(loadProfile_kW);
-    		int[] cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
-    		
-    		if (localMarginalPriceCurve_eurpMWh[cheapestTimeIdxsSorted[cheapestTimeIdxsSorted.length - 1]] - localMarginalPriceCurve_eurpMWh[cheapestTimeIdxsSorted[0]] < 30) {
+    		double[] localMarginalPriceCurveUpwards_eurpMWh = this.j_lp.getMarginalPriceCurveUpwards(loadProfile_kW);
+    		double[] localMarginalPriceCurveDownwards_eurpMWh = this.j_lp.getMarginalPriceCurveDownwards(loadProfile_kW);
+    		int[] cheapestTimeIdxsChargingSorted = argsort(localMarginalPriceCurveUpwards_eurpMWh);
+    		int[] cheapestTimeIdxsDischargingSorted = argsort(localMarginalPriceCurveDownwards_eurpMWh);
+    		/*if (localMarginalPriceCurveDownwards_eurpMWh[cheapestTimeIdxsDischargingSorted[cheapestTimeIdxsDischargingSorted.length-1]] - localMarginalPriceCurveUpwards_eurpMWh[cheapestTimeIdxsChargingSorted[0]] < 30) {
     			traceln("Price spread minimal, aborting after %s iterations", i);
     			break;
-    		}
+    		}*/
     		
-    		J_Triple<double[], Double, Integer> triplet = scheduleBatteryChargingIteration(loadProfile_kW, battery, cheapestTimeIdxsSorted);
-    		loadProfile_kW = triplet.getFirst();
+    		J_Triple<double[], Double, Integer> triplet = scheduleBatteryChargingIteration(loadProfile_kW, battery, cheapestTimeIdxsChargingSorted, charge_discharge_division);
     		double addedBESChargePower_kW = triplet.getSecond();
-    		int timeStepCharge_n = triplet.getThird();
-    		
+    		int timeStepCharge_n=cheapestTimeIdxsChargingSorted[0];
+    		if (triplet.getThird()!=null) {	    		
+        		loadProfile_kW = triplet.getFirst();
+	    		timeStepCharge_n = triplet.getThird();
+	    		charge_discharge_division[timeStepCharge_n] = 1;
+    		}
     		// Discharging iteration
-    		localMarginalPriceCurve_eurpMWh = this.j_lp.getMarginalPriceCurveDownwards(loadProfile_kW);
-    		cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
-    		triplet = scheduleBatteryDischargingIteration(loadProfile_kW, battery, cheapestTimeIdxsSorted);
-    		loadProfile_kW = triplet.getFirst();
+
+    		//cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
+    		triplet = scheduleBatteryDischargingIteration(loadProfile_kW, battery, cheapestTimeIdxsDischargingSorted, charge_discharge_division);
     		double addedBESDischargePower_kW = triplet.getSecond();
-    		int timeStepDischarge_n = triplet.getThird();
-    		
+    		int timeStepDischarge_n=cheapestTimeIdxsDischargingSorted[cheapestTimeIdxsDischargingSorted.length-1];
+    		if (triplet.getThird()!=null) {
+	    		loadProfile_kW = triplet.getFirst();
+	    		timeStepDischarge_n = triplet.getThird();
+	    		charge_discharge_division[timeStepDischarge_n] = -1;
+	    	}
     		// Additional checks to stop iterations
     		if (addedBESChargePower_kW == 0 && addedBESDischargePower_kW == 0) {
     			traceln("Stop iteration because added charge and discharge powers are zero. Iterations completed: %s", i);
     			break;
     		}
-    		if (timeStepCharge_n == timeStepDischarge_n) {
-    			traceln("Stop iteration because timeStepCharge_n and timeStepDischarge_n are equal! Iterations completed: %s", i);
+    		
+    		if (localMarginalPriceCurveDownwards_eurpMWh[timeStepDischarge_n] - localMarginalPriceCurveUpwards_eurpMWh[timeStepCharge_n] < 10) {
+    			traceln("Price spread minimal, aborting after %s iterations", i);
     			break;
     		}
+    		
+    		/*if (timeStepCharge_n == timeStepDischarge_n) {
+    			traceln("Stop iteration because timeStepCharge_n and timeStepDischarge_n are equal! Iterations completed: %s", i);
+    			break;
+    		}*/
     		
     		i++;
     	}
@@ -178,15 +192,15 @@ public class J_EMS implements Serializable {
     	return loadProfile_kW;
     } 
     
-    private J_Triple<double[], Double, Integer> scheduleBatteryChargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted) {
+    private J_Triple<double[], Double, Integer> scheduleBatteryChargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted, int[] charge_discharge_division) {
     	int iCharge = 0;
     	double[] remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iCharge], this.batterySOC_kWh.length);
     	//traceln("remainingSOCProfile_kWh: " + Arrays.toString(remainingSOCProfile_kWh)); 
     	double roomToCharge_kWh = battery.getStorageCapacity_kWh() - max(remainingSOCProfile_kWh);
     	//traceln("roomToCharge_kWh: " + roomToCharge_kWh);
-    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iCharge]] >= battery.getCapacityElectric_kW() || roundToDecimal(roomToCharge_kWh, 6) <= 0.0 ) {
+    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iCharge]] >= battery.getCapacityElectric_kW() || roundToDecimal(roomToCharge_kWh, 6) <= 0.0 || charge_discharge_division[cheapestTimeIdxsSorted[iCharge]] == -1) {
     		if (iCharge == (int)(loadProfile_kW.length / 2) - 1) {
-    			break;
+    			return new J_Triple(loadProfile_kW, 0.0, null);
     		}
     		iCharge++;
     		remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iCharge], this.batterySOC_kWh.length);
@@ -232,14 +246,14 @@ public class J_EMS implements Serializable {
     	return new J_Triple(loadProfile_kW, addedBESChargePower_kW, timeStepCharge_n);
     }
     
-    private J_Triple<double[], Double, Integer> scheduleBatteryDischargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted) {
+    private J_Triple<double[], Double, Integer> scheduleBatteryDischargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted, int[] charge_discharge_division) {
     	int iDischarge = loadProfile_kW.length - 1;
     	double[] remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iDischarge], this.batterySOC_kWh.length);
     	double roomToDischarge_kWh = min(remainingSOCProfile_kWh);
     	
-    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iDischarge]] <= -battery.getCapacityElectric_kW() || roundToDecimal(roomToDischarge_kWh, 6) <= 0.0 ) {
+    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iDischarge]] <= -battery.getCapacityElectric_kW() || roundToDecimal(roomToDischarge_kWh, 6) <= 0.0 || charge_discharge_division[cheapestTimeIdxsSorted[iDischarge]] == 1) {
     		if (iDischarge == (int)(loadProfile_kW.length / 2) - 1) {
-    			break;
+    			return new J_Triple(loadProfile_kW, 0.0, null);
     		}
     		iDischarge--; 
     		remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iDischarge], this.batterySOC_kWh.length);
@@ -330,5 +344,5 @@ public class J_EMS implements Serializable {
 	 * It needs to be changed when this class gets changed
 	 */ 
 	private static final long serialVersionUID = 1L;
-
 }
+
