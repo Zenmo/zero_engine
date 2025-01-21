@@ -9,6 +9,7 @@ public class J_LocalPrices implements Serializable {
 	private double congestionDeadzone_kW;
 	private double timeStep_h;
 	private double[] dailyPriceCurve_eurpMWh;
+	private int timeStepsPerDay_n;
 	
     /**
      * Default constructor
@@ -22,6 +23,7 @@ public class J_LocalPrices implements Serializable {
     	this.selfConsumptionSaving_eurpMWh = selfConsumptionSaving_eurpMWh;
     	this.congestionDeadzone_kW = congestionDeadzone_kW;
     	this.timeStep_h = timeStep_h; 
+    	this.timeStepsPerDay_n = roundToInt(24/timeStep_h);
     }
 
     public void updateDailyPriceCurve( double startTime_h, double timeWindow_h ) {
@@ -31,13 +33,13 @@ public class J_LocalPrices implements Serializable {
     	}
     }
 
-    public double[] getMarginalPriceCurveUpwards(double[] loadProfile_kW) {
+    public double[] getMarginalPriceCurveUpwards(double[] loadProfile_kW, int day) {
         double[] marginalPriceCurveUpwards = new double[loadProfile_kW.length];
 
         for (int i = 0; i < loadProfile_kW.length; i++) {
             double load_kW = loadProfile_kW[i];
             double loadProfileSign = (load_kW >= this.congestionDeadzone_kW ? 1 : 0) - ((-load_kW) > this.congestionDeadzone_kW ? 1 : 0);
-            double marginalPrice = this.dailyPriceCurve_eurpMWh[i]
+            double marginalPrice = this.dailyPriceCurve_eurpMWh[i+day*timeStepsPerDay_n]
                                    + loadProfileSign * (( 2*Math.abs(load_kW) - this.congestionDeadzone_kW) * this.congestionFactor_eurpMWhpkW )
                                    + (this.selfConsumptionSaving_eurpMWh * (load_kW >= 0 ? 1 : 0));
 
@@ -47,13 +49,17 @@ public class J_LocalPrices implements Serializable {
         return marginalPriceCurveUpwards;
     }
     
-    public double[] getMarginalPriceCurveDownwards(double[] loadProfile_kW) {
+    public double[] getMarginalPriceCurveUpwards(double[] loadProfile_kW) {
+    	return getMarginalPriceCurveUpwards(loadProfile_kW, 0);
+    }
+    
+    public double[] getMarginalPriceCurveDownwards(double[] loadProfile_kW, int day) {
         double[] marginalPriceCurveDownwards = new double[loadProfile_kW.length];
 
         for (int i = 0; i < loadProfile_kW.length; i++) {
             double load_kW = loadProfile_kW[i];
             double loadProfileSign = (load_kW > this.congestionDeadzone_kW ? 1 : 0) - ((-load_kW) >= this.congestionDeadzone_kW ? 1 : 0);
-            double marginalPrice = this.dailyPriceCurve_eurpMWh[i]
+            double marginalPrice = this.dailyPriceCurve_eurpMWh[i+day*timeStepsPerDay_n]
                                    + loadProfileSign * (( 2*Math.abs(load_kW) - this.congestionDeadzone_kW) * this.congestionFactor_eurpMWhpkW )
                                    + (this.selfConsumptionSaving_eurpMWh * (load_kW > 0 ? 1 : 0));
 
@@ -63,13 +69,17 @@ public class J_LocalPrices implements Serializable {
         return marginalPriceCurveDownwards;
     }
     
-    public double[] getActualPriceCurve(double[] loadProfile_kW) {
+    public double[] getMarginalPriceCurveDownwards(double[] loadProfile_kW) {
+    	return getMarginalPriceCurveDownwards(loadProfile_kW, 0);
+    }
+    
+    public double[] getActualPriceCurve(double[] loadProfile_kW, int day) {
         double[] actualPriceCurve = new double[loadProfile_kW.length];
 
         for (int i = 0; i < loadProfile_kW.length; i++) {
             double load_kW = loadProfile_kW[i];
             double loadProfileSign = (load_kW >= this.congestionDeadzone_kW ? 1 : 0) - ((-load_kW) > this.congestionDeadzone_kW ? 1 : 0);
-            double actualPrice = this.dailyPriceCurve_eurpMWh[i]
+            double actualPrice = this.dailyPriceCurve_eurpMWh[i+day*timeStepsPerDay_n]
                                    + loadProfileSign * (( Math.abs(load_kW) - this.congestionDeadzone_kW) * this.congestionFactor_eurpMWhpkW )
                                    + (this.selfConsumptionSaving_eurpMWh * (load_kW >= 0 ? 1 : 0));
 
@@ -77,6 +87,10 @@ public class J_LocalPrices implements Serializable {
         }
 
         return actualPriceCurve;
+    }
+    
+    public double[] getActualPriceCurve(double[] loadProfile_kW) {
+    	return getActualPriceCurve(loadProfile_kW, 0);
     }
     
     

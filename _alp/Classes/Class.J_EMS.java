@@ -5,12 +5,14 @@ public class J_EMS implements Serializable {
 
 	Agent parentAgent;
 	double timeStep_h;
+	int timeStepsPerDay_n;
 	List<J_EA> baseLoadAssets = new ArrayList<>();
 	List<J_EAFlexConsumption> schedulableAssets = new ArrayList<>();
 	J_LocalPrices j_lp;
 	double[] batteryProfile_kW;
 	double[] batterySOC_kWh;
 	int batteryPowerSteps_n = 10;
+	public int predictionHorizon_days;
 	
 	/**
      * Default constructor
@@ -18,12 +20,14 @@ public class J_EMS implements Serializable {
     public J_EMS() {
     }
     
-    public J_EMS(Agent parentAgent, J_LocalPrices j_lp, double timeStep_h) {
+    public J_EMS(Agent parentAgent, J_LocalPrices j_lp, double timeStep_h, int predictionHorizon_days) {
+    	this.predictionHorizon_days = predictionHorizon_days;
     	this.parentAgent = parentAgent;
     	this.j_lp = j_lp;
     	this.timeStep_h = timeStep_h;
-    	this.batteryProfile_kW = new double[roundToInt(24 / this.timeStep_h)];
-    	this.batterySOC_kWh = new double[roundToInt(24 / this.timeStep_h)];
+    	this.timeStepsPerDay_n = roundToInt(24/timeStep_h);
+    	this.batteryProfile_kW = new double[roundToInt(predictionHorizon_days*24 / this.timeStep_h)];
+    	this.batterySOC_kWh = new double[roundToInt(predictionHorizon_days*24 / this.timeStep_h)];
     }
 
     public void addBaseLoadAsset( J_EA baseLoadAsset) {
@@ -65,7 +69,9 @@ public class J_EMS implements Serializable {
     	this.schedulableAssets.add(schedulableAsset);
     }
     
+    /*
     public double[] scheduleDay(double[] previousLoadProfile_kW, J_EAFlexConsumption j_ea) {
+    	
     	double[] loadProfile_kW = Arrays.copyOf(previousLoadProfile_kW, previousLoadProfile_kW.length);
     	double workRemaining_kWh = j_ea.getDailyDemand_kWh();
     	Pair<double[], Double> pair;
@@ -75,10 +81,35 @@ public class J_EMS implements Serializable {
     		workRemaining_kWh = pair.getSecond();
     	}	
     	return loadProfile_kW;
+    }*/
+    
+    public double[] scheduleAssetPerDay(double[] previousLoadProfile_kW, J_EAFlexConsumption j_ea) {
+    	double[] loadProfile_kW = Arrays.copyOf(previousLoadProfile_kW, previousLoadProfile_kW.length);  // Length should correspond to predictionHorizon_days * timeStepsPerDay_n
+    	
+    	double[] loadPerDay_kW;
+
+    	//int timestepsPerDay_n = roundToInt(previousLoadProfile_kW.length/days);
+    	for (int day = predictionHorizon_days-1; day>=0; day--) { // Loop over days; back to front so that profile stored in the asset is of the 'current' day
+        	j_ea.resetProfile();
+        	loadPerDay_kW = Arrays.copyOfRange(loadProfile_kW, day*timeStepsPerDay_n, (day+1)*timeStepsPerDay_n); // Take load profile of day to be scheduled
+	    	double workRemaining_kWh = j_ea.getDailyDemand_kWh();
+	    	Pair<double[], Double> pair;
+	    	while (workRemaining_kWh > 0) {
+	    		pair = scheduleIteration(loadPerDay_kW, j_ea, workRemaining_kWh, day); // need to pass 'day' to get the corresponding price profiles, but flexAssetLoadPerDay_kW is just one day long.
+	    		loadPerDay_kW = pair.getFirst();
+	    		workRemaining_kWh = pair.getSecond();
+	    	}	
+    		for(int j=0; j<timeStepsPerDay_n; j++) { // Write result to loadprofile, on the corresponding day.
+    			loadProfile_kW[j+timeStepsPerDay_n*day] = loadPerDay_kW[j];
+    		}
+
+    	}
+    	return loadProfile_kW;
     }
     
-    private Pair<double[], Double> scheduleIteration(double[] loadProfile_kW, J_EAFlexConsumption j_ea, double workRemaining_kWh) {
-    	double[] localMarginalPriceCurve_eurpMWh = this.j_lp.getMarginalPriceCurveUpwards(loadProfile_kW);
+    private Pair<double[], Double> scheduleIteration(double[] loadProfile_kW, J_EAFlexConsumption j_ea, double workRemaining_kWh, int day) {
+    	double[] localMarginalPriceCurve_eurpMWh = this.j_lp.getMarginalPriceCurveUpwards(loadProfile_kW, day);
+    	//int timestepsPerDay_n = roundToInt(24/this.timeStep_h);
     	int[] cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
     	
     	int i = 0;
@@ -99,7 +130,7 @@ public class J_EMS implements Serializable {
     	}
     	
     	loadProfile_kW[cheapestTimeIdxsSorted[i]] += addedPower_kW;
-    	j_ea.getProfile_kW()[cheapestTimeIdxsSorted[i]] += addedPower_kW;
+    	j_ea.getProfile_kW()[cheapestTimeIdxsSorted[i]] += addedPower_kW; // Is this correct when planning multiple days??
     	workRemaining_kWh -= addedPower_kW * this.timeStep_h;
     	
     	return new Pair(loadProfile_kW, workRemaining_kWh);
@@ -107,7 +138,6 @@ public class J_EMS implements Serializable {
     
     public double[] scheduleBattery(double[] previousLoadProfile_kW, J_EAStorageElectric battery) {
     	double[] loadProfile_kW = Arrays.copyOf(previousLoadProfile_kW, previousLoadProfile_kW.length);
-    	
     	int i = 0;
     	while (i < 500) {
     		// Charging iteration    		

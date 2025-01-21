@@ -46,6 +46,7 @@ public class J_EAFlexConsumption extends J_EA implements Serializable {
     public double getDailyDemand_kWh() {
     	return this.dailyDemand_kWh;
     }
+    
     public void resetProfile() {
 		this.profile_kW = new double[this.scheduleLength]; // Don't make a new array but set all values to 0?
 		this.currentIndex = 0;
@@ -58,7 +59,7 @@ public class J_EAFlexConsumption extends J_EA implements Serializable {
     public double getCapacity_kW() {
     	return this.capacity_kW;
     }
-    public void updatePowerSteps_n(int powerSteps_n) {
+    public void setPowerSteps_n(int powerSteps_n) {
     	this.powerSteps_n = powerSteps_n;
     }
     
