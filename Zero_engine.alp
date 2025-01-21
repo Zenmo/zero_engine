@@ -4,7 +4,7 @@
 	         AnyLogic Project File
 *************************************************
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172123" AlpVersion="8.9.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.9.2.202410172112" AlpVersion="8.9.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_engine]]></Name>
@@ -4690,6 +4690,138 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737214225460</Id>
+					<Name><![CDATA[v_t12Demand_fr]]></Name>
+					<X>1530</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737214254814</Id>
+					<Name><![CDATA[v_t25Demand_fr]]></Name>
+					<X>1530</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312858009</Id>
+					<Name><![CDATA[v_t4Demand_fr]]></Name>
+					<X>1530</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312858011</Id>
+					<Name><![CDATA[v_t5Demand_fr]]></Name>
+					<X>1530</X><Y>140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312883191</Id>
+					<Name><![CDATA[v_t9Demand_fr]]></Name>
+					<X>1530</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312883193</Id>
+					<Name><![CDATA[v_t13Demand_fr]]></Name>
+					<X>1530</X><Y>180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312883195</Id>
+					<Name><![CDATA[v_t14Demand_fr]]></Name>
+					<X>1530</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312883197</Id>
+					<Name><![CDATA[v_t15Demand_fr]]></Name>
+					<X>1530</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312913943</Id>
+					<Name><![CDATA[v_t16Demand_fr]]></Name>
+					<X>1530</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312913945</Id>
+					<Name><![CDATA[v_t24Demand_fr]]></Name>
+					<X>1530</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1737312913947</Id>
+					<Name><![CDATA[v_t49Demand_fr]]></Name>
+					<X>1530</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -5591,6 +5723,171 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737214887785</Id>
+					<Name><![CDATA[t12Data]]></Name>
+					<X>-890</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737215219760</Id>
+					<Name><![CDATA[t25Data]]></Name>
+					<X>-890</X><Y>130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313001641</Id>
+					<Name><![CDATA[t4Data]]></Name>
+					<X>-890</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313001644</Id>
+					<Name><![CDATA[t5Data]]></Name>
+					<X>-890</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313015722</Id>
+					<Name><![CDATA[t9Data]]></Name>
+					<X>-890</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313015726</Id>
+					<Name><![CDATA[t13Data]]></Name>
+					<X>-890</X><Y>210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313015729</Id>
+					<Name><![CDATA[t14Data]]></Name>
+					<X>-890</X><Y>230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313015732</Id>
+					<Name><![CDATA[t15Data]]></Name>
+					<X>-890</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313019363</Id>
+					<Name><![CDATA[t16Data]]></Name>
+					<X>-890</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313019368</Id>
+					<Name><![CDATA[t24Data]]></Name>
+					<X>-890</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1737313019371</Id>
+					<Name><![CDATA[t49Data]]></Name>
+					<X>-890</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -6075,12 +6372,27 @@ v_currentHouseHoldHotWaterDemand_fr = tf_p_house_h_demand_hot_water(t_h);
 v_currentWindPowerNormalized_r = tf_p_wind_e_normalized(t_h);
 v_currentSolarPowerNormalized_r = tf_p_solar_e_normalized(t_h);
 v_currentAmbientTemperature_degC = tf_ambientTemperature_degC(t_h);
-v_currentIndustrySteelElectricityDemand_fr = tf_p_industry_steel_e_demand(t_h);
-v_currentIndustrySteelHeatDemand_fr = tf_p_industry_steel_h_demand(t_h);
-v_currentIndustryOtherElectricityDemand_fr = tf_p_industry_other_e_demand(t_h);
-v_currentIndustryOtherHeatDemand_fr = tf_p_industry_other_h_demand(t_h);
-v_currentLogisticsFleetEDemand_fr = tf_p_logistics_fleet_e_hgv(t_h);
+//v_currentIndustrySteelElectricityDemand_fr = tf_p_industry_steel_e_demand(t_h);
+//v_currentIndustrySteelHeatDemand_fr = tf_p_industry_steel_h_demand(t_h);
+//v_currentIndustryOtherElectricityDemand_fr = tf_p_industry_other_e_demand(t_h);
+//v_currentIndustryOtherHeatDemand_fr = tf_p_industry_other_h_demand(t_h);
+//v_currentLogisticsFleetEDemand_fr = tf_p_logistics_fleet_e_hgv(t_h);
 v_currentCookingDemand_fr = tf_cooking_demand(t_h);
+
+/*
+int timestep = (int)(t_h * 4);
+v_t12Demand_fr = t12Data.get(timestep) / (315.0 * 1804.0);
+v_t25Demand_fr = t25Data.get(timestep) / (290.0 * 889.0);
+v_t4Demand_fr = t4Data.get(timestep) / (231.0 * 1225.0);
+v_t5Demand_fr = t5Data.get(timestep) / (335.0 * 1519.0);
+v_t9Demand_fr = t9Data.get(timestep) / (168.0 * 1856.0);
+v_t13Demand_fr = t13Data.get(timestep) / (52.0 * 4553.0);
+v_t14Demand_fr = t14Data.get(timestep) / (169.0 * 3258.0);
+v_t15Demand_fr = t15Data.get(timestep) / (164.0 * 2167.0);
+v_t16Demand_fr = t16Data.get(timestep) / (173.0 * 2592.0);
+v_t24Demand_fr = t24Data.get(timestep) / (222.0 * 1853.0);
+v_t49Demand_fr = t49Data.get(timestep) / (211.0 * 1319.0);
+*/
 
 if (b_enableDLR) {
 	v_currentDLRfactor_fr = 1 + max(-0.1,v_currentWindPowerNormalized_r * 0.025*(30-v_currentAmbientTemperature_degC) + 0.5 - v_currentSolarPowerNormalized_r);
@@ -10494,6 +10806,9 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_originalCapacity_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_avgYearlyDemandPerHouse_kWh]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15646,6 +15961,27 @@ geupdate vanuit
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1726583647248</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1737292823336</Id>
+					<Name><![CDATA[p_avgYearlyDemandPerHouse_kWh]]></Name>
+					<X>370</X><Y>-60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1737292823334</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -22450,6 +22786,50 @@ for(J_EAConsumption e : c_consumptionAssets) {
 		double[] flowsArray;
 		if (e.energyAssetName != null) {
 			switch(e.energyAssetName) {
+				case "House_other_electricity":
+					//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
+					double randomizer = 0.7 + uniform(0.0, 0.6);
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
+				break;
+				case "T12":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t12Demand_fr );
+				break;
+				case "T25":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t25Demand_fr  );
+				break;
+				case "T4":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t4Demand_fr );
+				break;
+				case "T5":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t5Demand_fr  );
+				break;
+				case "T9":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t9Demand_fr );
+				break;
+				case "T13":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t13Demand_fr  );
+				break;
+				case "T14":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t14Demand_fr );
+				break;
+				case "T15":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t15Demand_fr  );
+				break;
+				case "T16":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t16Demand_fr  );
+				break;
+				case "T24":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t24Demand_fr );
+				break;
+				case "T49":
+					flowsArray = e.f_updateAllFlows( energyModel.v_t49Demand_fr  );
+				break;
+				case "Office_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+				break;
+				case "Store_other_electricity":
+					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
+				break;	
 				case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
 					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustryOtherElectricityDemand_fr );
 				break;
@@ -22461,18 +22841,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 				break;
 				case "INDUSTRY_STEEL_ELECTRICITY_DEMAND" :
 					flowsArray = e.f_updateAllFlows( energyModel.v_currentIndustrySteelElectricityDemand_fr );
-				break;
-				case "House_other_electricity":
-					//traceln("WRONG!! " + e.p_defaultEnergyAssetPresetName);
-					double randomizer = 0.7 + uniform(0.0, 0.6);
-					flowsArray = e.f_updateAllFlows( energyModel.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
-				break;
-				case "Office_other_electricity":
-					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
-				break;
-				case "Store_other_electricity":
-					flowsArray = e.f_updateAllFlows( energyModel.v_currentBuildingOtherElectricityDemand_fr );
-				break;				
+				break;			
 				default:
 					traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
@@ -23431,6 +23800,9 @@ if (j_ea instanceof J_EAVehicle) {
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
 			//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
 			c_fixedConsumptionElectricAssets.add(j_ea);
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.SOLARPANELS){
+			//v_windProductionElectric_kW += flowsArray[0];
+			c_pvAssets.add(j_ea);
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
 			//v_windProductionElectric_kW += flowsArray[0];
 			c_windAssets.add(j_ea);
@@ -24549,6 +24921,9 @@ data_batteryDischarging_kW.update();
 v_pvProductionElectric_kW = 0;
 for (J_EA j_ea : c_pvAssets) {
 	v_pvProductionElectric_kW += j_ea.getLastFlows()[0];
+	//if( v_pvProductionElectric_kW!= 0){
+		//traceln("PV productie = " + v_pvProductionElectric_kW );
+	//}
 }
 if (v_pvProductionElectric_kW < 0) {
 	traceln("Negative v_pvProductionElectric_kW! Curtailment error? Value: %s", v_pvProductionElectric_kW);
@@ -53489,9 +53864,13 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
     		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
     	}
-    	if (energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
+    	double x = a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h;
+    	if (energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY ) {
     		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-        	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);        	
+        	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h); 
+        	if ( profileType == OL_ProfileAssetType.SOLARPANELS && x != 0) { 
+        		this.electricityProduction_kW=x;
+        	}
     	} else if (energyCarrierConsumed == OL_EnergyCarrierType.METHANE) {
     		this.methaneConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
         	this.methaneProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);    		    		
