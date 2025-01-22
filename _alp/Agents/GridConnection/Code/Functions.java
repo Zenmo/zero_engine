@@ -1220,6 +1220,9 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 		c_batteryAssets.add(j_ea);
+		v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		energyModel.v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		
 	} else if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 	}
@@ -1867,7 +1870,8 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = null;
 		c_batteryAssets.remove(j_ea);
-		
+		v_totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		energyModel.v_totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = null;
@@ -2191,15 +2195,16 @@ data_electricVehicleDemand_kW.update();
 data_V2GSupply_kW.update();
 
 v_batteryPowerElectric_kW = 0;
-
+v_batteryStoredEnergy_kWh = 0;
 for (J_EA j_ea : c_batteryAssets) {
 	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
 		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
 	}
 }
 data_batteryCharging_kW.update();	
 data_batteryDischarging_kW.update();	
-
+data_batteryStoredEnergyLiveWeek_MWh.update();
 
 v_CHPProductionElectric_kW = 0;
 for (J_EA j_ea : c_chpAssets) {
@@ -2222,6 +2227,7 @@ for (J_EA j_ea : c_windAssets) {
 	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 data_windGeneration_kW.update();	
+
 
 //District heating
 data_districtHeatDelivery_kW.update();
@@ -2307,9 +2313,12 @@ for (J_EA j_ea : c_EvAssets) {
 }
 
 v_batteryPowerElectric_kW = 0;
+v_batteryStoredEnergy_kWh = 0;
 for (J_EA j_ea : c_batteryAssets) {
 	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
 		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
+		
 	}
 }
 
@@ -2358,6 +2367,8 @@ if (energyModel.b_isSummerWeek){
 	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
 	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
 	data_summerWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
+	
+	data_summerWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
 }
 
 //Winter week 
@@ -2390,6 +2401,8 @@ if (energyModel.b_isWinterWeek){
 	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
 	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
 	data_winterWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
+	
+	data_winterWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
 }
 
 // Daily Averages
@@ -2410,6 +2423,10 @@ v_dailyBatteriesSupply_kW += max(0,-v_batteryPowerElectric_kW);
 v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
 v_dailyCHPElectricityProduction_kW += v_CHPProductionElectric_kW;
 
+//Other
+
+v_dailyBatteryStoredEnergy_MWh += v_batteryStoredEnergy_kWh/1000;
+
 if (energyModel.b_isLastTimeStepOfDay) {
 	// Demand
 	double timeStepsInOneDay = 24 / energyModel.p_timeStep_h;
@@ -2428,6 +2445,9 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	data_annualBatteriesSupply_kW.add(energyModel.t_h, v_dailyBatteriesSupply_kW/ timeStepsInOneDay);
 	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/ timeStepsInOneDay);
 	data_annualCHPElectricitySupply_kW.add(energyModel.t_h, v_dailyCHPElectricityProduction_kW/ timeStepsInOneDay);
+	
+	//Other
+	data_annualBatteryStoredEnergy_MWh.add(energyModel.t_h, v_dailyBatteryStoredEnergy_MWh/ timeStepsInOneDay);
 	
 	//Yearly totals
 	v_totalPVGeneration_MWh += (v_dailyPVGeneration_kW/1000)*energyModel.p_timeStep_h;
@@ -2448,6 +2468,9 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	v_dailyBatteriesSupply_kW = 0;
 	v_dailyV2GSupply_kW = 0;
 	v_dailyCHPElectricityProduction_kW = 0;
+	
+	//Other
+	v_dailyBatteryStoredEnergy_MWh = 0;
 }
 
 
@@ -2475,6 +2498,7 @@ if (!setActive) {
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, false);
 	energyModel.v_totalInstalledPVPower_kW -= v_totalInstalledPVPower_kW;
 	energyModel.v_totalInstalledWindPower_kW -= v_totalInstalledWindPower_kW;
+	energyModel.v_totalInstalledBatteryStorageCapacity_MWh -= v_totalInstalledBatteryStorageCapacity_MWh;
 	
 	// Reset Connection Capacity to default
 	f_nfatoSetConnectionCapacity(true);
@@ -2526,6 +2550,7 @@ else {
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_totalInstalledWindPower_kW, true);
 	energyModel.v_totalInstalledPVPower_kW += v_totalInstalledPVPower_kW;
 	energyModel.v_totalInstalledWindPower_kW += v_totalInstalledWindPower_kW;
+	energyModel.v_totalInstalledBatteryStorageCapacity_MWh += v_totalInstalledBatteryStorageCapacity_MWh;
 }
 
 //Update the 'isActive' variable

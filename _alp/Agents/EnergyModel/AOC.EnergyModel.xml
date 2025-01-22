@@ -446,7 +446,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>80</X>
-			<Y>1250</Y>
+			<Y>1260</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -474,7 +474,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048281</Id>
 			<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1330</Y>
+			<Y>1340</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -502,7 +502,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048295</Id>
 			<Name><![CDATA[data_windGeneration_kW]]></Name>
 			<X>80</X>
-			<Y>1450</Y>
+			<Y>1460</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -530,7 +530,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048309</Id>
 			<Name><![CDATA[data_V2GSupply_kW]]></Name>
 			<X>80</X>
-			<Y>1490</Y>
+			<Y>1500</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -558,7 +558,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048324</Id>
 			<Name><![CDATA[data_PVGeneration_kW]]></Name>
 			<X>80</X>
-			<Y>1430</Y>
+			<Y>1440</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -586,7 +586,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048339</Id>
 			<Name><![CDATA[data_batteryCharging_kW]]></Name>
 			<X>80</X>
-			<Y>1390</Y>
+			<Y>1400</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -614,7 +614,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048354</Id>
 			<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1310</Y>
+			<Y>1320</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -642,7 +642,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048369</Id>
 			<Name><![CDATA[data_totalDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1550</Y>
+			<Y>1560</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -671,7 +671,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_dieselDemand_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>80</X>
-			<Y>1269</Y>
+			<Y>1279</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -699,7 +699,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048398</Id>
 			<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1370</Y>
+			<Y>1380</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -727,7 +727,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048412</Id>
 			<Name><![CDATA[data_batteryDischarging_kW]]></Name>
 			<X>80</X>
-			<Y>1470</Y>
+			<Y>1480</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -755,7 +755,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048425</Id>
 			<Name><![CDATA[data_totalSupply_kW]]></Name>
 			<X>80</X>
-			<Y>1570</Y>
+			<Y>1580</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -783,7 +783,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1699275048440</Id>
 			<Name><![CDATA[data_totalGridLoad_kW]]></Name>
 			<X>80</X>
-			<Y>1590</Y>
+			<Y>1600</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1026,7 +1026,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>80</X>
-			<Y>1290</Y>
+			<Y>1300</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2137,7 +2137,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>80</X>
-			<Y>1510</Y>
+			<Y>1520</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2165,7 +2165,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1717417117555</Id>
 			<Name><![CDATA[data_hydrogenElectricityDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1350</Y>
+			<Y>1360</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2193,7 +2193,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1720447715226</Id>
 			<Name><![CDATA[data_electricityCurtailment_kW]]></Name>
 			<X>80</X>
-			<Y>1410</Y>
+			<Y>1420</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2329,7 +2329,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1726292585769</Id>
 			<Name><![CDATA[data_districtHeatingDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1610</Y>
+			<Y>1620</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2357,7 +2357,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1726292590669</Id>
 			<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
 			<X>80</X>
-			<Y>1630</Y>
+			<Y>1640</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2567,7 +2567,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1734098799357</Id>
 			<Name><![CDATA[data_CHPElectricityProductionLiveWeek_kW]]></Name>
 			<X>80</X>
-			<Y>1530</Y>
+			<Y>1540</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2589,6 +2589,112 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<FreezeXAxis>false</FreezeXAxis>
 			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
 			<VerticalAxisExpression>sum(c_gridConnections,x-&gt;x.v_CHPProductionElectric_kW)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1737477392844</Id>
+			<Name><![CDATA[data_batteryStoredEnergy_MWh]]></Name>
+			<X>80</X>
+			<Y>1660</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>t_h-p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.v_batteryStoredEnergy_kWh/1000)</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1737534886489</Id>
+			<Name><![CDATA[data_annualAvgBatteryStoredEnergy_MWh]]></Name>
+			<X>390</X>
+			<Y>3210</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1737534931603</Id>
+			<Name><![CDATA[data_summerWeekBatteryStoredEnergy_MWh]]></Name>
+			<X>830</X>
+			<Y>3200</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1737534950715</Id>
+			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
+			<X>1280</X>
+			<Y>3200</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 	</AnalysisData>

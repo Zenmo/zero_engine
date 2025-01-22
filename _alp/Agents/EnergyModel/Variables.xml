@@ -185,7 +185,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1666979627442</Id>
-		<Name><![CDATA[v_totalBatteryInstalledCapacity_MWh]]></Name>
+		<Name><![CDATA[v_totalInstalledBatteryStorageCapacity_MWh]]></Name>
 		<X>1120</X>
 		<Y>180</Y>
 		<Label>
@@ -2453,7 +2453,7 @@
 		<Id>1722862764057</Id>
 		<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1740</Y>
+		<Y>1760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2472,7 +2472,7 @@
 		<Id>1722862764059</Id>
 		<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
 		<X>100</X>
-		<Y>1760</Y>
+		<Y>1780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2491,7 +2491,7 @@
 		<Id>1722862764061</Id>
 		<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1780</Y>
+		<Y>1800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2510,7 +2510,7 @@
 		<Id>1722862764063</Id>
 		<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1800</Y>
+		<Y>1820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2529,7 +2529,7 @@
 		<Id>1722862764065</Id>
 		<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1820</Y>
+		<Y>1840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2548,7 +2548,7 @@
 		<Id>1722862764067</Id>
 		<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1840</Y>
+		<Y>1860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2567,7 +2567,7 @@
 		<Id>1722862764069</Id>
 		<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1860</Y>
+		<Y>1880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2586,7 +2586,7 @@
 		<Id>1722862764071</Id>
 		<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
 		<X>100</X>
-		<Y>1880</Y>
+		<Y>1900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4157,7 +4157,7 @@
 		<Id>1730968866329</Id>
 		<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
 		<X>20</X>
-		<Y>3220</Y>
+		<Y>3250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4179,7 +4179,7 @@
 		<Id>1730968866331</Id>
 		<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
 		<X>20</X>
-		<Y>3240</Y>
+		<Y>3270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4201,7 +4201,7 @@
 		<Id>1730968866333</Id>
 		<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
 		<X>390</X>
-		<Y>3220</Y>
+		<Y>3260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4223,7 +4223,7 @@
 		<Id>1730968866335</Id>
 		<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
 		<X>390</X>
-		<Y>3240</Y>
+		<Y>3280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4245,7 +4245,7 @@
 		<Id>1730968880670</Id>
 		<Name><![CDATA[dsm_summerWeekDemandDataSets_kW]]></Name>
 		<X>830</X>
-		<Y>3205</Y>
+		<Y>3245</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4267,7 +4267,7 @@
 		<Id>1730968880672</Id>
 		<Name><![CDATA[dsm_summerWeekSupplyDataSets_kW]]></Name>
 		<X>830</X>
-		<Y>3225</Y>
+		<Y>3265</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4289,7 +4289,7 @@
 		<Id>1730968880674</Id>
 		<Name><![CDATA[dsm_winterWeekDemandDataSets_kW]]></Name>
 		<X>1280</X>
-		<Y>3200</Y>
+		<Y>3240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4311,7 +4311,7 @@
 		<Id>1730968880676</Id>
 		<Name><![CDATA[dsm_winterWeekSupplyDataSets_kW]]></Name>
 		<X>1280</X>
-		<Y>3220</Y>
+		<Y>3260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4465,7 +4465,7 @@
 		<Id>1731573420951</Id>
 		<Name><![CDATA[dsm_liveDemand_kW]]></Name>
 		<X>80</X>
-		<Y>1670</Y>
+		<Y>1700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4487,7 +4487,7 @@
 		<Id>1731573454382</Id>
 		<Name><![CDATA[dsm_liveSupply_kW]]></Name>
 		<X>80</X>
-		<Y>1690</Y>
+		<Y>1720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4911,6 +4911,25 @@
 		<Name><![CDATA[v_dailyCHPElectricityProduction_kW]]></Name>
 		<X>20</X>
 		<Y>3180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1737535155265</Id>
+		<Name><![CDATA[v_dailyBatteryStoredEnergy_MWh]]></Name>
+		<X>20</X>
+		<Y>3210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
