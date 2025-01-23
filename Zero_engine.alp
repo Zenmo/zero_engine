@@ -10808,7 +10808,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 							<Name><![CDATA[p_originalCapacity_kW]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_avgYearlyDemandPerHouse_kWh]]></Name>
+							<Name><![CDATA[p_hasMeasuredData]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -15970,19 +15970,19 @@ geupdate vanuit
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1737292823336</Id>
-					<Name><![CDATA[p_avgYearlyDemandPerHouse_kWh]]></Name>
+					<Name><![CDATA[p_hasMeasuredData]]></Name>
 					<X>370</X><Y>-60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[boolean]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1737292823334</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
