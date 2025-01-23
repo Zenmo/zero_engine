@@ -1061,7 +1061,7 @@ for (EnergyCoop EC : pop_energyCoops) {
 int v_timeStepsElapsed_live = v_timeStepsElapsed;
 v_timeStepsElapsed=0;
 
-c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));  
+c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));
 c_forecasts.forEach(p -> p.initializeForecast(p_runStartTime_h)); 
 //c_forecasts.parallelStream().forEach(p -> p.initializeForecast(p_runStartTime_h)); 
 

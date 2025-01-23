@@ -14,8 +14,8 @@ if( myParentNodeHeat instanceof GridNode ) {
 	//p_parentNodeHeat = myParentNodeHeat;
 }
 
-if (p_ownerID!=null){
-	ConnectionOwner myParentConnectionOwner = findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
+if (p_owner!=null){
+	ConnectionOwner myParentConnectionOwner = p_owner; //findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
 	if( myParentConnectionOwner instanceof ConnectionOwner) {
 		//p_ownerActor = myParentConnectionOwner;
 		l_ownerActor.connectTo(myParentConnectionOwner);
@@ -408,7 +408,7 @@ c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
 c_consumptionAssets.forEach(c -> c.f_updateAllFlows(0));
 c_productionAssets.forEach(p -> p.f_updateAllFlows(0));
 c_profileAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
-
+c_tractorAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
 /*ALCODEEND*/}
 
 double f_resetStates()
@@ -1242,6 +1242,8 @@ if (j_ea instanceof J_EAVehicle) {
 		} else {
 			traceln( "Unrecognized profile type!");
 		}
+} else if (j_ea instanceof J_EADieselTractor) {
+	c_tractorAssets.add(j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }

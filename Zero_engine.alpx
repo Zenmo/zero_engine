@@ -1450,6 +1450,10 @@
 				<Id>1737025326025</Id>
 				<Name><![CDATA[J_LoadDurationCurves]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1737633433233</Id>
+				<Name><![CDATA[J_EADieselTractor]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
