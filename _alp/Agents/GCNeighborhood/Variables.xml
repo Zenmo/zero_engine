@@ -589,7 +589,6 @@
 	<Variable Class="Parameter">
 		<Id>1730911077796</Id>
 		<Name><![CDATA[p_municipality]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1680</X>
 		<Y>930</Y>
 		<Label>
@@ -600,7 +599,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[GZ_Municipality]]></Type>
+			<Type><![CDATA[String]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
