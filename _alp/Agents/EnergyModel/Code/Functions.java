@@ -1034,6 +1034,11 @@ for (GridConnection GC : c_gridConnections) {
 		tt.setStartIndex(p_runStartTime_h);
 		tt.prepareNextActivity(p_runStartTime_h*60);
 		});
+	if (GC instanceof GCHouse) {
+		if (((GCHouse)GC).p_cookingTracker != null) {
+			((GCHouse)GC).p_cookingTracker.storeAndResetState();
+		}
+	}
 }
 for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
@@ -1143,6 +1148,11 @@ for (GridConnection GC : c_gridConnections) {
 		tt.prepareNextActivity((t_h-p_runStartTime_h)*60);
 		});	
 	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
+	if (GC instanceof GCHouse) {
+		if (((GCHouse)GC).p_cookingTracker != null) {
+			((GCHouse)GC).p_cookingTracker.restoreState();
+		}
+	}	
 }
 f_setInitialValues();
 
@@ -1619,6 +1629,7 @@ double v_currentNaturalGasDemand_kW = sum(c_gridConnections, x -> x.fm_currentCo
 double v_currentDieselDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.DIESEL));
 double v_currentHydrogenDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN));
 double v_currentElectrolyserDemand_kW = sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW);
+double v_currentCookingDemand_kW = sum(c_gridConnections, x->x.v_electricHobConsumption_kW);
 
 double v_currentPVGeneration_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 double v_currentWindGeneration_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
@@ -1652,6 +1663,7 @@ if (b_isSummerWeek){
 	data_summerWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 	data_summerWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 	data_summerWeekElectrolyserDemand_kW.add(t_h, v_currentElectrolyserDemand_kW);
+	data_summerWeekCookingElectricityDemand_kW.add(t_h, v_currentCookingDemand_kW);
 	
 	data_summerWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_summerWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -1688,6 +1700,7 @@ if (b_isWinterWeek){
 	data_winterWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 	data_winterWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 	data_winterWeekElectrolyserDemand_kW.add(t_h, v_currentElectrolyserDemand_kW);
+	data_winterWeekCookingElectricityDemand_kW.add(t_h, v_currentCookingDemand_kW);
 	
 	data_winterWeekPVGeneration_kW.add(t_h, v_currentPVGeneration_kW);
 	data_winterWeekWindGeneration_kW.add(t_h, v_currentWindGeneration_kW);
@@ -1706,7 +1719,7 @@ v_dailyHeatPumpElectricityDemand_kW += v_currentHeatPumpElectricityDemand_kW;
 v_dailyElectricVehicleDemand_kW += v_currentElectricVehicleDemand_kW;
 v_dailyBatteriesDemand_kW += v_currentBatteriesDemand_kW;
 v_dailyAverageElectrolyserDemand_kW += v_currentElectrolyserDemand_kW;
-
+v_dailyAverageCookingElectricityDemand_kW += v_currentCookingDemand_kW;
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
 
 v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
@@ -1728,6 +1741,7 @@ if (b_isLastTimeStepOfDay){
 	data_annualElectricVehicleDemand_kW.add(t_h-p_runStartTime_h, v_dailyElectricVehicleDemand_kW / timeStepsInOneDay);
 	data_annualBatteriesDemand_kW.add(t_h-p_runStartTime_h, v_dailyBatteriesDemand_kW / timeStepsInOneDay);
 	data_annualElectrolyserDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
+	data_annualCookingElectricityDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageCookingElectricityDemand_kW / timeStepsInOneDay);
 	data_totalFinalEnergyConsumption_kW.add(t_h-p_runStartTime_h, v_dailyFinalEnergyConsumption_kW/timeStepsInOneDay);
 	data_annualPVGeneration_kW.add(t_h-p_runStartTime_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
 	data_annualWindGeneration_kW.add(t_h-p_runStartTime_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
@@ -1748,6 +1762,7 @@ if (b_isLastTimeStepOfDay){
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
 	v_dailyAverageElectrolyserDemand_kW = 0;
+	v_dailyAverageCookingElectricityDemand_kW = 0;
 	v_dailyFinalEnergyConsumption_kW = 0;
 	
 	// Supply
@@ -1954,7 +1969,7 @@ v_dailyBaseloadElectricityDemand_kW = 0;
 v_dailyHeatPumpElectricityDemand_kW = 0;
 v_dailyElectricVehicleDemand_kW = 0;
 v_dailyBatteriesDemand_kW = 0;
-
+v_dailyAverageCookingElectricityDemand_kW = 0;
 
 // Supply
 fm_dailyAverageSupply_kW.clear();

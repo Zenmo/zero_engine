@@ -1456,8 +1456,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1723103882807</Id>
 		<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
-		<X>62.66666666666663</X>
-		<Y>2105.333333333333</Y>
+		<X>62.667</X>
+		<Y>2115.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1475,8 +1475,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1723103882809</Id>
 		<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
-		<X>62.66666666666663</X>
-		<Y>2125.333333333333</Y>
+		<X>62.667</X>
+		<Y>2135.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1494,8 +1494,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1723103882811</Id>
 		<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
-		<X>62.66666666666663</X>
-		<Y>2145.333333333333</Y>
+		<X>62.667</X>
+		<Y>2155.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1513,8 +1513,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1723103882813</Id>
 		<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
-		<X>62.66666666666663</X>
-		<Y>2165.333333333333</Y>
+		<X>62.667</X>
+		<Y>2175.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1653,8 +1653,8 @@
 		<Id>1723103882827</Id>
 		<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>62.66666666666663</X>
-		<Y>2225.333333333333</Y>
+		<X>62.667</X>
+		<Y>2235.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1673,8 +1673,8 @@
 		<Id>1723103882829</Id>
 		<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>62.66666666666663</X>
-		<Y>2185.333333333333</Y>
+		<X>62.667</X>
+		<Y>2195.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1693,8 +1693,8 @@
 		<Id>1723103882831</Id>
 		<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>62.66666666666663</X>
-		<Y>2205.333333333333</Y>
+		<X>62.667</X>
+		<Y>2215.333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4240,6 +4240,25 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
 			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1736518845393</Id>
+		<Name><![CDATA[v_dailyCookingElectricityDemand_kW]]></Name>
+		<X>63</X>
+		<Y>2084</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">

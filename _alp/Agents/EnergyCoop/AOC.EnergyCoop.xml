@@ -125,7 +125,7 @@ import java.util.EnumSet;]]></Import>
 			<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>60</X>
-			<Y>1450</Y>
+			<Y>1430</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -153,7 +153,7 @@ import java.util.EnumSet;]]></Import>
 			<Id>1709636537281</Id>
 			<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
 			<X>60</X>
-			<Y>1530</Y>
+			<Y>1510</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -265,7 +265,7 @@ import java.util.EnumSet;]]></Import>
 			<Id>1709636537321</Id>
 			<Name><![CDATA[data_batteryCharging_kW]]></Name>
 			<X>60</X>
-			<Y>1570</Y>
+			<Y>1550</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -293,7 +293,7 @@ import java.util.EnumSet;]]></Import>
 			<Id>1709636537330</Id>
 			<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
 			<X>60</X>
-			<Y>1510</Y>
+			<Y>1490</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -350,7 +350,7 @@ import java.util.EnumSet;]]></Import>
 			<Name><![CDATA[data_dieselDemand_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>60</X>
-			<Y>1469</Y>
+			<Y>1449</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -378,7 +378,7 @@ import java.util.EnumSet;]]></Import>
 			<Id>1709636537360</Id>
 			<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
 			<X>60</X>
-			<Y>1550</Y>
+			<Y>1530</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -435,7 +435,7 @@ import java.util.EnumSet;]]></Import>
 			<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>60</X>
-			<Y>1490</Y>
+			<Y>1470</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -516,8 +516,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1723103882837</Id>
 			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-			<X>392.66666666666663</X>
-			<Y>2125.333333333333</Y>
+			<X>392.667</X>
+			<Y>2135.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -542,8 +542,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1723103882840</Id>
 			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-			<X>392.66666666666663</X>
-			<Y>2165.333333333333</Y>
+			<X>392.667</X>
+			<Y>2175.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -568,8 +568,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1723103882845</Id>
 			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-			<X>392.66666666666663</X>
-			<Y>2105.333333333333</Y>
+			<X>392.667</X>
+			<Y>2115.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -672,8 +672,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1723103882880</Id>
 			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-			<X>392.66666666666663</X>
-			<Y>2145.333333333333</Y>
+			<X>392.667</X>
+			<Y>2155.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -834,8 +834,8 @@ import java.util.EnumSet;]]></Import>
 			<Id>1723103882930</Id>
 			<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>392.66666666666663</X>
-			<Y>2185.333333333333</Y>
+			<X>392.667</X>
+			<Y>2195.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -861,8 +861,8 @@ import java.util.EnumSet;]]></Import>
 			<Id>1723103882937</Id>
 			<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>392.66666666666663</X>
-			<Y>2225.333333333333</Y>
+			<X>392.667</X>
+			<Y>2235.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -915,8 +915,8 @@ import java.util.EnumSet;]]></Import>
 			<Id>1723103882953</Id>
 			<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>392.66666666666663</X>
-			<Y>2205.333333333333</Y>
+			<X>392.667</X>
+			<Y>2215.333</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1603,6 +1603,112 @@ import java.util.EnumSet;]]></Import>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>391</X>
 			<Y>2858</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1736518694619</Id>
+			<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
+			<X>60</X>
+			<Y>1570</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>energyModel.t_h-energyModel.p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>v_electricHobConsumption_kW</VerticalAxisExpression>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1736518845396</Id>
+			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
+			<X>393</X>
+			<Y>2084</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1736518921685</Id>
+			<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
+			<X>391</X>
+			<Y>2417</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1736518998850</Id>
+			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+			<X>390</X>
+			<Y>2727</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>

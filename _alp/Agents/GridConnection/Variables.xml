@@ -4798,6 +4798,25 @@
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1736433078736</Id>
+		<Name><![CDATA[v_dailyCookingElectricityDemand_kW]]></Name>
+		<X>740</X>
+		<Y>2470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1658499438204</Id>
 		<Name><![CDATA[p_gridConnectionCategory]]></Name>
