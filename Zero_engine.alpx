@@ -69,6 +69,10 @@
 					<Id>1668600528877</Id>
 					<Name><![CDATA[DIESEL]]></Name>
 				</Option>
+				<Option>
+					<Id>1737708801945</Id>
+					<Name><![CDATA[IRON_POWDER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118262286</Id>
@@ -344,6 +348,10 @@
 				<Option>
 					<Id>1734089970461</Id>
 					<Name><![CDATA[CHP]]></Name>
+				</Option>
+				<Option>
+					<Id>1737708795031</Id>
+					<Name><![CDATA[IRON_BURNER]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
