@@ -969,6 +969,10 @@
 					<Id>1734001947459</Id>
 					<Name><![CDATA[OFF]]></Name>
 				</Option>
+				<Option>
+					<Id>1737995812721</Id>
+					<Name><![CDATA[SELF_CONSUMPTION]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1668693527447</Id>

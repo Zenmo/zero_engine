@@ -11,6 +11,9 @@ if (p_batteryAsset != null){ // TEST CODE
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
 		
 		switch (p_batteryOperationMode) {
+			case SELF_CONSUMPTION:
+				f_batteryManagementSelfconsumption(p_batteryAsset.getCurrentStateOfCharge());
+				break;
 			case BALANCE:
 				f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
 				break;

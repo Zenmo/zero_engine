@@ -13,7 +13,8 @@ public class J_EMS implements Serializable {
 	double[] batterySOC_kWh;
 	int batteryPowerSteps_n = 10;
 	public int predictionHorizon_days;
-	
+	boolean[] availableToCharge;
+	boolean[] availableToDischarge;
 	/**
      * Default constructor
      */
@@ -26,8 +27,10 @@ public class J_EMS implements Serializable {
     	this.j_lp = j_lp;
     	this.timeStep_h = timeStep_h;
     	this.timeStepsPerDay_n = roundToInt(24/timeStep_h);
-    	this.batteryProfile_kW = new double[roundToInt(predictionHorizon_days*24 / this.timeStep_h)];
-    	this.batterySOC_kWh = new double[roundToInt(predictionHorizon_days*24 / this.timeStep_h)];
+    	this.batteryProfile_kW = new double[roundToInt(predictionHorizon_days*timeStepsPerDay_n)];
+    	this.batterySOC_kWh = new double[roundToInt(predictionHorizon_days*timeStepsPerDay_n)];
+    	this.availableToCharge = new boolean[roundToInt(predictionHorizon_days*timeStepsPerDay_n)];
+    	this.availableToDischarge = new boolean[roundToInt(predictionHorizon_days*timeStepsPerDay_n)];
     }
 
     public void addBaseLoadAsset( J_EA baseLoadAsset) {
@@ -138,7 +141,9 @@ public class J_EMS implements Serializable {
     
     public double[] scheduleBattery(double[] previousLoadProfile_kW, J_EAStorageElectric battery) {
     	double[] loadProfile_kW = Arrays.copyOf(previousLoadProfile_kW, previousLoadProfile_kW.length);
-    	int[] charge_discharge_division = new int[previousLoadProfile_kW.length];
+    	
+    	Arrays.fill(availableToCharge, Boolean.TRUE);
+    	Arrays.fill(availableToDischarge, Boolean.TRUE);
     	int i = 0;
     	while (i < 500) {
     		// Charging iteration    		
@@ -151,33 +156,33 @@ public class J_EMS implements Serializable {
     			break;
     		}*/
     		
-    		J_Triple<double[], Double, Integer> triplet = scheduleBatteryChargingIteration(loadProfile_kW, battery, cheapestTimeIdxsChargingSorted, charge_discharge_division);
+    		J_Triple<double[], Double, Integer> triplet = scheduleBatteryChargingIteration(loadProfile_kW, battery, cheapestTimeIdxsChargingSorted, availableToCharge);
     		double addedBESChargePower_kW = triplet.getSecond();
     		int timeStepCharge_n=cheapestTimeIdxsChargingSorted[0];
     		if (triplet.getThird()!=null) {	    		
         		loadProfile_kW = triplet.getFirst();
 	    		timeStepCharge_n = triplet.getThird();
-	    		charge_discharge_division[timeStepCharge_n] = 1;
+	    		availableToDischarge[timeStepCharge_n] = false;
     		}
     		// Discharging iteration
 
     		//cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
-    		triplet = scheduleBatteryDischargingIteration(loadProfile_kW, battery, cheapestTimeIdxsDischargingSorted, charge_discharge_division);
+    		triplet = scheduleBatteryDischargingIteration(loadProfile_kW, battery, cheapestTimeIdxsDischargingSorted, availableToDischarge);
     		double addedBESDischargePower_kW = triplet.getSecond();
     		int timeStepDischarge_n=cheapestTimeIdxsDischargingSorted[cheapestTimeIdxsDischargingSorted.length-1];
     		if (triplet.getThird()!=null) {
 	    		loadProfile_kW = triplet.getFirst();
 	    		timeStepDischarge_n = triplet.getThird();
-	    		charge_discharge_division[timeStepDischarge_n] = -1;
+	    		availableToCharge[timeStepDischarge_n] = false;
 	    	}
     		// Additional checks to stop iterations
     		if (addedBESChargePower_kW == 0 && addedBESDischargePower_kW == 0) {
-    			traceln("Stop iteration because added charge and discharge powers are zero. Iterations completed: %s", i);
+    			//traceln("Stop iteration because added charge and discharge powers are zero. Iterations completed: %s", i);
     			break;
     		}
     		
     		if (localMarginalPriceCurveDownwards_eurpMWh[timeStepDischarge_n] - localMarginalPriceCurveUpwards_eurpMWh[timeStepCharge_n] < 10) {
-    			traceln("Price spread minimal, aborting after %s iterations", i);
+    			//traceln("Price spread minimal, aborting after %s iterations", i);
     			break;
     		}
     		
@@ -192,13 +197,13 @@ public class J_EMS implements Serializable {
     	return loadProfile_kW;
     } 
     
-    private J_Triple<double[], Double, Integer> scheduleBatteryChargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted, int[] charge_discharge_division) {
+    private J_Triple<double[], Double, Integer> scheduleBatteryChargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted, boolean[] availableToCharge) {
     	int iCharge = 0;
     	double[] remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iCharge], this.batterySOC_kWh.length);
     	//traceln("remainingSOCProfile_kWh: " + Arrays.toString(remainingSOCProfile_kWh)); 
     	double roomToCharge_kWh = battery.getStorageCapacity_kWh() - max(remainingSOCProfile_kWh);
     	//traceln("roomToCharge_kWh: " + roomToCharge_kWh);
-    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iCharge]] >= battery.getCapacityElectric_kW() || roundToDecimal(roomToCharge_kWh, 6) <= 0.0 || charge_discharge_division[cheapestTimeIdxsSorted[iCharge]] == -1) {
+    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iCharge]] >= battery.getCapacityElectric_kW() || roundToDecimal(roomToCharge_kWh, 6) <= 0.0 || !availableToCharge[cheapestTimeIdxsSorted[iCharge]]) {
     		if (iCharge == (int)(loadProfile_kW.length / 2) - 1) {
     			return new J_Triple(loadProfile_kW, 0.0, null);
     		}
@@ -246,12 +251,12 @@ public class J_EMS implements Serializable {
     	return new J_Triple(loadProfile_kW, addedBESChargePower_kW, timeStepCharge_n);
     }
     
-    private J_Triple<double[], Double, Integer> scheduleBatteryDischargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted, int[] charge_discharge_division) {
+    private J_Triple<double[], Double, Integer> scheduleBatteryDischargingIteration(double[] loadProfile_kW, J_EAStorageElectric battery, int[] cheapestTimeIdxsSorted, boolean[] availableToCharge) {
     	int iDischarge = loadProfile_kW.length - 1;
     	double[] remainingSOCProfile_kWh = Arrays.copyOfRange(this.batterySOC_kWh, cheapestTimeIdxsSorted[iDischarge], this.batterySOC_kWh.length);
     	double roomToDischarge_kWh = min(remainingSOCProfile_kWh);
     	
-    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iDischarge]] <= -battery.getCapacityElectric_kW() || roundToDecimal(roomToDischarge_kWh, 6) <= 0.0 || charge_discharge_division[cheapestTimeIdxsSorted[iDischarge]] == 1) {
+    	while ( this.batteryProfile_kW[cheapestTimeIdxsSorted[iDischarge]] <= -battery.getCapacityElectric_kW() || roundToDecimal(roomToDischarge_kWh, 6) <= 0.0 || !availableToCharge[cheapestTimeIdxsSorted[iDischarge]] ) {
     		if (iDischarge == (int)(loadProfile_kW.length / 2) - 1) {
     			return new J_Triple(loadProfile_kW, 0.0, null);
     		}

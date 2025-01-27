@@ -2287,11 +2287,12 @@ f_initializeAccumulators();
 f_initializeLiveDataSets();
 
 // Use parallelisation?
+if (c_gridConnections.size() < 100 && b_forceParallelizeGridConnections) {
+	b_parallelizeGridConnections = false;
+}
+
 if (pop_connectionOwners.size() > 500 && b_parallelizeGridConnections) {
 	b_parallelizeConnectionOwners = true;
-}
-if (c_gridConnections.size() < 100) {
-	b_parallelizeGridConnections = true;
 }
 
 // set initial values

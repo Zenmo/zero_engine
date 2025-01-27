@@ -2670,3 +2670,20 @@ dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 /*ALCODEEND*/}
 
+double f_batteryManagementSelfconsumption(double batterySOC)
+{/*ALCODESTART::1737995704134*/
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){	
+	
+	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
+	//double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	
+	chargeSetpoint_kW = -FeedforwardGain_kWpKw*fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	return max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+
+} else {
+	return 0.0;
+}
+
+/*ALCODEEND*/}
+
