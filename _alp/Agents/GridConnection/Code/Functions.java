@@ -408,7 +408,6 @@ c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
 c_consumptionAssets.forEach(c -> c.f_updateAllFlows(0));
 c_productionAssets.forEach(p -> p.f_updateAllFlows(0));
 c_profileAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
-c_tractorAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
 /*ALCODEEND*/}
 
 double f_resetStates()
@@ -1243,7 +1242,7 @@ if (j_ea instanceof J_EAVehicle) {
 			traceln( "Unrecognized profile type!");
 		}
 } else if (j_ea instanceof J_EADieselTractor) {
-	c_tractorAssets.add(j_ea);
+	c_profileAssets.add(j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
