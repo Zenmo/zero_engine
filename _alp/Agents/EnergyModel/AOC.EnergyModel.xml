@@ -2624,7 +2624,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_annualAvgBatteryStoredEnergy_MWh]]></Name>
 			<X>390</X>
 			<Y>3210</Y>
-						<Label>
+			<Label>
 				<X>15</X>
 				<Y>0</Y>
 			</Label>
@@ -2749,7 +2749,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<FreezeXAxis>false</FreezeXAxis>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
-		<DataSet>	
+		<DataSet>
 			<Id>1736432989854</Id>
 			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
 			<X>1280</X>

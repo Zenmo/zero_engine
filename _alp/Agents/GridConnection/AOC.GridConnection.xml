@@ -2271,7 +2271,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 			<FreezeXAxis>false</FreezeXAxis>
 			<SamplesToKeep>365</SamplesToKeep>
 		</DataSet>
-		<DataSet>	
+		<DataSet>
 			<Id>1736433078739</Id>
 			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
 			<X>1070</X>
@@ -2375,7 +2375,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 			<FreezeXAxis>false</FreezeXAxis>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
-		<DataSet>	
+		<DataSet>
 			<Id>1736433078749</Id>
 			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
 			<X>1490</X>

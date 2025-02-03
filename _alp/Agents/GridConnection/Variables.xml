@@ -4844,7 +4844,7 @@
 		<Name><![CDATA[v_dailyBatteryStoredEnergy_MWh]]></Name>
 		<X>740</X>
 		<Y>2680</Y>
-			<Label>
+		<Label>
 			<X>10</X>
 			<Y>0</Y>
 		</Label>
