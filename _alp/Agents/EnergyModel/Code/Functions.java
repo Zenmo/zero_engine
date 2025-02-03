@@ -2239,7 +2239,9 @@ if (b_isInitialized) {
 t_h = p_runStartTime_h;
 
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
-v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue(); // Monday gives 1, Sunday gives 7.
+p_startHourWinterWeek = 24 * (49 * 7 + (8-v_dayOfWeek1jan)%7); // Week 49 is winterweek.
+p_startHourSummerWeek = 24 * (18 * 7 + (8-v_dayOfWeek1jan)%7); // Week 18 is summerweek.
 
 Date startDate = date();
 

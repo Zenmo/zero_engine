@@ -2679,6 +2679,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double chargeSetpoint_kW = 0;
 	
 	chargeSetpoint_kW = -FeedforwardGain_kWpKw*fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	return max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
 
 } else {
