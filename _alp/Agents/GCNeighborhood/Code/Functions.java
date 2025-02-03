@@ -13,7 +13,12 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_k
 if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0 && p_batteryOperationMode != OL_BatteryOperationMode.OFF){
 	switch (p_batteryOperationMode){
 		case BALANCE:
-			f_batteryManagementBalance_NBH(v_batterySOC_fr);
+			if(p_ignoreGridCapacityBattery){
+				f_batteryManagementBalanceNoGCCapacity_NBH(v_batterySOC_fr);
+			}
+			else{
+				f_batteryManagementBalance_NBH(v_batterySOC_fr);
+			}
 		break;
 		case PRICE:
 			f_batteryManagementPrice_NBH(v_batterySOC_fr);
@@ -97,8 +102,14 @@ double[] f_dividePowerDemandHeatingAssets()
 //Initialize power demand division array
 double powerDemandDivision[] = {0, 0, 0, 0}; // {Gasburner power request, HP power request, DH power request, Hydrogenburner power request}
 
-//Demanded total heating power at the current time step
+//Calculate fraction of total heat demand delivered by the CHP
+/*
 double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+double fractionOfTotalHeatDemandDeliveredyByCHP = max(0,p_chpAsset.getLastFlows().get(OL_EnergyCarriers.HEAT))/powerDemand_kW;
+double remainingFraction = fractionOfTotalHeatDemandDeliveredyByCHP;
+*/
+//Demanded total heating power at the current time step
+//double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
 //Demanded heating power for companies and household seperatly the current time step
 double powerDemand_households_kW = max(0,c_heatDemandEA.get("HOUSEHOLDS").getLastFlows().get(OL_EnergyCarriers.HEAT));
@@ -432,6 +443,9 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 		c_batteryAssets.add(j_ea);
+		v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		energyModel.v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		
 	} else if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
 	}
@@ -612,5 +626,46 @@ v_amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
 double f_resetSpecificGCStates_override()
 {/*ALCODESTART::1734716016619*/
 v_batteryMoneyMade_euro = 0;
+/*ALCODEEND*/}
+
+double f_batteryManagementBalanceNoGCCapacity_NBH(double batterySOC)
+{/*ALCODESTART::1736869275213*/
+//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	double currentLoadDeviation_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW; // still excludes battery power
+	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
+	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
+	//double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.95;
+	//double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.95;
+	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+	//double availableChargePower_kW = v_allowedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
+	//double availableDischargePower_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
+
+	double SOC_setp_fr_offset = v_SOC_setp_fr_offset_balance; // default: 0.6
+	//TODO: Verander in iets specifieks voor project - overwrite in GC Neighborhood
+	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
+	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	
+	//TODO forecast keer installed cap per buurt genormaliseerd.
+	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
+	double SOC_setp_fr =  SOC_setp_fr_offset + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
+	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+	
+	//traceln("SOC_setp_fr" + SOC_setp_fr);
+	
+	//traceln("SOC setpoint at " + getHourOfDay() + " h is " + SOC_setp_fr*100 + "%");
+	double FeedbackGain_kWpSOC_factor = v_FeedbackGain_kWpSOC_factor_balance; // default: 0.4
+	double FeedbackGain_kWpSOC = FeedbackGain_kWpSOC_factor * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
+	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	//chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
+	//traceln("v_powerFraction_fr" + p_batteryAsset.v_powerFraction_fr);
+	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
+}
 /*ALCODEEND*/}
 

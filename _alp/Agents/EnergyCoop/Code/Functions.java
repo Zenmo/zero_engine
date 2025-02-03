@@ -1091,7 +1091,7 @@ v_dailyBaseloadElectricityDemand_kW = 0;
 v_dailyHeatPumpElectricityDemand_kW = 0;
 v_dailyElectricVehicleDemand_kW = 0;
 v_dailyBatteriesDemand_kW = 0;
-
+v_dailyCookingElectricityDemand_kW = 0;
 
 // Supply
 fm_dailyAverageSupply_kW.clear();
@@ -1315,6 +1315,7 @@ if (energyModel.v_isRapidRun){
 	data_heatPumpElectricityDemand_kW.update();
 	data_electricVehicleDemand_kW.update();
 	data_batteryCharging_kW.update();
+	data_cookingElectricityDemand_kW.update();
 	
 	data_PVGeneration_kW.update();
 	data_V2GSupply_kW.update();
@@ -1785,6 +1786,7 @@ if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < en
 	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_heatPumpElectricityConsumption_kW);
 	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,v_evChargingPowerElectric_kW));
 	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekCookingElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_electricHobConsumption_kW);
 	
 	data_summerWeekPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_pvProductionElectric_kW);
 	data_summerWeekWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_windProductionElectric_kW);
@@ -1804,6 +1806,7 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_heatPumpElectricityConsumption_kW);
 	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, v_evChargingPowerElectric_kW));
 	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekCookingElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_electricHobConsumption_kW);
 	
 	data_winterWeekPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_pvProductionElectric_kW);
 	data_winterWeekWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_windProductionElectric_kW);
@@ -1819,6 +1822,7 @@ v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
+v_dailyCookingElectricityDemand_kW += v_electricHobConsumption_kW;
 
 // Supply
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
@@ -1839,6 +1843,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualCookingElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyCookingElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
 	// Supply
 	data_annualPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
 	data_annualWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
@@ -1852,6 +1857,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	v_dailyHeatPumpElectricityDemand_kW = 0;
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
+	v_dailyCookingElectricityDemand_kW = 0;
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
 	v_dailyPVGeneration_kW = 0;

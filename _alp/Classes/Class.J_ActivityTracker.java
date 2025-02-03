@@ -10,7 +10,7 @@ public class J_ActivityTracker implements Serializable {
 	//private ArrayList<Double> eventMagnitude = new ArrayList<>();
     public int nbActivities = 0;
 	public int v_eventIndex = 0;
-	private int v_eventIndexStored =0;
+	protected int v_eventIndexStored =0;
 
 	
     /**
@@ -43,4 +43,4 @@ public class J_ActivityTracker implements Serializable {
 	 */ 
 	private static final long serialVersionUID = 1L;
 
-}
+} 
