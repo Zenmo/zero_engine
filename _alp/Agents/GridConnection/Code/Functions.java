@@ -2167,7 +2167,7 @@ v_electricHobConsumption_kW = 0;
 for (J_EA j_ea : c_electricHobAssets) {
 	v_electricHobConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_electricHobDemand_kW.update();
+data_cookingElectricityDemand_kW.update();
 
 v_hydrogenElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electrolyserAssets) {
@@ -2361,6 +2361,7 @@ if (energyModel.b_isSummerWeek){
 	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
 	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
 	
 	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
@@ -2395,6 +2396,7 @@ if (energyModel.b_isWinterWeek){
 	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
 	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
 	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
 	
 	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
 	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
@@ -2413,6 +2415,7 @@ v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
 v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
+v_dailyCookingElectricityDemand_kW += v_electricHobConsumption_kW;
 
 // Supply
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
@@ -2438,6 +2441,7 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/ timeStepsInOneDay);
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/ timeStepsInOneDay);
 	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/ timeStepsInOneDay);
+	data_annualCookingElectricityDemand_kW.add(energyModel.t_h, v_dailyCookingElectricityDemand_kW/ timeStepsInOneDay);
 	
 	// Supply
 	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/ timeStepsInOneDay);
@@ -2460,6 +2464,7 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	v_dailyHeatPumpElectricityDemand_kW = 0;
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
+	v_dailyCookingElectricityDemand_kW = 0;
 	
 	// Supply
 	fm_dailyAverageSupply_kW.clear();

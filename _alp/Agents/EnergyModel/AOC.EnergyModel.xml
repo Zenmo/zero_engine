@@ -1080,7 +1080,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246336413</Id>
 			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
 			<X>390</X>
-			<Y>3060</Y>
+			<Y>3100</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1106,7 +1106,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246336419</Id>
 			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
 			<X>390</X>
-			<Y>3100</Y>
+			<Y>3140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1132,7 +1132,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246336425</Id>
 			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
 			<X>390</X>
-			<Y>3040</Y>
+			<Y>3080</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1236,7 +1236,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246336451</Id>
 			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
 			<X>390</X>
-			<Y>3080</Y>
+			<Y>3120</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1344,7 +1344,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>390</X>
-			<Y>3120</Y>
+			<Y>3160</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1371,7 +1371,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>390</X>
-			<Y>3160</Y>
+			<Y>3200</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1450,7 +1450,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378188</Id>
 			<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
 			<X>830</X>
-			<Y>3030</Y>
+			<Y>3070</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1476,7 +1476,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378194</Id>
 			<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
 			<X>830</X>
-			<Y>3070</Y>
+			<Y>3110</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1502,7 +1502,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378199</Id>
 			<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
 			<X>830</X>
-			<Y>3010</Y>
+			<Y>3050</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1606,7 +1606,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378219</Id>
 			<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
 			<X>830</X>
-			<Y>3050</Y>
+			<Y>3090</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1713,7 +1713,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378239</Id>
 			<Name><![CDATA[data_summerWeekNaturalGasSupply_kW]]></Name>
 			<X>830</X>
-			<Y>3090</Y>
+			<Y>3130</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1765,7 +1765,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378248</Id>
 			<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
 			<X>1280</X>
-			<Y>3030</Y>
+			<Y>3070</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1791,7 +1791,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378254</Id>
 			<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
 			<X>1280</X>
-			<Y>3070</Y>
+			<Y>3110</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1817,7 +1817,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378259</Id>
 			<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
 			<X>1280</X>
-			<Y>3010</Y>
+			<Y>3050</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1921,7 +1921,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1715246378279</Id>
 			<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
 			<X>1280</X>
-			<Y>3050</Y>
+			<Y>3090</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2029,7 +2029,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_winterWeekNaturalGasSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
-			<Y>3090</Y>
+			<Y>3130</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2056,7 +2056,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>390</X>
-			<Y>3140</Y>
+			<Y>3180</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2083,7 +2083,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_winterWeekHydrogenSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
-			<Y>3110</Y>
+			<Y>3150</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2110,7 +2110,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_summerWeekHydrogenSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
-			<Y>3110</Y>
+			<Y>3150</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2277,7 +2277,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1721134096132</Id>
 			<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
 			<X>830</X>
-			<Y>3165</Y>
+			<Y>3205</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2303,7 +2303,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1721134140759</Id>
 			<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
 			<X>1280</X>
-			<Y>3160</Y>
+			<Y>3200</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2489,7 +2489,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1734092249487</Id>
 			<Name><![CDATA[data_annualCHPElectricityProduction_kW]]></Name>
 			<X>390</X>
-			<Y>3180</Y>
+			<Y>3220</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2515,7 +2515,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1734092276192</Id>
 			<Name><![CDATA[data_summerWeekCHPElectricityProduction_kW]]></Name>
 			<X>830</X>
-			<Y>3130</Y>
+			<Y>3170</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2541,7 +2541,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1734092294449</Id>
 			<Name><![CDATA[data_winterWeekCHPElectricityProduction_kW]]></Name>
 			<X>1280</X>
-			<Y>3130</Y>
+			<Y>3170</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2624,6 +2624,32 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Name><![CDATA[data_annualAvgBatteryStoredEnergy_MWh]]></Name>
 			<X>390</X>
 			<Y>3210</Y>
+						<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1736432989842</Id>
+			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
+			<X>390</X>
+			<Y>3030</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2672,10 +2698,62 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 		<DataSet>
+			<Id>1736432989848</Id>
+			<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
+			<X>830</X>
+			<Y>2990</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
 			<Id>1737534950715</Id>
 			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
 			<X>1280</X>
 			<Y>3200</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>	
+			<Id>1736432989854</Id>
+			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+			<X>1280</X>
+			<Y>2990</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
