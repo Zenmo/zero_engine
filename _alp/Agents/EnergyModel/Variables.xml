@@ -5255,7 +5255,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[8000]]></Code>
+				<Code><![CDATA[8256]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1699275323337</Id>
@@ -5283,7 +5283,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[3288+24*7]]></Code>
+				<Code><![CDATA[3048]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1699275323345</Id>
