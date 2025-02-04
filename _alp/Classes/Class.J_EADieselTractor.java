@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class J_EADieselTractor extends J_EA implements Serializable {
+public class J_EADieselTractor extends J_EAProfile implements Serializable {
     final static double DIESEL_ENERGY_DENSITY_KWH_PER_L = 9.7;
     
     final double[] dieselConsumptionPerWeek_L;
