@@ -1245,7 +1245,7 @@ if (j_ea instanceof J_EAVehicle) {
 			traceln( "Unrecognized profile type!");
 		}
 } else if (j_ea instanceof J_EADieselTractor) {
-	c_profileAssets.add(j_ea);
+	c_profileAssets.add((J_EAProfile)j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }

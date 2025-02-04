@@ -5935,7 +5935,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EA</ElementClass>
+			<ElementClass>J_EAProfile</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
