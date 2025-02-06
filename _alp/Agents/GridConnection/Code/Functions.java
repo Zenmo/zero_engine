@@ -2417,6 +2417,7 @@ v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
 v_dailyCookingElectricityDemand_kW += v_electricHobConsumption_kW;
+v_dailyDistrictHeatingDemand_kW += v_districtHeatDelivery_kW;
 
 // Supply
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
@@ -2443,6 +2444,7 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/ timeStepsInOneDay);
 	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/ timeStepsInOneDay);
 	data_annualCookingElectricityDemand_kW.add(energyModel.t_h, v_dailyCookingElectricityDemand_kW/ timeStepsInOneDay);
+	data_annualDistrictHeatingDemand_kW.add(energyModel.t_h, v_dailyDistrictHeatingDemand_kW / timeStepsInOneDay);
 	
 	// Supply
 	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/ timeStepsInOneDay);
@@ -2466,6 +2468,7 @@ if (energyModel.b_isLastTimeStepOfDay) {
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
 	v_dailyCookingElectricityDemand_kW = 0;
+	v_dailyDistrictHeatingDemand_kW = 0;
 	
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
