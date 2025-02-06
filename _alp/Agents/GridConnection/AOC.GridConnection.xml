@@ -2401,6 +2401,32 @@ import javax.management.RuntimeErrorException;]]></Import>
 			<FreezeXAxis>false</FreezeXAxis>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
+		<DataSet>
+			<Id>1738838087394</Id>
+			<Name><![CDATA[data_annualDistrictHeatingDemand_kW]]></Name>
+			<X>1070</X>
+			<Y>2770</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
+		</DataSet>
 	</AnalysisData>
 	<AgentLinks>
 		<AgentLink>

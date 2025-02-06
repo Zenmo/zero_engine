@@ -2277,7 +2277,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1721134096132</Id>
 			<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
 			<X>830</X>
-			<Y>3205</Y>
+			<Y>3195</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2303,7 +2303,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1721134140759</Id>
 			<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
 			<X>1280</X>
-			<Y>3200</Y>
+			<Y>3190</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2623,7 +2623,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1737534886489</Id>
 			<Name><![CDATA[data_annualAvgBatteryStoredEnergy_MWh]]></Name>
 			<X>390</X>
-			<Y>3210</Y>
+			<Y>3240</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2675,7 +2675,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1737534931603</Id>
 			<Name><![CDATA[data_summerWeekBatteryStoredEnergy_MWh]]></Name>
 			<X>830</X>
-			<Y>3200</Y>
+			<Y>3220</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2727,7 +2727,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<Id>1737534950715</Id>
 			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
 			<X>1280</X>
-			<Y>3200</Y>
+			<Y>3220</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2774,6 +2774,32 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			</RecurrenceCode>
 			<FreezeXAxis>false</FreezeXAxis>
 			<SamplesToKeep>672</SamplesToKeep>
+		</DataSet>
+		<DataSet>
+			<Id>1738837472223</Id>
+			<Name><![CDATA[data_annualAvgDistrictHeatingDemand_kW]]></Name>
+			<X>390</X>
+			<Y>3310</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1687075200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+			<FreezeXAxis>false</FreezeXAxis>
+			<SamplesToKeep>365</SamplesToKeep>
 		</DataSet>
 	</AnalysisData>
 	<AgentLinks>
