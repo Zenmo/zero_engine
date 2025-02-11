@@ -21109,6 +21109,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1738933403772</Id>
+					<Name><![CDATA[v_test]]></Name>
+					<X>550</X><Y>780</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -22687,6 +22699,8 @@ v_currentPowerMethane_kW = 0;
 v_currentPowerHydrogen_kW = 0;
 v_currentPowerHeat_kW = 0;
 v_currentPowerDiesel_kW = 0;
+
+v_test = 0;
 
 v_currentElectricityConsumption_kW = 0;
 v_currentElectricityProduction_kW = 0;
@@ -27612,7 +27626,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 					<Id>1668439095464</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-3137392</Color>
-					<Expression2><![CDATA[v_pvProductionElectric_kW + v_windProductionElectric_kW]]></Expression2>
+					<Expression2><![CDATA[-v_pvProductionElectric_kW - v_windProductionElectric_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -53855,6 +53869,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     		ui_energyAsset.f_addFlows(arr);
     	}
     	this.lastFlowsArray = arr;
+    	
     	return arr;
     }
     
@@ -53868,8 +53883,9 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	if (energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY ) {
     		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
         	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h); 
-        	if ( profileType == OL_ProfileAssetType.SOLARPANELS && x != 0) { 
-        		this.electricityProduction_kW=x;
+        	if ( profileType == OL_ProfileAssetType.SOLARPANELS ) { 
+        		this.electricityProduction_kW = x;
+        		this.electricityConsumption_kW = 0;
         	}
     	} else if (energyCarrierConsumed == OL_EnergyCarrierType.METHANE) {
     		this.methaneConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
@@ -53891,6 +53907,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	//return arr;
 		double[] arr = returnEnergyFlows();
 		resetFlows();
+		
 		return arr;
     }
 
