@@ -17,6 +17,8 @@ public class ZeroAccumulator {
     private double sum = 0;
     private double posSum = 0;
     private double negSum = 0;
+    private double max = 0;
+    private double min = 0;
 
     private int numStepsAdded = 0;
 
@@ -51,6 +53,8 @@ public class ZeroAccumulator {
         posSum = 0;
         negSum = 0;
         numStepsAdded = 0;
+        max = 0;
+        min = 0;
         if (hasTimeSeries) { // Allocate memory for timeSeries, only when timeSeries is used.
             timeSeries = new double[(int) Math.round(duration_h / signalResolution_h)];
         }
@@ -74,6 +78,12 @@ public class ZeroAccumulator {
             posSum += Math.max(0.0, value);
             negSum += Math.min(0.0, value);
         }
+        if (value > max) {
+            max = value;
+        }
+        if (value < min) {
+            min = value;
+        }
     }
 
     public void addStep(double value) {
@@ -92,6 +102,12 @@ public class ZeroAccumulator {
             sum += value;
             posSum += Math.max(0.0, value);
             negSum += Math.min(0.0, value);
+        }
+        if (value > max) {
+            max = value;
+        }
+        if (value < min) {
+            min = value;
         }
         numStepsAdded++;
     }
@@ -162,6 +178,14 @@ public class ZeroAccumulator {
         } else {
             return timeSeries[i];
         }
+    }
+
+    public double getMax() {
+        return max;
+    }
+
+    public double getMin() {
+        return min;
     }
 
     public ZeroAccumulator add(ZeroAccumulator acc) {
