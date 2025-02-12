@@ -90,6 +90,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			this.available = false;
 			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
 			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.remove(this);
+			
+			//Update (charging) flows to zero, becausde vehicle is away.
+			this.f_updateAllFlows(0.0);
 			return true;
 		} else {
 			traceln("Trip not started because EV not available!");
