@@ -105,7 +105,9 @@ public class J_EADieselTractor extends J_EAProfile implements Serializable {
     
     private double currentPower_kW(double currentStep_h) {
         int week = (int) Math.round(currentStep_h / (7 * 24));
-        
+        if(week == 52) {
+        	week = 51;
+        }
         double thisWeekDieselConsumption_L = this.dieselConsumptionPerWeek_L[week];
         double thisWeekDieselConsumption_kWh = thisWeekDieselConsumption_L * DIESEL_ENERGY_DENSITY_KWH_PER_L;
         double power_kW = thisWeekDieselConsumption_kWh / workHoursPerWeek();
