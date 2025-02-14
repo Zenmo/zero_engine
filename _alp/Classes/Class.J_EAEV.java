@@ -76,7 +76,12 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
  
 	public void updateStateOfCharge( double power_kW ) {
-		stateOfCharge_r -= ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
+		if(vehicleScaling > 0){
+			stateOfCharge_r -= ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
+		}
+		else {
+			stateOfCharge_r = 0;
+		}
 	}
  
 	@Override
