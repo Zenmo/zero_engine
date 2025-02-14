@@ -1674,6 +1674,8 @@ if (b_isSummerWeek){
 	data_summerWeekCHPElectricityProduction_kW.add(t_h, v_currentCHPElectricityProduction_kW);
 	
 	data_summerWeekBatteryStoredEnergy_MWh.add(t_h, v_currentStoredEnergyBatteries_MWh);
+	
+	data_summerWeekDistrictHeatingDemand_kW.add(t_h, v_currentDistrictHeatingDemand_kW);
 	// TODO: Check if these calls below are costly
 	//data_summerWeekDemand_kW.add(t_h, sum(c_energyAssets, x->max(0, x.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY))));
 	//data_summerWeekSupply_kW.add(t_h, -sum(c_energyAssets, x->max(0, -x.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY)))); 
@@ -1710,9 +1712,15 @@ if (b_isWinterWeek){
 	data_winterWeekBatteriesSupply_kW.add(t_h, v_currentBatteriesSupply_kW);
 	data_winterWeekV2GSupply_kW.add(t_h, v_currentV2GSupply_kW);
 	data_winterWeekCHPElectricityProduction_kW.add(t_h, v_currentCHPElectricityProduction_kW);
-	data_winterWeekNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel.stream().filter(x -> x.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY).toList(), x -> x.v_currentLoad_kW));
 	
 	data_winterWeekBatteryStoredEnergy_MWh.add(t_h, v_currentStoredEnergyBatteries_MWh);
+	
+	data_winterWeekDistrictHeatingDemand_kW.add(t_h, v_currentDistrictHeatingDemand_kW);
+	
+	
+	//TODO: remove, use am_winterweek instead
+	data_winterWeekNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel.stream().filter(x -> x.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY).toList(), x -> x.v_currentLoad_kW));
+	
 }
 
 // Daily Averages
@@ -1749,14 +1757,14 @@ if (b_isLastTimeStepOfDay){
 	data_annualElectrolyserDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
 	data_annualCookingElectricityDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageCookingElectricityDemand_kW / timeStepsInOneDay);
 	data_totalFinalEnergyConsumption_kW.add(t_h-p_runStartTime_h, v_dailyFinalEnergyConsumption_kW/timeStepsInOneDay);
-	data_annualAvgDistrictHeatingDemand_kW.add(t_h-p_runStartTime_h, v_dailyDistrictHeatingDemand_kW/timeStepsInOneDay);
+	data_annualDistrictHeatingDemand_kW.add(t_h-p_runStartTime_h, v_dailyDistrictHeatingDemand_kW/timeStepsInOneDay);
 	
 	data_annualPVGeneration_kW.add(t_h-p_runStartTime_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
 	data_annualWindGeneration_kW.add(t_h-p_runStartTime_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
 	data_annualBatteriesSupply_kW.add(t_h-p_runStartTime_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
 	data_annualV2GSupply_kW.add(t_h-p_runStartTime_h, v_dailyV2GSupply_kW / timeStepsInOneDay);
 	data_annualCHPElectricityProduction_kW.add(t_h-p_runStartTime_h, v_dailyCHPElectricityProduction_kW / timeStepsInOneDay);
-	data_annualAvgBatteryStoredEnergy_MWh.add(t_h-p_runStartTime_h, v_dailyBatteryStoredEnergy_MWh/timeStepsInOneDay);
+	data_annualBatteryStoredEnergy_MWh.add(t_h-p_runStartTime_h, v_dailyBatteryStoredEnergy_MWh/timeStepsInOneDay);
 	
 		//Yearly totals
 	v_totalPVGeneration_MWh += (v_dailyPVGeneration_kW/1000)*p_timeStep_h;

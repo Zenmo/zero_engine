@@ -2371,6 +2371,8 @@ if (energyModel.b_isSummerWeek){
 	data_summerWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
 	
 	data_summerWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
+	
+	data_summerWeekDistrictHeatingDemand_kW.add(energyModel.t_h, v_districtHeatDelivery_kW);
 }
 
 //Winter week 
@@ -2406,6 +2408,8 @@ if (energyModel.b_isWinterWeek){
 	data_winterWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
 	
 	data_winterWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
+	
+	data_winterWeekDistrictHeatingDemand_kW.add(energyModel.t_h, v_districtHeatDelivery_kW);
 }
 
 // Daily Averages
