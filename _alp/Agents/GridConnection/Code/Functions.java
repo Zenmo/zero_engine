@@ -14,6 +14,10 @@ if( myParentNodeHeat instanceof GridNode ) {
 	//p_parentNodeHeat = myParentNodeHeat;
 }
 
+if (p_owner==null){
+	p_owner = findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID));
+}
+
 if (p_owner!=null){
 	ConnectionOwner myParentConnectionOwner = p_owner; //findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
 	if( myParentConnectionOwner instanceof ConnectionOwner) {
