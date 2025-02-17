@@ -213,4 +213,14 @@ public class ZeroAccumulator {
         }
         return this;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("ZeroAccumulator, currentSum: ");
+        sb.append(this.getSum());
+
+        return sb.toString();
+    }
 }

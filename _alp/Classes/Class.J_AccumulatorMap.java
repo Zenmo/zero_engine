@@ -62,10 +62,30 @@ public class J_AccumulatorMap implements Serializable {
 	
 
 	
-	@Override
-	public String toString() {
-		return super.toString();
-	}
+    public String toString() {
+        if (this.accumulatorArray.length == 0) {
+            return "{}";        	
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (OL_EnergyCarriers key : this.energyCarrierList) {
+        	ZeroAccumulator acc = this.get(key);
+        	//double value = this.get(key);
+        	if (acc.getSum() == 0.0) {
+        		continue;
+        	}
+        	
+        	sb.append(key);
+        	sb.append(" ");
+            sb.append(acc.toString());
+            //sb.append(" = ");
+            //sb.append(value);
+            sb.append(", ");
+        }
+        sb.delete(sb.length()-2, sb.length());
+        sb.append('}');
+        return sb.toString();
+    }
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>

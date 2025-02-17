@@ -167,6 +167,7 @@ if (myGridoperator != null) {
 
 double f_calculateEnergyBalance()
 {/*ALCODESTART::1667983361355*/
+//traceln("Hello!");
 // reset energy flows
 //v_electricityVolume_kWh = 0;
 //v_heatVolume_kWh = 0;
