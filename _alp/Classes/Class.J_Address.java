@@ -43,7 +43,7 @@ public class J_Address implements Serializable {
 			sb.append(" ");
 			sb.append(this.postalcode);
 		}
-		if ( this.postalcode != null ){
+		if ( this.city != null ){
 			sb.append(" ");
 			sb.append(this.city);
 		}
