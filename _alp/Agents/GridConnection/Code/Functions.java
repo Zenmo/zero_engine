@@ -14,12 +14,16 @@ if( myParentNodeHeat instanceof GridNode ) {
 	//p_parentNodeHeat = myParentNodeHeat;
 }
 
+if (p_owner==null){
+	p_owner = findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID));
+}
+
 if (p_owner!=null){
-	ConnectionOwner myParentConnectionOwner = p_owner; //findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
-	if( myParentConnectionOwner instanceof ConnectionOwner) {
+	//ConnectionOwner myParentConnectionOwner = p_owner;
+	if( p_owner instanceof ConnectionOwner) {
 		//p_ownerActor = myParentConnectionOwner;
-		l_ownerActor.connectTo(myParentConnectionOwner);
-		myParentConnectionOwner.f_connectToChild(this);
+		l_ownerActor.connectTo(p_owner);
+		p_owner.f_connectToChild(this);
 	}
 }
 /*EnergySupplier myParentEnergySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(p_ownerID)) ;
