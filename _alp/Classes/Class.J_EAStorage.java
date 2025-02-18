@@ -9,7 +9,6 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 	protected double initialStateOfCharge_r;
 	protected double stateOfChargeStored_r;
 	protected double lossFactor_r;
-	protected double timestep_h;
 	protected double ambientTemperature_degC;
 	protected String ambientTempType;
 	protected double discharged_kWh = 0;

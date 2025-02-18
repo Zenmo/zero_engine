@@ -39,7 +39,7 @@ v_amountOfGasBurners_services_fr = pctArray[0]/100;
 v_amountOfElectricHeatpumps_services_fr = pctArray[1]/100;
 v_amountOfHybridHeatpump_services_fr = pctArray[2]/100;
 v_amountOfDistrictHeating_services_fr = pctArray[3]/100;
-
+v_amountOfLowTempHeatgrid_services_fr = pctArray[4]/100;
 
 /*ALCODEEND*/}
 
@@ -49,7 +49,7 @@ v_amountOfGasBurners_houses_fr = pctArray[0]/100;
 v_amountOfElectricHeatpumps_houses_fr = pctArray[1]/100;
 v_amountOfHybridHeatpump_houses_fr = pctArray[2]/100;
 v_amountOfDistrictHeating_houses_fr = pctArray[3]/100;
-
+v_amountOfLowTempHeatgrid_houses_fr = pctArray[4]/100;
 
 /*ALCODEEND*/}
 
@@ -60,47 +60,53 @@ if(p_primaryHeatingAsset == null){ // null check, as certain neighborhoods don't
 }
 
 //Division of the power demand //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request}
-double powerDemandDivision[] = f_dividePowerDemandHeatingAssets(); 
+double powerDemandDivision_kW[] = f_dividePowerDemandHeatingAssets(); 
 
 //Split the power fractions (powerDemandDivision[] = {Gasburner power request, HP power request, DH power request}
 if(p_primaryHeatingAsset.getOutputCapacity_kW() != 0){
-	double powerFraction_GASBURNER = powerDemandDivision[0] / p_primaryHeatingAsset.getOutputCapacity_kW();
+	double powerFraction_GASBURNER = powerDemandDivision_kW[0] / p_primaryHeatingAsset.getOutputCapacity_kW();
 	p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_GASBURNER;
 	
 	//Gas burner control (always assigned to primary heating asset)	
 	p_primaryHeatingAsset.f_updateAllFlows(powerFraction_GASBURNER);
 }
 if(p_secondaryHeatingAsset.getOutputCapacity_kW() != 0){
-	double powerFraction_HEATPUMP  = powerDemandDivision[1] / p_secondaryHeatingAsset.getOutputCapacity_kW();
+	double powerFraction_HEATPUMP  = powerDemandDivision_kW[1] / p_secondaryHeatingAsset.getOutputCapacity_kW();
 	p_secondaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATPUMP;
 	
 	//Heatpump control (always assigned to secondary heating asset)
 	p_secondaryHeatingAsset.f_updateAllFlows(powerFraction_HEATPUMP);
 }
 if(p_tertiaryHeatingAsset.getOutputCapacity_kW() != 0){
-	double powerFraction_HEATDELIVERYSET = powerDemandDivision[2] / p_tertiaryHeatingAsset.getOutputCapacity_kW();
+	double powerFraction_HEATDELIVERYSET = powerDemandDivision_kW[2] / p_tertiaryHeatingAsset.getOutputCapacity_kW();
 	p_tertiaryHeatingAsset.v_powerFraction_fr = powerFraction_HEATDELIVERYSET;
 	
 	//Heat delivery set control (always assigned to tertiary heating asset)
 	p_tertiaryHeatingAsset.f_updateAllFlows(powerFraction_HEATDELIVERYSET);
 	
 	//Update districtheating variable
-	v_districtHeatDelivery_kW = powerDemandDivision[2]/p_tertiaryHeatingAsset.getEta_r();
+	v_districtHeatDelivery_kW = powerDemandDivision_kW[2]/p_tertiaryHeatingAsset.getEta_r();
 }
 if(p_quaternaryHeatingAsset.getOutputCapacity_kW() != 0){
-	double powerFraction_HYDROGENBURNER = powerDemandDivision[3] / p_quaternaryHeatingAsset.getOutputCapacity_kW();
+	double powerFraction_HYDROGENBURNER = powerDemandDivision_kW[3] / p_quaternaryHeatingAsset.getOutputCapacity_kW();
 	p_quaternaryHeatingAsset.v_powerFraction_fr = powerFraction_HYDROGENBURNER;	
 
 	//Hydrogen burner(always assigned to quaternary heating asset)
 	p_quaternaryHeatingAsset.f_updateAllFlows(powerFraction_HYDROGENBURNER);
 }
+if(p_quinaryHeatingAsset.getOutputCapacity_kW() != 0){
+	double powerFraction_LOWTEMPHEATGRID = powerDemandDivision_kW[4] / p_quinaryHeatingAsset.getOutputCapacity_kW();
+	p_quinaryHeatingAsset.v_powerFraction_fr = powerFraction_LOWTEMPHEATGRID;	
 
+	//Hydrogen burner(always assigned to quaternary heating asset)
+	p_quinaryHeatingAsset.f_updateAllFlows(powerFraction_LOWTEMPHEATGRID);
+}
 /*ALCODEEND*/}
 
 double[] f_dividePowerDemandHeatingAssets()
 {/*ALCODESTART::1722587530130*/
 //Initialize power demand division array
-double powerDemandDivision[] = {0, 0, 0, 0}; // {Gasburner power request, HP power request, DH power request, Hydrogenburner power request}
+double powerDemandDivision_kW[] = {0, 0, 0, 0, 0}; // {Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand}
 
 //Calculate fraction of total heat demand delivered by the CHP
 /*
@@ -118,52 +124,48 @@ double powerDemand_industry_kW = max(0,c_heatDemandEA.get("INDUSTRY").getLastFlo
 double powerDemand_services_kW = max(0,c_heatDemandEA.get("SERVICES").getLastFlows().get(OL_EnergyCarriers.HEAT));
 
 //Divide the powerdemand per heating type
-double gasBurnerPowerDemand 		= powerDemand_households_kW*v_amountOfGasBurners_houses_fr + 
+double gasBurnerPowerDemand_kW 		= powerDemand_households_kW*v_amountOfGasBurners_houses_fr + 
 									  powerDemand_agriculture_kW*v_amountOfGasBurners_agriculture_fr +
 									  powerDemand_industry_kW*v_amountOfGasBurners_industry_fr + 
 									  powerDemand_services_kW*v_amountOfGasBurners_services_fr;
 									  
-double electricHPPowerDemand 		= powerDemand_households_kW*v_amountOfElectricHeatpumps_houses_fr + 
+double electricHPPowerDemand_kW 		= powerDemand_households_kW*v_amountOfElectricHeatpumps_houses_fr + 
 									  powerDemand_agriculture_kW*v_amountOfElectricHeatpumps_agriculture_fr + 
 									  powerDemand_industry_kW*v_amountOfElectricHeatpumps_industry_fr + 
 									  powerDemand_services_kW*v_amountOfElectricHeatpumps_services_fr;
 									  
-double hybridHPPowerDemand 	   		= powerDemand_households_kW*v_amountOfHybridHeatpump_houses_fr +
+double hybridHPPowerDemand_kW 	   		= powerDemand_households_kW*v_amountOfHybridHeatpump_houses_fr +
 									  powerDemand_agriculture_kW*v_amountOfHybridHeatpump_agriculture_fr +
 									  powerDemand_industry_kW*v_amountOfHybridHeatpump_industry_fr + 
 									  powerDemand_services_kW*v_amountOfHybridHeatpump_services_fr;
 									  
-double districtHeatingPowerDemand   = powerDemand_households_kW*v_amountOfDistrictHeating_houses_fr +
+double districtHeatingPowerDemand_kW   = powerDemand_households_kW*v_amountOfDistrictHeating_houses_fr +
 									  powerDemand_agriculture_kW*v_amountOfDistrictHeating_agriculture_fr + 
 									  powerDemand_industry_kW*v_amountOfDistrictHeating_industry_fr + 
 									  powerDemand_services_kW*v_amountOfDistrictHeating_services_fr;
-									  
-//double hydrogenBurnerPowerDemand	= powerDemand_industry_kW*v_amountOfHydrogenUseForHeating_industry_fr;
-double hydrogenBurnerPowerDemand 	= (powerDemand_households_kW + powerDemand_agriculture_kW + powerDemand_industry_kW + powerDemand_services_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand; // To make sure all power demand is met
+														  
+double hydrogenBurnerPowerDemand_kW	= powerDemand_industry_kW*v_amountOfHydrogenUseForHeating_industry_fr;
 
+double lowTempHeatgridPowerDemand_kW 	= powerDemand_households_kW*v_amountOfLowTempHeatgrid_houses_fr + 
+									  powerDemand_services_kW*v_amountOfLowTempHeatgrid_services_fr;
+//double lowTempHeatgridPowerDemand_kW = (powerDemand_households_kW + powerDemand_agriculture_kW + powerDemand_industry_kW + powerDemand_services_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand - hydrogenBurnerPowerDemand; // To make sure all power demand is met
+									  
 //Get the current Heatpump COP
 double HP_COP = ((J_EAConversionHeatPump)p_secondaryHeatingAsset).getCOP();
 
 if ( HP_COP < p_thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
-	powerDemandDivision[0] = max(0, gasBurnerPowerDemand + hybridHPPowerDemand);
-	powerDemandDivision[1] = max(0, electricHPPowerDemand);
-	powerDemandDivision[2] = max(0, districtHeatingPowerDemand);
-	powerDemandDivision[3] = max(0, hydrogenBurnerPowerDemand);
+	powerDemandDivision_kW[0] = max(0, gasBurnerPowerDemand_kW + hybridHPPowerDemand_kW);
+	powerDemandDivision_kW[1] = max(0, electricHPPowerDemand_kW);
 }
 else{
-	powerDemandDivision[0] = max(0, gasBurnerPowerDemand);
-	powerDemandDivision[1] = max(0, electricHPPowerDemand + hybridHPPowerDemand);
-	powerDemandDivision[2] = max(0, districtHeatingPowerDemand);
-	powerDemandDivision[3] = max(0, hydrogenBurnerPowerDemand);
+	powerDemandDivision_kW[0] = max(0, gasBurnerPowerDemand_kW);
+	powerDemandDivision_kW[1] = max(0, electricHPPowerDemand_kW + hybridHPPowerDemand_kW);
 }
-/*
-//TESTER
-	powerDemandDivision[0] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
-	powerDemandDivision[1] = powerDemand_companies_kW*0.5 + powerDemand_households_kW*0.5;
-	powerDemandDivision[2] = 0;
-	powerDemandDivision[3] = 0;
-*/
-return powerDemandDivision; //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request}
+powerDemandDivision_kW[2] = max(0, districtHeatingPowerDemand_kW);
+powerDemandDivision_kW[3] = max(0, hydrogenBurnerPowerDemand_kW);
+powerDemandDivision_kW[4] = max(0, lowTempHeatgridPowerDemand_kW);
+
+return powerDemandDivision_kW; //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand};
 /*ALCODEEND*/}
 
 double f_connectToJ_EA_default_overwrite_OUD(J_EA j_ea)
@@ -408,10 +410,18 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		energyModel.c_ambientAirDependentAssets.add(j_ea);
-		c_electricHeatpumpAssets.add(j_ea);
-		//c_conversionElectricAssets.add(j_ea);
-		p_secondaryHeatingAsset = (J_EAConversion)j_ea;
+		if(p_secondaryHeatingAsset == null){
+			energyModel.c_ambientAirDependentAssets.add(j_ea);
+			c_electricHeatpumpAssets.add(j_ea);
+			//c_conversionElectricAssets.add(j_ea);
+			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
+		}
+		else{//Lowtemp heat grid heatpump
+			//energyModel.c_ambientAirDependentAssets.add(j_ea);
+			c_electricHeatpumpAssets.add(j_ea);
+			//c_conversionElectricAssets.add(j_ea);
+			p_quinaryHeatingAsset = (J_EAConversion)j_ea;
+		}
 	} else if (j_ea instanceof J_EAConversionHeatDeliverySet) {
 		p_tertiaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
@@ -585,6 +595,10 @@ double f_setH2HeatingFr_industry(double amountOfHydrogenUseForHeating_fr)
 {/*ALCODESTART::1732550952237*/
 
 //Get current values
+if(amountOfHydrogenUseForHeating_fr >= 1){
+	//throw new RuntimeException("Can not replace all gas in industry with hydrogen! The model does not support this.");
+	amountOfHydrogenUseForHeating_fr = 0.999;
+}
 double actualHeatingDemandSpaceHeating_fr =  (1 - v_amountOfHydrogenUseForHeating_industry_fr);
 double[] currentPctArray = {v_amountOfGasBurners_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
 							v_amountOfHybridHeatpump_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 

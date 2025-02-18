@@ -546,7 +546,7 @@ if ( p_heatBuffer != null ){
 //heat the house
 if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
-		powerFraction_heatPump_fr = 1; 
+		powerFraction_heatPump_fr = 1;
 		p_BuildingThermalAsset.v_powerFraction_fr = hp.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 	} 
 	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh

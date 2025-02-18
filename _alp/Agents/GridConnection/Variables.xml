@@ -14,9 +14,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -34,9 +34,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -54,9 +54,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -74,9 +74,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -94,9 +94,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -114,9 +114,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -134,9 +134,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -154,9 +154,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -173,9 +173,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -192,9 +192,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -211,9 +211,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -233,9 +233,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -255,9 +255,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -278,9 +278,9 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[int]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -300,9 +300,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -320,9 +320,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -340,9 +340,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[int]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[30]]></Code>
@@ -362,9 +362,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -381,9 +381,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -400,9 +400,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -419,9 +419,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -439,9 +439,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -459,9 +459,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -478,9 +478,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0.15]]></Code>
@@ -500,9 +500,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[min(1, 0.001)]]></Code>
@@ -522,9 +522,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0.7]]></Code>
@@ -544,9 +544,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -563,9 +563,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -583,9 +583,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -603,9 +603,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -623,9 +623,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -643,9 +643,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -663,9 +663,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -683,9 +683,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -704,9 +704,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -724,9 +724,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -744,9 +744,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -764,9 +764,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -783,9 +783,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -805,9 +805,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -824,9 +824,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -843,9 +843,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -864,9 +864,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -884,9 +884,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -903,9 +903,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0.1]]></Code>
@@ -925,9 +925,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -944,9 +944,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 		</Properties>
 	</Variable>
@@ -963,9 +963,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -983,9 +983,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1002,9 +1002,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1021,9 +1021,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1040,9 +1040,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1059,9 +1059,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1078,9 +1078,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1097,9 +1097,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1116,9 +1116,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1135,9 +1135,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1154,9 +1154,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1173,9 +1173,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1192,9 +1192,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1202,50 +1202,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1701700372068</Id>
-		<Name><![CDATA[v_currentEnergyConsumption_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>150</X>
-		<Y>1660</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1701700372070</Id>
-		<Name><![CDATA[v_currentEnergyProduction_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>150</X>
-		<Y>1680</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1701700372072</Id>
 		<Name><![CDATA[v_currentEnergyCurtailed_kW]]></Name>
 		<X>150</X>
-		<Y>1700</Y>
+		<Y>1780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1254,9 +1214,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1273,9 +1233,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1292,9 +1252,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1311,9 +1271,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1330,9 +1290,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1349,9 +1309,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1368,9 +1328,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1387,9 +1347,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1406,9 +1366,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1425,9 +1385,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1444,9 +1404,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1463,9 +1423,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1482,9 +1442,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1501,9 +1461,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1520,9 +1480,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1539,9 +1499,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1558,9 +1518,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1577,9 +1537,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1596,9 +1556,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1615,9 +1575,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1634,9 +1594,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1653,9 +1613,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1675,9 +1635,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1697,9 +1657,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1719,9 +1679,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1732,7 +1692,7 @@
 		<Id>1705421898378</Id>
 		<Name><![CDATA[v_currentPrimaryEnergyProductionHeatpumps_kW]]></Name>
 		<X>150</X>
-		<Y>1720</Y>
+		<Y>1800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1741,9 +1701,9 @@
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -1760,9 +1720,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1782,9 +1742,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1804,9 +1764,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1826,9 +1786,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1848,9 +1808,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -1870,53 +1830,13 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
 			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1706602023052</Id>
-		<Name><![CDATA[v_currentElectricityConsumption_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>150</X>
-		<Y>1740</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1706602029421</Id>
-		<Name><![CDATA[v_currentElectricityProduction_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>150</X>
-		<Y>1760</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1932,9 +1852,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
@@ -1954,9 +1874,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
@@ -1976,9 +1896,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
@@ -1998,9 +1918,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
@@ -2020,9 +1940,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
@@ -2042,9 +1962,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(false, energyModel.p_timeStep_h, 8760)]]></Code>
@@ -2064,9 +1984,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2086,9 +2006,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2108,9 +2028,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2130,9 +2050,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2152,9 +2072,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2174,9 +2094,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2196,9 +2116,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2218,9 +2138,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2240,9 +2160,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2262,9 +2182,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2284,9 +2204,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2306,9 +2226,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -2318,8 +2238,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1715086685641</Id>
 		<Name><![CDATA[v_dailyBaseloadElectricityDemand_kW]]></Name>
-		<X>740</X>
-		<Y>2310</Y>
+		<X>820</X>
+		<Y>1810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2328,17 +2248,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685643</Id>
 		<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kW]]></Name>
-		<X>740</X>
-		<Y>2330</Y>
+		<X>820</X>
+		<Y>1830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2347,17 +2267,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685647</Id>
 		<Name><![CDATA[v_dailyElectricVehicleDemand_kW]]></Name>
-		<X>740</X>
-		<Y>2350</Y>
+		<X>820</X>
+		<Y>1850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2366,17 +2286,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685649</Id>
 		<Name><![CDATA[v_dailyBatteriesDemand_kW]]></Name>
-		<X>740</X>
-		<Y>2370</Y>
+		<X>820</X>
+		<Y>1870</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2385,17 +2305,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685651</Id>
 		<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
-		<X>740</X>
-		<Y>2510</Y>
+		<X>820</X>
+		<Y>1920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2404,17 +2324,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685653</Id>
 		<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
-		<X>740</X>
-		<Y>2530</Y>
+		<X>820</X>
+		<Y>1940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2423,17 +2343,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685655</Id>
 		<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
-		<X>740</X>
-		<Y>2550</Y>
+		<X>820</X>
+		<Y>1960</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2442,17 +2362,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715086685657</Id>
 		<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
-		<X>740</X>
-		<Y>2570</Y>
+		<X>820</X>
+		<Y>1980</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2461,189 +2381,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715086756834</Id>
-		<Name><![CDATA[v_dailyElectricitySupply_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2290</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715086759851</Id>
-		<Name><![CDATA[v_dailyElectricityDemand_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2270</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715241326356</Id>
-		<Name><![CDATA[v_dailyDieselDemand_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2410</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715241380139</Id>
-		<Name><![CDATA[v_dailyHydrogenDemand_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2430</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715241396934</Id>
-		<Name><![CDATA[v_dailyNaturalGasDemand_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2390</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715241684044</Id>
-		<Name><![CDATA[v_dailyDistrictHeatDemand_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2450</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715241688653</Id>
-		<Name><![CDATA[v_dailyDistrictHeatSupply_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2630</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715241757962</Id>
-		<Name><![CDATA[v_dailyNaturalGasSupply_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2590</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1715673589196</Id>
-		<Name><![CDATA[v_dailyHydrogenSupply_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>740</X>
-		<Y>2610</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -2660,9 +2400,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2682,9 +2422,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2704,9 +2444,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2726,9 +2466,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2748,9 +2488,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2770,9 +2510,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2792,9 +2532,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2814,9 +2554,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2836,9 +2576,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2858,9 +2598,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2880,9 +2620,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -2902,15 +2642,53 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1718104519140</Id>
 		<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+		<X>150</X>
+		<Y>2220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1718104563816</Id>
+		<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+		<X>150</X>
+		<Y>2240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
+			<Type><![CDATA[DataSet]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1718104599790</Id>
+		<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
 		<X>150</X>
 		<Y>2260</Y>
 		<Label>
@@ -2921,15 +2699,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1718104563816</Id>
-		<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+		<Id>1718104616362</Id>
+		<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
 		<X>150</X>
 		<Y>2280</Y>
 		<Label>
@@ -2940,15 +2718,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1718104599790</Id>
-		<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
+		<Id>1718104645642</Id>
+		<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
 		<X>150</X>
 		<Y>2300</Y>
 		<Label>
@@ -2959,15 +2737,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1718104616362</Id>
-		<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
+		<Id>1718104655057</Id>
+		<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
 		<X>150</X>
 		<Y>2320</Y>
 		<Label>
@@ -2978,15 +2756,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1718104645642</Id>
-		<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
+		<Id>1718104682963</Id>
+		<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
 		<X>150</X>
 		<Y>2340</Y>
 		<Label>
@@ -2997,15 +2775,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1718104655057</Id>
-		<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
+		<Id>1718104746038</Id>
+		<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
 		<X>150</X>
 		<Y>2360</Y>
 		<Label>
@@ -3016,47 +2794,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[DataSet]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1718104682963</Id>
-		<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
-		<X>150</X>
-		<Y>2380</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[DataSet]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1718104746038</Id>
-		<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
-		<X>150</X>
-		<Y>2400</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
 		</Properties>
 	</Variable>
@@ -3073,9 +2813,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[false]]></Code>
@@ -3096,9 +2836,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -3118,9 +2858,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -3140,9 +2880,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -3163,9 +2903,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new double[24]]]></Code>
@@ -3186,9 +2926,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new double[24]]]></Code>
@@ -3208,9 +2948,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[false]]></Code>
@@ -3231,9 +2971,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -3253,9 +2993,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -3275,9 +3015,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -3297,9 +3037,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 		</Properties>
 	</Variable>
@@ -3316,9 +3056,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[true]]></Code>
@@ -3338,9 +3078,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -3360,9 +3100,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -3383,9 +3123,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new double[24]]]></Code>
@@ -3406,9 +3146,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new double[24]]]></Code>
@@ -3428,9 +3168,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3438,7 +3178,7 @@
 		<Id>1727099238699</Id>
 		<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
 		<X>150</X>
-		<Y>2430</Y>
+		<Y>2390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3447,9 +3187,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3466,9 +3206,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3476,7 +3216,7 @@
 		<Id>1727101009735</Id>
 		<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
 		<X>150</X>
-		<Y>2445</Y>
+		<Y>2405</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3485,9 +3225,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3495,7 +3235,7 @@
 		<Id>1731679457487</Id>
 		<Name><![CDATA[v_maxPeakDelivery_kW]]></Name>
 		<X>150</X>
-		<Y>2470</Y>
+		<Y>2430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3504,9 +3244,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3514,7 +3254,7 @@
 		<Id>1731679470154</Id>
 		<Name><![CDATA[v_maxPeakFeedin_kW]]></Name>
 		<X>150</X>
-		<Y>2490</Y>
+		<Y>2450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3523,9 +3263,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3542,9 +3282,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
@@ -3564,9 +3304,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3586,9 +3326,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3608,9 +3348,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap();]]></Code>
@@ -3630,9 +3370,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3652,9 +3392,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3674,9 +3414,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3696,9 +3436,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3718,9 +3458,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
@@ -3740,9 +3480,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 24*7)]]></Code>
@@ -3762,9 +3502,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3784,9 +3524,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3806,9 +3546,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3828,9 +3568,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3850,9 +3590,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3872,9 +3612,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3894,9 +3634,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3913,9 +3653,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3932,9 +3672,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -3954,9 +3694,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3973,9 +3713,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -3992,9 +3732,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -4011,9 +3751,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -4033,9 +3773,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -4045,8 +3785,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730726947778</Id>
 		<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
-		<X>740</X>
-		<Y>2720</Y>
+		<X>820</X>
+		<Y>2100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4055,9 +3795,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -4067,8 +3807,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730727024714</Id>
 		<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
-		<X>740</X>
-		<Y>2740</Y>
+		<X>820</X>
+		<Y>2120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4077,9 +3817,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -4089,8 +3829,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730727333815</Id>
 		<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
-		<X>1070</X>
-		<Y>2720</Y>
+		<X>1170</X>
+		<Y>2100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4099,9 +3839,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4111,8 +3851,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730727398733</Id>
 		<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
-		<X>1070</X>
-		<Y>2740</Y>
+		<X>1170</X>
+		<Y>2120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4121,9 +3861,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4133,8 +3873,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730729164023</Id>
 		<Name><![CDATA[dsm_summerWeekDemandDataSets_kW]]></Name>
-		<X>1490</X>
-		<Y>2860</Y>
+		<X>1590</X>
+		<Y>2100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4143,9 +3883,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4155,8 +3895,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730729202069</Id>
 		<Name><![CDATA[dsm_summerWeekSupplyDataSets_kW]]></Name>
-		<X>1490</X>
-		<Y>2880</Y>
+		<X>1590</X>
+		<Y>2120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4165,9 +3905,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4177,8 +3917,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730729205882</Id>
 		<Name><![CDATA[dsm_winterWeekDemandDataSets_kW]]></Name>
-		<X>1490</X>
-		<Y>2920</Y>
+		<X>2070</X>
+		<Y>2100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4187,9 +3927,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4199,8 +3939,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1730729207173</Id>
 		<Name><![CDATA[dsm_winterWeekSupplyDataSets_kW]]></Name>
-		<X>1490</X>
-		<Y>2940</Y>
+		<X>2070</X>
+		<Y>2120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4209,9 +3949,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4221,8 +3961,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731574001253</Id>
 		<Name><![CDATA[dsm_liveDemand_kW]]></Name>
-		<X>-120</X>
-		<Y>1900</Y>
+		<X>150</X>
+		<Y>1730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4231,9 +3971,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4243,8 +3983,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731574001255</Id>
 		<Name><![CDATA[dsm_liveSupply_kW]]></Name>
-		<X>-120</X>
-		<Y>1920</Y>
+		<X>150</X>
+		<Y>1750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4253,9 +3993,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_DataSetMap()]]></Code>
@@ -4275,9 +4015,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
@@ -4288,7 +4028,7 @@
 		<Id>1732292941471</Id>
 		<Name><![CDATA[v_totalPVGeneration_MWh]]></Name>
 		<X>150</X>
-		<Y>2530</Y>
+		<Y>2490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4297,9 +4037,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -4307,7 +4047,7 @@
 		<Id>1732292952959</Id>
 		<Name><![CDATA[v_totalWindGeneration_MWh]]></Name>
 		<X>150</X>
-		<Y>2550</Y>
+		<Y>2510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4316,9 +4056,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -4335,9 +4075,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
@@ -4357,9 +4097,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
@@ -4379,9 +4119,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4398,9 +4138,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4417,9 +4157,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4436,9 +4176,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4455,9 +4195,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
@@ -4477,9 +4217,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
@@ -4499,9 +4239,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4518,9 +4258,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4537,9 +4277,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4556,9 +4296,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
 		</Properties>
 	</Variable>
@@ -4575,9 +4315,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -4597,9 +4337,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -4619,9 +4359,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -4641,9 +4381,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_FlowsMap()]]></Code>
@@ -4663,9 +4403,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
@@ -4685,9 +4425,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
@@ -4707,9 +4447,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[false]]></Code>
@@ -4729,9 +4469,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[false]]></Code>
@@ -4751,9 +4491,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[false]]></Code>
@@ -4773,17 +4513,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1734091100383</Id>
 		<Name><![CDATA[v_dailyCHPElectricityProduction_kW]]></Name>
-		<X>740</X>
-		<Y>2650</Y>
+		<X>820</X>
+		<Y>2000</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4792,9 +4532,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -4811,9 +4551,9 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
@@ -4833,17 +4573,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1737542823483</Id>
 		<Name><![CDATA[v_dailyBatteryStoredEnergy_MWh]]></Name>
-		<X>740</X>
-		<Y>2680</Y>
+		<X>820</X>
+		<Y>2030</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4852,17 +4592,17 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1736433078736</Id>
 		<Name><![CDATA[v_dailyCookingElectricityDemand_kW]]></Name>
-		<X>740</X>
-		<Y>2470</Y>
+		<X>820</X>
+		<Y>1890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4871,9 +4611,28 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1738838125164</Id>
+		<Name><![CDATA[v_dailyDistrictHeatingDemand_kW]]></Name>
+		<X>820</X>
+		<Y>2060</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+			Constant="false"
+			AccessType="public"
+			StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
@@ -5996,7 +5755,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516437894</Id>
 		<Name><![CDATA[c_fixedConsumptionElectricAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>980</Y>
 		<Label>
 			<X>10</X>
@@ -6014,7 +5773,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516468629</Id>
 		<Name><![CDATA[c_electricHobAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1050</Y>
 		<Label>
 			<X>10</X>
@@ -6032,7 +5791,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516515981</Id>
 		<Name><![CDATA[c_conversionElectricAssets]]></Name>
-		<X>-120</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-180</X>
 		<Y>1030</Y>
 		<Label>
 			<X>10</X>
@@ -6050,7 +5810,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516532968</Id>
 		<Name><![CDATA[c_electricHeatpumpAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1070</Y>
 		<Label>
 			<X>10</X>
@@ -6068,7 +5828,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516544883</Id>
 		<Name><![CDATA[c_electrolyserAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1090</Y>
 		<Label>
 			<X>10</X>
@@ -6086,7 +5846,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516559744</Id>
 		<Name><![CDATA[c_EvAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1110</Y>
 		<Label>
 			<X>10</X>
@@ -6104,7 +5864,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516579645</Id>
 		<Name><![CDATA[c_pvAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1200</Y>
 		<Label>
 			<X>10</X>
@@ -6122,7 +5882,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516597938</Id>
 		<Name><![CDATA[c_windAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1220</Y>
 		<Label>
 			<X>10</X>
@@ -6140,7 +5900,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722517079192</Id>
 		<Name><![CDATA[c_batteryAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1130</Y>
 		<Label>
 			<X>10</X>
@@ -6156,32 +5916,9 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1730283362170</Id>
-		<Name><![CDATA[c_activeEnergyCarriers]]></Name>
-		<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>835</X>
-		<Y>760</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>OL_EnergyCarriers</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-			<CollectionInitializer Class="CodeValue">
-				<Code><![CDATA[{OL_EnergyCarriers.ELECTRICITY}]]></Code>
-			</CollectionInitializer>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1734089799023</Id>
 		<Name><![CDATA[c_chpAssets]]></Name>
-		<X>-120</X>
+		<X>-180</X>
 		<Y>1250</Y>
 		<Label>
 			<X>10</X>
