@@ -2829,6 +2829,15 @@
 			<Parameter>
 				<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_ignoreGridCapacityBattery]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_chpAsset]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_quinaryHeatingAsset]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

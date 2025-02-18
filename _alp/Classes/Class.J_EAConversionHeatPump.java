@@ -79,11 +79,14 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r;
 	}
 
+	public void setCOP(double COP_r) {
+		this.COP_r = COP_r;
+		this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r;
+	}
+	
 	public double getCOP() {
 		//traceln("Heatpump output temperature: " + this.outputTemperature_degC);
-
 		return this.COP_r;
-
 	}
 
 	@Override
@@ -179,6 +182,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		this.COP_r = this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
 		this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r;
 	}
+    
     
 	/**
 	 * This number is here for model snapshot storing purpose<br>

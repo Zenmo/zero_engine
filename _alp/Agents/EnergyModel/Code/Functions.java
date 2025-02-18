@@ -551,7 +551,7 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		J_EAStorageElectric e = (J_EAStorageElectric)ea;
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
+		v_totalInstalledBatteryStorageCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
 	
@@ -559,7 +559,7 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		J_EAEV e = (J_EAEV)ea;
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
+		v_totalInstalledBatteryStorageCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
 }
@@ -1077,7 +1077,7 @@ for (EnergyCoop EC : pop_energyCoops) {
 int v_timeStepsElapsed_live = v_timeStepsElapsed;
 v_timeStepsElapsed=0;
 
-c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));  
+c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));
 c_forecasts.forEach(p -> p.initializeForecast(p_runStartTime_h)); 
 //c_forecasts.parallelStream().forEach(p -> p.initializeForecast(p_runStartTime_h)); 
 
@@ -1639,6 +1639,7 @@ double v_currentDieselDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsump
 double v_currentHydrogenDemand_kW = sum(c_gridConnections, x-> x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN));
 double v_currentElectrolyserDemand_kW = sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW);
 double v_currentCookingDemand_kW = sum(c_gridConnections, x->x.v_electricHobConsumption_kW);
+double v_currentDistrictHeatingDemand_kW = sum(c_gridConnections, x->x.v_districtHeatDelivery_kW);
 
 double v_currentPVGeneration_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 double v_currentWindGeneration_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
@@ -1648,6 +1649,7 @@ double v_currentCHPElectricityProduction_kW = sum(c_gridConnections, x->x.v_CHPP
 double v_currentNaturalGasSupply_kW = sum(c_gridConnections, x-> x.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.METHANE));
 double v_currentHydrogenSupply_kW = sum(c_gridConnections, x-> x.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HYDROGEN));
 
+double v_currentStoredEnergyBatteries_MWh = sum(c_gridConnections, x->x.v_batteryStoredEnergy_kWh)/1000;
 
 //Summer week accumulators & dataSets
 if (b_isSummerWeek){
@@ -1680,6 +1682,9 @@ if (b_isSummerWeek){
 	data_summerWeekV2GSupply_kW.add(t_h, v_currentV2GSupply_kW);
 	data_summerWeekCHPElectricityProduction_kW.add(t_h, v_currentCHPElectricityProduction_kW);
 	
+	data_summerWeekBatteryStoredEnergy_MWh.add(t_h, v_currentStoredEnergyBatteries_MWh);
+	
+	data_summerWeekDistrictHeatingDemand_kW.add(t_h, v_currentDistrictHeatingDemand_kW);
 	// TODO: Check if these calls below are costly
 	//data_summerWeekDemand_kW.add(t_h, sum(c_energyAssets, x->max(0, x.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY))));
 	//data_summerWeekSupply_kW.add(t_h, -sum(c_energyAssets, x->max(0, -x.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY)))); 
@@ -1716,6 +1721,13 @@ if (b_isWinterWeek){
 	data_winterWeekBatteriesSupply_kW.add(t_h, v_currentBatteriesSupply_kW);
 	data_winterWeekV2GSupply_kW.add(t_h, v_currentV2GSupply_kW);
 	data_winterWeekCHPElectricityProduction_kW.add(t_h, v_currentCHPElectricityProduction_kW);
+	
+	data_winterWeekBatteryStoredEnergy_MWh.add(t_h, v_currentStoredEnergyBatteries_MWh);
+	
+	data_winterWeekDistrictHeatingDemand_kW.add(t_h, v_currentDistrictHeatingDemand_kW);
+	
+	
+	//TODO: remove, use am_winterweek instead
 	data_winterWeekNetLoad_kW.add(t_h, sum(c_gridNodesTopLevel.stream().filter(x -> x.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY).toList(), x -> x.v_currentLoad_kW));
 	
 }
@@ -1729,6 +1741,7 @@ v_dailyElectricVehicleDemand_kW += v_currentElectricVehicleDemand_kW;
 v_dailyBatteriesDemand_kW += v_currentBatteriesDemand_kW;
 v_dailyAverageElectrolyserDemand_kW += v_currentElectrolyserDemand_kW;
 v_dailyAverageCookingElectricityDemand_kW += v_currentCookingDemand_kW;
+v_dailyDistrictHeatingDemand_kW += v_currentDistrictHeatingDemand_kW;
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
 
 v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
@@ -1737,7 +1750,8 @@ v_dailyBatteriesSupply_kW += v_currentBatteriesSupply_kW;
 v_dailyV2GSupply_kW += v_currentV2GSupply_kW;
 v_dailyFinalEnergyConsumption_kW += v_currentFinalEnergyConsumption_kW;
 v_dailyCHPElectricityProduction_kW += v_currentCHPElectricityProduction_kW;
-	
+v_dailyBatteryStoredEnergy_MWh += v_currentStoredEnergyBatteries_MWh;
+
 if (b_isLastTimeStepOfDay){
 	double timeStepsInOneDay = 24 / p_timeStep_h;
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
@@ -1752,11 +1766,14 @@ if (b_isLastTimeStepOfDay){
 	data_annualElectrolyserDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageElectrolyserDemand_kW / timeStepsInOneDay);
 	data_annualCookingElectricityDemand_kW.add(t_h-p_runStartTime_h, v_dailyAverageCookingElectricityDemand_kW / timeStepsInOneDay);
 	data_totalFinalEnergyConsumption_kW.add(t_h-p_runStartTime_h, v_dailyFinalEnergyConsumption_kW/timeStepsInOneDay);
+	data_annualDistrictHeatingDemand_kW.add(t_h-p_runStartTime_h, v_dailyDistrictHeatingDemand_kW/timeStepsInOneDay);
+	
 	data_annualPVGeneration_kW.add(t_h-p_runStartTime_h, v_dailyPVGeneration_kW / timeStepsInOneDay);
 	data_annualWindGeneration_kW.add(t_h-p_runStartTime_h, v_dailyWindGeneration_kW / timeStepsInOneDay);
 	data_annualBatteriesSupply_kW.add(t_h-p_runStartTime_h, v_dailyBatteriesSupply_kW / timeStepsInOneDay);
 	data_annualV2GSupply_kW.add(t_h-p_runStartTime_h, v_dailyV2GSupply_kW / timeStepsInOneDay);
 	data_annualCHPElectricityProduction_kW.add(t_h-p_runStartTime_h, v_dailyCHPElectricityProduction_kW / timeStepsInOneDay);
+	data_annualBatteryStoredEnergy_MWh.add(t_h-p_runStartTime_h, v_dailyBatteryStoredEnergy_MWh/timeStepsInOneDay);
 	
 		//Yearly totals
 	v_totalPVGeneration_MWh += (v_dailyPVGeneration_kW/1000)*p_timeStep_h;
@@ -1773,6 +1790,7 @@ if (b_isLastTimeStepOfDay){
 	v_dailyAverageElectrolyserDemand_kW = 0;
 	v_dailyAverageCookingElectricityDemand_kW = 0;
 	v_dailyFinalEnergyConsumption_kW = 0;
+	v_dailyDistrictHeatingDemand_kW = 0;
 	
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
@@ -1781,6 +1799,9 @@ if (b_isLastTimeStepOfDay){
 	v_dailyBatteriesSupply_kW = 0;
 	v_dailyV2GSupply_kW = 0;
 	v_dailyCHPElectricityProduction_kW = 0;
+	
+	//Other
+	v_dailyBatteryStoredEnergy_MWh = 0;
 }
 /*ALCODEEND*/}
 
@@ -2355,6 +2376,7 @@ double f_setInitialValues()
 {/*ALCODESTART::1722853692644*/
 v_totalInstalledPVPower_kW = 0;
 v_totalInstalledWindPower_kW = 0;
+v_totalInstalledBatteryStorageCapacity_MWh = 0;
 for (J_EA ea : c_energyAssets) {
 	if (ea.energyAssetType == OL_EnergyAssetType.WINDMILL && ((GridConnection)ea.getParentAgent()).v_isActive ) {
 		v_totalInstalledWindPower_kW += ((J_EAProduction)ea).getCapacityElectric_kW();
@@ -2362,11 +2384,14 @@ for (J_EA ea : c_energyAssets) {
 	if (ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && ((GridConnection)ea.getParentAgent()).v_isActive ) {
 		v_totalInstalledPVPower_kW += ((J_EAProduction)ea).getCapacityElectric_kW();
 	}
+	if (ea.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC && ((GridConnection)ea.getParentAgent()).v_isActive ) {
+		v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)ea).getStorageCapacity_kWh()/1000;
+	}
+	
 }
 
 // Total installed battery capacity
-v_totalBatteryInstalledCapacity_MWh = sumWhere(c_energyAssets, j_ea -> ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh(), j_ea -> j_ea instanceof J_EAStorageElectric && (((GridConnection)j_ea.getParentAgent()).v_isActive))/1000;
-traceln("Total installed battery capacity: %s MWh", v_totalBatteryInstalledCapacity_MWh);
+traceln("Total installed battery capacity: %s MWh", v_totalInstalledBatteryStorageCapacity_MWh);
 
 // Starting prices
 c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions
@@ -2466,6 +2491,7 @@ data_windGeneration_kW.update();
 data_batteryDischarging_kW.update();
 data_V2GSupply_kW.update();
 data_CHPElectricityProductionLiveWeek_kW.update();
+data_batteryStoredEnergy_MWh.update();
 
 //data_hydrogenSupply_kW.update();
 data_districtHeatingDemand_kW.update();
