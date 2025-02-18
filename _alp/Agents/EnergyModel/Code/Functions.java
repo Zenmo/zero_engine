@@ -1463,8 +1463,8 @@ for (J_EA e : c_energyAssets) {
 }
 double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh + deltaThermalEnergySinceStart_MWh; // Positive number means more energy stored at the end of the simulation. 
 
-traceln("Check energy used from array and from energy assets: %s MWh", ( v_totalEnergyConsumed_MWh - totalEnergyUsed_MWh) );
-traceln("Check energy produced from array and from energy assets: %s MWh", ( v_totalEnergyProduced_MWh - totalEnergyProduced_MWh) );
+
+
 //traceln("Trucks have traveled " + totalDistanceTrucks_km + " km");
 
 //Total selfconsumption, selfsufficiency
@@ -1472,14 +1472,12 @@ traceln("Check energy produced from array and from energy assets: %s MWh", ( v_t
 v_totalEnergySelfConsumed_MWh = v_totalEnergyConsumed_MWh - (v_totalEnergyImport_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 //v_totalSelfConsumedEnergy_MWh = totalEnergyUsed_MWh - (v_totalImportedEnergy_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 
-double energyBalanceCheck_MWh = v_totalEnergyImport_MWh + v_totalEnergyProduced_MWh - (v_totalEnergyExport_MWh + v_totalEnergyConsumed_MWh + v_totalDeltaStoredEnergy_MWh);
-traceln("Check on energy balance is: " + energyBalanceCheck_MWh + " MWh, must be zero!");
 
 // Export and production-based selfconsumption
 if ( v_totalEnergyProduced_MWh > 0 ){
 	v_modelSelfConsumption_fr = v_totalEnergySelfConsumed_MWh / v_totalEnergyProduced_MWh;
 }
-
+traceln("");
 traceln("Total energy absorbed from environment by buildings: %s MWh", totalAmbientHeating_MWh);
 traceln("Delta thermal stored energy since start: %s MWh", deltaThermalEnergySinceStart_MWh);
 traceln("Total energy from vehicles charging outside the model scope: %s MWh", totalEnergyChargedOutsideModel_MWh);
@@ -1500,10 +1498,32 @@ traceln("Energy selfsufficiency (via import calc): %s %%", v_modelSelfSufficienc
 //double totalSelfSufficiency_fr_check = v_totalSelfConsumedEnergyCheck_MWh / totalEnergyUsed_MWh; // Calculation based on (total_production - total_export) / total_consumption. Negative delta-stored energy is contained in v_totalSelfConsumedEnergy_MWh. 
 
 // Remaining difference due to different temps of houses start vs end?
-
+traceln("");
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	traceln("Import " + EC.toString() + ": " + fm_totalImports_MWh.get(EC) + " MWh");
 	traceln("Export " + EC.toString() + ": " + fm_totalExports_MWh.get(EC) + " MWh");
+}
+
+traceln("");
+traceln("__--** Checks **--__");
+
+traceln("Check energy used from array and from energy assets: %s MWh", ( v_totalEnergyConsumed_MWh - totalEnergyUsed_MWh) );
+traceln("Check energy produced from array and from energy assets: %s MWh", ( v_totalEnergyProduced_MWh - totalEnergyProduced_MWh) );
+
+double energyBalanceCheck_MWh = v_totalEnergyImport_MWh + v_totalEnergyProduced_MWh - (v_totalEnergyExport_MWh + v_totalEnergyConsumed_MWh + v_totalDeltaStoredEnergy_MWh);
+traceln("Check on energy balance is: " + energyBalanceCheck_MWh + " MWh, must be zero!");
+traceln("");
+
+if ( Math.abs(energyBalanceCheck_MWh) > 1e-6 ) {
+	traceln("");
+	String warningString = String.format("__--** WARNING!!!! **--__");
+	String errorString = String.format("ENERGY BALANCE ERROR EXCEEDING TOLERANCE!! Error: %s MWh", energyBalanceCheck_MWh);
+	traceln(warningString);
+	//traceln(red, errorString);
+	System.err.println(errorString);
+	traceln(warningString);
+	traceln("");
+
 }
 
 /*

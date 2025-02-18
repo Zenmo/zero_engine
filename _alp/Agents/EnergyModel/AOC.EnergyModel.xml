@@ -2234,28 +2234,6 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 	</AnalysisData>
-	<Connectivity>
-		<ExcelFile>
-			<Id>1737980127952</Id>
-			<Name><![CDATA[heatDemandProfile]]></Name>
-			<X>330</X>
-			<Y>690</Y>
-			<Label>
-				<X>10</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<ResourceReference>
-				<PackageName>zero_engine</PackageName>
-				<ClassName>heatDemandProfile.xlsx</ClassName>
-			</ResourceReference>
-			<SaveInSnapshot>false</SaveInSnapshot>
-			<LoadOnStartup>true</LoadOnStartup>
-			<SaveOnDispose>true</SaveOnDispose>
-		</ExcelFile>
-	</Connectivity>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1658477103135</Id>

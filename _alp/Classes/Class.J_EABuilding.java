@@ -60,7 +60,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	@Override
 	public void calculateLoss() {
 		double heatLoss_kW = this.lossFactor_WpK * ( this.temperature_degC - this.ambientTemperature_degC ) / 1000;
-		traceln("heatLoss_kW: %s", heatLoss_kW);
+		//traceln("heatLoss_kW: %s", heatLoss_kW);
 		double deltaEnergy_kWh = -heatLoss_kW * this.timestep_h;
 		this.energyUse_kW += heatLoss_kW;
 		//traceln("Ambient temperature " + ambientTemperature_degC);
@@ -68,10 +68,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("tempdelta loss in thermal building asset (kW) " + energyUse_kW);
 		//traceln("lossfacter: " + lossFactor_WpK);
 		
-		traceln("deltaEnergy_kWh calculateLoss: %s", deltaEnergy_kWh);
-		traceln("temperature_degC %s", this.temperature_degC);
+		//traceln("deltaEnergy_kWh calculateLoss: %s", deltaEnergy_kWh);
+		//traceln("temperature_degC %s", this.temperature_degC);
 		updateStateOfCharge( deltaEnergy_kWh );
-		traceln("temperature_degC %s", this.temperature_degC);
+		//traceln("temperature_degC %s", this.temperature_degC);
 
 	}
 
@@ -80,7 +80,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("solarRadiation_Wpm2: %s", solarRadiation_Wpm2);
 
 		double solarHeating_kW = this.solarAbsorptionFactor_m2 * this.solarRadiation_Wpm2 / 1000;
-		traceln("solarHeating_kW: %s", solarHeating_kW);		
+		//traceln("solarHeating_kW: %s", solarHeating_kW);		
 		this.energyUse_kW -= solarHeating_kW;
 		//traceln("solarHeating_kW: %s", solarHeating_kW);
 		//traceln("exteriorReleaseScheduleIndex: %s", exteriorReleaseScheduleIndex);
@@ -95,10 +95,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("deltaEnergy_kWh: %s", deltaEnergy_kWh);
 		//traceln("exteriorReleaseSchedule_kWh: %s", Arrays.toString(exteriorReleaseSchedule_kWh));
 
-		traceln("deltaEnergy_kWh solar heating: %s", deltaEnergy_kWh);
-		traceln("temperature_degC %s", this.temperature_degC);
+		//traceln("deltaEnergy_kWh solar heating: %s", deltaEnergy_kWh);
+		//traceln("temperature_degC %s", this.temperature_degC);
 		updateStateOfCharge( deltaEnergy_kWh );
-		traceln("temperature_degC %s", this.temperature_degC);
+		//traceln("temperature_degC %s", this.temperature_degC);
 
 	}
 
@@ -119,7 +119,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.energyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timestep_h); // Only heat gain when outside is hotter than inside!
 
 		double inputPower_kW = ratioOfChargeCapacity_r * this.capacityHeat_kW; // positive power means lowering the buffer temperature!
-		traceln("inputPower_kW: %s", inputPower_kW);		
+		//traceln("inputPower_kW: %s", inputPower_kW);		
     	
 		double deltaEnergy_kWh;
 		if (this.interiorDelayTime_h != 0.0) {
@@ -129,7 +129,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			deltaEnergy_kWh = inputPower_kW * this.timestep_h; // to check the request with the energy currently in storage
 		}
 		
-		traceln("deltaEnergy_kWh operate: %s", deltaEnergy_kWh);
+		//traceln("deltaEnergy_kWh operate: %s", deltaEnergy_kWh);
 		
     	
 		double heatConsumption_kW = inputPower_kW;
@@ -139,9 +139,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("tempdelta charge: " + deltaTemp_degC);
 		//traceln(">> Heat storage heatproduction = "+ heatProduced_kWh + ", heatconsumption_kW = "+ heatConsumption_kW +" heatConsumed_kWh = "+ heatConsumed_kWh +", heatProduced_kWh = "+ heatProduced_kWh );
 
-		traceln("temperature_degC %s", this.temperature_degC);
+		//traceln("temperature_degC %s", this.temperature_degC);
 		updateStateOfCharge( deltaEnergy_kWh );
-		traceln("temperature_degC %s", this.temperature_degC);
+		//traceln("temperature_degC %s", this.temperature_degC);
 
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 
@@ -169,7 +169,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	@Override
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		double tempDelta_degC = deltaEnergy_kWh / (this.heatCapacity_JpK / 3.6E6 );
-		traceln("heatCapacity_JpK: %s", heatCapacity_JpK);
+		//traceln("heatCapacity_JpK: %s", heatCapacity_JpK);
 		this.temperature_degC += tempDelta_degC;
 		//this.stateOfCharge_r = ( this.temperature_degC - this.minTemperature_degC) / (this.maxTemperature_degC - this.minTemperature_degC);
 		//traceln("SOC: " + stateOfCharge_r);
