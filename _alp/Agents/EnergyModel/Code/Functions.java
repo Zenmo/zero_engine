@@ -429,16 +429,14 @@ if (b_enableDLR) {
 
 // Update environmental conditions for relevant energy assets
 for( J_EA e : c_ambientAirDependentAssets ) {
-	if( e instanceof J_EAStorageHeat ) {
-		//e.f_setLinkedVariable("AIR", null); // Why every timestep??
-		((J_EAStorageHeat)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
-		//e.updateAmbientTemperature( e.p_baseTemperatureReference );
-	} else if (e instanceof J_EAConversionHeatPump) {
-		((J_EAConversionHeatPump)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
-	//e.updateAmbientTemperature( e.p_baseTemperatureReference );
-	}else if( e instanceof J_EABuilding ) {
+	if( e instanceof J_EABuilding ) {
 		((J_EABuilding)e).updateSolarRadiation(v_currentSolarPowerNormalized_r*1000);
-		((J_EABuilding)e).updateAmbientTemperature(v_currentAmbientTemperature_degC);
+	}
+	if( e instanceof J_EAStorageHeat) { // includes J_EABuilding
+		((J_EAStorageHeat)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
+	}
+	if (e instanceof J_EAConversionHeatPump) {
+		((J_EAConversionHeatPump)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
 	}
 }
 
@@ -645,6 +643,24 @@ for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	v_currentEnergyImport_kW += max( 0, netFlow_kW );
 	v_currentEnergyExport_kW += max( 0, -netFlow_kW );
 }
+
+/*
+if (v_isRapidRun) {	
+	if (v_timeStepsElapsed == 0) {
+		heatDemandProfile.setCellValue("Tijd (uren)", "Sheet1", 1, 1);
+		heatDemandProfile.setCellValue("Datum", "Sheet1", 1, 2);
+		heatDemandProfile.setCellValue("Energie Behoefte (kWh)", "Sheet1", 1, 3);
+	}
+	
+	heatDemandProfile.setCellValue(t_h, "Sheet1", v_timeStepsElapsed+2, 1);
+	
+	double unix_time = (1672531200.0 + t_h * 60 * 60 ) / 86400.0 + 25569.0; // 1672531200 is 1 jan 2023 GMT+1
+	heatDemandProfile.setCellValue(unix_time, "Sheet1", v_timeStepsElapsed+2, 2);
+
+	double totalHeatDemand_kW = sum(c_gridConnections,x->x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT));
+	heatDemandProfile.setCellValue(totalHeatDemand_kW, "Sheet1", v_timeStepsElapsed + 2, 3);
+}
+*/
 
 /*ALCODEEND*/}
 
@@ -1417,10 +1433,11 @@ for (J_EA e : c_energyAssets) {
 				//electricityProduced_MWh += electricityProduced_kWh/1000;
 			} else {
 				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
-			}		
+			}
 			if ( e instanceof J_EABuilding ) {
 				totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-				deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-18)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature() - ((J_EABuilding)e).getInitialTemperature_degC())*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				deltaThermalEnergySinceStart_MWh += ((J_EABuilding)e).getRemainingHeatBufferHeat_kWh() / 1000;
 			}
 		} else {
 			/*if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
@@ -1432,11 +1449,7 @@ for (J_EA e : c_energyAssets) {
 				traceln("Lossfactor: %s", ((J_EABuilding)e).lossFactor_WpK);
 			}
 		}
-		if (e instanceof J_EABuilding) {
-			totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
-			totalHeatProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;						
-		}
-		if (e instanceof J_EAStorageHeat) {
+		if (e instanceof J_EAStorageHeat) { // includes J_EABuilding
 			totalAmbientHeating_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
 			totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;						
 		}
@@ -1448,27 +1461,23 @@ for (J_EA e : c_energyAssets) {
 		}
 	}
 }
-traceln("Check energy used from array and from energy assets: %s MWh", ( v_totalEnergyConsumed_MWh - totalEnergyUsed_MWh) );
-traceln("Check energy producted from array and from energy assets: %s MWh", ( v_totalEnergyProduced_MWh - totalEnergyProduced_MWh) );
+double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh + deltaThermalEnergySinceStart_MWh; // Positive number means more energy stored at the end of the simulation. 
+
+
+
 //traceln("Trucks have traveled " + totalDistanceTrucks_km + " km");
 
 //Total selfconsumption, selfsufficiency
-double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh + deltaThermalEnergySinceStart_MWh; // Positive number means more energy stored at the end of the simulation. 
 
 v_totalEnergySelfConsumed_MWh = v_totalEnergyConsumed_MWh - (v_totalEnergyImport_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 //v_totalSelfConsumedEnergy_MWh = totalEnergyUsed_MWh - (v_totalImportedEnergy_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
-double v_totalSelfConsumedEnergyCheck_MWh = v_totalEnergyProduced_MWh - (v_totalEnergyExport_MWh + max(0,v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes that this energy was self-produced, as opposed to imported! Putting negative delta-stored here assumes that this energy was exported, as opposed to self-consumed!
-// Cap selfConsumedEnergy to >=0
-v_totalEnergySelfConsumed_MWh=max(0,v_totalEnergySelfConsumed_MWh);
-v_totalSelfConsumedEnergyCheck_MWh=max(0,v_totalSelfConsumedEnergyCheck_MWh);
-traceln("Check self consumed energy based on import, export, consumption and production: " + (v_totalEnergySelfConsumed_MWh - v_totalSelfConsumedEnergyCheck_MWh) + " MWh error");
+
 
 // Export and production-based selfconsumption
 if ( v_totalEnergyProduced_MWh > 0 ){
-	//v_modelSelfConsumption_fr = 1 - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh))/v_totalEnergyProduced_MWh;
 	v_modelSelfConsumption_fr = v_totalEnergySelfConsumed_MWh / v_totalEnergyProduced_MWh;
 }
-
+traceln("");
 traceln("Total energy absorbed from environment by buildings: %s MWh", totalAmbientHeating_MWh);
 traceln("Delta thermal stored energy since start: %s MWh", deltaThermalEnergySinceStart_MWh);
 traceln("Total energy from vehicles charging outside the model scope: %s MWh", totalEnergyChargedOutsideModel_MWh);
@@ -1486,15 +1495,35 @@ v_modelSelfSufficiency_fr = v_totalEnergySelfConsumed_MWh / v_totalEnergyConsume
 
 traceln("Energy selfsufficiency (via import calc): %s %%", v_modelSelfSufficiency_fr*100);
 //double totalSelfSufficiency_fr_check = (v_totalEnergyProduced_MWh - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh)))/v_totalEnergyUsed_MWh; // Calculation based on (total_production - total_export) / total_consumption
-double totalSelfSufficiency_fr_check = v_totalSelfConsumedEnergyCheck_MWh / v_totalEnergyConsumed_MWh; // Calculation based on (total_production - total_export) / total_consumption. Negative delta-stored energy is contained in v_totalSelfConsumedEnergy_MWh. 
 //double totalSelfSufficiency_fr_check = v_totalSelfConsumedEnergyCheck_MWh / totalEnergyUsed_MWh; // Calculation based on (total_production - total_export) / total_consumption. Negative delta-stored energy is contained in v_totalSelfConsumedEnergy_MWh. 
 
-traceln("Energy selfsufficiency (via export calc): %s %%", totalSelfSufficiency_fr_check*100);
 // Remaining difference due to different temps of houses start vs end?
-
+traceln("");
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	traceln("Import " + EC.toString() + ": " + fm_totalImports_MWh.get(EC) + " MWh");
 	traceln("Export " + EC.toString() + ": " + fm_totalExports_MWh.get(EC) + " MWh");
+}
+
+traceln("");
+traceln("__--** Checks **--__");
+
+traceln("Check energy used from array and from energy assets: %s MWh", ( v_totalEnergyConsumed_MWh - totalEnergyUsed_MWh) );
+traceln("Check energy produced from array and from energy assets: %s MWh", ( v_totalEnergyProduced_MWh - totalEnergyProduced_MWh) );
+
+double energyBalanceCheck_MWh = v_totalEnergyImport_MWh + v_totalEnergyProduced_MWh - (v_totalEnergyExport_MWh + v_totalEnergyConsumed_MWh + v_totalDeltaStoredEnergy_MWh);
+traceln("Check on energy balance is: " + energyBalanceCheck_MWh + " MWh, must be zero!");
+traceln("");
+
+if ( Math.abs(energyBalanceCheck_MWh) > 1e-6 ) {
+	traceln("");
+	String warningString = String.format("__--** WARNING!!!! **--__");
+	String errorString = String.format("ENERGY BALANCE ERROR EXCEEDING TOLERANCE!! Error: %s MWh", energyBalanceCheck_MWh);
+	traceln(warningString);
+	//traceln(red, errorString);
+	System.err.println(errorString);
+	traceln(warningString);
+	traceln("");
+
 }
 
 /*

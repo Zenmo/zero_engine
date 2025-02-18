@@ -12,7 +12,6 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	protected double lossFactor_WpK;
 	protected double capacityHeat_kW;
 	
-	private double timestep_h;
 	private double temperature_degC;
 	private double temperatureStored_degC;
 	private double initialTemperature_degC;
@@ -20,10 +19,10 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	private double maxTemperature_degC;
 	private double setTemperature_degC;
 	protected double heatCapacity_JpK;
-	private double ambientTemperature_degC;
+	protected double ambientTemperature_degC;
 	public boolean requiresHeat = false;
-	public double energyAbsorbed_kWh=0;
-	public double energyAbsorbedStored_kWh=0;
+	protected double energyAbsorbed_kWh=0;
+	protected double energyAbsorbedStored_kWh=0;
 	
 
 
