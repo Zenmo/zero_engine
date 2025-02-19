@@ -82,7 +82,7 @@ public class J_AccumulatorMap implements Serializable {
             //sb.append(value);
             sb.append(", ");
         }
-        sb.delete(sb.length()-2, sb.length());
+        //sb.delete(sb.length()-2, sb.length());
         sb.append('}');
         return sb.toString();
     }
