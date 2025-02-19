@@ -2590,7 +2590,7 @@ EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList)
 EnergyCoop energyCoop = add_pop_energyCoops();
 energyCoop.p_actorID = "Custom Coop for filtered GC list";
 // Connect GCs, connectionOwners and energyCoop and gather data
-for(GridConnection gc : gcList) {
+/*for(GridConnection gc : gcList) {
 	if(gc.p_owner == null) {
 		throw new RuntimeException("Can't add gridConnection without a connectionOwner to EnergyCoop!");
 	} else {
@@ -2598,7 +2598,7 @@ for(GridConnection gc : gcList) {
 		gc.p_owner.p_coopParent = energyCoop;
 		gc.p_owner.f_initialize();
 	}
-}
+}*/
 // Initialisation, collecting data and calculating KPIs.
 energyCoop.f_initializeCustomCoop(gcList);
 
