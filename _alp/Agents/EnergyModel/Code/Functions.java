@@ -2588,7 +2588,7 @@ EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1739958854535*/
 // Add energyCoop
 EnergyCoop energyCoop = add_pop_energyCoops();
-
+energyCoop.p_actorID = "Custom Coop for filtered GC list";
 // Connect GCs, connectionOwners and energyCoop and gather data
 for(GridConnection gc : gcList) {
 	if(gc.p_owner == null) {
