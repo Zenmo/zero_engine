@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.2.202410172110"
+                   AnyLogicVersion="8.9.2.202410172112"
                    AlpVersion="8.9.2">
 	<Model>
 		<Id>1658477103134</Id>
@@ -14,20 +14,24 @@
 				<Id>1658478100573</Id>
 				<Name><![CDATA[OL_GridNodeType]]></Name>
 				<Option>
-					<Id>1658478100574</Id>
-					<Name><![CDATA[HVMV]]></Name>
+					<Id>1739967587321</Id>
+					<Name><![CDATA[LVLV]]></Name>
 				</Option>
 				<Option>
-					<Id>1721992801441</Id>
-					<Name><![CDATA[MVMV]]></Name>
+					<Id>1658478100575</Id>
+					<Name><![CDATA[MVLV]]></Name>
 				</Option>
 				<Option>
 					<Id>1721992807138</Id>
 					<Name><![CDATA[SUBMV]]></Name>
 				</Option>
 				<Option>
-					<Id>1658478100575</Id>
-					<Name><![CDATA[MVLV]]></Name>
+					<Id>1721992801441</Id>
+					<Name><![CDATA[MVMV]]></Name>
+				</Option>
+				<Option>
+					<Id>1658478100574</Id>
+					<Name><![CDATA[HVMV]]></Name>
 				</Option>
 				<Option>
 					<Id>1659705289295</Id>
@@ -164,6 +168,10 @@
 				<Option>
 					<Id>1724849181274</Id>
 					<Name><![CDATA[OTHER]]></Name>
+				</Option>
+				<Option>
+					<Id>1739979321556</Id>
+					<Name><![CDATA[COOP]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
