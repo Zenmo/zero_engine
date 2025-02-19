@@ -2584,3 +2584,48 @@ acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, p_timeStep_h, 
 
 /*ALCODEEND*/}
 
+EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList)
+{/*ALCODESTART::1739958854535*/
+// Add energyCoop
+EnergyCoop energyCoop = add_pop_energyCoops();
+
+// Connect GCs, connectionOwners and energyCoop and gather data
+for(GridConnection gc : gcList) {
+	if(gc.p_owner == null) {
+		throw new RuntimeException("Can't add gridConnection without a connectionOwner to EnergyCoop!");
+	} else {
+		gc.p_owner.p_actorGroup = "member";
+		gc.p_owner.p_coopParent = energyCoop;
+		gc.p_owner.f_initialize();
+	}
+}
+// Initialisation, collecting data and calculating KPIs.
+energyCoop.f_initializeCustomCoop(gcList);
+
+// Return energyCoop to caller 
+return energyCoop;
+/*ALCODEEND*/}
+
+EnergyCoop f_removeEnergyCoop(EnergyCoop energyCoop)
+{/*ALCODESTART::1739972940581*/
+// Connect GCs, connectionOwners and energyCoop and gather data
+for(Agent CO : energyCoop.c_coopCustomers){
+	if(CO instanceof ConnectionOwner){
+		((ConnectionOwner)CO).p_coopParent = null;
+		((ConnectionOwner)CO).f_initialize();	
+	}
+}
+
+for(Agent CO : energyCoop.c_coopMembers){
+	if(CO instanceof ConnectionOwner){
+		((ConnectionOwner)CO).p_coopParent = null;
+		((ConnectionOwner)CO).f_initialize();	
+	}
+}
+
+// Remove energyCoop from pop_energyCoops.
+remove_pop_energyCoops(energyCoop);
+
+
+/*ALCODEEND*/}
+

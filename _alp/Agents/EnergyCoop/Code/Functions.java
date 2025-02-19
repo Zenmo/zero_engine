@@ -1,4 +1,4 @@
-double f_connectToChild(Actor ConnectingChildNode,OL_EnergyCarriers EnergyCarrier)
+double f_connectToChild(Actor ConnectingChildActor,OL_EnergyCarriers EnergyCarrier)
 {/*ALCODESTART::1660736326703*/
 /*switch( EnergyCarrier ) {
 		case ELECTRICITY:
@@ -18,14 +18,17 @@ double f_connectToChild(Actor ConnectingChildNode,OL_EnergyCarriers EnergyCarrie
 		break;		
 }*/
 
-if (ConnectingChildNode.p_actorGroup != null) {
-	if (ConnectingChildNode.p_actorGroup.contains("production") || ConnectingChildNode.p_actorGroup.contains("Production") || ConnectingChildNode.p_actorGroup.contains("member")) { // Count owned production-sites as 'behind the meter'
-		c_coopMembers.add( ConnectingChildNode );
+if (ConnectingChildActor.p_actorGroup != null) {
+	if (ConnectingChildActor.p_actorGroup.contains("production") || ConnectingChildActor.p_actorGroup.contains("Production") || ConnectingChildActor.p_actorGroup.contains("member")) { // Count owned production-sites as 'behind the meter'
+		c_coopMembers.add( ConnectingChildActor);
+		c_memberGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 	} else {
-		c_coopCustomers.add( ConnectingChildNode );
+		c_coopCustomers.add( ConnectingChildActor );
+		c_customerGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 	}
 } else {
-	c_coopCustomers.add( ConnectingChildNode );
+	c_coopCustomers.add( ConnectingChildActor );
+	c_customerGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 }
 
 /*
@@ -202,59 +205,52 @@ v_currentFinalEnergyConsumption_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
+for (GridConnection GC : c_memberGridConnections) { // Take 'behind the meter' production and consumption!
+	for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+		fm_currentProductionFlows_kW.addFlow( energyCarrier, GC.fm_currentProductionFlows_kW.get(energyCarrier));
+		fm_currentConsumptionFlows_kW.addFlow( energyCarrier, GC.fm_currentConsumptionFlows_kW.get(energyCarrier));
+		fm_currentBalanceFlows_kW.addFlow( energyCarrier, GC.fm_currentBalanceFlows_kW.get(energyCarrier));
+	}
+	v_currentPrimaryEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
+	v_currentFinalEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
+	v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
+	v_currentPrimaryEnergyProductionHeatpumps_kW += GC.v_currentPrimaryEnergyProductionHeatpumps_kW;
+	v_currentOwnElectricityProduction_kW += GC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
+	
+	/*
+	v_currentEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
+	v_currentEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
+	v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
+	v_currentElectricityConsumption_kW += GC.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	v_currentElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	
+	v_currentOwnElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
+	*/
+	
+	// Categorical power flows
+	v_fixedConsumptionElectric_kW += GC.v_fixedConsumptionElectric_kW;
+	v_electricHobConsumption_kW += GC.v_electricHobConsumption_kW;
+	v_heatPumpElectricityConsumption_kW += GC.v_heatPumpElectricityConsumption_kW;
+	v_hydrogenElectricityConsumption_kW += GC.v_hydrogenElectricityConsumption_kW;
+	v_evChargingPowerElectric_kW += GC.v_evChargingPowerElectric_kW;
+	v_batteryPowerElectric_kW += GC.v_batteryPowerElectric_kW;
+	v_windProductionElectric_kW += GC.v_windProductionElectric_kW;
+	v_pvProductionElectric_kW += GC.v_pvProductionElectric_kW;
+	v_conversionPowerElectric_kW += GC.v_conversionPowerElectric_kW;
+	
+	/*
+	//v_methaneVolume_kWh += GC.v_currentPowerMethane_kW * energyModel.p_timeStep_h;
+	v_methaneVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.METHANE) * energyModel.p_timeStep_h;
+	v_dieselVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.DIESEL) * energyModel.p_timeStep_h;
+	v_hydrogenVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeStep_h;
+	*/
+	
+}
+
+
 // gather electricity flows
 for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
-	//traceln("c_coopMembers not empty!");
-	if(a instanceof ConnectionOwner){
-		ConnectionOwner CO = (ConnectionOwner)a;
-		//v_electricityVolume_kWh += CO.v_electricityVolume_kWh;
-		//if (energyModel.v_isRapidRun){		
-		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
-			for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-				fm_currentProductionFlows_kW.addFlow( energyCarrier, GC.fm_currentProductionFlows_kW.get(energyCarrier));
-				fm_currentConsumptionFlows_kW.addFlow( energyCarrier, GC.fm_currentConsumptionFlows_kW.get(energyCarrier));
-				fm_currentBalanceFlows_kW.addFlow( energyCarrier, GC.fm_currentBalanceFlows_kW.get(energyCarrier));
-			}
-			v_currentPrimaryEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
-			v_currentFinalEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
-			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
-			v_currentPrimaryEnergyProductionHeatpumps_kW += GC.v_currentPrimaryEnergyProductionHeatpumps_kW;
-			v_currentOwnElectricityProduction_kW += GC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-			
-			/*
-			v_currentEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
-			v_currentEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
-			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
-			v_currentElectricityConsumption_kW += GC.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-			v_currentElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-			
-			v_currentOwnElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-			*/
-			
-			// Categorical power flows
-			v_fixedConsumptionElectric_kW += GC.v_fixedConsumptionElectric_kW;
-			v_electricHobConsumption_kW += GC.v_electricHobConsumption_kW;
-			v_heatPumpElectricityConsumption_kW += GC.v_heatPumpElectricityConsumption_kW;
-			v_hydrogenElectricityConsumption_kW += GC.v_hydrogenElectricityConsumption_kW;
-			v_evChargingPowerElectric_kW += GC.v_evChargingPowerElectric_kW;
-			v_batteryPowerElectric_kW += GC.v_batteryPowerElectric_kW;
-			v_windProductionElectric_kW += GC.v_windProductionElectric_kW;
-			v_pvProductionElectric_kW += GC.v_pvProductionElectric_kW;
-			v_conversionPowerElectric_kW += GC.v_conversionPowerElectric_kW;
-			
-			/*
-			//v_methaneVolume_kWh += GC.v_currentPowerMethane_kW * energyModel.p_timeStep_h;
-			v_methaneVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.METHANE) * energyModel.p_timeStep_h;
-			v_dieselVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.DIESEL) * energyModel.p_timeStep_h;
-			v_hydrogenVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeStep_h;
-			*/
-			
-		}
-		//v_heatVolume_kWh += n.v_heatVolume_kWh;
-		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
-		//v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
-		//v_dieselVolume_kWh += n.v_dieselVolume_kWh;
-	} else if (a instanceof EnergyCoop) {
+	if (a instanceof EnergyCoop) {
 		EnergyCoop EC = (EnergyCoop)a;
 		
 		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
@@ -262,73 +258,53 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, EC.fm_currentConsumptionFlows_kW.get(energyCarrier));
 			fm_currentBalanceFlows_kW.addFlow( energyCarrier, EC.fm_currentBalanceFlows_kW.get(energyCarrier));
 		}
-		v_currentOwnElectricityProduction_kW += EC.v_currentOwnElectricityProduction_kW;
+		//v_currentOwnElectricityProduction_kW += EC.v_currentOwnElectricityProduction_kW;
+		
+		v_currentPrimaryEnergyProduction_kW += EC.v_currentPrimaryEnergyProduction_kW;
+		v_currentFinalEnergyConsumption_kW += EC.v_currentFinalEnergyConsumption_kW;
+		v_currentEnergyCurtailed_kW += EC.v_currentEnergyCurtailed_kW;
+		v_currentPrimaryEnergyProductionHeatpumps_kW += EC.v_currentPrimaryEnergyProductionHeatpumps_kW;
+		v_currentOwnElectricityProduction_kW += EC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 		
 		/*
-		v_electricityVolume_kWh += EC.v_electricityVolume_kWh;
-		//traceln("Hello!? coopMember EnergyCoop!");
-		double electricityConsumption_kW = max(0,EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
-		double electricityProduction_kW = max(0,-EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
-		v_currentElectricityConsumption_kW += electricityConsumption_kW;
-		//v_currentEnergyConsumption_kW += electricityConsumption_kW;
-		v_currentElectricityProduction_kW += electricityProduction_kW;
-		//v_currentEnergyProduction_kW += electricityProduction_kW;
+		v_currentEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
+		v_currentEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
+		v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
+		v_currentElectricityConsumption_kW += GC.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+		v_currentElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+		
+		v_currentOwnElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 		*/
 		
-		//v_heatVolume_kWh += n.v_heatVolume_kWh;
-		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
-		//v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
-		//v_dieselVolume_kWh += n.v_dieselVolume_kWh;
+		// Categorical power flows
+		v_fixedConsumptionElectric_kW += EC.v_fixedConsumptionElectric_kW;
+		v_electricHobConsumption_kW += EC.v_electricHobConsumption_kW;
+		v_heatPumpElectricityConsumption_kW += EC.v_heatPumpElectricityConsumption_kW;
+		v_hydrogenElectricityConsumption_kW += EC.v_hydrogenElectricityConsumption_kW;
+		v_evChargingPowerElectric_kW += EC.v_evChargingPowerElectric_kW;
+		v_batteryPowerElectric_kW += EC.v_batteryPowerElectric_kW;
+		v_windProductionElectric_kW += EC.v_windProductionElectric_kW;
+		v_pvProductionElectric_kW += EC.v_pvProductionElectric_kW;
+		v_conversionPowerElectric_kW += EC.v_conversionPowerElectric_kW;	
 	}
 }
 
-for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' production/consumption, but use 'nett flow' as measure of consumption/production
-	if(a instanceof ConnectionOwner){
-		ConnectionOwner CO = (ConnectionOwner)a;
-		
-		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
-			for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-				double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
-				fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
-				fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
-				fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
-				if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-					v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
-					v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
-				}
-			}
-						
-			//v_currentCustomerFeedIn_kW += max(0, -GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+for (GridConnection GC : c_customerGridConnections) { // Take 'behind the meter' production and consumption!
+	for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+		double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
+		fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
+		fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
+		fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
+		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+			v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
+			v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
 		}
-		
-		
-		
-		// TODO: will COs need flowsmaps too?
-		
-		//v_currentProductionFlows_kW.addFlow( CO.v_currentProductionFlow.get(OL_EnergyCarriers.ELECTRICITY));
-		//v_currentConsumptionFlows_kW.addFlow( CO.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-		//v_currentBalanceFlows_kW.addFlow( CO.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-		//v_currentCustomerFeedIn_kW += CO.v_currentProductionFlow.get(OL_EnergyCarriers.ELECTRICITY);
-		
-		/*
-		v_electricityVolume_kWh += CO.v_electricityVolume_kWh;
-		double electricityConsumption_kW = max(0,CO.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
-		double electricityProduction_kW = max(0,-CO.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
-		v_currentElectricityConsumption_kW += electricityConsumption_kW;
-		
-		v_currentEnergyConsumption_kW += electricityConsumption_kW;
-		v_currentElectricityProduction_kW += electricityProduction_kW;
-		v_currentEnergyProduction_kW += electricityProduction_kW;
+	}				
+	//v_currentCustomerFeedIn_kW += max(0, -GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+}
 
-		v_currentCustomerFeedIn_kW += electricityProduction_kW;
-		*/
-		
-		//v_heatVolume_kWh += n.v_heatVolume_kWh;
-		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
-		//v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
-		//v_dieselVolume_kWh += n.v_dieselVolume_kWh;
-	} else if (a instanceof EnergyCoop) {
-	
+for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' production/consumption, but use 'nett flow' as measure of consumption/production
+	if (a instanceof EnergyCoop) {
 		//traceln("Hello!? coopCustomer EnergyCoop!");
 		EnergyCoop EC = (EnergyCoop)a;
 				
@@ -340,20 +316,7 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 		
 		v_currentCustomerFeedIn_kW += EC.v_currentCustomerFeedIn_kW;
 		v_currentCustomerDelivery_kW += EC.v_currentCustomerDelivery_kW;
-		/*
-		v_electricityVolume_kWh += EC.v_electricityVolume_kWh;
-		double electricityConsumption_kW = max(0,EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
-		double electricityProduction_kW = max(0,-EC.v_electricityVolume_kWh)/energyModel.p_timeStep_h;
-		v_currentElectricityConsumption_kW += electricityConsumption_kW;
-		v_currentEnergyConsumption_kW += electricityConsumption_kW;
-		v_currentElectricityProduction_kW += electricityProduction_kW;
-		v_currentEnergyProduction_kW += electricityProduction_kW;
-		*/
 		
-		//v_heatVolume_kWh += n.v_heatVolume_kWh;
-		//v_methaneVolume_kWh += n.v_methaneVolume_kWh;
-		//v_hydrogenVolume_kWh += n.v_hydrogenVolume_kWh;
-		//v_dieselVolume_kWh += n.v_dieselVolume_kWh;
 	}
 }
 
@@ -1998,6 +1961,149 @@ for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 v_weekendEnergySelfConsumed_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendEnergyExport_MWh);
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - fm_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
 
+
+/*ALCODEEND*/}
+
+double f_collectGridConnectionTotals()
+{/*ALCODESTART::1739970817879*/
+int arraySize = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
+//double[] totalBalanceTimeSeries_kW = new double[arraySize];
+
+for (int i = 0; i<arraySize; i++) {
+	double currentBalance_kW = 0;
+	for (GridConnection gc : c_memberGridConnections) {
+		currentBalance_kW += gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()[i];
+		am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
+	}	
+}
+
+// Call groupContract function, multiple variants possible, add OptionsList for variants.
+
+
+//
+//v_currentEnergyConsumption_kW = 0;
+//v_currentEnergyProduction_kW = 0;
+v_currentEnergyCurtailed_kW = 0;
+//v_currentElectricityProduction_kW = 0;
+//v_currentElectricityConsumption_kW = 0;
+
+v_currentOwnElectricityProduction_kW = 0; // Only electricity production from 'members' as opposed to 'customers'.
+v_currentCustomerFeedIn_kW = 0; // Feedin from customers (self-consumption behind-the-meter is not counted for customers)
+v_currentCustomerDelivery_kW = 0; // Delivery to customers (self-consumption behind-the-meter is not counted for customers)
+
+// Categorical power flows
+v_fixedConsumptionElectric_kW = 0;
+v_electricHobConsumption_kW = 0;
+v_heatPumpElectricityConsumption_kW = 0;
+v_hydrogenElectricityConsumption_kW = 0;
+v_evChargingPowerElectric_kW = 0;
+v_batteryPowerElectric_kW = 0;
+v_windProductionElectric_kW = 0;
+v_pvProductionElectric_kW = 0;
+v_conversionPowerElectric_kW = 0;
+
+
+fm_currentProductionFlows_kW.clear();
+fm_currentConsumptionFlows_kW.clear();
+fm_currentBalanceFlows_kW.clear();
+v_currentPrimaryEnergyProduction_kW = 0;
+v_currentFinalEnergyConsumption_kW = 0;
+v_currentEnergyCurtailed_kW = 0;
+v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
+
+/*
+// gather electricity flows
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	//traceln("c_coopMembers not empty!");
+	if(a instanceof ConnectionOwner){
+		ConnectionOwner CO = (ConnectionOwner)a;
+		//v_electricityVolume_kWh += CO.v_electricityVolume_kWh;
+		//if (energyModel.v_isRapidRun){		
+		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
+			for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+				fm_currentProductionFlows_kW.addFlow( energyCarrier, GC.fm_currentProductionFlows_kW.get(energyCarrier));
+				fm_currentConsumptionFlows_kW.addFlow( energyCarrier, GC.fm_currentConsumptionFlows_kW.get(energyCarrier));
+				fm_currentBalanceFlows_kW.addFlow( energyCarrier, GC.fm_currentBalanceFlows_kW.get(energyCarrier));
+			}
+			v_currentPrimaryEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
+			v_currentFinalEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
+			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
+			v_currentPrimaryEnergyProductionHeatpumps_kW += GC.v_currentPrimaryEnergyProductionHeatpumps_kW;
+			v_currentOwnElectricityProduction_kW += GC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
+			
+			// Categorical power flows
+			v_fixedConsumptionElectric_kW += GC.v_fixedConsumptionElectric_kW;
+			v_electricHobConsumption_kW += GC.v_electricHobConsumption_kW;
+			v_heatPumpElectricityConsumption_kW += GC.v_heatPumpElectricityConsumption_kW;
+			v_hydrogenElectricityConsumption_kW += GC.v_hydrogenElectricityConsumption_kW;
+			v_evChargingPowerElectric_kW += GC.v_evChargingPowerElectric_kW;
+			v_batteryPowerElectric_kW += GC.v_batteryPowerElectric_kW;
+			v_windProductionElectric_kW += GC.v_windProductionElectric_kW;
+			v_pvProductionElectric_kW += GC.v_pvProductionElectric_kW;
+			v_conversionPowerElectric_kW += GC.v_conversionPowerElectric_kW;
+
+		}
+
+	} else if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		
+		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+			fm_currentProductionFlows_kW.addFlow( energyCarrier, EC.fm_currentProductionFlows_kW.get(energyCarrier));
+			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, EC.fm_currentConsumptionFlows_kW.get(energyCarrier));
+			fm_currentBalanceFlows_kW.addFlow( energyCarrier, EC.fm_currentBalanceFlows_kW.get(energyCarrier));
+		}
+		v_currentOwnElectricityProduction_kW += EC.v_currentOwnElectricityProduction_kW;
+		
+	}
+}
+
+for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' production/consumption, but use 'nett flow' as measure of consumption/production
+	if(a instanceof ConnectionOwner){
+		ConnectionOwner CO = (ConnectionOwner)a;
+		
+		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
+			for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+				double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
+				fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
+				fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
+				fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
+				if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+					v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
+					v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
+				}
+			}
+
+		}
+		
+	} else if (a instanceof EnergyCoop) {
+	
+		//traceln("Hello!? coopCustomer EnergyCoop!");
+		EnergyCoop EC = (EnergyCoop)a;
+				
+		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+			fm_currentProductionFlows_kW.addFlow( energyCarrier, EC.fm_currentProductionFlows_kW.get(energyCarrier));
+			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, EC.fm_currentConsumptionFlows_kW.get(energyCarrier));
+			fm_currentBalanceFlows_kW.addFlow( energyCarrier, EC.fm_currentBalanceFlows_kW.get(energyCarrier));
+		}
+		
+		v_currentCustomerFeedIn_kW += EC.v_currentCustomerFeedIn_kW;
+		v_currentCustomerDelivery_kW += EC.v_currentCustomerDelivery_kW;
+
+	}
+}
+
+*/
+/*ALCODEEND*/}
+
+double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
+{/*ALCODESTART::1739974426481*/
+dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+
+// Call KPI-without-yearsim function in energyCoop
+c_memberGridConnections = gcList;
+f_collectGridConnectionTotals();
+f_calculateKPIs();
 
 /*ALCODEEND*/}
 

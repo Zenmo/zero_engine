@@ -728,6 +728,7 @@ double f_resetStates()
 
 double f_initialize()
 {/*ALCODESTART::1716897235822*/
+// What happens if this function is triggered multiple times per connectionOwner?
 f_setContractValues();
 f_connectToParentActor();
 /*ALCODEEND*/}
