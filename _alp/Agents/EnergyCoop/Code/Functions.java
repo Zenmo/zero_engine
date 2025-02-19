@@ -1993,7 +1993,7 @@ v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
 // Make collective profiles
-int arraySize = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
+int arraySize = c_memberGridConnections.get(0).am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
 //double[] totalBalanceTimeSeries_kW = new double[arraySize];
 for (int i = 0; i<arraySize; i++) {
 	double currentBalance_kW = 0;
