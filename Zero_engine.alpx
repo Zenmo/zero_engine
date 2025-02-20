@@ -1462,6 +1462,10 @@
 				<Id>1737633433233</Id>
 				<Name><![CDATA[J_EADieselTractor]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1740048926477</Id>
+				<Name><![CDATA[ZeroAccumulator]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

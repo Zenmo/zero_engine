@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.FileOutputStream;
 import java.util.stream.Stream;
-import java.util.stream.IntStream;
 import java.util.Dictionary.*;
 import java.util.Hashtable.*;
 import java.util.*;
@@ -23,13 +22,25 @@ import java.util.stream.Collectors;
 import java.io.*;
 import java.io.File;
 import java.io.IOException;
-//import java.util.Date;  
+import java.util.Date;  
+import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import zeroPackage.ZeroMath;
-import zeroPackage.ZeroAccumulator;]]></Import>
+
+//Possibility to turn of traceln
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+//Curves
+import com.anylogic.engine.markup.AbstractCurve;
+import com.anylogic.engine.markup.GISMarkupSegment;
+import com.anylogic.engine.markup.GISPoint;
+//import zero_engine.OL_EnergyCarriers;
+//import zero_engine.OL_EnergyCarriers;
+import com.querydsl.core.types.dsl.TimeExpression;
+//import zero_engine.J_EAStorageElectric;
+//import zero_engine.J_EAConsumption;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>

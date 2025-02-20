@@ -1,4 +1,6 @@
-package zeroPackage;
+/**
+ * ZeroAccumulator
+ */	
 
 import zeroPackage.ZeroMath;
 import java.lang.Math;
@@ -187,6 +189,10 @@ public class ZeroAccumulator {
     public double getMin() {
         return min;
     }
+    
+    public double getSignalResolution_h() {
+    	return this.signalResolution_h;
+    }
 
     public ZeroAccumulator add(ZeroAccumulator acc) {
         if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
@@ -223,4 +229,11 @@ public class ZeroAccumulator {
 
         return sb.toString();
     }
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
 }

@@ -1977,49 +1977,56 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 
 double f_collectGridConnectionTotals()
 {/*ALCODESTART::1739970817879*/
-// Reset totals. Not needed when this agent has just been created??
-v_currentEnergyCurtailed_kW = 0;
-
-v_currentOwnElectricityProduction_kW = 0; // Only electricity production from 'members' as opposed to 'customers'.
-v_currentCustomerFeedIn_kW = 0; // Feedin from customers (self-consumption behind-the-meter is not counted for customers)
-v_currentCustomerDelivery_kW = 0; // Delivery to customers (self-consumption behind-the-meter is not counted for customers)
-
-// Categorical power flows
-v_fixedConsumptionElectric_kW = 0;
-v_electricHobConsumption_kW = 0;
-v_heatPumpElectricityConsumption_kW = 0;
-v_hydrogenElectricityConsumption_kW = 0;
-v_evChargingPowerElectric_kW = 0;
-v_batteryPowerElectric_kW = 0;
-v_windProductionElectric_kW = 0;
-v_pvProductionElectric_kW = 0;
-v_conversionPowerElectric_kW = 0;
-
-fm_currentProductionFlows_kW.clear();
-fm_currentConsumptionFlows_kW.clear();
-fm_currentBalanceFlows_kW.clear();
-v_currentPrimaryEnergyProduction_kW = 0;
-v_currentFinalEnergyConsumption_kW = 0;
-v_currentEnergyCurtailed_kW = 0;
-v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-
 // Accumulators
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.v_activeEnergyCarriers, true, 24, 8760 );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
 am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
 
+// Make collective profiles, electricity per timestep, other energy carriers per day!
 
-// Make collective profiles
+//Electricity
 int arraySize = c_memberGridConnections.get(0).am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
-//double[] totalBalanceTimeSeries_kW = new double[arraySize];
+
 for (int i = 0; i<arraySize; i++) {
 	double currentBalance_kW = 0;
 	for (GridConnection gc : c_memberGridConnections) {
 		currentBalance_kW += gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()[i];
 	}	
 	am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
+	
+	if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
+		am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
+	}
+	if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
+		am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
+	}
 }
+
+// Other energy carriers
+for (int i = 0; i<roundToInt((energyModel.p_runEndTime_h - energyModel.p_runStartTime_h)/24) ; i++){
+	for(OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+		if (EC != OL_EnergyCarriers.ELECTRICITY) {
+			double currentBalance_kW = 0.0;
+			double currentConsumption_kW = 0.0;
+			double currentProduction_kW = 0.0;
+			for (GridConnection gc : c_memberGridConnections) {
+				currentConsumption_kW += gc.dsm_dailyAverageDemandDataSets_kW.get(EC).getY(i)
+				currentProduction_kW += gc.dsm_dailyAverageSupplyDataSets_kW.get(EC).getY(i);
+			}	
+			currentBalance_kW = currentConsumption_kW - currentProduction_kW;
+			
+			am_totalBalanceAccumulators_kW.get(EC).addStep(currentBalance_kW);
+		}
+	}
+}
+
+// Total import/export from all balance accumulators.
+/*for(OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+	v_totalEnergyImport_MWh += am_totalBalanceAccumulators_kW.get(EC).getSumPos() * am_totalBalanceAccumulators_kW.get(EC).getSignalResolution_h() / 1000;
+	v_totalEnergyExport_MWh += am_totalBalanceAccumulators_kW.get(EC).getSumNeg() * am_totalBalanceAccumulators_kW.get(EC).getSignalResolution_h() / 1000;
+}*/
+
 for (GridConnection gc : c_memberGridConnections) {
 	acc_totalElectricityConsumption_kW.addStep(gc.acc_totalElectricityConsumption_kW.getSum());
 	acc_totalElectricityProduction_kW.addStep(gc.acc_totalElectricityProduction_kW.getSum());
@@ -2033,98 +2040,33 @@ for (GridConnection gc : c_memberGridConnections) {
 	//acc_totalCustomerDelivery_kW.addStep( v_currentCustomerDelivery_kW);
 	//acc_totalCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW);
 	
+	acc_summerWeekElectricityConsumption_kW.addStep(gc.acc_summerWeekElectricityConsumption_kW.getSum());
+	acc_summerWeekElectricityProduction_kW.addStep(gc.acc_summerWeekElectricityProduction_kW.getSum());
 	
+	acc_summerWeekEnergyProduction_kW.addStep(gc.acc_summerWeekEnergyProduction_kW.getSum());
+	acc_summerWeekEnergyConsumption_kW.addStep(gc.acc_summerWeekEnergyConsumption_kW.getSum());
+	acc_summerWeekEnergyCurtailed_kW.addStep(gc.acc_summerWeekEnergyCurtailed_kW.getSum());
+	acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(gc.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.getSum());
+	//acc_summerWeekOwnElectricityProduction_kW.addStep( gc.acc_summerWeekElectricityProduction_kW.getSum() );
+	
+	acc_winterWeekElectricityConsumption_kW.addStep(gc.acc_winterWeekElectricityConsumption_kW.getSum());
+	acc_winterWeekElectricityProduction_kW.addStep(gc.acc_winterWeekElectricityProduction_kW.getSum());
+	
+	acc_winterWeekEnergyProduction_kW.addStep(gc.acc_winterWeekEnergyProduction_kW.getSum());
+	acc_winterWeekEnergyConsumption_kW.addStep(gc.acc_winterWeekEnergyConsumption_kW.getSum());
+	acc_winterWeekEnergyCurtailed_kW.addStep(gc.acc_winterWeekEnergyCurtailed_kW.getSum());
+	acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(gc.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.getSum());
+	//acc_winterWeekOwnElectricityProduction_kW.addStep( gc.acc_winterWeekElectricityProduction_kW.getSum() );
+	
+	v_totalEnergyProduced_MWh += gc.v_totalEnergyProduced_MWh;
+	v_totalEnergyConsumed_MWh += gc.v_totalEnergyConsumed_MWh;
+
+	// Other totals from accumulators
+	v_totalPrimaryEnergyProductionHeatpumps_MWh += gc.v_totalPrimaryEnergyProductionHeatpumps_MWh;
+	v_totalEnergyCurtailed_MWh += gc.v_totalEnergyCurtailed_MWh;	
 }
 // Calc collective imports/exports
 
-
-// Call groupContract function, multiple variants possible, add OptionsList for variants.
-
-
-
-
-/*
-// gather electricity flows
-for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
-	//traceln("c_coopMembers not empty!");
-	if(a instanceof ConnectionOwner){
-		ConnectionOwner CO = (ConnectionOwner)a;
-		//v_electricityVolume_kWh += CO.v_electricityVolume_kWh;
-		//if (energyModel.v_isRapidRun){		
-		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
-			for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-				fm_currentProductionFlows_kW.addFlow( energyCarrier, GC.fm_currentProductionFlows_kW.get(energyCarrier));
-				fm_currentConsumptionFlows_kW.addFlow( energyCarrier, GC.fm_currentConsumptionFlows_kW.get(energyCarrier));
-				fm_currentBalanceFlows_kW.addFlow( energyCarrier, GC.fm_currentBalanceFlows_kW.get(energyCarrier));
-			}
-			v_currentPrimaryEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
-			v_currentFinalEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
-			v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
-			v_currentPrimaryEnergyProductionHeatpumps_kW += GC.v_currentPrimaryEnergyProductionHeatpumps_kW;
-			v_currentOwnElectricityProduction_kW += GC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-			
-			// Categorical power flows
-			v_fixedConsumptionElectric_kW += GC.v_fixedConsumptionElectric_kW;
-			v_electricHobConsumption_kW += GC.v_electricHobConsumption_kW;
-			v_heatPumpElectricityConsumption_kW += GC.v_heatPumpElectricityConsumption_kW;
-			v_hydrogenElectricityConsumption_kW += GC.v_hydrogenElectricityConsumption_kW;
-			v_evChargingPowerElectric_kW += GC.v_evChargingPowerElectric_kW;
-			v_batteryPowerElectric_kW += GC.v_batteryPowerElectric_kW;
-			v_windProductionElectric_kW += GC.v_windProductionElectric_kW;
-			v_pvProductionElectric_kW += GC.v_pvProductionElectric_kW;
-			v_conversionPowerElectric_kW += GC.v_conversionPowerElectric_kW;
-
-		}
-
-	} else if (a instanceof EnergyCoop) {
-		EnergyCoop EC = (EnergyCoop)a;
-		
-		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-			fm_currentProductionFlows_kW.addFlow( energyCarrier, EC.fm_currentProductionFlows_kW.get(energyCarrier));
-			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, EC.fm_currentConsumptionFlows_kW.get(energyCarrier));
-			fm_currentBalanceFlows_kW.addFlow( energyCarrier, EC.fm_currentBalanceFlows_kW.get(energyCarrier));
-		}
-		v_currentOwnElectricityProduction_kW += EC.v_currentOwnElectricityProduction_kW;
-		
-	}
-}
-
-for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' production/consumption, but use 'nett flow' as measure of consumption/production
-	if(a instanceof ConnectionOwner){
-		ConnectionOwner CO = (ConnectionOwner)a;
-		
-		for (GridConnection GC : CO.c_ownedGridConnections) { // Take 'behind the meter' production and consumption!
-			for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-				double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
-				fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
-				fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
-				fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
-				if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-					v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
-					v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
-				}
-			}
-
-		}
-		
-	} else if (a instanceof EnergyCoop) {
-	
-		//traceln("Hello!? coopCustomer EnergyCoop!");
-		EnergyCoop EC = (EnergyCoop)a;
-				
-		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-			fm_currentProductionFlows_kW.addFlow( energyCarrier, EC.fm_currentProductionFlows_kW.get(energyCarrier));
-			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, EC.fm_currentConsumptionFlows_kW.get(energyCarrier));
-			fm_currentBalanceFlows_kW.addFlow( energyCarrier, EC.fm_currentBalanceFlows_kW.get(energyCarrier));
-		}
-		
-		v_currentCustomerFeedIn_kW += EC.v_currentCustomerFeedIn_kW;
-		v_currentCustomerDelivery_kW += EC.v_currentCustomerDelivery_kW;
-
-	}
-}
-
-*/
 /*ALCODEEND*/}
 
 double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
@@ -2134,11 +2076,11 @@ c_memberGridConnections = gcList;
 dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 
-
 // Call KPI-without-yearsim function in energyCoop
 
 f_collectGridConnectionTotals();
-f_calculateKPIspartial();
+//f_calculateKPIspartial();
+f_calculateKPIs();
 
 /*ALCODEEND*/}
 
@@ -2149,8 +2091,8 @@ double f_calculateKPIspartial()
 //// TOTALS
 // Get import / export from balance accumulators.
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	fm_totalImports_MWh.put( EC, am_totalBalanceAccumulators_kW.get(EC).getSumPos() * energyModel.p_timeStep_h / 1000 );
-	fm_totalExports_MWh.put( EC, -am_totalBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
+	fm_totalImports_MWh.put( EC, am_totalBalanceAccumulators_kW.get(EC).getSumPos() * am_totalBalanceAccumulators_kW.get(EC).getSignalResolution_h() / 1000 );
+	fm_totalExports_MWh.put( EC, -am_totalBalanceAccumulators_kW.get(EC).getSumNeg() * am_totalBalanceAccumulators_kW.get(EC).getSignalResolution_h() / 1000 );
 }
 
 // Sum up the import / export totals

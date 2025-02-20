@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.io.*;
 
 import zeroPackage.ZeroMath;
-import zeroPackage.ZeroAccumulator;
+//import zeroPackage.ZeroAccumulator;
 import javax.management.RuntimeErrorException;]]></Import>
 	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);]]></StartupCode>
 	<Generic>false</Generic>
