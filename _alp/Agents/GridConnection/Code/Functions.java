@@ -1064,7 +1064,8 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 		v_activeEnergyCarriers.add(EC);
 		
 		if (energyModel.b_isInitialized) {
-			energyModel.v_activeEnergyCarriers.add(EC);
+			energyModel.f_addEnergyCarrier(EC);
+			//energyModel.v_activeEnergyCarriers.add(EC);
 			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();

@@ -2629,3 +2629,26 @@ remove_pop_energyCoops(energyCoop);
 
 /*ALCODEEND*/}
 
+EnergyCoop f_addEnergyCarrier(OL_EnergyCarriers EC)
+{/*ALCODESTART::1740056275008*/
+v_activeEnergyCarriers.add(EC);
+
+DataSet dsDemand = new DataSet( (int)(168 / p_timeStep_h) );
+DataSet dsSupply = new DataSet( (int)(168 / p_timeStep_h) );
+double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+	dsDemand.add( t, 0);
+	dsSupply.add( t, 0);
+}
+dsm_liveDemand_kW.put( EC, dsDemand);
+dsm_liveSupply_kW.put( EC, dsSupply);
+dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
+dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
+dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
+dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
+dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
+dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
+
+/*ALCODEEND*/}
+
