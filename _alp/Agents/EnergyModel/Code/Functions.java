@@ -2335,12 +2335,12 @@ getExperiment().getEngine().setStartDate(startDate);
 
 
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
-pop_connectionOwners.forEach(CO -> CO.f_initialize());
-pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 
 f_buildGridNodeTree();
 c_gridConnections.forEach(GC -> GC.f_initialize());
 
+pop_connectionOwners.forEach(CO -> CO.f_initialize());
+pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 
 // Loop over populations to check v_ispaused
 f_initializePause();

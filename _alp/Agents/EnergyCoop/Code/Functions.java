@@ -17,18 +17,20 @@ double f_connectToChild(Actor ConnectingChildActor,OL_EnergyCarriers EnergyCarri
 				
 		break;		
 }*/
-
 if (ConnectingChildActor.p_actorGroup != null) {
 	if (ConnectingChildActor.p_actorGroup.contains("production") || ConnectingChildActor.p_actorGroup.contains("Production") || ConnectingChildActor.p_actorGroup.contains("member")) { // Count owned production-sites as 'behind the meter'
 		c_coopMembers.add( ConnectingChildActor);
 		c_memberGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
+		//traceln("Adding: %s", ((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 	} else {
 		c_coopCustomers.add( ConnectingChildActor );
 		c_customerGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
+		
 	}
 } else {
 	c_coopCustomers.add( ConnectingChildActor );
 	c_customerGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
+	//traceln("Adding: %s", ((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 }
 
 /*
@@ -2015,8 +2017,8 @@ for (int i = 0; i<arraySize; i++) {
 	double currentBalance_kW = 0;
 	for (GridConnection gc : c_memberGridConnections) {
 		currentBalance_kW += gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()[i];
-		am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 	}	
+	am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 }
 for (GridConnection gc : c_memberGridConnections) {
 	acc_totalElectricityConsumption_kW.addStep(gc.acc_totalElectricityConsumption_kW.getSum());
