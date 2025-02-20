@@ -25,6 +25,12 @@ import java.util.EnumSet;]]></Import>
 		<Parameter>
 			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

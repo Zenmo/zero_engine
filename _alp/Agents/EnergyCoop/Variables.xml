@@ -4261,6 +4261,94 @@
 			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1740059065414</Id>
+		<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
+		<X>494.6</X>
+		<Y>777.4</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1740059065416</Id>
+		<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
+		<X>494.6</X>
+		<Y>757.4</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1740059453513</Id>
+		<Name><![CDATA[b_isRealDeliveryCapacityAvailable]]></Name>
+		<X>300</X>
+		<Y>308</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[true]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1740059453515</Id>
+		<Name><![CDATA[b_isRealFeedinCapacityAvailable]]></Name>
+		<X>300</X>
+		<Y>328</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[true]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1669037234222</Id>
 		<Name><![CDATA[p_actorContractList]]></Name>
@@ -4290,7 +4378,8 @@
 		<Id>1669036172744</Id>
 		<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 		<Description><![CDATA[TODO: This is still hardcoded! How should Coop know where to 'gather' this data? (Capacity of shared connection)]]></Description>
-		<X>60</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-170</X>
 		<Y>330</Y>
 		<Label>
 			<X>10</X>
@@ -4319,8 +4408,9 @@
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-		<X>60</X>
-		<Y>310</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-340</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4658,6 +4748,56 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1740058635580</Id>
+		<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
+		<X>62.400000000000006</X>
+		<Y>332</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1740058635578</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1740058635586</Id>
+		<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
+		<X>62.400000000000006</X>
+		<Y>312</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1740058635584</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1679563561816</Id>
 		<Name><![CDATA[c_actorContracts]]></Name>
@@ -4710,29 +4850,6 @@
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>Agent</ElementClass>
 			<ValueElementClass>Object</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1731333446360</Id>
-		<Name><![CDATA[c_selectedEnergyCarriers]]></Name>
-		<Description><![CDATA[Only contains Electricity by default]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>480</X>
-		<Y>760</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>OL_EnergyCarriers</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-			<CollectionInitializer Class="CodeValue">
-				<Code><![CDATA[{OL_EnergyCarriers.ELECTRICITY}]]></Code>
-			</CollectionInitializer>
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">

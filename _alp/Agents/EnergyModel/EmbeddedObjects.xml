@@ -725,6 +725,12 @@
 			<Parameter>
 				<Name><![CDATA[p_actorGroup]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

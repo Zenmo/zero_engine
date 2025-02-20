@@ -621,10 +621,38 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 
 double f_initialize()
 {/*ALCODESTART::1669042410671*/
+for(GridConnection GC:c_memberGridConnections){
+	p_contractedDeliveryCapacity_kW += GC.p_contractedDeliveryCapacity_kW;
+	p_contractedFeedinCapacity_kW += GC.p_contractedFeedinCapacity_kW;
+	v_activeEnergyCarriers.addAll(GC.v_activeEnergyCarriers);
+	v_activeProductionEnergyCarriers.addAll(GC.v_activeProductionEnergyCarriers);
+	v_activeConsumptionEnergyCarriers.addAll(GC.v_activeConsumptionEnergyCarriers);
+	
+
+	if(!GC.b_isRealDeliveryCapacityAvailable){
+		b_isRealDeliveryCapacityAvailable = false;
+	
+	}
+
+	if(!GC.b_isRealFeedinCapacityAvailable){
+		b_isRealFeedinCapacityAvailable = false;
+	
+	} 
+}
+
+dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+
+// Accumulators
+am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
+am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
+am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
+
+/*
 if ( p_actorContractList != null) {
 	f_setContractValues();	
 }
-//f_connectToParentActor();
 
 if (p_gridNodeUnderResponsibility != null){
 	GridNode myParentNodeElectric = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_gridNodeUnderResponsibility)) ;
@@ -642,28 +670,7 @@ if (p_gridNodeUnderResponsibility != null){
 }
 
 v_allowedCapacity_kW = p_connectionCapacity_kW;
-
-// Accumulators
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 8760 );
-am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
-
-// DatasetMaps
-dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-
-/*if(!v_enable_nfATO_b){
-	e_startNonFirmATO.reset();
-	e_endNonFirmATO.reset();
-}
-else {
-	e_startNonFirmATO.restartTo(v_contractConnection.nfATOstart_h, HOUR);
-	e_endNonFirmATO.restartTo(v_contractConnection.nfATOend_h, HOUR);
-	if(v_contractConnection.nfATOpower_kW == 0.0) { v_contractConnection.nfATOpower_kW = p_connectionCapacity_kW; }
-}*/
-
-//f_setInitPriceBands();
+*/
 /*ALCODEEND*/}
 
 double f_updateIncentives()
@@ -1961,13 +1968,9 @@ v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - 
 
 double f_collectGridConnectionTotals()
 {/*ALCODESTART::1739970817879*/
-// Accumulators
+// Make collective profiles, electricity per timestep, other energy carriers per day!
 am_totalBalanceAccumulators_kW.createEmptyAccumulators( energyModel.v_activeEnergyCarriers, true, 24, 8760 );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760) );
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(energyModel.v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 24*7);
-
-// Make collective profiles, electricity per timestep, other energy carriers per day!
 
 //Electricity
 int arraySize = c_memberGridConnections.get(0).am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().length;
@@ -2055,12 +2058,7 @@ double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1739974426481*/
 c_memberGridConnections = gcList;
 
-for(GridConnection GC:gcList){
-	v_activeEnergyCarriers.addAll(GC.v_activeEnergyCarriers);
-}
-
-dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+f_initialize();
 
 f_collectGridConnectionTotals();
 
@@ -2448,5 +2446,29 @@ if (energyModel.b_isLastTimeStepOfDay) {
 }
 
 
+/*ALCODEEND*/}
+
+double f_getGroupContractDeliveryCapacity_kW()
+{/*ALCODESTART::1740059187265*/
+DataSet data_netbelastingDuurkromme_kW = f_getDuurkromme();
+int arraySize = data_netbelastingDuurkromme_kW.size();
+if (arraySize < 8760/energyModel.p_timeStep_h){
+	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
+	return 0.0;
+} else {
+	return data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/energyModel.p_timeStep_h));
+}
+/*ALCODEEND*/}
+
+double f_getGroupContractFeedinCapacity_kW()
+{/*ALCODESTART::1740059261369*/
+DataSet data_netbelastingDuurkromme_kW = f_getDuurkromme();
+int arraySize = data_netbelastingDuurkromme_kW.size();
+if (arraySize < 8760/energyModel.p_timeStep_h){
+	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
+	return 0.0;
+} else {
+	return data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h));
+}
 /*ALCODEEND*/}
 
