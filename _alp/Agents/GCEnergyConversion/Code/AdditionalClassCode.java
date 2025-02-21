@@ -16,5 +16,5 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 @Override
 public void f_rapidRunDataLogging() {
 	super.f_rapidRunDataLogging();
-	f_fillAnnualDatasets_electrolyser();
+	//f_fillAnnualDatasets_electrolyser();
 }

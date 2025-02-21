@@ -2315,7 +2315,7 @@
 		<Id>1715086685651</Id>
 		<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
 		<X>820</X>
-		<Y>1920</Y>
+		<Y>1965</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2334,7 +2334,7 @@
 		<Id>1715086685653</Id>
 		<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
 		<X>820</X>
-		<Y>1940</Y>
+		<Y>1985</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2353,7 +2353,7 @@
 		<Id>1715086685655</Id>
 		<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
 		<X>820</X>
-		<Y>1960</Y>
+		<Y>2005</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2372,7 +2372,7 @@
 		<Id>1715086685657</Id>
 		<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
 		<X>820</X>
-		<Y>1980</Y>
+		<Y>2025</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3786,7 +3786,7 @@
 		<Id>1730726947778</Id>
 		<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
 		<X>820</X>
-		<Y>2100</Y>
+		<Y>2145</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3808,7 +3808,7 @@
 		<Id>1730727024714</Id>
 		<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
 		<X>820</X>
-		<Y>2120</Y>
+		<Y>2165</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3830,7 +3830,7 @@
 		<Id>1730727333815</Id>
 		<Name><![CDATA[dsm_dailyAverageDemandDataSets_kW]]></Name>
 		<X>1170</X>
-		<Y>2100</Y>
+		<Y>2140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3852,7 +3852,7 @@
 		<Id>1730727398733</Id>
 		<Name><![CDATA[dsm_dailyAverageSupplyDataSets_kW]]></Name>
 		<X>1170</X>
-		<Y>2120</Y>
+		<Y>2160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3874,7 +3874,7 @@
 		<Id>1730729164023</Id>
 		<Name><![CDATA[dsm_summerWeekDemandDataSets_kW]]></Name>
 		<X>1590</X>
-		<Y>2100</Y>
+		<Y>2140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3896,7 +3896,7 @@
 		<Id>1730729202069</Id>
 		<Name><![CDATA[dsm_summerWeekSupplyDataSets_kW]]></Name>
 		<X>1590</X>
-		<Y>2120</Y>
+		<Y>2160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3918,7 +3918,7 @@
 		<Id>1730729205882</Id>
 		<Name><![CDATA[dsm_winterWeekDemandDataSets_kW]]></Name>
 		<X>2070</X>
-		<Y>2100</Y>
+		<Y>2140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3940,7 +3940,7 @@
 		<Id>1730729207173</Id>
 		<Name><![CDATA[dsm_winterWeekSupplyDataSets_kW]]></Name>
 		<X>2070</X>
-		<Y>2120</Y>
+		<Y>2160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4523,7 +4523,7 @@
 		<Id>1734091100383</Id>
 		<Name><![CDATA[v_dailyCHPElectricityProduction_kW]]></Name>
 		<X>820</X>
-		<Y>2000</Y>
+		<Y>2045</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4583,7 +4583,7 @@
 		<Id>1737542823483</Id>
 		<Name><![CDATA[v_dailyBatteryStoredEnergy_MWh]]></Name>
 		<X>820</X>
-		<Y>2030</Y>
+		<Y>2075</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4621,7 +4621,26 @@
 		<Id>1738838125164</Id>
 		<Name><![CDATA[v_dailyDistrictHeatingDemand_kW]]></Name>
 		<X>820</X>
-		<Y>2060</Y>
+		<Y>2105</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1740152007250</Id>
+		<Name><![CDATA[v_dailyElectrolyserElectricityDemand_kW]]></Name>
+		<X>820</X>
+		<Y>1910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

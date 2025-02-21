@@ -595,23 +595,3 @@ switch (ElectrolyserAsset.getState()){
 
 /*ALCODEEND*/}
 
-double f_fillAnnualDatasets_electrolyser()
-{/*ALCODESTART::1731589202880*/
-if (energyModel.b_isSummerWeek) {
-	data_summerWeekElectrolyserDemand_kW.add(energyModel.t_h, max(0, v_hydrogenElectricityConsumption_kW));
-}
-
-if (energyModel.b_isWinterWeek) {
-	data_winterWeekElectrolyserDemand_kW.add(energyModel.t_h, max(0, v_hydrogenElectricityConsumption_kW));
-}
-
-v_dailyAverageElectrolyserDemand_kW += v_hydrogenElectricityConsumption_kW;
-
-if (energyModel.b_isLastTimeStepOfDay) {
-	data_annualElectrolyserDemand_kW.add(energyModel.t_h, v_dailyAverageElectrolyserDemand_kW / (24 / energyModel.p_timeStep_h));
-	v_dailyAverageElectrolyserDemand_kW = 0;
-}
-
-
-/*ALCODEEND*/}
-
