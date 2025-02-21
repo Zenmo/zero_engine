@@ -4822,6 +4822,33 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1739785906811</Id>
+					<Name><![CDATA[v_gasConsumed_month]]></Name>
+					<X>810</X><Y>620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1739785981193</Id>
+					<Name><![CDATA[v_indexMonth]]></Name>
+					<X>810</X><Y>590</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -5921,6 +5948,42 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[pauseSimulation();]]></Action>
+				</Event>
+				<Event>
+					<Id>1739785917654</Id>
+					<Name><![CDATA[event]]></Name>
+					<X>810</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1739865600000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[double cumConsumption = sum(Houses, x -> x.v_methaneDelivered_kWh);
+double hwd = sum(Houses, x -> x.v_hotwaterDemand_kWh);
+//traceln(roundToInt(cumConsumption));
+
+v_indexMonth ++;
+]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -42911,6 +42974,18 @@ public void f_simpleCharging(){
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1739787910380</Id>
+					<Name><![CDATA[v_hotwaterDemand_kWh]]></Name>
+					<X>460</X><Y>1460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1674464900101</Id>
 					<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
@@ -43257,6 +43332,8 @@ public void f_simpleCharging(){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.getLastFlows()[7] : 0;
+v_hotwaterDemand_kWh += v_hotwaterDemand_kW * 0.25;
+
 setHeatingTargetTemp();
  
 switch (p_heatingType) {	
