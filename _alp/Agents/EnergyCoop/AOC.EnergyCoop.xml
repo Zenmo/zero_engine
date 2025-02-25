@@ -123,8 +123,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370641</Id>
 			<Name><![CDATA[data_liveElectricityBalance_kW]]></Name>
-			<X>100</X>
-			<Y>2320</Y>
+			<X>870</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -149,8 +149,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370644</Id>
 			<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2090</Y>
+			<X>870</X>
+			<Y>1910</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -177,8 +177,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370647</Id>
 			<Name><![CDATA[data_windGeneration_kW]]></Name>
-			<X>100</X>
-			<Y>2190</Y>
+			<X>870</X>
+			<Y>2010</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -205,8 +205,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370650</Id>
 			<Name><![CDATA[data_V2GSupply_kW]]></Name>
-			<X>100</X>
-			<Y>2230</Y>
+			<X>870</X>
+			<Y>2050</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -233,8 +233,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370653</Id>
 			<Name><![CDATA[data_PVGeneration_kW]]></Name>
-			<X>100</X>
-			<Y>2170</Y>
+			<X>870</X>
+			<Y>1990</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -261,8 +261,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370656</Id>
 			<Name><![CDATA[data_batteryCharging_kW]]></Name>
-			<X>100</X>
-			<Y>2130</Y>
+			<X>870</X>
+			<Y>1950</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -289,8 +289,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370659</Id>
 			<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2050</Y>
+			<X>870</X>
+			<Y>1870</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -317,8 +317,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370662</Id>
 			<Name><![CDATA[data_totalDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2280</Y>
+			<X>870</X>
+			<Y>2100</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -345,8 +345,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370665</Id>
 			<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2110</Y>
+			<X>870</X>
+			<Y>1930</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -373,8 +373,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370668</Id>
 			<Name><![CDATA[data_batteryDischarging_kW]]></Name>
-			<X>100</X>
-			<Y>2210</Y>
+			<X>870</X>
+			<Y>2030</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -401,8 +401,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370678</Id>
 			<Name><![CDATA[data_hydrogenElectricityDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2070</Y>
+			<X>870</X>
+			<Y>1890</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -429,8 +429,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370685</Id>
 			<Name><![CDATA[data_totalSupply_kW]]></Name>
-			<X>100</X>
-			<Y>2300</Y>
+			<X>870</X>
+			<Y>2120</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -457,8 +457,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370688</Id>
 			<Name><![CDATA[data_gridCapacityDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2340</Y>
+			<X>870</X>
+			<Y>2160</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -485,8 +485,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370696</Id>
 			<Name><![CDATA[data_gridCapacitySupply_kW]]></Name>
-			<X>380</X>
-			<Y>2340</Y>
+			<X>1150</X>
+			<Y>2160</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -513,8 +513,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370705</Id>
 			<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
-			<X>100</X>
-			<Y>2360</Y>
+			<X>870</X>
+			<Y>2180</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -541,8 +541,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370710</Id>
 			<Name><![CDATA[data_districtHeatDelivery_kW]]></Name>
-			<X>100</X>
-			<Y>2380</Y>
+			<X>870</X>
+			<Y>2200</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -569,8 +569,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370715</Id>
 			<Name><![CDATA[data_CHPElectricityProductionLiveWeek_kW]]></Name>
-			<X>100</X>
-			<Y>2250</Y>
+			<X>870</X>
+			<Y>2070</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -597,8 +597,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740150370727</Id>
 			<Name><![CDATA[data_batteryStoredEnergyLiveWeek_MWh]]></Name>
-			<X>100</X>
-			<Y>2410</Y>
+			<X>870</X>
+			<Y>2230</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -625,8 +625,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740151409340</Id>
 			<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
-			<X>1450</X>
-			<Y>2029</Y>
+			<X>2220</X>
+			<Y>1849</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -651,8 +651,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740151409359</Id>
 			<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
-			<X>1930</X>
-			<Y>2027</Y>
+			<X>2700</X>
+			<Y>1847</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -677,8 +677,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557564</Id>
 			<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2080</Y>
+			<X>1800</X>
+			<Y>1900</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -703,8 +703,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557567</Id>
 			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-			<X>1030</X>
-			<Y>2230</Y>
+			<X>1800</X>
+			<Y>2050</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -729,8 +729,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557570</Id>
 			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-			<X>1030</X>
-			<Y>2270</Y>
+			<X>1800</X>
+			<Y>2090</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -755,8 +755,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557573</Id>
 			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-			<X>1030</X>
-			<Y>2210</Y>
+			<X>1800</X>
+			<Y>2030</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -781,8 +781,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557576</Id>
 			<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2120</Y>
+			<X>1800</X>
+			<Y>1940</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -807,8 +807,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557579</Id>
 			<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2060</Y>
+			<X>1800</X>
+			<Y>1880</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -833,8 +833,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557582</Id>
 			<Name><![CDATA[data_annualElectricVehicleDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2100</Y>
+			<X>1800</X>
+			<Y>1920</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -859,8 +859,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557585</Id>
 			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-			<X>1030</X>
-			<Y>2250</Y>
+			<X>1800</X>
+			<Y>2070</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -885,8 +885,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557588</Id>
 			<Name><![CDATA[data_summerWeekHeatPumpElectricityDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2080</Y>
+			<X>2220</X>
+			<Y>1900</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -911,8 +911,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557591</Id>
 			<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
-			<X>1450</X>
-			<Y>2230</Y>
+			<X>2220</X>
+			<Y>2050</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -937,8 +937,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557594</Id>
 			<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
-			<X>1450</X>
-			<Y>2270</Y>
+			<X>2220</X>
+			<Y>2090</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -963,8 +963,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557600</Id>
 			<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
-			<X>1450</X>
-			<Y>2210</Y>
+			<X>2220</X>
+			<Y>2030</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -989,8 +989,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557606</Id>
 			<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2120</Y>
+			<X>2220</X>
+			<Y>1940</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1015,8 +1015,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557613</Id>
 			<Name><![CDATA[data_summerWeekBaseloadElectricityDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2060</Y>
+			<X>2220</X>
+			<Y>1880</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1041,8 +1041,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557619</Id>
 			<Name><![CDATA[data_summerWeekElectricVehicleDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2100</Y>
+			<X>2220</X>
+			<Y>1920</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1067,8 +1067,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557626</Id>
 			<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
-			<X>1450</X>
-			<Y>2250</Y>
+			<X>2220</X>
+			<Y>2070</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1093,8 +1093,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557632</Id>
 			<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2081</Y>
+			<X>2700</X>
+			<Y>1901</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1119,8 +1119,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557638</Id>
 			<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
-			<X>1930</X>
-			<Y>2231</Y>
+			<X>2700</X>
+			<Y>2051</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1145,8 +1145,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557645</Id>
 			<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
-			<X>1930</X>
-			<Y>2271</Y>
+			<X>2700</X>
+			<Y>2091</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1171,8 +1171,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557651</Id>
 			<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
-			<X>1930</X>
-			<Y>2211</Y>
+			<X>2700</X>
+			<Y>2031</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1197,8 +1197,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557658</Id>
 			<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2121</Y>
+			<X>2700</X>
+			<Y>1941</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1223,8 +1223,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557665</Id>
 			<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2061</Y>
+			<X>2700</X>
+			<Y>1881</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1249,8 +1249,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557671</Id>
 			<Name><![CDATA[data_winterWeekElectricVehicleDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2101</Y>
+			<X>2700</X>
+			<Y>1921</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1275,8 +1275,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557678</Id>
 			<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
-			<X>1930</X>
-			<Y>2251</Y>
+			<X>2700</X>
+			<Y>2071</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1301,8 +1301,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557685</Id>
 			<Name><![CDATA[data_summerWeekCHPElectricityProduction_kW]]></Name>
-			<X>1450</X>
-			<Y>2290</Y>
+			<X>2220</X>
+			<Y>2110</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1327,8 +1327,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557691</Id>
 			<Name><![CDATA[data_winterWeekCHPElectricityProduction_kW]]></Name>
-			<X>1930</X>
-			<Y>2290</Y>
+			<X>2700</X>
+			<Y>2110</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1353,8 +1353,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557698</Id>
 			<Name><![CDATA[data_annualCHPElectricitySupply_kW]]></Name>
-			<X>1030</X>
-			<Y>2290</Y>
+			<X>1800</X>
+			<Y>2110</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1379,8 +1379,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557705</Id>
 			<Name><![CDATA[data_annualBatteryStoredEnergy_MWh]]></Name>
-			<X>1030</X>
-			<Y>2320</Y>
+			<X>1800</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1405,8 +1405,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557711</Id>
 			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2140</Y>
+			<X>1800</X>
+			<Y>1960</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1431,8 +1431,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557718</Id>
 			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
-			<X>1930</X>
-			<Y>2320</Y>
+			<X>2700</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1457,8 +1457,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557725</Id>
 			<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2140</Y>
+			<X>2220</X>
+			<Y>1960</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1483,8 +1483,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557731</Id>
 			<Name><![CDATA[data_summerWeekBatteryStoredEnergy_MWh]]></Name>
-			<X>1450</X>
-			<Y>2320</Y>
+			<X>2220</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1509,8 +1509,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557739</Id>
 			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2140</Y>
+			<X>2700</X>
+			<Y>1960</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1535,8 +1535,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557745</Id>
 			<Name><![CDATA[data_annualDistrictHeatingDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2350</Y>
+			<X>1800</X>
+			<Y>2170</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1561,8 +1561,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557752</Id>
 			<Name><![CDATA[data_summerWeekDistrictHeatingDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2350</Y>
+			<X>2220</X>
+			<Y>2170</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1587,8 +1587,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557759</Id>
 			<Name><![CDATA[data_winterWeekDistrictHeatingDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2350</Y>
+			<X>2700</X>
+			<Y>2170</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1613,8 +1613,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557766</Id>
 			<Name><![CDATA[data_annualElectrolyserElectricityDemand_kW]]></Name>
-			<X>1030</X>
-			<Y>2160</Y>
+			<X>1800</X>
+			<Y>1980</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1639,8 +1639,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557772</Id>
 			<Name><![CDATA[data_summerWeekElectrolyserElectricityDemand_kW]]></Name>
-			<X>1450</X>
-			<Y>2160</Y>
+			<X>2220</X>
+			<Y>1980</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1665,8 +1665,8 @@ import java.util.EnumSet;]]></Import>
 		<DataSet>
 			<Id>1740152557779</Id>
 			<Name><![CDATA[data_winterWeekElectrolyserElectricityDemand_kW]]></Name>
-			<X>1930</X>
-			<Y>2160</Y>
+			<X>2700</X>
+			<Y>1980</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>

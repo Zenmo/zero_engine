@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
+	<Rectangle>
+		<Id>1740491441996</Id>
+		<Name><![CDATA[rect_energyBalanceMonitor]]></Name>
+		<X>0</X>
+		<Y>980</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<Lock>true</Lock>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>3</LineWidth>
+		<LineColor>-7876870</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>840</Width>
+		<Height>720</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
 	<BarChart>
 		<Id>1692631026123</Id>
 		<Name><![CDATA[ch_coopBalance]]></Name>
@@ -84,9 +111,9 @@
 	</BarChart>
 	<Text>
 		<Id>1723034834835</Id>
-		<Name><![CDATA[text13]]></Name>
-		<X>-312</X>
-		<Y>1229</Y>
+		<Name><![CDATA[txt_productionEnergyBalanceMonitor_electricity]]></Name>
+		<X>78</X>
+		<Y>1309</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -109,9 +136,9 @@
 	</Text>
 	<Text>
 		<Id>1723034834837</Id>
-		<Name><![CDATA[text16]]></Name>
-		<X>-312</X>
-		<Y>1009</Y>
+		<Name><![CDATA[txt_consumptionEnergyBalanceMonitor]]></Name>
+		<X>530</X>
+		<Y>1090</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -130,13 +157,13 @@
 			<Size>10</Size>
 			<Style>0</Style>
 		</Font>
-		<Alignment>LEFT</Alignment>
+		<Alignment>CENTER</Alignment>
 	</Text>
 	<Text>
 		<Id>1723034834841</Id>
-		<Name><![CDATA[text12]]></Name>
-		<X>-342</X>
-		<Y>1059</Y>
+		<Name><![CDATA[txt_consumptionOrProduction_electricity]]></Name>
+		<X>48</X>
+		<Y>1139</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -159,9 +186,9 @@
 	</Text>
 	<Text>
 		<Id>1723034834843</Id>
-		<Name><![CDATA[text9]]></Name>
-		<X>-282</X>
-		<Y>981</Y>
+		<Name><![CDATA[txt_electricityEnergyBalanceMonitor]]></Name>
+		<X>108</X>
+		<Y>1061</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -179,6 +206,207 @@
 			<Name><![CDATA[Arial]]></Name>
 			<Size>14</Size>
 			<Style>2</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Text>
+		<Id>1740403771886</Id>
+		<Name><![CDATA[txt_cumulativeAssetCapacities]]></Name>
+		<X>1410</X>
+		<Y>390</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Cumulative asset capacities]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1740403817351</Id>
+		<Name><![CDATA[txt_cumulativeIndividualGCValues]]></Name>
+		<X>1410</X>
+		<Y>520</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Cumulative individual GC values]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>12</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1740490188581</Id>
+		<Name><![CDATA[text8]]></Name>
+		<X>400</X>
+		<Y>1010</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<Lock>true</Lock>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Energy balance monitor]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>20</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Text>
+		<Id>1740491352854</Id>
+		<Name><![CDATA[txt_otherEnergyBalanceMonitor]]></Name>
+		<X>520</X>
+		<Y>1060</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Other energy types]]></Text>
+		<Font>
+			<Name><![CDATA[Arial]]></Name>
+			<Size>14</Size>
+			<Style>2</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Text>
+		<Id>1740491671178</Id>
+		<Name><![CDATA[txt_consumptionEnergyBalanceMonitor_electricity]]></Name>
+		<X>90</X>
+		<Y>1090</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Consumption]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>10</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
+	<Text>
+		<Id>1740491692081</Id>
+		<Name><![CDATA[txt_consumptionOrProduction_energy]]></Name>
+		<X>530</X>
+		<Y>1160</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Consumption or production]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>10</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Text>
+		<Id>1740491726747</Id>
+		<Name><![CDATA[txt_productionEnergyBalanceMonitor_energy]]></Name>
+		<X>530</X>
+		<Y>1230</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Production]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>10</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Text>
+		<Id>1740491824448</Id>
+		<Name><![CDATA[txt_otherEnergyBalanceMonitor_electricity]]></Name>
+		<X>100</X>
+		<Y>1420</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Other]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>10</Size>
+			<Style>0</Style>
 		</Font>
 		<Alignment>CENTER</Alignment>
 	</Text>

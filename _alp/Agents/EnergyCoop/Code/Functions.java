@@ -183,6 +183,8 @@ v_batteryPowerElectric_kW = 0;
 v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
+v_districtHeatDelivery_kW = 0;
+v_CHPProductionElectric_kW = 0;
 
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
@@ -191,6 +193,9 @@ v_currentPrimaryEnergyProduction_kW = 0;
 v_currentFinalEnergyConsumption_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
+
+//Stored energy
+v_batteryStoredEnergy_kWh = 0;
 
 for (GridConnection GC : c_memberGridConnections) { // Take 'behind the meter' production and consumption!
 	for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
@@ -204,16 +209,6 @@ for (GridConnection GC : c_memberGridConnections) { // Take 'behind the meter' p
 	v_currentPrimaryEnergyProductionHeatpumps_kW += GC.v_currentPrimaryEnergyProductionHeatpumps_kW;
 	v_currentOwnElectricityProduction_kW += GC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 	
-	/*
-	v_currentEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
-	v_currentEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
-	v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
-	v_currentElectricityConsumption_kW += GC.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	v_currentElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	
-	v_currentOwnElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-	*/
-	
 	// Categorical power flows
 	v_fixedConsumptionElectric_kW += GC.v_fixedConsumptionElectric_kW;
 	v_electricHobConsumption_kW += GC.v_electricHobConsumption_kW;
@@ -224,14 +219,12 @@ for (GridConnection GC : c_memberGridConnections) { // Take 'behind the meter' p
 	v_windProductionElectric_kW += GC.v_windProductionElectric_kW;
 	v_pvProductionElectric_kW += GC.v_pvProductionElectric_kW;
 	v_conversionPowerElectric_kW += GC.v_conversionPowerElectric_kW;
+	v_districtHeatDelivery_kW += GC.v_districtHeatDelivery_kW;
+	v_CHPProductionElectric_kW += GC.v_CHPProductionElectric_kW;
 	
-	/*
-	//v_methaneVolume_kWh += GC.v_currentPowerMethane_kW * energyModel.p_timeStep_h;
-	v_methaneVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.METHANE) * energyModel.p_timeStep_h;
-	v_dieselVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.DIESEL) * energyModel.p_timeStep_h;
-	v_hydrogenVolume_kWh += GC.v_currentBalanceFlows_kW.get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeStep_h;
-	*/
-	
+	//Battery stored energy
+	v_batteryStoredEnergy_kWh += GC.v_batteryStoredEnergy_kWh;
+
 }
 
 
@@ -245,7 +238,6 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, EC.fm_currentConsumptionFlows_kW.get(energyCarrier));
 			fm_currentBalanceFlows_kW.addFlow( energyCarrier, EC.fm_currentBalanceFlows_kW.get(energyCarrier));
 		}
-		//v_currentOwnElectricityProduction_kW += EC.v_currentOwnElectricityProduction_kW;
 		
 		v_currentPrimaryEnergyProduction_kW += EC.v_currentPrimaryEnergyProduction_kW;
 		v_currentFinalEnergyConsumption_kW += EC.v_currentFinalEnergyConsumption_kW;
@@ -253,15 +245,6 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_currentPrimaryEnergyProductionHeatpumps_kW += EC.v_currentPrimaryEnergyProductionHeatpumps_kW;
 		v_currentOwnElectricityProduction_kW += EC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 		
-		/*
-		v_currentEnergyConsumption_kW += GC.v_currentFinalEnergyConsumption_kW;
-		v_currentEnergyProduction_kW += GC.v_currentPrimaryEnergyProduction_kW;
-		v_currentEnergyCurtailed_kW += GC.v_currentEnergyCurtailed_kW;
-		v_currentElectricityConsumption_kW += GC.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-		v_currentElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-		
-		v_currentOwnElectricityProduction_kW += GC.v_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-		*/
 		
 		// Categorical power flows
 		v_fixedConsumptionElectric_kW += EC.v_fixedConsumptionElectric_kW;
@@ -272,7 +255,12 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_batteryPowerElectric_kW += EC.v_batteryPowerElectric_kW;
 		v_windProductionElectric_kW += EC.v_windProductionElectric_kW;
 		v_pvProductionElectric_kW += EC.v_pvProductionElectric_kW;
-		v_conversionPowerElectric_kW += EC.v_conversionPowerElectric_kW;	
+		v_conversionPowerElectric_kW += EC.v_conversionPowerElectric_kW;
+		v_districtHeatDelivery_kW += EC.v_districtHeatDelivery_kW;
+		v_CHPProductionElectric_kW += EC.v_CHPProductionElectric_kW;
+	
+		//Battery stored energy
+		v_batteryStoredEnergy_kWh += EC.v_batteryStoredEnergy_kWh;
 	}
 }
 
@@ -1076,196 +1064,6 @@ dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(energyModel.v_activeEnergyCa
 
 /*ALCODEEND*/}
 
-double f_calculateKPIsOLD()
-{/*ALCODESTART::1704453927781*/
-v_electricityImported_kWh = acc_annualElectricityBalance_kW.getSumPos() * energyModel.p_timeStep_h;
-v_electricityExported_kWh = -(acc_annualElectricityBalance_kW.getSum() * energyModel.p_timeStep_h - v_electricityImported_kWh);
-//v_electricityExportedToGrid_kWh = -Arrays.stream(a_annualElectricityBalance_kW).filter(m -> m < 0).sum() * energyModel.p_timeStep_h;
-
-v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum()  * energyModel.p_timeStep_h / 1000;
-v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum()  * energyModel.p_timeStep_h / 1000;
-// Electricity self consumption
-v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityProduced_MWh - v_electricityExported_kWh/1000); // Production/export based!
-
-/*v_totalElectricitySelfConsumed_MWh = 0;
-for (int i=0; i<a_annualElectricityBalance_kW.length; i++) { // Look at selfconsumption per timestep to correctly account for low-sun conditions, and ensure selfConsumption cannot be negative per timestep.
-	v_totalElectricitySelfConsumed_MWh += max(0,(a_annualElectricityProduction_kW[i]-max(0,-a_annualElectricityBalance_kW[i])))*energyModel.p_timeStep_h/1000;
-	
-}*/
-// Treat v_totalElectricityConsumed_MWh as electricity delivered to customers!
-
-v_methaneImported_kWh = acc_annualMethaneBalance_kW.getSum() * energyModel.p_timeStep_h;
-v_methaneExported_kWh = 0;
-
-v_hydrogenImported_kWh = acc_annualHydrogenBalance_kW.getSum() * energyModel.p_timeStep_h;
-v_hydrogenExported_kWh = 0;
-
-v_dieselImported_kWh = acc_annualDieselBalance_kW.getSum() * energyModel.p_timeStep_h;
-
-//v_heatImported_kWh = Arrays.stream(a_annualHeatBalance_kW).sum() * energyModel.p_timeStep_h;
-//v_heatExported_kWh = 0;
-
-v_totalImport_MWh = (v_electricityImported_kWh + v_methaneImported_kWh + v_hydrogenImported_kWh + v_dieselImported_kWh)/1000; // v_heatImported_kWh
-v_totalExport_MWh = (v_electricityExported_kWh + v_methaneExported_kWh+ v_hydrogenExported_kWh)/1000; // v_heatExported_kWh
-
-
-v_totalSelfConsumedEnergy_MWh = max(0,v_totalEnergyConsumed_MWh - v_totalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
-double totalSelfConsumedEnergyCheck_MWh = max (0, v_totalEnergyProduced_MWh - v_totalExport_MWh);
-traceln("Check energyCoop consistency of v_totalSelfConsumedEnergy_MWh (should be zero): %s", v_totalSelfConsumedEnergy_MWh - totalSelfConsumedEnergyCheck_MWh);
-
-//// Winter/summer week totals
-// Calcs summerweek
-//int startIdx = roundToInt(energyModel.p_startHourSummerWeek/energyModel.p_timeStep_h);
-//int endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
-v_summerWeekTotalImport_MWh = acc_summerTotalImport_kW.getIntegral()/1000; // Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekTotalExport_MWh = acc_summerTotalExport_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualTotalExport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekEnergyConsumed_MWh = acc_summerEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekEnergyProduced_MWh = acc_summerEnergyProduction_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyProduction_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-
-v_summerWeekSelfConsumedEnergy_MWh = max(0, v_summerWeekEnergyConsumed_MWh - v_summerWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
-//v_summerWeekEnergyCurtailed_MWh=Arrays.copyOfRange(a_annualEnergyCurtailed_kW, energyModel.p_startHourSummerWeek,roundToInt(24*7/energyModel.p_timeStep_h))*energyModel.p_timeStep_h / 1000;
-
-v_summerWeekMethaneImport_MWh = acc_summerMethaneBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_summerWeekDieselImport_MWh = acc_summerDieselBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_summerWeekHydrogenImport_MWh = acc_summerHydrogenBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_summerWeekHydrogenExport_MWh = -acc_summerHydrogenBalance_kW.getSumNeg() * energyModel.p_timeStep_h / 1000;
-// Electricity selfconsumed
-v_summerWeekElectricityImport_MWh = acc_summerElectricityBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityExport_MWh = -acc_summerElectricityBalance_kW.getSumNeg() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityConsumed_MWh = acc_summerElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityProduced_MWh = acc_summerElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
-
-v_summerWeekElectricitySelfConsumed_MWh = max(0,v_summerWeekElectricityConsumed_MWh - v_summerWeekElectricityImport_MWh);v_summerWeekElectricitySelfConsumed_MWh = max(0,v_summerWeekElectricityConsumed_MWh - v_summerWeekElectricityImport_MWh);
-
-// Calcs winterweek
-
-v_winterWeekTotalImport_MWh = acc_winterTotalImport_kW.getIntegral()/1000; // Arrays.stream( Arrays.copyOfRange(a_annualTotalImport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekTotalExport_MWh = acc_winterTotalExport_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualTotalExport_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergyConsumed_MWh = acc_winterEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergyProduced_MWh = acc_winterEnergyProduction_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyProduction_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-
-v_winterWeekSelfConsumedEnergy_MWh = max(0,v_winterWeekEnergyConsumed_MWh - v_winterWeekTotalImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
-//v_winterWeekEnergyCurtailed_MWh=Arrays.copyOfRange(a_annualEnergyCurtailed_kW, energyModel.p_startHourSummerWeek,roundToInt(24*7/energyModel.p_timeStep_h))*energyModel.p_timeStep_h / 1000;
-
-v_winterWeekMethaneImport_MWh = acc_winterMethaneBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_winterWeekDieselImport_MWh = acc_winterDieselBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_winterWeekHydrogenImport_MWh = acc_winterHydrogenBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_winterWeekHydrogenExport_MWh = -acc_winterHydrogenBalance_kW.getSumNeg() * energyModel.p_timeStep_h / 1000;
-
-// Electricity selfconsumed
-v_winterWeekElectricityImport_MWh = acc_winterElectricityBalance_kW.getSumPos() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityExport_MWh = -acc_winterElectricityBalance_kW.getSumNeg() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityConsumed_MWh = acc_winterElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityProduced_MWh = acc_winterElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
-
-v_winterWeekElectricitySelfConsumed_MWh = max(0,v_winterWeekElectricityConsumed_MWh - v_winterWeekElectricityImport_MWh);
-
-// Daytime selfconsumption
-v_daytimeSelfConsumedEnergy_MWh = max(0, v_daytimeEnergyProduced_MWh - v_daytimeTotalExport_MWh);
-v_daytimeElectricitySelfConsumed_MWh = max(0, v_daytimeElectricityConsumed_MWh - v_daytimeElectricityImport_MWh);
-// Nighttime totals: yearly totays minus daytime totals
-v_nighttimeTotalExport_MWh = v_totalExport_MWh - v_daytimeTotalExport_MWh;
-v_nighttimeTotalImport_MWh = v_totalImport_MWh - v_daytimeTotalImport_MWh;
-v_nighttimeEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_daytimeEnergyConsumed_MWh;
-v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
-
-v_nighttimeElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_daytimeElectricityConsumed_MWh;
-v_nighttimeElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_daytimeElectricityProduced_MWh;
-v_nighttimeElectricityImport_MWh = v_electricityImported_kWh/1000 - v_daytimeElectricityImport_MWh;
-v_nighttimeElectricityExport_MWh = v_electricityExported_kWh/1000 - v_daytimeElectricityExport_MWh;
-v_nighttimeMethaneImport_MWh = v_methaneImported_kWh/1000 - v_daytimeMethaneImport_MWh;
-v_nighttimeDieselImport_MWh = v_dieselImported_kWh/1000 - v_daytimeDieselImport_MWh;
-v_nighttimeHydrogenImport_MWh = v_hydrogenImported_kWh/1000 - v_daytimeHydrogenImport_MWh;
-v_nighttimeHydrogenExport_MWh = v_hydrogenExported_kWh/1000 - v_daytimeHydrogenExport_MWh;
-
-v_nighttimeSelfConsumedEnergy_MWh = max(0, v_nighttimeEnergyProduced_MWh - v_nighttimeTotalExport_MWh);
-v_nighttimeElectricitySelfConsumed_MWh = max(0,v_nighttimeElectricityConsumed_MWh - v_nighttimeElectricityImport_MWh);
-
-// Weekday selfconsumption
-v_weekdaySelfConsumedEnergy_MWh = max(0, v_weekdayEnergyProduced_MWh - v_weekdayTotalExport_MWh);
-v_weekdayElectricitySelfConsumed_MWh = max(0,v_weekdayElectricityConsumed_MWh - v_weekdayElectricityImport_MWh);
-// Weekend totals: yearly totals minus weekday totals
-v_weekendTotalExport_MWh = v_totalExport_MWh - v_weekdayTotalExport_MWh;
-v_weekendTotalImport_MWh = v_totalImport_MWh - v_weekdayTotalImport_MWh;
-v_weekendEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_weekdayEnergyConsumed_MWh;
-v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
-v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
-
-v_weekendElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_weekdayElectricityConsumed_MWh;
-v_weekendElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_weekdayElectricityProduced_MWh;
-v_weekendElectricityImport_MWh = v_electricityImported_kWh/1000 - v_weekdayElectricityImport_MWh;
-v_weekendElectricityExport_MWh = v_electricityExported_kWh/1000 - v_weekdayElectricityExport_MWh;
-v_weekendMethaneImport_MWh = v_methaneImported_kWh/1000 - v_weekdayMethaneImport_MWh;
-v_weekendDieselImport_MWh = v_dieselImported_kWh/1000 - v_weekdayDieselImport_MWh;
-v_weekendHydrogenImport_MWh = v_hydrogenImported_kWh/1000 - v_weekdayHydrogenImport_MWh;
-v_weekendHydrogenExport_MWh = v_hydrogenExported_kWh/1000 - v_weekdayHydrogenExport_MWh;
-
-v_weekendSelfConsumedEnergy_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh);
-v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - v_weekendElectricityImport_MWh);
-
-//f_duurkrommes();
-
-/*
-// Summerweek
-int startIdx = roundToInt(energyModel.p_startHourSummerWeek/energyModel.p_timeStep_h);
-int endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
-v_summerWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(acc_annualElectricityBalance_kW.getTimeSeries(), startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityExport_MWh = -Arrays.stream(Arrays.copyOfRange(acc_annualElectricityBalance_kW.getTimeSeries(), startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(acc_annualElectricityConsumption_kW.getTimeSeries(), startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(acc_annualElectricityProduction_kW.getTimeSeries(), startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekElectricitySelfConsumed_MWh = max(0,v_summerWeekElectricityProduced_MWh - v_summerWeekElectricityExport_MWh);
-
-// Winterweek
-startIdx = roundToInt(energyModel.p_startHourWinterWeek/energyModel.p_timeStep_h);
-endIdx = startIdx + roundToInt(24*7/energyModel.p_timeStep_h);
-
-// Electricity selfconsumed
-v_winterWeekElectricityImport_MWh = Arrays.stream(Arrays.copyOfRange(acc_annualElectricityBalance_kW.getTimeSeries(), startIdx, endIdx)).filter(m -> m > 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityExport_MWh = -Arrays.stream(Arrays.copyOfRange(acc_annualElectricityBalance_kW.getTimeSeries(), startIdx, endIdx)).filter(m -> m < 0).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityConsumed_MWh = Arrays.stream(Arrays.copyOfRange(acc_annualElectricityConsumption_kW.getTimeSeries(), startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityProduced_MWh = Arrays.stream(Arrays.copyOfRange(acc_annualElectricityProduction_kW.getTimeSeries(), startIdx, endIdx)).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricitySelfConsumed_MWh = max(0,v_winterWeekElectricityProduced_MWh - v_winterWeekElectricityExport_MWh);
-
-// Daytime selfconsumption
-v_daytimeSelfConsumedEnergy_MWh = v_daytimeEnergyProduced_MWh - v_daytimeTotalExport_MWh;
-v_daytimeElectricitySelfConsumed_MWh = max(0,v_daytimeElectricityProduced_MWh - v_daytimeElectricityExport_MWh);
-
-// Nighttime totals: yearly totays minus daytime totals
-v_nighttimeTotalExport_MWh = v_totalExport_MWh - v_daytimeTotalExport_MWh;
-v_nighttimeTotalImport_MWh = v_totalImport_MWh - v_daytimeTotalImport_MWh;
-v_nighttimeEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_daytimeEnergyConsumed_MWh;
-v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
-v_nighttimeSelfConsumedEnergy_MWh = v_nighttimeEnergyProduced_MWh - v_nighttimeTotalExport_MWh;
-
-v_nighttimeElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_daytimeElectricityConsumed_MWh;
-v_nighttimeElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_daytimeElectricityProduced_MWh;
-v_nighttimeElectricityImport_MWh = v_electricityImported_kWh/1000 - v_daytimeElectricityImport_MWh;
-v_nighttimeElectricityExport_MWh = v_electricityExported_kWh/1000 - v_daytimeElectricityExport_MWh;
-v_nighttimeElectricitySelfConsumed_MWh = max(0,v_nighttimeElectricityProduced_MWh - v_nighttimeElectricityExport_MWh);
-
-// Weekday selfconsumption
-v_weekdaySelfConsumedEnergy_MWh = v_weekdayEnergyProduced_MWh - v_weekdayTotalExport_MWh;
-v_weekdayElectricitySelfConsumed_MWh = max(0,v_weekdayElectricityProduced_MWh - v_weekdayElectricityExport_MWh);
-
-// Weekend totals: yearly totals minus weekday totals
-v_weekendTotalExport_MWh = v_totalExport_MWh - v_weekdayTotalExport_MWh;
-v_weekendTotalImport_MWh = v_totalImport_MWh - v_weekdayTotalImport_MWh;
-v_weekendEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_weekdayEnergyConsumed_MWh;
-v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
-v_weekendSelfConsumedEnergy_MWh = v_weekendEnergyProduced_MWh - v_weekendTotalExport_MWh;
-
-v_weekendElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_weekdayElectricityConsumed_MWh;
-v_weekendElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_weekdayElectricityProduced_MWh;
-v_weekendElectricityImport_MWh = v_electricityImported_kWh/1000 - v_weekdayElectricityImport_MWh;
-v_weekendElectricityExport_MWh = v_electricityExported_kWh/1000 - v_weekdayElectricityExport_MWh;
-v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityProduced_MWh - v_weekendElectricityExport_MWh);
-*/
-
-
-/*ALCODEEND*/}
-
 double f_updateArrays()
 {/*ALCODESTART::1715857260657*/
 if (energyModel.v_isRapidRun){
@@ -1281,11 +1079,17 @@ if (energyModel.v_isRapidRun){
 	data_electricVehicleDemand_kW.update();
 	data_batteryCharging_kW.update();
 	data_cookingElectricityDemand_kW.update();
+	data_hydrogenElectricityDemand_kW.update();
 	
+	data_districtHeatDelivery_kW.update();
+
 	data_PVGeneration_kW.update();
-	data_V2GSupply_kW.update();
 	data_windGeneration_kW.update();
 	data_batteryDischarging_kW.update();
+	data_V2GSupply_kW.update();
+	data_CHPElectricityProductionLiveWeek_kW.update();
+	
+	data_batteryStoredEnergyLiveWeek_MWh.update();
 }
 
 /*ALCODEEND*/}
@@ -1646,13 +1450,24 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 
 double f_fillAnnualDatasets()
 {/*ALCODESTART::1731079736315*/
+//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / p_contractedDeliveryCapacity_kW ));
+
 double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	double netFlow_kW = fm_currentBalanceFlows_kW.get(EC);
-	currentImport_kW += max( 0, netFlow_kW );
-	currentExport_kW += max( 0, -netFlow_kW );
+	double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
+	currentImport_kW += max( 0, currentBalance_kW );
+	currentExport_kW += max( 0, -currentBalance_kW );
+	am_totalBalanceAccumulators_kW.get(EC).addStep(  currentBalance_kW );
 }
+
+// Total Accumulators
+acc_totalEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
+acc_totalEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
+acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
+acc_totalElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+acc_totalElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
 
 
 // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
@@ -1689,94 +1504,81 @@ if (energyModel.b_isWeekday) {
 	v_weekdayEnergyProduced_MWh += v_currentPrimaryEnergyProduction_kW / 1000 * energyModel.p_timeStep_h;
 	v_weekdayEnergyConsumed_MWh += v_currentFinalEnergyConsumption_kW / 1000 * energyModel.p_timeStep_h;
 }
-// SummerWeek accumulators.
-if (energyModel.b_isSummerWeek) {
+
+//Summer week 
+if (energyModel.b_isSummerWeek){
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		am_summerWeekBalanceAccumulators_kW.get(EC).addStep(fm_currentBalanceFlows_kW.get(EC) );
+		am_summerWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC) );
+		dsm_summerWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
+		dsm_summerWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
 	
-	acc_summerWeekElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	acc_summerWeekElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
+	acc_summerWeekElectricityProduction_kW.addStep( fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
+	acc_summerWeekElectricityConsumption_kW.addStep( fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
 
 	acc_summerWeekEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
 	acc_summerWeekEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-	
+
 	acc_summerWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 	acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
+
+	acc_summerWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
+	acc_summerWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
 	
-}	
-// WinterWeek accumulators.
-if (energyModel.b_isWinterWeek) {
+	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
+	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
+	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
+	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
+	data_summerWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
+	data_summerWeekElectrolyserElectricityDemand_kW.add(energyModel.t_h, max(0, v_hydrogenElectricityConsumption_kW));
+	
+	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
+	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
+	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
+	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
+	data_summerWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
+	
+	data_summerWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
+	
+	data_summerWeekDistrictHeatingDemand_kW.add(energyModel.t_h, v_districtHeatDelivery_kW);
+}
+
+//Winter week 
+if (energyModel.b_isWinterWeek){
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		am_winterWeekBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
+		dsm_winterWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
+		dsm_winterWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
-	
+
 	acc_winterWeekElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 	acc_winterWeekElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-	
+
 	acc_winterWeekEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
 	acc_winterWeekEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-	
+
 	acc_winterWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 	acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-}
+	acc_winterWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
+	acc_winterWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
 
-// Total Accumulators
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	am_totalBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
-}
-
-acc_totalEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
-acc_totalEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
-acc_totalElectricityProduction_kW.addStep( fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-acc_totalElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
-
-acc_totalOwnElectricityProduction_kW.addStep( v_currentOwnElectricityProduction_kW);
-acc_totalCustomerDelivery_kW.addStep( v_currentCustomerDelivery_kW);
-acc_totalCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW);
-
-
-//Summer week dataSets
-if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
+	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
+	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
+	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
+	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
+	data_winterWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
+	data_winterWeekElectrolyserElectricityDemand_kW.add(energyModel.t_h, max(0, v_hydrogenElectricityConsumption_kW));
+		
+	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
+	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
+	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
+	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
+	data_winterWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
 	
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_summerWeekDemandDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
-		dsm_summerWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
-	}
+	data_winterWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
 	
-	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_fixedConsumptionElectric_kW);
-	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_heatPumpElectricityConsumption_kW);
-	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,v_evChargingPowerElectric_kW));
-	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,v_batteryPowerElectric_kW));
-	data_summerWeekCookingElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_electricHobConsumption_kW);
-	
-	data_summerWeekPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_pvProductionElectric_kW);
-	data_summerWeekWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_windProductionElectric_kW);
-	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0,-v_batteryPowerElectric_kW));
-	data_summerWeekV2GSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, -v_evChargingPowerElectric_kW));
-}
-
-//Winter week dataSets
-if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
-	
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_winterWeekDemandDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
-		dsm_winterWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
-	}
-	
-	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_fixedConsumptionElectric_kW);
-	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_heatPumpElectricityConsumption_kW);
-	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, v_evChargingPowerElectric_kW));
-	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, v_batteryPowerElectric_kW));
-	data_winterWeekCookingElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_electricHobConsumption_kW);
-	
-	data_winterWeekPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_pvProductionElectric_kW);
-	data_winterWeekWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_windProductionElectric_kW);
-	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, -v_batteryPowerElectric_kW));
-	data_winterWeekV2GSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, max(0, -v_evChargingPowerElectric_kW));
+	data_winterWeekDistrictHeatingDemand_kW.add(energyModel.t_h, v_districtHeatDelivery_kW);
 }
 
 // Daily Averages
@@ -1788,6 +1590,9 @@ v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
 v_dailyCookingElectricityDemand_kW += v_electricHobConsumption_kW;
+v_dailyElectrolyserElectricityDemand_kW += v_hydrogenElectricityConsumption_kW;
+
+v_dailyDistrictHeatingDemand_kW += v_districtHeatDelivery_kW;
 
 // Supply
 fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
@@ -1796,25 +1601,41 @@ v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
 v_dailyWindGeneration_kW += v_windProductionElectric_kW;
 v_dailyBatteriesSupply_kW += max(0,-v_batteryPowerElectric_kW);
 v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
+v_dailyCHPElectricityProduction_kW += v_CHPProductionElectric_kW;
 
-if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
+//Other
+
+v_dailyBatteryStoredEnergy_MWh += v_batteryStoredEnergy_kWh/1000;
+
+if (energyModel.b_isLastTimeStepOfDay) {
 	// Demand
 	double timeStepsInOneDay = 24 / energyModel.p_timeStep_h;
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_dailyAverageDemandDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
-		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
+		dsm_dailyAverageDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
+		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
 	}
-	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBaseloadElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyHeatPumpElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualElectricVehicleDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualBatteriesDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualCookingElectricityDemand_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyCookingElectricityDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/ timeStepsInOneDay);
+	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/ timeStepsInOneDay);
+	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/ timeStepsInOneDay);
+	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/ timeStepsInOneDay);
+	data_annualCookingElectricityDemand_kW.add(energyModel.t_h, v_dailyCookingElectricityDemand_kW/ timeStepsInOneDay);
+	data_annualElectrolyserElectricityDemand_kW.add(energyModel.t_h, v_dailyElectrolyserElectricityDemand_kW/timeStepsInOneDay);
+	data_annualDistrictHeatingDemand_kW.add(energyModel.t_h, v_dailyDistrictHeatingDemand_kW / timeStepsInOneDay);
+	
 	// Supply
-	data_annualPVGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyPVGeneration_kW/(24 / energyModel.p_timeStep_h));
-	data_annualWindGeneration_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyWindGeneration_kW/(24 / energyModel.p_timeStep_h));
-	data_annualBatteriesSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyBatteriesSupply_kW/(24 / energyModel.p_timeStep_h));
-	data_annualV2GSupply_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_dailyV2GSupply_kW/(24 / energyModel.p_timeStep_h));
-
+	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/ timeStepsInOneDay);
+	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/ timeStepsInOneDay);
+	data_annualBatteriesSupply_kW.add(energyModel.t_h, v_dailyBatteriesSupply_kW/ timeStepsInOneDay);
+	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/ timeStepsInOneDay);
+	data_annualCHPElectricitySupply_kW.add(energyModel.t_h, v_dailyCHPElectricityProduction_kW/ timeStepsInOneDay);
+	
+	//Other
+	data_annualBatteryStoredEnergy_MWh.add(energyModel.t_h, v_dailyBatteryStoredEnergy_MWh/ timeStepsInOneDay);
+	
+	//Yearly totals
+	v_totalPVGeneration_MWh += (v_dailyPVGeneration_kW/1000)*energyModel.p_timeStep_h;
+	v_totalWindGeneration_MWh += (v_dailyWindGeneration_kW/1000)*energyModel.p_timeStep_h;
+	
 	// Resetting the daily values
 	// Demand
 	fm_dailyAverageDemand_kW.clear();
@@ -1823,15 +1644,20 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
 	v_dailyCookingElectricityDemand_kW = 0;
+	v_dailyElectrolyserElectricityDemand_kW = 0;
+	v_dailyDistrictHeatingDemand_kW = 0;
+	
 	// Supply
 	fm_dailyAverageSupply_kW.clear();
 	v_dailyPVGeneration_kW = 0;
 	v_dailyWindGeneration_kW = 0;
 	v_dailyBatteriesSupply_kW = 0;
 	v_dailyV2GSupply_kW = 0;
+	v_dailyCHPElectricityProduction_kW = 0;
 	
+	//Other
+	v_dailyBatteryStoredEnergy_MWh = 0;
 }
-
 /*ALCODEEND*/}
 
 double f_calculateKPIs()
@@ -1964,6 +1790,9 @@ v_weekendEnergySelfConsumed_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekend
 v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - fm_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
 
 
+//Cumulative KPIs of each grid connection individually
+f_getCumulativeIndividualGCValues();
+
 /*ALCODEEND*/}
 
 double f_collectGridConnectionTotals()
@@ -2050,7 +1879,17 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_totalPrimaryEnergyProductionHeatpumps_MWh += gc.v_totalPrimaryEnergyProductionHeatpumps_MWh;
 	v_totalEnergyCurtailed_MWh += gc.v_totalEnergyCurtailed_MWh;	
 }
+
+
 // Calc collective imports/exports
+
+
+
+//Calculate cumulative asset capacities
+f_getTotalInstalledCapacityOfAssets();
+
+//Calculate cumulative individual values
+f_getCumulativeIndividualGCValues();
 
 /*ALCODEEND*/}
 
@@ -2063,388 +1902,6 @@ f_initialize();
 f_collectGridConnectionTotals();
 
 f_calculateKPIs();
-
-/*ALCODEEND*/}
-
-double f_calculateKPIspartial()
-{/*ALCODESTART::1739980380185*/
-//f_duurkrommes();
-
-//// TOTALS
-// Get import / export from balance accumulators.
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	fm_totalImports_MWh.put( EC, am_totalBalanceAccumulators_kW.get(EC).getSumPos() * am_totalBalanceAccumulators_kW.get(EC).getSignalResolution_h() / 1000 );
-	fm_totalExports_MWh.put( EC, -am_totalBalanceAccumulators_kW.get(EC).getSumNeg() * am_totalBalanceAccumulators_kW.get(EC).getSignalResolution_h() / 1000 );
-}
-
-// Sum up the import / export totals
-v_totalEnergyImport_MWh = fm_totalImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
-v_totalEnergyExport_MWh = fm_totalExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
-
-// Electricity totals from production / consumption accumulators and selfconsumption
-v_totalElectricityConsumed_MWh = acc_totalElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_totalElectricityProduced_MWh= acc_totalElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - fm_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-//v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityProduced_MWh - v_totalExports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-
-// Energy totals from production / consumption accumulators and selfconsumption
-v_totalEnergyProduced_MWh = acc_totalEnergyProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_totalEnergyConsumed_MWh = acc_totalEnergyConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_totalEnergySelfConsumed_MWh = max(0, v_totalEnergyConsumed_MWh - v_totalEnergyImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-
-// Other totals from accumulators
-v_totalPrimaryEnergyProductionHeatpumps_MWh = acc_totalPrimaryEnergyProductionHeatpumps_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_totalEnergyCurtailed_MWh = acc_totalEnergyCurtailed_kW.getSum() * energyModel.p_timeStep_h / 1000;
-
-//Costumer delivery and feedin
-v_totalCustomerFeedIn_MWh = acc_totalCustomerFeedIn_kW.getIntegral() / 1000;
-v_totalCustomerDelivery_MWh = acc_totalCustomerDelivery_kW.getIntegral() / 1000;
-v_totalOwnElectricityProduction_MWh = acc_totalOwnElectricityProduction_kW.getIntegral() / 1000;
-
-/*
-//// Winter/summer week totals
-// Calcs summerweek
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	fm_summerWeekImports_MWh.put( EC, am_summerWeekBalanceAccumulators_kW.get(EC).getSumPos() * energyModel.p_timeStep_h / 1000 );
-	fm_summerWeekExports_MWh.put( EC, -am_summerWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
-}
-
-v_summerWeekEnergyImport_MWh = fm_summerWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
-v_summerWeekEnergyExport_MWh = fm_summerWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
-
-v_summerWeekElectricityProduced_MWh = acc_summerWeekElectricityProduction_kW.getIntegral() / 1000;
-v_summerWeekElectricityConsumed_MWh = acc_summerWeekElectricityConsumption_kW.getIntegral() / 1000;
-v_summerWeekElectricitySelfConsumed_MWh = max(0, v_summerWeekElectricityConsumed_MWh - fm_summerWeekImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-
-v_summerWeekEnergyConsumed_MWh = acc_summerWeekEnergyConsumption_kW.getIntegral()/1000;
-v_summerWeekEnergyProduced_MWh = acc_summerWeekEnergyProduction_kW.getIntegral()/1000;
-v_summerWeekEnergySelfConsumed_MWh = max(0, v_summerWeekEnergyConsumed_MWh - v_summerWeekEnergyImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-
-double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekEnergyExport_MWh;
-
-v_summerWeekPrimaryEnergyProductionHeatpumps_MWh = acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_summerWeekEnergyCurtailed_MWh = acc_summerWeekEnergyCurtailed_kW.getSum() * energyModel.p_timeStep_h / 1000;
-
-
-// Calcs winterweek
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	fm_winterWeekImports_MWh.put( EC, am_winterWeekBalanceAccumulators_kW.get(EC).getSumPos() * energyModel.p_timeStep_h / 1000 );
-	fm_winterWeekExports_MWh.put( EC, -am_winterWeekBalanceAccumulators_kW.get(EC).getSumNeg() * energyModel.p_timeStep_h / 1000 );
-}
-
-v_winterWeekEnergyImport_MWh = fm_winterWeekImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
-v_winterWeekEnergyExport_MWh = fm_winterWeekExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
-
-v_winterWeekElectricityConsumed_MWh = acc_winterWeekElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricityProduced_MWh = acc_winterWeekElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekElectricitySelfConsumed_MWh = max(0,v_winterWeekElectricityConsumed_MWh - fm_winterWeekImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-
-v_winterWeekEnergyConsumed_MWh = acc_winterWeekEnergyConsumption_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyConsumption_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergyProduced_MWh = acc_winterWeekEnergyProduction_kW.getIntegral()/1000; //Arrays.stream( Arrays.copyOfRange(a_annualEnergyProduction_kW, startIdx, endIdx) ).sum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergySelfConsumed_MWh = max(0,v_winterWeekEnergyConsumed_MWh - v_winterWeekEnergyImport_MWh); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
-
-double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekEnergyExport_MWh;
-
-v_winterWeekPrimaryEnergyProductionHeatpumps_MWh = acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.getSum() * energyModel.p_timeStep_h / 1000;
-v_winterWeekEnergyCurtailed_MWh = acc_winterWeekEnergyCurtailed_kW.getSum() * energyModel.p_timeStep_h / 1000;
-
-
-// Daytime selfconsumption
-v_daytimeEnergySelfConsumed_MWh = max(0, v_daytimeEnergyProduced_MWh - v_daytimeEnergyExport_MWh);
-v_daytimeElectricitySelfConsumed_MWh = max(0, v_daytimeElectricityConsumed_MWh - fm_daytimeImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-
-// Nighttime: totals minus daytime
-v_nighttimeEnergyExport_MWh = v_totalEnergyExport_MWh - v_daytimeEnergyExport_MWh;
-v_nighttimeEnergyImport_MWh = v_totalEnergyImport_MWh - v_daytimeEnergyImport_MWh;
-v_nighttimeEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_daytimeEnergyConsumed_MWh;
-v_nighttimeEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_daytimeEnergyProduced_MWh;
-
-v_nighttimeElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_daytimeElectricityConsumed_MWh;
-v_nighttimeElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_daytimeElectricityProduced_MWh;
-
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	fm_nighttimeImports_MWh.put( EC, fm_totalImports_MWh.get(EC) - fm_daytimeImports_MWh.get(EC) );
-	fm_nighttimeExports_MWh.put( EC, fm_totalExports_MWh.get(EC) - fm_daytimeExports_MWh.get(EC) );
-}
-
-v_nighttimeEnergySelfConsumed_MWh = max(0, v_nighttimeEnergyProduced_MWh - v_nighttimeEnergyExport_MWh);
-v_nighttimeElectricitySelfConsumed_MWh = max(0,v_nighttimeElectricityConsumed_MWh - fm_nighttimeImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-
-// Weekday selfconsumption
-v_weekdayEnergySelfConsumed_MWh = max(0, v_weekdayEnergyProduced_MWh - v_weekdayEnergyExport_MWh);
-v_weekdayElectricitySelfConsumed_MWh = max(0,v_weekdayElectricityConsumed_MWh - fm_weekdayImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-
-// Weekend: totals minus weekday
-v_weekendEnergyExport_MWh = v_totalEnergyExport_MWh - v_weekdayEnergyExport_MWh;
-v_weekendEnergyImport_MWh = v_totalEnergyImport_MWh - v_weekdayEnergyImport_MWh;
-v_weekendEnergyConsumed_MWh = v_totalEnergyConsumed_MWh - v_weekdayEnergyConsumed_MWh;
-v_weekendEnergyProduced_MWh = v_totalEnergyProduced_MWh - v_weekdayEnergyProduced_MWh;
-v_weekendEnergySelfConsumed_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendEnergyExport_MWh);
-
-v_weekendElectricityConsumed_MWh = v_totalElectricityConsumed_MWh - v_weekdayElectricityConsumed_MWh;
-v_weekendElectricityProduced_MWh = v_totalElectricityProduced_MWh - v_weekdayElectricityProduced_MWh;
-
-
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	fm_weekendImports_MWh.put( EC, fm_totalImports_MWh.get(EC) - fm_weekdayImports_MWh.get(EC) );
-	fm_weekendExports_MWh.put( EC, fm_totalExports_MWh.get(EC) - fm_weekdayExports_MWh.get(EC) );
-}
-
-v_weekendEnergySelfConsumed_MWh = max(0, v_weekendEnergyProduced_MWh - v_weekendEnergyExport_MWh);
-v_weekendElectricitySelfConsumed_MWh = max(0,v_weekendElectricityConsumed_MWh - fm_weekendImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
-*/
-/*ALCODEEND*/}
-
-double f_rapidRunDataLogging()
-{/*ALCODESTART::1740054737759*/
-v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / p_contractedDeliveryCapacity_kW ));
-
-double currentImport_kW = 0.0;
-double currentExport_kW = 0.0;
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-	currentImport_kW += max( 0, currentBalance_kW );
-	currentExport_kW += max( 0, -currentBalance_kW );
-	am_totalBalanceAccumulators_kW.get(EC).addStep(  currentBalance_kW );
-}
-
-// Total Accumulators
-acc_totalEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
-acc_totalEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
-acc_totalElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-acc_totalElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
-
-// Daytime totals. Use overal-total minus daytime total to get nighttime totals.
-if(energyModel.b_isDaytime) { 
-	
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
-	}
-	
-	acc_daytimeElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	acc_daytimeElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );	
-	acc_daytimeEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
-	acc_daytimeEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);	
-}
-
-// Weekend totals. Use overal-totals minus weekend totals to get weekday totals.
-if (!energyModel.b_isWeekday) { // 
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
-	}
-	
-	acc_weekendElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	acc_weekendElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	acc_weekendEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
-	acc_weekendEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-}
-
-
-// Further Subdivision of asset types within energy carriers
-v_fixedConsumptionElectric_kW = 0;
-for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
-	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_hydrogenElectricityConsumption_kW = 0;
-for (J_EA j_ea : c_electrolyserAssets) {
-	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_heatPumpElectricityConsumption_kW = 0;
-for (J_EA j_ea : c_electricHeatpumpAssets) {
-	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_evChargingPowerElectric_kW = 0;
-for (J_EA j_ea : c_EvAssets) {
-	if (j_ea instanceof J_EAEV) {
-		if (((J_EAEV)j_ea).vehicleScaling == 0) {
-			continue;
-		}
-	}
-	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_batteryPowerElectric_kW = 0;
-v_batteryStoredEnergy_kWh = 0;
-for (J_EA j_ea : c_batteryAssets) {
-	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
-		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
-		
-	}
-}
-
-v_CHPProductionElectric_kW = 0;
-for (J_EA j_ea : c_chpAssets) {
-	v_CHPProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_pvProductionElectric_kW = 0;
-for (J_EA j_ea : c_pvAssets) {
-	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_windProductionElectric_kW = 0;
-for (J_EA j_ea : c_windAssets) {
-	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-//Summer week 
-if (energyModel.b_isSummerWeek){
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		am_summerWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC) );
-		dsm_summerWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
-		dsm_summerWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
-	}
-	
-	acc_summerWeekElectricityProduction_kW.addStep( fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	acc_summerWeekElectricityConsumption_kW.addStep( fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-
-	acc_summerWeekEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
-	acc_summerWeekEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-
-	acc_summerWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
-	acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
-
-	acc_summerWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	acc_summerWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
-	
-	data_summerWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
-	data_summerWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
-	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
-	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
-	data_summerWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
-	
-	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
-	data_summerWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_summerWeekBatteriesSupply_kW.add(energyModel.t_h, max(0,-v_batteryPowerElectric_kW));
-	data_summerWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
-	data_summerWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
-	
-	data_summerWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
-	
-	data_summerWeekDistrictHeatingDemand_kW.add(energyModel.t_h, v_districtHeatDelivery_kW);
-}
-
-//Winter week 
-if (energyModel.b_isWinterWeek){
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		am_winterWeekBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
-		dsm_winterWeekDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
-		dsm_winterWeekSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
-	}
-
-	acc_winterWeekElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-	acc_winterWeekElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-
-	acc_winterWeekEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
-	acc_winterWeekEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
-
-	acc_winterWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
-	acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
-
-	acc_winterWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	acc_winterWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
-
-	data_winterWeekBaseloadElectricityDemand_kW.add(energyModel.t_h, v_fixedConsumptionElectric_kW);
-	data_winterWeekHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_heatPumpElectricityConsumption_kW);
-	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
-	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
-	data_winterWeekCookingElectricityDemand_kW.add(energyModel.t_h, v_electricHobConsumption_kW);
-	
-	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
-	data_winterWeekWindGeneration_kW.add(energyModel.t_h, v_windProductionElectric_kW);
-	data_winterWeekBatteriesSupply_kW.add(energyModel.t_h, max(0, -v_batteryPowerElectric_kW));
-	data_winterWeekV2GSupply_kW.add(energyModel.t_h, max(0, -v_evChargingPowerElectric_kW));
-	data_winterWeekCHPElectricityProduction_kW.add(energyModel.t_h, v_CHPProductionElectric_kW);
-	
-	data_winterWeekBatteryStoredEnergy_MWh.add(energyModel.t_h, v_batteryStoredEnergy_kWh/1000);
-	
-	data_winterWeekDistrictHeatingDemand_kW.add(energyModel.t_h, v_districtHeatDelivery_kW);
-}
-
-// Daily Averages
-// Demand
-fm_dailyAverageDemand_kW.addFlows(fm_currentConsumptionFlows_kW);
-
-v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
-v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
-v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
-v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
-v_dailyCookingElectricityDemand_kW += v_electricHobConsumption_kW;
-v_dailyDistrictHeatingDemand_kW += v_districtHeatDelivery_kW;
-
-// Supply
-fm_dailyAverageSupply_kW.addFlows(fm_currentProductionFlows_kW);
-
-v_dailyPVGeneration_kW += v_pvProductionElectric_kW;
-v_dailyWindGeneration_kW += v_windProductionElectric_kW;
-v_dailyBatteriesSupply_kW += max(0,-v_batteryPowerElectric_kW);
-v_dailyV2GSupply_kW += -min(0,v_evChargingPowerElectric_kW);
-v_dailyCHPElectricityProduction_kW += v_CHPProductionElectric_kW;
-
-//Other
-
-v_dailyBatteryStoredEnergy_MWh += v_batteryStoredEnergy_kWh/1000;
-
-if (energyModel.b_isLastTimeStepOfDay) {
-	// Demand
-	double timeStepsInOneDay = 24 / energyModel.p_timeStep_h;
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-		dsm_dailyAverageDemandDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageDemand_kW.get(EC) / timeStepsInOneDay );
-		dsm_dailyAverageSupplyDataSets_kW.get(EC).add( energyModel.t_h, fm_dailyAverageSupply_kW.get(EC) / timeStepsInOneDay );
-	}
-	data_annualBaseloadElectricityDemand_kW.add(energyModel.t_h, v_dailyBaseloadElectricityDemand_kW/ timeStepsInOneDay);
-	data_annualHeatPumpElectricityDemand_kW.add(energyModel.t_h, v_dailyHeatPumpElectricityDemand_kW/ timeStepsInOneDay);
-	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/ timeStepsInOneDay);
-	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/ timeStepsInOneDay);
-	data_annualCookingElectricityDemand_kW.add(energyModel.t_h, v_dailyCookingElectricityDemand_kW/ timeStepsInOneDay);
-	data_annualDistrictHeatingDemand_kW.add(energyModel.t_h, v_dailyDistrictHeatingDemand_kW / timeStepsInOneDay);
-	
-	// Supply
-	data_annualPVGeneration_kW.add(energyModel.t_h, v_dailyPVGeneration_kW/ timeStepsInOneDay);
-	data_annualWindGeneration_kW.add(energyModel.t_h, v_dailyWindGeneration_kW/ timeStepsInOneDay);
-	data_annualBatteriesSupply_kW.add(energyModel.t_h, v_dailyBatteriesSupply_kW/ timeStepsInOneDay);
-	data_annualV2GSupply_kW.add(energyModel.t_h, v_dailyV2GSupply_kW/ timeStepsInOneDay);
-	data_annualCHPElectricitySupply_kW.add(energyModel.t_h, v_dailyCHPElectricityProduction_kW/ timeStepsInOneDay);
-	
-	//Other
-	data_annualBatteryStoredEnergy_MWh.add(energyModel.t_h, v_dailyBatteryStoredEnergy_MWh/ timeStepsInOneDay);
-	
-	//Yearly totals
-	v_totalPVGeneration_MWh += (v_dailyPVGeneration_kW/1000)*energyModel.p_timeStep_h;
-	v_totalWindGeneration_MWh += (v_dailyWindGeneration_kW/1000)*energyModel.p_timeStep_h;
-	
-	// Resetting the daily values
-	// Demand
-	fm_dailyAverageDemand_kW.clear();
-	v_dailyBaseloadElectricityDemand_kW = 0;
-	v_dailyHeatPumpElectricityDemand_kW = 0;
-	v_dailyElectricVehicleDemand_kW = 0;
-	v_dailyBatteriesDemand_kW = 0;
-	v_dailyCookingElectricityDemand_kW = 0;
-	v_dailyDistrictHeatingDemand_kW = 0;
-	
-	// Supply
-	fm_dailyAverageSupply_kW.clear();
-	v_dailyPVGeneration_kW = 0;
-	v_dailyWindGeneration_kW = 0;
-	v_dailyBatteriesSupply_kW = 0;
-	v_dailyV2GSupply_kW = 0;
-	v_dailyCHPElectricityProduction_kW = 0;
-	
-	//Other
-	v_dailyBatteryStoredEnergy_MWh = 0;
-}
-
 
 /*ALCODEEND*/}
 
@@ -2470,5 +1927,111 @@ if (arraySize < 8760/energyModel.p_timeStep_h){
 } else {
 	return data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h));
 }
+/*ALCODEEND*/}
+
+double f_getCumulativeIndividualGCValues()
+{/*ALCODESTART::1740475013848*/
+v_cumulativeIndividualSelfconsumptionElectricity_MWh = 0;
+v_cumulativeIndividualSelfconsumptionElectricity_fr = 0;
+v_cumulativeIndividualSelfSufficiencyElectricity_fr = 0;
+
+v_cumulativeIndividualSelfconsumptionEnergy_MWh = 0;
+v_cumulativeIndividualSelfconsumptionEnergy_fr = 0;
+v_cumulativeIndividualSelfSufficiencyEnergy_fr = 0;
+
+//Add all battery storage capacities of gc
+for(GridConnection GC : c_memberGridConnections){
+	v_cumulativeIndividualSelfconsumptionElectricity_MWh += GC.v_totalElectricitySelfConsumed_MWh;
+	v_cumulativeIndividualSelfconsumptionEnergy_MWh += GC.v_totalEnergySelfConsumed_MWh;
+}
+
+//Do this also for the 'child' coops
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		EC.f_getCumulativeIndividualGCValues();
+		v_cumulativeIndividualSelfconsumptionElectricity_MWh = EC.v_cumulativeIndividualSelfconsumptionElectricity_MWh;
+	}
+}
+
+v_cumulativeIndividualSelfconsumptionElectricity_fr = v_totalElectricityProduced_MWh > 0 ? v_cumulativeIndividualSelfconsumptionElectricity_MWh / v_totalElectricityProduced_MWh : 0;
+v_cumulativeIndividualSelfSufficiencyElectricity_fr = v_totalElectricityConsumed_MWh > 0 ? v_cumulativeIndividualSelfconsumptionElectricity_MWh / v_totalElectricityConsumed_MWh : 0;
+
+v_cumulativeIndividualSelfconsumptionEnergy_fr = v_totalEnergyProduced_MWh > 0 ? v_cumulativeIndividualSelfconsumptionEnergy_MWh / v_totalEnergyProduced_MWh : 0;
+v_cumulativeIndividualSelfSufficiencyEnergy_fr = v_totalEnergyConsumed_MWh > 0 ? v_cumulativeIndividualSelfconsumptionEnergy_MWh / v_totalEnergyConsumed_MWh : 0;
+
+/*ALCODEEND*/}
+
+double f_getTotalInstalledCapacityOfAssets()
+{/*ALCODESTART::1740480839774*/
+v_totalInstalledWindPower_kW = 0;
+v_totalInstalledPVPower_kW = 0;
+v_totalInstalledBatteryStorageCapacity_MWh = 0;
+
+//Add all battery storage capacities of gc
+for(GridConnection GC : c_memberGridConnections){
+	v_totalInstalledWindPower_kW += GC.v_totalInstalledWindPower_kW;
+	v_totalInstalledPVPower_kW += GC.v_totalInstalledPVPower_kW;
+	v_totalInstalledBatteryStorageCapacity_MWh += GC.v_totalInstalledBatteryStorageCapacity_MWh;
+}
+
+//Do this also for the 'child' coops
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		EC.f_getTotalInstalledCapacityOfAssets();
+		v_totalInstalledWindPower_kW += EC.v_totalInstalledWindPower_kW;
+		v_totalInstalledPVPower_kW += EC.v_totalInstalledPVPower_kW;
+		v_totalInstalledBatteryStorageCapacity_MWh += EC.v_totalInstalledBatteryStorageCapacity_MWh;
+	}
+}
+/*ALCODEEND*/}
+
+ArrayList<GridConnection> f_getAllChildMemberGridConnections()
+{/*ALCODESTART::1740492770316*/
+return new ArrayList(f_getAllChildMemberGridConnections_recursion(new HashSet<GridConnection>()));
+/*ALCODEEND*/}
+
+HashSet<GridConnection> f_getAllChildMemberGridConnections_recursion(HashSet<GridConnection> allMemberGridConnections)
+{/*ALCODESTART::1740492770320*/
+//Add to collection
+allMemberGridConnections.addAll(this.c_memberGridConnections);
+
+//Recursive loop (repeat this function till bottom)
+List<Agent> childCoops = findAll(c_coopMembers, coopMember -> coopMember instanceof EnergyCoop);
+if(childCoops.size() == 0){
+	return allMemberGridConnections;
+}
+else{
+	for(Agent childCoop : childCoops){
+		((EnergyCoop)childCoop).f_getAllChildMemberGridConnections_recursion(allMemberGridConnections);
+	}
+	return allMemberGridConnections;
+}
+
+/*ALCODEEND*/}
+
+ArrayList<GridConnection> f_getAllChildCustomerGridConnections()
+{/*ALCODESTART::1740493169961*/
+return new ArrayList(f_getAllChildCustomerGridConnections_recursion(new HashSet<GridConnection>()));
+/*ALCODEEND*/}
+
+HashSet<GridConnection> f_getAllChildCustomerGridConnections_recursion(HashSet<GridConnection> allCustomerGridConnections)
+{/*ALCODESTART::1740493169963*/
+//Add to collection
+allCustomerGridConnections.addAll(this.c_customerGridConnections);
+
+//Recursive loop (repeat this function till bottom)
+List<Agent> childCoops = findAll(c_coopCustomers, coopCustomer -> coopCustomer instanceof EnergyCoop);
+if(childCoops.size() == 0){
+	return allCustomerGridConnections;
+}
+else{
+	for(Agent childCoop : childCoops){
+		((EnergyCoop)childCoop).f_getAllChildCustomerGridConnections_recursion(allCustomerGridConnections);
+	}
+	return allCustomerGridConnections;
+}
+
 /*ALCODEEND*/}
 
