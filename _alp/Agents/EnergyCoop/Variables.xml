@@ -4530,6 +4530,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740494852852</Id>
 		<Name><![CDATA[acc_summerWeekDeliveryCapacity_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1550</Y>
 		<Label>
@@ -4552,6 +4553,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740494852854</Id>
 		<Name><![CDATA[acc_winterWeekDeliveryCapacity_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1550</Y>
 		<Label>
@@ -4574,6 +4576,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740494852856</Id>
 		<Name><![CDATA[acc_summerWeekFeedinCapacity_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1530</Y>
 		<Label>
@@ -4596,6 +4599,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740494852858</Id>
 		<Name><![CDATA[acc_winterWeekFeedinCapacity_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1530</Y>
 		<Label>

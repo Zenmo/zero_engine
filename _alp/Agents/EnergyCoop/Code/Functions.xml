@@ -556,7 +556,6 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740502128173</Id>
 		<Name><![CDATA[f_collectFullSimDataSets]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>890</X>
 		<Y>160</Y>
 		<Label>
@@ -573,7 +572,6 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740502128178</Id>
 		<Name><![CDATA[f_collectWeeklyDataSets]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>890</X>
 		<Y>140</Y>
 		<Label>
