@@ -219,7 +219,17 @@ public class ZeroAccumulator {
         }
         return this;
     }
-
+    
+    public DataSet getDataSet(double startTime_h) {
+	
+		DataSet ds = new DataSet(timeSeries.length);
+		for (int i = 0; i < timeSeries.length; i++) {
+			ds.add(startTime_h + i * this.signalResolution_h, this.timeSeries[i] );
+		}
+		
+		return ds;
+    }
+		
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
