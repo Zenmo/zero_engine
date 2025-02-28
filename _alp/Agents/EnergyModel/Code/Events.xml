@@ -3,6 +3,7 @@
 	<Event>
 		<Id>1674058522977</Id>
 		<Name><![CDATA[pauseEvent]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>797</X>
 		<Y>252</Y>
 		<Label>

@@ -1099,6 +1099,11 @@ if (energyModel.v_isRapidRun){
 	data_CHPElectricityProductionLiveWeek_kW.update();
 	
 	data_batteryStoredEnergyLiveWeek_MWh.update();
+	
+	//Netload
+	data_liveElectricityBalance_kW.update();
+	data_gridCapacityDemand_kW.update();
+	data_gridCapacitySupply_kW.update();
 }
 
 /*ALCODEEND*/}
@@ -1819,11 +1824,10 @@ for (int i = 0; i<arraySize; i++) {
 		currentBalance_kW += gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()[i];
 	}	
 	am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
-	
 	if (energyModel.p_timeStep_h * i >= energyModel.p_startHourSummerWeek && energyModel.p_timeStep_h * i < energyModel.p_startHourSummerWeek + 24*7){
 		am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 	}
-	if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){
+	if (energyModel.p_timeStep_h * i >= energyModel.p_startHourWinterWeek && energyModel.p_timeStep_h * i < energyModel.p_startHourWinterWeek + 24*7){
 		am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 	}
 }
@@ -1934,7 +1938,7 @@ if (arraySize < 8760/energyModel.p_timeStep_h){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
 	return 0.0;
 } else {
-	return data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/energyModel.p_timeStep_h));
+	return max(0,data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h)));
 }
 /*ALCODEEND*/}
 
@@ -1946,12 +1950,13 @@ if (arraySize < 8760/energyModel.p_timeStep_h){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
 	return 0.0;
 } else {
-	return data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h));
+	return -min(0,data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/energyModel.p_timeStep_h)));
 }
 /*ALCODEEND*/}
 
 double f_getCumulativeIndividualGCValues()
 {/*ALCODESTART::1740475013848*/
+//Self consumption and sufficiency
 v_cumulativeIndividualSelfconsumptionElectricity_MWh = 0;
 v_cumulativeIndividualSelfconsumptionElectricity_fr = 0;
 v_cumulativeIndividualSelfSufficiencyElectricity_fr = 0;
@@ -1960,11 +1965,22 @@ v_cumulativeIndividualSelfconsumptionEnergy_MWh = 0;
 v_cumulativeIndividualSelfconsumptionEnergy_fr = 0;
 v_cumulativeIndividualSelfSufficiencyEnergy_fr = 0;
 
-//Add all battery storage capacities of gc
+//Max peaks
+v_cumulativeIndividualPeakDelivery_kW = 0;
+v_cumulativeIndividualPeakFeedin_kW = 0;
+
+//Loop over membered grid connections
 for(GridConnection GC : c_memberGridConnections){
+	//Add self consumption of gc individually
 	v_cumulativeIndividualSelfconsumptionElectricity_MWh += GC.v_totalElectricitySelfConsumed_MWh;
 	v_cumulativeIndividualSelfconsumptionEnergy_MWh += GC.v_totalEnergySelfConsumed_MWh;
+	
+	//Add all peaks for member grid connections
+	v_cumulativeIndividualPeakDelivery_kW += GC.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getMax();
+	v_cumulativeIndividualPeakFeedin_kW += GC.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getMin();	
 }
+
+//Add all max peaks of GC
 
 //Do this also for the 'child' coops
 for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
@@ -1972,6 +1988,8 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		EnergyCoop EC = (EnergyCoop)a;
 		EC.f_getCumulativeIndividualGCValues();
 		v_cumulativeIndividualSelfconsumptionElectricity_MWh = EC.v_cumulativeIndividualSelfconsumptionElectricity_MWh;
+		v_cumulativeIndividualPeakDelivery_kW  = EC.v_cumulativeIndividualPeakDelivery_kW;
+		v_cumulativeIndividualPeakFeedin_kW  = EC.v_cumulativeIndividualPeakFeedin_kW;
 	}
 }
 

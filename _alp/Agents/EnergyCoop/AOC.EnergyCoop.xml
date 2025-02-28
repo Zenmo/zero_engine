@@ -144,6 +144,8 @@ import java.util.EnumSet;]]></Import>
 				<Unit Class="TimeUnits">HOUR</Unit>
 			</RecurrenceCode>
 			<FreezeXAxis>false</FreezeXAxis>
+			<HorizontalAxisExpression>energyModel.t_h-energyModel.p_runStartTime_h</HorizontalAxisExpression>
+			<VerticalAxisExpression>fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)</VerticalAxisExpression>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 		<DataSet>
