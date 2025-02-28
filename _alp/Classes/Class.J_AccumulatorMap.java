@@ -32,7 +32,7 @@ public class J_AccumulatorMap implements Serializable {
 		accumulatorArray[key.ordinal()] = acc;
 		energyCarrierList.add(key);		
 	}
-    
+    /*
 	public double totalSum() {
 		double totalSum = 0.0;
 		for (var EC : energyCarrierList) {
@@ -40,11 +40,11 @@ public class J_AccumulatorMap implements Serializable {
 		}
 		return totalSum;
 	}
-	
-	public double totalIntegral() {
+	*/
+	public double totalIntegral_kWh() {
 		double totalIntegral = 0.0;
 		for (var EC : energyCarrierList) {
-			totalIntegral += accumulatorArray[EC.ordinal()].getIntegral();
+			totalIntegral += accumulatorArray[EC.ordinal()].getIntegral_kWh();
 		}
 		return totalIntegral;
 	}
@@ -71,7 +71,7 @@ public class J_AccumulatorMap implements Serializable {
         for (OL_EnergyCarriers key : this.energyCarrierList) {
         	ZeroAccumulator acc = this.get(key);
         	//double value = this.get(key);
-        	if (acc.getSum() == 0.0) {
+        	if (acc.getIntegral_kWh() == 0.0) {
         		continue;
         	}
         	

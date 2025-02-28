@@ -1191,15 +1191,6 @@ c_forecasts.forEach(p -> p.initializeForecast(t_h));
 
 double f_calculateKPIs()
 {/*ALCODESTART::1698922757486*/
-// Totals from accumulators:
-v_totalElectricityProduced_MWh = acc_totalElectricityProduction_kW.getSum() * p_timeStep_h / 1000; // Arrays.stream( a_annualElectricityProduction_kW ).sum() * p_timeStep_h / 1000;
-v_totalElectricityConsumed_MWh = acc_totalElectricityConsumption_kW.getSum() * p_timeStep_h / 1000; // Arrays.stream( a_annualElectricityConsumption_kW ).sum() * p_timeStep_h / 1000;
-
-v_totalEnergyProduced_MWh = acc_totalEnergyProduction_kW.getSum() * p_timeStep_h / 1000;
-v_totalEnergyConsumed_MWh = acc_totalEnergyConsumption_kW.getSum() * p_timeStep_h / 1000;
-
-v_totalEnergyCurtailed_MWh = acc_totalEnergyCurtailed_kW.getSum() * p_timeStep_h / 1000;
-v_totalPrimaryEnergyProductionHeatpumps_MWh = acc_totalPrimaryEnergyProductionHeatpumps_kW.getSum() * p_timeStep_h / 1000;
 
 // GridConnection KPIs (can these be done on-demand? What is dependency of other KPIs on GC KPI results?
 if (b_parallelizeGridConnections) {
@@ -1223,6 +1214,17 @@ f_sumBatteryUse();
 f_duurkrommes();
 
 pop_energyCoops.forEach(ec -> ec.f_calculateKPIs()); // Must go after f_sumGridNodeLoads() because it uses total electricity export!
+
+// Totals from accumulators:
+v_totalElectricityProduced_MWh = acc_totalElectricityProduction_kW.getSum() * p_timeStep_h / 1000; // Arrays.stream( a_annualElectricityProduction_kW ).sum() * p_timeStep_h / 1000;
+v_totalElectricityConsumed_MWh = acc_totalElectricityConsumption_kW.getSum() * p_timeStep_h / 1000; // Arrays.stream( a_annualElectricityConsumption_kW ).sum() * p_timeStep_h / 1000;
+
+v_totalEnergyProduced_MWh = acc_totalEnergyProduction_kW.getSum() * p_timeStep_h / 1000;
+v_totalEnergyConsumed_MWh = acc_totalEnergyConsumption_kW.getSum() * p_timeStep_h / 1000;
+
+v_totalEnergyCurtailed_MWh = acc_totalEnergyCurtailed_kW.getSum() * p_timeStep_h / 1000;
+v_totalPrimaryEnergyProductionHeatpumps_MWh = acc_totalPrimaryEnergyProductionHeatpumps_kW.getSum() * p_timeStep_h / 1000;
+
 
 v_totalEnergyImport_MWh = fm_totalImports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();
 v_totalEnergyExport_MWh = fm_totalExports_MWh.totalSum();//.values().stream().mapToDouble(Double::doubleValue).sum();

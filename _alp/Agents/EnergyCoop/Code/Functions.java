@@ -1820,7 +1820,7 @@ for (int i = 0; i<arraySize; i++) {
 	}	
 	am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 	
-	if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < energyModel.p_startHourSummerWeek + 24*7+1){
+	if (energyModel.p_timeStep_h * i >= energyModel.p_startHourSummerWeek && energyModel.p_timeStep_h * i < energyModel.p_startHourSummerWeek + 24*7){
 		am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 	}
 	if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < energyModel.p_startHourWinterWeek + 24*7+1){

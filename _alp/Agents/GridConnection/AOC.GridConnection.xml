@@ -452,8 +452,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040026</Id>
 			<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>1830</Y>
+			<X>1090</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -478,8 +478,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040034</Id>
 			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-			<X>1170</X>
-			<Y>1980</Y>
+			<X>1090</X>
+			<Y>2290</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -504,8 +504,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040041</Id>
 			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-			<X>1170</X>
-			<Y>2020</Y>
+			<X>1090</X>
+			<Y>2330</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -530,8 +530,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040046</Id>
 			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-			<X>1170</X>
-			<Y>1960</Y>
+			<X>1090</X>
+			<Y>2270</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -556,8 +556,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040051</Id>
 			<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>1870</Y>
+			<X>1090</X>
+			<Y>2180</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -582,8 +582,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040056</Id>
 			<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>1810</Y>
+			<X>1090</X>
+			<Y>2120</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -608,8 +608,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040068</Id>
 			<Name><![CDATA[data_annualElectricVehicleDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>1850</Y>
+			<X>1090</X>
+			<Y>2160</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -634,8 +634,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040072</Id>
 			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-			<X>1170</X>
-			<Y>2000</Y>
+			<X>1090</X>
+			<Y>2310</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -660,8 +660,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549909</Id>
 			<Name><![CDATA[data_summerWeekHeatPumpElectricityDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>1830</Y>
+			<X>1510</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -686,8 +686,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549918</Id>
 			<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
-			<X>1590</X>
-			<Y>1980</Y>
+			<X>1510</X>
+			<Y>2290</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -712,8 +712,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549924</Id>
 			<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
-			<X>1590</X>
-			<Y>2020</Y>
+			<X>1510</X>
+			<Y>2330</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -738,8 +738,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549928</Id>
 			<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
-			<X>1590</X>
-			<Y>1960</Y>
+			<X>1510</X>
+			<Y>2270</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -764,8 +764,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549933</Id>
 			<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>1870</Y>
+			<X>1510</X>
+			<Y>2180</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -790,8 +790,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549939</Id>
 			<Name><![CDATA[data_summerWeekBaseloadElectricityDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>1810</Y>
+			<X>1510</X>
+			<Y>2120</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -816,8 +816,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549953</Id>
 			<Name><![CDATA[data_summerWeekElectricVehicleDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>1850</Y>
+			<X>1510</X>
+			<Y>2160</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -842,8 +842,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549958</Id>
 			<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
-			<X>1590</X>
-			<Y>2000</Y>
+			<X>1510</X>
+			<Y>2310</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -868,8 +868,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361092</Id>
 			<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>1831</Y>
+			<X>1990</X>
+			<Y>2141</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -894,8 +894,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361101</Id>
 			<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
-			<X>2070</X>
-			<Y>1981</Y>
+			<X>1990</X>
+			<Y>2291</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -920,8 +920,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361108</Id>
 			<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
-			<X>2070</X>
-			<Y>2021</Y>
+			<X>1990</X>
+			<Y>2331</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -946,8 +946,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361117</Id>
 			<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
-			<X>2070</X>
-			<Y>1961</Y>
+			<X>1990</X>
+			<Y>2271</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -972,8 +972,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361125</Id>
 			<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>1871</Y>
+			<X>1990</X>
+			<Y>2181</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -998,8 +998,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361131</Id>
 			<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>1811</Y>
+			<X>1990</X>
+			<Y>2121</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1024,8 +1024,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361139</Id>
 			<Name><![CDATA[data_winterWeekElectricVehicleDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>1851</Y>
+			<X>1990</X>
+			<Y>2161</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1050,8 +1050,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361147</Id>
 			<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
-			<X>2070</X>
-			<Y>2001</Y>
+			<X>1990</X>
+			<Y>2311</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1216,8 +1216,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734091135494</Id>
 			<Name><![CDATA[data_summerWeekCHPElectricityProduction_kW]]></Name>
-			<X>1590</X>
-			<Y>2040</Y>
+			<X>1510</X>
+			<Y>2350</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1242,8 +1242,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734091175218</Id>
 			<Name><![CDATA[data_winterWeekCHPElectricityProduction_kW]]></Name>
-			<X>2070</X>
-			<Y>2040</Y>
+			<X>1990</X>
+			<Y>2350</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1268,8 +1268,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734091204923</Id>
 			<Name><![CDATA[data_annualCHPElectricitySupply_kW]]></Name>
-			<X>1170</X>
-			<Y>2040</Y>
+			<X>1090</X>
+			<Y>2350</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1322,8 +1322,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737542863669</Id>
 			<Name><![CDATA[data_annualBatteryStoredEnergy_MWh]]></Name>
-			<X>1170</X>
-			<Y>2070</Y>
+			<X>1090</X>
+			<Y>2380</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1348,8 +1348,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1736433078739</Id>
 			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>1890</Y>
+			<X>1090</X>
+			<Y>2200</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1374,8 +1374,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737542889304</Id>
 			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
-			<X>2070</X>
-			<Y>2070</Y>
+			<X>1990</X>
+			<Y>2380</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1400,8 +1400,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1736433078745</Id>
 			<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>1890</Y>
+			<X>1510</X>
+			<Y>2200</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1426,8 +1426,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737542909813</Id>
 			<Name><![CDATA[data_summerWeekBatteryStoredEnergy_MWh]]></Name>
-			<X>1590</X>
-			<Y>2070</Y>
+			<X>1510</X>
+			<Y>2380</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1452,8 +1452,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1736433078749</Id>
 			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>1890</Y>
+			<X>1990</X>
+			<Y>2200</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1478,8 +1478,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1738838087394</Id>
 			<Name><![CDATA[data_annualDistrictHeatingDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>2100</Y>
+			<X>1090</X>
+			<Y>2410</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1504,8 +1504,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1739533421085</Id>
 			<Name><![CDATA[data_summerWeekDistrictHeatingDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>2100</Y>
+			<X>1510</X>
+			<Y>2410</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1530,8 +1530,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1739533423776</Id>
 			<Name><![CDATA[data_winterWeekDistrictHeatingDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>2100</Y>
+			<X>1990</X>
+			<Y>2410</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1556,8 +1556,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1740151894929</Id>
 			<Name><![CDATA[data_annualElectrolyserElectricityDemand_kW]]></Name>
-			<X>1170</X>
-			<Y>1910</Y>
+			<X>1090</X>
+			<Y>2220</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1582,8 +1582,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1740151936836</Id>
 			<Name><![CDATA[data_summerWeekElectrolyserElectricityDemand_kW]]></Name>
-			<X>1590</X>
-			<Y>1910</Y>
+			<X>1510</X>
+			<Y>2220</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1608,8 +1608,8 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1740151964214</Id>
 			<Name><![CDATA[data_winterWeekElectrolyserElectricityDemand_kW]]></Name>
-			<X>2070</X>
-			<Y>1910</Y>
+			<X>1990</X>
+			<Y>2220</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>

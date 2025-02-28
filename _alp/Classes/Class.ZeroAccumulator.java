@@ -15,7 +15,7 @@ public class ZeroAccumulator {
     private double timeStep_h = 0.25;
     private double sampleWeight = timeStep_h / signalResolution_h;
     private int arraySize;
-
+    
     private double sum = 0;
     private double posSum = 0;
     private double negSum = 0;
@@ -23,7 +23,7 @@ public class ZeroAccumulator {
     private double min = 0;
 
     private int numStepsAdded = 0;
-
+    private int numStepsAddedThisEntry = 0; // Used when signal resolution is different from the timestep
     /**
      * Default constructor
      */
@@ -34,15 +34,17 @@ public class ZeroAccumulator {
      * Constructor initializing the fields
      */
     public ZeroAccumulator(boolean hasTimeSeries, double signalResolution_h, double duration_h) {
-        this.hasTimeSeries = hasTimeSeries;
+        if (signalResolution_h < this.timeStep_h) {
+        	throw new RuntimeException("Impossible to construct a ZeroAccumulator with Signal Resolution: " + signalResolution_h + " h, as it is shorter than the timestep.");
+        }
+    	this.hasTimeSeries = hasTimeSeries;
         this.signalResolution_h = signalResolution_h;
-        sampleWeight = timeStep_h / signalResolution_h;
+        this.sampleWeight = timeStep_h / signalResolution_h;
         this.duration_h = duration_h;
         this.arraySize = (int) Math.round(duration_h / signalResolution_h);
         if (hasTimeSeries) { // Allocate memory for timeSeries, only when timeSeries is used.
             timeSeries = new double[(int) Math.round(duration_h / signalResolution_h)];
         }
-
     }
 
     public void setTimeStep_h(double timeStep_h) {
@@ -63,6 +65,7 @@ public class ZeroAccumulator {
     }
 
     // public void addStep(double t_h, double value) {
+    /*
     public void addValue(double t_h, double value) {
         if (hasTimeSeries) {
             timeSeries[(int) Math.floor(t_h / signalResolution_h)] += value; // averages
@@ -87,87 +90,80 @@ public class ZeroAccumulator {
             min = value;
         }
     }
-
-    public void addStep(double value) {
+    */
+    
+    public void addStep(double power_kW) {
         if (hasTimeSeries) {
-            timeSeries[numStepsAdded] += value; // averages
-                                                // multiple
-                                                // timesteps
-                                                // when
-                                                // timeSeries
-                                                // has
-                                                // longer
-                                                // resolution
-                                                // than
-                                                // timestep.
+            // averages multiple timesteps when timeSeries has longer resolution than timestep.        	
+            this.timeSeries[this.numStepsAdded] += power_kW;
         } else {
-            sum += value;
-            posSum += Math.max(0.0, value);
-            negSum += Math.min(0.0, value);
+            sum += power_kW;
+            posSum += Math.max(0.0, power_kW);
+            negSum += Math.min(0.0, power_kW);
         }
-        if (value > max) {
-            max = value;
+        if (power_kW > max) {
+            max = power_kW;
         }
-        if (value < min) {
-            min = value;
+        if (power_kW < min) {
+            min = power_kW;
         }
-        numStepsAdded++;
+        
+        this.numStepsAddedThisEntry ++;
+        if (this.numStepsAddedThisEntry == roundToInt(this.signalResolution_h / this.timeStep_h)) {
+        	this.numStepsAddedThisEntry = 0;
+        	this.numStepsAdded++;
+        }
     }
 
-    public double getSum() {
+    private double getSum() {
         if (hasTimeSeries) {
             sum = ZeroMath.arraySum(timeSeries);
         }
         return sum;
     }
 
-    public double getIntegral() { // For getting total energy when addSteps was called with power as value
-        if (hasTimeSeries) {
-            sum = ZeroMath.arraySum(timeSeries);
-        }
-        return sum * signalResolution_h * sampleWeight;
+    public double getIntegral_kWh() { // For getting total energy when addSteps was called with power as value
+        return this.getSum() * this.timeStep_h;
     }
 
-    public double getSumPos() {
+    private double getSumPos() {
         if (hasTimeSeries) {
             posSum = ZeroMath.arraySumPos(timeSeries);
         }
         return posSum;
     }
-
-    public double getSumNeg() {
+    
+    public double getIntegralPos_kWh() { // For getting total energy when addSteps was called with power as value
+        return this.getSumPos() * this.timeStep_h;
+    }
+    
+    private double getSumNeg() {
         if (hasTimeSeries) {
             negSum = ZeroMath.arraySumNeg(timeSeries);
         }
         return negSum;
     }
 
-    public double[] getTimeSeries() {
+    public double getIntegralNeg_kWh() { // For getting total energy when addSteps was called with power as value
+        return this.getSumNeg() * this.timeStep_h;
+    }
+    
+    public double[] getTimeSeries_kW() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
             double[] timeSeriesTemp = new double[arraySize];
             double avgValue = sum / arraySize;
             Arrays.fill(timeSeriesTemp, avgValue);
-            /*
-             * for (int i = 0; i < arraySize; i++) {
-             * timeSeries[i] = avgValue;
-             * }
-             */
             return timeSeriesTemp;
         } else {
             return timeSeries;
         }
     }
 
-    public double[] getTimeSeriesIntegral() {
+    public double[] getTimeSeriesIntegral_kWh() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
             double[] timeSeriesTemp = new double[arraySize];
             double avgValue = sum / arraySize * sampleWeight;
             Arrays.fill(timeSeriesTemp, avgValue);
-            /*
-             * for (int i = 0; i < arraySize; i++) {
-             * timeSeries[i] = avgValue;
-             * }
-             */
             return timeSeriesTemp;
         } else {
             return ZeroMath.arrayMultiply(timeSeries.clone(), sampleWeight);
@@ -202,7 +198,6 @@ public class ZeroAccumulator {
             }
         } else {
             throw new RuntimeException("Impossible to add these incompatible accumulators");
-            // throw some error? or make some assumptions?
         }
         return this;
     }
@@ -215,13 +210,11 @@ public class ZeroAccumulator {
             }
         } else {
             throw new RuntimeException("Impossible to subtract these incompatible accumulators");
-            // throw some error? or make some assumptions?
         }
         return this;
     }
     
     public DataSet getDataSet(double startTime_h) {
-	
 		DataSet ds = new DataSet(timeSeries.length);
 		for (int i = 0; i < timeSeries.length; i++) {
 			ds.add(startTime_h + i * this.signalResolution_h, this.timeSeries[i] );
@@ -229,7 +222,7 @@ public class ZeroAccumulator {
 		
 		return ds;
     }
-		
+	
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
