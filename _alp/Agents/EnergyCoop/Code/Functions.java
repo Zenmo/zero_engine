@@ -1099,6 +1099,11 @@ if (energyModel.v_isRapidRun){
 	data_CHPElectricityProductionLiveWeek_kW.update();
 	
 	data_batteryStoredEnergyLiveWeek_MWh.update();
+	
+	//Netload
+	data_liveElectricityBalance_kW.update();
+	data_gridCapacityDemand_kW.update();
+	data_gridCapacitySupply_kW.update();
 }
 
 /*ALCODEEND*/}
@@ -1819,7 +1824,6 @@ for (int i = 0; i<arraySize; i++) {
 		currentBalance_kW += gc.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries()[i];
 	}	
 	am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
-	
 	if (energyModel.p_timeStep_h * i >= energyModel.p_startHourSummerWeek && energyModel.p_timeStep_h * i < energyModel.p_startHourSummerWeek + 24*7){
 		am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).addStep(currentBalance_kW);
 	}
@@ -1934,7 +1938,7 @@ if (arraySize < 8760/energyModel.p_timeStep_h){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
 	return 0.0;
 } else {
-	return data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/energyModel.p_timeStep_h));
+	return max(0,data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h)));
 }
 /*ALCODEEND*/}
 
@@ -1946,7 +1950,7 @@ if (arraySize < 8760/energyModel.p_timeStep_h){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
 	return 0.0;
 } else {
-	return data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h));
+	return -min(0,data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/energyModel.p_timeStep_h)));
 }
 /*ALCODEEND*/}
 

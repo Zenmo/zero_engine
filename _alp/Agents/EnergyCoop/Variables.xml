@@ -3015,7 +3015,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_AccumulatorMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_AccumulatorMap();]]></Code>
+				<Code><![CDATA[new J_AccumulatorMap()]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
