@@ -129,8 +129,8 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1666945497935</Id>
-		<Name><![CDATA[f_sumMolecularEnergyFlows]]></Name>
-		<Description><![CDATA[Bereken invoer en uitvoer van energiedragers naast elektriciteit (methaan, waterstof) voor totale kostenberekening en model-verificatie. Aangeroepen in f_returnKPIData aan het einde van de modelrun.
+		<Name><![CDATA[f_calculateImportExport]]></Name>
+		<Description><![CDATA[Bereken invoer en uitvoer van energiedragers. Aangeroepen in f_returnKPIData aan het einde van de modelrun.
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>

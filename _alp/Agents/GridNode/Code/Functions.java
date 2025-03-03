@@ -388,7 +388,7 @@ v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh
 
 DataSet f_getDuurkromme()
 {/*ALCODESTART::1718111675053*/
-J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries(), energyModel);
+J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
 
 data_netbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveTotal_kW;
 data_summerWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveSummer_kW;

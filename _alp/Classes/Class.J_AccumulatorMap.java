@@ -60,7 +60,27 @@ public class J_AccumulatorMap implements Serializable {
 		}
 	}
 	
-
+	public J_AccumulatorMap add( J_AccumulatorMap accumulatorMap ) {
+		for (var EC : accumulatorMap.energyCarrierList) {
+			if (!this.energyCarrierList.contains(EC)) {
+				// make a new one?
+				throw new RuntimeException("Tried to add an AccumulatorMap with a new EnergyCarrier.");
+			}
+			this.get(EC).add(accumulatorMap.get(EC));
+		}
+		return this;
+	}
+	
+	public J_AccumulatorMap subtract( J_AccumulatorMap accumulatorMap ) {
+		for (var EC : accumulatorMap.energyCarrierList) {
+			if (!this.energyCarrierList.contains(EC)) {
+				// make a new one?
+				throw new RuntimeException("Tried to subtract an AccumulatorMap with a new EnergyCarrier.");
+			}
+			this.get(EC).subtract(accumulatorMap.get(EC));
+		}
+		return this;
+	}
 	
     public String toString() {
         if (this.accumulatorArray.length == 0) {

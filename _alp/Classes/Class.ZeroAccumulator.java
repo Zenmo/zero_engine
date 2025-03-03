@@ -13,14 +13,14 @@ public class ZeroAccumulator {
     private double duration_h;
     private double signalResolution_h = 0.25;
     private double timeStep_h = 0.25;
-    private double sampleWeight = timeStep_h / signalResolution_h;
+    private double sampleWeight_fr = timeStep_h / signalResolution_h;
     private int arraySize;
     
-    private double sum = 0;
-    private double posSum = 0;
-    private double negSum = 0;
-    private double max = 0;
-    private double min = 0;
+    private double totalEnergy_kWh = 0;
+    private double totalPositiveEnergy_kWh = 0;
+    private double totalNegativeEnergy_kWh = 0;
+    private double maxPower_kW = 0;
+    private double minPower_kW = 0;
 
     private int numStepsAdded = 0;
     private int numStepsAddedThisEntry = 0; // Used when signal resolution is different from the timestep
@@ -39,7 +39,7 @@ public class ZeroAccumulator {
         }
     	this.hasTimeSeries = hasTimeSeries;
         this.signalResolution_h = signalResolution_h;
-        this.sampleWeight = timeStep_h / signalResolution_h;
+        this.sampleWeight_fr = timeStep_h / signalResolution_h;
         this.duration_h = duration_h;
         this.arraySize = (int) Math.round(duration_h / signalResolution_h);
         if (hasTimeSeries) { // Allocate memory for timeSeries, only when timeSeries is used.
@@ -49,16 +49,16 @@ public class ZeroAccumulator {
 
     public void setTimeStep_h(double timeStep_h) {
         this.timeStep_h = timeStep_h;
-        sampleWeight = timeStep_h / signalResolution_h;
+        sampleWeight_fr = timeStep_h / signalResolution_h;
     }
 
     public void reset() {
-        sum = 0;
-        posSum = 0;
-        negSum = 0;
+    	totalEnergy_kWh = 0;
+    	totalPositiveEnergy_kWh = 0;
+    	totalNegativeEnergy_kWh = 0;
         numStepsAdded = 0;
-        max = 0;
-        min = 0;
+        maxPower_kW = 0;
+        minPower_kW = 0;
         if (hasTimeSeries) { // Allocate memory for timeSeries, only when timeSeries is used.
             timeSeries = new double[(int) Math.round(duration_h / signalResolution_h)];
         }
@@ -95,17 +95,17 @@ public class ZeroAccumulator {
     public void addStep(double power_kW) {
         if (hasTimeSeries) {
             // averages multiple timesteps when timeSeries has longer resolution than timestep.        	
-            this.timeSeries[this.numStepsAdded] += power_kW;
+            this.timeSeries[this.numStepsAdded] += power_kW * this.sampleWeight_fr;
         } else {
-            sum += power_kW;
-            posSum += Math.max(0.0, power_kW);
-            negSum += Math.min(0.0, power_kW);
+        	totalEnergy_kWh += power_kW  * this.timeStep_h;
+        	totalPositiveEnergy_kWh += Math.max(0.0, power_kW) * this.timeStep_h;
+        	totalNegativeEnergy_kWh += Math.min(0.0, power_kW) * this.timeStep_h;
         }
-        if (power_kW > max) {
-            max = power_kW;
+        if (power_kW > maxPower_kW) {
+        	maxPower_kW = power_kW;
         }
-        if (power_kW < min) {
-            min = power_kW;
+        if (power_kW < minPower_kW) {
+        	minPower_kW = power_kW;
         }
         
         this.numStepsAddedThisEntry ++;
@@ -115,43 +115,32 @@ public class ZeroAccumulator {
         }
     }
 
-    private double getSum() {
-        if (hasTimeSeries) {
-            sum = ZeroMath.arraySum(timeSeries);
-        }
-        return sum;
-    }
-
     public double getIntegral_kWh() { // For getting total energy when addSteps was called with power as value
-        return this.getSum() * this.timeStep_h;
-    }
-
-    private double getSumPos() {
-        if (hasTimeSeries) {
-            posSum = ZeroMath.arraySumPos(timeSeries);
+        if (this.hasTimeSeries) {
+        	this.totalEnergy_kWh = ZeroMath.arraySum(this.timeSeries) * this.signalResolution_h;
         }
-        return posSum;
+    	return this.totalEnergy_kWh;
     }
     
     public double getIntegralPos_kWh() { // For getting total energy when addSteps was called with power as value
-        return this.getSumPos() * this.timeStep_h;
+        if (this.hasTimeSeries) {
+        	this.totalPositiveEnergy_kWh = ZeroMath.arraySumPos(this.timeSeries) * this.signalResolution_h;
+        }
+        return this.totalPositiveEnergy_kWh;
     }
     
-    private double getSumNeg() {
-        if (hasTimeSeries) {
-            negSum = ZeroMath.arraySumNeg(timeSeries);
-        }
-        return negSum;
-    }
 
     public double getIntegralNeg_kWh() { // For getting total energy when addSteps was called with power as value
-        return this.getSumNeg() * this.timeStep_h;
+        if (this.hasTimeSeries) {
+        	this.totalNegativeEnergy_kWh = ZeroMath.arraySumNeg(this.timeSeries) * this.signalResolution_h;
+        }
+        return this.totalNegativeEnergy_kWh;
     }
     
     public double[] getTimeSeries_kW() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
             double[] timeSeriesTemp = new double[arraySize];
-            double avgValue = sum / arraySize;
+            double avgValue = this.totalEnergy_kWh / this.duration_h;
             Arrays.fill(timeSeriesTemp, avgValue);
             return timeSeriesTemp;
         } else {
@@ -162,11 +151,11 @@ public class ZeroAccumulator {
     public double[] getTimeSeriesIntegral_kWh() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
             double[] timeSeriesTemp = new double[arraySize];
-            double avgValue = sum / arraySize * sampleWeight;
+            double avgValue = this.totalEnergy_kWh / arraySize;
             Arrays.fill(timeSeriesTemp, avgValue);
             return timeSeriesTemp;
         } else {
-            return ZeroMath.arrayMultiply(timeSeries.clone(), sampleWeight);
+            return ZeroMath.arrayMultiply(timeSeries.clone(), this.signalResolution_h);
         }
     }
 
@@ -178,12 +167,12 @@ public class ZeroAccumulator {
         }
     }
 
-    public double getMax() {
-        return max;
+    public double getMaxPower_kW() {
+        return maxPower_kW;
     }
 
-    public double getMin() {
-        return min;
+    public double getMinPower_kW() {
+        return minPower_kW;
     }
     
     public double getSignalResolution_h() {
@@ -196,7 +185,19 @@ public class ZeroAccumulator {
             for (int i = 0; i < timeSeries.length; i++) {
                 this.timeSeries[i] += acc.timeSeries[i];
             }
-        } else {
+            this.maxPower_kW = Arrays.stream(this.timeSeries).max().getAsDouble();
+            this.minPower_kW = Arrays.stream(this.timeSeries).min().getAsDouble();
+            
+        } else if ((!this.hasTimeSeries && !acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
+                && (this.signalResolution_h == acc.signalResolution_h)) {
+            this.totalEnergy_kWh += acc.totalEnergy_kWh;
+            // These values below we can not determine since we have no timeSeries (but you can still call getSumPos()...)
+            this.totalPositiveEnergy_kWh = 0;
+            this.totalNegativeEnergy_kWh = 0;
+            this.maxPower_kW = 0;
+            this.minPower_kW = 0;
+        }    
+        else {
             throw new RuntimeException("Impossible to add these incompatible accumulators");
         }
         return this;
@@ -208,6 +209,16 @@ public class ZeroAccumulator {
             for (int i = 0; i < timeSeries.length; i++) {
                 this.timeSeries[i] -= acc.timeSeries[i];
             }
+            this.maxPower_kW = Arrays.stream(this.timeSeries).max().getAsDouble();
+            this.minPower_kW = Arrays.stream(this.timeSeries).min().getAsDouble();
+        } else if ((!this.hasTimeSeries && !acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
+                && (this.signalResolution_h == acc.signalResolution_h)) {
+        	this.totalEnergy_kWh -= acc.totalEnergy_kWh;
+            // These values below we can not determine since we have no timeSeries (but you can still call getSumPos()...)
+            this.totalPositiveEnergy_kWh = 0;
+            this.totalNegativeEnergy_kWh = 0;
+            this.maxPower_kW = 0;
+            this.minPower_kW = 0;
         } else {
             throw new RuntimeException("Impossible to subtract these incompatible accumulators");
         }
@@ -227,8 +238,8 @@ public class ZeroAccumulator {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("ZeroAccumulator, currentSum: ");
-        sb.append(this.getSum());
+        sb.append("ZeroAccumulator, totalEnergy_kWh: ");
+        sb.append(this.totalEnergy_kWh);
 
         return sb.toString();
     }

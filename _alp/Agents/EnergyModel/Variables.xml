@@ -1556,7 +1556,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715864481324</Id>
-		<Name><![CDATA[acc_totalEnergyProduction_kW]]></Name>
+		<Name><![CDATA[acc_dailyAverageEnergyProduction_kW]]></Name>
 		<X>610</X>
 		<Y>1090</Y>
 		<Label>
@@ -1578,7 +1578,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1715864481326</Id>
-		<Name><![CDATA[acc_totalEnergyConsumption_kW]]></Name>
+		<Name><![CDATA[acc_dailyAverageEnergyConsumption_kW]]></Name>
 		<X>610</X>
 		<Y>1110</Y>
 		<Label>
