@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1660731375016</Id>
 	<Name><![CDATA[EnergyCoop]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
 
 import zeroPackage.ZeroMath;
@@ -26,6 +27,7 @@ import java.util.EnumSet;]]></Import>
 			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
 	</Parameters>
+	<Implements>Interface_Results</Implements>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660731375014</Id>

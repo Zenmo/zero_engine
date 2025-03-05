@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1658499438203</Id>
 	<Name><![CDATA[GridConnection]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Import><![CDATA[/*import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,6 +21,7 @@ import java.io.*;
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;
 import javax.management.RuntimeErrorException;]]></Import>
+	<Implements>Interface_Results</Implements>
 	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>

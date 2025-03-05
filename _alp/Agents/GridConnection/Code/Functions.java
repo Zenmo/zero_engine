@@ -2731,3 +2731,8 @@ dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 /*ALCODEEND*/}
 
+ZeroAccumulator getAcc_dailyAverageBaseloadElectricityConsumption_kW()
+{/*ALCODESTART::1741177966110*/
+return acc_dailyAverageBaseloadElectricityConsumption_kW;
+/*ALCODEEND*/}
+

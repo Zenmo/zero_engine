@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1658477103140</Id>
 	<Name><![CDATA[EnergyModel]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -41,6 +42,7 @@ import com.anylogic.engine.markup.GISPoint;
 import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAStorageElectric;
 //import zero_engine.J_EAConsumption;]]></Import>
+	<Implements>Interface_Results</Implements>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>
