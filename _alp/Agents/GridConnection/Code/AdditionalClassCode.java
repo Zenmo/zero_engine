@@ -1,2 +1,2 @@
-public ZeroAccumulator getAcc_dailyAverageHeatPumpElectricityConsumption_kW() { return acc_dailyAverageHeatPumpElectricityConsumption_kW; }
-public ZeroAccumulator getAcc_dailyAverageElectricVehicleConsumption_kW() { return acc_dailyAverageElectricVehicleConsumption_kW; }
+public J_RapidRunData getRapidRunData(){return v_rapidRunData;}
+public J_LiveData getLiveData(){return v_liveData;}

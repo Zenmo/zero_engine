@@ -42,7 +42,7 @@ import com.anylogic.engine.markup.GISPoint;
 import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAStorageElectric;
 //import zero_engine.J_EAConsumption;]]></Import>
-	<Implements>Interface_Results</Implements>
+	<Implements>I_energyData</Implements>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658477103138</Id>
