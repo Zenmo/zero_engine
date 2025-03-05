@@ -1470,6 +1470,18 @@
 				<Id>1740048926478</Id>
 				<Name><![CDATA[ZeroTimeSeries]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1741163937278</Id>
+				<Name><![CDATA[Interface_Results]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741180550081</Id>
+				<Name><![CDATA[J_RapidRunData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741180880935</Id>
+				<Name><![CDATA[J_LiveData]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
