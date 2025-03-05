@@ -1466,6 +1466,10 @@
 				<Id>1740048926477</Id>
 				<Name><![CDATA[ZeroAccumulator]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1740048926478</Id>
+				<Name><![CDATA[ZeroTimeSeries]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
