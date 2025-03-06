@@ -632,7 +632,7 @@
 		<Id>1731573713521</Id>
 		<Name><![CDATA[f_initializeLiveDataSets]]></Name>
 		<X>80</X>
-		<Y>860</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -648,7 +648,7 @@
 		<Id>1732550958758</Id>
 		<Name><![CDATA[f_initializeAccumulators]]></Name>
 		<X>80</X>
-		<Y>910</Y>
+		<Y>890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -717,5 +717,20 @@
 			<Type><![CDATA[OL_EnergyCarriers]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1741277522881</Id>
+		<Name><![CDATA[f_initializePreviousRunData]]></Name>
+		<X>80</X>
+		<Y>940</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 	</Function>
 </Functions>

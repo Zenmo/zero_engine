@@ -811,7 +811,7 @@
 		<Id>1730728785333</Id>
 		<Name><![CDATA[f_initializeDataSets]]></Name>
 		<X>580</X>
-		<Y>800</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -837,5 +837,20 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1741277722817</Id>
+		<Name><![CDATA[f_initializePreviousRunData]]></Name>
+		<X>580</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 	</Function>
 </Functions>

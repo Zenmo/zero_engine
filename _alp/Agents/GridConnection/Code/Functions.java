@@ -2745,9 +2745,6 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 
 double f_initializeDataSets()
 {/*ALCODESTART::1730728785333*/
-v_liveData = new J_LiveData();
-v_rapidRunData = new J_RapidRunData();
-
 v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 
@@ -2858,5 +2855,10 @@ data_windGeneration_kW.update();
 data_districtHeatDelivery_kW.update();
 
 //data_totalNetLoad_kW.update();
+/*ALCODEEND*/}
+
+double f_initializePreviousRunData()
+{/*ALCODESTART::1741277722817*/
+
 /*ALCODEEND*/}
 

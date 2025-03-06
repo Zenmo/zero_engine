@@ -630,11 +630,6 @@ for(GridConnection GC:c_memberGridConnections){
 	} 
 }
 
-//Create data objects
-v_liveData = new J_LiveData();
-v_rapidRunData = new J_RapidRunData();
-
-
 //========== TOTAL ACCUMULATORS ==========//
 am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h );
 am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) );
@@ -2195,6 +2190,11 @@ for (int i=0; i < liveWeekSize; i++){
 	//Stored
 	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(timeAxisValue, batteryStoredEnergyLiveWeek_MWh);
 }
+
+/*ALCODEEND*/}
+
+double f_initializePreviousRunData()
+{/*ALCODESTART::1741277674313*/
 
 /*ALCODEEND*/}
 

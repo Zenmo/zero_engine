@@ -3,6 +3,8 @@
  */	
 public class J_RapidRunData {
 	
+	public Agent parentAgent;
+	
 	//Full simulation
 	public ZeroAccumulator acc_dailyAverageBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageHeatPumpElectricityConsumption_kW;
@@ -59,9 +61,9 @@ public class J_RapidRunData {
     /**
      * Default constructor
      */
-    public J_RapidRunData() {
+    public J_RapidRunData(Agent parentAgent) {
+    	this.parentAgent = parentAgent;
     }
-    
     
 	public String toString() {
 		return super.toString();

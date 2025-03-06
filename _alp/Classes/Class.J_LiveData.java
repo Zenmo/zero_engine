@@ -3,7 +3,7 @@
  */	
 public class J_LiveData {
 	
-	
+	public Agent parentAgent;
 	public J_DataSetMap dsm_liveDemand_kW = new J_DataSetMap(); 
 	public J_DataSetMap dsm_liveSupply_kW = new J_DataSetMap(); 
 	public DataSet data_baseloadElectricityDemand_kW = new DataSet(672);
@@ -28,7 +28,8 @@ public class J_LiveData {
     /**
      * Default constructor
      */
-    public J_LiveData() {
+    public J_LiveData(Agent parentAgent) {
+    	this.parentAgent = parentAgent;
     }
 	
 	public String toString() {

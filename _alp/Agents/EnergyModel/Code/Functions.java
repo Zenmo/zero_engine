@@ -2627,3 +2627,8 @@ dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h))
 
 /*ALCODEEND*/}
 
+double f_initializePreviousRunData()
+{/*ALCODESTART::1741277522881*/
+
+/*ALCODEEND*/}
+
