@@ -736,6 +736,9 @@ acc_weekendEnergyConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeS
 acc_weekendElectricityProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
 acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
 
+//========== LIVE WEEK DATASETS ==========//
+dsm_liveDemand_kW.createEmptyDataSets(v_activeConsumptionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+dsm_liveSupply_kW.createEmptyDataSets(v_activeProductionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 /*ALCODEEND*/}
 
 double f_updateIncentives()
@@ -1099,8 +1102,10 @@ if (energyModel.v_isRapidRun){
 	//f_fillAnnualDatasets();
 	f_fillAnnualDatasets();
 } else {
-	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+	for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
 		dsm_liveDemand_kW.get(EC).add( energyModel.t_h, fm_currentConsumptionFlows_kW.get(EC) );
+	}
+	for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
 		dsm_liveSupply_kW.get(EC).add( energyModel.t_h, fm_currentProductionFlows_kW.get(EC) );
 	}
 	data_baseloadElectricityDemand_kW.update();

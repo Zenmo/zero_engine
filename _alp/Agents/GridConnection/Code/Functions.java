@@ -2216,12 +2216,14 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 
 double f_fillLiveDataSets()
 {/*ALCODESTART::1722518225504*/
+double timeStep_h = energyModel.t_h-energyModel.p_runStartTime_h;
+
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	dsm_liveDemand_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
 	dsm_liveSupply_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
 }
 
-data_liveElectricityBalance_kW.add(energyModel.t_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+data_liveElectricityBalance_kW.add(timeStep_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 
 //data_naturalGasDemand_kW.update();
 //data_dieselDemand_kW.update();
@@ -2238,7 +2240,7 @@ v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
 	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_baseloadElectricityDemand_kW.update();
+v_liveData.add()data_baseloadElectricityDemand_kW.update();
 
 v_electricHobConsumption_kW = 0;
 for (J_EA j_ea : c_electricHobAssets) {
@@ -2729,10 +2731,5 @@ dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-/*ALCODEEND*/}
-
-ZeroAccumulator getAcc_dailyAverageBaseloadElectricityConsumption_kW()
-{/*ALCODESTART::1741177966110*/
-return acc_dailyAverageBaseloadElectricityConsumption_kW;
 /*ALCODEEND*/}
 
