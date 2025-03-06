@@ -43,6 +43,17 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	}
     
     @Override
+    public void f_updateAllFlows( double powerFraction_fr ) {
+		this.operate( min(1, max(0,powerFraction_fr)) );
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);		
+    	}
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
+    }
+    
+    @Override
     public void operate(double ratioOfCapacity) {
 		double electricityConsumption_kW = inputCapacity_kW * ratioOfCapacity;
 		double hydrogenProduction_kW = 0;
@@ -118,7 +129,8 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "				
+		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "
+				+ "Current state: " + this.electrolyserState + ", "
 				+ "InputCapacity: " + this.inputCapacity_kW + " kW, " 
 				+ "with efficiency: " + this.eta_r + ", "
 				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
