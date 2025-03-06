@@ -3,7 +3,7 @@
 	<EmbeddedObject>
 		<Id>1658477403183</Id>
 		<Name><![CDATA[pop_gridNodes]]></Name>
-		<X>300</X>
+		<X>380</X>
 		<Y>50</Y>
 		<Label>
 			<X>15</X>
@@ -281,7 +281,7 @@
 	<EmbeddedObject>
 		<Id>1658499722957</Id>
 		<Name><![CDATA[pop_UI_EnergyAsset]]></Name>
-		<X>297</X>
+		<X>377</X>
 		<Y>362</Y>
 		<Label>
 			<X>15</X>
@@ -2193,7 +2193,7 @@
 	<EmbeddedObject>
 		<Id>1676382641979</Id>
 		<Name><![CDATA[pop_GIS_Buildings]]></Name>
-		<X>297</X>
+		<X>377</X>
 		<Y>422</Y>
 		<Label>
 			<X>15</X>
@@ -2319,7 +2319,7 @@
 	<EmbeddedObject>
 		<Id>1676382641980</Id>
 		<Name><![CDATA[pop_GIS_Objects]]></Name>
-		<X>297</X>
+		<X>377</X>
 		<Y>382</Y>
 		<Label>
 			<X>15</X>
@@ -2409,7 +2409,7 @@
 	<EmbeddedObject>
 		<Id>1676382641981</Id>
 		<Name><![CDATA[pop_GIS_Parcels]]></Name>
-		<X>297</X>
+		<X>377</X>
 		<Y>400</Y>
 		<Label>
 			<X>15</X>

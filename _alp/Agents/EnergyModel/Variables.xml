@@ -23,8 +23,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1659356201846</Id>
 		<Name><![CDATA[v_currentWindPowerNormalized_r]]></Name>
-		<X>1120</X>
-		<Y>100</Y>
+		<X>1220</X>
+		<Y>65</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -42,8 +42,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1659356216131</Id>
 		<Name><![CDATA[v_currentSolarPowerNormalized_r]]></Name>
-		<X>1120</X>
-		<Y>120</Y>
+		<X>1220</X>
+		<Y>85</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -61,8 +61,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1659364131698</Id>
 		<Name><![CDATA[v_currentAmbientTemperature_degC]]></Name>
-		<X>1120</X>
-		<Y>80</Y>
+		<X>1220</X>
+		<Y>45</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -80,8 +80,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1663238634515</Id>
 		<Name><![CDATA[v_timeStepsElapsed]]></Name>
-		<X>557</X>
-		<Y>382</Y>
+		<X>677</X>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -186,8 +186,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1666979627442</Id>
 		<Name><![CDATA[v_totalInstalledBatteryStorageCapacity_MWh]]></Name>
-		<X>1120</X>
-		<Y>180</Y>
+		<X>1220</X>
+		<Y>145</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -224,8 +224,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1671636172718</Id>
 		<Name><![CDATA[v_WindYieldForecast_fr]]></Name>
-		<X>800</X>
-		<Y>430</Y>
+		<X>960</X>
+		<Y>398</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -243,8 +243,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1671636200983</Id>
 		<Name><![CDATA[v_SolarYieldForecast_fr]]></Name>
-		<X>800</X>
-		<Y>450</Y>
+		<X>960</X>
+		<Y>418</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -262,8 +262,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1671638019875</Id>
 		<Name><![CDATA[v_epexForecast_eurpkWh]]></Name>
-		<X>800</X>
-		<Y>490</Y>
+		<X>960</X>
+		<Y>458</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -281,8 +281,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1672229241505</Id>
 		<Name><![CDATA[v_totalInstalledWindPower_kW]]></Name>
-		<X>1120</X>
-		<Y>202</Y>
+		<X>1220</X>
+		<Y>167</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -303,8 +303,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1672229257384</Id>
 		<Name><![CDATA[v_totalInstalledPVPower_kW]]></Name>
-		<X>1120</X>
-		<Y>222</Y>
+		<X>1220</X>
+		<Y>187</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -451,8 +451,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1683718894234</Id>
 		<Name><![CDATA[v_timeSeriesRuntime_ms]]></Name>
-		<X>557</X>
-		<Y>472</Y>
+		<X>677</X>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -470,8 +470,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1683718916458</Id>
 		<Name><![CDATA[v_gridNodesRuntime_ms]]></Name>
-		<X>557</X>
-		<Y>512</Y>
+		<X>677</X>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -489,8 +489,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1683718921466</Id>
 		<Name><![CDATA[v_gridConnectionsRuntime_ms]]></Name>
-		<X>557</X>
-		<Y>492</Y>
+		<X>677</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -508,8 +508,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1683718924632</Id>
 		<Name><![CDATA[v_incentivesRuntime_ms]]></Name>
-		<X>557</X>
-		<Y>552</Y>
+		<X>677</X>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -527,8 +527,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1683718924634</Id>
 		<Name><![CDATA[v_financialsRuntime_ms]]></Name>
-		<X>557</X>
-		<Y>532</Y>
+		<X>677</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -546,8 +546,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1690290329895</Id>
 		<Name><![CDATA[hourOfYearPerMonth]]></Name>
-		<X>556</X>
-		<Y>402</Y>
+		<X>676</X>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -569,8 +569,8 @@
 		<Id>1690290329902</Id>
 		<Name><![CDATA[v_hourOfYearStart]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>556</X>
-		<Y>423</Y>
+		<X>676</X>
+		<Y>391</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -654,8 +654,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1697554735224</Id>
 		<Name><![CDATA[v_isRapidRun]]></Name>
-		<X>790</X>
-		<Y>140</Y>
+		<X>950</X>
+		<Y>108</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -720,8 +720,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1699277193134</Id>
 		<Name><![CDATA[t_h]]></Name>
-		<X>557</X>
-		<Y>212</Y>
+		<X>677</X>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -742,6 +742,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1699278542898</Id>
 		<Name><![CDATA[v_dailyNetLoadAvg_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2800</Y>
 		<Label>
@@ -898,7 +899,7 @@
 		<Id>1700725227193</Id>
 		<Name><![CDATA[v_currentFinalEnergyConsumption_kW]]></Name>
 		<X>80</X>
-		<Y>1020</Y>
+		<Y>1120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -917,7 +918,7 @@
 		<Id>1700725244568</Id>
 		<Name><![CDATA[v_currentPrimaryEnergyProduction_kW]]></Name>
 		<X>80</X>
-		<Y>1000</Y>
+		<Y>1100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -936,7 +937,7 @@
 		<Id>1700725502196</Id>
 		<Name><![CDATA[v_currentEnergyCurtailed_kW]]></Name>
 		<X>80</X>
-		<Y>1060</Y>
+		<Y>1160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -955,7 +956,7 @@
 		<Id>1701699259425</Id>
 		<Name><![CDATA[v_currentEnergyImport_kW]]></Name>
 		<X>80</X>
-		<Y>1121</Y>
+		<Y>1221</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -974,7 +975,7 @@
 		<Id>1701699273727</Id>
 		<Name><![CDATA[v_currentEnergyExport_kW]]></Name>
 		<X>80</X>
-		<Y>1141</Y>
+		<Y>1241</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1169,7 +1170,7 @@
 		<Id>1701786316417</Id>
 		<Name><![CDATA[v_currentElectricityImport_kW]]></Name>
 		<X>80</X>
-		<Y>1160</Y>
+		<Y>1260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1188,7 +1189,7 @@
 		<Id>1701786316419</Id>
 		<Name><![CDATA[v_currentElectricityExport_kW]]></Name>
 		<X>80</X>
-		<Y>1180</Y>
+		<Y>1280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1356,7 +1357,7 @@
 		<Id>1705422009185</Id>
 		<Name><![CDATA[v_currentPrimaryEnergyProductionHeatpumps_kW]]></Name>
 		<X>80</X>
-		<Y>1080</Y>
+		<Y>1180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1516,8 +1517,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1712842800772</Id>
 		<Name><![CDATA[v_dayOfWeek1jan]]></Name>
-		<X>560</X>
-		<Y>700</Y>
+		<X>680</X>
+		<Y>668</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1535,8 +1536,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1715074195578</Id>
 		<Name><![CDATA[v_kpiCalcsRuntime_ms]]></Name>
-		<X>557</X>
-		<Y>572</Y>
+		<X>677</X>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1978,6 +1979,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315931</Id>
 		<Name><![CDATA[v_dailyBaseloadElectricityDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2830</Y>
 		<Label>
@@ -2016,6 +2018,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315933</Id>
 		<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2850</Y>
 		<Label>
@@ -2035,6 +2038,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315935</Id>
 		<Name><![CDATA[v_dailyElectricVehicleDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2870</Y>
 		<Label>
@@ -2054,6 +2058,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315937</Id>
 		<Name><![CDATA[v_dailyBatteriesDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2890</Y>
 		<Label>
@@ -2073,6 +2078,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315939</Id>
 		<Name><![CDATA[v_dailyPVGeneration_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2960</Y>
 		<Label>
@@ -2092,6 +2098,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315941</Id>
 		<Name><![CDATA[v_dailyWindGeneration_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2980</Y>
 		<Label>
@@ -2111,6 +2118,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315943</Id>
 		<Name><![CDATA[v_dailyBatteriesSupply_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>3000</Y>
 		<Label>
@@ -2130,6 +2138,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1715246315945</Id>
 		<Name><![CDATA[v_dailyV2GSupply_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>3020</Y>
 		<Label>
@@ -2149,8 +2158,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1716899850820</Id>
 		<Name><![CDATA[v_topLevelGridCapacity_kW]]></Name>
-		<X>1119</X>
-		<Y>250</Y>
+		<X>1219</X>
+		<Y>215</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2171,8 +2180,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1718883144081</Id>
 		<Name><![CDATA[v_electricityYieldForecast_fr]]></Name>
-		<X>800</X>
-		<Y>470</Y>
+		<X>960</X>
+		<Y>438</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2190,8 +2199,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1721228298986</Id>
 		<Name><![CDATA[v_currentDLRfactor_fr]]></Name>
-		<X>1120</X>
-		<Y>150</Y>
+		<X>1220</X>
+		<Y>115</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2212,8 +2221,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1721228965491</Id>
 		<Name><![CDATA[v_minDLRfactor_fr]]></Name>
-		<X>1334</X>
-		<Y>150</Y>
+		<X>1434</X>
+		<Y>115</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2234,8 +2243,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1721228970137</Id>
 		<Name><![CDATA[v_maxDLRfactor_fr]]></Name>
-		<X>1504</X>
-		<Y>150</Y>
+		<X>1604</X>
+		<Y>115</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2549,7 +2558,7 @@
 		<Id>1730452122313</Id>
 		<Name><![CDATA[fm_currentBalanceFlows_kW]]></Name>
 		<X>80</X>
-		<Y>940</Y>
+		<Y>1040</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3857,7 +3866,7 @@
 		<Id>1730479615156</Id>
 		<Name><![CDATA[fm_currentConsumptionFlows_kW]]></Name>
 		<X>80</X>
-		<Y>920</Y>
+		<Y>1020</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3879,7 +3888,7 @@
 		<Id>1730479616638</Id>
 		<Name><![CDATA[fm_currentProductionFlows_kW]]></Name>
 		<X>80</X>
-		<Y>900</Y>
+		<Y>1000</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3982,6 +3991,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1730968866329</Id>
 		<Name><![CDATA[fm_dailyAverageDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2760</Y>
 		<Label>
@@ -4004,6 +4014,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1730968866331</Id>
 		<Name><![CDATA[fm_dailyAverageSupply_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2780</Y>
 		<Label>
@@ -4158,8 +4169,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731422680250</Id>
 		<Name><![CDATA[b_isDaytime]]></Name>
-		<X>560</X>
-		<Y>750</Y>
+		<X>680</X>
+		<Y>718</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4180,8 +4191,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731422698257</Id>
 		<Name><![CDATA[b_isWeekday]]></Name>
-		<X>560</X>
-		<Y>770</Y>
+		<X>680</X>
+		<Y>738</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4202,8 +4213,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731422704613</Id>
 		<Name><![CDATA[b_isSummerWeek]]></Name>
-		<X>560</X>
-		<Y>790</Y>
+		<X>680</X>
+		<Y>758</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4224,8 +4235,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731422714256</Id>
 		<Name><![CDATA[b_isWinterWeek]]></Name>
-		<X>560</X>
-		<Y>810</Y>
+		<X>680</X>
+		<Y>778</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4246,8 +4257,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731422900385</Id>
 		<Name><![CDATA[b_isLastTimeStepOfDay]]></Name>
-		<X>560</X>
-		<Y>830</Y>
+		<X>680</X>
+		<Y>798</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4268,8 +4279,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731423522698</Id>
 		<Name><![CDATA[t_hourOfDay]]></Name>
-		<X>610</X>
-		<Y>212</Y>
+		<X>730</X>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4290,8 +4301,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1731573420951</Id>
 		<Name><![CDATA[dsm_liveDemand_kW]]></Name>
-		<X>80</X>
-		<Y>1700</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-980</X>
+		<Y>2180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4312,8 +4324,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1731573454382</Id>
 		<Name><![CDATA[dsm_liveSupply_kW]]></Name>
-		<X>80</X>
-		<Y>1720</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>-980</X>
+		<Y>2200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4334,8 +4347,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1731576444065</Id>
 		<Name><![CDATA[v_activeEnergyCarriers]]></Name>
-		<X>800</X>
-		<Y>610</Y>
+		<X>960</X>
+		<Y>578</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4356,6 +4369,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731590299824</Id>
 		<Name><![CDATA[v_dailyAverageElectrolyserDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2910</Y>
 		<Label>
@@ -4394,6 +4408,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732191713843</Id>
 		<Name><![CDATA[v_dailyFinalEnergyConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>3120</Y>
 		<Label>
@@ -4691,8 +4706,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1733478626642</Id>
 		<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
-		<X>820</X>
-		<Y>650</Y>
+		<X>980</X>
+		<Y>618</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4713,8 +4728,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1733478626644</Id>
 		<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
-		<X>820</X>
-		<Y>630</Y>
+		<X>980</X>
+		<Y>598</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -4735,6 +4750,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1734092339930</Id>
 		<Name><![CDATA[v_dailyCHPElectricityProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>3040</Y>
 		<Label>
@@ -4754,6 +4770,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1736432989839</Id>
 		<Name><![CDATA[v_dailyAverageCookingElectricityDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>2930</Y>
 		<Label>
@@ -4773,6 +4790,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1737535155265</Id>
 		<Name><![CDATA[v_dailyBatteryStoredEnergy_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>3070</Y>
 		<Label>
@@ -4792,6 +4810,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1738837520829</Id>
 		<Name><![CDATA[v_dailyDistrictHeatingDemand_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>20</X>
 		<Y>3100</Y>
 		<Label>
@@ -5804,8 +5823,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1741182108240</Id>
 		<Name><![CDATA[v_rapidRunData]]></Name>
-		<X>240</X>
-		<Y>-30</Y>
+		<X>80</X>
+		<Y>930</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -5823,8 +5842,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1741182108242</Id>
 		<Name><![CDATA[v_liveData]]></Name>
-		<X>240</X>
-		<Y>-60</Y>
+		<X>80</X>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6049,8 +6068,8 @@
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-		<X>800</X>
-		<Y>510</Y>
+		<X>960</X>
+		<Y>478</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6136,8 +6155,8 @@
 	<Variable Class="Parameter">
 		<Id>1699275323339</Id>
 		<Name><![CDATA[p_startHourWinterWeek]]></Name>
-		<X>560</X>
-		<Y>610</Y>
+		<X>680</X>
+		<Y>578</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6164,8 +6183,8 @@
 	<Variable Class="Parameter">
 		<Id>1699275323347</Id>
 		<Name><![CDATA[p_startHourSummerWeek]]></Name>
-		<X>560</X>
-		<Y>630</Y>
+		<X>680</X>
+		<Y>598</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6192,8 +6211,8 @@
 	<Variable Class="Parameter">
 		<Id>1699290370683</Id>
 		<Name><![CDATA[p_plotInterval_h]]></Name>
-		<X>560</X>
-		<Y>650</Y>
+		<X>680</X>
+		<Y>618</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6295,8 +6314,8 @@
 	<Variable Class="Parameter">
 		<Id>1712844009289</Id>
 		<Name><![CDATA[p_year]]></Name>
-		<X>560</X>
-		<Y>680</Y>
+		<X>680</X>
+		<Y>648</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6380,7 +6399,7 @@
 	<Variable Class="Parameter">
 		<Id>1724587724718</Id>
 		<Name><![CDATA[p_gridNodeTimeSeriesExcel]]></Name>
-		<X>1280</X>
+		<X>1360</X>
 		<Y>760</Y>
 		<Label>
 			<X>10</X>
@@ -6405,8 +6424,8 @@
 	<Variable Class="Parameter">
 		<Id>1731439789362</Id>
 		<Name><![CDATA[p_runStartTime_h]]></Name>
-		<X>790</X>
-		<Y>160</Y>
+		<X>950</X>
+		<Y>128</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6433,8 +6452,8 @@
 	<Variable Class="Parameter">
 		<Id>1731439835898</Id>
 		<Name><![CDATA[p_runEndTime_h]]></Name>
-		<X>790</X>
-		<Y>180</Y>
+		<X>950</X>
+		<Y>148</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6507,7 +6526,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1663251681035</Id>
 		<Name><![CDATA[c_gridNodesTopLevel]]></Name>
-		<X>299</X>
+		<X>379</X>
 		<Y>108</Y>
 		<Label>
 			<X>10</X>
@@ -6525,7 +6544,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1663252052482</Id>
 		<Name><![CDATA[c_gridNodesNotTopLevel]]></Name>
-		<X>299</X>
+		<X>379</X>
 		<Y>128</Y>
 		<Label>
 			<X>10</X>
@@ -6562,7 +6581,7 @@
 		<Id>1663336485480</Id>
 		<Name><![CDATA[c_gridNodesHeat]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>299</X>
+		<X>379</X>
 		<Y>148</Y>
 		<Label>
 			<X>10</X>
@@ -6581,7 +6600,7 @@
 		<Id>1664953351408</Id>
 		<Name><![CDATA[c_productionAssets]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>299</X>
+		<X>379</X>
 		<Y>208</Y>
 		<Label>
 			<X>10</X>
@@ -6599,7 +6618,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1665492426842</Id>
 		<Name><![CDATA[c_ambientAirDependentAssets]]></Name>
-		<X>299</X>
+		<X>379</X>
 		<Y>248</Y>
 		<Label>
 			<X>10</X>
@@ -6655,7 +6674,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1666978650654</Id>
 		<Name><![CDATA[c_energyAssets]]></Name>
-		<X>299</X>
+		<X>379</X>
 		<Y>186</Y>
 		<Label>
 			<X>10</X>
@@ -6842,7 +6861,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1692799535493</Id>
 		<Name><![CDATA[c_storageAssets]]></Name>
-		<X>299</X>
+		<X>379</X>
 		<Y>228</Y>
 		<Label>
 			<X>10</X>
@@ -6860,7 +6879,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1692871551713</Id>
 		<Name><![CDATA[c_EVs]]></Name>
-		<X>299</X>
+		<X>379</X>
 		<Y>268</Y>
 		<Label>
 			<X>10</X>
@@ -6915,7 +6934,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1716885030303</Id>
 		<Name><![CDATA[c_gridNodeExecutionList]]></Name>
-		<X>300</X>
+		<X>380</X>
 		<Y>70</Y>
 		<Label>
 			<X>10</X>
@@ -6933,7 +6952,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1717756420421</Id>
 		<Name><![CDATA[c_GISBuildingClusters]]></Name>
-		<X>300</X>
+		<X>380</X>
 		<Y>450</Y>
 		<Label>
 			<X>10</X>
@@ -6951,7 +6970,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1718895986988</Id>
 		<Name><![CDATA[c_gridNodeExecutionListReverse]]></Name>
-		<X>300</X>
+		<X>380</X>
 		<Y>90</Y>
 		<Label>
 			<X>10</X>
@@ -7026,8 +7045,8 @@
 		<Name><![CDATA[c_activeEnergyCarriers]]></Name>
 		<Description><![CDATA[This collection contains all the FlowsMapKeys for your project. Some are essentially mandatory e.g. ELECTRICITY and ENERGY_USE. Others you may not need for your project e.g. HYDROGEN. This collection is passed to all the energy assets? who will only fill their flowsmap with these keys.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>800</X>
-		<Y>580</Y>
+		<X>960</X>
+		<Y>548</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

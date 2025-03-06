@@ -1081,14 +1081,14 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 			//energyModel.v_activeEnergyCarriers.add(EC);
 			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
-			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
 				dsDemand.add( t, 0);
 				dsSupply.add( t, 0);
 			}
-			dsm_liveDemand_kW.put( EC, dsDemand);
-			dsm_liveSupply_kW.put( EC, dsSupply);
+			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
+			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
@@ -2216,51 +2216,67 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 
 double f_fillLiveDataSets()
 {/*ALCODESTART::1722518225504*/
-double timeStep_h = energyModel.t_h-energyModel.p_runStartTime_h;
+//Current timestep
+double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
 
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	dsm_liveDemand_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
-	dsm_liveSupply_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
+//Energy carrier flows
+for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
+	v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+}
+for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
+	v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
 }
 
-data_liveElectricityBalance_kW.add(timeStep_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 
-//data_naturalGasDemand_kW.update();
-//data_dieselDemand_kW.update();
-//data_hydrogenDemand_kW.update();
-//data_hydrogenSupply_kW.update();
+//Electricity balance
+v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 
-data_totalDemand_kW.update();
-data_totalSupply_kW.update();
 
-data_gridCapacityDemand_kW.update();
-data_gridCapacitySupply_kW.update();
-// Gather specific electricity flows from corresponding energy assets
+//Total demand and supply
+v_liveData.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
+v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
+
+
+//Live capacity datasets
+v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, p_contractedDeliveryCapacity_kW);
+v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, p_contractedFeedinCapacity_kW);
+
+
+//// Gather specific electricity flows from corresponding energy assets
+
+//Baseload electricity
 v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
 	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-v_liveData.add()data_baseloadElectricityDemand_kW.update();
+v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
 
+
+//Cooking
 v_electricHobConsumption_kW = 0;
 for (J_EA j_ea : c_electricHobAssets) {
 	v_electricHobConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_cookingElectricityDemand_kW.update();
+v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
 
+
+//Hydrogen elec consumption
 v_hydrogenElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electrolyserAssets) {
 	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_hydrogenElectricityDemand_kW.update();
+v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
 
+
+//Heatpump elec consumption
 v_heatPumpElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electricHeatpumpAssets) {
 	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_heatPumpElectricityDemand_kW.update();
+v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
 
-//data_electricCarsDemand_kW.update();
+
+//EVs
 v_evChargingPowerElectric_kW = 0;
 for (J_EA j_ea : c_EvAssets) {
 	if (j_ea instanceof J_EAEV) {
@@ -2270,9 +2286,11 @@ for (J_EA j_ea : c_EvAssets) {
 	}
 	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_electricVehicleDemand_kW.update();
-data_V2GSupply_kW.update();
+v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
+v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
 
+
+//Batteries
 v_batteryPowerElectric_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
 for (J_EA j_ea : c_batteryAssets) {
@@ -2281,16 +2299,20 @@ for (J_EA j_ea : c_batteryAssets) {
 		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
 	}
 }
-data_batteryCharging_kW.update();	
-data_batteryDischarging_kW.update();	
-data_batteryStoredEnergyLiveWeek_MWh.update();
+v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
+v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
+v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
 
+
+//CHP production
 v_CHPProductionElectric_kW = 0;
 for (J_EA j_ea : c_chpAssets) {
 	v_CHPProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_CHPElectricityProductionLiveWeek_kW.update();	
+v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
 
+
+//PV production
 v_pvProductionElectric_kW = 0;
 for (J_EA j_ea : c_pvAssets) {
 	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
@@ -2299,19 +2321,21 @@ if (v_pvProductionElectric_kW < 0) {
 	traceln("Negative v_pvProductionElectric_kW! Curtailment error? Value: %s", v_pvProductionElectric_kW);
 	pauseSimulation();
 }
-data_PVGeneration_kW.update();	
+v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
 
+
+//Wind production
 v_windProductionElectric_kW = 0;
 for (J_EA j_ea : c_windAssets) {
 	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-data_windGeneration_kW.update();	
+v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
 
 
 //District heating
-data_districtHeatDelivery_kW.update();
+v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
 
-//data_totalNetLoad_kW.update();
+
 /*ALCODEEND*/}
 
 double f_rapidRunDataLogging()
@@ -2721,8 +2745,11 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 
 double f_initializeDataSets()
 {/*ALCODESTART::1730728785333*/
-dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData = new J_LiveData();
+v_rapidRunData = new J_RapidRunData();
+
+v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 
 dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
 dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
@@ -2731,5 +2758,105 @@ dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+/*ALCODEEND*/}
+
+double f_fillLiveDataSets_old()
+{/*ALCODESTART::1741258042922*/
+double timeStep_h = energyModel.t_h-energyModel.p_runStartTime_h;
+
+for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+	dsm_liveDemand_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+	dsm_liveSupply_kW.get(EC).add( energyModel.t_h-energyModel.p_runStartTime_h, fm_currentProductionFlows_kW.get(EC) );
+}
+
+data_liveElectricityBalance_kW.add(timeStep_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+
+//data_naturalGasDemand_kW.update();
+//data_dieselDemand_kW.update();
+//data_hydrogenDemand_kW.update();
+//data_hydrogenSupply_kW.update();
+
+data_totalDemand_kW.update();
+data_totalSupply_kW.update();
+
+data_gridCapacityDemand_kW.update();
+data_gridCapacitySupply_kW.update();
+// Gather specific electricity flows from corresponding energy assets
+v_fixedConsumptionElectric_kW = 0;
+for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
+	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_baseloadElectricityDemand_kW.update()
+
+v_electricHobConsumption_kW = 0;
+for (J_EA j_ea : c_electricHobAssets) {
+	v_electricHobConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_cookingElectricityDemand_kW.update();
+
+v_hydrogenElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electrolyserAssets) {
+	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_hydrogenElectricityDemand_kW.update();
+
+v_heatPumpElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electricHeatpumpAssets) {
+	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_heatPumpElectricityDemand_kW.update();
+
+//data_electricCarsDemand_kW.update();
+v_evChargingPowerElectric_kW = 0;
+for (J_EA j_ea : c_EvAssets) {
+	if (j_ea instanceof J_EAEV) {
+		if (((J_EAEV)j_ea).vehicleScaling == 0) {
+			continue;
+		}
+	}
+	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_electricVehicleDemand_kW.update();
+data_V2GSupply_kW.update();
+
+v_batteryPowerElectric_kW = 0;
+v_batteryStoredEnergy_kWh = 0;
+for (J_EA j_ea : c_batteryAssets) {
+	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
+		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
+	}
+}
+data_batteryCharging_kW.update();	
+data_batteryDischarging_kW.update();	
+data_batteryStoredEnergyLiveWeek_MWh.update();
+
+v_CHPProductionElectric_kW = 0;
+for (J_EA j_ea : c_chpAssets) {
+	v_CHPProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_CHPElectricityProductionLiveWeek_kW.update();	
+
+v_pvProductionElectric_kW = 0;
+for (J_EA j_ea : c_pvAssets) {
+	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+if (v_pvProductionElectric_kW < 0) {
+	traceln("Negative v_pvProductionElectric_kW! Curtailment error? Value: %s", v_pvProductionElectric_kW);
+	pauseSimulation();
+}
+data_PVGeneration_kW.update();	
+
+v_windProductionElectric_kW = 0;
+for (J_EA j_ea : c_windAssets) {
+	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+data_windGeneration_kW.update();	
+
+
+//District heating
+data_districtHeatDelivery_kW.update();
+
+//data_totalNetLoad_kW.update();
 /*ALCODEEND*/}
 

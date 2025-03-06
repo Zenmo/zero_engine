@@ -455,39 +455,11 @@ import com.querydsl.core.types.dsl.TimeExpression;
 	</TableFunctions>
 	<AnalysisData>
 		<DataSet>
-			<Id>1699275048264</Id>
-			<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>80</X>
-			<Y>1260</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<AutoUpdate>false</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1687075200000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<FreezeXAxis>false</FreezeXAxis>
-			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
-			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.METHANE))</VerticalAxisExpression>
-			<SamplesToKeep>672</SamplesToKeep>
-		</DataSet>
-		<DataSet>
 			<Id>1699275048281</Id>
 			<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1340</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1820</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -514,8 +486,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048295</Id>
 			<Name><![CDATA[data_windGeneration_kW]]></Name>
-			<X>80</X>
-			<Y>1460</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1940</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -542,8 +515,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048309</Id>
 			<Name><![CDATA[data_V2GSupply_kW]]></Name>
-			<X>80</X>
-			<Y>1500</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1980</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -570,8 +544,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048324</Id>
 			<Name><![CDATA[data_PVGeneration_kW]]></Name>
-			<X>80</X>
-			<Y>1440</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1920</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -598,8 +573,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048339</Id>
 			<Name><![CDATA[data_batteryCharging_kW]]></Name>
-			<X>80</X>
-			<Y>1400</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1880</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -626,8 +602,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048354</Id>
 			<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1320</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1800</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -654,8 +631,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048369</Id>
 			<Name><![CDATA[data_totalDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1560</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2040</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -680,39 +658,11 @@ import com.querydsl.core.types.dsl.TimeExpression;
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 		<DataSet>
-			<Id>1699275048383</Id>
-			<Name><![CDATA[data_dieselDemand_kW]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>80</X>
-			<Y>1279</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<AutoUpdate>false</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1687075200000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<FreezeXAxis>false</FreezeXAxis>
-			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
-			<VerticalAxisExpression>sum(c_gridConnections, x-&gt;x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.DIESEL))</VerticalAxisExpression>
-			<SamplesToKeep>672</SamplesToKeep>
-		</DataSet>
-		<DataSet>
 			<Id>1699275048398</Id>
 			<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1380</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1860</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -739,8 +689,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048412</Id>
 			<Name><![CDATA[data_batteryDischarging_kW]]></Name>
-			<X>80</X>
-			<Y>1480</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1960</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -767,8 +718,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048425</Id>
 			<Name><![CDATA[data_totalSupply_kW]]></Name>
-			<X>80</X>
-			<Y>1580</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2060</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -795,8 +747,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1699275048440</Id>
 			<Name><![CDATA[data_totalGridLoad_kW]]></Name>
-			<X>80</X>
-			<Y>1600</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2080</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -823,10 +776,11 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1700478038239</Id>
 			<Name><![CDATA[data_HSMScapacity_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>80</X>
 			<Y>2530</Y>
 			<Label>
-				<X>15</X>
+				<X>20</X>
 				<Y>0</Y>
 			</Label>
 			<PublicFlag>false</PublicFlag>
@@ -849,6 +803,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1702537713723</Id>
 			<Name><![CDATA[data_HSMScapacitySupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>260</X>
 			<Y>2530</Y>
 			<Label>
@@ -873,37 +828,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 			<SamplesToKeep>2</SamplesToKeep>
 		</DataSet>
 		<DataSet>
-			<Id>1708507900127</Id>
-			<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>80</X>
-			<Y>1300</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<AutoUpdate>false</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1687075200000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<FreezeXAxis>false</FreezeXAxis>
-			<HorizontalAxisExpression>t_h</HorizontalAxisExpression>
-			<VerticalAxisExpression>sum(c_gridConnections, x-&gt; x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN))</VerticalAxisExpression>
-			<SamplesToKeep>672</SamplesToKeep>
-		</DataSet>
-		<DataSet>
 			<Id>1715246336405</Id>
 			<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2850</Y>
 			<Label>
@@ -930,6 +857,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336413</Id>
 			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2980</Y>
 			<Label>
@@ -956,6 +884,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336419</Id>
 			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>3020</Y>
 			<Label>
@@ -982,6 +911,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336425</Id>
 			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2960</Y>
 			<Label>
@@ -1008,6 +938,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336432</Id>
 			<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2890</Y>
 			<Label>
@@ -1034,6 +965,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336438</Id>
 			<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2830</Y>
 			<Label>
@@ -1060,6 +992,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336445</Id>
 			<Name><![CDATA[data_annualElectricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2870</Y>
 			<Label>
@@ -1086,6 +1019,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246336451</Id>
 			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>3000</Y>
 			<Label>
@@ -1112,6 +1046,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378181</Id>
 			<Name><![CDATA[data_summerWeekHeatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2850</Y>
 			<Label>
@@ -1138,6 +1073,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378188</Id>
 			<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2980</Y>
 			<Label>
@@ -1164,6 +1100,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378194</Id>
 			<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>3020</Y>
 			<Label>
@@ -1190,6 +1127,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378199</Id>
 			<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2960</Y>
 			<Label>
@@ -1216,6 +1154,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378204</Id>
 			<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2890</Y>
 			<Label>
@@ -1242,6 +1181,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378210</Id>
 			<Name><![CDATA[data_summerWeekBaseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2830</Y>
 			<Label>
@@ -1268,6 +1208,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378214</Id>
 			<Name><![CDATA[data_summerWeekElectricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2870</Y>
 			<Label>
@@ -1294,6 +1235,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378219</Id>
 			<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>3000</Y>
 			<Label>
@@ -1320,6 +1262,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378244</Id>
 			<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2850</Y>
 			<Label>
@@ -1346,6 +1289,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378248</Id>
 			<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2980</Y>
 			<Label>
@@ -1372,6 +1316,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378254</Id>
 			<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>3020</Y>
 			<Label>
@@ -1398,6 +1343,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378259</Id>
 			<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2960</Y>
 			<Label>
@@ -1424,6 +1370,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378264</Id>
 			<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2890</Y>
 			<Label>
@@ -1450,6 +1397,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378269</Id>
 			<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2830</Y>
 			<Label>
@@ -1476,6 +1424,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378274</Id>
 			<Name><![CDATA[data_winterWeekElectricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2870</Y>
 			<Label>
@@ -1502,6 +1451,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1715246378279</Id>
 			<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>3000</Y>
 			<Label>
@@ -1529,8 +1479,8 @@ import com.querydsl.core.types.dsl.TimeExpression;
 			<Id>1715671336391</Id>
 			<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>80</X>
-			<Y>1520</Y>
+			<X>-980</X>
+			<Y>2000</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1557,8 +1507,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1717417117555</Id>
 			<Name><![CDATA[data_hydrogenElectricityDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1360</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1840</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1585,8 +1536,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1720447715226</Id>
 			<Name><![CDATA[data_electricityCurtailment_kW]]></Name>
-			<X>80</X>
-			<Y>1420</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>1900</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1613,6 +1565,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1721120077353</Id>
 			<Name><![CDATA[data_gridCapacityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>560</X>
 			<Y>2530</Y>
 			<Label>
@@ -1641,6 +1594,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1721120077360</Id>
 			<Name><![CDATA[data_gridCapacitySupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>840</X>
 			<Y>2530</Y>
 			<Label>
@@ -1669,6 +1623,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1721134096132</Id>
 			<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2725</Y>
 			<Label>
@@ -1695,6 +1650,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1721134140759</Id>
 			<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2720</Y>
 			<Label>
@@ -1721,8 +1677,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1726292585769</Id>
 			<Name><![CDATA[data_districtHeatingDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1620</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2100</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1749,8 +1706,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1726292590669</Id>
 			<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
-			<X>80</X>
-			<Y>1640</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2120</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1777,6 +1735,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1731590299827</Id>
 			<Name><![CDATA[data_annualElectrolyserDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2910</Y>
 			<Label>
@@ -1803,6 +1762,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1731590299832</Id>
 			<Name><![CDATA[data_summerWeekElectrolyserDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2910</Y>
 			<Label>
@@ -1829,6 +1789,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1731590299839</Id>
 			<Name><![CDATA[data_winterWeekElectrolyserDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2910</Y>
 			<Label>
@@ -1855,6 +1816,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1732191711327</Id>
 			<Name><![CDATA[data_totalFinalEnergyConsumption_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>3120</Y>
 			<Label>
@@ -1881,6 +1843,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1734092249487</Id>
 			<Name><![CDATA[data_annualCHPElectricityProduction_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>3040</Y>
 			<Label>
@@ -1907,6 +1870,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1734092276192</Id>
 			<Name><![CDATA[data_summerWeekCHPElectricityProduction_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>3040</Y>
 			<Label>
@@ -1933,6 +1897,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1734092294449</Id>
 			<Name><![CDATA[data_winterWeekCHPElectricityProduction_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>3040</Y>
 			<Label>
@@ -1959,8 +1924,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1734098799357</Id>
 			<Name><![CDATA[data_CHPElectricityProductionLiveWeek_kW]]></Name>
-			<X>80</X>
-			<Y>1540</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2020</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -1987,8 +1953,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1737477392844</Id>
 			<Name><![CDATA[data_batteryStoredEnergy_MWh]]></Name>
-			<X>80</X>
-			<Y>1660</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>-980</X>
+			<Y>2140</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -2015,6 +1982,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1737534886489</Id>
 			<Name><![CDATA[data_annualBatteryStoredEnergy_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>3070</Y>
 			<Label>
@@ -2041,6 +2009,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1736432989842</Id>
 			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>2930</Y>
 			<Label>
@@ -2067,6 +2036,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1737534931603</Id>
 			<Name><![CDATA[data_summerWeekBatteryStoredEnergy_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>3070</Y>
 			<Label>
@@ -2093,6 +2063,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1736432989848</Id>
 			<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>2930</Y>
 			<Label>
@@ -2119,6 +2090,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1737534950715</Id>
 			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>3070</Y>
 			<Label>
@@ -2145,6 +2117,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1736432989854</Id>
 			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>2930</Y>
 			<Label>
@@ -2171,6 +2144,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1738837472223</Id>
 			<Name><![CDATA[data_annualDistrictHeatingDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>410</X>
 			<Y>3100</Y>
 			<Label>
@@ -2197,6 +2171,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1739536728453</Id>
 			<Name><![CDATA[data_summerWeekDistrictHeatingDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>830</X>
 			<Y>3100</Y>
 			<Label>
@@ -2223,6 +2198,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 		<DataSet>
 			<Id>1739536768462</Id>
 			<Name><![CDATA[data_winterWeekDistrictHeatingDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1280</X>
 			<Y>3100</Y>
 			<Label>

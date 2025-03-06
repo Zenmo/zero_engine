@@ -296,14 +296,14 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 			energyModel.v_activeEnergyCarriers.add(EC);
 			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
-			double startTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-			double endTime = dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
 				dsDemand.add( t, 0);
 				dsSupply.add( t, 0);
 			}
-			dsm_liveDemand_kW.put( EC, dsDemand);
-			dsm_liveSupply_kW.put( EC, dsSupply);
+			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
+			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));

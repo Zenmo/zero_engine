@@ -120,6 +120,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1705918625852</Id>
 			<Name><![CDATA[data_liveElectricityBalance_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2100</Y>
 			<Label>
@@ -146,6 +147,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013830</Id>
 			<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1870</Y>
 			<Label>
@@ -174,6 +176,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013840</Id>
 			<Name><![CDATA[data_windGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1970</Y>
 			<Label>
@@ -202,6 +205,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013851</Id>
 			<Name><![CDATA[data_V2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2010</Y>
 			<Label>
@@ -230,6 +234,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013861</Id>
 			<Name><![CDATA[data_PVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1950</Y>
 			<Label>
@@ -258,6 +263,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013871</Id>
 			<Name><![CDATA[data_batteryCharging_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1910</Y>
 			<Label>
@@ -286,6 +292,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013882</Id>
 			<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1830</Y>
 			<Label>
@@ -314,6 +321,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013892</Id>
 			<Name><![CDATA[data_totalDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2060</Y>
 			<Label>
@@ -342,6 +350,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013912</Id>
 			<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1890</Y>
 			<Label>
@@ -370,6 +379,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013922</Id>
 			<Name><![CDATA[data_batteryDischarging_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1990</Y>
 			<Label>
@@ -398,6 +408,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508013931</Id>
 			<Name><![CDATA[data_hydrogenElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>1850</Y>
 			<Label>
@@ -426,6 +437,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1708508354305</Id>
 			<Name><![CDATA[data_totalSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2080</Y>
 			<Label>
@@ -454,6 +466,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040026</Id>
 			<Name><![CDATA[data_annualHeatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2140</Y>
 			<Label>
@@ -480,6 +493,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040034</Id>
 			<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2290</Y>
 			<Label>
@@ -506,6 +520,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040041</Id>
 			<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2330</Y>
 			<Label>
@@ -532,6 +547,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040046</Id>
 			<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2270</Y>
 			<Label>
@@ -558,6 +574,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040051</Id>
 			<Name><![CDATA[data_annualBatteriesDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2180</Y>
 			<Label>
@@ -584,6 +601,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040056</Id>
 			<Name><![CDATA[data_annualBaseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2120</Y>
 			<Label>
@@ -610,6 +628,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040068</Id>
 			<Name><![CDATA[data_annualElectricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2160</Y>
 			<Label>
@@ -636,6 +655,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715086040072</Id>
 			<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2310</Y>
 			<Label>
@@ -662,6 +682,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549909</Id>
 			<Name><![CDATA[data_summerWeekHeatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2140</Y>
 			<Label>
@@ -688,6 +709,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549918</Id>
 			<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2290</Y>
 			<Label>
@@ -714,6 +736,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549924</Id>
 			<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2330</Y>
 			<Label>
@@ -740,6 +763,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549928</Id>
 			<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2270</Y>
 			<Label>
@@ -766,6 +790,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549933</Id>
 			<Name><![CDATA[data_summerWeekBatteriesDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2180</Y>
 			<Label>
@@ -792,6 +817,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549939</Id>
 			<Name><![CDATA[data_summerWeekBaseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2120</Y>
 			<Label>
@@ -818,6 +844,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549953</Id>
 			<Name><![CDATA[data_summerWeekElectricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2160</Y>
 			<Label>
@@ -844,6 +871,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715088549958</Id>
 			<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2310</Y>
 			<Label>
@@ -870,6 +898,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361092</Id>
 			<Name><![CDATA[data_winterWeekHeatPumpElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2141</Y>
 			<Label>
@@ -896,6 +925,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361101</Id>
 			<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2291</Y>
 			<Label>
@@ -922,6 +952,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361108</Id>
 			<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2331</Y>
 			<Label>
@@ -948,6 +979,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361117</Id>
 			<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2271</Y>
 			<Label>
@@ -974,6 +1006,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361125</Id>
 			<Name><![CDATA[data_winterWeekBatteriesDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2181</Y>
 			<Label>
@@ -1000,6 +1033,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361131</Id>
 			<Name><![CDATA[data_winterWeekBaseloadElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2121</Y>
 			<Label>
@@ -1026,6 +1060,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361139</Id>
 			<Name><![CDATA[data_winterWeekElectricVehicleDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2161</Y>
 			<Label>
@@ -1052,6 +1087,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1715244361147</Id>
 			<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2311</Y>
 			<Label>
@@ -1078,6 +1114,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1721119365065</Id>
 			<Name><![CDATA[data_gridCapacityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2120</Y>
 			<Label>
@@ -1106,6 +1143,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1721119365072</Id>
 			<Name><![CDATA[data_gridCapacitySupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>430</X>
 			<Y>2120</Y>
 			<Label>
@@ -1134,6 +1172,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1726222586985</Id>
 			<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2140</Y>
 			<Label>
@@ -1162,6 +1201,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1726238177866</Id>
 			<Name><![CDATA[data_districtHeatDelivery_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2160</Y>
 			<Label>
@@ -1190,6 +1230,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734088556966</Id>
 			<Name><![CDATA[data_CHPElectricityProductionLiveWeek_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2030</Y>
 			<Label>
@@ -1218,6 +1259,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734091135494</Id>
 			<Name><![CDATA[data_summerWeekCHPElectricityProduction_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2350</Y>
 			<Label>
@@ -1244,6 +1286,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734091175218</Id>
 			<Name><![CDATA[data_winterWeekCHPElectricityProduction_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2350</Y>
 			<Label>
@@ -1270,6 +1313,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1734091204923</Id>
 			<Name><![CDATA[data_annualCHPElectricitySupply_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2350</Y>
 			<Label>
@@ -1296,6 +1340,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737539184843</Id>
 			<Name><![CDATA[data_batteryStoredEnergyLiveWeek_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>150</X>
 			<Y>2190</Y>
 			<Label>
@@ -1324,6 +1369,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737542863669</Id>
 			<Name><![CDATA[data_annualBatteryStoredEnergy_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2380</Y>
 			<Label>
@@ -1350,6 +1396,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1736433078739</Id>
 			<Name><![CDATA[data_annualCookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2200</Y>
 			<Label>
@@ -1376,6 +1423,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737542889304</Id>
 			<Name><![CDATA[data_winterWeekBatteryStoredEnergy_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2380</Y>
 			<Label>
@@ -1402,6 +1450,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1736433078745</Id>
 			<Name><![CDATA[data_summerWeekCookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2200</Y>
 			<Label>
@@ -1428,6 +1477,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1737542909813</Id>
 			<Name><![CDATA[data_summerWeekBatteryStoredEnergy_MWh]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2380</Y>
 			<Label>
@@ -1454,6 +1504,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1736433078749</Id>
 			<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2200</Y>
 			<Label>
@@ -1480,6 +1531,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1738838087394</Id>
 			<Name><![CDATA[data_annualDistrictHeatingDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2410</Y>
 			<Label>
@@ -1506,6 +1558,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1739533421085</Id>
 			<Name><![CDATA[data_summerWeekDistrictHeatingDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2410</Y>
 			<Label>
@@ -1532,6 +1585,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1739533423776</Id>
 			<Name><![CDATA[data_winterWeekDistrictHeatingDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2410</Y>
 			<Label>
@@ -1558,6 +1612,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1740151894929</Id>
 			<Name><![CDATA[data_annualElectrolyserElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1090</X>
 			<Y>2220</Y>
 			<Label>
@@ -1584,6 +1639,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1740151936836</Id>
 			<Name><![CDATA[data_summerWeekElectrolyserElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1510</X>
 			<Y>2220</Y>
 			<Label>
@@ -1610,6 +1666,7 @@ import javax.management.RuntimeErrorException;]]></Import>
 		<DataSet>
 			<Id>1740151964214</Id>
 			<Name><![CDATA[data_winterWeekElectrolyserElectricityDemand_kW]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>1990</X>
 			<Y>2220</Y>
 			<Label>
