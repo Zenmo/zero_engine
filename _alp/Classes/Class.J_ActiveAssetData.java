@@ -1,12 +1,15 @@
 /**
  * J_ActiveAssetsData
  */	
+
+import java.util.EnumSet;
+
 public class J_ActiveAssetData {
 	
 	public Agent parentAgent;
 	
-	//public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	//public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	
 	public boolean hasElectricHeating = false;
 	public boolean hasElectricTransport = false;
