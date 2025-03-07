@@ -21,7 +21,7 @@ import java.io.*;
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;
 import javax.management.RuntimeErrorException;]]></Import>
-	<Implements>I_energyData</Implements>
+	<Implements>I_EnergyData</Implements>
 	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>

@@ -27,7 +27,7 @@ import java.util.EnumSet;]]></Import>
 			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
 	</Parameters>
-	<Implements>I_energyData</Implements>
+	<Implements>I_EnergyData</Implements>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660731375014</Id>

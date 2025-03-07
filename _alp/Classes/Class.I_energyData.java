@@ -1,4 +1,4 @@
-public interface I_energyData{
+public interface I_EnergyData{
 	J_RapidRunData getRapidRunData();
     J_LiveData getLiveData();
     J_RapidRunData getPreviousRapidRunData();
