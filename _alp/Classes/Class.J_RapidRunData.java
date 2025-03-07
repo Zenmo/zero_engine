@@ -19,8 +19,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_dailyAverageBatteriesProduction_kW;
     public ZeroAccumulator acc_dailyAverageCHPElectricityProduction_kW;
     //public ZeroAccumulator acc_dailyAverageBatteriesStoredEnergy_MWh;
-    public ZeroAccumulator am_dailyAverageConsumptionAccumulators_kW;
-    public ZeroAccumulator am_dailyAverageProductionAccumulators_kW;
+    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW;
+    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW;
     
     
     //Summer week
@@ -37,8 +37,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_summerWeekCHPElectricityProduction_kW;
     //public ZeroAccumulator acc_summerWeekBatteriesStoredEnergy_MWh;
-    public ZeroAccumulator am_summerWeekConsumptionAccumulators_kW;
-    public ZeroAccumulator am_summerWeekProductionAccumulators_kW;
+    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW;
+    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW;
     
     
     //Winter week
@@ -55,8 +55,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_winterWeekCHPElectricityProduction_kW;
     //public ZeroAccumulator acc_winterWeekBatteriesStoredEnergy_MWh;
-    public ZeroAccumulator am_winterWeekConsumptionAccumulators_kW;
-    public ZeroAccumulator am_winterWeekProductionAccumulators_kW;
+    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW;
+    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW;
 
     /**
      * Default constructor
