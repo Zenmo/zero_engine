@@ -304,12 +304,14 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 			}
 			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+			/*
 			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
 			dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
 			dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
 			dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			*/
 		}
 	}
 }

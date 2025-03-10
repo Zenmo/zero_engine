@@ -426,7 +426,18 @@ v_currentElectricityPriceConsumption_eurpkWh  = 0;
 v_currentLoadLowPassed_kW = 0;
 //v_currentIndoorTemp_degC = (p_BuildingThermalAsset == null) ? 0 : p_BuildingThermalAsset.getCurrentTemperature();
  
-//========== TOTALS ==========//
+v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+
+// Not yet in J_RapidRunData:
+v_totalPVGeneration_MWh = 0;
+v_totalWindGeneration_MWh = 0;
+
+//Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
+f_resetSpecificGCStates();
+
+
+//========== OBSOLETE ==========//
+/*
 // Imports / Exports
 v_totalEnergyImport_MWh = 0;
 v_totalEnergyExport_MWh = 0;
@@ -448,8 +459,6 @@ v_maxPeakFeedin_kW = 0;
 //Specific assets
 v_totalEnergyCurtailed_MWh = 0;
 v_totalPrimaryEnergyProductionHeatpumps_MWh = 0;
-v_totalPVGeneration_MWh = 0;
-v_totalWindGeneration_MWh = 0;
 
 //Overload
 v_totalOverloadDurationDelivery_hr = 0;
@@ -650,9 +659,8 @@ v_weekendElectricitySelfConsumed_MWh = 0;
 v_weekendEnergyProduced_MWh = 0;
 v_weekendEnergyConsumed_MWh = 0;
 v_weekendEnergySelfConsumed_MWh = 0;
+*/
 
-//Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
-f_resetSpecificGCStates();
 
 /*ALCODEEND*/}
 
@@ -1089,12 +1097,13 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 			}
 			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
-			dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
+			/*dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
 			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
 			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
 			dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
 			dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
 			dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
+			*/
 		}
 	}
 }
@@ -1641,7 +1650,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 
 DataSet f_getDuurkromme()
 {/*ALCODESTART::1708520215192*/
-J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);
+J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);
 
 data_netbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveTotal_kW;
 data_summerWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveSummer_kW;
@@ -2662,6 +2671,7 @@ double f_initializeDataSets()
 v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 
+/*
 dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
 dsm_dailyAverageSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
 
@@ -2669,6 +2679,7 @@ dsm_summerWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+*/
 /*ALCODEEND*/}
 
 double f_fillLiveDataSets_old()

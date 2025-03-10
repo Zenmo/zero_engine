@@ -238,6 +238,109 @@ public class J_RapidRunData {
 	    acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
 	}
 
+    public void resetAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
+    	this.v_activeEnergyCarriers = v_activeEnergyCarriers;
+    	this.v_activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+    	this.v_activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+    	//Total simulation
+		am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, simDuration_h );
+    	am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
+    	am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(v_activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
+    	am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, simDuration_h);
+
+    	acc_dailyAverageEnergyProduction_kW.reset();
+    	acc_dailyAverageEnergyConsumption_kW.reset();
+
+    	acc_totalEnergyCurtailed_kW.reset();
+    	acc_totalPrimaryEnergyProductionHeatpumps_kW.reset();
+
+    	acc_dailyAverageBaseloadElectricityConsumption_kW.reset();
+    	acc_dailyAverageHeatPumpElectricityConsumption_kW.reset();
+    	acc_dailyAverageElectricVehicleConsumption_kW.reset();
+    	acc_dailyAverageBatteriesConsumption_kW.reset();
+    	acc_dailyAverageElectricCookingConsumption_kW.reset();
+    	acc_dailyAverageElectrolyserElectricityConsumption_kW.reset();
+    	acc_dailyAverageDistrictHeatingConsumption_kW.reset();
+
+    	acc_dailyAveragePVProduction_kW.reset();
+    	acc_dailyAverageWindProduction_kW.reset();
+    	acc_dailyAverageV2GProduction_kW.reset();
+    	acc_dailyAverageBatteriesProduction_kW.reset();
+    	acc_dailyAverageCHPElectricityProduction_kW.reset();
+    	//Summerweek
+    	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+
+    	acc_summerWeekEnergyProduction_kW.reset();
+    	acc_summerWeekEnergyConsumption_kW.reset();
+
+    	acc_summerWeekEnergyCurtailed_kW.reset();
+    	acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.reset();
+
+    	acc_summerWeekFeedinCapacity_kW.reset();
+    	acc_summerWeekDeliveryCapacity_kW.reset();
+
+    	acc_summerWeekBaseloadElectricityConsumption_kW.reset();
+    	acc_summerWeekHeatPumpElectricityConsumption_kW.reset();
+    	acc_summerWeekElectricVehicleConsumption_kW.reset();
+    	acc_summerWeekBatteriesConsumption_kW.reset();
+    	acc_summerWeekElectricCookingConsumption_kW.reset();
+    	acc_summerWeekElectrolyserElectricityConsumption_kW.reset();
+    	acc_summerWeekDistrictHeatingConsumption_kW.reset();
+
+    	acc_summerWeekPVProduction_kW.reset();
+    	acc_summerWeekWindProduction_kW.reset();
+    	acc_summerWeekV2GProduction_kW.reset();
+    	acc_summerWeekBatteriesProduction_kW.reset();
+    	acc_summerWeekCHPElectricityProduction_kW.reset();
+    	//Winterweek
+    	am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+
+    	acc_winterWeekEnergyProduction_kW.reset();
+    	acc_winterWeekEnergyConsumption_kW.reset();
+
+    	acc_winterWeekEnergyCurtailed_kW.reset();
+    	acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.reset();
+
+    	acc_winterWeekFeedinCapacity_kW.reset();
+    	acc_winterWeekDeliveryCapacity_kW.reset();
+
+    	acc_winterWeekBaseloadElectricityConsumption_kW.reset();
+    	acc_winterWeekHeatPumpElectricityConsumption_kW.reset();
+    	acc_winterWeekElectricVehicleConsumption_kW.reset();
+    	acc_winterWeekBatteriesConsumption_kW.reset();
+    	acc_winterWeekElectricCookingConsumption_kW.reset();
+    	acc_winterWeekElectrolyserElectricityConsumption_kW.reset();
+    	acc_winterWeekDistrictHeatingConsumption_kW.reset();
+
+    	acc_winterWeekPVProduction_kW.reset();
+    	acc_winterWeekWindProduction_kW.reset();
+    	acc_winterWeekV2GProduction_kW.reset();
+    	acc_winterWeekBatteriesProduction_kW.reset();
+    	acc_winterWeekCHPElectricityProduction_kW.reset();
+    	// Daytime 
+    	am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+    	am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+    	
+    	acc_daytimeElectricityProduction_kW.reset();
+    	acc_daytimeElectricityConsumption_kW.reset();
+    	acc_daytimeEnergyProduction_kW.reset();
+    	acc_daytimeEnergyConsumption_kW.reset();
+
+    	// Weekend
+    	am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+    	am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
+
+    	// Energy / Electricity
+    	acc_weekendElectricityProduction_kW.reset();
+    	acc_weekendElectricityConsumption_kW.reset();
+    	acc_weekendEnergyProduction_kW.reset();
+    	acc_weekendEnergyConsumption_kW.reset();
+    }
+    
     public double getTotalOverloadDurationDelivery_hr() {
     	double totalOverloadDurationDelivery_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();

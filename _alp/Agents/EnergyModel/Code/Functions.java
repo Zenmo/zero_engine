@@ -1227,18 +1227,18 @@ v_totalEnergyCurtailed_MWh = acc_totalEnergyCurtailed_kW.getIntegral_kWh() / 100
 v_totalPrimaryEnergyProductionHeatpumps_MWh = acc_totalPrimaryEnergyProductionHeatpumps_kW.getIntegral_kWh() / 1000;
 
 // Electricity self consumption
-v_individualSelfSufficiency_fr = sum(c_gridConnections, gc -> gc.v_totalElectricitySelfConsumed_MWh) / v_totalElectricityConsumed_MWh;
-v_individualSelfConsumption_fr = sum(c_gridConnections, gc -> gc.v_totalElectricitySelfConsumed_MWh) / v_totalElectricityProduced_MWh;
+v_individualSelfSufficiency_fr = sum(c_gridConnections, gc -> gc.v_rapidRunData.getTotalElectricitySelfConsumed_MWh()) / v_totalElectricityConsumed_MWh;
+v_individualSelfConsumption_fr = sum(c_gridConnections, gc -> gc.v_rapidRunData.getTotalElectricitySelfConsumed_MWh()) / v_totalElectricityProduced_MWh;
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - fm_totalImports_MWh.get(OL_EnergyCarriers.ELECTRICITY));
 v_collectiveSelfConsumption_fr = v_totalElectricitySelfConsumed_MWh / v_totalElectricityProduced_MWh;
 
 //Heat grid
-v_totalEnergyConsumptionForDistrictHeating_MWh = fm_totalImports_MWh.get(OL_EnergyCarriers.HEAT) + sum(DistrictHeatingSystems, DH -> DH.v_totalEnergyImport_MWh);
+v_totalEnergyConsumptionForDistrictHeating_MWh = fm_totalImports_MWh.get(OL_EnergyCarriers.HEAT) + sum(DistrictHeatingSystems, DH -> DH.v_rapidRunData.getTotalEnergyImport_MWh());
 
 //Heatpump totals
 v_totalElectricityConsumptionHeatpumps_MWh = 0;
 for(GridConnection GC : c_gridConnections){
-	v_totalElectricityConsumptionHeatpumps_MWh += GC.acc_dailyAverageHeatPumpElectricityConsumption_kW.getIntegral_kWh()/1000;
+	v_totalElectricityConsumptionHeatpumps_MWh += GC.v_rapidRunData.acc_dailyAverageHeatPumpElectricityConsumption_kW.getIntegral_kWh()/1000;
 }
 
 //Tracelns
