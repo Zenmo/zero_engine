@@ -169,10 +169,6 @@
 					<Id>1724849181274</Id>
 					<Name><![CDATA[OTHER]]></Name>
 				</Option>
-				<Option>
-					<Id>1739979321556</Id>
-					<Name><![CDATA[COOP]]></Name>
-				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118426374</Id>
@@ -1178,6 +1174,26 @@
 				<Id>1729686050861</Id>
 				<Name><![CDATA[OL_EAFlowKeys]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+			</OptionList>
+			<OptionList>
+				<Id>1741598206262</Id>
+				<Name><![CDATA[OL_ResultScope]]></Name>
+				<Option>
+					<Id>1741598207010</Id>
+					<Name><![CDATA[ENERGYMODEL]]></Name>
+				</Option>
+				<Option>
+					<Id>1741598225549</Id>
+					<Name><![CDATA[ENERGYCOOP]]></Name>
+				</Option>
+				<Option>
+					<Id>1741598228834</Id>
+					<Name><![CDATA[GRIDCONNECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1741598233168</Id>
+					<Name><![CDATA[GRIDNODE]]></Name>
+				</Option>
 			</OptionList>
 		</OptionLists>
 		<Folders/>
