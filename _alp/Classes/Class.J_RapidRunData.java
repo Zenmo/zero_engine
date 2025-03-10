@@ -238,6 +238,44 @@ public class J_RapidRunData {
 	    acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
 	}
 
+    public double getTotalOverloadDurationDelivery_hr() {
+    	double totalOverloadDurationDelivery_hr = 0.0;
+    	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
+    	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
+        	if(electricityBalance_kW > ((GridConnection)parentAgent).p_contractedDeliveryCapacity_kW){
+        		totalOverloadDurationDelivery_hr += signalResolution_h;
+        	}
+    	}
+    	return totalOverloadDurationDelivery_hr;
+    }
+    
+    public double getTotalOverloadDurationFeedin_hr() {
+    	double totalOverloadDurationFeedin_hr = 0.0;
+    	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
+    	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
+        	if(electricityBalance_kW < ((GridConnection)parentAgent).p_contractedFeedinCapacity_kW){
+        		totalOverloadDurationFeedin_hr += signalResolution_h;
+        	}
+    	}
+    	return totalOverloadDurationFeedin_hr;
+    }   
+   
+    public double getPeakDelivery_kW() {
+    	double peakDelivery_kW = 0.0;
+    	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
+    		peakDelivery_kW = max(peakDelivery_kW, electricityBalance_kW);
+    	}
+    	return peakDelivery_kW;
+    }
+    
+    public double getPeakFeedin_kW() {
+    	double peakFeedin_kW = 0.0;
+    	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
+    		peakFeedin_kW = max(peakFeedin_kW, -electricityBalance_kW);
+    	}
+    	return peakFeedin_kW;
+    }
+    
     public double getTotalElectricityConsumed_MWh() { 
         return am_dailyAverageConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000; 
     }

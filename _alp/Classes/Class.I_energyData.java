@@ -4,4 +4,6 @@ public interface I_EnergyData{
     J_RapidRunData getPreviousRapidRunData();
     J_ActiveAssetData getActiveAssetData();
     OL_ResultScope getScope();
+    boolean getDeliveryCapacityKnown();
+    boolean getFeedinCapacityKnown();
 }
