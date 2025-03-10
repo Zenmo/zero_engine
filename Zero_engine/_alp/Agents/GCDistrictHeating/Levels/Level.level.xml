@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Presentation>
+	<TimePlot>
+		<Id>1678448899357</Id>
+		<Name><![CDATA[pl_SOC1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1030</X>
+		<Y>500</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<AutoUpdate>true</AutoUpdate>
+		<OccurrenceAtTime>true</OccurrenceAtTime>
+		<OccurrenceDate>1668499200000</OccurrenceDate>
+		<OccurrenceTime Class="CodeUnitValue">
+			<Code><![CDATA[0]]></Code>
+			<Unit Class="TimeUnits">HOUR</Unit>
+		</OccurrenceTime>
+		<RecurrenceCode Class="CodeUnitValue">
+			<Code><![CDATA[15]]></Code>
+			<Unit Class="TimeUnits">MINUTE</Unit>
+		</RecurrenceCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Width>500</Width>
+		<Height>280</Height>
+		<BackgroundColor/>
+		<BorderColor/>
+		<ChartArea>
+			<XOffset>50</XOffset>
+			<YOffset>30</YOffset>
+			<Width>420</Width>
+			<Height>160</Height>
+			<BackgroundColor>-1</BackgroundColor>
+			<BorderColor>-16777216</BorderColor>
+			<GridColor>-12566464</GridColor>
+		</ChartArea>
+		<Legend>
+			<Place>SOUTH</Place>
+			<TextColor>-16777216</TextColor>
+			<Size>60</Size>
+		</Legend>
+		<Labels>
+			<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+			<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+			<TextColor>-12566464</TextColor>
+		</Labels>
+		<ShowLegend>true</ShowLegend>
+		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
+		<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+		<VerScaleFromExpression>0</VerScaleFromExpression>
+		<VerScaleToExpression>1</VerScaleToExpression>
+		<VerScaleType>AUTO</VerScaleType>
+		<DrawLine>true</DrawLine>
+		<Interpolation>LINEAR</Interpolation>
+		<DatasetExpression>
+			<Title>current electricity price</Title>
+			<Id>1678448899351</Id>
+			<Expression>my_dataset</Expression>
+			<Color>-32944</Color>
+			<Expression2>v_currentElectricityPriceConsumption_eurpkWh</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<DatasetExpression>
+			<Title>ElectricityPrice LowPassed</Title>
+			<Id>1678448899352</Id>
+			<Expression>my_dataset8</Expression>
+			<Color>-13447886</Color>
+			<Expression2>v_electricityPriceLowPassed_eurpkWh</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<DatasetExpression>
+			<Title>CHP full power current price</Title>
+			<Id>0</Id>
+			<Expression>my_dataset9</Expression>
+			<Color>-9404272</Color>
+			<Expression2>v_chpElectricityPrice</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<SamplesToKeep>1000</SamplesToKeep>
+		<TimeWindowExpression>48</TimeWindowExpression>
+		<FillAreaUnderLine>false</FillAreaUnderLine>
+		<LabelFormat>HH_mm</LabelFormat>
+	</TimePlot>
+	<TimePlot>
+		<Id>1678452019907</Id>
+		<Name><![CDATA[pl_SOC2]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>760</X>
+		<Y>840</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<AutoUpdate>false</AutoUpdate>
+		<OccurrenceAtTime>true</OccurrenceAtTime>
+		<OccurrenceDate>1668499200000</OccurrenceDate>
+		<OccurrenceTime Class="CodeUnitValue">
+			<Code><![CDATA[0]]></Code>
+			<Unit Class="TimeUnits">HOUR</Unit>
+		</OccurrenceTime>
+		<RecurrenceCode Class="CodeUnitValue">
+			<Code><![CDATA[15]]></Code>
+			<Unit Class="TimeUnits">MINUTE</Unit>
+		</RecurrenceCode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Width>500</Width>
+		<Height>280</Height>
+		<BackgroundColor/>
+		<BorderColor/>
+		<ChartArea>
+			<XOffset>50</XOffset>
+			<YOffset>30</YOffset>
+			<Width>420</Width>
+			<Height>160</Height>
+			<BackgroundColor>-1</BackgroundColor>
+			<BorderColor>-16777216</BorderColor>
+			<GridColor>-12566464</GridColor>
+		</ChartArea>
+		<Legend>
+			<Place>SOUTH</Place>
+			<TextColor>-16777216</TextColor>
+			<Size>60</Size>
+		</Legend>
+		<Labels>
+			<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+			<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+			<TextColor>-12566464</TextColor>
+		</Labels>
+		<ShowLegend>true</ShowLegend>
+		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
+		<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+		<VerScaleFromExpression>0</VerScaleFromExpression>
+		<VerScaleToExpression>1</VerScaleToExpression>
+		<VerScaleType>AUTO</VerScaleType>
+		<DrawLine>true</DrawLine>
+		<Interpolation>LINEAR</Interpolation>
+		<DatasetExpression>
+			<Title>Storage temp</Title>
+			<Id>1678452019904</Id>
+			<Expression>my_dataset9</Expression>
+			<Color>-65536</Color>
+			<Expression2>v_bufferTemp_degC</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<SamplesToKeep>1000</SamplesToKeep>
+		<TimeWindowExpression>48</TimeWindowExpression>
+		<FillAreaUnderLine>false</FillAreaUnderLine>
+		<LabelFormat>HH_mm</LabelFormat>
+	</TimePlot>
+</Presentation>

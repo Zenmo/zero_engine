@@ -1,17 +1,19 @@
+import java.util.EnumSet;
 /**
  * J_RapidRunData
  */	
 public class J_RapidRunData {
 	
 	public Agent parentAgent;
+	EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers;
+	EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers;
+	EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers;
 	
 	////Full simulation
 	public J_AccumulatorMap am_totalBalanceAccumulators_kW;
-    public J_FlowsMap	fm_totalExports_MWh	;
-    public J_FlowsMap	fm_totallmports_MWh	;   
 	
     public ZeroAccumulator acc_totalEnergyCurtailed_kW;
-    public ZeroAccumulator acc_totalPrimaryEnergy_ProductionHeatpumps_kW;
+    public ZeroAccumulator acc_totalPrimaryEnergyProductionHeatpumps_kW;
     
     public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW;
     public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW;
@@ -32,19 +34,14 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_dailyAverageBatteriesProduction_kW;
     public ZeroAccumulator acc_dailyAverageCHPElectricityProduction_kW;
     //public ZeroAccumulator acc_dailyAverageBatteriesStoredEnergy_MWh;
-
-
-
-    
+  
     ////Summer week
     public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW;
-    public J_FlowsMap fm_summerWeekExports_MWh;
-    public J_FlowsMap fm_summerWeekImports_MWh;   
-    
-    public ZeroAccumulator acc_summerWeekDelivery_Capacity_kw;
+
+    public ZeroAccumulator acc_summerWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_summerWeekFeedinCapacity_kW;
     
-    public ZeroAccumulator acc_summerWeekEnergy_Consumption_kW;
+    public ZeroAccumulator acc_summerWeekEnergyConsumption_kW;
     public ZeroAccumulator acc_summerWeekEnergyCurtailed_kW;
     public ZeroAccumulator acc_summerWeekEnergyProduction_kW;
 
@@ -63,19 +60,17 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekV2GProduction_kW;
     public ZeroAccumulator acc_summerWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_summerWeekCHPElectricityProduction_kW;
-    public ZeroAccumulator acc_summerWeekPrimary_Energy_ProductionHeatpumps_kW;
+    public ZeroAccumulator acc_summerWeekPrimaryEnergyProductionHeatpumps_kW;
     //public ZeroAccumulator acc_summerWeekBatteriesStoredEnergy_MWh;
 
     ////Winter week
     public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW;
-    public J_FlowsMap fm_winterWeekExports_MWh;
-    public J_FlowsMap fm_winterWeekImports_MWh;
     
     public ZeroAccumulator acc_winterWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_winterWeekFeedinCapacity_kW;
     
-    public ZeroAccumulator acc_winterWeekEnergy_Consumption_kW;
-    public ZeroAccumulator acc_winterWeekEnergy_Production_kW;
+    public ZeroAccumulator acc_winterWeekEnergyConsumption_kW;
+    public ZeroAccumulator acc_winterWeekEnergyProduction_kW;
     public ZeroAccumulator acc_winterWeekEnergyCurtailed_kW;  
     
     public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW;
@@ -93,20 +88,20 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekV2GProduction_kW;
     public ZeroAccumulator acc_winterWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_winterWeekCHPElectricityProduction_kW;
-    public ZeroAccumulator acc_winterWeekPrimaryEnergy_Production_Heatpumps_kW;
+    public ZeroAccumulator acc_winterWeekPrimaryEnergyProductionHeatpumps_kW;
     //public ZeroAccumulator acc_winterWeekBatteriesStoredEnergy_MWh;
-
     
     ////Daytime / Nighttime
 	public J_AccumulatorMap am_daytimeExports_kW;
-    public J_AccumulatorMap am_daytimelmports_kW;
+    public J_AccumulatorMap am_daytimeImports_kW;
     
 	public J_AccumulatorMap am_nighttimeExports_kW;
     public J_AccumulatorMap am_nighttimelmports_kW;
   
     public ZeroAccumulator acc_daytimeEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
-    
+    public ZeroAccumulator acc_daytimeElectricityConsumption_kW;
+    public ZeroAccumulator acc_daytimeElectricityProduction_kW;
     
     //Weekend/day
     public ZeroAccumulator acc_weekendElectricityConsumption_kW;
@@ -121,78 +116,7 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_weekdayEnergyConsumption_kW;
     public ZeroAccumulator acc_weekdayEnergyProduction_kW;
     public J_AccumulatorMap am_weekdayExports_kW;
-    public J_AccumulatorMap am_weekdayImports_kW;
-
-
-    
-    //VOOR NU VARIABELEN: ZET DIT METEEN IN DE GETTER
-    public	double	v_totalElectricity_Produced_MWh;
-    public	double	v_totalElectricityConsumed_MWh;
-    public	double	V_totalElectricitySelfConsumed_MWh;
-    public	double	v_totalEnergy_Produced_MWh;
-    public	double	v_totalEnergyConsumed_MWh;
-    public	double	v_totalEnergyCurtailed_MWh;
-    public	double	v_totalEnergyExport_MWh;
-    public	double	v_totalEnergyImport_MWh;
-    public	double	v_totalEnergySelfConsumed_MWh;
-    public	double	v_totalPrimaryEnergyProduction_Heatpumps_MWh;   
-   
-
-    public	double	v_summerWeekElectricity_Produced_MWh;
-    public	double	v_summerWeekElectricityConsumed_MWh;
-    public	double	v_summerWeekElectricitySelfConsumed_MWh;
-    public	double	v_summerWeekEnergy_Consumed_MWh;
-    public	double	v_summerWeekEnergy_Produced_MWh;
-    public	double	v_summerWeekEnergyCurtailed_MWh;
-    public	double	v_summerWeekEnergyExport_MWh;
-    public	double	v_summerWeekEnergyImport_MWh;
-    public	double	v_summerWeekEnergySelfConsumed_MWh;
-    public	double	v_summerWeek_Primary_Energy_ProductionHeatpumps_MWh;
-    
-    public	double	v_winterWeekElectricity_Consumed_MWh;
-    public	double	v_winterWeekElectricity_Produced_MWh;
-    public	double	v_winterWeekElectricitySelfConsumed_MWh;
-    public	double	v_winterWeekEnergyConsumed_MWh;
-    public	double	v_winterWeekEnergyCurtailed_MWh;
-    public	double	v_winterWeekEnergyExport_MWh;
-    public	double	v_winterWeekEnergyImport_MWh;
-    public	double	v_winterWeekEnergyProduced_MWh;
-    public	double	v_winterWeekEnergySelfConsumed_MWh;
-    public	double	v_winterWeekPrimaryEnergyProductionHeatpumps_MWh;
-    
-    public	double	v_daytimeElectricity_Consumed_MWh;
-    public	double	v_daytimeElectricity_Produced_MWh;
-    public	double	v_daytimeElectricitySelfConsumed_MW;
-    public	double	v_daytimeEnergy_Produced_MWh;
-    public	double	v_daytimeEnergyConsumed_MWh;
-    public	double	v_daytimeEnergyExport_MWh;
-    public	double	v_daytimeEnergyImport_MWh;
-    public	double	v_daytimeEnergySelfConsumed_MWh;
-    
-    public double v_nighttimeElectricityConsumed_MWh;
-    public double v_nighttimeElectricityProduced_MWh;
-    public double v_nighttimeElectricitySelfConsumed_MWh;
-    public double v_nighttimeEnergyConsumed_MWh;
-    public double v_nighttimeEnergyExport_MWh;
-    public double v_nighttimeEnergyImport_MWh;
-    public double v_nighttimeEnergyProduced_MWh;
-    public double v_nighttimeEnergySelfConsumed_MWh;
-    public double v_weekdayElectricityConsumed_MWh;
-    public double v_weekdayElectricityProduced_MWh;
-    public double v_weekdayElectricitySelfConsumed_MWh;
-    public double v_weekdayEnergyConsumed_MWh;
-    public double v_weekdayEnergyExport_MWh;
-    public double v_weekdayEnergyImport_MWh;
-    public double v_weekdayEnergyProduced_MWh;
-    public double v_weekdayEnergySelfConsumed_MWh;
-    public double v_weekendElectricity_Produced_MWh;
-    public double v_weekendElectricityConsumed_MWh;
-    public double v_weekendElectricitySelfConsumed_MWh;
-    public double v_weekendEnergyConsumed_MWh;
-    public double v_weekendEnergyExport_MWh;
-    public double v_weekendEnergyImport_MWh;
-    public double v_weekendEnergyProduced_MWh;
-    public double v_weekendEnergySelfConsumed_MWh;
+    public J_AccumulatorMap am_weekdayImports_kW;   
     
     /**
      * Default constructor
@@ -201,175 +125,343 @@ public class J_RapidRunData {
     	this.parentAgent = parentAgent;
     }
     
-
-    public double getTotalElectricityProduced_MWh() { 
-        return v_totalElectricity_Produced_MWh; 
-    }
+    public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
+    	this.v_activeEnergyCarriers = v_activeEnergyCarriers;
+    	this.v_activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+    	this.v_activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+	    //========== TOTAL ACCUMULATORS ==========//
+		am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, simDuration_h );
+	    am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
+	    am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(v_activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
+	    am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, simDuration_h);
+	
+	    acc_dailyAverageEnergyProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	
+	    acc_totalEnergyCurtailed_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	
+	    acc_dailyAverageBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageElectricVehicleConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageBatteriesConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageElectricCookingConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageDistrictHeatingConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	
+	    acc_dailyAveragePVProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageWindProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageV2GProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageBatteriesProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageCHPElectricityProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	
+	    //acc_dailyAverageBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, 24.0, simDuration_h);
+	
+	    //========== SUMMER WEEK ACCUMULATORS ==========//
+	    am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	
+	    acc_summerWeekEnergyProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_summerWeekEnergyCurtailed_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_summerWeekFeedinCapacity_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekDeliveryCapacity_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_summerWeekBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekElectricVehicleConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekBatteriesConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekElectricCookingConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekDistrictHeatingConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_summerWeekPVProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekWindProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekV2GProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekBatteriesProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    //acc_summerWeekBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    //========== WINTER WEEK ACCUMULATORS ==========//
+	    am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	
+	    acc_winterWeekEnergyProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_winterWeekEnergyCurtailed_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_winterWeekFeedinCapacity_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekDeliveryCapacity_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_winterWeekBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekElectricVehicleConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekBatteriesConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekElectricCookingConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekDistrictHeatingConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    acc_winterWeekPVProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekWindProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekV2GProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekBatteriesProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    //acc_winterWeekBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, timeStep_h, 168.0);
+	
+	    //========== DAYTIME ACCUMULATORS ==========//
+	    am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+	    am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+	
+	    acc_daytimeEnergyProduction_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
+	    acc_daytimeEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,0.5 * (simDuration_h));
+	    //acc_daytimeEnergyCurtailed_kW = new ZeroAccumulator(false, timeStep_h, simDuration_h);
+	    acc_daytimeElectricityProduction_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
+	    acc_daytimeElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
+	
+	    //========== WEEKEND ACCUMULATORS ==========//
+	    am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+	    am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
+	
+	    acc_weekendEnergyProduction_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+	    acc_weekendEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,2 / 7  * (simDuration_h) + 48);
+	    //acc_weekendEnergyCurtailed_kW = new ZeroAccumulator(false, timeStep_h, simDuration_h);
+	    acc_weekendElectricityProduction_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+	    acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+	}
 
     public double getTotalElectricityConsumed_MWh() { 
-        return v_totalElectricityConsumed_MWh; 
+        return am_dailyAverageConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000; 
     }
-
+    public double getTotalElectricityProduced_MWh() { 
+        return am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000; 
+    }
     public double getTotalElectricitySelfConsumed_MWh() { 
-        return V_totalElectricitySelfConsumed_MWh; 
+        return max(0, getTotalElectricityProduced_MWh() - am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000); 
     }
-
-    public double getTotalEnergyProduced_MWh() { 
-        return v_totalEnergy_Produced_MWh; 
-    }
-
     public double getTotalEnergyConsumed_MWh() { 
-        return v_totalEnergyConsumed_MWh; 
+        return acc_dailyAverageEnergyConsumption_kW.getIntegral_kWh() / 1000; 
     }
-
+    public double getTotalEnergyProduced_MWh() { 
+        return acc_dailyAverageEnergyProduction_kW.getIntegral_kWh() / 1000; 
+    }
     public double getTotalEnergyCurtailed_MWh() { 
-        return v_totalEnergyCurtailed_MWh; 
+        return acc_totalEnergyCurtailed_kW.getIntegral_kWh() / 1000; 
     }
-
-    public double getTotalEnergyExport_MWh() { 
-        return v_totalEnergyExport_MWh; 
-    }
-
     public double getTotalEnergyImport_MWh() { 
-        return v_totalEnergyImport_MWh; 
+    	double totalEnergyImport_kWh = 0.0;
+    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    		totalEnergyImport_kWh+=am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
+    	}
+        return totalEnergyImport_kWh/1000; 
+    }   
+    public double getTotalEnergyExport_MWh() { 
+    	double totalEnergyExport_kWh = 0.0;
+    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    		totalEnergyExport_kWh+=am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
+    	}
+        return totalEnergyExport_kWh/1000; 
     }
-
     public double getTotalEnergySelfConsumed_MWh() { 
-        return v_totalEnergySelfConsumed_MWh; 
+        return max(0, getTotalEnergyConsumed_MWh() - getTotalEnergyImport_MWh()); 
     }
-
     public double getTotalPrimaryEnergyProductionHeatpumps_MWh() { 
-        return v_totalPrimaryEnergyProduction_Heatpumps_MWh; 
+        return acc_totalPrimaryEnergyProductionHeatpumps_kW.getIntegral_kWh() / 1000; 
     }
 
+// Summerweek Getters
+    public double getSummerWeekElectricityConsumed_MWh() {
+        return am_summerWeekConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000;
+    }
+    public double getSummerWeekElectricityProduced_MWh() {
+        return am_summerWeekProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000;
+    }
+    public double getSummerWeekElectricitySelfConsumed_MWh() {
+        return max(0, getSummerWeekElectricityConsumed_MWh() - am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000);
+    }
+    public double getSummerWeekEnergyConsumed_MWh() {
+        return acc_summerWeekEnergyConsumption_kW.getIntegral_kWh() / 1000;
+    }
+    public double getSummerWeekEnergyProduced_MWh() {
+        return acc_summerWeekEnergyProduction_kW.getIntegral_kWh() / 1000;
+    }
+    public double getSummerWeekEnergyCurtailed_MWh() {
+        return acc_summerWeekEnergyCurtailed_kW.getIntegral_kWh() / 1000;
+    }
+    public double getSummerWeekEnergyImport_MWh() {
+        double summerWeekEnergyImport_kWh = 0.0;
+    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    		summerWeekEnergyImport_kWh+=am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
+    	}
+        return summerWeekEnergyImport_kWh/1000;
+    }
+    public double getSummerWeekEnergyExport_MWh() {
+        double summerWeekEnergyExport_kWh = 0.0;
+    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    		summerWeekEnergyExport_kWh+=am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
+    	}
+        return summerWeekEnergyExport_kWh/1000;
+    }    
+    public double getSummerWeekEnergySelfConsumed_MWh() {
+        return max(0, getSummerWeekEnergyConsumed_MWh() - getSummerWeekEnergyImport_MWh());
+    }
+    public double getSummerWeekPrimaryEnergyProductionHeatpumps_MWh() {
+        return acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.getIntegral_kWh() / 1000;
+    }
+    
+// Winterweek Getters
+    public double getWinterWeekElectricityConsumed_MWh() {
+        return am_winterWeekConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000;
+    }
+    public double getWinterWeekElectricityProduced_MWh() {
+        return am_winterWeekProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000;
+    }
+    public double getWinterWeekElectricitySelfConsumed_MWh() {
+        return max(0, getWinterWeekElectricityConsumed_MWh() - am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000);
+    }
+    public double getWinterWeekEnergyConsumed_MWh() {
+        return acc_winterWeekEnergyConsumption_kW.getIntegral_kWh() / 1000;
+    }
+    public double getWinterWeekEnergyProduced_MWh() {
+        return acc_winterWeekEnergyProduction_kW.getIntegral_kWh() / 1000;
+    }
+    public double getWinterWeekEnergyCurtailed_MWh() {
+        return acc_winterWeekEnergyCurtailed_kW.getIntegral_kWh() / 1000;
+    }
+    public double getWinterWeekEnergyImport_MWh() {
+        double winterWeekEnergyImport_kWh = 0.0;
+    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    		winterWeekEnergyImport_kWh+=am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
+    	}
+        return winterWeekEnergyImport_kWh/1000;
+    }
+    public double getWinterWeekEnergyExport_MWh() {
+        double winterWeekEnergyExport_kWh = 0.0;
+    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    		winterWeekEnergyExport_kWh+=am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
+    	}
+        return winterWeekEnergyExport_kWh/1000;
+    }    
+    public double getWinterWeekEnergySelfConsumed_MWh() {
+        return max(0, getWinterWeekEnergyConsumed_MWh() - getWinterWeekEnergyImport_MWh());
+    }
+    public double getWinterWeekPrimaryEnergyProductionHeatpumps_MWh() {
+        return acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.getIntegral_kWh() / 1000;
+    }
+    
+// Daytime getters    
     public double getDaytimeElectricityConsumed_MWh() { 
-        return v_daytimeElectricity_Consumed_MWh; 
+        return acc_daytimeElectricityConsumption_kW.getIntegral_kWh() / 1000; 
     }
-
     public double getDaytimeElectricityProduced_MWh() { 
-        return v_daytimeElectricity_Produced_MWh; 
+        return acc_daytimeElectricityProduction_kW.getIntegral_kWh() / 1000; 
     }
-
     public double getDaytimeElectricitySelfConsumed_MWh() { 
-        return v_daytimeElectricitySelfConsumed_MW; 
+        return max(0, getDaytimeElectricityConsumed_MWh() - am_daytimeImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000); 
     }
-
-    public double getDaytimeEnergyProduced_MWh() { 
-        return v_daytimeEnergy_Produced_MWh; 
-    }
-
     public double getDaytimeEnergyConsumed_MWh() { 
-        return v_daytimeEnergyConsumed_MWh; 
+        return acc_daytimeEnergyConsumption_kW.getIntegral_kWh() / 1000; 
     }
-
+    public double getDaytimeEnergyProduced_MWh() { 
+        return acc_daytimeEnergyProduction_kW.getIntegral_kWh() / 1000; 
+    }
     public double getDaytimeEnergyExport_MWh() { 
-        return v_daytimeEnergyExport_MWh; 
+        return am_daytimeExports_kW.totalIntegral_kWh()/1000; 
     }
-
     public double getDaytimeEnergyImport_MWh() { 
-        return v_daytimeEnergyImport_MWh; 
+        return am_daytimeImports_kW.totalIntegral_kWh()/1000; 
     }
-
     public double getDaytimeEnergySelfConsumed_MWh() { 
-        return v_daytimeEnergySelfConsumed_MWh; 
+        return max(0, getDaytimeEnergyProduced_MWh() - getDaytimeEnergyExport_MWh()); 
     }
-
+    
+//Nighttime Getters
     public double getNighttimeElectricityConsumed_MWh() { 
-        return v_nighttimeElectricityConsumed_MWh; 
+        return getTotalElectricityConsumed_MWh() - getDaytimeElectricityConsumed_MWh(); 
     }
-
     public double getNighttimeElectricityProduced_MWh() { 
-        return v_nighttimeElectricityProduced_MWh; 
+        return getTotalElectricityProduced_MWh() - getDaytimeElectricityProduced_MWh(); 
     }
-
     public double getNighttimeElectricitySelfConsumed_MWh() { 
-        return v_nighttimeElectricitySelfConsumed_MWh; 
+        return max(0,getNighttimeElectricityConsumed_MWh() - (am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000 - am_daytimeImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000)); 
     }
-
     public double getNighttimeEnergyConsumed_MWh() { 
-        return v_nighttimeEnergyConsumed_MWh; 
+        return getTotalEnergyConsumed_MWh() - getDaytimeEnergyConsumed_MWh(); 
     }
-
-    public double getNighttimeEnergyExport_MWh() { 
-        return v_nighttimeEnergyExport_MWh; 
-    }
-
-    public double getNighttimeEnergyImport_MWh() { 
-        return v_nighttimeEnergyImport_MWh; 
-    }
-
     public double getNighttimeEnergyProduced_MWh() { 
-        return v_nighttimeEnergyProduced_MWh; 
+        return getTotalEnergyProduced_MWh() - getDaytimeEnergyProduced_MWh(); 
     }
-
+    public double getNighttimeEnergyExport_MWh() { 
+        return getTotalEnergyExport_MWh() - getDaytimeEnergyExport_MWh(); 
+    }
+    public double getNighttimeEnergyImport_MWh() { 
+        return getTotalEnergyImport_MWh() - getDaytimeEnergyImport_MWh(); 
+    }
     public double getNighttimeEnergySelfConsumed_MWh() { 
-        return v_nighttimeEnergySelfConsumed_MWh; 
+        return max(0, getNighttimeEnergyProduced_MWh() - getNighttimeEnergyExport_MWh()); 
+    } 
+
+// Weekday Getters
+    public double getWeekdayElectricityConsumed_MWh() { 
+        return getTotalElectricityConsumed_MWh() - getWeekendElectricityConsumed_MWh(); 
+    }
+    public double getWeekdayElectricityProduced_MWh() { 
+        return getTotalElectricityProduced_MWh() - getWeekendElectricityProduced_MWh(); 
+    }
+    public double getWeekdayElectricitySelfConsumed_MWh() { 
+        return max(0,getWeekdayElectricityConsumed_MWh() - (am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000 - am_weekendImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000)); 
+    }
+    public double getWeekdayEnergyConsumed_MWh() { 
+        return getTotalEnergyConsumed_MWh() - getWeekendEnergyConsumed_MWh(); 
+    }
+    public double getWeekdayEnergyProduced_MWh() { 
+        return getTotalEnergyProduced_MWh() - getWeekendEnergyProduced_MWh(); 
+    }
+    public double getWeekdayEnergyExport_MWh() { 
+        return getTotalEnergyExport_MWh() - getWeekendEnergyExport_MWh(); 
+    }
+    public double getWeekdayEnergyImport_MWh() { 
+        return getTotalEnergyImport_MWh() - getWeekendEnergyImport_MWh(); 
+    }
+    public double getWeekdayEnergySelfConsumed_MWh() { 
+        return max(0, getWeekdayEnergyProduced_MWh() - getWeekdayEnergyExport_MWh()); 
     } 
     
-    public double getWeekdayElectricityConsumed_MWh() { 
-        return v_weekdayElectricityConsumed_MWh; 
-    }
-
-    public double getWeekdayElectricityProduced_MWh() { 
-        return v_weekdayElectricityProduced_MWh; 
-    }
-
-    public double getWeekdayElectricitySelfConsumed_MWh() { 
-        return v_weekdayElectricitySelfConsumed_MWh; 
-    }
-
-    public double getWeekdayEnergyConsumed_MWh() { 
-        return v_weekdayEnergyConsumed_MWh; 
-    }
-
-    public double getWeekdayEnergyExport_MWh() { 
-        return v_weekdayEnergyExport_MWh; 
-    }
-
-    public double getWeekdayEnergyImport_MWh() { 
-        return v_weekdayEnergyImport_MWh; 
-    }
-
-    public double getWeekdayEnergyProduced_MWh() { 
-        return v_weekdayEnergyProduced_MWh; 
-    }
-
-    public double getWeekdayEnergySelfConsumed_MWh() { 
-        return v_weekdayEnergySelfConsumed_MWh; 
-    }
-
-    public double getWeekendElectricityProduced_MWh() { 
-        return v_weekendElectricity_Produced_MWh; 
-    }
-
+//Weekend Getters
     public double getWeekendElectricityConsumed_MWh() { 
-        return v_weekendElectricityConsumed_MWh; 
+        return acc_weekendElectricityConsumption_kW.getIntegral_kWh() / 1000; 
     }
-
+    public double getWeekendElectricityProduced_MWh() { 
+        return acc_weekendElectricityProduction_kW.getIntegral_kWh() / 1000; 
+    }
     public double getWeekendElectricitySelfConsumed_MWh() { 
-        return v_weekendElectricitySelfConsumed_MWh; 
+        return max(0, getWeekendElectricityConsumed_MWh() - am_weekendImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000); 
     }
-
     public double getWeekendEnergyConsumed_MWh() { 
-        return v_weekendEnergyConsumed_MWh; 
+        return acc_weekendEnergyConsumption_kW.getIntegral_kWh() / 1000; 
     }
-
-    public double getWeekendEnergyExport_MWh() { 
-        return v_weekendEnergyExport_MWh; 
-    }
-
-    public double getWeekendEnergyImport_MWh() { 
-        return v_weekendEnergyImport_MWh; 
-    }
-
     public double getWeekendEnergyProduced_MWh() { 
-        return v_weekendEnergyProduced_MWh; 
+        return acc_weekendEnergyProduction_kW.getIntegral_kWh() / 1000; 
     }
-
+    public double getWeekendEnergyExport_MWh() { 
+        return am_weekendExports_kW.totalIntegral_kWh()/1000; 
+    }
+    public double getWeekendEnergyImport_MWh() { 
+        return am_weekendImports_kW.totalIntegral_kWh()/1000; 
+    }
     public double getWeekendEnergySelfConsumed_MWh() { 
-        return v_weekendEnergySelfConsumed_MWh; 
+        return max(0, getWeekendEnergyProduced_MWh() - getWeekendEnergyExport_MWh()); 
     }
     
+//toString()
     public String toString() {
 		return super.toString();
 	}
