@@ -134,6 +134,7 @@
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>960</X>
 		<Y>288</Y>
 		<Label>
@@ -295,9 +296,10 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1699275323325</Id>
-		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
-		<X>677</X>
-		<Y>302</Y>
+		<Name><![CDATA[f_rapidRunDataLoggingOld]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>960</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -647,6 +649,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732550958758</Id>
 		<Name><![CDATA[f_initializeAccumulators]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>80</X>
 		<Y>890</Y>
 		<Label>
@@ -732,5 +735,21 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1741622740564</Id>
+		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
+		<X>677</X>
+		<Y>301</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

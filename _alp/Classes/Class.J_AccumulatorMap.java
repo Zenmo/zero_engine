@@ -42,11 +42,27 @@ public class J_AccumulatorMap implements Serializable {
 	}
 	*/
 	public double totalIntegral_kWh() {
-		double totalIntegral = 0.0;
+		double totalIntegral_kWh = 0.0;
 		for (var EC : energyCarrierList) {
-			totalIntegral += accumulatorArray[EC.ordinal()].getIntegral_kWh();
+			totalIntegral_kWh += accumulatorArray[EC.ordinal()].getIntegral_kWh();
 		}
-		return totalIntegral;
+		return totalIntegral_kWh;
+	}
+	
+	public double totalIntegralPos_kWh() {
+		double totalIntegralPos_kWh = 0.0;
+		for (var EC : energyCarrierList) {
+			totalIntegralPos_kWh += accumulatorArray[EC.ordinal()].getIntegralPos_kWh();
+		}
+		return totalIntegralPos_kWh;
+	}
+	
+	public double totalIntegralNeg_kWh() {
+		double totalIntegralNeg_kWh = 0.0;
+		for (var EC : energyCarrierList) {
+			totalIntegralNeg_kWh += accumulatorArray[EC.ordinal()].getIntegralNeg_kWh();
+		}
+		return totalIntegralNeg_kWh;
 	}
 	
 	public void clear() {
