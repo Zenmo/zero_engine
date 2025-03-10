@@ -550,31 +550,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1729065255969</Id>
-		<Name><![CDATA[p_heatStrategy]]></Name>
-		<X>1680</X>
-		<Y>800</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[String]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1729065255967</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1729069223731</Id>
 		<Name><![CDATA[p_nbCompaniesTotal]]></Name>
 		<X>1680</X>

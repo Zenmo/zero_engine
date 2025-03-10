@@ -2806,9 +2806,6 @@
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatStrategy]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_nbCompaniesTotal]]></Name>
 			</Parameter>
 			<Parameter>
