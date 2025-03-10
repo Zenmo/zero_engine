@@ -348,7 +348,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1731079736315</Id>
 		<Name><![CDATA[f_fillAnnualDatasets]]></Name>
-		<X>700</X>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>890</X>
 		<Y>240</Y>
 		<Label>
 			<X>10</X>
@@ -597,5 +598,21 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1741626527076</Id>
+		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
+		<X>689.2</X>
+		<Y>239.2</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

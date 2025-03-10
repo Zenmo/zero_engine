@@ -1402,6 +1402,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562265</Id>
 		<Name><![CDATA[v_totalEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1260</Y>
 		<Label>
@@ -1421,6 +1422,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562267</Id>
 		<Name><![CDATA[v_totalEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1240</Y>
 		<Label>
@@ -1440,6 +1442,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562269</Id>
 		<Name><![CDATA[v_totalEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1280</Y>
 		<Label>
@@ -1462,6 +1465,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562271</Id>
 		<Name><![CDATA[v_totalEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1480</Y>
 		<Label>
@@ -1484,6 +1488,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562273</Id>
 		<Name><![CDATA[v_summerWeekEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1480</Y>
 		<Label>
@@ -1503,6 +1508,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562275</Id>
 		<Name><![CDATA[v_summerWeekEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1500</Y>
 		<Label>
@@ -1522,6 +1528,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562277</Id>
 		<Name><![CDATA[v_summerWeekEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1260</Y>
 		<Label>
@@ -1541,6 +1548,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562279</Id>
 		<Name><![CDATA[v_summerWeekEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1240</Y>
 		<Label>
@@ -1560,6 +1568,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562281</Id>
 		<Name><![CDATA[v_summerWeekEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1280</Y>
 		<Label>
@@ -1579,6 +1588,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562283</Id>
 		<Name><![CDATA[v_winterWeekEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1480</Y>
 		<Label>
@@ -1598,6 +1608,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562285</Id>
 		<Name><![CDATA[v_winterWeekEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1500</Y>
 		<Label>
@@ -1617,6 +1628,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562287</Id>
 		<Name><![CDATA[v_winterWeekEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1260</Y>
 		<Label>
@@ -1636,6 +1648,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562289</Id>
 		<Name><![CDATA[v_winterWeekEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1240</Y>
 		<Label>
@@ -1655,6 +1668,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562291</Id>
 		<Name><![CDATA[v_winterWeekEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1280</Y>
 		<Label>
@@ -1674,6 +1688,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562293</Id>
 		<Name><![CDATA[v_totalEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1500</Y>
 		<Label>
@@ -1696,6 +1711,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562295</Id>
 		<Name><![CDATA[v_daytimeEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1480</Y>
 		<Label>
@@ -1715,6 +1731,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562297</Id>
 		<Name><![CDATA[v_daytimeEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1500</Y>
 		<Label>
@@ -1734,6 +1751,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562299</Id>
 		<Name><![CDATA[v_daytimeEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1260</Y>
 		<Label>
@@ -1753,6 +1771,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562301</Id>
 		<Name><![CDATA[v_daytimeEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1240</Y>
 		<Label>
@@ -1772,6 +1791,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562303</Id>
 		<Name><![CDATA[v_daytimeEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1280</Y>
 		<Label>
@@ -1791,6 +1811,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562305</Id>
 		<Name><![CDATA[v_nighttimeEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1480</Y>
 		<Label>
@@ -1810,6 +1831,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562307</Id>
 		<Name><![CDATA[v_nighttimeEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1500</Y>
 		<Label>
@@ -1829,6 +1851,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562309</Id>
 		<Name><![CDATA[v_nighttimeEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1260</Y>
 		<Label>
@@ -1848,6 +1871,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562311</Id>
 		<Name><![CDATA[v_nighttimeEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1240</Y>
 		<Label>
@@ -1867,6 +1891,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562313</Id>
 		<Name><![CDATA[v_nighttimeEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1280</Y>
 		<Label>
@@ -1886,6 +1911,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562315</Id>
 		<Name><![CDATA[v_weekdayEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1480</Y>
 		<Label>
@@ -1905,6 +1931,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562317</Id>
 		<Name><![CDATA[v_weekdayEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1500</Y>
 		<Label>
@@ -1924,6 +1951,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562319</Id>
 		<Name><![CDATA[v_weekdayEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1260</Y>
 		<Label>
@@ -1943,6 +1971,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562321</Id>
 		<Name><![CDATA[v_weekdayEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1240</Y>
 		<Label>
@@ -1962,6 +1991,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562323</Id>
 		<Name><![CDATA[v_weekdayEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1280</Y>
 		<Label>
@@ -1981,6 +2011,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562325</Id>
 		<Name><![CDATA[v_weekendEnergyImport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1480</Y>
 		<Label>
@@ -2000,6 +2031,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562327</Id>
 		<Name><![CDATA[v_weekendEnergyExport_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1500</Y>
 		<Label>
@@ -2019,6 +2051,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562329</Id>
 		<Name><![CDATA[v_weekendEnergyConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1260</Y>
 		<Label>
@@ -2038,6 +2071,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562331</Id>
 		<Name><![CDATA[v_weekendEnergyProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1240</Y>
 		<Label>
@@ -2057,6 +2091,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562333</Id>
 		<Name><![CDATA[v_weekendEnergySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1280</Y>
 		<Label>
@@ -2076,6 +2111,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562335</Id>
 		<Name><![CDATA[v_totalElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1180</Y>
 		<Label>
@@ -2098,6 +2134,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562337</Id>
 		<Name><![CDATA[v_totalElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1160</Y>
 		<Label>
@@ -2120,6 +2157,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562339</Id>
 		<Name><![CDATA[v_totalElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1199</Y>
 		<Label>
@@ -2142,6 +2180,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562341</Id>
 		<Name><![CDATA[v_totalPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1400</Y>
 		<Label>
@@ -2164,6 +2203,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562343</Id>
 		<Name><![CDATA[v_summerWeekElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1180</Y>
 		<Label>
@@ -2186,6 +2226,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562345</Id>
 		<Name><![CDATA[v_winterWeekElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1180</Y>
 		<Label>
@@ -2208,6 +2249,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562347</Id>
 		<Name><![CDATA[v_daytimeElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1180</Y>
 		<Label>
@@ -2230,6 +2272,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562349</Id>
 		<Name><![CDATA[v_nighttimeElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1179</Y>
 		<Label>
@@ -2252,6 +2295,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562351</Id>
 		<Name><![CDATA[v_weekdayElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1180</Y>
 		<Label>
@@ -2274,6 +2318,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562353</Id>
 		<Name><![CDATA[v_weekendElectricityConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1180</Y>
 		<Label>
@@ -2296,6 +2341,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562355</Id>
 		<Name><![CDATA[acc_dailyAverageEnergyProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1090</Y>
 		<Label>
@@ -2318,6 +2364,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562357</Id>
 		<Name><![CDATA[acc_dailyAverageEnergyConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1110</Y>
 		<Label>
@@ -2340,6 +2387,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562359</Id>
 		<Name><![CDATA[acc_totalEnergyCurtailed_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1320</Y>
 		<Label>
@@ -2408,6 +2456,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562365</Id>
 		<Name><![CDATA[acc_totalPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1380</Y>
 		<Label>
@@ -2430,6 +2479,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562367</Id>
 		<Name><![CDATA[v_summerWeekElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1160</Y>
 		<Label>
@@ -2452,6 +2502,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562369</Id>
 		<Name><![CDATA[v_summerWeekElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1200</Y>
 		<Label>
@@ -2474,6 +2525,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562371</Id>
 		<Name><![CDATA[v_winterWeekElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1160</Y>
 		<Label>
@@ -2496,6 +2548,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562373</Id>
 		<Name><![CDATA[v_winterWeekElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1200</Y>
 		<Label>
@@ -2518,6 +2571,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562375</Id>
 		<Name><![CDATA[v_daytimeElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1160</Y>
 		<Label>
@@ -2540,6 +2594,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562377</Id>
 		<Name><![CDATA[v_daytimeElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1200</Y>
 		<Label>
@@ -2562,6 +2617,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562379</Id>
 		<Name><![CDATA[v_nighttimeElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1160</Y>
 		<Label>
@@ -2584,6 +2640,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562381</Id>
 		<Name><![CDATA[v_nighttimeElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1197</Y>
 		<Label>
@@ -2606,6 +2663,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562383</Id>
 		<Name><![CDATA[v_weekdayElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1160</Y>
 		<Label>
@@ -2628,6 +2686,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562385</Id>
 		<Name><![CDATA[v_weekdayElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1200</Y>
 		<Label>
@@ -2650,6 +2709,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562387</Id>
 		<Name><![CDATA[v_weekendElectricityProduced_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1200</Y>
 		<Label>
@@ -2672,6 +2732,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562389</Id>
 		<Name><![CDATA[v_weekendElectricitySelfConsumed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1160</Y>
 		<Label>
@@ -2694,6 +2755,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562391</Id>
 		<Name><![CDATA[acc_summerWeekEnergyProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1090</Y>
 		<Label>
@@ -2716,6 +2778,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562393</Id>
 		<Name><![CDATA[acc_summerWeekEnergyConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1110</Y>
 		<Label>
@@ -2738,6 +2801,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562395</Id>
 		<Name><![CDATA[acc_summerWeekEnergyCurtailed_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1320</Y>
 		<Label>
@@ -2806,6 +2870,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562401</Id>
 		<Name><![CDATA[acc_winterWeekEnergyProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1090</Y>
 		<Label>
@@ -2828,6 +2893,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562403</Id>
 		<Name><![CDATA[acc_winterWeekEnergyConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1110</Y>
 		<Label>
@@ -2850,6 +2916,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562405</Id>
 		<Name><![CDATA[acc_winterWeekEnergyCurtailed_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1320</Y>
 		<Label>
@@ -2918,6 +2985,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562411</Id>
 		<Name><![CDATA[acc_winterWeekPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1380</Y>
 		<Label>
@@ -2940,6 +3008,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562413</Id>
 		<Name><![CDATA[am_winterWeekBalanceAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1020</Y>
 		<Label>
@@ -2962,6 +3031,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562415</Id>
 		<Name><![CDATA[fm_summerWeekImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1440</Y>
 		<Label>
@@ -2984,6 +3054,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562417</Id>
 		<Name><![CDATA[fm_summerWeekExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1460</Y>
 		<Label>
@@ -3006,6 +3077,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562419</Id>
 		<Name><![CDATA[am_summerWeekBalanceAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1020</Y>
 		<Label>
@@ -3028,6 +3100,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562421</Id>
 		<Name><![CDATA[fm_daytimeImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1440</Y>
 		<Label>
@@ -3050,6 +3123,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562423</Id>
 		<Name><![CDATA[fm_daytimeExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1460</Y>
 		<Label>
@@ -3072,6 +3146,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562425</Id>
 		<Name><![CDATA[fm_nighttimeImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1440</Y>
 		<Label>
@@ -3094,6 +3169,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562427</Id>
 		<Name><![CDATA[fm_nighttimeExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2580</X>
 		<Y>1460</Y>
 		<Label>
@@ -3116,6 +3192,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562429</Id>
 		<Name><![CDATA[fm_totalImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1440</Y>
 		<Label>
@@ -3138,6 +3215,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562431</Id>
 		<Name><![CDATA[fm_totalExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1460</Y>
 		<Label>
@@ -3160,6 +3238,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562433</Id>
 		<Name><![CDATA[am_totalBalanceAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1020</Y>
 		<Label>
@@ -3182,6 +3261,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562435</Id>
 		<Name><![CDATA[acc_summerWeekPrimaryEnergyProductionHeatpumps_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1380</Y>
 		<Label>
@@ -3204,6 +3284,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562437</Id>
 		<Name><![CDATA[fm_weekdayImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1440</Y>
 		<Label>
@@ -3226,6 +3307,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562439</Id>
 		<Name><![CDATA[fm_weekdayExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2950</X>
 		<Y>1460</Y>
 		<Label>
@@ -3248,6 +3330,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562441</Id>
 		<Name><![CDATA[fm_weekendImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1440</Y>
 		<Label>
@@ -3270,6 +3353,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562443</Id>
 		<Name><![CDATA[fm_weekendExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1460</Y>
 		<Label>
@@ -3292,6 +3376,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562445</Id>
 		<Name><![CDATA[fm_winterWeekImports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1440</Y>
 		<Label>
@@ -3314,6 +3399,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562447</Id>
 		<Name><![CDATA[fm_winterWeekExports_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1460</Y>
 		<Label>
@@ -3336,6 +3422,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562449</Id>
 		<Name><![CDATA[v_totalEnergyCurtailed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>1340</Y>
 		<Label>
@@ -3355,6 +3442,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562451</Id>
 		<Name><![CDATA[v_summerWeekEnergyCurtailed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1340</Y>
 		<Label>
@@ -3374,6 +3462,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562453</Id>
 		<Name><![CDATA[v_winterWeekEnergyCurtailed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1340</Y>
 		<Label>
@@ -3393,6 +3482,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562455</Id>
 		<Name><![CDATA[v_summerWeekPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1320</X>
 		<Y>1400</Y>
 		<Label>
@@ -3415,6 +3505,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1731504562457</Id>
 		<Name><![CDATA[v_winterWeekPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1840</X>
 		<Y>1400</Y>
 		<Label>
@@ -3718,6 +3809,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740150370624</Id>
 		<Name><![CDATA[v_totalOverloadDurationDelivery_hr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>2430</Y>
 		<Label>
@@ -3737,6 +3829,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740150370626</Id>
 		<Name><![CDATA[v_totalOverloadDurationFeedin_hr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>2445</Y>
 		<Label>
@@ -3756,6 +3849,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740150370628</Id>
 		<Name><![CDATA[v_maxPeakDelivery_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>2470</Y>
 		<Label>
@@ -3775,6 +3869,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740150370630</Id>
 		<Name><![CDATA[v_maxPeakFeedin_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>2490</Y>
 		<Label>
@@ -4689,6 +4784,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654019</Id>
 		<Name><![CDATA[am_dailyAverageConsumptionAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2740</Y>
 		<Label>
@@ -4711,6 +4807,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654024</Id>
 		<Name><![CDATA[am_dailyAverageProductionAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2760</Y>
 		<Label>
@@ -4733,6 +4830,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654026</Id>
 		<Name><![CDATA[acc_dailyAverageBaseloadElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2410</Y>
 		<Label>
@@ -4755,6 +4853,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654028</Id>
 		<Name><![CDATA[acc_dailyAverageHeatPumpElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2430</Y>
 		<Label>
@@ -4777,6 +4876,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654030</Id>
 		<Name><![CDATA[acc_dailyAverageElectricVehicleConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2450</Y>
 		<Label>
@@ -4799,6 +4899,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654032</Id>
 		<Name><![CDATA[acc_dailyAverageBatteriesConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2470</Y>
 		<Label>
@@ -4821,6 +4922,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654034</Id>
 		<Name><![CDATA[acc_dailyAverageElectricCookingConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2490</Y>
 		<Label>
@@ -4843,6 +4945,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654036</Id>
 		<Name><![CDATA[acc_dailyAverageElectrolyserElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2510</Y>
 		<Label>
@@ -4865,6 +4968,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654038</Id>
 		<Name><![CDATA[acc_dailyAveragePVProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2580</Y>
 		<Label>
@@ -4887,6 +4991,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654040</Id>
 		<Name><![CDATA[acc_dailyAverageWindProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2600</Y>
 		<Label>
@@ -4909,6 +5014,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654042</Id>
 		<Name><![CDATA[acc_dailyAverageV2GProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2620</Y>
 		<Label>
@@ -4931,6 +5037,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654044</Id>
 		<Name><![CDATA[acc_dailyAverageBatteriesProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2640</Y>
 		<Label>
@@ -4976,6 +5083,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654048</Id>
 		<Name><![CDATA[acc_dailyAverageDistrictHeatingConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2530</Y>
 		<Label>
@@ -4998,6 +5106,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654050</Id>
 		<Name><![CDATA[acc_dailyAverageCHPElectricityProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1600</X>
 		<Y>2660</Y>
 		<Label>
@@ -5020,6 +5129,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654052</Id>
 		<Name><![CDATA[acc_summerWeekBaseloadElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2410</Y>
 		<Label>
@@ -5042,6 +5152,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654054</Id>
 		<Name><![CDATA[acc_summerWeekHeatPumpElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2430</Y>
 		<Label>
@@ -5064,6 +5175,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654056</Id>
 		<Name><![CDATA[acc_summerWeekElectricVehicleConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2450</Y>
 		<Label>
@@ -5086,6 +5198,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654058</Id>
 		<Name><![CDATA[acc_summerWeekBatteriesConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2470</Y>
 		<Label>
@@ -5108,6 +5221,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654060</Id>
 		<Name><![CDATA[acc_summerWeekElectricCookingConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2490</Y>
 		<Label>
@@ -5130,6 +5244,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654062</Id>
 		<Name><![CDATA[acc_summerWeekElectrolyserElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2510</Y>
 		<Label>
@@ -5152,6 +5267,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654064</Id>
 		<Name><![CDATA[acc_summerWeekPVProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2580</Y>
 		<Label>
@@ -5174,6 +5290,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654066</Id>
 		<Name><![CDATA[acc_summerWeekWindProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2600</Y>
 		<Label>
@@ -5196,6 +5313,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654068</Id>
 		<Name><![CDATA[acc_summerWeekV2GProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2620</Y>
 		<Label>
@@ -5218,6 +5336,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654070</Id>
 		<Name><![CDATA[acc_summerWeekBatteriesProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2640</Y>
 		<Label>
@@ -5263,6 +5382,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654074</Id>
 		<Name><![CDATA[acc_summerWeekDistrictHeatingConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2530</Y>
 		<Label>
@@ -5285,6 +5405,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654076</Id>
 		<Name><![CDATA[acc_summerWeekCHPElectricityProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2660</Y>
 		<Label>
@@ -5307,6 +5428,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654078</Id>
 		<Name><![CDATA[acc_winterWeekBaseloadElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2410</Y>
 		<Label>
@@ -5329,6 +5451,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654080</Id>
 		<Name><![CDATA[acc_winterWeekHeatPumpElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2430</Y>
 		<Label>
@@ -5351,6 +5474,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654082</Id>
 		<Name><![CDATA[acc_winterWeekElectricVehicleConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2450</Y>
 		<Label>
@@ -5373,6 +5497,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654084</Id>
 		<Name><![CDATA[acc_winterWeekBatteriesConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2470</Y>
 		<Label>
@@ -5395,6 +5520,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654086</Id>
 		<Name><![CDATA[acc_winterWeekElectricCookingConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2490</Y>
 		<Label>
@@ -5417,6 +5543,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654088</Id>
 		<Name><![CDATA[acc_winterWeekElectrolyserElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2510</Y>
 		<Label>
@@ -5439,6 +5566,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654090</Id>
 		<Name><![CDATA[acc_winterWeekPVProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2580</Y>
 		<Label>
@@ -5461,6 +5589,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654092</Id>
 		<Name><![CDATA[acc_winterWeekWindProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2600</Y>
 		<Label>
@@ -5483,6 +5612,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654094</Id>
 		<Name><![CDATA[acc_winterWeekV2GProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2620</Y>
 		<Label>
@@ -5505,6 +5635,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654096</Id>
 		<Name><![CDATA[acc_winterWeekBatteriesProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2640</Y>
 		<Label>
@@ -5550,6 +5681,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654100</Id>
 		<Name><![CDATA[acc_winterWeekDistrictHeatingConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2530</Y>
 		<Label>
@@ -5572,6 +5704,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654102</Id>
 		<Name><![CDATA[acc_winterWeekCHPElectricityProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2660</Y>
 		<Label>
@@ -5594,6 +5727,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654104</Id>
 		<Name><![CDATA[am_summerWeekConsumptionAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2740</Y>
 		<Label>
@@ -5616,6 +5750,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654106</Id>
 		<Name><![CDATA[am_summerWeekProductionAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2080</X>
 		<Y>2760</Y>
 		<Label>
@@ -5638,6 +5773,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654108</Id>
 		<Name><![CDATA[am_winterWeekConsumptionAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2740</Y>
 		<Label>
@@ -5660,6 +5796,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1740757654110</Id>
 		<Name><![CDATA[am_winterWeekProductionAccumulators_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2600</X>
 		<Y>2760</Y>
 		<Label>
@@ -5682,6 +5819,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011246947</Id>
 		<Name><![CDATA[acc_daytimeEnergyProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1090</Y>
 		<Label>
@@ -5701,6 +5839,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011246954</Id>
 		<Name><![CDATA[acc_daytimeEnergyConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1110</Y>
 		<Label>
@@ -5720,6 +5859,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011246956</Id>
 		<Name><![CDATA[acc_daytimeElectricityProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1050</Y>
 		<Label>
@@ -5739,6 +5879,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011246958</Id>
 		<Name><![CDATA[acc_daytimeElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1070</Y>
 		<Label>
@@ -5758,6 +5899,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011261756</Id>
 		<Name><![CDATA[am_daytimeExports_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1540</Y>
 		<Label>
@@ -5780,6 +5922,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011261761</Id>
 		<Name><![CDATA[am_daytimeImports_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2230</X>
 		<Y>1520</Y>
 		<Label>
@@ -5802,6 +5945,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011277428</Id>
 		<Name><![CDATA[am_weekendExports_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1540</Y>
 		<Label>
@@ -5824,6 +5968,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011277433</Id>
 		<Name><![CDATA[am_weekendImports_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1520</Y>
 		<Label>
@@ -5846,6 +5991,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011288964</Id>
 		<Name><![CDATA[acc_weekendEnergyProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1090</Y>
 		<Label>
@@ -5865,6 +6011,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011288969</Id>
 		<Name><![CDATA[acc_weekendEnergyConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1110</Y>
 		<Label>
@@ -5884,6 +6031,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011288971</Id>
 		<Name><![CDATA[acc_weekendElectricityProduction_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1050</Y>
 		<Label>
@@ -5903,6 +6051,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741011288973</Id>
 		<Name><![CDATA[acc_weekendElectricityConsumption_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>3300</X>
 		<Y>1070</Y>
 		<Label>
