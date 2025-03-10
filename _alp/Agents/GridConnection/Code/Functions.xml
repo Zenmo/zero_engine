@@ -402,6 +402,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1701956274181</Id>
 		<Name><![CDATA[f_calculateKPIs]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>890</X>
 		<Y>580</Y>
 		<Label>

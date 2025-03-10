@@ -1194,13 +1194,13 @@ double f_calculateKPIs()
 {/*ALCODESTART::1698922757486*/
 
 // GridConnection KPIs (can these be done on-demand? What is dependency of other KPIs on GC KPI results?
-if (b_parallelizeGridConnections) {
+/*if (b_parallelizeGridConnections) {
 	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateKPIs());
 } else {
 	c_gridConnections.forEach(gc -> gc.f_calculateKPIs());
 }
 c_subGridConnections.forEach(gc -> gc.f_calculateKPIs());
-
+*/
 for(GridConnection g: c_gridConnections){ // 
 	    c_gridConnectionOverload_fr.put(g.p_gridConnectionID, g.v_maxConnectionLoad_fr);
 }	
