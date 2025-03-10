@@ -1,3 +1,4 @@
+
 /**
  * J_ActivityTrackerTrips
  */	
@@ -52,6 +53,42 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    	}
 	    }
 	    prepareNextActivity(time_min);    	
+    }
+    
+    public J_ActivityTrackerTrips(EnergyModel main, ExcelFile tripsExcel, int rowIndex, J_EAVehicle Vehicle) {
+    	this.energyModel = main;
+    	this.rowIndex = rowIndex;
+    	this.Vehicle = Vehicle;		
+		this.nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
+		this.tripPatternIdentifier = "";// tripsExcel.getCellStringValue("sheet1", rowIndex + 2, 1);
+		
+	    for (int i = 0; i < nbActivities; i++){
+	    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
+	    	endtimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
+	    	distances_km.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));		    
+	    }
+	    
+	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
+    	if (endtimes_min.get(nbActivities-1) < 10080) {
+		    for (int weeks = 1; weeks < 53; weeks++) {
+		    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
+		    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
+		    		endtimes_min.add(endtimes_min.get(eventIdx) + 10080*weeks);
+		    		distances_km.add(distances_km.get(eventIdx));
+		    	}
+		    }
+	    }
+    	
+    	// Determine 'minute of week'
+    	double minuteOfWeek = ((energyModel.v_dayOfWeek1jan - 1)*24 + energyModel.t_h)*60;
+	    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
+	    while ( starttimes_min.get(v_eventIndex) < minuteOfWeek ) {	
+	    	v_eventIndex++;
+	    	if ( v_eventIndex > starttimes_min.size() - 1 ) {	
+	    		break;
+	    	}
+	    }
+	    prepareNextActivity(minuteOfWeek);    	
     }
    
    public void setVehicle(J_EAVehicle Vehicle) {

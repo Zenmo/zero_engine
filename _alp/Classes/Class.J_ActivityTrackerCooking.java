@@ -57,6 +57,46 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	//traceln("Endtimes: %s", endtimes_min);
     }
     
+    public J_ActivityTrackerCooking(ExcelFile inputCookingActivities, int rowIndex, J_EAConversion HOB) {
+    	//this.energyModel = main;
+    	this.rowIndex = rowIndex;
+    	this.HOB=HOB;
+    	//int rowIndex = uniform_discr(2, 300); 
+    	//traceln("RowIndex: %s", this.rowIndex);
+    	//traceln(this.HOB.getParentAgent());
+    	
+    	this.timeStep_min = 60 * this.HOB.timestep_h;
+    	
+    	double v_cookingPatternIndex = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 1);
+    	int nbOfCookingSessions = (int)(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 2));
+
+    	for (int i = 0; i < nbOfCookingSessions; i++){
+    		starttimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
+    		endtimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
+    		
+    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getOutputCapacity_kW();
+    		powerFractions_fr.add(ratio);
+    	}
+    	
+    	// Determine 'minute of week'
+    	double minuteOfWeek = ((energyModel.v_dayOfWeek1jan - 1)*24 + energyModel.t_h)*60;
+	    
+    	while ( starttimes_min.get(v_eventIndex) - minuteOfWeek < 0) {
+    		starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
+    		endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
+    		v_eventIndex++;
+    		if ( v_eventIndex > starttimes_min.size() - 1 ) {
+    			v_eventIndex = 0;
+    		}
+    	}    	
+    	
+    	initalStarttimes_min = new ArrayList<>(starttimes_min);
+    	initalEndtimes_min = new ArrayList<>(endtimes_min);
+    	//traceln("Current model time in minutes: " + energyModel.t_h*60 + ", nb sessions: " + nbOfCookingSessions);
+    	//traceln("Starttimes: %s", starttimes_min);
+    	//traceln("Endtimes: %s", endtimes_min);
+    }
+    
     public void manageActivities(double time_min) {
     	//traceln("Cooking tracker current time: " + time_min);
     	//traceln("Event index: " + v_eventIndex);
