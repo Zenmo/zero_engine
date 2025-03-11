@@ -280,7 +280,7 @@
 	</EmbeddedObject>
 	<EmbeddedObject>
 		<Id>1658499722957</Id>
-		<Name><![CDATA[pop_UI_EnergyAsset]]></Name>
+		<Name><![CDATA[energyDataViewer]]></Name>
 		<X>377</X>
 		<Y>362</Y>
 		<Label>
@@ -292,30 +292,24 @@
 		<ShowLabel>true</ShowLabel>
 		<ActiveObjectClass>
 			<PackageName>zero_engine</PackageName>
-			<ClassName>UI_EnergyAsset</ClassName>
+			<ClassName>EnergyDataViewer</ClassName>
 		</ActiveObjectClass>
 		<GenericParameterSubstitute>
 			<GenericParameterSubstituteReference>
 				<PackageName>zero_engine</PackageName>
-				<ClassName>UI_EnergyAsset</ClassName>
-				<ItemName>1658499506318</ItemName>
+				<ClassName>EnergyDataViewer</ClassName>
+				<ItemName>1705600400160</ItemName>
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[j_ea]]></Name>
+				<Name><![CDATA[p_areaType]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_parentAgent]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_energyAssetType]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_assetName]]></Name>
+				<Name><![CDATA[p_name]]></Name>
 			</Parameter>
 		</Parameters>
-		<ReplicationFlag>true</ReplicationFlag>
+		<ReplicationFlag>false</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[0]]></Code>
 		</Replication>
