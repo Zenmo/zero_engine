@@ -4,6 +4,7 @@
 public class J_LoadDurationCurves implements Serializable {
 	private boolean firstRun = true;
 	private EnergyModel energyModel;
+	
 	public int arraySize;
 	private double[] netLoadArrayAnnual_kW;
 	public double[] loadDuractionCurveTotal_kW;

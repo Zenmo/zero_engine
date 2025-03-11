@@ -359,6 +359,10 @@ public class J_RapidRunData {
     	acc_weekendEnergyConsumption_kW.reset();
     }
     
+    public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {
+    	return new J_LoadDurationCurves(this.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);    		
+    }
+    
     public double getTotalOverloadDurationDelivery_hr() {
     	double totalOverloadDurationDelivery_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
