@@ -1222,8 +1222,8 @@ v_totalElectricityProduced_MWh= v_rapidRunData.getTotalElectricityProduced_MWh()
 
 v_totalEnergyConsumed_MWh = v_rapidRunData.getTotalEnergyConsumed_MWh();//acc_dailyAverageEnergyConsumption_kW.getIntegral_kWh() / 1000;
 v_totalEnergyProduced_MWh = v_rapidRunData.getTotalEnergyProduced_MWh();//acc_dailyAverageEnergyProduction_kW.getIntegral_kWh() / 1000;
-v_totalEnergyImport_MWh = v_rapidRunData.am_totalBalanceAccumulators_kW.totalIntegralPos_kWh();
-v_totalEnergyExport_MWh = -v_rapidRunData.am_totalBalanceAccumulators_kW.totalIntegralNeg_kWh();
+v_totalEnergyImport_MWh = v_rapidRunData.am_totalBalanceAccumulators_kW.totalIntegralPos_kWh()/1000;
+v_totalEnergyExport_MWh = -v_rapidRunData.am_totalBalanceAccumulators_kW.totalIntegralNeg_kWh()/1000;
 v_totalEnergyCurtailed_MWh = v_rapidRunData.getTotalEnergyCurtailed_MWh();//acc_totalEnergyCurtailed_kW.getIntegral_kWh() / 1000;
 //v_totalPrimaryEnergyProductionHeatpumps_MWh = acc_totalPrimaryEnergyProductionHeatpumps_kW.getIntegral_kWh() / 1000;
 
@@ -2266,6 +2266,9 @@ if (c_gridConnections.size() < 100) {
 // set initial values
 f_setInitialValues();
 
+//Initialize active asset booleans
+v_activeAssetData.updateActiveAssetData(f_getGridConnections());
+
 b_isInitialized = true;
 /*ALCODEEND*/}
 
@@ -2830,6 +2833,23 @@ v_rapidRunData.acc_dailyAverageV2GProduction_kW.addStep( max(0, -v_evChargingPow
 v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
 //acc_dailyAverageBatteriesStoredEnergy_MWh.addStep();		
+
+/*ALCODEEND*/}
+
+double f_updateActiveAssetData(ArrayList<GridConnection> gcList)
+{/*ALCODESTART::1741710906926*/
+//Update main area
+v_activeAssetData.updateActiveAssetData(f_getGridConnections());
+
+//Update coop
+if(pop_energyCoops.size()>0){
+	pop_energyCoops.get(pop_energyCoops.size()-1).v_activeAssetData.updateActiveAssetData(pop_energyCoops.get(pop_energyCoops.size()-1).f_getAllChildMemberGridConnections());
+}	
+
+//Update grid connection area collections
+for(GridConnection GC : gcList){
+	GC.v_activeAssetData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
+}
 
 /*ALCODEEND*/}
 

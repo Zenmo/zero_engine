@@ -10,13 +10,13 @@ public class J_RapidRunData {
 	EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers;
 	
 	////Full simulation
-	public J_AccumulatorMap am_totalBalanceAccumulators_kW;
+	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap();
 	
     public ZeroAccumulator acc_totalEnergyCurtailed_kW;
     public ZeroAccumulator acc_totalPrimaryEnergyProductionHeatpumps_kW;
     
-    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW;
-    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW;
+    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap();
     
 	public ZeroAccumulator acc_dailyAverageEnergyConsumption_kW;
 	public ZeroAccumulator acc_dailyAverageEnergyProduction_kW;
@@ -28,6 +28,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_dailyAverageElectricCookingConsumption_kW;
     public ZeroAccumulator acc_dailyAverageElectrolyserElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageDistrictHeatingConsumption_kW;
+    public ZeroAccumulator acc_dailyAverageFinalEnergyConsumption_kW;
+    
     public ZeroAccumulator acc_dailyAveragePVProduction_kW;
     public ZeroAccumulator acc_dailyAverageWindProduction_kW;
     public ZeroAccumulator acc_dailyAverageV2GProduction_kW;
@@ -37,7 +39,7 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_dailyAverageBatteriesSOC_fr;
     
     ////Summer week
-    public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW;
+    public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW = new J_AccumulatorMap();
 
     public ZeroAccumulator acc_summerWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_summerWeekFeedinCapacity_kW;
@@ -46,8 +48,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekEnergyCurtailed_kW;
     public ZeroAccumulator acc_summerWeekEnergyProduction_kW;
 
-    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW;
-    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW;  
+    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW = new J_AccumulatorMap();
 
     public ZeroAccumulator acc_summerWeekBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_summerWeekHeatPumpElectricityConsumption_kW;
@@ -66,17 +68,17 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_summerWeekBatteriesSOC_fr;
     
     ////Winter week
-    public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW;
+    public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW = new J_AccumulatorMap();
     
     public ZeroAccumulator acc_winterWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_winterWeekFeedinCapacity_kW;
     
     public ZeroAccumulator acc_winterWeekEnergyConsumption_kW;
     public ZeroAccumulator acc_winterWeekEnergyProduction_kW;
-    public ZeroAccumulator acc_winterWeekEnergyCurtailed_kW;  
+    public ZeroAccumulator acc_winterWeekEnergyCurtailed_kW;
     
-    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW;
-    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW;  
+    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW = new J_AccumulatorMap();  
     
     public ZeroAccumulator acc_winterWeekBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_winterWeekHeatPumpElectricityConsumption_kW;
@@ -95,11 +97,11 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_winterWeekBatteriesSOC_fr;
     
     ////Daytime / Nighttime
-	public J_AccumulatorMap am_daytimeExports_kW;
-    public J_AccumulatorMap am_daytimeImports_kW;
+	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap();
     
-	public J_AccumulatorMap am_nighttimeExports_kW;
-    public J_AccumulatorMap am_nighttimelmports_kW;
+	public J_AccumulatorMap am_nighttimeExports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_nighttimelmports_kW = new J_AccumulatorMap();
   
     public ZeroAccumulator acc_daytimeEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
@@ -111,15 +113,15 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_weekendElectricityProduction_kW;
     public ZeroAccumulator acc_weekendEnergyConsumption_kW;
     public ZeroAccumulator acc_weekendEnergyProduction_kW;
-    public J_AccumulatorMap am_weekendExports_kW;
-    public J_AccumulatorMap am_weekendImports_kW;
+    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
 
     public ZeroAccumulator acc_weekdayElectricityConsumption_kW;
     public ZeroAccumulator acc_weekdayElectricityProduction_kW;
     public ZeroAccumulator acc_weekdayEnergyConsumption_kW;
     public ZeroAccumulator acc_weekdayEnergyProduction_kW;
-    public J_AccumulatorMap am_weekdayExports_kW;
-    public J_AccumulatorMap am_weekdayImports_kW;   
+    public J_AccumulatorMap am_weekdayExports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_weekdayImports_kW = new J_AccumulatorMap();   
     
     /**
      * Default constructor
@@ -151,7 +153,8 @@ public class J_RapidRunData {
 	    acc_dailyAverageElectricCookingConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageDistrictHeatingConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
-	
+	    acc_dailyAverageFinalEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    
 	    acc_dailyAveragePVProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageWindProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageV2GProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -267,7 +270,8 @@ public class J_RapidRunData {
     	acc_dailyAverageElectricCookingConsumption_kW.reset();
     	acc_dailyAverageElectrolyserElectricityConsumption_kW.reset();
     	acc_dailyAverageDistrictHeatingConsumption_kW.reset();
-
+    	acc_dailyAverageFinalEnergyConsumption_kW.reset();
+    	
     	acc_dailyAveragePVProduction_kW.reset();
     	acc_dailyAverageWindProduction_kW.reset();
     	acc_dailyAverageV2GProduction_kW.reset();

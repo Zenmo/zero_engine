@@ -1444,6 +1444,7 @@ for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
 	energyModel.v_activeConsumptionEnergyCarriers.add(EC_consumption);
 }
 
+v_activeAssetData.updateActiveAssetData(new ArrayList<>(List.of(this)));
 /*ALCODEEND*/}
 
 double f_calculateKPIs()
