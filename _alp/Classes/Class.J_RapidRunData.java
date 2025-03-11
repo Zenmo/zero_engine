@@ -33,8 +33,9 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_dailyAverageV2GProduction_kW;
     public ZeroAccumulator acc_dailyAverageBatteriesProduction_kW;
     public ZeroAccumulator acc_dailyAverageCHPElectricityProduction_kW;
-    //public ZeroAccumulator acc_dailyAverageBatteriesStoredEnergy_MWh;
-  
+    public ZeroTimeSeries ts_dailyAverageBatteriesStoredEnergy_MWh;
+    public ZeroTimeSeries ts_dailyAverageBatteriesSOC_fr;
+    
     ////Summer week
     public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW;
 
@@ -61,8 +62,9 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_summerWeekCHPElectricityProduction_kW;
     public ZeroAccumulator acc_summerWeekPrimaryEnergyProductionHeatpumps_kW;
-    //public ZeroAccumulator acc_summerWeekBatteriesStoredEnergy_MWh;
-
+    public ZeroTimeSeries ts_summerWeekBatteriesStoredEnergy_MWh;
+    public ZeroTimeSeries ts_summerWeekBatteriesSOC_fr;
+    
     ////Winter week
     public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW;
     
@@ -89,7 +91,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_winterWeekCHPElectricityProduction_kW;
     public ZeroAccumulator acc_winterWeekPrimaryEnergyProductionHeatpumps_kW;
-    //public ZeroAccumulator acc_winterWeekBatteriesStoredEnergy_MWh;
+    public ZeroTimeSeries ts_winterWeekBatteriesStoredEnergy_MWh;
+    public ZeroTimeSeries ts_winterWeekBatteriesSOC_fr;
     
     ////Daytime / Nighttime
 	public J_AccumulatorMap am_daytimeExports_kW;
@@ -155,8 +158,9 @@ public class J_RapidRunData {
 	    acc_dailyAverageBatteriesProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageCHPElectricityProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	
-	    //acc_dailyAverageBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, 24.0, simDuration_h);
-	
+	    ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
+	    ts_dailyAverageBatteriesSOC_fr = new ZeroTimeSeries(timeStep_h, simDuration_h);
+	    
 	    //========== SUMMER WEEK ACCUMULATORS ==========//
 	    am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
 	    am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
@@ -185,8 +189,9 @@ public class J_RapidRunData {
 	    acc_summerWeekBatteriesProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	
-	    //acc_summerWeekBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, timeStep_h, 168.0);
-	
+	    ts_summerWeekBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, 168.0);
+	    ts_summerWeekBatteriesSOC_fr = new ZeroTimeSeries(timeStep_h, 168.0);
+	    
 	    //========== WINTER WEEK ACCUMULATORS ==========//
 	    am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
 	    am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
@@ -215,8 +220,9 @@ public class J_RapidRunData {
 	    acc_winterWeekBatteriesProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	
-	    //acc_winterWeekBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, timeStep_h, 168.0);
-	
+	    ts_winterWeekBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, 168.0);
+	    ts_winterWeekBatteriesSOC_fr = new ZeroTimeSeries(timeStep_h, 168.0);
+	    
 	    //========== DAYTIME ACCUMULATORS ==========//
 	    am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
 	    am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
@@ -267,6 +273,10 @@ public class J_RapidRunData {
     	acc_dailyAverageV2GProduction_kW.reset();
     	acc_dailyAverageBatteriesProduction_kW.reset();
     	acc_dailyAverageCHPElectricityProduction_kW.reset();
+
+        ts_dailyAverageBatteriesStoredEnergy_MWh.reset();
+        ts_dailyAverageBatteriesSOC_fr.reset();
+        
     	//Summerweek
     	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
     	am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
@@ -294,6 +304,10 @@ public class J_RapidRunData {
     	acc_summerWeekV2GProduction_kW.reset();
     	acc_summerWeekBatteriesProduction_kW.reset();
     	acc_summerWeekCHPElectricityProduction_kW.reset();
+
+	    ts_summerWeekBatteriesStoredEnergy_MWh.reset();
+	    ts_summerWeekBatteriesSOC_fr.reset();
+	    
     	//Winterweek
     	am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
     	am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
@@ -321,6 +335,10 @@ public class J_RapidRunData {
     	acc_winterWeekV2GProduction_kW.reset();
     	acc_winterWeekBatteriesProduction_kW.reset();
     	acc_winterWeekCHPElectricityProduction_kW.reset();
+    	
+	    ts_winterWeekBatteriesStoredEnergy_MWh.reset();
+	    ts_winterWeekBatteriesSOC_fr.reset();
+	    
     	// Daytime 
     	am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
     	am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
