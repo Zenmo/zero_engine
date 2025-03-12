@@ -362,7 +362,7 @@ public class J_RapidRunData {
     	double totalOverloadDurationDelivery_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-        	if(electricityBalance_kW > ((GridConnection)parentAgent).p_contractedDeliveryCapacity_kW){
+        	if(electricityBalance_kW > ((I_EnergyData)parentAgent).getDeliveryCapacity_kW()){
         		totalOverloadDurationDelivery_hr += signalResolution_h;
         	}
     	}
@@ -373,7 +373,7 @@ public class J_RapidRunData {
     	double totalOverloadDurationFeedin_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-        	if(electricityBalance_kW < ((GridConnection)parentAgent).p_contractedFeedinCapacity_kW){
+        	if(electricityBalance_kW < ((I_EnergyData)parentAgent).getFeedinCapacity_kW()){
         		totalOverloadDurationFeedin_hr += signalResolution_h;
         	}
     	}
