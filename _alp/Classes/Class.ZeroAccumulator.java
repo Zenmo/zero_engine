@@ -137,6 +137,19 @@ public class ZeroAccumulator {
         return this.totalNegativeEnergy_kWh;
     }
     
+    public double getIntegral_MWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegral_kWh()/1000;
+    }
+    
+    public double getIntegralPos_MWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralPos_kWh()/1000;
+    }
+
+    public double getIntegralNeg_MWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralNeg_kWh()/1000;
+    }
+    
+    
     public double[] getTimeSeries_kW() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
             double[] timeSeriesTemp = new double[arraySize];
@@ -148,6 +161,7 @@ public class ZeroAccumulator {
         }
     }
 
+    /* What does this do?
     public double[] getTimeSeriesIntegral_kWh() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
             double[] timeSeriesTemp = new double[arraySize];
@@ -157,7 +171,7 @@ public class ZeroAccumulator {
         } else {
             return ZeroMath.arrayMultiply(timeSeries.clone(), this.signalResolution_h);
         }
-    }
+    } */
 
     public Double getY(int i) {
         if (!hasTimeSeries) {

@@ -428,6 +428,20 @@ public class J_RapidRunData {
     	}
         return totalEnergyExport_kWh/1000; 
     }
+    
+    public double getTotalExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
+    }
+    public double getTotalImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
+    }
+    
     public double getTotalEnergySelfConsumed_MWh() { 
         return max(0, getTotalEnergyConsumed_MWh() - getTotalEnergyImport_MWh()); 
     }
@@ -468,6 +482,20 @@ public class J_RapidRunData {
     	}
         return summerWeekEnergyExport_kWh/1000;
     }    
+    
+    public double getSummerWeekExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return -this.am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
+    }
+    public double getSummerWeekImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
+    }
+    
     public double getSummerWeekEnergySelfConsumed_MWh() {
         return max(0, getSummerWeekEnergyConsumed_MWh() - getSummerWeekEnergyImport_MWh());
     }
@@ -508,6 +536,19 @@ public class J_RapidRunData {
     	}
         return winterWeekEnergyExport_kWh/1000;
     }    
+    public double getWinterWeekExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return -this.am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
+    }
+    public double getWinterWeekImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
+    }
+    
     public double getWinterWeekEnergySelfConsumed_MWh() {
         return max(0, getWinterWeekEnergyConsumed_MWh() - getWinterWeekEnergyImport_MWh());
     }
