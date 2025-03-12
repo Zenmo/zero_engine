@@ -100,9 +100,6 @@ public class J_RapidRunData {
 	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap();
     public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap();
     
-	public J_AccumulatorMap am_nighttimeExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_nighttimelmports_kW = new J_AccumulatorMap();
-  
     public ZeroAccumulator acc_daytimeEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
     public ZeroAccumulator acc_daytimeElectricityConsumption_kW;
@@ -116,12 +113,6 @@ public class J_RapidRunData {
     public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
     public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
 
-    public ZeroAccumulator acc_weekdayElectricityConsumption_kW;
-    public ZeroAccumulator acc_weekdayElectricityProduction_kW;
-    public ZeroAccumulator acc_weekdayEnergyConsumption_kW;
-    public ZeroAccumulator acc_weekdayEnergyProduction_kW;
-    public J_AccumulatorMap am_weekdayExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_weekdayImports_kW = new J_AccumulatorMap();   
     
     /**
      * Default constructor
@@ -549,6 +540,18 @@ public class J_RapidRunData {
     public double getDaytimeEnergySelfConsumed_MWh() { 
         return max(0, getDaytimeEnergyProduced_MWh() - getDaytimeEnergyExport_MWh()); 
     }
+    public double getDaytimeExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_daytimeExports_kW.get(EC).getIntegral_kWh() / 1000;
+    }
+    public double getDaytimeImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_daytimeImports_kW.get(EC).getIntegral_kWh() / 1000;
+    }
     
 //Nighttime Getters
     public double getNighttimeElectricityConsumed_MWh() { 
@@ -575,7 +578,18 @@ public class J_RapidRunData {
     public double getNighttimeEnergySelfConsumed_MWh() { 
         return max(0, getNighttimeEnergyProduced_MWh() - getNighttimeEnergyExport_MWh()); 
     } 
-
+    public double getNighttimeExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh() / 1000 - this.getDaytimeExport_MWh(EC);
+    }
+    public double getNighttimeImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh() / 1000 - this.getDaytimeImport_MWh(EC);
+    }
 // Weekday Getters
     public double getWeekdayElectricityConsumed_MWh() { 
         return getTotalElectricityConsumed_MWh() - getWeekendElectricityConsumed_MWh(); 
@@ -601,7 +615,18 @@ public class J_RapidRunData {
     public double getWeekdayEnergySelfConsumed_MWh() { 
         return max(0, getWeekdayEnergyProduced_MWh() - getWeekdayEnergyExport_MWh()); 
     } 
-    
+    public double getWeekdayExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh() / 1000 - this.getWeekendExport_MWh(EC);
+    }
+    public double getWeekdayImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh() / 1000 - this.getWeekendImport_MWh(EC);
+    }
 //Weekend Getters
     public double getWeekendElectricityConsumed_MWh() { 
         return acc_weekendElectricityConsumption_kW.getIntegral_kWh() / 1000; 
@@ -627,6 +652,19 @@ public class J_RapidRunData {
     public double getWeekendEnergySelfConsumed_MWh() { 
         return max(0, getWeekendEnergyProduced_MWh() - getWeekendEnergyExport_MWh()); 
     }
+    public double getWeekendExport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_weekendExports_kW.get(EC).getIntegral_kWh() / 1000;
+    }
+    public double getWeekendImport_MWh( OL_EnergyCarriers EC ) {
+    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    	}
+    	return this.am_weekendImports_kW.get(EC).getIntegral_kWh() / 1000;
+    }
+    
     
 //toString()
     public String toString() {

@@ -1855,8 +1855,8 @@ for(GridConnection GC : c_memberGridConnections){
 	v_cumulativeIndividualSelfconsumptionEnergy_MWh += GC.v_rapidRunData.getTotalEnergySelfConsumed_MWh();
 	
 	//Add all peaks for member grid connections
-	v_cumulativeIndividualPeakDelivery_kW += GC.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getMaxPower_kW();
-	v_cumulativeIndividualPeakFeedin_kW += GC.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getMinPower_kW();	
+	v_cumulativeIndividualPeakDelivery_kW += GC.v_rapidRunData.getPeakDelivery_kW();
+	v_cumulativeIndividualPeakFeedin_kW += GC.v_rapidRunData.getPeakFeedin_kW();	
 }
 
 //Add all max peaks of GC
