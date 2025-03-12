@@ -412,7 +412,7 @@ public class J_RapidRunData {
         return am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh() / 1000; 
     }
     public double getTotalElectricitySelfConsumed_MWh() { 
-        return max(0, getTotalElectricityProduced_MWh() - am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000); 
+        return max(0, getTotalElectricityConsumed_MWh() - am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000); 
     }
     public double getTotalEnergyConsumed_MWh() { 
         return acc_dailyAverageEnergyConsumption_kW.getIntegral_kWh() / 1000; 
@@ -433,7 +433,7 @@ public class J_RapidRunData {
     public double getTotalEnergyExport_MWh() { 
     	double totalEnergyExport_kWh = 0.0;
     	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-    		totalEnergyExport_kWh+=am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
+    		totalEnergyExport_kWh+= - am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
         return totalEnergyExport_kWh/1000; 
     }
@@ -473,7 +473,7 @@ public class J_RapidRunData {
     public double getSummerWeekEnergyExport_MWh() {
         double summerWeekEnergyExport_kWh = 0.0;
     	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-    		summerWeekEnergyExport_kWh+=am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
+    		summerWeekEnergyExport_kWh+= - am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
         return summerWeekEnergyExport_kWh/1000;
     }    
@@ -513,7 +513,7 @@ public class J_RapidRunData {
     public double getWinterWeekEnergyExport_MWh() {
         double winterWeekEnergyExport_kWh = 0.0;
     	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-    		winterWeekEnergyExport_kWh+=am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
+    		winterWeekEnergyExport_kWh+= - am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
         return winterWeekEnergyExport_kWh/1000;
     }    

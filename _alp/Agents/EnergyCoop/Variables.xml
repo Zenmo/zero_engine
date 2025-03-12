@@ -6152,7 +6152,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_ActiveAssetData]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_ActiveAssetData(this)]]></Code>
+				<Code><![CDATA[new J_ActiveAssetData(this, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

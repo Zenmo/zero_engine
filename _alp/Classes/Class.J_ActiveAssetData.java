@@ -8,8 +8,8 @@ public class J_ActiveAssetData {
 	
 	public Agent parentAgent;
 	
-	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
+	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
 	
 	public boolean hasElectricHeating = false;
 	public boolean hasElectricTransport = false;
@@ -27,8 +27,10 @@ public class J_ActiveAssetData {
     /**
      * Default constructor
      */
-    public J_ActiveAssetData(Agent parentAgent) {
+    public J_ActiveAssetData(Agent parentAgent, EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers) {
     	this.parentAgent = parentAgent;
+    	this.activeConsumptionEnergyCarriers = activeConsumptionEnergyCarriers;
+    	this.activeProductionEnergyCarriers = activeProductionEnergyCarriers;
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
