@@ -1034,6 +1034,14 @@ traceln(" ");
 
 double startTime1 = System.currentTimeMillis();
 
+if (v_rapidRunData != null) {
+	if (b_storePreviousRapidRunData) {
+		v_previousRunData = v_rapidRunData.getClone();
+	}
+} else {
+	v_rapidRunData = new J_RapidRunData(this);
+	v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();	
+}
 // Store and reset model states...
 
 for (J_EA EA : c_energyAssets) {
@@ -1041,6 +1049,14 @@ for (J_EA EA : c_energyAssets) {
 }
 
 for (GridConnection GC : c_gridConnections) {
+	if (GC.v_rapidRunData != null) {
+		if (b_storePreviousRapidRunData) {
+			GC.v_previousRunData = GC.v_rapidRunData.getClone();
+		}
+	} else {
+		GC.v_rapidRunData = new J_RapidRunData(GC);
+		GC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, GC.v_activeEnergyCarriers, GC.v_activeConsumptionEnergyCarriers, GC.v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+	}
 	GC.f_resetStates();
 	//GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	//GC.c_tripTrackers.forEach(tt->tt.setStartIndex(p_runStartTime_h));
@@ -1070,6 +1086,14 @@ for (ConnectionOwner CO : pop_connectionOwners) {
 }
 
 for (EnergyCoop EC : pop_energyCoops) {
+	if (EC.v_rapidRunData != null) {
+		if (b_storePreviousRapidRunData) {
+			EC.v_previousRunData = EC.v_rapidRunData.getClone();
+		}
+	} else {
+		EC.v_rapidRunData = new J_RapidRunData(EC);
+		EC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, EC.v_activeEnergyCarriers, EC.v_activeConsumptionEnergyCarriers, EC.v_activeProductionEnergyCarriers);
+	}
 	EC.f_resetStates();
 }
 
@@ -2251,7 +2275,7 @@ for (GridNode GN : c_gridNodeExecutionList) {
 }
 
 f_initializeForecasts();
-v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+//v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 //f_initializeAccumulators();
 f_initializeLiveDataSets();
 

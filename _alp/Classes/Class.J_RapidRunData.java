@@ -354,6 +354,102 @@ public class J_RapidRunData {
     	acc_weekendEnergyConsumption_kW.reset();
     }
     
+    public J_RapidRunData getClone() {
+    	J_RapidRunData clone = new J_RapidRunData(this.parentAgent);
+
+    	clone.v_activeEnergyCarriers=this.v_activeEnergyCarriers.clone();
+    	clone.v_activeConsumptionEnergyCarriers=this.v_activeConsumptionEnergyCarriers.clone();
+    	clone.v_activeProductionEnergyCarriers=this.v_activeProductionEnergyCarriers.clone();
+    	////Full simulation
+    	clone.am_totalBalanceAccumulators_kW=this.am_totalBalanceAccumulators_kW.getClone();
+    	clone.acc_totalEnergyCurtailed_kW=this.acc_totalEnergyCurtailed_kW.getClone();
+        clone.acc_totalPrimaryEnergyProductionHeatpumps_kW=this.acc_totalPrimaryEnergyProductionHeatpumps_kW.getClone();
+        clone.am_dailyAverageConsumptionAccumulators_kW=this.am_dailyAverageConsumptionAccumulators_kW.getClone();
+        clone.am_dailyAverageProductionAccumulators_kW=this.am_dailyAverageProductionAccumulators_kW.getClone();
+        clone.acc_dailyAverageEnergyConsumption_kW=this.acc_dailyAverageEnergyConsumption_kW.getClone();
+    	clone.acc_dailyAverageEnergyProduction_kW=this.acc_dailyAverageEnergyProduction_kW.getClone();
+    	clone.acc_dailyAverageBaseloadElectricityConsumption_kW=this.acc_dailyAverageBaseloadElectricityConsumption_kW.getClone();
+        clone.acc_dailyAverageHeatPumpElectricityConsumption_kW=this.acc_dailyAverageHeatPumpElectricityConsumption_kW.getClone();
+        clone.acc_dailyAverageElectricVehicleConsumption_kW=this.acc_dailyAverageElectricVehicleConsumption_kW.getClone();
+        clone.acc_dailyAverageBatteriesConsumption_kW=this.acc_dailyAverageBatteriesConsumption_kW.getClone();
+        clone.acc_dailyAverageElectricCookingConsumption_kW=this.acc_dailyAverageElectricCookingConsumption_kW.getClone();
+        clone.acc_dailyAverageElectrolyserElectricityConsumption_kW=this.acc_dailyAverageElectrolyserElectricityConsumption_kW.getClone();
+        clone.acc_dailyAverageDistrictHeatingConsumption_kW=this.acc_dailyAverageDistrictHeatingConsumption_kW.getClone();
+        clone.acc_dailyAverageFinalEnergyConsumption_kW=this.acc_dailyAverageFinalEnergyConsumption_kW.getClone();
+        clone.acc_dailyAveragePVProduction_kW=this.acc_dailyAveragePVProduction_kW.getClone();
+        clone.acc_dailyAverageWindProduction_kW=this.acc_dailyAverageWindProduction_kW.getClone();
+        clone.acc_dailyAverageV2GProduction_kW=this.acc_dailyAverageV2GProduction_kW.getClone();
+        clone.acc_dailyAverageBatteriesProduction_kW=this.acc_dailyAverageBatteriesProduction_kW.getClone();
+        clone.acc_dailyAverageCHPElectricityProduction_kW=this.acc_dailyAverageCHPElectricityProduction_kW.getClone();
+        clone.ts_dailyAverageBatteriesStoredEnergy_MWh=this.ts_dailyAverageBatteriesStoredEnergy_MWh.getClone();
+        clone.ts_dailyAverageBatteriesSOC_fr=this.ts_dailyAverageBatteriesSOC_fr.getClone();
+        ////Summer week
+        clone.am_summerWeekBalanceAccumulators_kW=this.am_summerWeekBalanceAccumulators_kW.getClone();
+        clone.acc_summerWeekDeliveryCapacity_kW=this.acc_summerWeekDeliveryCapacity_kW.getClone();
+        clone.acc_summerWeekFeedinCapacity_kW=this.acc_summerWeekFeedinCapacity_kW.getClone();
+        clone.acc_summerWeekEnergyConsumption_kW=this.acc_summerWeekEnergyConsumption_kW.getClone();
+        clone.acc_summerWeekEnergyCurtailed_kW=this.acc_summerWeekEnergyCurtailed_kW.getClone();
+        clone.acc_summerWeekEnergyProduction_kW=this.acc_summerWeekEnergyProduction_kW.getClone();
+        clone.am_summerWeekConsumptionAccumulators_kW=this.am_summerWeekConsumptionAccumulators_kW.getClone();
+        clone.am_summerWeekProductionAccumulators_kW=this.am_summerWeekProductionAccumulators_kW.getClone();
+        clone.acc_summerWeekBaseloadElectricityConsumption_kW=this.acc_summerWeekBaseloadElectricityConsumption_kW.getClone();
+        clone.acc_summerWeekHeatPumpElectricityConsumption_kW=this.acc_summerWeekHeatPumpElectricityConsumption_kW.getClone();
+        clone.acc_summerWeekElectricVehicleConsumption_kW=this.acc_summerWeekElectricVehicleConsumption_kW.getClone();
+        clone.acc_summerWeekBatteriesConsumption_kW=this.acc_summerWeekBatteriesConsumption_kW.getClone();
+        clone.acc_summerWeekElectricCookingConsumption_kW=this.acc_summerWeekElectricCookingConsumption_kW.getClone();
+        clone.acc_summerWeekElectrolyserElectricityConsumption_kW=this.acc_summerWeekElectrolyserElectricityConsumption_kW.getClone();
+        clone.acc_summerWeekDistrictHeatingConsumption_kW=this.acc_summerWeekDistrictHeatingConsumption_kW.getClone();
+        clone.acc_summerWeekPVProduction_kW=this.acc_summerWeekPVProduction_kW.getClone();
+        clone.acc_summerWeekWindProduction_kW=this.acc_summerWeekWindProduction_kW.getClone();
+        clone.acc_summerWeekV2GProduction_kW=this.acc_summerWeekV2GProduction_kW.getClone();
+        clone.acc_summerWeekBatteriesProduction_kW=this.acc_summerWeekBatteriesProduction_kW.getClone();
+        clone.acc_summerWeekCHPElectricityProduction_kW=this.acc_summerWeekCHPElectricityProduction_kW.getClone();
+        clone.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW=this.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.getClone();
+        clone.ts_summerWeekBatteriesStoredEnergy_MWh=this.ts_summerWeekBatteriesStoredEnergy_MWh.getClone();
+        clone.ts_summerWeekBatteriesSOC_fr=this.ts_summerWeekBatteriesSOC_fr.getClone();
+        ////Winter week
+        clone.am_winterWeekBalanceAccumulators_kW = this.am_winterWeekBalanceAccumulators_kW.getClone();
+        clone.acc_winterWeekDeliveryCapacity_kW = this.acc_winterWeekDeliveryCapacity_kW.getClone();
+        clone.acc_winterWeekFeedinCapacity_kW = this.acc_winterWeekFeedinCapacity_kW.getClone();
+        clone.acc_winterWeekEnergyConsumption_kW = this.acc_winterWeekEnergyConsumption_kW.getClone();
+        clone.acc_winterWeekEnergyProduction_kW = this.acc_winterWeekEnergyProduction_kW.getClone();
+        clone.acc_winterWeekEnergyCurtailed_kW = this.acc_winterWeekEnergyCurtailed_kW.getClone();
+        clone.am_winterWeekConsumptionAccumulators_kW = this.am_winterWeekConsumptionAccumulators_kW.getClone();
+        clone.am_winterWeekProductionAccumulators_kW = this.am_winterWeekProductionAccumulators_kW.getClone();  
+        clone.acc_winterWeekBaseloadElectricityConsumption_kW = this.acc_winterWeekBaseloadElectricityConsumption_kW.getClone();
+        clone.acc_winterWeekHeatPumpElectricityConsumption_kW = this.acc_winterWeekHeatPumpElectricityConsumption_kW.getClone();
+        clone.acc_winterWeekElectricVehicleConsumption_kW = this.acc_winterWeekElectricVehicleConsumption_kW.getClone();
+        clone.acc_winterWeekBatteriesConsumption_kW = this.acc_winterWeekBatteriesConsumption_kW.getClone();
+        clone.acc_winterWeekElectricCookingConsumption_kW = this.acc_winterWeekElectricCookingConsumption_kW.getClone();
+        clone.acc_winterWeekElectrolyserElectricityConsumption_kW = this.acc_winterWeekElectrolyserElectricityConsumption_kW.getClone();
+        clone.acc_winterWeekDistrictHeatingConsumption_kW = this.acc_winterWeekDistrictHeatingConsumption_kW.getClone();
+        clone.acc_winterWeekPVProduction_kW = this.acc_winterWeekPVProduction_kW.getClone();
+        clone.acc_winterWeekWindProduction_kW = this.acc_winterWeekWindProduction_kW.getClone();
+        clone.acc_winterWeekV2GProduction_kW = this.acc_winterWeekV2GProduction_kW.getClone();
+        clone.acc_winterWeekBatteriesProduction_kW = this.acc_winterWeekBatteriesProduction_kW.getClone();
+        clone.acc_winterWeekCHPElectricityProduction_kW = this.acc_winterWeekCHPElectricityProduction_kW.getClone();
+        clone.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW = this.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.getClone();
+        clone.ts_winterWeekBatteriesStoredEnergy_MWh = this.ts_winterWeekBatteriesStoredEnergy_MWh.getClone();
+        clone.ts_winterWeekBatteriesSOC_fr = this.ts_winterWeekBatteriesSOC_fr.getClone();
+        ////Daytime / Nighttime
+    	clone.am_daytimeExports_kW = am_daytimeExports_kW.getClone();
+        clone.am_daytimeImports_kW = am_daytimeImports_kW.getClone();
+        clone.acc_daytimeEnergyConsumption_kW = acc_daytimeEnergyConsumption_kW.getClone();
+        clone.acc_daytimeEnergyProduction_kW = acc_daytimeEnergyProduction_kW.getClone();
+        clone.acc_daytimeElectricityConsumption_kW = acc_daytimeElectricityConsumption_kW.getClone();
+        clone.acc_daytimeElectricityProduction_kW = acc_daytimeElectricityProduction_kW.getClone();
+        //Weekend/day
+        clone.acc_weekendElectricityConsumption_kW = this.acc_weekendElectricityConsumption_kW.getClone();
+        clone.acc_weekendElectricityProduction_kW = this.acc_weekendElectricityProduction_kW.getClone();
+        clone.acc_weekendEnergyConsumption_kW = this.acc_weekendEnergyConsumption_kW.getClone();
+        clone.acc_weekendEnergyProduction_kW = this.acc_weekendEnergyProduction_kW.getClone();
+        clone.am_weekendExports_kW = this.am_weekendExports_kW.getClone();
+        clone.am_weekendImports_kW = this.am_weekendImports_kW.getClone();
+        
+        return clone;
+
+    }
+    
     public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {
     	return new J_LoadDurationCurves(this.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);    		
     }

@@ -54,7 +54,6 @@ for (GridConnection GC : energyModel.f_getGridConnections()){
 double f_fillEnergyDataViewer(I_EnergyData data)
 {/*ALCODESTART::1741792546533*/
 v_engineAgent = data.getRapidRunData().parentAgent;
-
 //Number of connected gcs
 //v_numberOfGridconnections = 1;
 

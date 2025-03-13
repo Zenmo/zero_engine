@@ -5847,9 +5847,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_RapidRunData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_RapidRunData(this);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
