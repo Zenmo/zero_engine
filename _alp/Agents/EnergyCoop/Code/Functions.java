@@ -639,8 +639,11 @@ acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h,
 v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeConsumptionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeProductionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 
-//Initialize active asset booleans
-v_activeAssetData.updateActiveAssetData(f_getAllChildMemberGridConnections());
+// Initializing Live Data Class
+v_liveData = new J_LiveData(this);
+v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.assetsMetaData = v_liveAssetsMetaData;
+v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(f_getAllChildMemberGridConnections()));
 /*ALCODEEND*/}
 
 double f_updateIncentives()
@@ -1888,9 +1891,9 @@ v_totalInstalledBatteryStorageCapacity_MWh = 0;
 
 //Add all battery storage capacities of gc
 for(GridConnection GC : c_memberGridConnections){
-	v_totalInstalledWindPower_kW += GC.v_totalInstalledWindPower_kW;
-	v_totalInstalledPVPower_kW += GC.v_totalInstalledPVPower_kW;
-	v_totalInstalledBatteryStorageCapacity_MWh += GC.v_totalInstalledBatteryStorageCapacity_MWh;
+	v_totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	v_totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	v_totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 }
 
 //Do this also for the 'child' coops
@@ -1898,9 +1901,9 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 	if (a instanceof EnergyCoop) {
 		EnergyCoop EC = (EnergyCoop)a;
 		EC.f_getTotalInstalledCapacityOfAssets();
-		v_totalInstalledWindPower_kW += EC.v_totalInstalledWindPower_kW;
-		v_totalInstalledPVPower_kW += EC.v_totalInstalledPVPower_kW;
-		v_totalInstalledBatteryStorageCapacity_MWh += EC.v_totalInstalledBatteryStorageCapacity_MWh;
+		v_totalInstalledWindPower_kW += EC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		v_totalInstalledPVPower_kW += EC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		v_totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
 }
 /*ALCODEEND*/}

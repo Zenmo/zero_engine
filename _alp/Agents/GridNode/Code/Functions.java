@@ -590,8 +590,8 @@ v_totalInstalledPVPower_kW = 0;
 
 for (GridConnection GC : c_connectedGridConnections) {
 	if (GC.v_isActive) {
-		v_totalInstalledWindPower_kW += GC.v_totalInstalledWindPower_kW;
-		v_totalInstalledPVPower_kW += GC.v_totalInstalledPVPower_kW;
+		v_totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		v_totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 	}
 }
 

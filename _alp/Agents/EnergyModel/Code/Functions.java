@@ -2266,8 +2266,11 @@ if (c_gridConnections.size() < 100) {
 // set initial values
 f_setInitialValues();
 
-//Initialize active asset booleans
-v_activeAssetData.updateActiveAssetData(f_getGridConnections());
+// Initializing Live Data Class
+v_liveData = new J_LiveData(this);
+v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.assetsMetaData = v_liveAssetsMetaData;
+v_liveAssetsMetaData.updateActiveAssetData(c_gridConnections);
 
 b_isInitialized = true;
 /*ALCODEEND*/}
@@ -2839,16 +2842,16 @@ v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.addStep( v_CHPProduct
 double f_updateActiveAssetData(ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1741710906926*/
 //Update main area
-v_activeAssetData.updateActiveAssetData(f_getGridConnections());
+v_liveAssetsMetaData.updateActiveAssetData(f_getGridConnections());
 
 //Update coop
 if(pop_energyCoops.size()>0){
-	pop_energyCoops.get(pop_energyCoops.size()-1).v_activeAssetData.updateActiveAssetData(pop_energyCoops.get(pop_energyCoops.size()-1).f_getAllChildMemberGridConnections());
+	pop_energyCoops.get(pop_energyCoops.size()-1).v_liveAssetsMetaData.updateActiveAssetData(pop_energyCoops.get(pop_energyCoops.size()-1).f_getAllChildMemberGridConnections());
 }	
 
 //Update grid connection area collections
 for(GridConnection GC : gcList){
-	GC.v_activeAssetData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
+	GC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
 }
 
 /*ALCODEEND*/}

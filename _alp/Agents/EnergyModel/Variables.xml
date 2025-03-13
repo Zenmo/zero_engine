@@ -5963,50 +5963,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1741182108240</Id>
-		<Name><![CDATA[v_rapidRunData]]></Name>
-		<X>80</X>
-		<Y>910</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[J_RapidRunData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_RapidRunData(this);]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1741182108242</Id>
-		<Name><![CDATA[v_liveData]]></Name>
-		<X>80</X>
-		<Y>860</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[J_LiveData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_LiveData(this);]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1741277544181</Id>
 		<Name><![CDATA[v_previousRunData]]></Name>
 		<X>80</X>
@@ -6029,10 +5985,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1741362445595</Id>
-		<Name><![CDATA[v_activeAssetData]]></Name>
+		<Id>1741872284288</Id>
+		<Name><![CDATA[v_rapidRunData]]></Name>
 		<X>80</X>
-		<Y>810</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -6044,10 +6000,45 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[J_ActiveAssetData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_ActiveAssetData(this, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers)]]></Code>
-			</InitialValue>
+			<Type><![CDATA[J_RapidRunData]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1741872284290</Id>
+		<Name><![CDATA[v_liveData]]></Name>
+		<X>80</X>
+		<Y>780</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_LiveData]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1741872284292</Id>
+		<Name><![CDATA[v_liveAssetsMetaData]]></Name>
+		<X>100</X>
+		<Y>800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AssetsMetaData]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">

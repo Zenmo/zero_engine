@@ -1500,7 +1500,11 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1741361867834</Id>
-				<Name><![CDATA[J_ActiveAssetData]]></Name>
+				<Name><![CDATA[J_AssetsMetaData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741864496371</Id>
+				<Name><![CDATA[J_ConnectionMetaData]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

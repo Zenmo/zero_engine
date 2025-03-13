@@ -381,19 +381,19 @@ if (j_ea instanceof J_EAVehicle) {
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		v_hasPV = true;
-		v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
 			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
 		}
-		energyModel.v_totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
 			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
 		}
-		energyModel.v_totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
@@ -455,8 +455,8 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 		c_batteryAssets.add(j_ea);
-		v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
-		energyModel.v_totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 		
 	} else if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
@@ -503,8 +503,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	
 	//TODO forecast keer installed cap per buurt genormaliseerd.
-	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
-	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
 	double SOC_setp_fr =  SOC_setp_fr_offset + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
 	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
@@ -663,8 +663,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	
 	//TODO forecast keer installed cap per buurt genormaliseerd.
-	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
-	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
 	double SOC_setp_fr =  SOC_setp_fr_offset + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
 	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");

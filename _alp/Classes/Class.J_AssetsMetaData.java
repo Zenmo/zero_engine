@@ -1,16 +1,13 @@
 /**
- * J_ActiveAssetsData
+ * J_AssetsMetaData
  */	
 
 import java.util.EnumSet;
 
-public class J_ActiveAssetData {
+public class J_AssetsMetaData {
 	
 	public Agent parentAgent;
-	
-	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
-	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
-	
+
 	public boolean hasElectricHeating = false;
 	public boolean hasElectricTransport = false;
 	public boolean hasPV = false;
@@ -21,16 +18,44 @@ public class J_ActiveAssetData {
 	public boolean hasCHP = false;
 	public boolean hasV2G = false;
 	public boolean hasElectricCooking = false;
-	public double totalInstalledWindPower_kW = 0;
-	public double totalInstalledPVPower_kW = 0;
-	public double totalInstalledBatteryStorageCapacity_MWh = 0;
-    /**
+
+	public Double totalInstalledPVPower_kW;
+	public Double totalInstalledWindPower_kW;
+	public Double totalInstalledBatteryStorageCapacity_MWh;
+	
+	public Double PVPotential_kW;
+	public Double windPotential_kW;
+	
+	/**
      * Default constructor
      */
-    public J_ActiveAssetData(Agent parentAgent, EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers) {
-    	this.parentAgent = parentAgent;
-    	this.activeConsumptionEnergyCarriers = activeConsumptionEnergyCarriers;
-    	this.activeProductionEnergyCarriers = activeProductionEnergyCarriers;
+    public J_AssetsMetaData(Agent parentAgent) {
+    	this.parentAgent = parentAgent;   	
+    	/*
+    	ArrayList<GridConnection> gcList = new ArrayList<>();    	
+    	if (parentAgent instanceof GridConnection) {
+    	    this.totalInstalledPVPower_kW = ((GridConnection)parentAgent).v_totalInstalledPVPower_kW;
+    		this.totalInstalledWindPower_kW = ((GridConnection)parentAgent).v_totalInstalledWindPower_kW;
+    	    this.totalInstalledBatteryStorageCapacity_MWh = ((GridConnection)parentAgent).v_totalInstalledBatteryStorageCapacity_MWh;    		
+    	    gcList.add((GridConnection)parentAgent);
+    	}
+    	else if (parentAgent instanceof EnergyCoop) {
+    	    this.totalInstalledPVPower_kW = ((EnergyCoop)parentAgent).v_totalInstalledPVPower_kW;
+    		this.totalInstalledWindPower_kW = ((EnergyCoop)parentAgent).v_totalInstalledWindPower_kW;
+    	    this.totalInstalledBatteryStorageCapacity_MWh = ((EnergyCoop)parentAgent).v_totalInstalledBatteryStorageCapacity_MWh;    	    		
+    	    gcList.addAll(((EnergyCoop)parentAgent).f_getAllChildMemberGridConnections());
+    	}
+    	else if (parentAgent instanceof EnergyModel) {
+    	    this.totalInstalledPVPower_kW = ((EnergyModel)parentAgent).v_totalInstalledPVPower_kW;
+    		this.totalInstalledWindPower_kW = ((EnergyModel)parentAgent).v_totalInstalledWindPower_kW;
+    	    this.totalInstalledBatteryStorageCapacity_MWh = ((EnergyModel)parentAgent).v_totalInstalledBatteryStorageCapacity_MWh;    	    		
+    	    gcList.addAll(((EnergyModel)parentAgent).f_getGridConnections());
+    	}
+    	else {
+    		throw new RuntimeException("Are you sure you meant to create an assetsmetadata class with parentagent " + parentAgent + " ?");
+    	}
+    	this.updateActiveAssetData(gcList);
+    	 */
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
@@ -44,9 +69,7 @@ public class J_ActiveAssetData {
 	    this.hasCHP = false;
 	    this.hasV2G = false;
 	    this.hasElectricCooking = false;
-	    this.totalInstalledWindPower_kW = 0;
-	    this.totalInstalledPVPower_kW = 0;
-	    this.totalInstalledBatteryStorageCapacity_MWh = 0;
+
 	
 	    //Electric heating
 	    for(GridConnection GC : gcList){

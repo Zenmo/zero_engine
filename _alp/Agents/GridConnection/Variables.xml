@@ -2930,6 +2930,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1719407798845</Id>
 		<Name><![CDATA[v_totalInstalledWindPower_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>540</X>
 		<Y>460</Y>
 		<Label>
@@ -2943,7 +2944,7 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
+			<Type><![CDATA[Double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
 			</InitialValue>
@@ -2952,6 +2953,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1719407798847</Id>
 		<Name><![CDATA[v_totalInstalledPVPower_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>540</X>
 		<Y>480</Y>
 		<Label>
@@ -2965,7 +2967,7 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
+			<Type><![CDATA[Double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
 			</InitialValue>
@@ -4677,6 +4679,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1737535986116</Id>
 		<Name><![CDATA[v_totalInstalledBatteryStorageCapacity_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>540</X>
 		<Y>500</Y>
 		<Label>
@@ -4690,7 +4693,7 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
+			<Type><![CDATA[Double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
 			</InitialValue>
@@ -5833,8 +5836,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1741182119260</Id>
 		<Name><![CDATA[v_rapidRunData]]></Name>
-		<X>1080</X>
-		<Y>560</Y>
+		<X>570</X>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -5847,16 +5850,13 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_RapidRunData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_RapidRunData(this);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1741182119264</Id>
 		<Name><![CDATA[v_liveData]]></Name>
-		<X>1080</X>
-		<Y>540</Y>
+		<X>570</X>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -5869,9 +5869,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_LiveData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_LiveData(this);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -5897,10 +5894,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1741362059257</Id>
-		<Name><![CDATA[v_activeAssetData]]></Name>
-		<X>580</X>
-		<Y>770</Y>
+		<Id>1741871129695</Id>
+		<Name><![CDATA[v_liveAssetsMetaData]]></Name>
+		<X>590</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -5912,10 +5909,7 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[J_ActiveAssetData]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_ActiveAssetData(this, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers)]]></Code>
-			</InitialValue>
+			<Type><![CDATA[J_AssetsMetaData]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">

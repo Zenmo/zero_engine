@@ -178,7 +178,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1741858724892</Id>
-		<Name><![CDATA[f_updateActiveAssetBooleans]]></Name>
+		<Name><![CDATA[f_updateLiveActiveAssetBooleans]]></Name>
 		<X>1246</X>
 		<Y>-130</Y>
 		<Label>

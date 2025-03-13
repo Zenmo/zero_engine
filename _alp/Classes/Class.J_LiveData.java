@@ -1,9 +1,17 @@
+import java.util.EnumSet;
 /**
  * J_LiveData
  */	
 public class J_LiveData {
 	
 	public Agent parentAgent;
+	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
+	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
+	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
+	
+	public J_AssetsMetaData assetsMetaData;
+	public J_ConnectionMetaData connectionMetaData;
+
 	public J_DataSetMap dsm_liveDemand_kW = new J_DataSetMap(); 
 	public J_DataSetMap dsm_liveSupply_kW = new J_DataSetMap(); 
 	public DataSet data_baseloadElectricityDemand_kW = new DataSet(672);

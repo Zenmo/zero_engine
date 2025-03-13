@@ -59,11 +59,11 @@ v_engineAgent = data.getRapidRunData().parentAgent;
 //v_numberOfGridconnections = 1;
 
 //Set active energyCarriers
-v_activeConsumptionEnergyCarriers = data.getActiveAssetData().activeConsumptionEnergyCarriers;
-v_activeProductionEnergyCarriers = data.getActiveAssetData().activeProductionEnergyCarriers;
+v_activeConsumptionEnergyCarriers = data.getLiveData().activeConsumptionEnergyCarriers;
+v_activeProductionEnergyCarriers = data.getLiveData().activeProductionEnergyCarriers;
 
 //Update active asset booleans
-f_updateActiveAssetBooleans(data);
+f_updateLiveActiveAssetBooleans(data);
 
 //Update variables
 f_updateVariables(data);
@@ -84,18 +84,17 @@ f_updateLoadDurationCurve(data);
 double f_updateVariables(I_EnergyData data)
 {/*ALCODESTART::1741792546535*/
 //Grid capacity
-v_gridCapacityDelivery_kW = data.getDeliveryCapacity_kW();
-v_gridCapacityFeedIn_kW = data.getFeedinCapacity_kW();
+v_gridCapacityDelivery_kW = data.getLiveData().connectionMetaData.contractedDeliveryCapacity_kW;
+v_gridCapacityFeedIn_kW = data.getLiveData().connectionMetaData.contractedFeedinCapacity_kW;
 
 //area.v_gridCapacityDelivery_groupcontract_kW = GC.p_contractedDeliveryCapacity_kW;
 //area.v_gridCapacityFeedin_groupcontract_kW = GC.p_contractedFeedinCapacity_kW;
 
-b_isRealDeliveryCapacityAvailable = data.getDeliveryCapacityKnown();
-b_isRealFeedinCapacityAvailable = data.getFeedinCapacityKnown();
+b_isRealDeliveryCapacityAvailable = data.getLiveData().connectionMetaData.contractedDeliveryCapacityKnown;
+b_isRealFeedinCapacityAvailable = data.getLiveData().connectionMetaData.contractedFeedinCapacityKnown;
 
 //Installed Asset variables
-v_batteryStorageCapacityInstalled_MWh = data.getActiveAssetData().totalInstalledBatteryStorageCapacity_MWh;
-
+v_batteryStorageCapacityInstalled_MWh = data.getLiveData().assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 
 // KPIs for individual vs collective plots 
 v_individualSelfconsumptionElectricity_fr = data.getRapidRunData().getTotalElectricitySelfConsumed_MWh()/data.getRapidRunData().getTotalElectricityConsumed_MWh();
@@ -436,16 +435,16 @@ v_dataNetbelastingDuurkrommeWeekend_kW = ldc.ds_loadDurationCurveWeekend_kW;
 v_dataNetbelastingDuurkrommeWeekday_kW = ldc.ds_loadDurationCurveWeekday_kW;
 /*ALCODEEND*/}
 
-double f_updateActiveAssetBooleans(I_EnergyData data)
+double f_updateLiveActiveAssetBooleans(I_EnergyData data)
 {/*ALCODESTART::1741858724892*/
-b_hasElectricHeating = data.getActiveAssetData().hasElectricHeating;
-b_hasElectricTransport = data.getActiveAssetData().hasElectricTransport;
-b_hasPV = data.getActiveAssetData().hasPV;
-b_hasWindturbine = data.getActiveAssetData().hasWindturbine;
-b_hasBattery = data.getActiveAssetData().hasBattery;
-b_hasHeatGridConnection = data.getActiveAssetData().hasHeatGridConnection;
-b_hasCHP = data.getActiveAssetData().hasCHP;
-b_hasV2G = data.getActiveAssetData().hasV2G;
-b_hasElectricCooking = data.getActiveAssetData().hasElectricCooking;
+b_hasElectricHeating = data.getLiveData().assetsMetaData.hasElectricHeating;
+b_hasElectricTransport = data.getLiveData().assetsMetaData.hasElectricTransport;
+b_hasPV = data.getLiveData().assetsMetaData.hasPV;
+b_hasWindturbine = data.getLiveData().assetsMetaData.hasWindturbine;
+b_hasBattery = data.getLiveData().assetsMetaData.hasBattery;
+b_hasHeatGridConnection = data.getLiveData().assetsMetaData.hasHeatGridConnection;
+b_hasCHP = data.getLiveData().assetsMetaData.hasCHP;
+b_hasV2G = data.getLiveData().assetsMetaData.hasV2G;
+b_hasElectricCooking = data.getLiveData().assetsMetaData.hasElectricCooking;
 /*ALCODEEND*/}
 

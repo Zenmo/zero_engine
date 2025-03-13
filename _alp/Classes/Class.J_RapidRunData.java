@@ -5,9 +5,12 @@ import java.util.EnumSet;
 public class J_RapidRunData {
 	
 	public Agent parentAgent;
-	EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers;
-	EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers;
-	EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers;
+	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
+	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
+	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
+	
+	public J_AssetsMetaData assetsMetaData;
+	public J_ConnectionMetaData connectionMetaData;
 	
 	////Full simulation
 	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap();
@@ -122,9 +125,9 @@ public class J_RapidRunData {
     }
     
     public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
-    	this.v_activeEnergyCarriers = v_activeEnergyCarriers;
-    	this.v_activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-    	this.v_activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+    	this.activeEnergyCarriers = v_activeEnergyCarriers;
+    	this.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+    	this.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
 	    //========== TOTAL ACCUMULATORS ==========//
 		am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, simDuration_h );
 	    am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
@@ -239,9 +242,9 @@ public class J_RapidRunData {
 	}
 
     public void resetAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
-    	this.v_activeEnergyCarriers = v_activeEnergyCarriers;
-    	this.v_activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-    	this.v_activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+    	this.activeEnergyCarriers = v_activeEnergyCarriers;
+    	this.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+    	this.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
     	//Total simulation
 		am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, simDuration_h );
     	am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
@@ -362,7 +365,7 @@ public class J_RapidRunData {
     	double totalOverloadDurationDelivery_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-        	if(electricityBalance_kW > ((I_EnergyData)parentAgent).getDeliveryCapacity_kW()){
+        	if(electricityBalance_kW > connectionMetaData.contractedDeliveryCapacity_kW){
         		totalOverloadDurationDelivery_hr += signalResolution_h;
         	}
     	}
@@ -373,7 +376,7 @@ public class J_RapidRunData {
     	double totalOverloadDurationFeedin_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-        	if(electricityBalance_kW < -((I_EnergyData)parentAgent).getFeedinCapacity_kW()){
+        	if(electricityBalance_kW < -connectionMetaData.contractedFeedinCapacity_kW){
         		totalOverloadDurationFeedin_hr += signalResolution_h;
         	}
     	}
@@ -416,27 +419,27 @@ public class J_RapidRunData {
     }
     public double getTotalEnergyImport_MWh() { 
     	double totalEnergyImport_kWh = 0.0;
-    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		totalEnergyImport_kWh+=am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
     	}
         return totalEnergyImport_kWh/1000; 
     }   
     public double getTotalEnergyExport_MWh() { 
     	double totalEnergyExport_kWh = 0.0;
-    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		totalEnergyExport_kWh+= - am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
         return totalEnergyExport_kWh/1000; 
     }
     
     public double getTotalExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
     }
     public double getTotalImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
@@ -474,27 +477,27 @@ public class J_RapidRunData {
     }
     public double getSummerWeekEnergyImport_MWh() {
         double summerWeekEnergyImport_kWh = 0.0;
-    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		summerWeekEnergyImport_kWh+=am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
     	}
         return summerWeekEnergyImport_kWh/1000;
     }
     public double getSummerWeekEnergyExport_MWh() {
         double summerWeekEnergyExport_kWh = 0.0;
-    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		summerWeekEnergyExport_kWh+= - am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
         return summerWeekEnergyExport_kWh/1000;
     }    
     
     public double getSummerWeekExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return -this.am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
     }
     public double getSummerWeekImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_summerWeekBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
@@ -528,26 +531,26 @@ public class J_RapidRunData {
     }
     public double getWinterWeekEnergyImport_MWh() {
         double winterWeekEnergyImport_kWh = 0.0;
-    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		winterWeekEnergyImport_kWh+=am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
     	}
         return winterWeekEnergyImport_kWh/1000;
     }
     public double getWinterWeekEnergyExport_MWh() {
         double winterWeekEnergyExport_kWh = 0.0;
-    	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
+    	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		winterWeekEnergyExport_kWh+= - am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
         return winterWeekEnergyExport_kWh/1000;
     }    
     public double getWinterWeekExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return -this.am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
     }
     public double getWinterWeekImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_winterWeekBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
@@ -586,13 +589,13 @@ public class J_RapidRunData {
         return max(0, getDaytimeEnergyProduced_MWh() - getDaytimeEnergyExport_MWh()); 
     }
     public double getDaytimeExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_daytimeExports_kW.get(EC).getIntegral_kWh() / 1000;
     }
     public double getDaytimeImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_daytimeImports_kW.get(EC).getIntegral_kWh() / 1000;
@@ -624,13 +627,13 @@ public class J_RapidRunData {
         return max(0, getNighttimeEnergyProduced_MWh() - getNighttimeEnergyExport_MWh()); 
     } 
     public double getNighttimeExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh() / 1000 - this.getDaytimeExport_MWh(EC);
     }
     public double getNighttimeImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh() / 1000 - this.getDaytimeImport_MWh(EC);
@@ -661,13 +664,13 @@ public class J_RapidRunData {
         return max(0, getWeekdayEnergyProduced_MWh() - getWeekdayEnergyExport_MWh()); 
     } 
     public double getWeekdayExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh() / 1000 - this.getWeekendExport_MWh(EC);
     }
     public double getWeekdayImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh() / 1000 - this.getWeekendImport_MWh(EC);
@@ -698,13 +701,13 @@ public class J_RapidRunData {
         return max(0, getWeekendEnergyProduced_MWh() - getWeekendEnergyExport_MWh()); 
     }
     public double getWeekendExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_weekendExports_kW.get(EC).getIntegral_kWh() / 1000;
     }
     public double getWeekendImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.v_activeEnergyCarriers.contains(EC)) {
+    	if (!this.activeEnergyCarriers.contains(EC)) {
     		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
     	}
     	return this.am_weekendImports_kW.get(EC).getIntegral_kWh() / 1000;
