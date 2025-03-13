@@ -23,6 +23,14 @@ public class J_AccumulatorMap implements Serializable {
     	}
     }
     
+    public J_AccumulatorMap getClone() {
+    	J_AccumulatorMap am = new J_AccumulatorMap();
+    	for (var EC : this.energyCarrierList) {
+    		am.put(EC, accumulatorArray[EC.ordinal()].getClone());
+    	}
+    	return am;
+    }
+   
     public ZeroAccumulator get(OL_EnergyCarriers key) {
 		return accumulatorArray[key.ordinal()];
 	}
