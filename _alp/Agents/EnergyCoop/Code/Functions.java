@@ -649,6 +649,10 @@ v_liveData.connectionMetaData.contractedDeliveryCapacity_kW = this.p_contractedD
 v_liveData.connectionMetaData.contractedFeedinCapacity_kW = this.p_contractedFeedinCapacity_kW;
 v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = this.b_isRealDeliveryCapacityAvailable;
 v_liveData.connectionMetaData.contractedFeedinCapacityKnown = this.b_isRealFeedinCapacityAvailable;
+// Doesn't exist for Coop!
+//v_liveData.connectionMetaData.physicalCapacity_kW = this.p_physicalConnectionCapacity_kW;
+
+
 
 /*ALCODEEND*/}
 

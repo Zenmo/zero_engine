@@ -30,10 +30,14 @@ public class J_ConnectionMetaData implements Serializable {
     	J_ConnectionMetaData clone = new J_ConnectionMetaData(this.parentAgent);
     	clone.contractedDeliveryCapacity_kW = this.contractedDeliveryCapacity_kW.doubleValue();
     	clone.contractedFeedinCapacity_kW = this.contractedFeedinCapacity_kW.doubleValue();
-    	clone.physicalCapacity_kW = this.physicalCapacity_kW.doubleValue();
+    	if (this.physicalCapacity_kW!=null) {
+    		clone.physicalCapacity_kW = this.physicalCapacity_kW.doubleValue();
+    	}
     	clone.contractedDeliveryCapacityKnown = this.contractedDeliveryCapacityKnown.booleanValue();
     	clone.contractedFeedinCapacityKnown = this.contractedFeedinCapacityKnown.booleanValue();
-    	clone.physicalCapacityKnown = this.physicalCapacityKnown.booleanValue();
+    	if (this.physicalCapacityKnown!=null) {
+    		clone.physicalCapacityKnown = this.physicalCapacityKnown.booleanValue();
+    	}
     	return clone;
     }
     
