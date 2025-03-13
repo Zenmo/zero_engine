@@ -737,7 +737,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
 			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) {
+		} else if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) {
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 		}

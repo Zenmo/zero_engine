@@ -681,7 +681,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 	if (!c_vehicleAssets.isEmpty()) {
 		SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-	} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { // Look at weather forecast to charge/discharge battery
+	} else if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) { // Look at weather forecast to charge/discharge battery
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 	}
@@ -723,7 +723,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
 		if (!c_vehicleAssets.isEmpty()) {
 			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		} else if (energyModel.v_totalInstalledWindPower_kW > 0 ) { 
+		} else if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) { 
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 		}
@@ -1316,7 +1316,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		double maxSpreadChargingPower_kW = min(chargeNeedForNextTrip_kWh / (max(1, timeToNextTrip_min - v_additionalTimeSpreadCharging_MIN) / 60), maxChargingPower_kW);
 		//traceln("maxSpreadChargingPower_kW" + maxSpreadChargingPower_kW);
 		double WTPoffset_eurpkWh = 0;
-		if (energyModel.v_totalInstalledWindPower_kW > 499) {
+		if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 499) {
 			WTPoffset_eurpkWh = 0.05*(1-energyModel.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
 		} else {
 			WTPoffset_eurpkWh = 0.02;
@@ -1432,8 +1432,23 @@ else {
 }
 
 f_setOperatingSwitches();
-//v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+
+// Initializing Live Data Class
+v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
+v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
+v_liveData.connectionMetaData = new J_ConnectionMetaData(this);
+v_liveData.connectionMetaData.contractedDeliveryCapacity_kW = this.p_contractedDeliveryCapacity_kW;
+v_liveData.connectionMetaData.contractedFeedinCapacity_kW = this.p_contractedFeedinCapacity_kW;
+v_liveData.connectionMetaData.physicalCapacity_kW = this.p_physicalConnectionCapacity_kW;
+v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = this.b_isRealDeliveryCapacityAvailable;
+v_liveData.connectionMetaData.contractedFeedinCapacityKnown = this.b_isRealFeedinCapacityAvailable;
+v_liveData.connectionMetaData.physicalCapacityKnown = this.b_isRealPhysicalCapacityAvailable;
+
 f_initializeDataSets();
+
+//v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers){
 	energyModel.v_activeEnergyCarriers.add(EC);
 }
@@ -1444,11 +1459,8 @@ for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
 	energyModel.v_activeConsumptionEnergyCarriers.add(EC_consumption);
 }
 
-// Initializing Live Data Class
-v_liveData = new J_LiveData(this);
-v_liveAssetsMetaData = new J_AssetsMetaData(this);
-v_liveData.assetsMetaData = v_liveAssetsMetaData;
-v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
+
+
 /*ALCODEEND*/}
 
 double f_calculateKPIs()
@@ -2466,7 +2478,7 @@ if (energyModel.b_isSummerWeek){
 	v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
 	v_rapidRunData.acc_summerWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
@@ -2504,7 +2516,7 @@ if (energyModel.b_isWinterWeek){
 	v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 	
 	v_rapidRunData.acc_winterWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
@@ -2576,9 +2588,9 @@ if (!setActive) {
 	// update GN parents' wind / solar totals
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, false);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, false);
-	energyModel.v_totalInstalledPVPower_kW -= v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	energyModel.v_totalInstalledWindPower_kW -= v_liveAssetsMetaData.totalInstalledWindPower_kW;
-	energyModel.v_totalInstalledBatteryStorageCapacity_MWh -= v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	
 	// Reset Connection Capacity to default
 	f_nfatoSetConnectionCapacity(true);
@@ -2628,9 +2640,9 @@ else {
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);
-	energyModel.v_totalInstalledPVPower_kW += v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	energyModel.v_totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
-	energyModel.v_totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 }
 
 //Update the 'isActive' variable

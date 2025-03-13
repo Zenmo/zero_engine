@@ -640,10 +640,16 @@ v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeConsumptionEnergyCarrie
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeProductionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
 
 // Initializing Live Data Class
-v_liveData = new J_LiveData(this);
-v_liveAssetsMetaData = new J_AssetsMetaData(this);
-v_liveData.assetsMetaData = v_liveAssetsMetaData;
 v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(f_getAllChildMemberGridConnections()));
+v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
+v_liveData.connectionMetaData = new J_ConnectionMetaData(this);
+v_liveData.connectionMetaData.contractedDeliveryCapacity_kW = this.p_contractedDeliveryCapacity_kW;
+v_liveData.connectionMetaData.contractedFeedinCapacity_kW = this.p_contractedFeedinCapacity_kW;
+v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = this.b_isRealDeliveryCapacityAvailable;
+v_liveData.connectionMetaData.contractedFeedinCapacityKnown = this.b_isRealFeedinCapacityAvailable;
+
 /*ALCODEEND*/}
 
 double f_updateIncentives()
@@ -1885,15 +1891,15 @@ v_cumulativeIndividualSelfSufficiencyEnergy_fr = v_rapidRunData.getTotalEnergyCo
 
 double f_getTotalInstalledCapacityOfAssets()
 {/*ALCODESTART::1740480839774*/
-v_totalInstalledWindPower_kW = 0;
-v_totalInstalledPVPower_kW = 0;
-v_totalInstalledBatteryStorageCapacity_MWh = 0;
+v_liveAssetsMetaData.totalInstalledWindPower_kW = 0.0;
+v_liveAssetsMetaData.totalInstalledPVPower_kW = 0.0;
+v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
 
 //Add all battery storage capacities of gc
 for(GridConnection GC : c_memberGridConnections){
-	v_totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
-	v_totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	v_totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	v_liveAssetsMetaData.totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	v_liveAssetsMetaData.totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 }
 
 //Do this also for the 'child' coops
@@ -1901,9 +1907,9 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 	if (a instanceof EnergyCoop) {
 		EnergyCoop EC = (EnergyCoop)a;
 		EC.f_getTotalInstalledCapacityOfAssets();
-		v_totalInstalledWindPower_kW += EC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
-		v_totalInstalledPVPower_kW += EC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-		v_totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+		v_liveAssetsMetaData.totalInstalledWindPower_kW += EC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		v_liveAssetsMetaData.totalInstalledPVPower_kW += EC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
 }
 /*ALCODEEND*/}
@@ -2180,7 +2186,7 @@ if (energyModel.b_isSummerWeek){
 	v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
 	v_rapidRunData.acc_summerWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
@@ -2218,7 +2224,7 @@ if (energyModel.b_isWinterWeek){
 	v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 	
 	v_rapidRunData.acc_winterWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );

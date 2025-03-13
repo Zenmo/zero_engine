@@ -109,7 +109,7 @@ if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
 			double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 			double SOC_setp_fr = 0.5;			
-			if (energyModel.v_totalInstalledWindPower_kW > 10000) {
+			if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 10000) {
 				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
 				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 			} else {

@@ -28,6 +28,9 @@ import java.util.EnumSet;]]></Import>
 		</Parameter>
 	</Parameters>
 	<Implements>I_EnergyData</Implements>
+	<StartupCode><![CDATA[v_liveData = new J_LiveData(this);
+v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.assetsMetaData = v_liveAssetsMetaData;]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660731375014</Id>

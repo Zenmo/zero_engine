@@ -19,43 +19,18 @@ public class J_AssetsMetaData {
 	public boolean hasV2G = false;
 	public boolean hasElectricCooking = false;
 
-	public Double totalInstalledPVPower_kW;
-	public Double totalInstalledWindPower_kW;
-	public Double totalInstalledBatteryStorageCapacity_MWh;
+	public Double totalInstalledPVPower_kW = 0.0;
+	public Double totalInstalledWindPower_kW = 0.0;
+	public Double totalInstalledBatteryStorageCapacity_MWh = 0.0;
 	
-	public Double PVPotential_kW;
-	public Double windPotential_kW;
+	public Double PVPotential_kW = 0.0;
+	public Double windPotential_kW = 0.0;
 	
 	/**
      * Default constructor
      */
     public J_AssetsMetaData(Agent parentAgent) {
-    	this.parentAgent = parentAgent;   	
-    	/*
-    	ArrayList<GridConnection> gcList = new ArrayList<>();    	
-    	if (parentAgent instanceof GridConnection) {
-    	    this.totalInstalledPVPower_kW = ((GridConnection)parentAgent).v_totalInstalledPVPower_kW;
-    		this.totalInstalledWindPower_kW = ((GridConnection)parentAgent).v_totalInstalledWindPower_kW;
-    	    this.totalInstalledBatteryStorageCapacity_MWh = ((GridConnection)parentAgent).v_totalInstalledBatteryStorageCapacity_MWh;    		
-    	    gcList.add((GridConnection)parentAgent);
-    	}
-    	else if (parentAgent instanceof EnergyCoop) {
-    	    this.totalInstalledPVPower_kW = ((EnergyCoop)parentAgent).v_totalInstalledPVPower_kW;
-    		this.totalInstalledWindPower_kW = ((EnergyCoop)parentAgent).v_totalInstalledWindPower_kW;
-    	    this.totalInstalledBatteryStorageCapacity_MWh = ((EnergyCoop)parentAgent).v_totalInstalledBatteryStorageCapacity_MWh;    	    		
-    	    gcList.addAll(((EnergyCoop)parentAgent).f_getAllChildMemberGridConnections());
-    	}
-    	else if (parentAgent instanceof EnergyModel) {
-    	    this.totalInstalledPVPower_kW = ((EnergyModel)parentAgent).v_totalInstalledPVPower_kW;
-    		this.totalInstalledWindPower_kW = ((EnergyModel)parentAgent).v_totalInstalledWindPower_kW;
-    	    this.totalInstalledBatteryStorageCapacity_MWh = ((EnergyModel)parentAgent).v_totalInstalledBatteryStorageCapacity_MWh;    	    		
-    	    gcList.addAll(((EnergyModel)parentAgent).f_getGridConnections());
-    	}
-    	else {
-    		throw new RuntimeException("Are you sure you meant to create an assetsmetadata class with parentagent " + parentAgent + " ?");
-    	}
-    	this.updateActiveAssetData(gcList);
-    	 */
+    	this.parentAgent = parentAgent;
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
@@ -155,6 +130,27 @@ public class J_AssetsMetaData {
 	    }
 	}
 
+    public J_AssetsMetaData getClone() {
+    	J_AssetsMetaData clone = new J_AssetsMetaData(this.parentAgent);
+    	clone.hasElectricHeating = this.hasElectricHeating;
+    	clone.hasElectricTransport = this.hasElectricTransport;
+    	clone.hasPV = this.hasPV;
+    	clone.hasWindturbine = this.hasWindturbine;
+    	clone.hasBattery = this.hasBattery;
+    	clone.hasHeatGridConnection = this.hasHeatGridConnection;
+    	clone.hasElectrolyser = this.hasElectrolyser;
+    	clone.hasCHP = this.hasCHP;
+    	clone.hasV2G = this.hasV2G;
+    	clone.hasElectricCooking = this.hasElectricCooking;
+    	clone.totalInstalledPVPower_kW = this.totalInstalledPVPower_kW.doubleValue();
+    	clone.totalInstalledWindPower_kW = this.totalInstalledWindPower_kW.doubleValue();
+    	clone.totalInstalledBatteryStorageCapacity_MWh = this.totalInstalledBatteryStorageCapacity_MWh.doubleValue();
+    	clone.PVPotential_kW = this.PVPotential_kW.doubleValue();
+    	clone.windPotential_kW = this.windPotential_kW.doubleValue();
+    	return clone;
+    }
+    
+    
 	@Override
 	public String toString() {
 		return super.toString();

@@ -360,9 +360,9 @@ public class J_RapidRunData {
     public J_RapidRunData getClone() {
     	J_RapidRunData clone = new J_RapidRunData(this.parentAgent);
 
-    	clone.v_activeEnergyCarriers=this.v_activeEnergyCarriers.clone();
-    	clone.v_activeConsumptionEnergyCarriers=this.v_activeConsumptionEnergyCarriers.clone();
-    	clone.v_activeProductionEnergyCarriers=this.v_activeProductionEnergyCarriers.clone();
+    	clone.activeEnergyCarriers=this.activeEnergyCarriers.clone();
+    	clone.activeConsumptionEnergyCarriers=this.activeConsumptionEnergyCarriers.clone();
+    	clone.activeProductionEnergyCarriers=this.activeProductionEnergyCarriers.clone();
     	////Full simulation
     	clone.am_totalBalanceAccumulators_kW=this.am_totalBalanceAccumulators_kW.getClone();
     	clone.acc_totalEnergyCurtailed_kW=this.acc_totalEnergyCurtailed_kW.getClone();
@@ -449,6 +449,8 @@ public class J_RapidRunData {
         clone.am_weekendExports_kW = this.am_weekendExports_kW.getClone();
         clone.am_weekendImports_kW = this.am_weekendImports_kW.getClone();
         
+        clone.assetsMetaData = this.assetsMetaData.getClone();
+        clone.connectionMetaData = this.connectionMetaData.getClone();
         return clone;
 
     }
