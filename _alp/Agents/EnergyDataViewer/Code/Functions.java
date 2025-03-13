@@ -132,6 +132,9 @@ v_totalElectricitySelfConsumed_MWh = data.getRapidRunData().getTotalElectricityS
 v_annualOverloadDurationDelivery_hr = data.getRapidRunData().getTotalOverloadDurationDelivery_hr();
 v_annualOverloadDurationFeedin_hr = data.getRapidRunData().getTotalOverloadDurationFeedin_hr();
 
+v_totalEnergyConsumptionForDistrictHeating_MWh = data.getRapidRunData().getTotalDistrictHeatingConsumption_MWh();
+v_totalPrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getTotalPrimaryEnergyProductionHeatpumps_MWh();
+
 //========== SUMMER/WINTER WEEK ==========//
 fm_summerWeekImports_MWh.clear();
 fm_winterWeekImports_MWh.clear();
@@ -268,7 +271,7 @@ v_dataV2GElectricityProductionLiveWeek_kW = data.getLiveData().data_V2GSupply_kW
 v_dataCHPElectricityProductionLiveWeek_kW = data.getLiveData().data_CHPElectricityProductionLiveWeek_kW;
 
 //SOC
-v_dataBatterySOCLiveWeek_.reset();
+v_dataBatterySOCLiveWeek_fr.reset();
 for (int i = 0; i < data.getLiveData().data_batteryStoredEnergyLiveWeek_MWh.size(); i++) {
     // Get the x and y values from the source dataset
     double x = data.getLiveData().data_batteryStoredEnergyLiveWeek_MWh.getX(i);
@@ -278,7 +281,7 @@ for (int i = 0; i < data.getLiveData().data_batteryStoredEnergyLiveWeek_MWh.size
     double SOC = v_batteryStorageCapacityInstalled_MWh > 0 ? y / v_batteryStorageCapacityInstalled_MWh : 0;
     
     // Add the new x and y values to the target dataset
-    v_dataBatterySOCLiveWeek_.add(x, SOC);
+    v_dataBatterySOCLiveWeek_fr.add(x, SOC);
 }
 
 //Total
@@ -316,7 +319,7 @@ v_dataElectricityCHPProductionSummerWeek_kW = data.getRapidRunData().acc_summerW
 v_dataNetLoadSummerWeek_kW = data.getRapidRunData().am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDataSet(summerWeekStartTime_h);
 
 DataSet summerWeekBatteryStorage = data.getRapidRunData().ts_summerWeekBatteriesStoredEnergy_MWh.getDataSet(summerWeekStartTime_h);
-v_dataBatterySOCSummerWeek_.reset();
+v_dataBatterySOCSummerWeek_fr.reset();
 for (int i = 0; i < summerWeekBatteryStorage.size(); i++) {
     // Get the x and y values from the source dataset
     double x = summerWeekBatteryStorage.getX(i);
@@ -326,7 +329,7 @@ for (int i = 0; i < summerWeekBatteryStorage.size(); i++) {
     double SOC = v_batteryStorageCapacityInstalled_MWh > 0 ? y / v_batteryStorageCapacityInstalled_MWh : 0;
     
     // Add the new x and y values to the target dataset
-    v_dataBatterySOCSummerWeek_.add(x, SOC);
+    v_dataBatterySOCSummerWeek_fr.add(x, SOC);
 }
 
 //========== WINTER WEEK ==========//
@@ -353,7 +356,7 @@ v_dataElectricityCHPProductionWinterWeek_kW = data.getRapidRunData().acc_winterW
 v_dataNetLoadWinterWeek_kW = data.getRapidRunData().am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDataSet(winterWeekStartTime_h);
 
 DataSet winterWeekBatteryStorage = data.getRapidRunData().ts_winterWeekBatteriesStoredEnergy_MWh.getDataSet(winterWeekStartTime_h);
-v_dataBatterySOCWinterWeek_.reset();
+v_dataBatterySOCWinterWeek_fr.reset();
 for (int i = 0; i < winterWeekBatteryStorage.size(); i++) {
     // Get the x and y values from the source dataset
     double x = winterWeekBatteryStorage.getX(i);
@@ -363,7 +366,7 @@ for (int i = 0; i < winterWeekBatteryStorage.size(); i++) {
     double SOC = v_batteryStorageCapacityInstalled_MWh > 0 ? y / v_batteryStorageCapacityInstalled_MWh : 0;
     
     // Add the new x and y values to the target dataset
-    v_dataBatterySOCWinterWeek_.add(x, SOC);
+    v_dataBatterySOCWinterWeek_fr.add(x, SOC);
 }
 /*ALCODEEND*/}
 
@@ -381,6 +384,7 @@ v_dataElectricityForStorageConsumptionYear_kW = data.getRapidRunData().acc_daily
 v_dataElectricityForHydrogenConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectrolyserElectricityConsumption_kW.getDataSet(startTime_h);
 v_dataElectricityForCookingConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectricCookingConsumption_kW.getDataSet(startTime_h);
 v_dataDistrictHeatConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageDistrictHeatingConsumption_kW.getDataSet(startTime_h);
+data_dailyAverageFinalEnergyConsumption_kW = data.getRapidRunData().acc_dailyAverageFinalEnergyConsumption_kW.getDataSet(startTime_h);
 
 //Supply
 v_dataElectricityWindProductionYear_kW = data.getRapidRunData().acc_dailyAverageWindProduction_kW.getDataSet(startTime_h);
@@ -389,9 +393,8 @@ v_dataElectricityStorageProductionYear_kW = data.getRapidRunData().acc_dailyAver
 v_dataElectricityV2GProductionYear_kW = data.getRapidRunData().acc_dailyAverageV2GProduction_kW.getDataSet(startTime_h);
 v_dataElectricityCHPProductionYear_kW = data.getRapidRunData().acc_dailyAverageCHPElectricityProduction_kW.getDataSet(startTime_h);
 
-
 DataSet totalBatteryStorage = data.getRapidRunData().ts_dailyAverageBatteriesStoredEnergy_MWh.getDataSet(startTime_h);
-v_dataBatterySOCYear_.reset();
+v_dataBatterySOCYear_fr.reset();
 for (int i = 0; i < totalBatteryStorage.size(); i++) {
     // Get the x and y values from the source dataset
     double x = totalBatteryStorage.getX(i);
@@ -401,7 +404,7 @@ for (int i = 0; i < totalBatteryStorage.size(); i++) {
     double SOC = v_batteryStorageCapacityInstalled_MWh > 0 ? y / v_batteryStorageCapacityInstalled_MWh : 0;
     
     // Add the new x and y values to the target dataset
-    v_dataBatterySOCYear_.add(x, SOC);
+    v_dataBatterySOCYear_fr.add(x, SOC);
 }
 
 /*ALCODEEND*/}

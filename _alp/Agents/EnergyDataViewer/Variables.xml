@@ -671,6 +671,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741792546617</Id>
 		<Name><![CDATA[v_dataDistrictHeatProductionYear_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>206</X>
 		<Y>1125</Y>
 		<Label>
@@ -1051,6 +1052,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741792546657</Id>
 		<Name><![CDATA[v_dataDistrictHeatProductionSummerWeek_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>206</X>
 		<Y>1690</Y>
 		<Label>
@@ -1146,6 +1148,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741792546667</Id>
 		<Name><![CDATA[v_dataDistrictHeatProductionWinterWeek_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>206</X>
 		<Y>2340</Y>
 		<Label>
@@ -1805,7 +1808,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1741792546737</Id>
-		<Name><![CDATA[v_totalElectricityConsumptionHeatpumps_MWh]]></Name>
+		<Name><![CDATA[v_totalPrimaryEnergyProductionHeatpumps_MWh]]></Name>
 		<X>686</X>
 		<Y>520</Y>
 		<Label>
@@ -3792,7 +3795,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1741792546931</Id>
-		<Name><![CDATA[v_dataBatterySOCLiveWeek_]]></Name>
+		<Name><![CDATA[v_dataBatterySOCLiveWeek_fr]]></Name>
 		<X>196</X>
 		<Y>635</Y>
 		<Label>
@@ -3814,7 +3817,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1741792546933</Id>
-		<Name><![CDATA[v_dataBatterySOCYear_]]></Name>
+		<Name><![CDATA[v_dataBatterySOCYear_fr]]></Name>
 		<X>186</X>
 		<Y>1170</Y>
 		<Label>
@@ -3836,7 +3839,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1741792546935</Id>
-		<Name><![CDATA[v_dataBatterySOCSummerWeek_]]></Name>
+		<Name><![CDATA[v_dataBatterySOCSummerWeek_fr]]></Name>
 		<X>206</X>
 		<Y>1790</Y>
 		<Label>
@@ -3844,7 +3847,7 @@
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
+		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true"
               Constant="false"
@@ -3858,7 +3861,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1741792546937</Id>
-		<Name><![CDATA[v_dataBatterySOCWinterWeek_]]></Name>
+		<Name><![CDATA[v_dataBatterySOCWinterWeek_fr]]></Name>
 		<X>206</X>
 		<Y>2440</Y>
 		<Label>

@@ -448,6 +448,10 @@ public class J_RapidRunData {
     public double getTotalPrimaryEnergyProductionHeatpumps_MWh() { 
         return acc_totalPrimaryEnergyProductionHeatpumps_kW.getIntegral_kWh() / 1000; 
     }
+    public double getTotalDistrictHeatingConsumption_MWh() {
+    	return acc_dailyAverageDistrictHeatingConsumption_kW.getIntegral_kWh() / 1000;
+    }
+    
 
 // Summerweek Getters
     public double getSummerWeekElectricityConsumed_MWh() {
