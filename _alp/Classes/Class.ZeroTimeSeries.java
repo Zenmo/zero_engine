@@ -14,9 +14,6 @@ public class ZeroTimeSeries implements Serializable {
 	    private double timeStep_h = 0.25;
 	    private double sampleWeight = timeStep_h / signalResolution_h;
 	    
-	    private double sum = 0;
-	    private double posSum = 0;
-	    private double negSum = 0;
 	    private double max = 0;
 	    private double min = 0;
 
@@ -49,15 +46,25 @@ public class ZeroTimeSeries implements Serializable {
 	    }
 
 	    public void reset() {
-	        sum = 0;
-	        posSum = 0;
-	        negSum = 0;
+
 	        numStepsAdded = 0;
 	        max = 0;
 	        min = 0;
 	        timeSeries = new double[(int) Math.round(duration_h / signalResolution_h)];
 	        
 	    }
+	    
+	    public ZeroTimeSeries getClone() {
+	    	ZeroTimeSeries ts = new ZeroTimeSeries(this.signalResolution_h, this.duration_h);
+	    	ts.timeStep_h = this.timeStep_h;
+    		ts.timeSeries = this.timeSeries.clone();
+    		ts.max = this.max;
+    		ts.min = this.min;
+    		ts.numStepsAdded = this.numStepsAdded;
+			ts.numStepsAddedThisEntry = this.numStepsAddedThisEntry;
+	    	return ts;
+	    }
+	    
     
 	    public void addStep(double value) {
             this.timeSeries[this.numStepsAdded] += value * sampleWeight;
@@ -77,18 +84,18 @@ public class ZeroTimeSeries implements Serializable {
 	    }
 
 	    public double getSum() {
-            sum = ZeroMath.arraySum(timeSeries);
-	        return sum;
+            return ZeroMath.arraySum(timeSeries);
+	        //return sum;
 	    }
 
 	    public double getSumPos() {
-            posSum = ZeroMath.arraySumPos(timeSeries);
-	        return posSum;
+            return ZeroMath.arraySumPos(timeSeries);
+	        //return posSum;
 	    }
 	    
 	    public double getSumNeg() {
-            negSum = ZeroMath.arraySumNeg(timeSeries);
-	        return negSum;
+            return ZeroMath.arraySumNeg(timeSeries);
+	        //return negSum;
 	    }
 
 	    public double[] getTimeSeries() {

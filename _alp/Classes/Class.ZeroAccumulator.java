@@ -47,6 +47,25 @@ public class ZeroAccumulator {
         }
     }
 
+    public ZeroAccumulator getClone() {
+    	ZeroAccumulator zeroAccumulator = new ZeroAccumulator(this.hasTimeSeries, this.signalResolution_h, this.duration_h);
+    	zeroAccumulator.sampleWeight_fr = this.sampleWeight_fr;
+    	if (hasTimeSeries) { 
+    		zeroAccumulator.timeSeries = this.timeSeries.clone();
+    		zeroAccumulator.maxPower_kW = Arrays.stream(this.timeSeries).max().getAsDouble();
+    		zeroAccumulator.minPower_kW = Arrays.stream(this.timeSeries).min().getAsDouble();
+    	} else {
+    		zeroAccumulator.totalEnergy_kWh = this.totalEnergy_kWh;
+    		zeroAccumulator.totalNegativeEnergy_kWh = this.totalNegativeEnergy_kWh;
+    		zeroAccumulator.totalPositiveEnergy_kWh = this.totalPositiveEnergy_kWh;
+    		zeroAccumulator.maxPower_kW = this.maxPower_kW;
+    		zeroAccumulator.minPower_kW = this.minPower_kW;
+    	}
+		zeroAccumulator.numStepsAdded = this.numStepsAdded;
+		zeroAccumulator.numStepsAddedThisEntry = this.numStepsAddedThisEntry;
+    	return zeroAccumulator;
+    }
+    
     public void setTimeStep_h(double timeStep_h) {
         this.timeStep_h = timeStep_h;
         sampleWeight_fr = timeStep_h / signalResolution_h;
@@ -64,33 +83,7 @@ public class ZeroAccumulator {
         }
     }
 
-    // public void addStep(double t_h, double value) {
-    /*
-    public void addValue(double t_h, double value) {
-        if (hasTimeSeries) {
-            timeSeries[(int) Math.floor(t_h / signalResolution_h)] += value; // averages
-                                                                             // multiple
-                                                                             // timesteps
-                                                                             // when
-                                                                             // timeSeries
-                                                                             // has
-                                                                             // longer
-                                                                             // resolution
-                                                                             // than
-                                                                             // timestep.
-        } else {
-            sum += value;
-            posSum += Math.max(0.0, value);
-            negSum += Math.min(0.0, value);
-        }
-        if (value > max) {
-            max = value;
-        }
-        if (value < min) {
-            min = value;
-        }
-    }
-    */
+
     
     public void addStep(double power_kW) {
         if (hasTimeSeries) {
@@ -240,12 +233,15 @@ public class ZeroAccumulator {
     }
     
     public DataSet getDataSet(double startTime_h) {
-		DataSet ds = new DataSet(timeSeries.length);
-		for (int i = 0; i < timeSeries.length; i++) {
-			ds.add(startTime_h + i * this.signalResolution_h, this.timeSeries[i] );
-		}
-		
-		return ds;
+    	if (this.hasTimeSeries) {
+			DataSet ds = new DataSet(timeSeries.length);
+			for (int i = 0; i < timeSeries.length; i++) {
+				ds.add(startTime_h + i * this.signalResolution_h, this.timeSeries[i] );
+			}
+			return ds;
+    	} else {
+    		throw new RuntimeException("Impossible to create DataSet from accumulator without timeSeries.");    		
+    	}
     }
 	
     @Override

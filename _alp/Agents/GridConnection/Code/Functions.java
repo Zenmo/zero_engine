@@ -1432,7 +1432,7 @@ else {
 }
 
 f_setOperatingSwitches();
-v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+//v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 f_initializeDataSets();
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers){
 	energyModel.v_activeEnergyCarriers.add(EC);

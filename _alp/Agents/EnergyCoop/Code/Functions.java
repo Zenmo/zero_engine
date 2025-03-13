@@ -630,7 +630,7 @@ for(GridConnection GC:c_memberGridConnections){
 	} 
 }
 
-v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+//v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
 acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
 acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
