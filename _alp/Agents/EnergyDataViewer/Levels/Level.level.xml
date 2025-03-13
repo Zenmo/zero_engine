@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
 	<Text>
-		<Id>1715242013530</Id>
+		<Id>1741792546446</Id>
 		<Name><![CDATA[t_profiles]]></Name>
-		<X>170</X>
-		<Y>10</Y>
+		<X>316</X>
+		<Y>20</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -26,10 +26,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715243818644</Id>
+		<Id>1741792546449</Id>
 		<Name><![CDATA[t_totals]]></Name>
-		<X>650</X>
-		<Y>20</Y>
+		<X>796</X>
+		<Y>30</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -51,10 +51,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715243915970</Id>
+		<Id>1741792546451</Id>
 		<Name><![CDATA[txt_liveWeek]]></Name>
-		<X>5</X>
-		<Y>30</Y>
+		<X>151</X>
+		<Y>40</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -76,10 +76,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715243966775</Id>
+		<Id>1741792546453</Id>
 		<Name><![CDATA[txt_year]]></Name>
-		<X>5</X>
-		<Y>640</Y>
+		<X>151</X>
+		<Y>650</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -101,10 +101,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245227030</Id>
+		<Id>1741792546455</Id>
 		<Name><![CDATA[txt_summerWeek]]></Name>
-		<X>0</X>
-		<Y>1190</Y>
+		<X>146</X>
+		<Y>1200</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -127,10 +127,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245277723</Id>
+		<Id>1741792546457</Id>
 		<Name><![CDATA[txt_winterWeek]]></Name>
-		<X>0</X>
-		<Y>1840</Y>
+		<X>146</X>
+		<Y>1850</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -153,10 +153,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245371002</Id>
+		<Id>1741792546459</Id>
 		<Name><![CDATA[txt_yearTotals]]></Name>
-		<X>500</X>
-		<Y>50</Y>
+		<X>646</X>
+		<Y>60</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -178,10 +178,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245405222</Id>
+		<Id>1741792546461</Id>
 		<Name><![CDATA[txt_SummerWinterWeekTotals]]></Name>
-		<X>470</X>
-		<Y>630</Y>
+		<X>616</X>
+		<Y>640</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -203,10 +203,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245525434</Id>
+		<Id>1741792546463</Id>
 		<Name><![CDATA[t_belastingduurkromme]]></Name>
-		<X>1140</X>
-		<Y>10</Y>
+		<X>1286</X>
+		<Y>20</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -229,10 +229,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245572431</Id>
+		<Id>1741792546465</Id>
 		<Name><![CDATA[t_gn]]></Name>
-		<X>1100</X>
-		<Y>310</Y>
+		<X>1246</X>
+		<Y>320</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -254,10 +254,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1715245603945</Id>
+		<Id>1741792546467</Id>
 		<Name><![CDATA[t_other]]></Name>
-		<X>1660</X>
-		<Y>30</Y>
+		<X>1766</X>
+		<Y>40</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -279,10 +279,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732806230785</Id>
+		<Id>1741792546469</Id>
 		<Name><![CDATA[txt_liveWeekProduction]]></Name>
-		<X>15</X>
-		<Y>305</Y>
+		<X>161</X>
+		<Y>315</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -304,10 +304,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732806261207</Id>
+		<Id>1741792546471</Id>
 		<Name><![CDATA[txt_liveWeekProductionElectricity]]></Name>
-		<X>35</X>
-		<Y>325</Y>
+		<X>181</X>
+		<Y>335</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -329,10 +329,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732806349255</Id>
+		<Id>1741792546473</Id>
 		<Name><![CDATA[txt_liveWeekProductionOther]]></Name>
-		<X>40</X>
-		<Y>455</Y>
+		<X>186</X>
+		<Y>465</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -354,10 +354,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732806365504</Id>
+		<Id>1741792546475</Id>
 		<Name><![CDATA[txt_liveWeekConsumption]]></Name>
-		<X>10</X>
-		<Y>50</Y>
+		<X>156</X>
+		<Y>60</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -379,10 +379,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732806475290</Id>
+		<Id>1741792546477</Id>
 		<Name><![CDATA[txt_liveWeekProductionElectricity1]]></Name>
-		<X>30</X>
-		<Y>70</Y>
+		<X>176</X>
+		<Y>80</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -404,10 +404,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732806475292</Id>
+		<Id>1741792546479</Id>
 		<Name><![CDATA[txt_liveWeekProductionOther1]]></Name>
-		<X>40</X>
-		<Y>230</Y>
+		<X>186</X>
+		<Y>240</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -429,10 +429,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869474618</Id>
+		<Id>1741792546481</Id>
 		<Name><![CDATA[txt_yearProduction]]></Name>
-		<X>20</X>
-		<Y>925</Y>
+		<X>166</X>
+		<Y>935</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -454,10 +454,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869474620</Id>
+		<Id>1741792546483</Id>
 		<Name><![CDATA[txt_yearProductionElectricity]]></Name>
-		<X>30</X>
-		<Y>945</Y>
+		<X>176</X>
+		<Y>955</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -479,10 +479,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869474622</Id>
+		<Id>1741792546485</Id>
 		<Name><![CDATA[txt_yearConsumption]]></Name>
-		<X>20</X>
-		<Y>660</Y>
+		<X>166</X>
+		<Y>670</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -504,10 +504,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869474624</Id>
+		<Id>1741792546487</Id>
 		<Name><![CDATA[txt_yearConsumptionElectricity]]></Name>
-		<X>35</X>
-		<Y>680</Y>
+		<X>181</X>
+		<Y>690</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -529,10 +529,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869474626</Id>
+		<Id>1741792546489</Id>
 		<Name><![CDATA[txt_yearConsumptionOther]]></Name>
-		<X>35</X>
-		<Y>840</Y>
+		<X>181</X>
+		<Y>850</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -554,10 +554,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869520533</Id>
+		<Id>1741792546491</Id>
 		<Name><![CDATA[txt_yearProductionOther]]></Name>
-		<X>40</X>
-		<Y>1065</Y>
+		<X>186</X>
+		<Y>1075</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -579,10 +579,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869736237</Id>
+		<Id>1741792546493</Id>
 		<Name><![CDATA[txt_liveWeekNet]]></Name>
-		<X>20</X>
-		<Y>525</Y>
+		<X>166</X>
+		<Y>535</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -604,10 +604,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732869980041</Id>
+		<Id>1741792546495</Id>
 		<Name><![CDATA[txt_summerWeekConsumption]]></Name>
-		<X>20</X>
-		<Y>1210</Y>
+		<X>166</X>
+		<Y>1220</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -629,10 +629,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870037835</Id>
+		<Id>1741792546497</Id>
 		<Name><![CDATA[txt_summerWeekConsumptionElectricity]]></Name>
-		<X>40</X>
-		<Y>1230</Y>
+		<X>186</X>
+		<Y>1240</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -654,10 +654,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870119933</Id>
+		<Id>1741792546499</Id>
 		<Name><![CDATA[txt_summerWeekConsumptionOther]]></Name>
-		<X>40</X>
-		<Y>1390</Y>
+		<X>186</X>
+		<Y>1400</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -679,10 +679,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870146238</Id>
+		<Id>1741792546501</Id>
 		<Name><![CDATA[txt_summerWeekProduction]]></Name>
-		<X>20</X>
-		<Y>1470</Y>
+		<X>166</X>
+		<Y>1480</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -704,10 +704,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870168677</Id>
+		<Id>1741792546503</Id>
 		<Name><![CDATA[txt_summerWeekProductionOther]]></Name>
-		<X>40</X>
-		<Y>1630</Y>
+		<X>186</X>
+		<Y>1640</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -729,10 +729,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870179791</Id>
+		<Id>1741792546505</Id>
 		<Name><![CDATA[txt_summerWeekProductionElectricity]]></Name>
-		<X>40</X>
-		<Y>1490</Y>
+		<X>186</X>
+		<Y>1500</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -754,10 +754,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870251984</Id>
+		<Id>1741792546507</Id>
 		<Name><![CDATA[txt_summerWeekNet]]></Name>
-		<X>30</X>
-		<Y>1710</Y>
+		<X>176</X>
+		<Y>1720</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -779,10 +779,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449330</Id>
+		<Id>1741792546509</Id>
 		<Name><![CDATA[txt_winterWeekConsumption]]></Name>
-		<X>20</X>
-		<Y>1860</Y>
+		<X>166</X>
+		<Y>1870</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -804,10 +804,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449332</Id>
+		<Id>1741792546511</Id>
 		<Name><![CDATA[txt_winterWeekConsumptionElectricity]]></Name>
-		<X>40</X>
-		<Y>1880</Y>
+		<X>186</X>
+		<Y>1890</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -829,10 +829,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449334</Id>
+		<Id>1741792546513</Id>
 		<Name><![CDATA[txt_winterWeekConsumptionOther]]></Name>
-		<X>40</X>
-		<Y>2040</Y>
+		<X>186</X>
+		<Y>2050</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -854,10 +854,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449336</Id>
+		<Id>1741792546515</Id>
 		<Name><![CDATA[txt_winterWeekProduction]]></Name>
-		<X>20</X>
-		<Y>2120</Y>
+		<X>166</X>
+		<Y>2130</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -879,10 +879,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449338</Id>
+		<Id>1741792546517</Id>
 		<Name><![CDATA[txt_winterWeekProductionOther]]></Name>
-		<X>40</X>
-		<Y>2280</Y>
+		<X>186</X>
+		<Y>2290</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -904,10 +904,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449340</Id>
+		<Id>1741792546519</Id>
 		<Name><![CDATA[txt_winterWeekProductionElectricity]]></Name>
-		<X>40</X>
-		<Y>2140</Y>
+		<X>186</X>
+		<Y>2150</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -929,10 +929,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732870449342</Id>
+		<Id>1741792546521</Id>
 		<Name><![CDATA[txt_summerWeekNet1]]></Name>
-		<X>30</X>
-		<Y>2360</Y>
+		<X>176</X>
+		<Y>2370</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -954,10 +954,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732871084308</Id>
+		<Id>1741792546523</Id>
 		<Name><![CDATA[txt_DayNightTotals]]></Name>
-		<X>480</X>
-		<Y>1200</Y>
+		<X>626</X>
+		<Y>1210</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -979,10 +979,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1732871152023</Id>
+		<Id>1741792546525</Id>
 		<Name><![CDATA[txt_WeekdayWeekendTotals]]></Name>
-		<X>480</X>
-		<Y>1840</Y>
+		<X>626</X>
+		<Y>1850</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1004,10 +1004,10 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1734439461635</Id>
+		<Id>1741792546527</Id>
 		<Name><![CDATA[t_activeAssetBooleans]]></Name>
-		<X>1610</X>
-		<Y>370</Y>
+		<X>1716</X>
+		<Y>510</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -1028,4 +1028,39 @@
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1741860356570</Id>
+		<Name><![CDATA[button_back]]></Name>
+		<X>270</X>
+		<Y>-100</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="100" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor/>
+			<Enabled>true</Enabled>
+			<ActionCode>if (v_engineAgent != null) {
+	if (v_engineAgent instanceof GridConnection) {
+		((GridConnection)v_engineAgent).va_gridConnection.navigateTo();
+	}
+	else if (v_engineAgent instanceof EnergyCoop) {
+		((EnergyCoop)v_engineAgent).va_coop.navigateTo();	
+	}
+	else if (v_engineAgent instanceof EnergyModel) {
+		((EnergyModel)v_engineAgent).va_engine.navigateTo();	
+	}
+}</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>Back to Agent</LabelText>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

@@ -1956,4 +1956,22 @@ import java.util.EnumSet;]]></Import>
 			<Presentation xmlns:al="http://anylogic.com"/>
 		</Level>
 	</Presentation>
+	<Areas>
+		<Area>
+			<Id>1741860694288</Id>
+			<Name><![CDATA[va_coop]]></Name>
+			<X>0</X>
+			<Y>0</Y>
+			<Label>
+				<X>0</X>
+				<Y>-10</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>false</ShowLabel>
+			<Title/>
+			<Width>1920</Width>
+			<Height>980</Height>
+		</Area>
+	</Areas>
 </ActiveObjectClass>

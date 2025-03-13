@@ -410,4 +410,30 @@
 		</Font>
 		<Alignment>CENTER</Alignment>
 	</Text>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1741856471603</Id>
+		<Name><![CDATA[button_viewData]]></Name>
+		<X>240</X>
+		<Y>-90</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="100" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor/>
+			<Enabled>true</Enabled>
+			<ActionCode>energyModel.energyDataViewer.f_fillEnergyDataViewer(this);
+energyModel.energyDataViewer.viewArea.navigateTo();</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>View Data</LabelText>
+		</ExtendedProperties>
+	</Control>
 </Presentation>

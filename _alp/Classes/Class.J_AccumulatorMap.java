@@ -98,6 +98,14 @@ public class J_AccumulatorMap implements Serializable {
 		return this;
 	}
 	
+	public J_DataSetMap getDataSetMap( double startTime_h ) {
+		J_DataSetMap dsm = new J_DataSetMap();
+		for (var EC : this.energyCarrierList) {
+			dsm.put(EC, this.get(EC).getDataSet(startTime_h));
+		}
+		return dsm;
+	}
+	
     public String toString() {
         if (this.accumulatorArray.length == 0) {
             return "{}";        	
