@@ -1258,7 +1258,9 @@ v_totalElectricitySelfConsumed_MWh = v_rapidRunData.getTotalElectricitySelfConsu
 v_collectiveSelfConsumption_fr = v_totalElectricitySelfConsumed_MWh / v_totalElectricityProduced_MWh;
 
 //Heat grid
-v_totalEnergyConsumptionForDistrictHeating_MWh = v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.HEAT).getIntegral_kWh()/1000 + sum(DistrictHeatingSystems, DH -> DH.v_rapidRunData.getTotalEnergyImport_MWh());
+if (v_activeEnergyCarriers.contains(OL_EnergyCarriers.HEAT)){
+	v_totalEnergyConsumptionForDistrictHeating_MWh = v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.HEAT).getIntegral_kWh()/1000 + sum(DistrictHeatingSystems, DH -> DH.v_rapidRunData.getTotalEnergyImport_MWh());
+}
 
 //Heatpump totals
 v_totalElectricityConsumptionHeatpumps_MWh = 0;
