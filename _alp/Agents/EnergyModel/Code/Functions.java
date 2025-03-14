@@ -2035,6 +2035,7 @@ else{
 
 double f_updateActiveAssetsMetaData()
 {/*ALCODESTART::1741710906926*/
+
 //Update main area
 v_liveAssetsMetaData.updateActiveAssetData(f_getGridConnections());
 

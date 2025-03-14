@@ -1362,8 +1362,6 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 double f_initialize()
 {/*ALCODESTART::1698854861644*/
-traceln("GridConnection initialize" + p_gridConnectionID);
-
 if (v_liveConnectionMetaData.physicalCapacity_kW < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative physical connection capacity!");
 } else if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW < 0) {
