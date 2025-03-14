@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.2.202410172110"
+                   AnyLogicVersion="8.9.2.202410172112"
                    AlpVersion="8.9.2">
 	<Model>
 		<Id>1658477103134</Id>
@@ -1179,6 +1179,26 @@
 				<Name><![CDATA[OL_EAFlowKeys]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</OptionList>
+			<OptionList>
+				<Id>1741598206262</Id>
+				<Name><![CDATA[OL_ResultScope]]></Name>
+				<Option>
+					<Id>1741598207010</Id>
+					<Name><![CDATA[ENERGYMODEL]]></Name>
+				</Option>
+				<Option>
+					<Id>1741598225549</Id>
+					<Name><![CDATA[ENERGYCOOP]]></Name>
+				</Option>
+				<Option>
+					<Id>1741598228834</Id>
+					<Name><![CDATA[GRIDCONNECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1741598233168</Id>
+					<Name><![CDATA[GRIDNODE]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders/>
 		<ActiveObjectClasses/>
@@ -1461,6 +1481,34 @@
 			<JavaClass>
 				<Id>1737633433233</Id>
 				<Name><![CDATA[J_EADieselTractor]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1740048926477</Id>
+				<Name><![CDATA[ZeroAccumulator]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1740048926478</Id>
+				<Name><![CDATA[ZeroTimeSeries]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741163937278</Id>
+				<Name><![CDATA[I_EnergyData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741180550081</Id>
+				<Name><![CDATA[J_RapidRunData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741180880935</Id>
+				<Name><![CDATA[J_LiveData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741361867834</Id>
+				<Name><![CDATA[J_AssetsMetaData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1741864496371</Id>
+				<Name><![CDATA[J_ConnectionMetaData]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

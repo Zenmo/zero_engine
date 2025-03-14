@@ -5,7 +5,7 @@
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
 
 import zeroPackage.ZeroMath;
-import zeroPackage.ZeroAccumulator;]]></Import>
+//import zeroPackage.ZeroAccumulator;]]></Import>
 	<StartupCode><![CDATA[/*
 if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 	double capacityHeat_kW = 1000;

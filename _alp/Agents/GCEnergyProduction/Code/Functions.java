@@ -57,8 +57,8 @@ double f_manageElektrolyser(J_EAConversionElektrolyser ElektrolyserAsset)
 if (ElektrolyserAsset.getInputCapacity_kW()>0) {
 	
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
-	double availableElectricPower_kW = p_contractedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	double excessElectricPower_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + p_contractedFeedinCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
+	double availableElectricPower_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	double excessElectricPower_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + v_liveConnectionMetaData.contractedFeedinCapacity_kW); // Should at least draw this much power to stay within connection limits. Doesn't account for a battery!
 	double eta_r = ElektrolyserAsset.getEta_r();
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double ProductionSetpoint_kW = ElektrolyserAsset.getInputCapacity_kW() * 0.30 * eta_r; // Aim for average production power of xx% of elektrolyser peak power
@@ -109,7 +109,7 @@ if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
 			double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 			double SOC_setp_fr = 0.5;			
-			if (energyModel.v_totalInstalledWindPower_kW > 10000) {
+			if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 10000) {
 				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
 				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 			} else {

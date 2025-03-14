@@ -99,15 +99,6 @@
 			<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_physicalConnectionCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_address]]></Name>
 		</Parameter>
 	</Parameters>

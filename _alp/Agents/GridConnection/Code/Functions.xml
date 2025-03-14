@@ -402,6 +402,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1701956274181</Id>
 		<Name><![CDATA[f_calculateKPIs]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>890</X>
 		<Y>580</Y>
 		<Label>
@@ -439,22 +440,6 @@
 			<Name><![CDATA[caller]]></Name>
 			<Type><![CDATA[J_EA]]></Type>
 		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>DataSet</ReturnType>
-		<Id>1708520215192</Id>
-		<Name><![CDATA[f_getDuurkromme]]></Name>
-		<X>910</X>
-		<Y>600</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -502,6 +487,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1716282675260</Id>
 		<Name><![CDATA[f_initializeAccumulators]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>910</X>
 		<Y>70</Y>
 		<Label>
@@ -704,8 +690,8 @@
 		<Id>1722584668566</Id>
 		<Name><![CDATA[f_setActive]]></Name>
 		<Description><![CDATA[Function to pause a gridconnection so it is not operated or counted towards totals in the energy model.]]></Description>
-		<X>890</X>
-		<Y>710</Y>
+		<X>270</X>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -758,60 +744,27 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1729160728518</Id>
-		<Name><![CDATA[f_addFlows1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1160</X>
-		<Y>240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[arr]]></Name>
-			<Type><![CDATA[double[]]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[caller]]></Name>
-			<Type><![CDATA[J_EA]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1729166938774</Id>
-		<Name><![CDATA[f_removeFlows1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1290</X>
-		<Y>240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[arr]]></Name>
-			<Type><![CDATA[double[]]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[caller]]></Name>
-			<Type><![CDATA[J_EA]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1730728785333</Id>
 		<Name><![CDATA[f_initializeDataSets]]></Name>
-		<X>1020</X>
-		<Y>-40</Y>
+		<X>1070</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1741258042922</Id>
+		<Name><![CDATA[f_fillLiveDataSets_old]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1320</X>
+		<Y>690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -100,15 +100,6 @@
 			<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_contractedFeedinCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_contractedDeliveryCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_physicalConnectionCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_address]]></Name>
 		</Parameter>
 	</Parameters>
@@ -246,84 +237,6 @@
 			<AutoUpdate>false</AutoUpdate>
 			<OccurrenceAtTime>true</OccurrenceAtTime>
 			<OccurrenceDate>1717142400000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<FreezeXAxis>false</FreezeXAxis>
-			<SamplesToKeep>672</SamplesToKeep>
-		</DataSet>
-		<DataSet>
-			<Id>1731589115771</Id>
-			<Name><![CDATA[data_annualElectrolyserDemand_kW]]></Name>
-			<X>1070</X>
-			<Y>2470</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<AutoUpdate>false</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1687075200000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<FreezeXAxis>false</FreezeXAxis>
-			<SamplesToKeep>365</SamplesToKeep>
-		</DataSet>
-		<DataSet>
-			<Id>1731589115777</Id>
-			<Name><![CDATA[data_summerWeekElectrolyserDemand_kW]]></Name>
-			<X>1490</X>
-			<Y>2280</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<AutoUpdate>false</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1687075200000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[0]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
-			</RecurrenceCode>
-			<FreezeXAxis>false</FreezeXAxis>
-			<SamplesToKeep>672</SamplesToKeep>
-		</DataSet>
-		<DataSet>
-			<Id>1731589115784</Id>
-			<Name><![CDATA[data_winterWeekElectrolyserDemand_kW]]></Name>
-			<X>1490</X>
-			<Y>2620</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<AutoUpdate>false</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1687075200000</OccurrenceDate>
 			<OccurrenceTime Class="CodeUnitValue">
 				<Code><![CDATA[0]]></Code>
 				<Unit Class="TimeUnits">HOUR</Unit>
