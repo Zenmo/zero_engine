@@ -86,6 +86,8 @@ double f_updateVariables(I_EnergyData data)
 v_gridCapacityDelivery_kW = data.getLiveData().connectionMetaData.contractedDeliveryCapacity_kW;
 v_gridCapacityFeedIn_kW = data.getLiveData().connectionMetaData.contractedFeedinCapacity_kW;
 
+v_gridCapacityDelivery_kW_rapidRun = data.getRapidRunData().connectionMetaData.contractedDeliveryCapacity_kW;
+v_gridCapacityFeedIn_kW_rapidRun = data.getRapidRunData().connectionMetaData.contractedFeedinCapacity_kW;
 //area.v_gridCapacityDelivery_groupcontract_kW = GC.p_contractedDeliveryCapacity_kW;
 //area.v_gridCapacityFeedin_groupcontract_kW = GC.p_contractedFeedinCapacity_kW;
 

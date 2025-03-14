@@ -442,22 +442,6 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>DataSet</ReturnType>
-		<Id>1708520215192</Id>
-		<Name><![CDATA[f_getDuurkromme]]></Name>
-		<X>890</X>
-		<Y>600</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -706,8 +690,8 @@
 		<Id>1722584668566</Id>
 		<Name><![CDATA[f_setActive]]></Name>
 		<Description><![CDATA[Function to pause a gridconnection so it is not operated or counted towards totals in the energy model.]]></Description>
-		<X>890</X>
-		<Y>710</Y>
+		<X>270</X>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -789,20 +773,5 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1741277722817</Id>
-		<Name><![CDATA[f_initializePreviousRunData]]></Name>
-		<X>570</X>
-		<Y>760</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 	</Function>
 </Functions>

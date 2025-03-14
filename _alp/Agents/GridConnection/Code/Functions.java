@@ -428,10 +428,6 @@ v_currentLoadLowPassed_kW = 0;
  
 v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 
-// Not yet in J_RapidRunData:
-v_totalPVGeneration_MWh = 0;
-v_totalWindGeneration_MWh = 0;
-
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 
@@ -1383,7 +1379,7 @@ if(v_isActive){
 		if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0.0 && v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
 		v_liveConnectionMetaData.contractedDeliveryCapacity_kW = v_liveConnectionMetaData.physicalCapacity_kW;
 		v_liveConnectionMetaData.contractedFeedinCapacity_kW = v_liveConnectionMetaData.physicalCapacity_kW;
-	} else if ( v_liveConnectionMetaData.physicalCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
+		} else if ( v_liveConnectionMetaData.physicalCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
 			v_liveConnectionMetaData.physicalCapacity_kW = max(v_liveConnectionMetaData.contractedDeliveryCapacity_kW, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 		}
 	}
@@ -1658,158 +1654,6 @@ if (caller instanceof J_EAStorageElectric) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW -= energyUse_kW;
 }
-/*ALCODEEND*/}
-
-DataSet f_getDuurkromme()
-{/*ALCODESTART::1708520215192*/
-J_LoadDurationCurves j_duurkrommes = new J_LoadDurationCurves(v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);
-
-data_netbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveTotal_kW;
-data_summerWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveSummer_kW;
-data_winterWeekNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWinter_kW;
-data_daytimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveDaytime_kW;
-data_nighttimeNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveNighttime_kW;
-data_weekdayNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekday_kW;
-data_weekendNetbelastingDuurkromme_kW = j_duurkrommes.ds_loadDurationCurveWeekend_kW;
- 
-return data_netbelastingDuurkromme_kW;
-/*
-boolean firstRun = true;
-if (data_netbelastingDuurkromme_kW != null) {	
-	if (data_netbelastingDuurkrommeVorige_kW != null) { // Not second run either!
-		data_netbelastingDuurkrommeVorige_kW.reset();
-	} else {
-		data_netbelastingDuurkrommeVorige_kW = new DataSet(roundToInt(365*24/energyModel.p_timeStep_h));
-	}
-	firstRun = false;
-} else {
-	data_netbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/energyModel.p_timeStep_h));
-	data_summerWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/energyModel.p_timeStep_h));
-	data_winterWeekNetbelastingDuurkromme_kW = new DataSet(roundToInt(7*24/energyModel.p_timeStep_h));
-	data_daytimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/2/energyModel.p_timeStep_h));
-	data_nighttimeNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/2/energyModel.p_timeStep_h));
-	data_weekdayNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/7*5/energyModel.p_timeStep_h)+100);
-	data_weekendNetbelastingDuurkromme_kW = new DataSet(roundToInt(365*24/7*2/energyModel.p_timeStep_h)+100);
-}
-
-// We copy our annual array to preserve it as a time-series and make new arrays for the others
-double[] netLoadArrayAnnual_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries().clone(); 
-int arraySize = netLoadArrayAnnual_kW.length;
-double[] netLoadArraySummerweek_kW = new double[roundToInt(168 / energyModel.p_timeStep_h)];
-double[] netLoadArrayWinterweek_kW= new double[roundToInt(168 / energyModel.p_timeStep_h)];
-double[] netLoadArrayDaytime_kW = new double[arraySize/2];
-double[] netLoadArrayNighttime_kW = new double[arraySize/2];
-// For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
-ArrayList<Double> listNetLoadArrayWeekday_kW = new ArrayList<>();
-ArrayList<Double> listNetLoadArrayWeekend_kW = new ArrayList<>();
- 
-int i_winter=0;
-int i_summer=0;
-int i_day=0;
-int i_night=0;
-int i_weekday=0;
-int i_weekend=0;
-
-//double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
-
-for(int i=0; i<arraySize ; i++) {
-	if (!firstRun) {
-		// First we make sure to store our previous Load Curve
-		data_netbelastingDuurkrommeVorige_kW.add(i*energyModel.p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));		
-	}
-	// summer/winter
-	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
-		netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
-		i_summer++;
-	}
-	if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
-		netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
-		i_winter++;
-	}
-	// day/night
-	if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
-		netLoadArrayDaytime_kW[i_day]=-netLoadArrayAnnual_kW[i];
-		i_day++;
-	} else {
-		netLoadArrayNighttime_kW[i_night]=-netLoadArrayAnnual_kW[i];
-		i_night++;
-	}
-	//Weekday/weekend
-	if (((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
-		listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
-		i_weekday++;
-	} else {
-		listNetLoadArrayWeekend_kW.add(-netLoadArrayAnnual_kW[i]);
-		i_weekend++;
-	}
-	
-}
- 
-// Now we have the size of the weekday & weekend arrays.
-double[] netLoadArrayWeekday_kW = new double[listNetLoadArrayWeekday_kW.size()];
-double[] netLoadArrayWeekend_kW = new double[listNetLoadArrayWeekend_kW.size()];
-for (int i = 0; i < listNetLoadArrayWeekday_kW.size(); i++) {
-	netLoadArrayWeekday_kW[i] = listNetLoadArrayWeekday_kW.get(i);
-}
-for (int i = 0; i < listNetLoadArrayWeekend_kW.size(); i++) {
-	netLoadArrayWeekend_kW[i] = listNetLoadArrayWeekend_kW.get(i);
-}
- 
- 
-// Sort all arrays
-Arrays.parallelSort(netLoadArrayAnnual_kW);
-Arrays.parallelSort(netLoadArraySummerweek_kW);
-Arrays.parallelSort(netLoadArrayWinterweek_kW);
-Arrays.parallelSort(netLoadArrayDaytime_kW);
-Arrays.parallelSort(netLoadArrayNighttime_kW);
-Arrays.parallelSort(netLoadArrayWeekday_kW);
-Arrays.parallelSort(netLoadArrayWeekend_kW);
- 
-// Write results to datasets
-// Netbelastingduurkromme year
-//if (!firstRun) {
-	data_netbelastingDuurkromme_kW.reset();
-	data_summerWeekNetbelastingDuurkromme_kW.reset();	
-	data_winterWeekNetbelastingDuurkromme_kW.reset();
-	data_daytimeNetbelastingDuurkromme_kW.reset();
-	data_nighttimeNetbelastingDuurkromme_kW.reset();
-	data_weekdayNetbelastingDuurkromme_kW.reset();
-	data_weekendNetbelastingDuurkromme_kW.reset();
-//}
-for(int i=0; i< arraySize; i++) {
-	data_netbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, netLoadArrayAnnual_kW[arraySize-i-1]);
-}
-// Netbelastingduurkromme summer / winter
-arraySize = netLoadArraySummerweek_kW.length;
-for(int i=0; i< arraySize; i++) {
-	data_summerWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArraySummerweek_kW[i]);
-}
-arraySize = netLoadArrayWinterweek_kW.length;
-for(int i=0; i< arraySize; i++) {
-	data_winterWeekNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWinterweek_kW[i]);
-}
-// Netbelastingduurkromme day / night
-arraySize = netLoadArrayDaytime_kW.length;
-for(int i=0; i< arraySize; i++) {
-	data_daytimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayDaytime_kW[i]);
-}
-arraySize = netLoadArrayNighttime_kW.length;
-for(int i=0; i< arraySize; i++) {
-	data_nighttimeNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayNighttime_kW[i]);
-}
-// Netbelastingduurkromme weekday / weekend
-arraySize = netLoadArrayWeekday_kW.length;
-for(int i=0; i< arraySize; i++) {
-	data_weekdayNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekday_kW[i]);
-}
-arraySize = netLoadArrayWeekend_kW.length;
-for(int i=0; i< arraySize; i++) {
-	data_weekendNetbelastingDuurkromme_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
-}
- 
-return data_netbelastingDuurkromme_kW;
-
-*/
 /*ALCODEEND*/}
 
 double f_removeTheJ_EA(J_EA j_ea)
@@ -2323,7 +2167,11 @@ for (J_EA j_ea : c_batteryAssets) {
 v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
 v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
 v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
-
+double currentSOC = 0;
+if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+	currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+}
+v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
 
 //CHP production
 v_CHPProductionElectric_kW = 0;
@@ -2488,7 +2336,13 @@ if (energyModel.b_isSummerWeek){
 	v_rapidRunData.acc_summerWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_summerWeekBatteriesProduction_kW.addStep( max(0,-v_batteryPowerElectric_kW) );
 	v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
-	//acc_summerWeekBatteriesStoredEnergy_MWh.addStep();		
+	v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.addStep(v_batteryStoredEnergy_kWh);
+	if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+		v_rapidRunData.ts_summerWeekBatteriesSOC_fr.addStep(v_batteryStoredEnergy_kWh/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+	}
+	else{
+		v_rapidRunData.ts_summerWeekBatteriesSOC_fr.addStep(0);	
+	}	
 
 }
 
@@ -2526,8 +2380,13 @@ if (energyModel.b_isWinterWeek){
 	v_rapidRunData.acc_winterWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_winterWeekBatteriesProduction_kW.addStep( max(0,-v_batteryPowerElectric_kW) );
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
-	//acc_winterWeekBatteriesStoredEnergy_MWh.addStep();		
-	
+	v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.addStep(v_batteryStoredEnergy_kWh);
+	if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+		v_rapidRunData.ts_winterWeekBatteriesSOC_fr.addStep(v_batteryStoredEnergy_kWh/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+	}
+	else{
+		v_rapidRunData.ts_winterWeekBatteriesSOC_fr.addStep(0);	
+	}		
 }
 
 
@@ -2543,9 +2402,6 @@ v_rapidRunData.acc_dailyAverageEnergyConsumption_kW.addStep(v_currentFinalEnergy
 v_rapidRunData.acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 v_rapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
 
-//acc_dailyAverageDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-//acc_dailyAverageFeedinCapacity_kW.addStep( p_contractedFeedinCapacity_kW);
-
 v_rapidRunData.acc_dailyAverageBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 v_rapidRunData.acc_dailyAverageHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
 v_rapidRunData.acc_dailyAverageElectricVehicleConsumption_kW.addStep( max(0,v_evChargingPowerElectric_kW) );
@@ -2559,7 +2415,13 @@ v_rapidRunData.acc_dailyAverageWindProduction_kW.addStep( v_windProductionElectr
 v_rapidRunData.acc_dailyAverageV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.addStep( max(0,-v_batteryPowerElectric_kW) );
 v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
-//acc_dailyAverageBatteriesStoredEnergy_MWh.addStep();		
+v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.addStep(v_batteryStoredEnergy_kWh);
+if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.addStep(v_batteryStoredEnergy_kWh/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+}
+else{
+	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.addStep(0);	
+}
 
 /*ALCODEEND*/}
 
@@ -2632,6 +2494,7 @@ else {
 	// Set Connection Capacity according to NFATO
 	f_nfatoSetConnectionCapacity(false);
 	
+	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);
@@ -2792,10 +2655,5 @@ data_windGeneration_kW.update();
 data_districtHeatDelivery_kW.update();
 
 //data_totalNetLoad_kW.update();
-/*ALCODEEND*/}
-
-double f_initializePreviousRunData()
-{/*ALCODESTART::1741277722817*/
-
 /*ALCODEEND*/}
 

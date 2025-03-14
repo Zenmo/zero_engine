@@ -41,10 +41,15 @@ public class J_ConnectionMetaData implements Serializable {
     	return clone;
     }
     
-	@Override
-	public String toString() {
-		return super.toString();
-	}
+    @Override
+    public String toString() {
+        return "ContractedDeliveryCapacity_kW: " + contractedDeliveryCapacity_kW + 
+               ", ContractedFeedinCapacity_kW: " + contractedFeedinCapacity_kW + 
+               ", PhysicalCapacity_kW: " + physicalCapacity_kW + 
+               ", ContractedDeliveryCapacityKnown: " + contractedDeliveryCapacityKnown + 
+               ", ContractedFeedinCapacityKnown: " + contractedFeedinCapacityKnown + 
+               ", PhysicalCapacityKnown: " + physicalCapacityKnown;
+    }
 
 	
 	/**

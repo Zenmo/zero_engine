@@ -298,25 +298,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1715857260657</Id>
-		<Name><![CDATA[f_updateArrays]]></Name>
+		<Name><![CDATA[f_updateLiveDataSets]]></Name>
 		<X>680</X>
 		<Y>220</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>DataSet</ReturnType>
-		<Id>1723101436982</Id>
-		<Name><![CDATA[f_getDuurkromme]]></Name>
-		<X>690</X>
-		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -583,21 +567,6 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1741277674313</Id>
-		<Name><![CDATA[f_initializePreviousRunData]]></Name>
-		<X>60</X>
-		<Y>930</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>

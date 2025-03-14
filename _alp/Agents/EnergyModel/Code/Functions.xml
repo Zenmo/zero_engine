@@ -128,27 +128,6 @@
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1666945497935</Id>
-		<Name><![CDATA[f_calculateImportExport]]></Name>
-		<Description><![CDATA[Bereken invoer en uitvoer van energiedragers. Aangeroepen in f_returnKPIData aan het einde van de modelrun.
-
-@author: JorritvandenHouten
-@since: 28-10-2022]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>960</X>
-		<Y>288</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1666978595555</Id>
 		<Name><![CDATA[f_sumBatteryUse]]></Name>
 		<X>960</X>
@@ -292,23 +271,6 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1699275323325</Id>
-		<Name><![CDATA[f_rapidRunDataLoggingOld]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>960</X>
-		<Y>700</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -316,22 +278,6 @@
 		<Name><![CDATA[f_resetAnnualValues]]></Name>
 		<X>950</X>
 		<Y>88</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1700560766579</Id>
-		<Name><![CDATA[f_duurkrommes]]></Name>
-		<X>960</X>
-		<Y>328</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -634,7 +580,7 @@
 		<Id>1731573713521</Id>
 		<Name><![CDATA[f_initializeLiveDataSets]]></Name>
 		<X>80</X>
-		<Y>850</Y>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -707,21 +653,6 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1741277522881</Id>
-		<Name><![CDATA[f_initializePreviousRunData]]></Name>
-		<X>80</X>
-		<Y>910</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1741622740564</Id>
 		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
 		<X>677</X>
@@ -739,9 +670,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1741710906926</Id>
-		<Name><![CDATA[f_updateActiveAssetData]]></Name>
-		<X>1400</X>
-		<Y>350</Y>
+		<Name><![CDATA[f_updateActiveAssetsMetaData]]></Name>
+		<X>80</X>
+		<Y>950</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -749,10 +680,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[gcList]]></Name>
-			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
