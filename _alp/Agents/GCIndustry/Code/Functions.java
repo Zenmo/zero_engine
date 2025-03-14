@@ -181,7 +181,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset).getCOP();
 		double HP_powerDemand_kW = heatDemand_kW / HP_COP;
 		// Decide to use CHP or HeatPump to fulfill heat demand based on 'SoC' of gasbuffer and current electricity use on site
-		if ( (-(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)) > 0.5*p_contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
+		if ( (-(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)) > 0.5*v_liveConnectionMetaData.contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_secondaryHeatingAsset.v_powerFraction_fr = 0;
 			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getInputCapacity_kW());
@@ -201,7 +201,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		} else { // CHP when there is sufficient biogas
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
 			if ( p_gasBuffer.getCurrentStateOfCharge() < 0.9 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.
-				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()),(p_contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getInputCapacity_kW());
+				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()),(v_liveConnectionMetaData.contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getInputCapacity_kW());
 			} else {
 				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
 				//if ( p_gasBuffer.j_ea.getCurrentStateOfCharge() > 0.98 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.				

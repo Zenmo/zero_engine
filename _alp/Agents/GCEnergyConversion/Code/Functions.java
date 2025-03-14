@@ -140,8 +140,8 @@ double f_manageElectrolyser(J_EAConversionElectrolyser ElectrolyserAsset)
 if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
 	
-	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW;
-	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW;
+	double v_allowedDeliveryCapacity_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+	double v_allowedFeedinCapacity_kW = v_liveConnectionMetaData.contractedFeedinCapacity_kW;
 	double availableElectricPower_kW = max(0, v_allowedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 	double excessElectricPower_kW = max(0, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_allowedFeedinCapacity_kW);
 	

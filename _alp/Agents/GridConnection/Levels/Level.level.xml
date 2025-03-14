@@ -545,7 +545,7 @@
 			<Id>0</Id>
 			<Expression>my_dataset6</Expression>
 			<Color>-65536</Color>
-			<Expression2>p_contractedDeliveryCapacity_kW</Expression2>
+			<Expression2>v_liveConnectionMetaData.contractedDeliveryCapacity_kW</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
@@ -555,7 +555,7 @@
 			<Id>0</Id>
 			<Expression>my_dataset7</Expression>
 			<Color>-65536</Color>
-			<Expression2>- p_contractedFeedinCapacity_kW</Expression2>
+			<Expression2>- v_liveConnectionMetaData.contractedFeedinCapacity_kW</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

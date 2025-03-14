@@ -491,8 +491,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double currentLoadDeviation_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW; // still excludes battery power
 	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
 	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
-	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.95;
-	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.95;
+	double v_allowedDeliveryCapacity_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW*0.95;
+	double v_allowedFeedinCapacity_kW = v_liveConnectionMetaData.contractedFeedinCapacity_kW*0.95;
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
 	double availableDischargePower_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
@@ -576,8 +576,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		boolean b_stayWithinConnectionLimits = true;
 		if( b_stayWithinConnectionLimits ) {		
 			
-			double availableChargePower_kW = p_contractedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
-			double availableDischargePower_kW = p_contractedFeedinCapacity_kW + fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max discharging power within grid capacity
+			double availableChargePower_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
+			double availableDischargePower_kW = v_liveConnectionMetaData.contractedFeedinCapacity_kW + fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max discharging power within grid capacity
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	

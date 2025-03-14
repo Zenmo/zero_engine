@@ -39,7 +39,7 @@ if (p_BuildingThermalAsset != null && p_primaryHeatingAsset != null) {
 
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1664963959146*/
-double availablePowerAtPrice_kW = p_contractedDeliveryCapacity_kW;
+double availablePowerAtPrice_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
 if (l_ownerActor.getConnectedAgent()!=null){
 	v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 	availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
@@ -54,7 +54,7 @@ f_manageHeatingAssets();
 
 if( p_householdEV != null){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-	double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
 	f_manageCharging();
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
@@ -435,7 +435,7 @@ double f_manageCharging_overwrite()
 {/*ALCODESTART::1675014184707*/
 double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge();
 
 switch (p_chargingAttitudeVehicles) {
@@ -765,8 +765,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 			double electricitySurplus_kW = - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 			
-			double availableChargePower_kW = electricitySurplus_kW + p_contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = electricitySurplus_kW - p_contractedFeedinCapacity_kW; // Max discharging power within grid capacity
+			double availableChargePower_kW = electricitySurplus_kW + v_liveConnectionMetaData.contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = electricitySurplus_kW - v_liveConnectionMetaData.contractedFeedinCapacity_kW; // Max discharging power within grid capacity
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	

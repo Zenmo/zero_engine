@@ -63,13 +63,13 @@ double f_manageFuelCell()
 {/*ALCODESTART::1721138603366*/
 // Arbitrarely i'm deciding not to use more than 95% of the GC & GN capacity.
 double capacityLimit_fr = 0.95;
-if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > p_contractedDeliveryCapacity_kW * capacityLimit_fr || fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr) {
+if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > v_liveConnectionMetaData.contractedDeliveryCapacity_kW * capacityLimit_fr || fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr) {
 	J_EAConversionFuelCell fuelCellAsset = (J_EAConversionFuelCell) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
 	if (fuelCellAsset == null) {
 		traceln("No fuel cell asset found");
 	}
 	else {
-		double powerNeeded_kW = max(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - p_contractedDeliveryCapacity_kW * capacityLimit_fr,  fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
+		double powerNeeded_kW = max(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedDeliveryCapacity_kW * capacityLimit_fr,  fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - l_parentNodeElectric.getConnectedAgent().p_capacity_kW * capacityLimit_fr);
 		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
 		double efficiency = fuelCellAsset.getEta_r();
 		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getOutputCapacity_kW()*efficiency);

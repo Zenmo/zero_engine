@@ -612,20 +612,20 @@ double f_initialize()
 
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
-	p_contractedDeliveryCapacity_kW += GC.p_contractedDeliveryCapacity_kW;
-	p_contractedFeedinCapacity_kW += GC.p_contractedFeedinCapacity_kW;
+	v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+	v_liveConnectionMetaData.contractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
 	v_activeEnergyCarriers.addAll(GC.v_activeEnergyCarriers);
 	v_activeProductionEnergyCarriers.addAll(GC.v_activeProductionEnergyCarriers);
 	v_activeConsumptionEnergyCarriers.addAll(GC.v_activeConsumptionEnergyCarriers);
 	
 
-	if(!GC.b_isRealDeliveryCapacityAvailable){
-		b_isRealDeliveryCapacityAvailable = false;
+	if(!GC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
+		v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
 	
 	}
 
-	if(!GC.b_isRealFeedinCapacityAvailable){
-		b_isRealFeedinCapacityAvailable = false;
+	if(!GC.v_liveConnectionMetaData.contractedFeedinCapacityKnown){
+		v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 	
 	} 
 }
@@ -644,14 +644,6 @@ v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(f_getAllChildMemberGr
 v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
 v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
 v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
-v_liveData.connectionMetaData = new J_ConnectionMetaData(this);
-v_liveData.connectionMetaData.contractedDeliveryCapacity_kW = this.p_contractedDeliveryCapacity_kW;
-v_liveData.connectionMetaData.contractedFeedinCapacity_kW = this.p_contractedFeedinCapacity_kW;
-v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = this.b_isRealDeliveryCapacityAvailable;
-v_liveData.connectionMetaData.contractedFeedinCapacityKnown = this.b_isRealFeedinCapacityAvailable;
-// Doesn't exist for Coop!
-//v_liveData.connectionMetaData.physicalCapacity_kW = this.p_physicalConnectionCapacity_kW;
-
 
 
 /*ALCODEEND*/}
@@ -1047,8 +1039,8 @@ if (energyModel.v_isRapidRun){
 	
 	
 	//Live capacity datasets
-	v_liveData.data_gridCapacityDemand_kW.add(timeStep_h, p_contractedDeliveryCapacity_kW);
-	v_liveData.data_gridCapacitySupply_kW.add(timeStep_h, p_contractedFeedinCapacity_kW);
+	v_liveData.data_gridCapacityDemand_kW.add(timeStep_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_liveData.data_gridCapacitySupply_kW.add(timeStep_h, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 	
 	
 	//// Gather specific electricity flows from corresponding energy assets
@@ -2189,8 +2181,8 @@ if (energyModel.b_isSummerWeek){
 	v_rapidRunData.acc_summerWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 	v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-	v_rapidRunData.acc_summerWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_summerWeekDeliveryCapacity_kW.addStep( v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
@@ -2227,8 +2219,8 @@ if (energyModel.b_isWinterWeek){
 	v_rapidRunData.acc_winterWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 	v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 	
-	v_rapidRunData.acc_winterWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_winterWeekDeliveryCapacity_kW.addStep( v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );

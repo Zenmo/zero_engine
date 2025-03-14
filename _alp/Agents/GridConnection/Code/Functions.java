@@ -671,8 +671,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double electricitySurplus_kW = - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // still excludes battery power
 	//traceln("electricitySuprlus_kW: " + electricitySurplus_kW);
 	//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( electricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
-	double v_allowedDeliveryCapacity_kW = p_contractedDeliveryCapacity_kW*0.9;
-	double v_allowedFeedinCapacity_kW = p_contractedFeedinCapacity_kW*0.9;
+	double v_allowedDeliveryCapacity_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW*0.9;
+	double v_allowedFeedinCapacity_kW = v_liveConnectionMetaData.contractedFeedinCapacity_kW*0.9;
 	//double connectionCapacity_kW = v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 	double availableChargePower_kW = v_allowedDeliveryCapacity_kW + electricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = electricitySurplus_kW - v_allowedFeedinCapacity_kW; // Max discharging power within grid capacity
@@ -750,8 +750,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		if( b_stayWithinConnectionLimits ) {		
 			double electricitySurplus_kW = - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 			
-			double availableChargePower_kW = electricitySurplus_kW + p_contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = electricitySurplus_kW - p_contractedFeedinCapacity_kW; // Max discharging power within grid capacity
+			double availableChargePower_kW = electricitySurplus_kW + v_liveConnectionMetaData.contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
+			double availableDischargePower_kW = electricitySurplus_kW - v_liveConnectionMetaData.contractedFeedinCapacity_kW; // Max discharging power within grid capacity
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		}			
 	
@@ -857,7 +857,7 @@ double f_manageCharging()
 {/*ALCODESTART::1671095995172*/
 double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = p_contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
 		f_simpleCharging();
@@ -869,12 +869,12 @@ switch (p_chargingAttitudeVehicles) {
 		f_maxPowerCharging( max(0, availableChargingCapacity));
 	break;
 	case CHEAP:
-		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_contractedDeliveryCapacity_kW); 
+		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;
 	case V2G:
-		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_contractedDeliveryCapacity_kW); 
+		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;
@@ -1366,23 +1366,25 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 double f_initialize()
 {/*ALCODESTART::1698854861644*/
-if (p_physicalConnectionCapacity_kW < 0) {
+traceln("GridConnection initialize" + p_gridConnectionID);
+
+if (v_liveConnectionMetaData.physicalCapacity_kW < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative physical connection capacity!");
-} else if (p_contractedDeliveryCapacity_kW < 0) {
+} else if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted delivery capacity!");
-} else if (p_contractedFeedinCapacity_kW < 0) {
+} else if (v_liveConnectionMetaData.contractedFeedinCapacity_kW < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted feed in capacity!");
 }
 
 if(v_isActive){
-	if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0 && p_physicalConnectionCapacity_kW == 0.0) { // If no contracted or physical capacity is given, throw error.
+	if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0.0 && v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0.0 && v_liveConnectionMetaData.physicalCapacity_kW == 0.0) { // If no contracted or physical capacity is given, throw error.
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has 0.0 physical and contracted capacity! Not a valid state of for this agent");
 	} else {
-		if (p_contractedDeliveryCapacity_kW == 0.0 && p_contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
-		p_contractedDeliveryCapacity_kW = p_physicalConnectionCapacity_kW;
-		p_contractedFeedinCapacity_kW = p_physicalConnectionCapacity_kW;
-	} else if ( p_physicalConnectionCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
-			p_physicalConnectionCapacity_kW = max(p_contractedDeliveryCapacity_kW, p_contractedFeedinCapacity_kW);
+		if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0.0 && v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
+		v_liveConnectionMetaData.contractedDeliveryCapacity_kW = v_liveConnectionMetaData.physicalCapacity_kW;
+		v_liveConnectionMetaData.contractedFeedinCapacity_kW = v_liveConnectionMetaData.physicalCapacity_kW;
+	} else if ( v_liveConnectionMetaData.physicalCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
+			v_liveConnectionMetaData.physicalCapacity_kW = max(v_liveConnectionMetaData.contractedDeliveryCapacity_kW, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 		}
 	}
 }
@@ -1438,13 +1440,6 @@ v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
 v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
 v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
 v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
-v_liveData.connectionMetaData = new J_ConnectionMetaData(this);
-v_liveData.connectionMetaData.contractedDeliveryCapacity_kW = this.p_contractedDeliveryCapacity_kW;
-v_liveData.connectionMetaData.contractedFeedinCapacity_kW = this.p_contractedFeedinCapacity_kW;
-v_liveData.connectionMetaData.physicalCapacity_kW = this.p_physicalConnectionCapacity_kW;
-v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = this.b_isRealDeliveryCapacityAvailable;
-v_liveData.connectionMetaData.contractedFeedinCapacityKnown = this.b_isRealFeedinCapacityAvailable;
-v_liveData.connectionMetaData.physicalCapacityKnown = this.b_isRealPhysicalCapacityAvailable;
 
 f_initializeDataSets();
 
@@ -2071,10 +2066,10 @@ double f_curtailment()
 switch(p_curtailmentMode) {
 	case CAPACITY:
 	// Keep feedin power within connection capacity
-	if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - p_contractedFeedinCapacity_kW) { // overproduction!
+	if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
 		for (J_EAProduction j_ea : c_productionAssets) {
-			j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - p_contractedFeedinCapacity_kW);
-			if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - p_contractedFeedinCapacity_kW)) {
+			j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+			if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
 				break;
 			}
 		}
@@ -2109,22 +2104,22 @@ if (timeOfDay == hourOfDay) {
 	int previousHour = ((hourOfDay - 1) % 24 + 24) % 24;
 	if (dayOfWeek == 0 || dayOfWeek == 6) {
 		if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
-			p_contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
-			p_contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
 		}
 		else {
-			p_contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
-			p_contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
 		}
 	}
 	else {
 		if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous weekend capacity
-			p_contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
-			p_contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
 		}
 		else {
-			p_contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
-			p_contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
+			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
 		}
 	}
 }
@@ -2140,22 +2135,22 @@ int hourOfDay = (int) timeOfDay;
 
 if (dayOfWeek == 0 || dayOfWeek == 6) {
 	if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
-		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
-		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
 	}
 	else {
-		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
-		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
 	}
 }
 else {
 	if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
-		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
-		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
 	}
 	else {
-		p_contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
-		p_contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
+		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
 	}
 }
 /*ALCODEEND*/}
@@ -2193,8 +2188,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
 	boolean b_stayWithinConnectionLimits = true;
 	if( b_stayWithinConnectionLimits ) {	
-		double maxBatteryPower_kW = p_contractedDeliveryCapacity_kW - (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)); // Max battery charging power within grid capacity
-		double minBatteryPower_kW = - (p_contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))); // Max discharging power within grid capacity (this number is usually negative!)
+		double maxBatteryPower_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW - (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)); // Max battery charging power within grid capacity
+		double minBatteryPower_kW = - (v_liveConnectionMetaData.contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))); // Max discharging power within grid capacity (this number is usually negative!)
 		chargeSetpoint_kW = min(max(chargeSetpoint_kW, minBatteryPower_kW),maxBatteryPower_kW); // Don't allow too much (dis)charging!
 		/*if (minBatteryPower_kW>0) {
 			traceln("Battery must charge to prevent curtailment! minBatteryPower_kW: %s, chargeSetpoint_kW: %s, battery SOC: %s", minBatteryPower_kW, chargeSetpoint_kW, currentBatteryStateOfCharge_fr);
@@ -2264,8 +2259,8 @@ v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProducti
 
 
 //Live capacity datasets
-v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, p_contractedDeliveryCapacity_kW);
-v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, p_contractedFeedinCapacity_kW);
+v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 
 
 //// Gather specific electricity flows from corresponding energy assets
@@ -2366,7 +2361,7 @@ v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalan
 
 double f_rapidRunDataLogging()
 {/*ALCODESTART::1722518905501*/
-v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / p_contractedDeliveryCapacity_kW ));
+v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / v_liveConnectionMetaData.contractedDeliveryCapacity_kW ));
 
 double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
@@ -2477,8 +2472,8 @@ if (energyModel.b_isSummerWeek){
 	v_rapidRunData.acc_summerWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 	v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-	v_rapidRunData.acc_summerWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_summerWeekDeliveryCapacity_kW.addStep( v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_rapidRunData.acc_summerWeekFeedinCapacity_kW.addStep( -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
@@ -2515,8 +2510,8 @@ if (energyModel.b_isWinterWeek){
 	v_rapidRunData.acc_winterWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
 	v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 	
-	v_rapidRunData.acc_winterWeekDeliveryCapacity_kW.addStep( p_contractedDeliveryCapacity_kW);
-	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( -p_contractedFeedinCapacity_kW);
+	v_rapidRunData.acc_winterWeekDeliveryCapacity_kW.addStep( v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_rapidRunData.acc_winterWeekFeedinCapacity_kW.addStep( -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 	
 	v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW.addStep( v_fixedConsumptionElectric_kW );
 	v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW.addStep( v_heatPumpElectricityConsumption_kW );
@@ -2667,14 +2662,14 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double power_fr = 0;
 	double capacityElectric_kW = p_batteryAsset.getCapacityElectric_kW();
 	
-	if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > p_contractedFeedinCapacity_kW * safetyMargin_fr) {
+	if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > v_liveConnectionMetaData.contractedFeedinCapacity_kW * safetyMargin_fr) {
 		// discharge
-		double dischargeNeeded_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - p_contractedFeedinCapacity_kW * safetyMargin_fr;
+		double dischargeNeeded_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW * safetyMargin_fr;
 		power_fr = - dischargeNeeded_kW / capacityElectric_kW;
 	}
-	else if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < p_contractedDeliveryCapacity_kW * safetyMargin_fr) {
+	else if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_liveConnectionMetaData.contractedDeliveryCapacity_kW * safetyMargin_fr) {
 		// charge
-		double chargeAvailable_kW = p_contractedDeliveryCapacity_kW * safetyMargin_fr - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+		double chargeAvailable_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW * safetyMargin_fr - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 		power_fr = chargeAvailable_kW / capacityElectric_kW;
 	}
 

@@ -5,12 +5,12 @@ public class J_ConnectionMetaData implements Serializable {
 
 	public Agent parentAgent;
 
-	public Double contractedDeliveryCapacity_kW;
-	public Double contractedFeedinCapacity_kW;
-	public Double physicalCapacity_kW;
-	public Boolean contractedDeliveryCapacityKnown;
-	public Boolean contractedFeedinCapacityKnown;
-	public Boolean physicalCapacityKnown;
+	public Double contractedDeliveryCapacity_kW  = 0.0;
+	public Double contractedFeedinCapacity_kW  = 0.0;
+	public Double physicalCapacity_kW  = 0.0;
+	public Boolean contractedDeliveryCapacityKnown  = false;
+	public Boolean contractedFeedinCapacityKnown  = false;
+	public Boolean physicalCapacityKnown  = false;
 	
     /**
      * Default constructor
