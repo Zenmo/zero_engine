@@ -1447,7 +1447,7 @@ v_timeStepsElapsed ++;
 double f_buildGridNodeTree()
 {/*ALCODESTART::1716884712799*/
 //Initialize top level grid values
-double topLevelGridCapacity_kW = 0;
+double topLevelElectricGridCapacity_kW = 0;
 boolean topLevelGridCapacitiesKnown = true;
 
 // First make all links between GridNodes
@@ -1462,9 +1462,11 @@ for( GridNode GN : pop_gridNodes ) {
 	if (parentNode == null) {
 		f_gridNodeRecursiveAdd(GN);
 		c_gridNodesTopLevel.add(GN);
-		topLevelGridCapacity_kW +=GN.p_capacity_kW;
-		if(!GN.p_realCapacityAvailable){
-			topLevelGridCapacitiesKnown = false;
+		if(GN.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY){
+			topLevelElectricGridCapacity_kW +=GN.p_capacity_kW;
+			if(!GN.p_realCapacityAvailable){
+				topLevelGridCapacitiesKnown = false;
+			}
 		}
 	} else {
 		c_gridNodesNotTopLevel.add(GN);	
@@ -1478,9 +1480,9 @@ c_gridNodeExecutionListReverse = c_gridNodeExecutionList;
 Collections.reverse(c_gridNodeExecutionList);
 
 //Set cumulative toplevel grid values as energyModel values
-v_liveConnectionMetaData.physicalCapacity_kW = topLevelGridCapacity_kW;
-v_liveConnectionMetaData.contractedDeliveryCapacity_kW = topLevelGridCapacity_kW;
-v_liveConnectionMetaData.contractedFeedinCapacity_kW = topLevelGridCapacity_kW;
+v_liveConnectionMetaData.physicalCapacity_kW = topLevelElectricGridCapacity_kW;
+v_liveConnectionMetaData.contractedDeliveryCapacity_kW = topLevelElectricGridCapacity_kW;
+v_liveConnectionMetaData.contractedFeedinCapacity_kW = topLevelElectricGridCapacity_kW;
 v_liveConnectionMetaData.physicalCapacityKnown = topLevelGridCapacitiesKnown;
 v_liveConnectionMetaData.contractedDeliveryCapacityKnown = topLevelGridCapacitiesKnown;
 v_liveConnectionMetaData.contractedFeedinCapacityKnown = topLevelGridCapacitiesKnown;
