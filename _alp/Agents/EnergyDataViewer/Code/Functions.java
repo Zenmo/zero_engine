@@ -384,7 +384,7 @@ v_dataElectricityForStorageConsumptionYear_kW = data.getRapidRunData().acc_daily
 v_dataElectricityForHydrogenConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectrolyserElectricityConsumption_kW.getDataSet(startTime_h);
 v_dataElectricityForCookingConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectricCookingConsumption_kW.getDataSet(startTime_h);
 v_dataDistrictHeatConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageDistrictHeatingConsumption_kW.getDataSet(startTime_h);
-data_dailyAverageFinalEnergyConsumption_kW = data.getRapidRunData().acc_dailyAverageFinalEnergyConsumption_kW.getDataSet(startTime_h);
+data_dailyAverageFinalEnergyConsumption_kW = data.getRapidRunData().acc_dailyAverageEnergyConsumption_kW.getDataSet(startTime_h);
 
 //Supply
 v_dataElectricityWindProductionYear_kW = data.getRapidRunData().acc_dailyAverageWindProduction_kW.getDataSet(startTime_h);

@@ -31,7 +31,6 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_dailyAverageElectricCookingConsumption_kW;
     public ZeroAccumulator acc_dailyAverageElectrolyserElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageDistrictHeatingConsumption_kW;
-    public ZeroAccumulator acc_dailyAverageFinalEnergyConsumption_kW;
     
     public ZeroAccumulator acc_dailyAveragePVProduction_kW;
     public ZeroAccumulator acc_dailyAverageWindProduction_kW;
@@ -147,7 +146,6 @@ public class J_RapidRunData {
 	    acc_dailyAverageElectricCookingConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageDistrictHeatingConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
-	    acc_dailyAverageFinalEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    
 	    acc_dailyAveragePVProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageWindProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -264,7 +262,6 @@ public class J_RapidRunData {
     	acc_dailyAverageElectricCookingConsumption_kW.reset();
     	acc_dailyAverageElectrolyserElectricityConsumption_kW.reset();
     	acc_dailyAverageDistrictHeatingConsumption_kW.reset();
-    	acc_dailyAverageFinalEnergyConsumption_kW.reset();
     	
     	acc_dailyAveragePVProduction_kW.reset();
     	acc_dailyAverageWindProduction_kW.reset();
@@ -378,7 +375,6 @@ public class J_RapidRunData {
         clone.acc_dailyAverageElectricCookingConsumption_kW=this.acc_dailyAverageElectricCookingConsumption_kW.getClone();
         clone.acc_dailyAverageElectrolyserElectricityConsumption_kW=this.acc_dailyAverageElectrolyserElectricityConsumption_kW.getClone();
         clone.acc_dailyAverageDistrictHeatingConsumption_kW=this.acc_dailyAverageDistrictHeatingConsumption_kW.getClone();
-        clone.acc_dailyAverageFinalEnergyConsumption_kW=this.acc_dailyAverageFinalEnergyConsumption_kW.getClone();
         clone.acc_dailyAveragePVProduction_kW=this.acc_dailyAveragePVProduction_kW.getClone();
         clone.acc_dailyAverageWindProduction_kW=this.acc_dailyAverageWindProduction_kW.getClone();
         clone.acc_dailyAverageV2GProduction_kW=this.acc_dailyAverageV2GProduction_kW.getClone();
