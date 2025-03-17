@@ -21,7 +21,7 @@ public class J_RapidRunData {
     public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap();
     public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap();
     
-	public ZeroAccumulator acc_dailyAverageEnergyConsumption_kW;
+	public ZeroAccumulator acc_dailyAverageFinalEnergyConsumption_kW;
 	public ZeroAccumulator acc_dailyAverageEnergyProduction_kW;
 	
 	public ZeroAccumulator acc_dailyAverageBaseloadElectricityConsumption_kW;
@@ -46,7 +46,7 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_summerWeekFeedinCapacity_kW;
     
-    public ZeroAccumulator acc_summerWeekEnergyConsumption_kW;
+    public ZeroAccumulator acc_summerWeekFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_summerWeekEnergyCurtailed_kW;
     public ZeroAccumulator acc_summerWeekEnergyProduction_kW;
 
@@ -75,7 +75,7 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_winterWeekFeedinCapacity_kW;
     
-    public ZeroAccumulator acc_winterWeekEnergyConsumption_kW;
+    public ZeroAccumulator acc_winterWeekFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_winterWeekEnergyProduction_kW;
     public ZeroAccumulator acc_winterWeekEnergyCurtailed_kW;
     
@@ -102,7 +102,7 @@ public class J_RapidRunData {
 	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap();
     public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap();
     
-    public ZeroAccumulator acc_daytimeEnergyConsumption_kW;
+    public ZeroAccumulator acc_daytimeFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
     public ZeroAccumulator acc_daytimeElectricityConsumption_kW;
     public ZeroAccumulator acc_daytimeElectricityProduction_kW;
@@ -110,7 +110,7 @@ public class J_RapidRunData {
     //Weekend/day
     public ZeroAccumulator acc_weekendElectricityConsumption_kW;
     public ZeroAccumulator acc_weekendElectricityProduction_kW;
-    public ZeroAccumulator acc_weekendEnergyConsumption_kW;
+    public ZeroAccumulator acc_weekendFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_weekendEnergyProduction_kW;
     public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
     public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
@@ -134,7 +134,7 @@ public class J_RapidRunData {
 	    am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, simDuration_h);
 	
 	    acc_dailyAverageEnergyProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
-	    acc_dailyAverageEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAverageFinalEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	
 	    acc_totalEnergyCurtailed_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -162,7 +162,7 @@ public class J_RapidRunData {
 	    am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
 	
 	    acc_summerWeekEnergyProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
-	    acc_summerWeekEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekFinalEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	
 	    acc_summerWeekEnergyCurtailed_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
@@ -193,7 +193,7 @@ public class J_RapidRunData {
 	    am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
 	
 	    acc_winterWeekEnergyProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
-	    acc_winterWeekEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekFinalEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	
 	    acc_winterWeekEnergyCurtailed_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
@@ -223,7 +223,7 @@ public class J_RapidRunData {
 	    am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
 	
 	    acc_daytimeEnergyProduction_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
-	    acc_daytimeEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,0.5 * (simDuration_h));
+	    acc_daytimeFinalEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,0.5 * (simDuration_h));
 	    //acc_daytimeEnergyCurtailed_kW = new ZeroAccumulator(false, timeStep_h, simDuration_h);
 	    acc_daytimeElectricityProduction_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
 	    acc_daytimeElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
@@ -233,7 +233,7 @@ public class J_RapidRunData {
 	    am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
 	
 	    acc_weekendEnergyProduction_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
-	    acc_weekendEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,2 / 7  * (simDuration_h) + 48);
+	    acc_weekendFinalEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,2 / 7  * (simDuration_h) + 48);
 	    //acc_weekendEnergyCurtailed_kW = new ZeroAccumulator(false, timeStep_h, simDuration_h);
 	    acc_weekendElectricityProduction_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
 	    acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
@@ -250,7 +250,7 @@ public class J_RapidRunData {
     	am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, simDuration_h);
 
     	acc_dailyAverageEnergyProduction_kW.reset();
-    	acc_dailyAverageEnergyConsumption_kW.reset();
+    	acc_dailyAverageFinalEnergyConsumption_kW.reset();
 
     	acc_totalEnergyCurtailed_kW.reset();
     	acc_totalPrimaryEnergyProductionHeatpumps_kW.reset();
@@ -278,7 +278,7 @@ public class J_RapidRunData {
     	am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
 
     	acc_summerWeekEnergyProduction_kW.reset();
-    	acc_summerWeekEnergyConsumption_kW.reset();
+    	acc_summerWeekFinalEnergyConsumption_kW.reset();
 
     	acc_summerWeekEnergyCurtailed_kW.reset();
     	acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.reset();
@@ -309,7 +309,7 @@ public class J_RapidRunData {
     	am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
 
     	acc_winterWeekEnergyProduction_kW.reset();
-    	acc_winterWeekEnergyConsumption_kW.reset();
+    	acc_winterWeekFinalEnergyConsumption_kW.reset();
 
     	acc_winterWeekEnergyCurtailed_kW.reset();
     	acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.reset();
@@ -341,7 +341,7 @@ public class J_RapidRunData {
     	acc_daytimeElectricityProduction_kW.reset();
     	acc_daytimeElectricityConsumption_kW.reset();
     	acc_daytimeEnergyProduction_kW.reset();
-    	acc_daytimeEnergyConsumption_kW.reset();
+    	acc_daytimeFinalEnergyConsumption_kW.reset();
 
     	// Weekend
     	am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
@@ -351,7 +351,7 @@ public class J_RapidRunData {
     	acc_weekendElectricityProduction_kW.reset();
     	acc_weekendElectricityConsumption_kW.reset();
     	acc_weekendEnergyProduction_kW.reset();
-    	acc_weekendEnergyConsumption_kW.reset();
+    	acc_weekendFinalEnergyConsumption_kW.reset();
     }
     
     public J_RapidRunData getClone() {
@@ -366,7 +366,7 @@ public class J_RapidRunData {
         clone.acc_totalPrimaryEnergyProductionHeatpumps_kW=this.acc_totalPrimaryEnergyProductionHeatpumps_kW.getClone();
         clone.am_dailyAverageConsumptionAccumulators_kW=this.am_dailyAverageConsumptionAccumulators_kW.getClone();
         clone.am_dailyAverageProductionAccumulators_kW=this.am_dailyAverageProductionAccumulators_kW.getClone();
-        clone.acc_dailyAverageEnergyConsumption_kW=this.acc_dailyAverageEnergyConsumption_kW.getClone();
+        clone.acc_dailyAverageFinalEnergyConsumption_kW=this.acc_dailyAverageFinalEnergyConsumption_kW.getClone();
     	clone.acc_dailyAverageEnergyProduction_kW=this.acc_dailyAverageEnergyProduction_kW.getClone();
     	clone.acc_dailyAverageBaseloadElectricityConsumption_kW=this.acc_dailyAverageBaseloadElectricityConsumption_kW.getClone();
         clone.acc_dailyAverageHeatPumpElectricityConsumption_kW=this.acc_dailyAverageHeatPumpElectricityConsumption_kW.getClone();
@@ -386,7 +386,7 @@ public class J_RapidRunData {
         clone.am_summerWeekBalanceAccumulators_kW=this.am_summerWeekBalanceAccumulators_kW.getClone();
         clone.acc_summerWeekDeliveryCapacity_kW=this.acc_summerWeekDeliveryCapacity_kW.getClone();
         clone.acc_summerWeekFeedinCapacity_kW=this.acc_summerWeekFeedinCapacity_kW.getClone();
-        clone.acc_summerWeekEnergyConsumption_kW=this.acc_summerWeekEnergyConsumption_kW.getClone();
+        clone.acc_summerWeekFinalEnergyConsumption_kW=this.acc_summerWeekFinalEnergyConsumption_kW.getClone();
         clone.acc_summerWeekEnergyCurtailed_kW=this.acc_summerWeekEnergyCurtailed_kW.getClone();
         clone.acc_summerWeekEnergyProduction_kW=this.acc_summerWeekEnergyProduction_kW.getClone();
         clone.am_summerWeekConsumptionAccumulators_kW=this.am_summerWeekConsumptionAccumulators_kW.getClone();
@@ -410,7 +410,7 @@ public class J_RapidRunData {
         clone.am_winterWeekBalanceAccumulators_kW = this.am_winterWeekBalanceAccumulators_kW.getClone();
         clone.acc_winterWeekDeliveryCapacity_kW = this.acc_winterWeekDeliveryCapacity_kW.getClone();
         clone.acc_winterWeekFeedinCapacity_kW = this.acc_winterWeekFeedinCapacity_kW.getClone();
-        clone.acc_winterWeekEnergyConsumption_kW = this.acc_winterWeekEnergyConsumption_kW.getClone();
+        clone.acc_winterWeekFinalEnergyConsumption_kW = this.acc_winterWeekFinalEnergyConsumption_kW.getClone();
         clone.acc_winterWeekEnergyProduction_kW = this.acc_winterWeekEnergyProduction_kW.getClone();
         clone.acc_winterWeekEnergyCurtailed_kW = this.acc_winterWeekEnergyCurtailed_kW.getClone();
         clone.am_winterWeekConsumptionAccumulators_kW = this.am_winterWeekConsumptionAccumulators_kW.getClone();
@@ -433,14 +433,14 @@ public class J_RapidRunData {
         ////Daytime / Nighttime
     	clone.am_daytimeExports_kW = am_daytimeExports_kW.getClone();
         clone.am_daytimeImports_kW = am_daytimeImports_kW.getClone();
-        clone.acc_daytimeEnergyConsumption_kW = acc_daytimeEnergyConsumption_kW.getClone();
+        clone.acc_daytimeFinalEnergyConsumption_kW = acc_daytimeFinalEnergyConsumption_kW.getClone();
         clone.acc_daytimeEnergyProduction_kW = acc_daytimeEnergyProduction_kW.getClone();
         clone.acc_daytimeElectricityConsumption_kW = acc_daytimeElectricityConsumption_kW.getClone();
         clone.acc_daytimeElectricityProduction_kW = acc_daytimeElectricityProduction_kW.getClone();
         //Weekend/day
         clone.acc_weekendElectricityConsumption_kW = this.acc_weekendElectricityConsumption_kW.getClone();
         clone.acc_weekendElectricityProduction_kW = this.acc_weekendElectricityProduction_kW.getClone();
-        clone.acc_weekendEnergyConsumption_kW = this.acc_weekendEnergyConsumption_kW.getClone();
+        clone.acc_weekendFinalEnergyConsumption_kW = this.acc_weekendFinalEnergyConsumption_kW.getClone();
         clone.acc_weekendEnergyProduction_kW = this.acc_weekendEnergyProduction_kW.getClone();
         clone.am_weekendExports_kW = this.am_weekendExports_kW.getClone();
         clone.am_weekendImports_kW = this.am_weekendImports_kW.getClone();
@@ -503,7 +503,7 @@ public class J_RapidRunData {
         return max(0, getTotalElectricityConsumed_MWh() - am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000); 
     }
     public double getTotalEnergyConsumed_MWh() { 
-        return acc_dailyAverageEnergyConsumption_kW.getIntegral_kWh() / 1000; 
+        return acc_dailyAverageFinalEnergyConsumption_kW.getIntegral_kWh() / 1000; 
     }
     public double getTotalEnergyProduced_MWh() { 
         return acc_dailyAverageEnergyProduction_kW.getIntegral_kWh() / 1000; 
@@ -561,7 +561,7 @@ public class J_RapidRunData {
         return max(0, getSummerWeekElectricityConsumed_MWh() - am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000);
     }
     public double getSummerWeekEnergyConsumed_MWh() {
-        return acc_summerWeekEnergyConsumption_kW.getIntegral_kWh() / 1000;
+        return acc_summerWeekFinalEnergyConsumption_kW.getIntegral_kWh() / 1000;
     }
     public double getSummerWeekEnergyProduced_MWh() {
         return acc_summerWeekEnergyProduction_kW.getIntegral_kWh() / 1000;
@@ -615,7 +615,7 @@ public class J_RapidRunData {
         return max(0, getWinterWeekElectricityConsumed_MWh() - am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_kWh() / 1000);
     }
     public double getWinterWeekEnergyConsumed_MWh() {
-        return acc_winterWeekEnergyConsumption_kW.getIntegral_kWh() / 1000;
+        return acc_winterWeekFinalEnergyConsumption_kW.getIntegral_kWh() / 1000;
     }
     public double getWinterWeekEnergyProduced_MWh() {
         return acc_winterWeekEnergyProduction_kW.getIntegral_kWh() / 1000;
@@ -668,7 +668,7 @@ public class J_RapidRunData {
         return max(0, getDaytimeElectricityConsumed_MWh() - am_daytimeImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000); 
     }
     public double getDaytimeEnergyConsumed_MWh() { 
-        return acc_daytimeEnergyConsumption_kW.getIntegral_kWh() / 1000; 
+        return acc_daytimeFinalEnergyConsumption_kW.getIntegral_kWh() / 1000; 
     }
     public double getDaytimeEnergyProduced_MWh() { 
         return acc_daytimeEnergyProduction_kW.getIntegral_kWh() / 1000; 
@@ -780,7 +780,7 @@ public class J_RapidRunData {
         return max(0, getWeekendElectricityConsumed_MWh() - am_weekendImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_kWh()/1000); 
     }
     public double getWeekendEnergyConsumed_MWh() { 
-        return acc_weekendEnergyConsumption_kW.getIntegral_kWh() / 1000; 
+        return acc_weekendFinalEnergyConsumption_kW.getIntegral_kWh() / 1000; 
     }
     public double getWeekendEnergyProduced_MWh() { 
         return acc_weekendEnergyProduction_kW.getIntegral_kWh() / 1000; 
