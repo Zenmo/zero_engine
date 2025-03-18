@@ -686,9 +686,6 @@ for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
 	AllLowerLVLConnectedGridConnections.addAll(GN.f_getConnectedGridConnections());
 }
 
-AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
-
-
 return AllLowerLVLConnectedGridConnections;
 /*ALCODEEND*/}
 
