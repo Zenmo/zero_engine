@@ -34,9 +34,6 @@ public class J_AssetsMetaData {
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
-    	this.totalInstalledPVPower_kW = 0.0;
-    	this.totalInstalledWindPower_kW = 0.0;
-    	this.totalInstalledBatteryStorageCapacity_MWh = 0.0;
     	this.hasElectricHeating = false;
 	    this.hasElectricTransport = false;
 	    this.hasPV = false;
@@ -47,7 +44,6 @@ public class J_AssetsMetaData {
 	    this.hasCHP = false;
 	    this.hasV2G = false;
 	    this.hasElectricCooking = false;
-
 	
 	    //Electric heating
 	    for(GridConnection GC : gcList){
@@ -65,35 +61,23 @@ public class J_AssetsMetaData {
 	    }
 	    //PV
 	    for(GridConnection GC : gcList){
-	    	if(GC.c_pvAssets.size()>0 && GC.v_isActive){
-	    		for(J_EA pvAsset : GC.c_pvAssets){
-	    			if(((J_EAProduction)pvAsset).getCapacityElectric_kW() > 0) {
-			    		this.hasPV = true;
-			    		this.totalInstalledPVPower_kW += ((J_EAProduction)pvAsset).getCapacityElectric_kW();
-	    			}
-	    		}
+	    	if (GC.v_liveAssetsMetaData.totalInstalledPVPower_kW > 0 && GC.v_isActive) {
+	    		this.hasPV = true;
+	    		break;	    		
 	    	}
 	    }
 	    //Wind
 	    for(GridConnection GC : gcList){
-	    	if(GC.c_windAssets.size()>0 && GC.v_isActive){
-	    		for(J_EA windturbine : GC.c_windAssets){
-	    			if(((J_EAProduction)windturbine).getCapacityElectric_kW() > 0) {
-			    		this.hasWindturbine = true;
-			    		this.totalInstalledWindPower_kW += ((J_EAProduction)windturbine).getCapacityElectric_kW();
-	    			}
-	    		}
+	    	if (GC.v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 && GC.v_isActive) {
+	    		this.hasWindturbine = true;
+	    		break;
 	    	}
 	    }
 	    //Battery
 	    for(GridConnection GC : gcList){
-	    	if(GC.c_batteryAssets.size()>0 && GC.v_isActive){
-	    		for(J_EA battery : GC.c_batteryAssets){
-	    			if(((J_EAStorageElectric)battery).getStorageCapacity_kWh() > 0){
-	    				this.hasBattery = true;
-	    				this.totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)battery).getStorageCapacity_kWh()/1000;
-	    			}
-	    		}
+	    	if (GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0 && GC.v_isActive) {
+				this.hasBattery = true;
+				break;
 	    	}
 	    }
 	    //Heat grid

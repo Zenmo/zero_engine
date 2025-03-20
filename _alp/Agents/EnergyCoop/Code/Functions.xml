@@ -486,7 +486,6 @@
 		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1740493169961</Id>
 		<Name><![CDATA[f_getAllChildCustomerGridConnections]]></Name>
-		<Description><![CDATA[Function that gets all grid nodes and the children of those grid nodes, etc. All the way to the bottom node.]]></Description>
 		<X>60</X>
 		<Y>420</Y>
 		<Label>
@@ -503,7 +502,6 @@
 		<ReturnType>HashSet&lt;GridConnection&gt;</ReturnType>
 		<Id>1740493169963</Id>
 		<Name><![CDATA[f_getAllChildCustomerGridConnections_recursion]]></Name>
-		<Description><![CDATA[Recursion Function that gets all grid nodes and the children of those grid nodes, etc. All the way to the bottom node. For basic use should be called with an empty list!]]></Description>
 		<X>80</X>
 		<Y>440</Y>
 		<Label>

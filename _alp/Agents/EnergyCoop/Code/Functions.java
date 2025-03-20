@@ -21,11 +21,11 @@ if (ConnectingChildActor.p_actorGroup != null) {
 	if (ConnectingChildActor.p_actorGroup.contains("production") || ConnectingChildActor.p_actorGroup.contains("Production") || ConnectingChildActor.p_actorGroup.contains("member")) { // Count owned production-sites as 'behind the meter'
 		c_coopMembers.add( ConnectingChildActor);
 		c_memberGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
+		(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections).forEach( gc -> gc.c_parentCoops.add(this));
 		//traceln("Adding: %s", ((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 	} else {
 		c_coopCustomers.add( ConnectingChildActor );
 		c_customerGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
-		
 	}
 } else {
 	c_coopCustomers.add( ConnectingChildActor );
@@ -1166,7 +1166,6 @@ double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1739974426481*/
 c_memberGridConnections = gcList;
 
-
 //Basic initialization
 f_initialize();
 
@@ -1293,10 +1292,12 @@ return new ArrayList(f_getAllChildMemberGridConnections_recursion(new HashSet<Gr
 HashSet<GridConnection> f_getAllChildMemberGridConnections_recursion(HashSet<GridConnection> allMemberGridConnections)
 {/*ALCODESTART::1740492770320*/
 //Add to collection
+traceln(" c_memberGridConnections : " + c_memberGridConnections);
 allMemberGridConnections.addAll(this.c_memberGridConnections);
-
+traceln("allMemberGridConnections: " + allMemberGridConnections);
 //Recursive loop (repeat this function till bottom)
 List<Agent> childCoops = findAll(c_coopMembers, coopMember -> coopMember instanceof EnergyCoop);
+traceln("childCoops: " + childCoops);
 if(childCoops.size() == 0){
 	return allMemberGridConnections;
 }

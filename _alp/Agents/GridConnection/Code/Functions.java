@@ -1170,19 +1170,23 @@ if (j_ea instanceof J_EAVehicle) {
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		v_hasPV = true;
-		v_liveAssetsMetaData.totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
 		}
-		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
+		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
 		c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_liveAssetsMetaData.totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
 		}
-		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
+		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 		c_windAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
@@ -1242,8 +1246,10 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 		c_batteryAssets.add(j_ea);
-		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
-		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		double capacity_MWh = ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
+		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		
 	} else if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientAirDependentAssets.add(j_ea);
@@ -1260,6 +1266,7 @@ if (j_ea instanceof J_EAVehicle) {
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
 			//v_windProductionElectric_kW += flowsArray[0];
 			c_windAssets.add(j_ea);
+			// TODO: Add some to the total installed wind (of this GC, its GN, the energymodel (and its parent coop))
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
 			//Do nothing
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
@@ -1701,19 +1708,23 @@ if (j_ea instanceof J_EAVehicle) {
 		if (otherPV == null) {
 			v_hasPV = false;
 		}
-		v_liveAssetsMetaData.totalInstalledPVPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), false);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
 		}
-		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
+		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
 		c_pvAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_liveAssetsMetaData.totalInstalledWindPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
 		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, ((J_EAProduction)j_ea).getCapacityElectric_kW(), false);
+			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
 		}
-		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
+		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
 		c_windAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
