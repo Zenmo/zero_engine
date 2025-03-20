@@ -656,7 +656,13 @@ if (p_parentNodeID != null) {
 
 List<GridNode> f_getLowerLVLConnectedGridNodes()
 {/*ALCODESTART::1725964027407*/
-return f_getAllConnectedGridNodes_recursion(new ArrayList<GridNode>());
+List<GridNode> allConnectedGridNodes = new ArrayList<GridNode>();
+
+for(GridNode GN : c_connectedGridNodes){
+	allConnectedGridNodes.addAll(GN.f_getAllConnectedGridNodes_recursion(allConnectedGridNodes));
+}
+
+return allConnectedGridNodes;
 /*ALCODEEND*/}
 
 List<GridNode> f_getAllConnectedGridNodes_recursion(List<GridNode> allConnectedGridNodes)
@@ -687,7 +693,6 @@ for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
 }
 
 AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
-
 
 return AllLowerLVLConnectedGridConnections;
 /*ALCODEEND*/}
