@@ -108,12 +108,14 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_daytimeElectricityProduction_kW;
     
     //Weekend/day
+    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
+    
     public ZeroAccumulator acc_weekendElectricityConsumption_kW;
     public ZeroAccumulator acc_weekendElectricityProduction_kW;
     public ZeroAccumulator acc_weekendFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_weekendEnergyProduction_kW;
-    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
+
 
     
     /**
