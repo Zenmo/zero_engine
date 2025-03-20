@@ -34,6 +34,9 @@ public class J_AssetsMetaData {
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
+    	this.totalInstalledPVPower_kW = 0.0;
+    	this.totalInstalledWindPower_kW = 0.0;
+    	this.totalInstalledBatteryStorageCapacity_MWh = 0.0;
     	this.hasElectricHeating = false;
 	    this.hasElectricTransport = false;
 	    this.hasPV = false;
@@ -153,7 +156,17 @@ public class J_AssetsMetaData {
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return "totalInstalledPVPower_kW: " + totalInstalledPVPower_kW + 
+				", totalInstalledWindPower_kW: " + totalInstalledWindPower_kW + 
+	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh + 
+	            ", hasElectricHeating: " + hasElectricHeating + 
+	            ", hasElectricTransport: " + hasElectricTransport + 
+	            ", hasWindturbine: " + hasWindturbine +
+		        ", hasBattery: " + hasBattery +
+		        ", hasHeatGridConnection: " + hasHeatGridConnection +
+		        ", hasElectrolyser: " + hasElectrolyser +
+		        ", hasCHP: " + hasCHP +
+		        ", hasV2G: " + hasV2G +
+		        ", hasElectricCooking: " + hasElectricCooking;
 	}
-
 }
