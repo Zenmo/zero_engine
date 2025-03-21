@@ -1186,6 +1186,7 @@ if(energyModel.v_rapidRunData != null){
 	f_calculateKPIs();
 }
 
+f_connectCoopBattery();
 /*ALCODEEND*/}
 
 double f_getGroupContractDeliveryCapacity_kW()
@@ -1660,5 +1661,21 @@ else{
 	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.addStep(0);	
 }
 
+/*ALCODEEND*/}
+
+double f_connectCoopBattery()
+{/*ALCODESTART::1742569887460*/
+GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP);
+
+if(coopBattery != null){
+	//Reset previous state
+	coopBattery.v_previousPowerElectricity_kW = 0;
+	coopBattery.f_setActive(true);
+	
+	//Connect to coop
+	coopBattery.c_parentCoops.add(this);
+	c_memberGridConnections.add(coopBattery);
+	v_liveAssetsMetaData.hasBattery = true;
+}
 /*ALCODEEND*/}
 

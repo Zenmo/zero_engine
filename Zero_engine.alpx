@@ -974,6 +974,10 @@
 					<Name><![CDATA[SIMPLE]]></Name>
 				</Option>
 				<Option>
+					<Id>1742557314771</Id>
+					<Name><![CDATA[BALANCE_COOP]]></Name>
+				</Option>
+				<Option>
 					<Id>1734001947459</Id>
 					<Name><![CDATA[OFF]]></Name>
 				</Option>
