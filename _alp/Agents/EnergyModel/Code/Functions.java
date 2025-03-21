@@ -1797,6 +1797,9 @@ energyCoop.p_actorID = "Custom Coop for filtered GC list";
 // Initialisation, collecting data and calculating KPIs.
 energyCoop.f_initializeCustomCoop(gcList);
 
+// Adding this coop to the list of coops in the GC
+gcList.forEach(gc -> gc.c_parentCoops.add(energyCoop));
+
 // Return energyCoop to caller 
 return energyCoop;
 /*ALCODEEND*/}
@@ -1816,6 +1819,11 @@ for(Agent CO : energyCoop.c_coopMembers){
 		((ConnectionOwner)CO).p_coopParent = null;
 		((ConnectionOwner)CO).f_initialize();	
 	}
+}
+
+// Removing this coop from the list of coops in the GC
+for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
+	GC.c_parentCoops.remove(energyCoop);
 }
 
 // Remove energyCoop from pop_energyCoops.

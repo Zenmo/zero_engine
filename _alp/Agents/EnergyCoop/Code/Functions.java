@@ -21,11 +21,11 @@ if (ConnectingChildActor.p_actorGroup != null) {
 	if (ConnectingChildActor.p_actorGroup.contains("production") || ConnectingChildActor.p_actorGroup.contains("Production") || ConnectingChildActor.p_actorGroup.contains("member")) { // Count owned production-sites as 'behind the meter'
 		c_coopMembers.add( ConnectingChildActor);
 		c_memberGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
+		(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections).forEach( gc -> gc.c_parentCoops.add(this));
 		//traceln("Adding: %s", ((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
 	} else {
 		c_coopCustomers.add( ConnectingChildActor );
 		c_customerGridConnections.addAll(((ConnectionOwner)ConnectingChildActor).c_ownedGridConnections);
-		
 	}
 } else {
 	c_coopCustomers.add( ConnectingChildActor );
@@ -1164,8 +1164,7 @@ f_getCumulativeIndividualGCValues();
 
 double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1739974426481*/
-c_memberGridConnections = gcList;
-
+c_memberGridConnections.addAll(gcList);
 
 //Basic initialization
 f_initialize();
@@ -1297,6 +1296,7 @@ allMemberGridConnections.addAll(this.c_memberGridConnections);
 
 //Recursive loop (repeat this function till bottom)
 List<Agent> childCoops = findAll(c_coopMembers, coopMember -> coopMember instanceof EnergyCoop);
+
 if(childCoops.size() == 0){
 	return allMemberGridConnections;
 }
