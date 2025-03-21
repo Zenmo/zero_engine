@@ -1164,7 +1164,7 @@ f_getCumulativeIndividualGCValues();
 
 double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
 {/*ALCODESTART::1739974426481*/
-c_memberGridConnections = gcList;
+c_memberGridConnections.addAll(gcList);
 
 //Basic initialization
 f_initialize();
@@ -1292,12 +1292,11 @@ return new ArrayList(f_getAllChildMemberGridConnections_recursion(new HashSet<Gr
 HashSet<GridConnection> f_getAllChildMemberGridConnections_recursion(HashSet<GridConnection> allMemberGridConnections)
 {/*ALCODESTART::1740492770320*/
 //Add to collection
-traceln(" c_memberGridConnections : " + c_memberGridConnections);
 allMemberGridConnections.addAll(this.c_memberGridConnections);
-traceln("allMemberGridConnections: " + allMemberGridConnections);
+
 //Recursive loop (repeat this function till bottom)
 List<Agent> childCoops = findAll(c_coopMembers, coopMember -> coopMember instanceof EnergyCoop);
-traceln("childCoops: " + childCoops);
+
 if(childCoops.size() == 0){
 	return allMemberGridConnections;
 }
