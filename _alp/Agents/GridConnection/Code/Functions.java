@@ -1917,7 +1917,19 @@ switch(p_curtailmentMode) {
 		}
 	}
 	break;
-	case PRICE:
+	case MARKETPRICE:
+	if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
+		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
+			for (J_EAProduction j_ea : c_productionAssets) {
+				j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
+					break;
+				}
+			}
+		}
+	}
+	break;
+	case NODALPRICING:
 	// Prevent feedin when nodal price is negative
 	double priceTreshold_eur = -0.0;
 	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
