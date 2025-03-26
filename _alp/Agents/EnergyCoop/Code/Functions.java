@@ -1670,7 +1670,6 @@ GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_ba
 if(coopBattery != null){
 	//Reset previous state
 	coopBattery.v_previousPowerElectricity_kW = 0;
-	coopBattery.f_setActive(true);
 	
 	//Connect to coop
 	coopBattery.c_parentCoops.add(this);
