@@ -971,7 +971,7 @@
 				</Option>
 				<Option>
 					<Id>1725879557284</Id>
-					<Name><![CDATA[SIMPLE]]></Name>
+					<Name><![CDATA[SELF_CONSUMPTION]]></Name>
 				</Option>
 				<Option>
 					<Id>1734001947459</Id>
@@ -1103,7 +1103,11 @@
 				</Option>
 				<Option>
 					<Id>1722411204922</Id>
-					<Name><![CDATA[PRICE]]></Name>
+					<Name><![CDATA[MARKETPRICE]]></Name>
+				</Option>
+				<Option>
+					<Id>1742810522883</Id>
+					<Name><![CDATA[NODALPRICING]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>

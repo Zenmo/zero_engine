@@ -14,8 +14,8 @@ if (p_batteryAsset != null){ // TEST CODE
 			case BALANCE:
 				f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
 				break;
-			case SIMPLE:
-				f_batteryManagementSimple();
+			case SELF_CONSUMPTION:
+				f_batteryManagementSelfConsumption();
 				break;
 			case PRICE:
 				f_batteryManagementPrice(p_batteryAsset.getCurrentStateOfCharge());
