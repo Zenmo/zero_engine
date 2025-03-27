@@ -2611,9 +2611,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gisRegion]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_gridConnectionCategory]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2716,7 +2713,7 @@
 				<Name><![CDATA[p_nbHouseholds]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_municipality]]></Name>
+				<Name><![CDATA[p_municipalityCode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_nbServices]]></Name>
