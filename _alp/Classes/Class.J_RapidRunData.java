@@ -625,7 +625,7 @@ public class J_RapidRunData {
         return this.am_winterWeekBalanceAccumulators_kW.totalIntegralPos_MWh();
     }
     public double getWinterWeekEnergyExport_MWh() {
-        return -this.am_winterWeekBalanceAccumulators_kW.totalIntegralPos_MWh();
+        return -this.am_winterWeekBalanceAccumulators_kW.totalIntegralNeg_MWh();
     }    
     public double getWinterWeekExport_MWh( OL_EnergyCarriers EC ) {
     	if (!this.activeEnergyCarriers.contains(EC)) {
