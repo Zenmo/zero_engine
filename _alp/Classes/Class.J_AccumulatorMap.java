@@ -57,6 +57,10 @@ public class J_AccumulatorMap implements Serializable {
 		return totalIntegral_kWh;
 	}
 	
+	public double totalIntegral_MWh() {
+		return this.totalIntegral_kWh() / 1000;
+	}
+	
 	public double totalIntegralPos_kWh() {
 		double totalIntegralPos_kWh = 0.0;
 		for (var EC : energyCarrierList) {
@@ -65,12 +69,20 @@ public class J_AccumulatorMap implements Serializable {
 		return totalIntegralPos_kWh;
 	}
 	
+	public double totalIntegralPos_MWh() {
+		return this.totalIntegralPos_kWh() / 1000;
+	}
+	
 	public double totalIntegralNeg_kWh() {
 		double totalIntegralNeg_kWh = 0.0;
 		for (var EC : energyCarrierList) {
 			totalIntegralNeg_kWh += accumulatorArray[EC.ordinal()].getIntegralNeg_kWh();
 		}
 		return totalIntegralNeg_kWh;
+	}
+	
+	public double totalIntegralNeg_MWh() {
+		return this.totalIntegralNeg_kWh() / 1000;
 	}
 	
 	public void clear() {

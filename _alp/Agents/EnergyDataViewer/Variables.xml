@@ -329,7 +329,7 @@
 		<Id>1741792546581</Id>
 		<Name><![CDATA[v_summerWeekEnergySelfConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>900</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -348,7 +348,7 @@
 		<Id>1741792546583</Id>
 		<Name><![CDATA[v_summerWeekEnergyImport_MWh]]></Name>
 		<X>686</X>
-		<Y>720</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -367,7 +367,7 @@
 		<Id>1741792546585</Id>
 		<Name><![CDATA[v_summerWeekEnergyExport_MWh]]></Name>
 		<X>686</X>
-		<Y>740</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -386,7 +386,7 @@
 		<Id>1741792546587</Id>
 		<Name><![CDATA[v_summerWeekElectricitySelfConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>820</Y>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1593,7 +1593,7 @@
 		<Id>1741792546743</Id>
 		<Name><![CDATA[fm_summerWeekImports_MWh]]></Name>
 		<X>686</X>
-		<Y>680</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1615,7 +1615,7 @@
 		<Id>1741792546745</Id>
 		<Name><![CDATA[fm_summerWeekExports_MWh]]></Name>
 		<X>686</X>
-		<Y>700</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1700,7 +1700,7 @@
 		<Id>1741792546753</Id>
 		<Name><![CDATA[v_summerWeekEnergyConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>880</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1719,7 +1719,7 @@
 		<Id>1741792546755</Id>
 		<Name><![CDATA[v_summerWeekEnergyProduced_MWh]]></Name>
 		<X>686</X>
-		<Y>860</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1738,7 +1738,7 @@
 		<Id>1741792546757</Id>
 		<Name><![CDATA[v_summerWeekElectricityConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>800</Y>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1757,7 +1757,7 @@
 		<Id>1741792546759</Id>
 		<Name><![CDATA[v_summerWeekElectricityProduced_MWh]]></Name>
 		<X>686</X>
-		<Y>780</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2323,7 +2323,7 @@
 		<Id>1741792546817</Id>
 		<Name><![CDATA[v_weekendEnergyImport_MWh]]></Name>
 		<X>686</X>
-		<Y>2360</Y>
+		<Y>2390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2342,7 +2342,7 @@
 		<Id>1741792546819</Id>
 		<Name><![CDATA[v_weekendEnergyExport_MWh]]></Name>
 		<X>686</X>
-		<Y>2380</Y>
+		<Y>2410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2361,7 +2361,7 @@
 		<Id>1741792546821</Id>
 		<Name><![CDATA[v_weekendEnergyConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>2255</Y>
+		<Y>2285</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2380,7 +2380,7 @@
 		<Id>1741792546823</Id>
 		<Name><![CDATA[v_weekendEnergyProduced_MWh]]></Name>
 		<X>686</X>
-		<Y>2235</Y>
+		<Y>2265</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2399,7 +2399,7 @@
 		<Id>1741792546825</Id>
 		<Name><![CDATA[v_weekendEnergySelfConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>2275</Y>
+		<Y>2305</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2462,7 +2462,7 @@
 		<Id>1741792546831</Id>
 		<Name><![CDATA[v_weekendElectricityConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>2175</Y>
+		<Y>2205</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2572,7 +2572,7 @@
 		<Id>1741792546841</Id>
 		<Name><![CDATA[v_weekendElectricityProduced_MWh]]></Name>
 		<X>686</X>
-		<Y>2155</Y>
+		<Y>2185</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2594,7 +2594,7 @@
 		<Id>1741792546843</Id>
 		<Name><![CDATA[v_weekendElectricitySelfConsumed_MWh]]></Name>
 		<X>686</X>
-		<Y>2195</Y>
+		<Y>2225</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2704,7 +2704,7 @@
 		<Id>1741792546853</Id>
 		<Name><![CDATA[fm_weekendImports_MWh]]></Name>
 		<X>686</X>
-		<Y>2320</Y>
+		<Y>2350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2726,7 +2726,7 @@
 		<Id>1741792546855</Id>
 		<Name><![CDATA[fm_weekendExports_MWh]]></Name>
 		<X>686</X>
-		<Y>2340</Y>
+		<Y>2370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -3796,6 +3796,120 @@
 		<Name><![CDATA[v_gridCapacityDelivery_kW_rapidRun]]></Name>
 		<X>1215</X>
 		<Y>455</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743067237799</Id>
+		<Name><![CDATA[v_summerWeekPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>685</X>
+		<Y>910</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743067333060</Id>
+		<Name><![CDATA[v_winterWeekPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>685</X>
+		<Y>1195</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743067347245</Id>
+		<Name><![CDATA[v_daytimePrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>685</X>
+		<Y>1515</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743067361421</Id>
+		<Name><![CDATA[v_nighttimePrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>686</X>
+		<Y>1805</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743067393031</Id>
+		<Name><![CDATA[v_weekdayPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>686</X>
+		<Y>2148</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1743067406399</Id>
+		<Name><![CDATA[v_weekendPrimaryEnergyProductionHeatpumps_MWh]]></Name>
+		<X>686</X>
+		<Y>2442</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
