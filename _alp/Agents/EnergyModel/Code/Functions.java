@@ -1255,8 +1255,6 @@ traceln("Energy import: "+ v_totalEnergyImport_MWh + " MWh");
 traceln("Energy export: "+ v_totalEnergyExport_MWh + " MWh");
 
 // *** Total energy balance ***
-//double electricityProduced_MWh = 0;
-//double totalDistanceTrucks_km = 0;
 double deltaThermalEnergySinceStart_MWh = 0;
 double totalAmbientHeating_MWh = 0;
 double totalEnergyCurtailed_MWh = 0;
@@ -1266,18 +1264,8 @@ double totalEnergyChargedOutsideModel_MWh = 0;
 double totalHeatProduced_MWh = 0;
 for (J_EA e : c_energyAssets) {
 	if (((GridConnection) e.getParentAgent()).v_isActive ) {
-	
 		double EnergyUsed_kWh = e.getEnergyUsed_kWh();
-		//double electricityProduced_kWh = 0;
-
-		//energyConsumed_MWh += max(0,EnergyUsed_kWh)/1000;
-		//energyProduced_MWh +=max(0,-EnergyUsed_kWh)/1000;
 		if (EnergyUsed_kWh > 0) {
-		
-			/*if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
-				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
-				totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
-			} else */
 			if( e instanceof J_EAConversionGasCHP ) {
 				totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
 				//electricityProduced_kWh = ((J_EAConversionGasCHP)e).getElectricityProduced_kWh();
@@ -1291,9 +1279,6 @@ for (J_EA e : c_energyAssets) {
 				deltaThermalEnergySinceStart_MWh += ((J_EABuilding)e).getRemainingHeatBufferHeat_kWh() / 1000;
 			}
 		} else {
-			/*if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
-				electricityProduced_MWh -= EnergyUsed_kWh/1000;
-			}*/
 			totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
 			if ( e instanceof J_EABuilding ) {
 				traceln("Building has produced more energy than it has used?? Is lossfactor too low?");
@@ -1314,15 +1299,9 @@ for (J_EA e : c_energyAssets) {
 }
 double v_totalDeltaStoredEnergy_MWh = v_batteryStoredEnergyDeltaSinceStart_MWh + deltaThermalEnergySinceStart_MWh; // Positive number means more energy stored at the end of the simulation. 
 
-
-
-//traceln("Trucks have traveled " + totalDistanceTrucks_km + " km");
-
 //Total selfconsumption, selfsufficiency
-
 v_totalEnergySelfConsumed_MWh = v_totalEnergyConsumed_MWh - (v_totalEnergyImport_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
 //v_totalSelfConsumedEnergy_MWh = totalEnergyUsed_MWh - (v_totalImportedEnergy_MWh + max(0,-v_totalDeltaStoredEnergy_MWh)); // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.
-
 
 // Export and production-based selfconsumption
 if ( v_totalEnergyProduced_MWh > 0 ){
@@ -1351,8 +1330,8 @@ traceln("Energy selfsufficiency (via import calc): %s %%", v_modelSelfSufficienc
 // Remaining difference due to different temps of houses start vs end?
 traceln("");
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
-	traceln("Import " + EC.toString() + ": " + v_rapidRunData.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh()/1000 + " MWh");
-	traceln("Export " + EC.toString() + ": " + v_rapidRunData.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh()/1000 + " MWh");
+	traceln("Import " + EC.toString() + ": " + v_rapidRunData.getTotalImport_MWh(EC) + " MWh");
+	traceln("Export " + EC.toString() + ": " + v_rapidRunData.getTotalExport_MWh(EC) + " MWh");
 }
 
 traceln("");
@@ -1376,36 +1355,6 @@ if ( Math.abs(energyBalanceCheck_MWh) > 1e-6 ) {
 	traceln("");
 
 }
-
-/*
-traceln( "import electricity: " + v_totalElectricityImport_MWh + " MWh");
-traceln( "export electricity: " + v_totalElectricityExport_MWh + " MWh");
-traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + " MWh");
-traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
-traceln( "nett import hydrogen: " + (v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + " MWh");
-*/
-
-/*// intStream.parallel experiment works to extract daytime consumption! Now benchmark performance...
-double daytimeEnergyUsed_MWh = IntStream.range(0, a_annualDaytimeIdxs.length).parallel().mapToDouble(idx -> a_annualEnergyConsumption_kW[idx]*a_annualDaytimeIdxs[idx]).sum()*p_timeStep_h/1000;
-traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnergyUsed_MWh, daytimeEnergyUsed_MWh);
-*/
-/*for (int i = 0; i<365; i++) { // Check if accumulator with signal resolution different from timestep still gives consistent results
-	if (abs(data_annualElectricityDemand_MWh.getY(i) - acc_annualDailyElectricityDemand_MWh.getTimeSeries()[i]) > 0.0001) {
-		traceln("Dataset and accumulator don't agree about daily electricity demand on day no. %s, dataset value: %s, accumulator value: %s", i, data_annualElectricityDemand_MWh.getY(i), acc_annualDailyElectricityDemand_MWh.getTimeSeries()[i]);
-	}
-}*/
-
-/*if ( abs(acc_annualElectricityBalanceDownsampled_kW.getIntegral()-acc_annualElectricityBalance_kW.getIntegral()) > 0.1 ) { // Check if reduced resolution accumulator gives same integral result!
-	traceln("Accumulators with different signal resolution DON'T agree on integral: full-res integral: %s, low-res integral: %s", acc_annualElectricityBalanceDownsampled_kW.getIntegral(), acc_annualElectricityBalance_kW.getIntegral());
-} else {
-	traceln("Accumulators with different signal resolution AGREE on integral: full-res integral: %s, low-res integral: %s", acc_annualElectricityBalanceDownsampled_kW.getIntegral(), acc_annualElectricityBalance_kW.getIntegral());
-}*/
-
-//double nettElectricityArray_kWh = Arrays.stream( a_annualElectricityBalance_kW ).sum() * p_timeStep_h / 1000;
-//double nettElectricityAccumulator_kWh = acc_annualElectricityBalance_kW.getSum() * p_timeStep_h / 1000;
-//double importElectricityAccumulator_kWh = acc_annualElectricityBalance_kW.getSumPos() * p_timeStep_h / 1000;
-//traceln("Test ZeroAccumulator: importElectricityAccumulator_kWh: %s kWh, nettElectricityAccumulator_kWh: %s kWh", importElectricityAccumulator_kWh, nettElectricityAccumulator_kWh);
-
 
 /*ALCODEEND*/}
 
