@@ -401,8 +401,8 @@ double f_updateTimeseries(double t_h)
 {/*ALCODESTART::1664952601107*/
 b_isDaytime = t_h % 24 > 6 && t_h % 24 < 18;
 b_isWeekday = (t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5);
-b_isSummerWeek = t_h >= p_startHourSummerWeek && t_h < p_startHourSummerWeek + 24*7;
-b_isWinterWeek = t_h >= p_startHourWinterWeek && t_h < p_startHourWinterWeek + 24*7;
+b_isSummerWeek = (t_h % 8760) >= p_startHourSummerWeek && (t_h % 8760) < p_startHourSummerWeek + 24*7;
+b_isWinterWeek = (t_h % 8760) >= p_startHourWinterWeek && (t_h % 8760) < p_startHourWinterWeek + 24*7;
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 

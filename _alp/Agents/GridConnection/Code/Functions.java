@@ -2526,28 +2526,12 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 
 /*ALCODEEND*/}
 
-double f_batteryManagementSimple()
+double f_batteryManagementSelfConsumption()
 {/*ALCODESTART::1725629047745*/
-//traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
-
-	double safetyMargin_fr = 0.95; // fraction of connection capacity that we use
-	double power_fr = 0;
-	double capacityElectric_kW = p_batteryAsset.getCapacityElectric_kW();
-	
-	if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > v_liveConnectionMetaData.contractedFeedinCapacity_kW * safetyMargin_fr) {
-		// discharge
-		double dischargeNeeded_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW * safetyMargin_fr;
-		power_fr = - dischargeNeeded_kW / capacityElectric_kW;
-	}
-	else if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_liveConnectionMetaData.contractedDeliveryCapacity_kW * safetyMargin_fr) {
-		// charge
-		double chargeAvailable_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW * safetyMargin_fr - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-		power_fr = chargeAvailable_kW / capacityElectric_kW;
-	}
-
-	
-	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, power_fr));
+	double chargeSetpoint_kW = - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	// limit charging power to battery max power.
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
 }
 /*ALCODEEND*/}
 
