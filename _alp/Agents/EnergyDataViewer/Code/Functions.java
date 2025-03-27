@@ -161,6 +161,8 @@ v_summerWeekElectricityConsumed_MWh = data.getRapidRunData().getSummerWeekElectr
 v_summerWeekElectricityProduced_MWh = data.getRapidRunData().getSummerWeekElectricityProduced_MWh();
 v_summerWeekElectricitySelfConsumed_MWh = data.getRapidRunData().getSummerWeekElectricitySelfConsumed_MWh();
 
+v_summerWeekPrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getSummerWeekPrimaryEnergyProductionHeatpumps_MWh();
+
 v_winterWeekEnergyImport_MWh = data.getRapidRunData().getWinterWeekEnergyImport_MWh();
 v_winterWeekEnergyExport_MWh = data.getRapidRunData().getWinterWeekEnergyExport_MWh();
 
@@ -171,6 +173,8 @@ v_winterWeekEnergySelfConsumed_MWh = data.getRapidRunData().getWinterWeekEnergyS
 v_winterWeekElectricityConsumed_MWh = data.getRapidRunData().getWinterWeekElectricityConsumed_MWh();
 v_winterWeekElectricityProduced_MWh = data.getRapidRunData().getWinterWeekElectricityProduced_MWh();
 v_winterWeekElectricitySelfConsumed_MWh = data.getRapidRunData().getWinterWeekElectricitySelfConsumed_MWh();
+
+v_winterWeekPrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getWinterWeekPrimaryEnergyProductionHeatpumps_MWh();
 
 //========== DAY/NIGHT ==========//
 fm_daytimeImports_MWh.clear();
@@ -198,6 +202,8 @@ v_daytimeElectricityConsumed_MWh = data.getRapidRunData().getDaytimeElectricityC
 v_daytimeElectricityProduced_MWh = data.getRapidRunData().getDaytimeElectricityProduced_MWh();
 v_daytimeElectricitySelfConsumed_MWh = data.getRapidRunData().getDaytimeElectricitySelfConsumed_MWh();
 
+v_daytimePrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getDaytimePrimaryEnergyProductionHeatpumps_MWh();
+
 v_nighttimeEnergyImport_MWh = data.getRapidRunData().getNighttimeEnergyImport_MWh();
 v_nighttimeEnergyExport_MWh = data.getRapidRunData().getNighttimeEnergyExport_MWh();
 
@@ -209,6 +215,7 @@ v_nighttimeElectricityConsumed_MWh = data.getRapidRunData().getNighttimeElectric
 v_nighttimeElectricityProduced_MWh = data.getRapidRunData().getNighttimeElectricityProduced_MWh();
 v_nighttimeElectricitySelfConsumed_MWh = data.getRapidRunData().getNighttimeElectricitySelfConsumed_MWh();
 
+v_nighttimePrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getNighttimePrimaryEnergyProductionHeatpumps_MWh();
 
 //========== WEEK/WEEKEND ==========//
 fm_weekdayImports_MWh.clear();
@@ -236,6 +243,8 @@ v_weekdayElectricityConsumed_MWh = data.getRapidRunData().getWeekdayElectricityC
 v_weekdayElectricityProduced_MWh = data.getRapidRunData().getWeekdayElectricityProduced_MWh();
 v_weekdayElectricitySelfConsumed_MWh = data.getRapidRunData().getWeekdayElectricitySelfConsumed_MWh();
 
+v_weekdayPrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getWeekdayPrimaryEnergyProductionHeatpumps_MWh();
+
 v_weekendEnergyImport_MWh = data.getRapidRunData().getWeekendEnergyImport_MWh();
 v_weekendEnergyExport_MWh = data.getRapidRunData().getWeekendEnergyExport_MWh();
 
@@ -246,6 +255,8 @@ v_weekendEnergySelfConsumed_MWh = data.getRapidRunData().getWeekendEnergySelfCon
 v_weekendElectricityConsumed_MWh = data.getRapidRunData().getWeekendElectricityConsumed_MWh();
 v_weekendElectricityProduced_MWh = data.getRapidRunData().getWeekendElectricityProduced_MWh();
 v_weekendElectricitySelfConsumed_MWh = data.getRapidRunData().getWeekendElectricitySelfConsumed_MWh();
+
+v_weekendPrimaryEnergyProductionHeatpumps_MWh = data.getRapidRunData().getWeekendPrimaryEnergyProductionHeatpumps_MWh();
 
 /*ALCODEEND*/}
 
