@@ -514,7 +514,7 @@ public class J_RapidRunData {
         return am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh(); 
     }
     public double getTotalElectricitySelfConsumed_MWh() { 
-        return max(0, getTotalElectricityConsumed_MWh() - am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_MWh()); 
+        return max(0, getTotalElectricityConsumed_MWh() - getTotalImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getTotalEnergyConsumed_MWh() { 
         return acc_dailyAverageFinalEnergyConsumption_kW.getIntegral_MWh(); 
@@ -564,7 +564,7 @@ public class J_RapidRunData {
         return am_summerWeekProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh();
     }
     public double getSummerWeekElectricitySelfConsumed_MWh() {
-        return max(0, getSummerWeekElectricityConsumed_MWh() - am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_MWh());
+        return max(0, getSummerWeekElectricityConsumed_MWh() - getSummerWeekImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getSummerWeekEnergyConsumed_MWh() {
         return acc_summerWeekFinalEnergyConsumption_kW.getIntegral_MWh();
@@ -610,7 +610,7 @@ public class J_RapidRunData {
         return am_winterWeekProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh();
     }
     public double getWinterWeekElectricitySelfConsumed_MWh() {
-        return max(0, getWinterWeekElectricityConsumed_MWh() - am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegralPos_MWh());
+        return max(0, getWinterWeekElectricityConsumed_MWh() - getWinterWeekImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getWinterWeekEnergyConsumed_MWh() {
         return acc_winterWeekFinalEnergyConsumption_kW.getIntegral_MWh();
@@ -655,7 +655,7 @@ public class J_RapidRunData {
         return acc_daytimeElectricityProduction_kW.getIntegral_MWh(); 
     }
     public double getDaytimeElectricitySelfConsumed_MWh() { 
-        return max(0, getDaytimeElectricityConsumed_MWh() - am_daytimeImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh()); 
+        return max(0, getDaytimeElectricityConsumed_MWh() - getDaytimeImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getDaytimeEnergyConsumed_MWh() { 
         return acc_daytimeFinalEnergyConsumption_kW.getIntegral_MWh(); 
@@ -695,7 +695,7 @@ public class J_RapidRunData {
         return getTotalElectricityProduced_MWh() - getDaytimeElectricityProduced_MWh(); 
     }
     public double getNighttimeElectricitySelfConsumed_MWh() { 
-        return max(0,getNighttimeElectricityConsumed_MWh() - (am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh() - am_daytimeImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh())); 
+        return max(0, getNighttimeElectricityConsumed_MWh() - getNighttimeImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getNighttimeEnergyConsumed_MWh() { 
         return getTotalEnergyConsumed_MWh() - getDaytimeEnergyConsumed_MWh(); 
@@ -735,7 +735,7 @@ public class J_RapidRunData {
         return getTotalElectricityProduced_MWh() - getWeekendElectricityProduced_MWh(); 
     }
     public double getWeekdayElectricitySelfConsumed_MWh() { 
-        return max(0,getWeekdayElectricityConsumed_MWh() - (am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh() - am_weekendImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh())); 
+        return max(0, getWeekdayElectricityConsumed_MWh() - getWeekdayImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getWeekdayEnergyConsumed_MWh() { 
         return getTotalEnergyConsumed_MWh() - getWeekendEnergyConsumed_MWh(); 
@@ -775,7 +775,7 @@ public class J_RapidRunData {
         return acc_weekendElectricityProduction_kW.getIntegral_MWh(); 
     }
     public double getWeekendElectricitySelfConsumed_MWh() { 
-        return max(0, getWeekendElectricityConsumed_MWh() - am_weekendImports_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh()); 
+        return max(0, getWeekendElectricityConsumed_MWh() - getWeekendImport_MWh(OL_EnergyCarriers.ELECTRICITY));
     }
     public double getWeekendEnergyConsumed_MWh() { 
         return acc_weekendFinalEnergyConsumption_kW.getIntegral_MWh(); 
