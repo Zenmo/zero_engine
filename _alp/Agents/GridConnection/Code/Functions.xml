@@ -729,9 +729,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1725629047745</Id>
-		<Name><![CDATA[f_batteryManagementSimple]]></Name>
-		<X>1230</X>
-		<Y>820</Y>
+		<Name><![CDATA[f_batteryManagementSelfConsumption]]></Name>
+		<X>920</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

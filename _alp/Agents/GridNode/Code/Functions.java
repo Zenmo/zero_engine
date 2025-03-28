@@ -117,22 +117,22 @@ if (energyModel.v_isRapidRun){
 		data_totalLoad_kW.add(energyModel.t_h, v_currentLoad_kW);
 	}
 	// SummerWeek
-	if (energyModel.t_h > energyModel.p_startHourSummerWeek && energyModel.t_h <= energyModel.p_startHourSummerWeek+24*7) {
+	if (energyModel.b_isSummerWeek) {
 		v_summerWeekImport_MWh += currentImport_MWh;
 		v_summerWeekExport_MWh += currentExport_MWh;
 		v_summerWeekExcessImport_MWh += currentExcessImport_MWh;
 		v_summerWeekExcessExport_MWh += currentExcessExport_MWh;
 		
-		data_summerWeekLoad_kW.add(energyModel.t_h, v_currentLoad_kW);
+		data_summerWeekLoad_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_currentLoad_kW);
 	}
 	// Winterweek
-	if (energyModel.t_h > energyModel.p_startHourWinterWeek && energyModel.t_h <= energyModel.p_startHourWinterWeek+24*7) {
+	if (energyModel.b_isWinterWeek) {
 		v_winterWeekImport_MWh += currentImport_MWh;
 		v_winterWeekExport_MWh += currentExport_MWh;
 		v_winterWeekExcessImport_MWh += currentExcessImport_MWh;
 		v_winterWeekExcessExport_MWh += currentExcessExport_MWh;
 		
-		data_winterWeekLoad_kW.add(energyModel.t_h, v_currentLoad_kW);
+		data_winterWeekLoad_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_currentLoad_kW);
 	}
 	// Daytime
 	if (energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) {
@@ -371,7 +371,7 @@ acc_annualElectricityBalance_kW.reset();
 
 double f_calculateKPIs()
 {/*ALCODESTART::1713181018774*/
-//f_duurkrommes();
+f_getDuurkromme();
 
 // Calcs nighttime
 v_nighttimeImport_MWh = v_totalImport_MWh - v_daytimeExcessImport_MWh;
