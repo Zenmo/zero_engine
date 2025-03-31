@@ -1082,7 +1082,6 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 		
 		if (energyModel.b_isInitialized) {
 			energyModel.f_addEnergyCarrier(EC);
-			//energyModel.v_activeEnergyCarriers.add(EC);
 			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
@@ -1093,13 +1092,6 @@ for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
 			}
 			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
-			/*dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
-			dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
-			dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / energyModel.p_timeStep_h)));
-			*/
 		}
 	}
 }
@@ -2463,7 +2455,7 @@ if (!setActive) {
 		obj.gisRegion.setVisible(false);
 	}
 	
-	
+
 	// update GN parents' wind / solar totals
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, false);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, false);

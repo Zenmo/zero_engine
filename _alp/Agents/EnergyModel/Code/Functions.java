@@ -540,7 +540,6 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		J_EAStorageElectric e = (J_EAStorageElectric)ea;
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
-		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
 	
@@ -548,7 +547,6 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		J_EAEV e = (J_EAEV)ea;
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
-		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
 }
@@ -1530,7 +1528,7 @@ if (pop_connectionOwners.size() > 500 && b_parallelizeGridConnections) {
 	b_parallelizeConnectionOwners = true;
 }
 if (c_gridConnections.size() < 100) {
-	b_parallelizeGridConnections = true;
+	b_parallelizeGridConnections = false;
 }
 
 // set initial values
