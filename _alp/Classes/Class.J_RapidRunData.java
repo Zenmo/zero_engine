@@ -555,6 +555,9 @@ public class J_RapidRunData {
     	return acc_dailyAverageDistrictHeatingConsumption_kW.getIntegral_MWh();
     }
     
+    public double getTotalBatteryCycles() { 
+    	return acc_dailyAverageBatteriesConsumption_kW.getIntegral_MWh()/this.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+    }
 
 // Summerweek Getters
     public double getSummerWeekElectricityConsumed_MWh() {
@@ -602,6 +605,10 @@ public class J_RapidRunData {
         return acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.getIntegral_MWh();
     }
     
+    public double getSummerWeekBatteryCycles() { 
+    	return acc_summerWeekBatteriesConsumption_kW.getIntegral_MWh()/this.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+    }
+    
 // Winterweek Getters
     public double getWinterWeekElectricityConsumed_MWh() {
         return am_winterWeekConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh();
@@ -645,6 +652,10 @@ public class J_RapidRunData {
     }
     public double getWinterWeekPrimaryEnergyProductionHeatpumps_MWh() {
         return acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.getIntegral_MWh();
+    }
+    
+    public double getWinterWeekBatteryCycles() { 
+    	return acc_winterWeekBatteriesConsumption_kW.getIntegral_MWh()/this.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
     }
     
 // Daytime getters    
