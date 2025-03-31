@@ -68,7 +68,10 @@ if ( p_batteryAsset != null ) {
 			f_batteryManagementPrice(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
 			f_batteryManagementPriceGrid(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP){
+			f_batteryManagementBalanceCOOP(v_batterySOC_fr);
 		}
+		
 		
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		//J_FlowsMap flowsMap = flowsPair.getFirst();
@@ -338,6 +341,58 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 	//traceln("hello?");
+}
+
+/*ALCODEEND*/}
+
+double f_batteryManagementBalanceCOOP(double batterySOC)
+{/*ALCODESTART::1742557292690*/
+
+if(c_parentCoops.isEmpty()){
+	return;
+}
+
+EnergyCoop parentCoop = c_parentCoops.get(0);
+
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){	
+	double CoopConnectionCapacityDelivery_kW = parentCoop.v_liveConnectionMetaData.contractedDeliveryCapacity_kW * 0.9; //10% reduction, to accord for time step delay
+	double CoopConnectionCapacityFeedin_kW = parentCoop.v_liveConnectionMetaData.contractedDeliveryCapacity_kW * 0.9; //10% reduction, to accord for time step delay
+	double v_previousPowerBattery_kW = v_previousPowerElectricity_kW;// Assumes battery is only asset on gridconnection!! p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
+	double currentCoopElectricityBalance_kW = parentCoop.v_liveData.data_liveElectricityBalance_kW.getY(parentCoop.v_liveData.data_liveElectricityBalance_kW.size() - 1) - v_previousPowerBattery_kW;	
+	
+	double availableChargePower_kW = CoopConnectionCapacityDelivery_kW - currentCoopElectricityBalance_kW; // Max battery charging power within grid capacity
+	double availableDischargePower_kW = CoopConnectionCapacityFeedin_kW + currentCoopElectricityBalance_kW; // Max discharging power within grid capacity
+	//Tuning parameters
+	double FeedbackGain_kWpSOC = 3 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
+	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	
+	//Congestion prevention
+	if (availableChargePower_kW < 0) { //Delivery side
+		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getCapacityElectric_kW());
+		return;
+	}
+	if (availableDischargePower_kW < 0) { //Feedin side
+		p_batteryAsset.v_powerFraction_fr = min(1, -availableDischargePower_kW / p_batteryAsset.getCapacityElectric_kW());
+		return;
+	}
+	
+	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) {
+		if (currentCoopElectricityBalance_kW < 0) {
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, -currentCoopElectricityBalance_kW / p_batteryAsset.getCapacityElectric_kW()));
+		}
+	}
+	else {
+		double expectedWind_kWh = parentCoop.v_liveAssetsMetaData.totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
+		double expectedSolar_kWh = parentCoop.v_liveAssetsMetaData.totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
+		double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
+		double SOC_setp_fr = 1 - incomingPower_fr;
+	
+		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
+		chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+	}
 }
 
 /*ALCODEEND*/}

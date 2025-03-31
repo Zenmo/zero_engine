@@ -164,4 +164,28 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1742557292690</Id>
+		<Name><![CDATA[f_batteryManagementBalanceCOOP]]></Name>
+		<Description><![CDATA[Regeling voor balancering van Coop-load.
+
+@author: Gillis Hommen
+@since: 28-12-2022]]></Description>
+		<X>1160</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[batterySOC]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
 </Functions>

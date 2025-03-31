@@ -1773,6 +1773,9 @@ for(Agent CO : energyCoop.c_coopMembers){
 // Removing this coop from the list of coops in the GC
 for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 	GC.c_parentCoops.remove(energyCoop);
+	if(GC instanceof GCGridBattery && GC.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP){
+		GC.f_setActive(false);
+	}
 }
 
 // Remove energyCoop from pop_energyCoops.
