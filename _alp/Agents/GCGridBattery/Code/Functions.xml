@@ -26,8 +26,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1666956527771</Id>
 		<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-		<X>800</X>
-		<Y>240</Y>
+		<X>910</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -43,8 +43,8 @@
 		<Id>1666967854749</Id>
 		<Name><![CDATA[f_operateFixedConsumptionAssets_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>800</X>
-		<Y>220</Y>
+		<X>910</X>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -108,7 +108,7 @@
 		<Id>1688369593905</Id>
 		<Name><![CDATA[f_calculateEnergyBalance_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>780</X>
+		<X>890</X>
 		<Y>180</Y>
 		<Label>
 			<X>10</X>
