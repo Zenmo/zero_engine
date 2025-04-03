@@ -2673,6 +2673,9 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	// limit charging power to battery max power.
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargeSetpointExternal_kW / p_batteryAsset.getCapacityElectric_kW()));
 }
+
+//Reset the value again.
+v_batteryChargeSetpointExternal_kW = 0;
 /*ALCODEEND*/}
 
 double f_setExternalBatteryChargeSetpoint(double chargeSetpoint_kW)
