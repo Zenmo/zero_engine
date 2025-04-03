@@ -881,6 +881,8 @@ if (energyModel.v_isRapidRun){
 
 }
 
+f_batteryManagementCollectiveSelfConsumption();
+
 /*ALCODEEND*/}
 
 double f_fillAnnualDatasetsOLD()
@@ -1680,5 +1682,28 @@ if(coopBattery != null){
 	c_memberGridConnections.add(coopBattery);
 	v_liveAssetsMetaData.hasBattery = true;
 }
+/*ALCODEEND*/}
+
+double f_batteryManagementCollectiveSelfConsumption()
+{/*ALCODESTART::1743670158646*/
+double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
+double sumOfChargeSetpoints_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
+
+// Generate setpoints and 'push' to memberGridConnections for next timestep
+for(int i = 0; i<c_memberGridConnections.size(); i++) {
+	GridConnection GC = c_memberGridConnections.get(i);
+	if (GC.p_batteryAsset != null) {		
+		GC.f_setExternalBatteryChargeSetpoint(sumOfChargeSetpoints_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
+	}
+}
+
+// For a more advanced version that takes into account feedin power of individual GC's for the setpoint of each GC:
+
+// Inventorize battery sizes and feedin-powers over c_memberGridConnections 
+//double[] GCbatteryPowers_kW = new double[c_memberGridConnections.size()];
+//double[] GCbatterySizes_kWh = new double[c_memberGridConnections.size()];
+//double[] GCcurrentBalanceElectricity_kW = new double[c_memberGridConnections.size()];
+
+
 /*ALCODEEND*/}
 

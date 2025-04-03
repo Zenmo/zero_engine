@@ -53,8 +53,8 @@ if (l_ownerActor.getConnectedAgent()!=null){
 f_manageHeatingAssets();
 
 if( p_householdEV != null){
-	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : p_batteryAsset.getMaxDischargePower_kW(); 
+	//double availableChargingCapacity_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
 	f_manageCharging();
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
@@ -433,9 +433,9 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 
 double f_manageCharging_overwrite()
 {/*ALCODESTART::1675014184707*/
-double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
+double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : p_batteryAsset.getMaxDischargePower_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+double availableChargingCapacity_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge();
 
 switch (p_chargingAttitudeVehicles) {
@@ -443,12 +443,12 @@ switch (p_chargingAttitudeVehicles) {
 		f_simpleCharging();
 	break;
 	case CHEAP:
-		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
+		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity_kW));
 	break;	
 	case V2G:
 		//v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_connectionCapacity_kW); 
 		//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
+		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity_kW));
 	break;	
 	default:
 		traceln("Incorrect charging mode in household @f_manageCharging_overwrite");

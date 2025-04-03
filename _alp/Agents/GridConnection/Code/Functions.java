@@ -851,9 +851,9 @@ else {
 
 double f_manageCharging()
 {/*ALCODESTART::1671095995172*/
-double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
+double availablePowerFromBatteries_kW = p_batteryAsset == null ? 0 : p_batteryAsset.getMaxDischargePower_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+double availableChargingCapacity_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availablePowerFromBatteries_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
 		f_simpleCharging();
@@ -862,17 +862,17 @@ switch (p_chargingAttitudeVehicles) {
 		f_maxSpreadCharging();
 	break;
 	case MAX_POWER:
-		f_maxPowerCharging( max(0, availableChargingCapacity));
+		f_maxPowerCharging( max(0, availableChargingCapacity_kW));
 	break;
 	case CHEAP:
 		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
+		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity_kW));
 	break;
 	case V2G:
 		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
+		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity_kW));
 	break;
 }
 
@@ -1426,7 +1426,7 @@ else {
 	l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += Wind_kW;
 }
 
-f_setOperatingSwitches();
+//f_setOperatingSwitches();
 
 // Initializing Live Data Class
 v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
@@ -2665,5 +2665,25 @@ data_windGeneration_kW.update();
 data_districtHeatDelivery_kW.update();
 
 //data_totalNetLoad_kW.update();
+/*ALCODEEND*/}
+
+double f_batteryManagementExternalSetpoint()
+{/*ALCODESTART::1743666170189*/
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	// limit charging power to battery max power.
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargeSetpointExternal_kW / p_batteryAsset.getCapacityElectric_kW()));
+}
+/*ALCODEEND*/}
+
+double f_setExternalBatteryChargeSetpoint(double chargeSetpoint_kW)
+{/*ALCODESTART::1743666170191*/
+v_batteryChargeSetpointExternal_kW = chargeSetpoint_kW;
+// ToDo: Return max possible charge power, considering SoC! (
+if (p_batteryAsset!=null) {
+	v_batteryChargeSetpointExternal_kW = max(min(chargeSetpoint_kW,p_batteryAsset.getMaxChargePower_kW()),-p_batteryAsset.getMaxDischargePower_kW());
+} else {
+	v_batteryChargeSetpointExternal_kW = 0.0;
+}
+return v_batteryChargeSetpointExternal_kW;
 /*ALCODEEND*/}
 

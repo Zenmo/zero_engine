@@ -981,6 +981,10 @@
 					<Id>1734001947459</Id>
 					<Name><![CDATA[OFF]]></Name>
 				</Option>
+				<Option>
+					<Id>1743670346969</Id>
+					<Name><![CDATA[EXTERNAL_SETPOINT]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1668693527447</Id>
