@@ -610,6 +610,9 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 double f_initialize()
 {/*ALCODESTART::1669042410671*/
 
+v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
 	v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
