@@ -568,7 +568,7 @@
 		<Id>1676552997739</Id>
 		<Name><![CDATA[v_balanceElectricityDelivery_eur]]></Name>
 		<X>660</X>
-		<Y>519</Y>
+		<Y>659</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -590,7 +590,7 @@
 		<Id>1676552997741</Id>
 		<Name><![CDATA[v_balanceElectricityTransport_eur]]></Name>
 		<X>660</X>
-		<Y>539</Y>
+		<Y>679</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -612,7 +612,7 @@
 		<Id>1676552997743</Id>
 		<Name><![CDATA[v_balanceElectricityTax_eur]]></Name>
 		<X>660</X>
-		<Y>559</Y>
+		<Y>699</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -792,7 +792,7 @@
 		<Id>1692113155819</Id>
 		<Name><![CDATA[v_balanceElectricity_eur]]></Name>
 		<X>660</X>
-		<Y>500</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1525,8 +1525,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740152681807</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfconsumptionElectricity_fr]]></Name>
-		<X>1420</X>
-		<Y>590</Y>
+		<X>1490</X>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1544,8 +1544,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740152689012</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfconsumptionEnergy_fr]]></Name>
-		<X>1420</X>
-		<Y>660</Y>
+		<X>1490</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1563,8 +1563,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740152690222</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfSufficiencyElectricity_fr]]></Name>
-		<X>1420</X>
-		<Y>610</Y>
+		<X>1490</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1582,8 +1582,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740152691469</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfSufficiencyEnergy_fr]]></Name>
-		<X>1420</X>
-		<Y>680</Y>
+		<X>1490</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1620,8 +1620,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740489780788</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfconsumptionElectricity_MWh]]></Name>
-		<X>1420</X>
-		<Y>570</Y>
+		<X>1490</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1639,8 +1639,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740489782775</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfconsumptionEnergy_MWh]]></Name>
-		<X>1420</X>
-		<Y>640</Y>
+		<X>1490</X>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1658,8 +1658,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740672534686</Id>
 		<Name><![CDATA[v_cumulativeIndividualPeakFeedin_kW]]></Name>
-		<X>1420</X>
-		<Y>740</Y>
+		<X>1490</X>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1677,8 +1677,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1740672540722</Id>
 		<Name><![CDATA[v_cumulativeIndividualPeakDelivery_kW]]></Name>
-		<X>1420</X>
-		<Y>720</Y>
+		<X>1490</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1817,33 +1817,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1669036172744</Id>
-		<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-		<Description><![CDATA[TODO: This is still hardcoded! How should Coop know where to 'gather' this data? (Capacity of shared connection)]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-340</X>
-		<Y>200</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1669036172742</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1671707831168</Id>
 		<Name><![CDATA[p_gridNodeUnderResponsibility]]></Name>
 		<Description><![CDATA[Pointer of the designated parent actor (e.g. a Coop or energy supplier)
@@ -1866,66 +1839,6 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1671707831166</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1676551040549</Id>
-		<Name><![CDATA[p_actorID]]></Name>
-		<Description><![CDATA[Unique identifier of this actor in String format. Designated in Config-excel and used to link actors to netConnections.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-340</X>
-		<Y>60</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[String]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1676551040547</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1676551040552</Id>
-		<Name><![CDATA[p_actorType]]></Name>
-		<Description><![CDATA[Actor type in OL_ActorType format. Designated in Config-excel and used to determine actor-type specific functionalities later.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-340</X>
-		<Y>80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[String]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1676551040550</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -2184,6 +2097,34 @@
 			<ParameterEditor>
 				<Id>1692620732352</Id>
 				<EditorContolType>CHECK_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1743766771356</Id>
+		<Name><![CDATA[p_centralBatteryManagementMode]]></Name>
+		<X>680</X>
+		<Y>350</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[OL_CentralBatteryManagementMode]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[OL_CentralBatteryManagementMode.OFF]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1743766771354</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>

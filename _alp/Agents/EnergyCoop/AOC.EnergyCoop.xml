@@ -15,16 +15,13 @@ import java.util.EnumSet;]]></Import>
 	</ExtendsReference>
 	<Parameters>
 		<Parameter>
-			<Name><![CDATA[p_actorID]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorType]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_actorSubgroup]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_actorGroup]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_centralBatteryManagementMode]]></Name>
 		</Parameter>
 	</Parameters>
 	<Implements>I_EnergyData</Implements>

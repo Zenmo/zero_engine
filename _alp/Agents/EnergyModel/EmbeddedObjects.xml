@@ -666,16 +666,7 @@
 				<Name><![CDATA[p_actorContractList]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_gridNodeUnderResponsibility]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentActorID]]></Name>
@@ -709,6 +700,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_actorGroup]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_centralBatteryManagementMode]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

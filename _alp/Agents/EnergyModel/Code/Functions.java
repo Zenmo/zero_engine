@@ -490,7 +490,7 @@ if (b_parallelizeConnectionOwners) {
 */
 
 for (EnergyCoop h : pop_energyCoops) {
-	h.f_calculateEnergyBalance();
+	h.f_runTimeStepEnergyCoop();
 }
 /*for (EnergySupplier e : pop_energySuppliers) {
 	e.f_updateFinances();

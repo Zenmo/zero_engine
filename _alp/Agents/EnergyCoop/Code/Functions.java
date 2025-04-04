@@ -302,8 +302,6 @@ v_electricitySurplus_kW = -fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECT
 /*
 v_electricitySurplus_kW = -v_electricityVolume_kWh / energyModel.p_timeStep_h;
 */
-
-f_updateLiveDataSets();
 /*ALCODEEND*/}
 
 double f_getVariableEnergyPrice()
@@ -810,79 +808,71 @@ v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runS
 
 double f_updateLiveDataSets()
 {/*ALCODESTART::1715857260657*/
-if (energyModel.v_isRapidRun){
-	f_rapidRunDataLogging();
-} else {
-	//Current timestep
-	double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
-	
-	//Energy carrier flows
-	for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
-		v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
-	}
-	for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
-		v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
-	}
-	
-	
-	//Electricity balance
-	v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-	
-	
-	//Total demand and supply
-	v_liveData.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
-	v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
-	
-	
-	//Live capacity datasets
-	v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-	
-	
-	//// Gather specific electricity flows from corresponding energy assets
-	
-	//Baseload electricity
-	v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
-	
-	//Cooking
-	v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
-	
-	//Hydrogen elec consumption
-	v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
-	
-	//Heatpump elec consumption
-	v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
-	
-	//EVs
-	v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
-	v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
-	
-	//Batteries
-	v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
-	v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
-	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
-	double currentSOC = 0;
-	if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
-		currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
-	}
-	v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
-	
-	//CHP production
-	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
-	
-	//PV production
-	v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
-	
-	//Wind production
-	v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
-	
-	//District heating
-	v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
+//Current timestep
+double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
 
+//Energy carrier flows
+for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
+	v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+}
+for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
+	v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
 }
 
-f_batteryManagementCollectiveSelfConsumption();
 
+//Electricity balance
+v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+
+
+//Total demand and supply
+v_liveData.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
+v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
+
+
+//Live capacity datasets
+v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+
+
+//// Gather specific electricity flows from corresponding energy assets
+
+//Baseload electricity
+v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
+
+//Cooking
+v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
+
+//Hydrogen elec consumption
+v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
+
+//Heatpump elec consumption
+v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
+
+//EVs
+v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
+v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
+
+//Batteries
+v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
+v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
+v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
+double currentSOC = 0;
+if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+	currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+}
+v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
+
+//CHP production
+v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
+
+//PV production
+v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
+
+//Wind production
+v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
+
+//District heating
+v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
 /*ALCODEEND*/}
 
 double f_fillAnnualDatasetsOLD()
@@ -1093,13 +1083,13 @@ double f_calculateKPIs()
 f_getCumulativeIndividualGCValues();
 
 //Costumer delivery and feedin
-v_totalCustomerFeedIn_MWh = acc_totalCustomerFeedIn_kW.getIntegral_kWh() / 1000;
-v_totalCustomerDelivery_MWh = acc_totalCustomerDelivery_kW.getIntegral_kWh() / 1000;
-v_totalOwnElectricityProduction_MWh = acc_totalOwnElectricityProduction_kW.getIntegral_kWh() / 1000;
+v_totalCustomerFeedIn_MWh = acc_totalCustomerFeedIn_kW.getIntegral_MWh();
+v_totalCustomerDelivery_MWh = acc_totalCustomerDelivery_kW.getIntegral_MWh();
+v_totalOwnElectricityProduction_MWh = acc_totalOwnElectricityProduction_kW.getIntegral_MWh();
 
 /*ALCODEEND*/}
 
-double f_collectGridConnectionTotals()
+double f_collectGridConnectionRapidRunData()
 {/*ALCODESTART::1739970817879*/
 // Make collective profiles, electricity per timestep, other energy carriers per day!
 
@@ -1182,13 +1172,13 @@ if(energyModel.v_rapidRunData != null){
 	v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
 	
 	//Collect current totals
-	f_collectGridConnectionTotals();
+	f_collectGridConnectionRapidRunData();
 	
 	//Calculate KPIs
 	f_calculateKPIs();
 }
 
-f_connectCoopBattery();
+f_connectCoopGridBattery();
 /*ALCODEEND*/}
 
 double f_getGroupContractDeliveryCapacity_kW()
@@ -1385,8 +1375,6 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW);
 	v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh);
 	v_rapidRunData.ts_winterWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_winterWeekBatteriesSOC_fr);	
-
-	
 }
 /*ALCODEEND*/}
 
@@ -1669,7 +1657,7 @@ else{
 
 /*ALCODEEND*/}
 
-double f_connectCoopBattery()
+double f_connectCoopGridBattery()
 {/*ALCODESTART::1742569887460*/
 GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP);
 
@@ -1684,7 +1672,7 @@ if(coopBattery != null){
 }
 /*ALCODEEND*/}
 
-double f_batteryManagementCollectiveSelfConsumption()
+double f_batteryManagementCollectiveSelfConsumption_batterySize()
 {/*ALCODESTART::1743670158646*/
 double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
 double sumOfChargeSetpoints_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
@@ -1703,6 +1691,86 @@ for(int i = 0; i<c_memberGridConnections.size(); i++) {
 //double[] GCbatteryPowers_kW = new double[c_memberGridConnections.size()];
 //double[] GCbatterySizes_kWh = new double[c_memberGridConnections.size()];
 //double[] GCcurrentBalanceElectricity_kW = new double[c_memberGridConnections.size()];
+
+
+/*ALCODEEND*/}
+
+double f_runTimeStepEnergyCoop()
+{/*ALCODESTART::1743768563794*/
+////Energy flows and data
+f_calculateEnergyBalance();
+
+//Collect the energy data
+if (energyModel.v_isRapidRun){
+	f_rapidRunDataLogging();
+} else {
+	f_updateLiveDataSets();
+}
+
+//Run EnergyCoop central battery setpoint steering (if turned on)
+f_centralBatteryManagementEnergyCoop();
+
+
+////Money flows and data
+//f_updateFinances();
+/*ALCODEEND*/}
+
+double f_centralBatteryManagementEnergyCoop()
+{/*ALCODESTART::1743769955761*/
+if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.OFF){
+	//Do nothing
+}
+else if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.SELFCONSUMPTION_BATTERYSIZE){
+	f_batteryManagementCollectiveSelfConsumption_batterySize();
+}
+else if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.SELFCONSUMPTION_EXPORTRATE){
+	f_batteryManagementCollectiveSelfConsumption_exportRate();
+}
+
+
+/*ALCODEEND*/}
+
+double f_batteryManagementCollectiveSelfConsumption_exportRate()
+{/*ALCODESTART::1743774244972*/
+double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
+double sumOfChargeSetpoints_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
+
+List<GridConnection> memberedGCWithSetpointBatteries = findAll(c_memberGridConnections, GC -> GC.p_batteryAsset != null && GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT);
+List<GridConnection> memberedGCWithSetpointBatteries_withFreeCapacity = new ArrayList<GridConnection>(memberedGCWithSetpointBatteries);
+
+double remainingSumOfChargeSetpoints_kW = sumOfChargeSetpoints_kW;
+double gc_balanceFlowElectricity_kW;
+double gc_calculatedChargeSetpoint_kW;
+double gc_actualChargeSetpoint_kW;
+
+List<GridConnection> memberedGCWithSetpointBatteries_noCapacity = new ArrayList<GridConnection>();
+
+while( Math.abs(remainingSumOfChargeSetpoints_kW) > 0.0001 && memberedGCWithSetpointBatteries_withFreeCapacity.size() > 0){
+	memberedGCWithSetpointBatteries_noCapacity.clear();
+	double removedSumOfChargedSetpoints = 0;
+	double totalBalanceFlowRemainingGC = 0;
+	for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
+		totalBalanceFlowRemainingGC += GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
+	}
+	if (Math.abs(totalBalanceFlowRemainingGC) < 0.0001) {
+   		traceln("Warning: totalBalanceFlowRemainingGC is zero, cant distribute any further");
+    break;
+	}
+	for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
+		gc_balanceFlowElectricity_kW = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
+		gc_calculatedChargeSetpoint_kW = GC.v_batteryChargeSetpointExternal_kW + remainingSumOfChargeSetpoints_kW * ( gc_balanceFlowElectricity_kW / totalBalanceFlowRemainingGC);
+		removedSumOfChargedSetpoints -= GC.v_batteryChargeSetpointExternal_kW;
+		gc_actualChargeSetpoint_kW = GC.f_setExternalBatteryChargeSetpoint(gc_calculatedChargeSetpoint_kW);
+		
+		removedSumOfChargedSetpoints += gc_actualChargeSetpoint_kW;
+		 
+		if(gc_calculatedChargeSetpoint_kW != gc_actualChargeSetpoint_kW){
+			memberedGCWithSetpointBatteries_noCapacity.add(GC);
+		}
+	}
+	memberedGCWithSetpointBatteries_withFreeCapacity.removeAll(memberedGCWithSetpointBatteries_noCapacity);
+	remainingSumOfChargeSetpoints_kW -= removedSumOfChargedSetpoints;
+}
 
 
 /*ALCODEEND*/}

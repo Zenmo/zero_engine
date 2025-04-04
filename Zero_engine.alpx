@@ -1211,6 +1211,22 @@
 					<Name><![CDATA[GRIDNODE]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1743774354676</Id>
+				<Name><![CDATA[OL_CentralBatteryManagementMode]]></Name>
+				<Option>
+					<Id>1743774427307</Id>
+					<Name><![CDATA[OFF]]></Name>
+				</Option>
+				<Option>
+					<Id>1743774355255</Id>
+					<Name><![CDATA[SELFCONSUMPTION_BATTERYSIZE]]></Name>
+				</Option>
+				<Option>
+					<Id>1743774382475</Id>
+					<Name><![CDATA[SELFCONSUMPTION_EXPORTRATE]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders/>
 		<ActiveObjectClasses/>
