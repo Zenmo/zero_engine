@@ -704,6 +704,12 @@
 			<Parameter>
 				<Name><![CDATA[p_centralBatteryManagementMode]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorID]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorType]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

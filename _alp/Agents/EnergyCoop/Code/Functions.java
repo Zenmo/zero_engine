@@ -1732,44 +1732,69 @@ else if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.SELFCO
 
 double f_batteryManagementCollectiveSelfConsumption_exportRate()
 {/*ALCODESTART::1743774244972*/
-double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
+//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
 double sumOfChargeSetpoints_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
 
+//Get all members that have a battery that is put on the external setpoint mode
 List<GridConnection> memberedGCWithSetpointBatteries = findAll(c_memberGridConnections, GC -> GC.p_batteryAsset != null && GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT);
-List<GridConnection> memberedGCWithSetpointBatteries_withFreeCapacity = new ArrayList<GridConnection>(memberedGCWithSetpointBatteries);
 
+
+//Initialize iterable gc list
+List<GridConnection> memberedGCWithSetpointBatteries_withFreeCapacity = new ArrayList<GridConnection>();
+
+//Only add the gc that have the same direction as net coop charge flow to the gc that will use their battery
+for(GridConnection GC : memberedGCWithSetpointBatteries){
+	double gc_balanceFlow = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
+	if((sumOfChargeSetpoints_kW < 0 && -gc_balanceFlow < 0) || (sumOfChargeSetpoints_kW > 0 && -gc_balanceFlow > 0)){
+		memberedGCWithSetpointBatteries_withFreeCapacity.add(GC);
+	}
+}
+
+//Initialize variables
 double remainingSumOfChargeSetpoints_kW = sumOfChargeSetpoints_kW;
 double gc_balanceFlowElectricity_kW;
 double gc_calculatedChargeSetpoint_kW;
 double gc_actualChargeSetpoint_kW;
-
 List<GridConnection> memberedGCWithSetpointBatteries_noCapacity = new ArrayList<GridConnection>();
 
+//Loop until no gc have battery capacity left or the setpoint is reached
 while( Math.abs(remainingSumOfChargeSetpoints_kW) > 0.0001 && memberedGCWithSetpointBatteries_withFreeCapacity.size() > 0){
 	memberedGCWithSetpointBatteries_noCapacity.clear();
-	double removedSumOfChargedSetpoints = 0;
-	double totalBalanceFlowRemainingGC = 0;
+	double removedSumOfChargedSetpoints_kW = 0;
+	double totalBalanceFlowRemainingGC_kW = 0;
+	
+	//Calculate the new combined balance flow, to use for distributing the remaining chargeSetpoint
 	for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
-		totalBalanceFlowRemainingGC += GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
+		totalBalanceFlowRemainingGC_kW += GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
 	}
-	if (Math.abs(totalBalanceFlowRemainingGC) < 0.0001) {
-   		traceln("Warning: totalBalanceFlowRemainingGC is zero, cant distribute any further");
-    break;
+	if (Math.abs(totalBalanceFlowRemainingGC_kW) < 0.0001) {
+   		traceln("Warning: totalBalanceFlowRemainingGC is zero, cant distribute any further, nr GC left: " + memberedGCWithSetpointBatteries_withFreeCapacity.size());
+    	break;
 	}
+	
+	//Iterate over the gc that still have space left in their charge capacity or battery storage
 	for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
 		gc_balanceFlowElectricity_kW = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
-		gc_calculatedChargeSetpoint_kW = GC.v_batteryChargeSetpointExternal_kW + remainingSumOfChargeSetpoints_kW * ( gc_balanceFlowElectricity_kW / totalBalanceFlowRemainingGC);
-		removedSumOfChargedSetpoints -= GC.v_batteryChargeSetpointExternal_kW;
+		gc_calculatedChargeSetpoint_kW = GC.v_batteryChargeSetpointExternal_kW + remainingSumOfChargeSetpoints_kW * ( gc_balanceFlowElectricity_kW / totalBalanceFlowRemainingGC_kW);
+		
+		//First remove setpoint from previous iteration again
+		removedSumOfChargedSetpoints_kW -= GC.v_batteryChargeSetpointExternal_kW;
+		
+		//Set and get new setpoint
 		gc_actualChargeSetpoint_kW = GC.f_setExternalBatteryChargeSetpoint(gc_calculatedChargeSetpoint_kW);
 		
-		removedSumOfChargedSetpoints += gc_actualChargeSetpoint_kW;
-		 
+		//Add new setpoint to removed setpiont total for this iteration again (netto this is increased by the additional amount compared to last iteration)
+		removedSumOfChargedSetpoints_kW += gc_actualChargeSetpoint_kW;
+		
+		//If the actual setpoint that has been returned by the gc is not equal to the required setpoint, it means the gc cant charge/dis charge any further, so remove it from the pool 
 		if(gc_calculatedChargeSetpoint_kW != gc_actualChargeSetpoint_kW){
 			memberedGCWithSetpointBatteries_noCapacity.add(GC);
+			//traceln("MEMBER HAS NO MORE BATTERY CAPACITY LEFT");
 		}
 	}
+	//Update the remaining pool of GC and to be distributed setpoint_kW
 	memberedGCWithSetpointBatteries_withFreeCapacity.removeAll(memberedGCWithSetpointBatteries_noCapacity);
-	remainingSumOfChargeSetpoints_kW -= removedSumOfChargedSetpoints;
+	remainingSumOfChargeSetpoints_kW -= removedSumOfChargedSetpoints_kW;
 }
 
 
