@@ -2691,39 +2691,6 @@ return v_batteryChargeSetpointExternal_kW;
 
 double f_operateSharedBatteryAndMetering()
 {/*ALCODESTART::1744097180013*/
-/*v_previousPowerElectricity_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-
-fm_currentProductionFlows_kW.clear();
-fm_currentConsumptionFlows_kW.clear();
-fm_currentBalanceFlows_kW.clear();
-
-v_currentPrimaryEnergyProduction_kW = 0;
-v_currentFinalEnergyConsumption_kW = 0;
-
-v_currentEnergyCurtailed_kW = 0;
-v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-
-// Categorical power flows
-v_fixedConsumptionElectric_kW = 0;
-v_electricHobConsumption_kW = 0;
-v_heatPumpElectricityConsumption_kW = 0;
-v_hydrogenElectricityConsumption_kW = 0;
-v_evChargingPowerElectric_kW = 0;
-v_batteryPowerElectric_kW = 0;
-v_windProductionElectric_kW = 0;
-v_pvProductionElectric_kW = 0;
-v_conversionPowerElectric_kW = 0;
-v_CHPProductionElectric_kW = 0;
-
-if (v_enableNFato) {
-	f_nfatoUpdateConnectionCapacity();
-}
-
-c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60));
-
-f_operateFixedAssets();*/
-
 if (p_batteryAsset!=null) {
 	f_batteryManagementExternalSetpoint();
 	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);

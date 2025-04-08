@@ -21,7 +21,7 @@ if (p_batteryAsset != null){
 				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 				break;
 			case EXTERNAL_SETPOINT:
-				//f_batteryManagementExternalSetpoint();
+				//Management function and remaining flex should be called by external control agent -> Return.
 				return;
 		}
 		

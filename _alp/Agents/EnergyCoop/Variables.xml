@@ -568,7 +568,7 @@
 		<Id>1676552997739</Id>
 		<Name><![CDATA[v_balanceElectricityDelivery_eur]]></Name>
 		<X>660</X>
-		<Y>659</Y>
+		<Y>679</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -590,7 +590,7 @@
 		<Id>1676552997741</Id>
 		<Name><![CDATA[v_balanceElectricityTransport_eur]]></Name>
 		<X>660</X>
-		<Y>679</Y>
+		<Y>699</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -612,7 +612,7 @@
 		<Id>1676552997743</Id>
 		<Name><![CDATA[v_balanceElectricityTax_eur]]></Name>
 		<X>660</X>
-		<Y>699</Y>
+		<Y>719</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -792,7 +792,7 @@
 		<Id>1692113155819</Id>
 		<Name><![CDATA[v_balanceElectricity_eur]]></Name>
 		<X>660</X>
-		<Y>640</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
