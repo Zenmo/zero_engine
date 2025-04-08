@@ -394,15 +394,14 @@ c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_ru
 f_operateFixedAssets();
 f_operateFlexAssets();
 
-if (v_enableCurtailment) {
-	f_curtailment();
+if (p_batteryOperationMode!=OL_BatteryOperationMode.EXTERNAL_SETPOINT) {
+	if(v_enableCurtailment) {
+		f_curtailment();
+	}
+
+	f_connectionMetering();
 }
 
-f_connectionMetering();
-
-//if (!Double.isFinite(v_currentPowerElectricity_kW)) {
-//	traceln("Gridconnection %s with connection_id %s has NaN or infinite v_currentPowerElectricity_kW at time %s!", p_gridConnectionID, p_company_connection_id, energyModel.t_h);
-//}
 /*ALCODEEND*/}
 
 double f_operateFixedAssets()
@@ -2680,7 +2679,7 @@ v_batteryChargeSetpointExternal_kW = 0;
 
 double f_setExternalBatteryChargeSetpoint(double chargeSetpoint_kW)
 {/*ALCODESTART::1743666170191*/
-v_batteryChargeSetpointExternal_kW = chargeSetpoint_kW;
+//v_batteryChargeSetpointExternal_kW = chargeSetpoint_kW;
 // ToDo: Return max possible charge power, considering SoC! (
 if (p_batteryAsset!=null) {
 	v_batteryChargeSetpointExternal_kW = max(min(chargeSetpoint_kW,p_batteryAsset.getMaxChargePower_kW()),-p_batteryAsset.getMaxDischargePower_kW());
@@ -2688,5 +2687,55 @@ if (p_batteryAsset!=null) {
 	v_batteryChargeSetpointExternal_kW = 0.0;
 }
 return v_batteryChargeSetpointExternal_kW;
+/*ALCODEEND*/}
+
+double f_operateSharedBatteryAndMetering()
+{/*ALCODESTART::1744097180013*/
+/*v_previousPowerElectricity_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+
+fm_currentProductionFlows_kW.clear();
+fm_currentConsumptionFlows_kW.clear();
+fm_currentBalanceFlows_kW.clear();
+
+v_currentPrimaryEnergyProduction_kW = 0;
+v_currentFinalEnergyConsumption_kW = 0;
+
+v_currentEnergyCurtailed_kW = 0;
+v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
+
+// Categorical power flows
+v_fixedConsumptionElectric_kW = 0;
+v_electricHobConsumption_kW = 0;
+v_heatPumpElectricityConsumption_kW = 0;
+v_hydrogenElectricityConsumption_kW = 0;
+v_evChargingPowerElectric_kW = 0;
+v_batteryPowerElectric_kW = 0;
+v_windProductionElectric_kW = 0;
+v_pvProductionElectric_kW = 0;
+v_conversionPowerElectric_kW = 0;
+v_CHPProductionElectric_kW = 0;
+
+if (v_enableNFato) {
+	f_nfatoUpdateConnectionCapacity();
+}
+
+c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60));
+
+f_operateFixedAssets();*/
+
+if (p_batteryAsset!=null) {
+	f_batteryManagementExternalSetpoint();
+	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
+}
+
+if (v_enableCurtailment) {
+	f_curtailment();
+}
+
+f_connectionMetering();
+
+
 /*ALCODEEND*/}
 

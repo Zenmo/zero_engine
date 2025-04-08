@@ -584,7 +584,6 @@ fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
 
-
 v_currentFinalEnergyConsumption_kW = 0;
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
@@ -592,36 +591,27 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
 if (b_parallelizeGridConnections) {
 	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance());
+} else {
 	for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
-		
-		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
-		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
-		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-
-		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
-		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
-		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
-		v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
-	}
-} 
-else {
-	for(GridConnection gc : c_gridConnections) {
 		gc.f_calculateEnergyBalance();
-		
-		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
-		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
-		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-		
-		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
-		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
-		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
-		v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
 	}
 }
+f_aggregators();
 
-for (GridConnection gc : c_subGridConnections) {
+for(GridConnection gc : c_gridConnections) { 
+	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
+	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
+	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
+
+	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
+	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
+	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
+	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
+} 
+
+/*for (GridConnection gc : c_subGridConnections) {
 	gc.f_calculateEnergyBalance();
-}
+}*/
 
 v_currentEnergyImport_kW = 0.0;
 v_currentEnergyExport_kW = 0.0;
@@ -631,23 +621,6 @@ for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	v_currentEnergyExport_kW += max( 0, -netFlow_kW );
 }
 
-/*
-if (v_isRapidRun) {	
-	if (v_timeStepsElapsed == 0) {
-		heatDemandProfile.setCellValue("Tijd (uren)", "Sheet1", 1, 1);
-		heatDemandProfile.setCellValue("Datum", "Sheet1", 1, 2);
-		heatDemandProfile.setCellValue("Energie Behoefte (kWh)", "Sheet1", 1, 3);
-	}
-	
-	heatDemandProfile.setCellValue(t_h, "Sheet1", v_timeStepsElapsed+2, 1);
-	
-	double unix_time = (1672531200.0 + t_h * 60 * 60 ) / 86400.0 + 25569.0; // 1672531200 is 1 jan 2023 GMT+1
-	heatDemandProfile.setCellValue(unix_time, "Sheet1", v_timeStepsElapsed+2, 2);
-
-	double totalHeatDemand_kW = sum(c_gridConnections,x->x.fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT));
-	heatDemandProfile.setCellValue(totalHeatDemand_kW, "Sheet1", v_timeStepsElapsed + 2, 3);
-}
-*/
 
 /*ALCODEEND*/}
 
@@ -1055,9 +1028,9 @@ for (GridConnection GC : c_gridConnections) {
 		}
 	}
 }
-for (GridConnection GC : c_subGridConnections) {
+/*for (GridConnection GC : c_subGridConnections) {
 	GC.f_resetStates();
-}
+}*/
 
 for (GridNode GN : pop_gridNodes) {
 	GN.f_resetStates();
@@ -2012,6 +1985,43 @@ if(pop_energyCoops.size()>0){
 for(GridConnection GC : f_getGridConnections()){
 	GC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
 }
+
+/*ALCODEEND*/}
+
+double f_aggregators()
+{/*ALCODESTART::1743946400524*/
+//pop_energyCoops.foreach(EC -> EC.)
+
+
+double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
+
+double CollectiveChargeSetpoint_kW = 0.0;
+for(GridConnection GC : c_gridConnections) {
+	if (GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT && GC instanceof GCUtility) {
+		CollectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	}
+}
+traceln("Aggregator active! CollectiveChargeSetpoint_kW: %s kW", CollectiveChargeSetpoint_kW);
+traceln("Aggregator active! Total battery capacity %s kWh", sumOfBatteryCapacities_kWh);
+
+// Generate setpoints and 'push' to memberGridConnections for next timestep
+for(GridConnection GC : c_gridConnections) {
+	if (GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT && GC instanceof GCUtility) {
+		if (GC.p_batteryAsset != null) {		
+			GC.f_setExternalBatteryChargeSetpoint(CollectiveChargeSetpoint_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
+			traceln("GC charge setpoint: %s", GC.v_batteryChargeSetpointExternal_kW);
+		}
+		GC.f_operateSharedBatteryAndMetering();
+	}
+}
+
+// For a more advanced version that takes into account feedin power of individual GC's for the setpoint of each GC:
+
+// Inventorize battery sizes and feedin-powers over c_memberGridConnections 
+//double[] GCbatteryPowers_kW = new double[c_memberGridConnections.size()];
+//double[] GCbatterySizes_kWh = new double[c_memberGridConnections.size()];
+//double[] GCcurrentBalanceElectricity_kW = new double[c_memberGridConnections.size()];
+
 
 /*ALCODEEND*/}
 

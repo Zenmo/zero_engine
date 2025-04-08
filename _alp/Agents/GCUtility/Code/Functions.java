@@ -4,7 +4,7 @@ f_manageHeatingAssets();
 
 f_manageCharging();
 
-if (p_batteryAsset != null){ // TEST CODE
+if (p_batteryAsset != null){ 
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
 		
 		switch (p_batteryOperationMode) {
@@ -21,14 +21,12 @@ if (p_batteryAsset != null){ // TEST CODE
 				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 				break;
 			case EXTERNAL_SETPOINT:
-				f_batteryManagementExternalSetpoint();
-				break;
+				//f_batteryManagementExternalSetpoint();
+				return;
 		}
 		
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		//traceln("flows:" + Arrays.toString(arr));
-		//v_batteryPowerElectric_kW = arr[4] - arr[0];
 	}
 }
 

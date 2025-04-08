@@ -34,6 +34,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
+		if (capacityElectric_kW == 0.0) {
+			return;
+		}
     	double inputPower_kW = ratioOfChargeCapacity_r * capacityElectric_kW; // Electric power going into battery, before losses.
     	double deltaEnergy_kWh;   // The change in energy stored in the battery this timestep ('internal' energy)
     	

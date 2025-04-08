@@ -81,7 +81,7 @@
 		<Id>1663238634515</Id>
 		<Name><![CDATA[v_timeStepsElapsed]]></Name>
 		<X>677</X>
-		<Y>350</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -484,7 +484,7 @@
 		<Id>1690290329895</Id>
 		<Name><![CDATA[hourOfYearPerMonth]]></Name>
 		<X>676</X>
-		<Y>370</Y>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -499,29 +499,6 @@
 			<Type><![CDATA[int[]]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new int[] {0, 744, 1392, 2136, 2856, 3600, 4320, 5064, 5808, 6528, 7272, 7992}]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1690290329902</Id>
-		<Name><![CDATA[v_hourOfYearStart]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>676</X>
-		<Y>391</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[int]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2827,6 +2804,7 @@
 		<Id>1716453161218</Id>
 		<Name><![CDATA[c_subGridConnections]]></Name>
 		<Description><![CDATA[A subGridConnections are a subset of (children of) of GridConnections that are "part" of another GC and thus are not counted towards the totals.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>90</X>
 		<Y>280</Y>
 		<Label>
