@@ -1344,7 +1344,7 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageBatteriesProduction_kW);
 	v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW);
 	v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh);
-	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.add(gc.v_rapidRunData.ts_dailyAverageBatteriesSOC_fr);	
+	//v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.add(gc.v_rapidRunData.ts_dailyAverageBatteriesSOC_fr);	
 
 	v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW);
 	v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW);
@@ -1359,7 +1359,7 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_summerWeekBatteriesProduction_kW.add(gc.v_rapidRunData.acc_summerWeekBatteriesProduction_kW);
 	v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW	);
 	v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh);
-	v_rapidRunData.ts_summerWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_summerWeekBatteriesSOC_fr);	
+	//v_rapidRunData.ts_summerWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_summerWeekBatteriesSOC_fr);	
 
 	v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW);
 	v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW);
@@ -1374,7 +1374,7 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_winterWeekBatteriesProduction_kW.add(gc.v_rapidRunData.acc_winterWeekBatteriesProduction_kW);
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW);
 	v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh);
-	v_rapidRunData.ts_winterWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_winterWeekBatteriesSOC_fr);	
+	//v_rapidRunData.ts_winterWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_winterWeekBatteriesSOC_fr);	
 }
 /*ALCODEEND*/}
 
@@ -1675,13 +1675,17 @@ if(coopBattery != null){
 double f_batteryManagementCollectiveSelfConsumption_batterySize(List<GridConnection> memberedGCWithSetpointBatteries)
 {/*ALCODESTART::1743670158646*/
 double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
-double sumOfChargeSetpoints_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
-
+double collectiveChargeSetpoint_kW = 0;
+for(GridConnection GC : memberedGCWithSetpointBatteries) {
+	if (GC instanceof GCUtility) {
+		collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	}
+}
 // Generate setpoints and 'push' to memberGridConnections for next timestep
 for(int i = 0; i<memberedGCWithSetpointBatteries.size(); i++) {
 	GridConnection GC = memberedGCWithSetpointBatteries.get(i);
 	if (GC.p_batteryAsset != null) {		
-		GC.f_setExternalBatteryChargeSetpoint(sumOfChargeSetpoints_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
+		GC.f_setExternalBatteryChargeSetpoint(collectiveChargeSetpoint_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
 	}
 }
 
@@ -1720,7 +1724,8 @@ else if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.SELFCO
 	f_batteryManagementCollectiveSelfConsumption_batterySize(memberedGCWithSetpointBatteries);
 }
 else if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.SELFCONSUMPTION_EXPORTRATE){
-	f_batteryManagementCollectiveSelfConsumption_exportRate_GH(memberedGCWithSetpointBatteries);
+	//f_batteryManagementCollectiveSelfConsumption_exportRate_GH(memberedGCWithSetpointBatteries);
+	f_batteryManagementCollectiveSelfConsumption_exportRate(memberedGCWithSetpointBatteries);
 }
 
 
@@ -1729,21 +1734,26 @@ else if(p_centralBatteryManagementMode == OL_CentralBatteryManagementMode.SELFCO
 double f_batteryManagementCollectiveSelfConsumption_exportRate(List<GridConnection> memberedGCWithSetpointBatteries)
 {/*ALCODESTART::1743774244972*/
 //Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
-double sumOfChargeSetpoints_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
+double collectiveChargeSetpoint_kW = 0;
+for(GridConnection GC : memberedGCWithSetpointBatteries) {
+	if (GC instanceof GCUtility) {
+		collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	}
+}
 
 //Initialize iterable gc list
 List<GridConnection> memberedGCWithSetpointBatteries_withFreeCapacity = new ArrayList<GridConnection>();
 
 //Only add the gc that have the same direction as net coop charge flow to the gc that will use their battery
 for(GridConnection GC : memberedGCWithSetpointBatteries){
-	double gc_balanceFlow = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
-	if((sumOfChargeSetpoints_kW < 0 && -gc_balanceFlow < 0) || (sumOfChargeSetpoints_kW > 0 && -gc_balanceFlow > 0)){
+	double gc_balanceFlow = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	if((collectiveChargeSetpoint_kW < 0 && -gc_balanceFlow < 0) || (collectiveChargeSetpoint_kW > 0 && -gc_balanceFlow > 0)){
 		memberedGCWithSetpointBatteries_withFreeCapacity.add(GC);
 	}
 }
 
 //Initialize variables
-double remainingSumOfChargeSetpoints_kW = sumOfChargeSetpoints_kW;
+double remainingSumOfChargeSetpoints_kW = collectiveChargeSetpoint_kW;
 double gc_balanceFlowElectricity_kW;
 double gc_calculatedChargeSetpoint_kW;
 double gc_actualChargeSetpoint_kW;
@@ -1757,7 +1767,7 @@ while( Math.abs(remainingSumOfChargeSetpoints_kW) > 0.0001 && memberedGCWithSetp
 	
 	//Calculate the new combined balance flow, to use for distributing the remaining chargeSetpoint
 	for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
-		totalBalanceFlowRemainingGC_kW += GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW;
+		totalBalanceFlowRemainingGC_kW += GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	}
 	if (Math.abs(totalBalanceFlowRemainingGC_kW) < 0.0001) {
    		traceln("Warning: totalBalanceFlowRemainingGC is zero, cant distribute any further, nr GC left: " + memberedGCWithSetpointBatteries_withFreeCapacity.size());
@@ -1795,7 +1805,13 @@ while( Math.abs(remainingSumOfChargeSetpoints_kW) > 0.0001 && memberedGCWithSetp
 double f_batteryManagementCollectiveSelfConsumption_exportRate_GH(List<GridConnection> memberedGCWithSetpointBatteries)
 {/*ALCODESTART::1743854008730*/
 //Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
-double CoopChargeSetpoint_kW = -(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_batteryPowerElectric_kW);
+double collectiveChargeSetpoint_kW = 0;
+for(GridConnection GC : memberedGCWithSetpointBatteries) {
+	if (GC instanceof GCUtility) {
+		collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+	}
+}
+
 double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
 //Get all members that have a battery that is put on the external setpoint mode
 memberedGCWithSetpointBatteries.forEach(GC -> GC.f_setExternalBatteryChargeSetpoint(0.0));
@@ -1819,16 +1835,16 @@ for (GridConnection GC : memberedGCWithSetpointBatteries) {
 }*/
 
 // For all qualifying GCs, make balanceflow zero if possible. Also, distinguish between collective feedin and collective delivery
-double remainingSumOfChargeSetpoints_kW = CoopChargeSetpoint_kW;
+double remainingSumOfChargeSetpoints_kW = collectiveChargeSetpoint_kW;
 //traceln("Starting with Coop charge setpoint %s", CoopChargeSetpoint_kW);
 //if(remainingSumOfChargeSetpoints_kW > 0) { // Collective production/supply case
 	// Divide setpoint proportional to feedin power per GC
 	for (GridConnection GC : memberedGCWithSetpointBatteries) {
 		double GC_Setpoint_kW=0;
-		if (CoopChargeSetpoint_kW > 0) {
-			GC_Setpoint_kW = CoopChargeSetpoint_kW * max(0,-(GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW))/totalCurrentFeedin_kW; // Divide summed charge-power proportional to feedin power on each GC.
-		} else if (CoopChargeSetpoint_kW < 0){ 
-			GC_Setpoint_kW = CoopChargeSetpoint_kW * max(0,(GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GC.v_batteryPowerElectric_kW))/totalCurrentDelivery_kW; // Divide summed charge-power proportional to delivery power on each GC.
+		if (collectiveChargeSetpoint_kW > 0) {
+			GC_Setpoint_kW = collectiveChargeSetpoint_kW * max(0,-GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))/totalCurrentFeedin_kW; // Divide summed charge-power proportional to feedin power on each GC.
+		} else if (collectiveChargeSetpoint_kW < 0){ 
+			GC_Setpoint_kW = collectiveChargeSetpoint_kW * max(0,GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))/totalCurrentDelivery_kW; // Divide summed charge-power proportional to delivery power on each GC.
 		}
 		remainingSumOfChargeSetpoints_kW -= (GC.f_setExternalBatteryChargeSetpoint(GC_Setpoint_kW));
 		/*
@@ -1980,7 +1996,7 @@ for(GridConnection GC : c_memberGridConnections) {
 double f_aggregatorManagement_EnergyCoop()
 {/*ALCODESTART::1744108399128*/
 //Get all members that have a battery that is put on the external setpoint mode
-List<GridConnection> memberedGCWithSetpointBatteries = findAll(c_memberGridConnections, GC -> GC.p_batteryAsset != null && GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT);
+List<GridConnection> memberedGCWithSetpointBatteries = findAll(c_memberGridConnections, GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT);
 
 //Run battery setpoint management
 f_centralBatteryManagementEnergyCoop(memberedGCWithSetpointBatteries);

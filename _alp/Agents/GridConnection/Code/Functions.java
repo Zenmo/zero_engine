@@ -394,7 +394,8 @@ c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_ru
 f_operateFixedAssets();
 f_operateFlexAssets();
 
-if (p_batteryOperationMode!=OL_BatteryOperationMode.EXTERNAL_SETPOINT) {
+if (p_batteryOperationMode!=OL_BatteryOperationMode.EXTERNAL_SETPOINT || c_parentCoops.size() == 0) {
+
 	if(v_enableCurtailment) {
 		f_curtailment();
 	}
@@ -2691,7 +2692,7 @@ return v_batteryChargeSetpointExternal_kW;
 
 double f_operateSharedBatteryAndMetering()
 {/*ALCODESTART::1744097180013*/
-if (p_batteryAsset!=null) {
+if (p_batteryAsset!=null && p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT) {
 	f_batteryManagementExternalSetpoint();
 	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();

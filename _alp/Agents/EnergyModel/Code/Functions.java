@@ -598,6 +598,7 @@ if (b_parallelizeGridConnections) {
 }
 f_aggregators();
 
+
 for(GridConnection gc : c_gridConnections) { 
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
@@ -1990,38 +1991,11 @@ for(GridConnection GC : f_getGridConnections()){
 
 double f_aggregators()
 {/*ALCODESTART::1743946400524*/
-//pop_energyCoops.foreach(EC -> EC.)
+//Function used to perform central management functions (like setpoint battery steering, within a timestep)
 
-
-double sumOfBatteryCapacities_kWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
-
-double CollectiveChargeSetpoint_kW = 0.0;
-for(GridConnection GC : c_gridConnections) {
-	if (GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT && GC instanceof GCUtility) {
-		CollectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	}
+//Run energy coop aggrator
+for (EnergyCoop EC : pop_energyCoops) {
+	EC.f_aggregatorManagement_EnergyCoop();
 }
-traceln("Aggregator active! CollectiveChargeSetpoint_kW: %s kW", CollectiveChargeSetpoint_kW);
-traceln("Aggregator active! Total battery capacity %s kWh", sumOfBatteryCapacities_kWh);
-
-// Generate setpoints and 'push' to memberGridConnections for next timestep
-for(GridConnection GC : c_gridConnections) {
-	if (GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT && GC instanceof GCUtility) {
-		if (GC.p_batteryAsset != null) {		
-			GC.f_setExternalBatteryChargeSetpoint(CollectiveChargeSetpoint_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
-			traceln("GC charge setpoint: %s", GC.v_batteryChargeSetpointExternal_kW);
-		}
-		GC.f_operateSharedBatteryAndMetering();
-	}
-}
-
-// For a more advanced version that takes into account feedin power of individual GC's for the setpoint of each GC:
-
-// Inventorize battery sizes and feedin-powers over c_memberGridConnections 
-//double[] GCbatteryPowers_kW = new double[c_memberGridConnections.size()];
-//double[] GCbatterySizes_kWh = new double[c_memberGridConnections.size()];
-//double[] GCcurrentBalanceElectricity_kW = new double[c_memberGridConnections.size()];
-
-
 /*ALCODEEND*/}
 

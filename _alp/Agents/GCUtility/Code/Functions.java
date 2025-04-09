@@ -22,7 +22,10 @@ if (p_batteryAsset != null){
 				break;
 			case EXTERNAL_SETPOINT:
 				//Management function and remaining flex should be called by external control agent -> Return.
-				return;
+				if(c_parentCoops.size()>0){
+					return;
+				}
+				break;
 		}
 		
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
