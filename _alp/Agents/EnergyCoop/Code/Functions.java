@@ -608,6 +608,9 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 double f_initialize()
 {/*ALCODESTART::1669042410671*/
 
+v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
+v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
 	v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
@@ -1256,6 +1259,7 @@ v_cumulativeIndividualSelfSufficiencyEnergy_fr = v_rapidRunData.getTotalEnergyCo
 
 double f_getTotalInstalledCapacityOfAssets()
 {/*ALCODESTART::1740480839774*/
+//Collect live totals
 v_liveAssetsMetaData.totalInstalledWindPower_kW = 0.0;
 v_liveAssetsMetaData.totalInstalledPVPower_kW = 0.0;
 v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
@@ -1275,6 +1279,29 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_liveAssetsMetaData.totalInstalledWindPower_kW += EC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		v_liveAssetsMetaData.totalInstalledPVPower_kW += EC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
+}
+
+//Collect rapid run totals
+v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW = 0.0;
+v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW = 0.0;
+v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
+
+//Add all battery storage capacities of gc
+for(GridConnection GC : c_memberGridConnections){
+	v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+	v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+	v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+}
+
+//Do this also for the 'child' coops
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		EC.f_getTotalInstalledCapacityOfAssets();
+		v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW += EC.v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+		v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW += EC.v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+		v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
 }
 /*ALCODEEND*/}
