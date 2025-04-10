@@ -1100,7 +1100,7 @@ v_totalOwnElectricityProduction_MWh = acc_totalOwnElectricityProduction_kW.getIn
 
 /*ALCODEEND*/}
 
-double f_collectGridConnectionTotals()
+double f_collectGridConnectionRapidRunData()
 {/*ALCODESTART::1739970817879*/
 // Make collective profiles, electricity per timestep, other energy carriers per day!
 
@@ -1149,7 +1149,7 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW);
 }
 
-f_collectAssetSpecificEnergyFlows();
+f_collectAssetSpecificEnergyFlows_rapidRun();
 
 // This is only true because we have no customers and only members of the Coop for this implementation
 acc_totalOwnElectricityProduction_kW = v_rapidRunData.am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
@@ -1158,10 +1158,10 @@ acc_totalOwnElectricityProduction_kW = v_rapidRunData.am_dailyAverageProductionA
 
 
 //Calculate cumulative asset capacities
-f_getTotalInstalledCapacityOfAssets();
+f_getTotalInstalledCapacityOfAssets_rapidRun();
 
-//Calculate cumulative individual values
-f_getCumulativeIndividualGCValues();
+//Recalculate SOC ts for energycoop
+f_recalculateSOC_rapidrun();
 
 /*ALCODEEND*/}
 
@@ -1173,7 +1173,7 @@ c_memberGridConnections.addAll(gcList);
 f_initialize();
 
 //Collect live datasets
-f_collectLiveDataSets();
+f_collectGridConnectionLiveData();
 
 if(energyModel.v_rapidRunData != null){
 	//Create rapid run data class used to collect rapid run data of other gc
@@ -1183,7 +1183,7 @@ if(energyModel.v_rapidRunData != null){
 	v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
 	
 	//Collect current totals
-	f_collectGridConnectionTotals();
+	f_collectGridConnectionRapidRunData();
 	
 	//Calculate KPIs
 	f_calculateKPIs();
@@ -1265,27 +1265,28 @@ v_cumulativeIndividualSelfSufficiencyEnergy_fr = v_rapidRunData.getTotalEnergyCo
 
 /*ALCODEEND*/}
 
-double f_getTotalInstalledCapacityOfAssets()
+double f_getTotalInstalledCapacityOfAssets_rapidRun()
 {/*ALCODESTART::1740480839774*/
-v_liveAssetsMetaData.totalInstalledWindPower_kW = 0.0;
-v_liveAssetsMetaData.totalInstalledPVPower_kW = 0.0;
-v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
+//Collect rapid run asset totals
+v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW = 0.0;
+v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW = 0.0;
+v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
 
 //Add all battery storage capacities of gc
 for(GridConnection GC : c_memberGridConnections){
-	v_liveAssetsMetaData.totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
-	v_liveAssetsMetaData.totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+	v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+	v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 }
 
 //Do this also for the 'child' coops
 for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
 	if (a instanceof EnergyCoop) {
 		EnergyCoop EC = (EnergyCoop)a;
-		EC.f_getTotalInstalledCapacityOfAssets();
-		v_liveAssetsMetaData.totalInstalledWindPower_kW += EC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
-		v_liveAssetsMetaData.totalInstalledPVPower_kW += EC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+		EC.f_getTotalInstalledCapacityOfAssets_rapidRun();
+		v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW += EC.v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+		v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW += EC.v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+		v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
 }
 /*ALCODEEND*/}
@@ -1339,7 +1340,7 @@ else{
 
 /*ALCODEEND*/}
 
-double f_collectAssetSpecificEnergyFlows()
+double f_collectAssetSpecificEnergyFlows_rapidRun()
 {/*ALCODESTART::1740502128178*/
 for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_dailyAverageBaseloadElectricityConsumption_kW.add(gc.v_rapidRunData.acc_dailyAverageBaseloadElectricityConsumption_kW);
@@ -1355,7 +1356,6 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageBatteriesProduction_kW);
 	v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW);
 	v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh);
-	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.add(gc.v_rapidRunData.ts_dailyAverageBatteriesSOC_fr);	
 
 	v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekBaseloadElectricityConsumption_kW);
 	v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekHeatPumpElectricityConsumption_kW);
@@ -1370,7 +1370,6 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_summerWeekBatteriesProduction_kW.add(gc.v_rapidRunData.acc_summerWeekBatteriesProduction_kW);
 	v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW	);
 	v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh);
-	v_rapidRunData.ts_summerWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_summerWeekBatteriesSOC_fr);	
 
 	v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekBaseloadElectricityConsumption_kW);
 	v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekHeatPumpElectricityConsumption_kW);
@@ -1385,13 +1384,11 @@ for (GridConnection gc : c_memberGridConnections) {
 	v_rapidRunData.acc_winterWeekBatteriesProduction_kW.add(gc.v_rapidRunData.acc_winterWeekBatteriesProduction_kW);
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.add(gc.v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW);
 	v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.add(gc.v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh);
-	v_rapidRunData.ts_winterWeekBatteriesSOC_fr.add(gc.v_rapidRunData.ts_winterWeekBatteriesSOC_fr);	
-
-	
 }
+
 /*ALCODEEND*/}
 
-double f_collectLiveDataSets()
+double f_collectGridConnectionLiveData()
 {/*ALCODESTART::1740502128180*/
 ArrayList<GridConnection> gcList = f_getAllChildMemberGridConnections();
 
@@ -1493,6 +1490,13 @@ for (int i=0; i < liveWeekSize; i++){
 	//Stored
 	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(timeAxisValue, batteryStoredEnergyLiveWeek_MWh);
 }
+
+
+//Calculate cumulative asset capacities
+f_getTotalInstalledCapacityOfAssets_live();
+
+//Recalculate SOC ts for energycoop
+f_recalculateSOCDataSet_live();
 
 /*ALCODEEND*/}
 
@@ -1682,6 +1686,94 @@ if(coopBattery != null){
 	coopBattery.c_parentCoops.add(this);
 	c_memberGridConnections.add(coopBattery);
 	v_liveAssetsMetaData.hasBattery = true;
+}
+/*ALCODEEND*/}
+
+double f_recalculateSOC_rapidrun()
+{/*ALCODESTART::1744211126429*/
+double[] dailyAverageBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.getLength()];
+double[] summerWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_summerWeekBatteriesSOC_fr.getLength()];
+double[] winterWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_winterWeekBatteriesSOC_fr.getLength()];
+
+double totalInstalledBatteryStorageCapacity_MWh = v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+
+//Total
+for(int i = 0; i < v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength() ; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		dailyAverageBatteriesSOC_fr[i] = v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;
+	}
+	else{
+		dailyAverageBatteriesSOC_fr[i] = 0;
+	}
+}
+
+//Summerweek SOC
+for(int i = 0; i < v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.getLength() ; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		summerWeekBatteriesSOC_fr[i] = v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
+	}
+	else{
+		summerWeekBatteriesSOC_fr[i] = 0;	
+	}
+}
+
+//Winterweek SOC
+for(int i = 0; i < v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.getLength() ; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		winterWeekBatteriesSOC_fr[i] = v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
+	}
+	else{
+		winterWeekBatteriesSOC_fr[i] = 0;	
+	}
+}
+
+v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.setTimeSeries(dailyAverageBatteriesSOC_fr);
+v_rapidRunData.ts_summerWeekBatteriesSOC_fr.setTimeSeries(summerWeekBatteriesSOC_fr);
+v_rapidRunData.ts_winterWeekBatteriesSOC_fr.setTimeSeries(winterWeekBatteriesSOC_fr);
+/*ALCODEEND*/}
+
+double f_getTotalInstalledCapacityOfAssets_live()
+{/*ALCODESTART::1744211359139*/
+//Collect live asset totals
+v_liveAssetsMetaData.totalInstalledWindPower_kW = 0.0;
+v_liveAssetsMetaData.totalInstalledPVPower_kW = 0.0;
+v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
+
+//Add all battery storage capacities of gc
+for(GridConnection GC : c_memberGridConnections){
+	v_liveAssetsMetaData.totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	v_liveAssetsMetaData.totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+}
+
+//Do this also for the 'child' coops
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		EC.f_getTotalInstalledCapacityOfAssets_live();
+		v_liveAssetsMetaData.totalInstalledWindPower_kW += EC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		v_liveAssetsMetaData.totalInstalledPVPower_kW += EC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
+}
+/*ALCODEEND*/}
+
+double f_recalculateSOCDataSet_live()
+{/*ALCODESTART::1744271942642*/
+double totalInstalledBatteryStorageCapacity_MWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+
+
+double currentSOC = 0;
+int liveWeekSize = v_liveData.data_batteryStoredEnergyLiveWeek_MWh.size();
+
+for (int i=0; i < liveWeekSize; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		currentSOC = v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;
+	}
+	else{
+		currentSOC = 0;
+	}
+	v_liveData.data_batterySOC_fr.add(v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getX(i), currentSOC);
 }
 /*ALCODEEND*/}
 
