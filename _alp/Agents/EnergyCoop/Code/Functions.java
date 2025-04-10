@@ -1181,7 +1181,7 @@ if(energyModel.v_rapidRunData != null){
 	f_calculateKPIs();
 }
 
-f_connectCoopGridBattery();
+f_connectCoopBattery();
 /*ALCODEEND*/}
 
 double f_getGroupContractDeliveryCapacity_kW()
@@ -1666,7 +1666,7 @@ else{
 
 /*ALCODEEND*/}
 
-double f_connectCoopGridBattery()
+double f_connectCoopBattery()
 {/*ALCODESTART::1742569887460*/
 GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP);
 
@@ -1722,6 +1722,49 @@ if (energyModel.v_isRapidRun){
 
 ////Money flows and data
 //f_updateFinances();
+/*ALCODEEND*/}
+
+double f_recalculateSOC_rapidrun()
+{/*ALCODESTART::1744211126429*/
+double[] dailyAverageBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.getLength()];
+double[] summerWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_summerWeekBatteriesSOC_fr.getLength()];
+double[] winterWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_winterWeekBatteriesSOC_fr.getLength()];
+
+double totalInstalledBatteryStorageCapacity_MWh = v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+
+//Total
+for(int i = 0; i < v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength() ; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		dailyAverageBatteriesSOC_fr[i] = v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
+	}
+	else{
+		dailyAverageBatteriesSOC_fr[i] = 0;
+	}
+}
+
+//Summerweek SOC
+for(int i = 0; i < v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.getLength() ; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		summerWeekBatteriesSOC_fr[i] = v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
+	}
+	else{
+		summerWeekBatteriesSOC_fr[i] = 0;	
+	}
+}
+
+//Winterweek SOC
+for(int i = 0; i < v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.getLength() ; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		winterWeekBatteriesSOC_fr[i] = v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
+	}
+	else{
+		winterWeekBatteriesSOC_fr[i] = 0;	
+	}
+}
+
+v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.setTimeSeries(dailyAverageBatteriesSOC_fr);
+v_rapidRunData.ts_summerWeekBatteriesSOC_fr.setTimeSeries(summerWeekBatteriesSOC_fr);
+v_rapidRunData.ts_winterWeekBatteriesSOC_fr.setTimeSeries(winterWeekBatteriesSOC_fr);
 /*ALCODEEND*/}
 
 double f_centralBatteryManagementEnergyCoop(List<GridConnection> memberedGCWithSetpointBatteries)
@@ -2002,60 +2045,6 @@ for(GridConnection GC : c_memberGridConnections) {
 
 /*ALCODEEND*/}
 
-double f_aggregatorManagement_EnergyCoop()
-{/*ALCODESTART::1744108399128*/
-//Get all members that have a battery that is put on the external setpoint mode
-List<GridConnection> memberedGCWithSetpointBatteries = findAll(c_memberGridConnections, GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT);
-
-//Run battery setpoint management
-f_centralBatteryManagementEnergyCoop(memberedGCWithSetpointBatteries);
-
-//Run battery setpoint for GC + remaining steps for the gc (curtailment, additional flex later in merit order and finally connection metering)
-memberedGCWithSetpointBatteries.forEach(GC -> GC.f_operateSharedBatteryAndMetering());
-/*ALCODEEND*/}
-double f_recalculateSOC_rapidrun()
-{/*ALCODESTART::1744211126429*/
-double[] dailyAverageBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.getLength()];
-double[] summerWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_summerWeekBatteriesSOC_fr.getLength()];
-double[] winterWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_winterWeekBatteriesSOC_fr.getLength()];
-
-double totalInstalledBatteryStorageCapacity_MWh = v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
-
-//Total
-for(int i = 0; i < v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength() ; i++){
-	if(totalInstalledBatteryStorageCapacity_MWh > 0){
-		dailyAverageBatteriesSOC_fr[i] = v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
-	}
-	else{
-		dailyAverageBatteriesSOC_fr[i] = 0;
-	}
-}
-
-//Summerweek SOC
-for(int i = 0; i < v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.getLength() ; i++){
-	if(totalInstalledBatteryStorageCapacity_MWh > 0){
-		summerWeekBatteriesSOC_fr[i] = v_rapidRunData.ts_summerWeekBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
-	}
-	else{
-		summerWeekBatteriesSOC_fr[i] = 0;	
-	}
-}
-
-//Winterweek SOC
-for(int i = 0; i < v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.getLength() ; i++){
-	if(totalInstalledBatteryStorageCapacity_MWh > 0){
-		winterWeekBatteriesSOC_fr[i] = v_rapidRunData.ts_winterWeekBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
-	}
-	else{
-		winterWeekBatteriesSOC_fr[i] = 0;	
-	}
-}
-
-v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.setTimeSeries(dailyAverageBatteriesSOC_fr);
-v_rapidRunData.ts_summerWeekBatteriesSOC_fr.setTimeSeries(summerWeekBatteriesSOC_fr);
-v_rapidRunData.ts_winterWeekBatteriesSOC_fr.setTimeSeries(winterWeekBatteriesSOC_fr);
-/*ALCODEEND*/}
-
 double f_getTotalInstalledCapacityOfAssets_live()
 {/*ALCODESTART::1744211359139*/
 //Collect live asset totals
@@ -2080,6 +2069,18 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
 }
+/*ALCODEEND*/}
+
+double f_aggregatorManagement_EnergyCoop()
+{/*ALCODESTART::1744108399128*/
+//Get all members that have a battery that is put on the external setpoint mode
+List<GridConnection> memberedGCWithSetpointBatteries = findAll(c_memberGridConnections, GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryOperationMode == OL_BatteryOperationMode.EXTERNAL_SETPOINT);
+
+//Run battery setpoint management
+f_centralBatteryManagementEnergyCoop(memberedGCWithSetpointBatteries);
+
+//Run battery setpoint for GC + remaining steps for the gc (curtailment, additional flex later in merit order and finally connection metering)
+memberedGCWithSetpointBatteries.forEach(GC -> GC.f_operateSharedBatteryAndMetering());
 /*ALCODEEND*/}
 
 double f_recalculateSOCDataSet_live()

@@ -712,7 +712,7 @@
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>	
+		<ReturnType>double</ReturnType>
 		<Id>1744211359139</Id>
 		<Name><![CDATA[f_getTotalInstalledCapacityOfAssets_live]]></Name>
 		<X>990</X>
@@ -744,7 +744,7 @@
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>	
+		<ReturnType>double</ReturnType>
 		<Id>1744271942642</Id>
 		<Name><![CDATA[f_recalculateSOCDataSet_live]]></Name>
 		<X>990</X>

@@ -6,6 +6,7 @@ import zeroPackage.ZeroMath;
 import java.lang.Math;
 import java.util.Arrays;
 import java.lang.RuntimeException;
+
 public class ZeroTimeSeries implements Serializable {
 
 	    private double[] timeSeries;
@@ -173,4 +174,9 @@ public class ZeroTimeSeries implements Serializable {
 		 */ 
 		private static final long serialVersionUID = 1L;
 
-	}
+	} 
+ 
+ 
+ 
+ 
+ 
