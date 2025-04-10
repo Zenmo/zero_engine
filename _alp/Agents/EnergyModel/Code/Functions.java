@@ -401,8 +401,8 @@ double f_updateTimeseries(double t_h)
 {/*ALCODESTART::1664952601107*/
 b_isDaytime = t_h % 24 > 6 && t_h % 24 < 18;
 b_isWeekday = (t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5);
-b_isSummerWeek = (t_h % 8760) >= p_startHourSummerWeek && (t_h % 8760) < p_startHourSummerWeek + 24*7;
-b_isWinterWeek = (t_h % 8760) >= p_startHourWinterWeek && (t_h % 8760) < p_startHourWinterWeek + 24*7;
+b_isSummerWeek = (t_h % 8760) >= p_startOfSummerWeek_h && (t_h % 8760) < p_startOfSummerWeek_h + 24*7;
+b_isWinterWeek = (t_h % 8760) >= p_startOfWinterWeek_h && (t_h % 8760) < p_startOfWinterWeek_h + 24*7;
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
@@ -1368,9 +1368,17 @@ acc_totalDLRfactor_f.reset();
 
 double f_runTimestep()
 {/*ALCODESTART::1701162826549*/
-// Update tijdreeksen in leesbare variabelen
 t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;// + v_hourOfYearStart);// % 8760;
 
+// Reduce startdate after one year, loop all dat
+if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % 8760 == 0.0) {
+	Date startDate = getExperiment().getEngine().getStartDate();
+	startDate.setYear(startDate.getYear()-1);
+	getExperiment().getEngine().setStartDate(startDate);
+	traceln("Reduced anylogic date by one year, looping all data");
+}
+
+// Update tijdreeksen in leesbare variabelen
 f_updateTimeseries(t_h);
 
 // Operate assets on each gridConnection
@@ -1464,6 +1472,9 @@ t_h = p_runStartTime_h;
 
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
+p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
+
 
 Date startDate = date();
 
