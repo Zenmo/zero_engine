@@ -1700,7 +1700,7 @@ double totalInstalledBatteryStorageCapacity_MWh = v_rapidRunData.assetsMetaData.
 //Total
 for(int i = 0; i < v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength() ; i++){
 	if(totalInstalledBatteryStorageCapacity_MWh > 0){
-		dailyAverageBatteriesSOC_fr[i] = v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;	
+		dailyAverageBatteriesSOC_fr[i] = v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;
 	}
 	else{
 		dailyAverageBatteriesSOC_fr[i] = 0;
