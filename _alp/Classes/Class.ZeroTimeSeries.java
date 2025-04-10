@@ -102,6 +102,10 @@ public class ZeroTimeSeries implements Serializable {
             return this.timeSeries;
 	    }
 
+	    public void setTimeSeries(double[] timeSeries) {
+            this.timeSeries = timeSeries;
+	    }
+	    
 	    public Double getY(int i) {
             return timeSeries[i];
 	    }
@@ -147,6 +151,10 @@ public class ZeroTimeSeries implements Serializable {
 			}
 			
 			return ds;
+	    }
+	    
+	    public int getLength() {
+	    	return timeSeries.length;
 	    }
 		
 	    @Override
