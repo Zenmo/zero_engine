@@ -319,7 +319,7 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;]]></StartupCode>
 			<PresentationFlag>true</PresentationFlag>
 			<ShowLabel>true</ShowLabel>
 			<InterpolationMethod>LINEAR</InterpolationMethod>
-			<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+			<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
 			<ApproximationOrder>1</ApproximationOrder>
 			<LoadFromDatabase>false</LoadFromDatabase>
@@ -350,7 +350,7 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;]]></StartupCode>
 			<PresentationFlag>true</PresentationFlag>
 			<ShowLabel>true</ShowLabel>
 			<InterpolationMethod>LINEAR</InterpolationMethod>
-			<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+			<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
 			<ApproximationOrder>1</ApproximationOrder>
 			<LoadFromDatabase>false</LoadFromDatabase>
@@ -380,7 +380,7 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;]]></StartupCode>
 			<PresentationFlag>true</PresentationFlag>
 			<ShowLabel>true</ShowLabel>
 			<InterpolationMethod>LINEAR</InterpolationMethod>
-			<OutOfRangeBehaviour>NEAREST</OutOfRangeBehaviour>
+			<OutOfRangeBehaviour>REPEATING</OutOfRangeBehaviour>
 			<OutOfRangeCustomValue>0.0</OutOfRangeCustomValue>
 			<ApproximationOrder>1</ApproximationOrder>
 			<LoadFromDatabase>false</LoadFromDatabase>

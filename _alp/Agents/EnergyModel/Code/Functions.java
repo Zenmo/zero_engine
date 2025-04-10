@@ -1368,9 +1368,17 @@ acc_totalDLRfactor_f.reset();
 
 double f_runTimestep()
 {/*ALCODESTART::1701162826549*/
-// Update tijdreeksen in leesbare variabelen
 t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;// + v_hourOfYearStart);// % 8760;
 
+// Reduce startdate after one year, loop all dat
+if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % 8760 == 0.0) {
+	Date startDate = getExperiment().getEngine().getStartDate();
+	startDate.setYear(startDate.getYear()-1);
+	getExperiment().getEngine().setStartDate(startDate);
+	traceln("Reduced anylogic date by one year, looping all data");
+}
+
+// Update tijdreeksen in leesbare variabelen
 f_updateTimeseries(t_h);
 
 // Operate assets on each gridConnection
