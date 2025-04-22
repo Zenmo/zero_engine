@@ -770,9 +770,12 @@ if ( p_BuildingThermalAsset == null ) {
 			}
 		} else {
 			if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump) { // when there is only a gas burner or DH set
-					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
-					//traceln("Running manageHeatingAsset for single heating asset");
-			} else {
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());
+			}
+			else if(p_primaryHeatingAsset instanceof J_EAConversionGasCHP){
+				p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / ((J_EAConversionGasCHP)p_primaryHeatingAsset).getOutputHeatCapacity_kW());
+			} 
+			else {
 				traceln("GridConnection " + p_gridConnectionID + " has a single unsupported heating asset!");
 			}
 		}
@@ -1211,9 +1214,11 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
 		c_electrolyserAssets.add(j_ea);
-	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
+	} else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP || j_ea.energyAssetType == OL_EnergyAssetType.METHANE_CHP) {
 		c_chpAssets.add(j_ea);
+		if (j_ea instanceof J_EAConversionGasCHP) {
+			p_primaryHeatingAsset = (J_EAConversion)j_ea;
+		}
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);

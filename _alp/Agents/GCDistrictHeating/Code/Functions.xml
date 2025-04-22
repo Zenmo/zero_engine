@@ -5,8 +5,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1663773953770</Id>
 		<Name><![CDATA[f_operateAssetsDistrictHeating]]></Name>
-		<X>930</X>
-		<Y>260</Y>
+		<X>910</X>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -75,8 +75,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1693302929918</Id>
 		<Name><![CDATA[f_connectToJ_EA_DistrictHeating]]></Name>
-		<X>1020</X>
-		<Y>200</Y>
+		<X>1070</X>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
