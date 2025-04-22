@@ -155,6 +155,10 @@
 				<Id>1724849181274</Id>
 				<Name><![CDATA[OTHER]]></Name>
 			</Option>
+			<Option>
+				<Id>1744868282127</Id>
+				<Name><![CDATA[PARKING]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659118426374</Id>
@@ -5915,6 +5919,21 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1744868469165</Id>
+					<Name><![CDATA[c_parkingSpots]]></Name>
+					<X>300</X><Y>480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GIS_Object]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -11039,6 +11058,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11946,6 +11971,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12117,6 +12148,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12281,6 +12318,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12489,6 +12532,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12653,6 +12702,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -12819,6 +12874,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -12983,6 +13044,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -13482,6 +13549,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -13653,6 +13726,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_eigenOprit]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_initialPVpanels]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxPVpanels]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -22045,6 +22124,48 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1744897246214</Id>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+					<X>50</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1744897246212</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1744897254893</Id>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
+					<X>50</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1744897254891</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626903</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
@@ -22198,7 +22319,7 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 				<Variable Class="CollectionVariable">
 					<Id>1704895219414</Id>
 					<Name><![CDATA[c_connectedGISObjects]]></Name>
-					<X>50</X><Y>480</Y>
+					<X>50</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -42753,6 +42874,12 @@ public void f_simpleCharging(){
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -44951,6 +45078,12 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -46042,6 +46175,12 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -46500,6 +46639,12 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -48166,6 +48311,12 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -48849,6 +49000,12 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -50151,6 +50308,12 @@ public void f_resetSpecificGCStates(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -51621,6 +51784,12 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -52459,6 +52628,12 @@ public void f_connectToJ_EA_default(J_EA j_ea){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_eigenOprit]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_initialPVpanels]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_maxPVpanels]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
