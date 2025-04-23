@@ -1214,11 +1214,9 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
 		c_electrolyserAssets.add(j_ea);
-	} else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP || j_ea.energyAssetType == OL_EnergyAssetType.METHANE_CHP) {
+	} else if (j_ea instanceof J_EAConversionGasCHP) {
 		c_chpAssets.add(j_ea);
-		if (j_ea instanceof J_EAConversionGasCHP) {
-			p_primaryHeatingAsset = (J_EAConversion)j_ea;
-		}
+		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -1728,28 +1726,32 @@ if (j_ea instanceof J_EAVehicle) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 		c_electricHobAssets.remove(j_ea);
-		//c_conversionElectricAssets.remove(j_ea);
-	}	
-	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+	}
+	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
-	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		if(p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP)
-			p_secondaryHeatingAsset = null;
-		else{
-			p_primaryHeatingAsset = null;
-		}
-	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		p_primaryHeatingAsset = null;
-		energyModel.c_ambientAirDependentAssets.remove(j_ea);
-		c_electricHeatpumpAssets.remove(j_ea);
-		//c_conversionElectricAssets.remove(j_ea);
-	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
-		p_primaryHeatingAsset = null;
 	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		c_electrolyserAssets.remove(j_ea);
 	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
-		c_chpAssets.remove(j_ea);
+	else{
+		if (j_ea instanceof J_EAConversionGasBurner) {
+	
+		} else if (j_ea instanceof J_EAConversionHeatPump) {
+			energyModel.c_ambientAirDependentAssets.remove(j_ea);
+			c_electricHeatpumpAssets.remove(j_ea);
+		} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
+
+		} else if (j_ea instanceof J_EAConversionGasCHP) {
+			c_chpAssets.remove(j_ea);
+		}
+		if(p_primaryHeatingAsset == j_ea){
+			if(p_secondaryHeatingAsset != null){
+				p_primaryHeatingAsset = p_secondaryHeatingAsset;
+				p_secondaryHeatingAsset = null;
+			}
+		}
+		if(p_secondaryHeatingAsset == j_ea){
+			p_secondaryHeatingAsset = null;
+		}
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
