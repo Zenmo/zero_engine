@@ -839,7 +839,7 @@ if (energyModel.v_isRapidRun){
 	
 	//Live capacity datasets
 	v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-	v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
 	
 	
 	//// Gather specific electricity flows from corresponding energy assets
