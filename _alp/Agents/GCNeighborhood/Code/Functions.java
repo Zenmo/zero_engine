@@ -428,8 +428,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_tertiaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_quaternaryHeatingAsset = (J_EAConversion)j_ea;
-	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.CHP) {
+	} else if (j_ea instanceof J_EAConversionGasCHP) {
 		c_chpAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
