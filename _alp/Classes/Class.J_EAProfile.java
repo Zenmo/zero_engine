@@ -13,7 +13,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	//protected double outputTemperature_degC;
 	public double loadLoad_kWh = 0;
 	private double profileScaling_fr = 1;
-
+	private boolean enableProfileLooping = true;
 	
     /**
      * Default constructor
@@ -76,7 +76,9 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     @Override
     //public Pair<J_FlowsMap, Double> operate(double time_h) {
     public void operate(double time_h) {
-    	if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
+    	if (enableProfileLooping && time_h >= a_energyProfile_kWh.length * profileTimestep_h) {
+    		time_h = time_h % a_energyProfile_kWh.length * profileTimestep_h;
+    	} else if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
     		traceln("Time out of upper bound for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
 //    		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
     		throw new RuntimeException(String.format("Time out of upper bound for evaluating J_EAProfile power! Time is: %s", time_h));

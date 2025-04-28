@@ -811,71 +811,76 @@ v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runS
 
 double f_updateLiveDataSets()
 {/*ALCODESTART::1715857260657*/
-//Current timestep
-double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
-
-//Energy carrier flows
-for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
-	v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+if (energyModel.v_isRapidRun){
+	f_rapidRunDataLogging();
+} else {
+	//Current timestep
+	double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
+	
+	//Energy carrier flows
+	for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
+		v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+	}
+	for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
+		v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
+	}
+	
+	
+	//Electricity balance
+	v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+	
+	
+	//Total demand and supply
+	v_liveData.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
+	v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
+	
+	
+	//Live capacity datasets
+	v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	
+	
+	//// Gather specific electricity flows from corresponding energy assets
+	
+	//Baseload electricity
+	v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
+	
+	//Cooking
+	v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
+	
+	//Hydrogen elec consumption
+	v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
+	
+	//Heatpump elec consumption
+	v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
+	
+	//EVs
+	v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
+	v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
+	
+	//Batteries
+	v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
+	v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
+	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
+	double currentSOC = 0;
+	if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+		currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
+	v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
+	
+	//CHP production
+	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
+	
+	//PV production
+	v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
+	
+	//Wind production
+	v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
+	
+	//District heating
+	v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
 }
-for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
-	v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
-}
 
-
-//Electricity balance
-v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-
-
-//Total demand and supply
-v_liveData.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
-v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
-
-
-//Live capacity datasets
-v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
-v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-
-
-//// Gather specific electricity flows from corresponding energy assets
-
-//Baseload electricity
-v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
-
-//Cooking
-v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
-
-//Hydrogen elec consumption
-v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
-
-//Heatpump elec consumption
-v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
-
-//EVs
-v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
-v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
-
-//Batteries
-v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
-v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
-v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
-double currentSOC = 0;
-if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
-	currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
-}
-v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
-
-//CHP production
-v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
-
-//PV production
-v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
-
-//Wind production
-v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
-
-//District heating
-v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
 /*ALCODEEND*/}
 
 double f_fillAnnualDatasetsOLD()

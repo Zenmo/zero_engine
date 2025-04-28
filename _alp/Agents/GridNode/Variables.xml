@@ -1746,6 +1746,7 @@ geupdate vanuit
 	<Variable Class="Parameter">
 		<Id>1718566355120</Id>
 		<Name><![CDATA[p_uniqueColor]]></Name>
+		<Description><![CDATA[Color used to color net neighbours. Default = gray, so all unknown net neighbours and gridnodes become gray.]]></Description>
 		<X>70</X>
 		<Y>300</Y>
 		<Label>
@@ -1760,7 +1761,7 @@ geupdate vanuit
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[randomColor()]]></Code>
+				<Code><![CDATA[gray]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1718566355118</Id>

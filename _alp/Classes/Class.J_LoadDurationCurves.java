@@ -72,11 +72,11 @@ public class J_LoadDurationCurves implements Serializable {
     			ds_previousLoadDurationCurveTotal_kW.add(i*energyModel.p_timeStep_h,ds_loadDurationCurveTotal_kW.getY(i));		
     		}
     		// summer/winter
-    		if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourSummerWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourSummerWeek+24*7) {
+    		if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfSummerWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfSummerWeek_h+24*7) {
     			netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
     			i_summer++;
     		}
-    		if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startHourWinterWeek && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startHourWinterWeek+24*7) {
+    		if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfWinterWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfWinterWeek_h+24*7) {
     			netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
     			i_winter++;
     		}

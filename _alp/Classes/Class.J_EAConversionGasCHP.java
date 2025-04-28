@@ -96,6 +96,18 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 		return outputTemperature_degC;
 	}
 	
+	public double getOutputHeatCapacity_kW() {
+		return outputHeatCapacity_kW;
+	}
+	public double getOutputElectricCapacity_kW() {
+		return outputElectricCapacity_kW;
+	}
+	
+	@Override
+	public double getOutputCapacity_kW() {
+		throw new RuntimeException("Can't use the basic getOutputcapacity of this Asset, as it has 2 outputs. So You need to specify which output!");
+	}
+	
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed

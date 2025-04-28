@@ -308,7 +308,7 @@ double f_updateWeeklyDatasets(I_EnergyData data)
 {/*ALCODESTART::1741792546539*/
 //========== SUMMER WEEK ==========//
 // Consumption
-double summerWeekStartTime_h = energyModel.p_startHourSummerWeek - energyModel.p_runStartTime_h;
+double summerWeekStartTime_h = energyModel.p_startOfSummerWeek_h - energyModel.p_runStartTime_h;
 dsm_summerWeekConsumptionDataSets_kW = data.getRapidRunData().am_summerWeekConsumptionAccumulators_kW.getDataSetMap(summerWeekStartTime_h);
 v_dataElectricityBaseloadConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekBaseloadElectricityConsumption_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityForHeatConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekHeatPumpElectricityConsumption_kW.getDataSet(summerWeekStartTime_h);
@@ -345,7 +345,7 @@ for (int i = 0; i < summerWeekBatteryStorage.size(); i++) {
 
 //========== WINTER WEEK ==========//
 // Consumption
-double winterWeekStartTime_h = energyModel.p_startHourWinterWeek - energyModel.p_runStartTime_h;
+double winterWeekStartTime_h = energyModel.p_startOfWinterWeek_h - energyModel.p_runStartTime_h;
 dsm_winterWeekConsumptionDataSets_kW = data.getRapidRunData().am_winterWeekConsumptionAccumulators_kW.getDataSetMap(winterWeekStartTime_h);
 v_dataElectricityBaseloadConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekBaseloadElectricityConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityForHeatConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekHeatPumpElectricityConsumption_kW.getDataSet(winterWeekStartTime_h);

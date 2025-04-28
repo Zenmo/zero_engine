@@ -349,10 +349,6 @@
 					<Id>1717159864803</Id>
 					<Name><![CDATA[FUEL_CELL]]></Name>
 				</Option>
-				<Option>
-					<Id>1734089970461</Id>
-					<Name><![CDATA[CHP]]></Name>
-				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659525715752</Id>
