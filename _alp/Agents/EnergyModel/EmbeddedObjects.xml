@@ -511,6 +511,9 @@
 			<Parameter>
 				<Name><![CDATA[p_energyCoopID]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_dataSharingAgreed]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
