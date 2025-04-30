@@ -1531,7 +1531,6 @@ f_initializeForecasts();
 
 f_initializeLiveDataSets();
 
-//v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 //f_initializeAccumulators();
 
 // Use parallelisation?
@@ -1794,28 +1793,19 @@ remove_pop_energyCoops(energyCoop);
 
 /*ALCODEEND*/}
 
-EnergyCoop f_addEnergyCarrier(OL_EnergyCarriers EC)
+EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1740056275008*/
 v_activeEnergyCarriers.add(EC);
+v_activeConsumptionEnergyCarriers.add(EC);
 
 DataSet dsDemand = new DataSet( (int)(168 / p_timeStep_h) );
-DataSet dsSupply = new DataSet( (int)(168 / p_timeStep_h) );
+
 double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 for (double t = startTime; t <= endTime; t += p_timeStep_h) {
 	dsDemand.add( t, 0);
-	dsSupply.add( t, 0);
 }
 v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
-v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
-/*
-dsm_dailyAverageDemandDataSets_kW.put( EC, new DataSet(365));
-dsm_dailyAverageSupplyDataSets_kW.put( EC, new DataSet(365));
-dsm_summerWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
-dsm_summerWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
-dsm_winterWeekDemandDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
-dsm_winterWeekSupplyDataSets_kW.put( EC, new DataSet( (int)(168 / p_timeStep_h)));
-*/
 /*ALCODEEND*/}
 
 double f_rapidRunDataLogging()
@@ -1853,8 +1843,13 @@ if(b_isDaytime) {
 	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		v_rapidRunData.am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		v_rapidRunData.am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		
+		if(v_activeConsumptionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
+		}
+		if(v_activeProductionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		}
 	}
 	
 	v_rapidRunData.acc_daytimeElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
@@ -1869,8 +1864,12 @@ if(b_isDaytime) {
 if (!b_isWeekday) { // 
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		v_rapidRunData.am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		v_rapidRunData.am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		if(v_activeConsumptionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
+		}
+		if(v_activeProductionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		}
 	}
 	
 	v_rapidRunData.acc_weekendElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
@@ -2024,5 +2023,19 @@ for(GridConnection GC : f_getGridConnections()){
 	GC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
 }
 
+/*ALCODEEND*/}
+
+EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
+{/*ALCODESTART::1746021439807*/
+v_activeEnergyCarriers.add(EC);
+v_activeProductionEnergyCarriers.add(EC);
+
+DataSet dsSupply = new DataSet( (int)(168 / p_timeStep_h) );
+double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+	dsSupply.add( t, 0);
+}
+v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 /*ALCODEEND*/}
 

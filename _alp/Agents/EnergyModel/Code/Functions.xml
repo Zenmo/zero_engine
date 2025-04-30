@@ -634,7 +634,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1740056275008</Id>
-		<Name><![CDATA[f_addEnergyCarrier]]></Name>
+		<Name><![CDATA[f_addConsumptionEnergyCarrier]]></Name>
 		<X>1680</X>
 		<Y>580</Y>
 		<Label>
@@ -680,6 +680,26 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>EnergyCoop</ReturnType>
+		<Id>1746021439807</Id>
+		<Name><![CDATA[f_addProductionEnergyCarrier]]></Name>
+		<X>1680</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[EC]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

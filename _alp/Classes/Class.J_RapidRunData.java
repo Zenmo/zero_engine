@@ -129,14 +129,14 @@ public class J_RapidRunData {
     }
     
     public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
-    	this.activeEnergyCarriers = v_activeEnergyCarriers;
-    	this.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-    	this.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+    	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
+    	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
+    	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
 	    //========== TOTAL ACCUMULATORS ==========//
-		am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, simDuration_h );
+		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 24.0, simDuration_h );
 	    am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
-	    am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(v_activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
-	    am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, simDuration_h);
+	    am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
+	    am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, 24.0, simDuration_h);
 	
 	    acc_dailyAverageEnergyProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageFinalEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -162,9 +162,9 @@ public class J_RapidRunData {
 	    ts_dailyAverageBatteriesSOC_fr = new ZeroTimeSeries(24.0, simDuration_h);
 	    
 	    //========== SUMMER WEEK ACCUMULATORS ==========//
-	    am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
-	    am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
-	    am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, timeStep_h, 168.0);
+	    am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, timeStep_h, 168.0);
 	
 	    acc_summerWeekEnergyProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekFinalEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
@@ -193,9 +193,9 @@ public class J_RapidRunData {
 	    ts_summerWeekBatteriesSOC_fr = new ZeroTimeSeries(timeStep_h, 168.0);
 	    
 	    //========== WINTER WEEK ACCUMULATORS ==========//
-	    am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
-	    am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
-	    am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 168.0);
+	    am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, timeStep_h, 168.0);
+	    am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, timeStep_h, 168.0);
 	
 	    acc_winterWeekEnergyProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekFinalEnergyConsumption_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
@@ -224,8 +224,8 @@ public class J_RapidRunData {
 	    ts_winterWeekBatteriesSOC_fr = new ZeroTimeSeries(timeStep_h, 168.0);
 	    
 	    //========== DAYTIME ACCUMULATORS ==========//
-	    am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
-	    am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+	    am_daytimeImports_kW.createEmptyAccumulators( this.activeConsumptionEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+	    am_daytimeExports_kW.createEmptyAccumulators( this.activeProductionEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
 	
 	    acc_daytimeEnergyProduction_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
 	    acc_daytimeFinalEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,0.5 * (simDuration_h));
@@ -236,8 +236,8 @@ public class J_RapidRunData {
 	    acc_daytimePrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
 	    		
 	    //========== WEEKEND ACCUMULATORS ==========//
-	    am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
-	    am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
+	    am_weekendImports_kW.createEmptyAccumulators( this.activeConsumptionEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+	    am_weekendExports_kW.createEmptyAccumulators( this.activeProductionEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
 	
 	    acc_weekendEnergyProduction_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
 	    acc_weekendFinalEnergyConsumption_kW = new ZeroAccumulator(false, timeStep_h,2 / 7  * (simDuration_h) + 48);
@@ -249,14 +249,14 @@ public class J_RapidRunData {
     }
 
     public void resetAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
-    	this.activeEnergyCarriers = v_activeEnergyCarriers;
-    	this.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-    	this.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+    	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
+    	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
+    	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
     	//Total simulation
-		am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, simDuration_h );
+		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 24.0, simDuration_h );
     	am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
-    	am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(v_activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
-    	am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, simDuration_h);
+    	am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
+    	am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, 24.0, simDuration_h);
 
     	acc_dailyAverageEnergyProduction_kW.reset();
     	acc_dailyAverageFinalEnergyConsumption_kW.reset();
@@ -282,9 +282,9 @@ public class J_RapidRunData {
         ts_dailyAverageBatteriesSOC_fr.reset();
         
     	//Summerweek
-    	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
-    	am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
-    	am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, timeStep_h, 24*7);
+    	am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, timeStep_h, 24*7);
 
     	acc_summerWeekEnergyProduction_kW.reset();
     	acc_summerWeekFinalEnergyConsumption_kW.reset();
@@ -314,8 +314,8 @@ public class J_RapidRunData {
 	    
     	//Winterweek
     	am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
-    	am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
-    	am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, timeStep_h, 24*7);
+    	am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, timeStep_h, 24*7);
+    	am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, timeStep_h, 24*7);
 
     	acc_winterWeekEnergyProduction_kW.reset();
     	acc_winterWeekFinalEnergyConsumption_kW.reset();
@@ -344,8 +344,8 @@ public class J_RapidRunData {
 	    ts_winterWeekBatteriesSOC_fr.reset();
 	    
     	// Daytime 
-    	am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
-    	am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+    	am_daytimeImports_kW.createEmptyAccumulators( this.activeConsumptionEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
+    	am_daytimeExports_kW.createEmptyAccumulators( this.activeProductionEnergyCarriers, false, timeStep_h, 0.5 * (simDuration_h));
     	
     	acc_daytimeElectricityProduction_kW.reset();
     	acc_daytimeElectricityConsumption_kW.reset();
@@ -355,8 +355,8 @@ public class J_RapidRunData {
     	acc_daytimePrimaryEnergyProductionHeatpumps_kW.reset();
     	
     	// Weekend
-    	am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
-    	am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
+    	am_weekendImports_kW.createEmptyAccumulators( this.activeConsumptionEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
+    	am_weekendExports_kW.createEmptyAccumulators( this.activeProductionEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
 
     	acc_weekendElectricityProduction_kW.reset();
     	acc_weekendElectricityConsumption_kW.reset();

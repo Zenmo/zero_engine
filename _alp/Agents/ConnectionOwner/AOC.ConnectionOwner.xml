@@ -20,9 +20,6 @@
 		<Parameter>
 			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
-		<Parameter>
-			<Name><![CDATA[b_dataSharingAgreed]]></Name>
-		</Parameter>
 	</Parameters>
 	<StartupCode><![CDATA[energyModel.c_actors.add(this);
 energyModel.c_connectionOwners.add(this);]]></StartupCode>
