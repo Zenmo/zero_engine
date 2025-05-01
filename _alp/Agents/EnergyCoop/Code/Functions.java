@@ -1514,9 +1514,14 @@ double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-	currentImport_kW += max( 0, currentBalance_kW );
-	currentExport_kW += max( 0, -currentBalance_kW );
 	v_rapidRunData.am_totalBalanceAccumulators_kW.get(EC).addStep(  currentBalance_kW );
+	
+	if(v_activeConsumptionEnergyCarriers.contains(EC)){
+		currentImport_kW += max( 0, currentBalance_kW );
+	}
+	if(v_activeProductionEnergyCarriers.contains(EC)){
+		currentExport_kW += max( 0, -currentBalance_kW );
+	}
 }
 
 // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
@@ -1524,8 +1529,13 @@ if(energyModel.b_isDaytime) {
 	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		v_rapidRunData.am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		v_rapidRunData.am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+
+		if(v_activeConsumptionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
+		}
+		if(v_activeProductionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		}
 	}
 	
 	v_rapidRunData.acc_daytimeElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
@@ -1539,8 +1549,13 @@ if(energyModel.b_isDaytime) {
 if (!energyModel.b_isWeekday) { // 
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		v_rapidRunData.am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		v_rapidRunData.am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+
+		if(v_activeConsumptionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
+		}
+		if(v_activeProductionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		}
 	}
 	
 	v_rapidRunData.acc_weekendElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
