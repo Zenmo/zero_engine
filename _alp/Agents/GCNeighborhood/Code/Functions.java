@@ -288,34 +288,46 @@ if (j_ea instanceof J_EAVehicle) {
 
 double f_connectToJ_EA_default_overwrite(J_EA j_ea)
 {/*ALCODESTART::1730370456790*/
-for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
-	if (!v_activeEnergyCarriers.contains(EC)) {
+for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
+	if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
 		v_activeEnergyCarriers.add(EC);
-		
+		v_activeConsumptionEnergyCarriers.add(EC);
+			
 		if (energyModel.b_isInitialized) {
-			energyModel.f_addEnergyCarrier(EC);
+			//Add EC to energyModel
+			energyModel.f_addConsumptionEnergyCarrier(EC);
+			
+			//Initialize dataset
 			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
-			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
 				dsDemand.add( t, 0);
-				dsSupply.add( t, 0);
 			}
 			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
-			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 		}
 	}
 }
 
-//Production EC
-for(OL_EnergyCarriers EC_production : j_ea.getActiveProductionEnergyCarriers()){
-	v_activeProductionEnergyCarriers.add(EC_production);
-}
-
-//Consumption EC
-for(OL_EnergyCarriers EC_consumption : j_ea.getActiveConsumptionEnergyCarriers()){
-	v_activeConsumptionEnergyCarriers.add(EC_consumption);
+for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
+	if (!v_activeProductionEnergyCarriers.contains(EC)) {
+		v_activeEnergyCarriers.add(EC);
+		v_activeProductionEnergyCarriers.add(EC);		
+		if (energyModel.b_isInitialized) {
+		
+			//Add EC to energyModel
+			energyModel.f_addProductionEnergyCarrier(EC);
+			
+			//Initialize datasets
+			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+				dsSupply.add( t, 0);
+			}
+			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+		}
+	}
 }
 
 

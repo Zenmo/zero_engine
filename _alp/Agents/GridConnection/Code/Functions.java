@@ -1079,37 +1079,47 @@ if( this instanceof GCDistrictHeating ) { // Temporarily disabled while transfer
 
 double f_connectToJ_EA_default(J_EA j_ea)
 {/*ALCODESTART::1692799608559*/
-for (OL_EnergyCarriers EC : j_ea.getActiveEnergyCarriers()) {
-	if (!v_activeEnergyCarriers.contains(EC)) {
+for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
+	if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
 		v_activeEnergyCarriers.add(EC);
-		
+		v_activeConsumptionEnergyCarriers.add(EC);
+			
 		if (energyModel.b_isInitialized) {
-			energyModel.f_addEnergyCarrier(EC);
+			//Add EC to energyModel
+			energyModel.f_addConsumptionEnergyCarrier(EC);
+			
+			//Initialize dataset
 			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
-			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
 				dsDemand.add( t, 0);
-				dsSupply.add( t, 0);
 			}
 			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
-			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 		}
 	}
 }
 
-//Production EC
-for(OL_EnergyCarriers EC_production : j_ea.getActiveProductionEnergyCarriers()){
-	v_activeProductionEnergyCarriers.add(EC_production);
+for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
+	if (!v_activeProductionEnergyCarriers.contains(EC)) {
+		v_activeEnergyCarriers.add(EC);
+		v_activeProductionEnergyCarriers.add(EC);		
+		if (energyModel.b_isInitialized) {
+		
+			//Add EC to energyModel
+			energyModel.f_addProductionEnergyCarrier(EC);
+			
+			//Initialize datasets
+			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+				dsSupply.add( t, 0);
+			}
+			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+		}
+	}
 }
-
-//Consumption EC
-for(OL_EnergyCarriers EC_consumption : j_ea.getActiveConsumptionEnergyCarriers()){
-	v_activeConsumptionEnergyCarriers.add(EC_consumption);
-}
-
-
 
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
@@ -1439,7 +1449,6 @@ v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
 
 f_initializeDataSets();
 
-//v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers){
 	energyModel.v_activeEnergyCarriers.add(EC);
 }
@@ -2235,9 +2244,14 @@ double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-	currentImport_kW += max( 0, currentBalance_kW );
-	currentExport_kW += max( 0, -currentBalance_kW );
 	v_rapidRunData.am_totalBalanceAccumulators_kW.get(EC).addStep(  currentBalance_kW );
+	
+	if(v_activeConsumptionEnergyCarriers.contains(EC)){
+		currentImport_kW += max( 0, currentBalance_kW );
+	}
+	if(v_activeProductionEnergyCarriers.contains(EC)){
+		currentExport_kW += max( 0, -currentBalance_kW );
+	}
 }
 
 // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
@@ -2245,8 +2259,12 @@ if(energyModel.b_isDaytime) {
 	
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		v_rapidRunData.am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		v_rapidRunData.am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		if(v_activeConsumptionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_daytimeImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
+		}
+		if(v_activeProductionEnergyCarriers.contains(EC)){
+			v_rapidRunData.am_daytimeExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+		}
 	}
 	
 	v_rapidRunData.acc_daytimeElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
@@ -2260,10 +2278,13 @@ if(energyModel.b_isDaytime) {
 if (!energyModel.b_isWeekday) { // 
 	for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 		double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
-		v_rapidRunData.am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
-		v_rapidRunData.am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
-	}
-	
+			if(v_activeConsumptionEnergyCarriers.contains(EC)){
+				v_rapidRunData.am_weekendImports_kW.get(EC).addStep(max( 0, currentBalance_kW ));
+			}
+			if(v_activeProductionEnergyCarriers.contains(EC)){
+				v_rapidRunData.am_weekendExports_kW.get(EC).addStep(max( 0, -currentBalance_kW ));
+			}
+		}
 	v_rapidRunData.acc_weekendElectricityProduction_kW.addStep(fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
 	v_rapidRunData.acc_weekendElectricityConsumption_kW.addStep(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
 	v_rapidRunData.acc_weekendEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
