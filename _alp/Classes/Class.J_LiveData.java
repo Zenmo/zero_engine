@@ -40,6 +40,46 @@ public class J_LiveData {
     	this.parentAgent = parentAgent;
     }
 	
+    public void resetLiveDatasets(double startTime, double endTime, double timeStep_h) {
+    	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
+    		DataSet dsDemand = new DataSet( (int)(168 / timeStep_h) );
+    		for (double t = startTime; t <= endTime; t += timeStep_h) {
+    			dsDemand.add( t, 0);
+    		}
+    		dsm_liveDemand_kW.put( EC, dsDemand);
+    	}
+    	
+    	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
+    		DataSet dsSupply = new DataSet( (int)(168 / timeStep_h) );
+    		for (double t = startTime; t <= endTime; t += timeStep_h) {
+    			dsSupply.add( t, 0);
+    		}
+    		dsm_liveSupply_kW.put( EC, dsSupply);
+    	}
+    	
+		for (double t = startTime; t <= endTime; t += timeStep_h) {
+	    	data_baseloadElectricityDemand_kW.add( t, 0);
+	    	data_hydrogenElectricityDemand_kW.add( t, 0);
+	    	data_heatPumpElectricityDemand_kW.add( t, 0);
+	    	data_electricVehicleDemand_kW.add( t, 0);
+	    	data_batteryCharging_kW.add( t, 0);
+	    	data_PVGeneration_kW.add( t, 0);
+	    	data_windGeneration_kW.add( t, 0);
+	    	data_batteryDischarging_kW.add( t, 0);
+	    	data_V2GSupply_kW.add( t, 0);
+	    	data_CHPElectricityProductionLiveWeek_kW.add( t, 0);
+	    	data_totalDemand_kW.add( t, 0); 
+	    	data_totalSupply_kW.add( t, 0);
+	    	data_liveElectricityBalance_kW.add( t, 0);
+	    	data_gridCapacityDemand_kW.add( t, 0); 
+	    	data_gridCapacitySupply_kW.add( t, 0);
+	    	data_cookingElectricityDemand_kW.add( t, 0);
+	    	data_districtHeatDelivery_kW.add( t, 0);
+	    	data_batteryStoredEnergyLiveWeek_MWh.add( t, 0);
+	    	data_batterySOC_fr.add( t, 0);	
+    	}
+    }
+    
 	public String toString() {
 		return super.toString();
 	}

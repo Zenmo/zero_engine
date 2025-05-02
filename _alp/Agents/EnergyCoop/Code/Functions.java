@@ -1175,7 +1175,13 @@ f_initialize();
 //Collect live datasets
 f_collectGridConnectionLiveData();
 
-if(energyModel.v_rapidRunData != null){
+boolean allGCHaveRapidRun = true;
+for(GridConnection GC : c_memberGridConnections){
+	if(GC.v_rapidRunData == null){
+		allGCHaveRapidRun = false;
+	}
+}
+if(allGCHaveRapidRun){
 	//Create rapid run data class used to collect rapid run data of other gc
 	v_rapidRunData = new J_RapidRunData(this);
 	v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, EnumSet.copyOf(v_activeEnergyCarriers), EnumSet.copyOf(v_activeConsumptionEnergyCarriers), EnumSet.copyOf(v_activeProductionEnergyCarriers));
