@@ -12325,6 +12325,12 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_maxPVpanels]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_maxSolarPV]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nbParkingSpots]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -13174,6 +13180,9 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						<Parameter>
 							<Name><![CDATA[p_annotation]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_closestGridNode]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -13261,6 +13270,9 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_annotation]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_closestGridNode]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -13352,6 +13364,9 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_address]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_closestGridNode]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -16322,7 +16337,7 @@ geupdate vanuit
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[GridConnection]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
@@ -46364,6 +46379,48 @@ public void f_operateFlexAssets(){
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1746553037332</Id>
+					<Name><![CDATA[p_maxSolarPV]]></Name>
+					<X>470</X><Y>530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1746553037330</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1746553049513</Id>
+					<Name><![CDATA[p_nbParkingSpots]]></Name>
+					<X>470</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1746553049511</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -46371,57 +46428,11 @@ public void f_operateFlexAssets(){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671111800831</Id>
 					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-					<X>800</X><Y>240</Y>
+					<X>800</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for( J_EA v : c_conversionAssets ){
-	if (v instanceof J_EAConversionElektrolyser) {
-		f_manageElektrolyser((J_EAConversionElektrolyser)v);
-	}
-}
-
-// Determine EV charging
-f_manageCharging();
-//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
-
-// Operate battery
-/*if (p_batteryAsset != null){
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
-		f_batteryManagementBalanceCoop( v_batterySOC_fr );
-	}
-	else {
-		f_batteryManagementPriceGrid( v_batterySOC_fr );
-	}
-	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batteryPowerElectric_kW = arr[4] - arr[0];
-	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-}*/
-
-if ( p_batteryAsset != null ) {
-	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
-			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalance(v_batterySOC_fr);
-//		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
-//			f_batteryManagementBalanceSupply(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
-			f_batteryManagementPrice(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
-			f_batteryManagementNodalPricing(v_batterySOC_fr);
-		}
-
-		double[] flowsArray = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		v_batteryPowerElectric_kW = flowsArray[4] - flowsArray[0];//p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-	}
-}
-]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -46484,7 +46495,7 @@ if ( p_batteryAsset != null ) {
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-					<X>800</X><Y>280</Y>
+					<X>810</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -50139,6 +50150,29 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1746553585203</Id>
+					<Name><![CDATA[p_closestGridNode]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>50</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[GridNode]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<UnitOfValue Class="RateUnits"><![CDATA[PER_SECOND]]></UnitOfValue>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1746553585201</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1721726757949</Id>
 					<Name><![CDATA[c_containedGridConnections]]></Name>
@@ -50161,7 +50195,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1721720983063</Id>
 					<Name><![CDATA[f_style]]></Name>
-					<X>600</X><Y>55</Y>
+					<X>590</X><Y>30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -51027,6 +51061,9 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				<Parameter>
 					<Name><![CDATA[p_annotation]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_closestGridNode]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -51527,6 +51564,9 @@ v_totalHydrogenUsed_MWh = 0;]]></Body>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_annotation]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_closestGridNode]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
