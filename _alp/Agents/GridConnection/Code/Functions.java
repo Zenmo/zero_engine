@@ -2543,6 +2543,7 @@ else {
 	f_nfatoSetConnectionCapacity(false);
 	
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
+	
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
 	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);
@@ -2555,6 +2556,13 @@ else {
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
+	
+	
+	//Initialize/reset dataset maps to 0
+	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	v_liveData.resetLiveDatasets(startTime, endTime, energyModel.p_timeStep_h);
+
 }
 
 //Update the 'isActive' variable
