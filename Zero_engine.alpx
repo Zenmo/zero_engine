@@ -977,6 +977,10 @@
 					<Id>1734001947459</Id>
 					<Name><![CDATA[OFF]]></Name>
 				</Option>
+				<Option>
+					<Id>1746607342910</Id>
+					<Name><![CDATA[BATTERY_ALGORITHM_BAS]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1668693527447</Id>
@@ -1513,6 +1517,10 @@
 			<JavaClass>
 				<Id>1741864496371</Id>
 				<Name><![CDATA[J_ConnectionMetaData]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1746606645736</Id>
+				<Name><![CDATA[J_BatteryAlgorithmBas]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
