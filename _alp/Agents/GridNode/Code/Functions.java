@@ -659,7 +659,7 @@ List<GridNode> f_getLowerLVLConnectedGridNodes()
 List<GridNode> allConnectedGridNodes = new ArrayList<GridNode>();
 
 for(GridNode GN : c_connectedGridNodes){
-	allConnectedGridNodes.addAll(GN.f_getAllConnectedGridNodes_recursion(allConnectedGridNodes));
+	allConnectedGridNodes.addAll(GN.f_getAllConnectedGridNodes_recursion(new ArrayList<GridNode>()));
 }
 
 return allConnectedGridNodes;
