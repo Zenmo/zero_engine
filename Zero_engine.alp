@@ -47,6 +47,10 @@
 				<Id>1659705310310</Id>
 				<Name><![CDATA[LT5thgen]]></Name>
 			</Option>
+			<Option>
+				<Id>1747077660252</Id>
+				<Name><![CDATA[LVLV]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659117289326</Id>
@@ -2584,7 +2588,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1701782531465</Id>
 					<Name><![CDATA[v_peakElecImport_kW]]></Name>
-					<X>80</X><Y>1210</Y>
+					<X>80</X><Y>1250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2599,7 +2603,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				<Variable Class="PlainVariable">
 					<Id>1701782538616</Id>
 					<Name><![CDATA[v_peakElecExport_kW]]></Name>
-					<X>80</X><Y>1230</Y>
+					<X>80</X><Y>1270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4352,8 +4356,7 @@ v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1715246315957</Id>
-					<Name><![CDATA[v_dailyDistrictHeatDemand_kWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<Name><![CDATA[v_dailyCookingElectricityDemand_kW]]></Name>
 					<X>20</X><Y>2970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -7819,6 +7822,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	double v_currentBaseloadElectricityDemand_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
 	double v_currentHeatPumpElectricityDemand_kW = sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW);
 	double v_currentElectricVehicleDemand_kW = sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW));
+	double v_currentElectricCookingDemand_kW = sum(c_gridConnections, x->max(0,x.v_electricHobConsumption_kW));
 	double v_currentBatteriesDemand_kW = sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW));
 	double v_currentNaturalGasDemand_kW = sum(c_gridConnections, x-> max(0, x.v_currentPowerMethane_kW));
 	double v_currentDieselDemand_kW = sum(c_gridConnections, x-> max(0, x.v_currentPowerDiesel_kW));
@@ -7924,7 +7928,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	
 		data_summerWeekBaseloadElectricityDemand_kW.add(t_h, sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW));
 		data_summerWeekHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
-		//data_summerWeekElectricCarsDemand_kW.add(t_h, sum(c_gridConnections, x->x.v_electricCarsDemand_kW));
+		data_summerWeekElectricCookingDemand_kW.add(t_h, v_currentElectricCookingDemand_kW);
 		data_summerWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 		data_summerWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 		data_summerWeekNaturalGasDemand_kW.add(t_h, v_currentNaturalGasDemand_kW);
@@ -7968,7 +7972,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	
 		data_winterWeekBaseloadElectricityDemand_kW.add(t_h, sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW));
 		data_winterWeekHeatPumpElectricityDemand_kW.add(t_h, v_currentHeatPumpElectricityDemand_kW);
-		//data_winterWeekElectricCarsDemand_kW.add(t_h, sum(c_gridConnections, x->x.v_electricCarsDemand_kW));
+		data_winterWeekCookingElectricityDemand_kW.add(t_h, v_currentElectricCookingDemand_kW);
 		data_winterWeekElectricVehicleDemand_kW.add(t_h, v_currentElectricVehicleDemand_kW);
 		data_winterWeekBatteriesDemand_kW.add(t_h, v_currentBatteriesDemand_kW);
 		data_winterWeekNaturalGasDemand_kW.add(t_h, v_currentNaturalGasDemand_kW);
@@ -8005,6 +8009,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 	v_dailyNaturalGasDemand_kW += v_currentNaturalGasDemand_kW;
 	v_dailyDieselDemand_kW += v_currentDieselDemand_kW;
 	v_dailyHydrogenDemand_kW += v_currentHydrogenDemand_kW;
+	v_dailyCookingElectricityDemand_kW += v_currentElectricCookingDemand_kW;
 	
 	v_dailyPVGeneration_kW += v_currentPVGeneration_kW;
 	v_dailyWindGeneration_kW += v_currentWindGeneration_kW;
@@ -8020,6 +8025,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		data_annualHeatPumpElectricityDemand_kW.add(t_h, v_dailyHeatPumpElectricityDemand_kW/(24 / p_timeStep_h));
 		//data_annualElectricCarsDemand_MWh.add(t_h, v_dailyElectricCarsDemand_kWh/(24 / p_timeStep_h));
 		data_annualElectricVehicleDemand_kW.add(t_h, v_dailyElectricVehicleDemand_kW/(24 / p_timeStep_h));
+		data_annualCookingDemand_kW.add(t_h, v_dailyCookingElectricityDemand_kW / (24/ p_timeStep_h));
 		data_annualBatteriesDemand_kW.add(t_h, v_dailyBatteriesDemand_kW/(24 / p_timeStep_h));
 		data_annualNaturalGasDemand_kW.add(t_h, v_dailyNaturalGasDemand_kW/(24 / p_timeStep_h));
 		data_annualDieselDemand_kW.add(t_h, v_dailyDieselDemand_kW/(24 / p_timeStep_h));
@@ -8043,6 +8049,7 @@ traceln("v_daytimeEnergyUsed_MWh: %s, daytimeEnergyUsed_MWh: %s", v_daytimeEnerg
 		v_dailyNaturalGasDemand_kW = 0;
 		v_dailyDieselDemand_kW = 0;
 		v_dailyHydrogenDemand_kW = 0;
+		v_dailyCookingElectricityDemand_kW = 0;
 		
 		v_dailyPVGeneration_kW = 0;
 		v_dailyWindGeneration_kW = 0;
@@ -8103,6 +8110,7 @@ data_annualHeatPumpElectricityDemand_kW.reset();
 //data_annualElectricCarsDemand_MWh.reset();
 data_annualElectricVehicleDemand_kW.reset();
 data_annualBatteriesDemand_kW.reset();
+data_annualCookingDemand_kW.reset();
 
 data_annualPVGeneration_kW.reset();
 data_annualWindGeneration_kW.reset();
@@ -9138,7 +9146,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048264</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW]]></Name>
-					<X>80</X><Y>1250</Y>
+					<X>80</X><Y>1290</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9162,7 +9170,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048281</Id>
 					<Name><![CDATA[data_heatPumpElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1330</Y>
+					<X>80</X><Y>1370</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9186,7 +9194,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048295</Id>
 					<Name><![CDATA[data_windGeneration_kW]]></Name>
-					<X>80</X><Y>1450</Y>
+					<X>80</X><Y>1490</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9210,7 +9218,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048309</Id>
 					<Name><![CDATA[data_V2GSupply_kW]]></Name>
-					<X>80</X><Y>1490</Y>
+					<X>80</X><Y>1530</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9234,7 +9242,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048324</Id>
 					<Name><![CDATA[data_PVGeneration_kW]]></Name>
-					<X>80</X><Y>1430</Y>
+					<X>80</X><Y>1470</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9258,7 +9266,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048339</Id>
 					<Name><![CDATA[data_batteryCharging_kW]]></Name>
-					<X>80</X><Y>1390</Y>
+					<X>80</X><Y>1430</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9282,7 +9290,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048354</Id>
 					<Name><![CDATA[data_baseloadElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1310</Y>
+					<X>80</X><Y>1350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9306,7 +9314,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048369</Id>
 					<Name><![CDATA[data_totalDemand_kW]]></Name>
-					<X>80</X><Y>1530</Y>
+					<X>80</X><Y>1570</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9330,7 +9338,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048383</Id>
 					<Name><![CDATA[data_dieselDemand_kW]]></Name>
-					<X>80</X><Y>1269</Y>
+					<X>80</X><Y>1309</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9354,7 +9362,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048398</Id>
 					<Name><![CDATA[data_electricVehicleDemand_kW]]></Name>
-					<X>80</X><Y>1370</Y>
+					<X>80</X><Y>1410</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9378,7 +9386,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048412</Id>
 					<Name><![CDATA[data_batteryDischarging_kW]]></Name>
-					<X>80</X><Y>1470</Y>
+					<X>80</X><Y>1510</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9402,7 +9410,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048425</Id>
 					<Name><![CDATA[data_totalSupply_kW]]></Name>
-					<X>80</X><Y>1550</Y>
+					<X>80</X><Y>1590</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9426,7 +9434,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1699275048440</Id>
 					<Name><![CDATA[data_totalNetLoad_kW]]></Name>
-					<X>80</X><Y>1570</Y>
+					<X>80</X><Y>1610</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9626,7 +9634,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1708507900127</Id>
 					<Name><![CDATA[data_hydrogenDemand_kW]]></Name>
-					<X>80</X><Y>1290</Y>
+					<X>80</X><Y>1330</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9672,7 +9680,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246336413</Id>
 					<Name><![CDATA[data_annualWindGeneration_kW]]></Name>
-					<X>390</X><Y>3030</Y>
+					<X>390</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9694,7 +9702,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246336419</Id>
 					<Name><![CDATA[data_annualV2GSupply_kW]]></Name>
-					<X>390</X><Y>3070</Y>
+					<X>390</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9716,7 +9724,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246336425</Id>
 					<Name><![CDATA[data_annualPVGeneration_kW]]></Name>
-					<X>390</X><Y>3010</Y>
+					<X>390</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9804,7 +9812,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246336451</Id>
 					<Name><![CDATA[data_annualBatteriesSupply_kW]]></Name>
-					<X>390</X><Y>3050</Y>
+					<X>390</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9870,7 +9878,6 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246336486</Id>
 					<Name><![CDATA[data_annualDisctricHeatDemand_MWh]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>390</X><Y>2970</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9893,7 +9900,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246336493</Id>
 					<Name><![CDATA[data_annualNaturalGasSupply_kW]]></Name>
-					<X>390</X><Y>3090</Y>
+					<X>390</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9916,7 +9923,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<Id>1715246336499</Id>
 					<Name><![CDATA[data_annualDistrictHeatSupply_MWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>390</X><Y>3130</Y>
+					<X>390</X><Y>3170</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9982,7 +9989,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378188</Id>
 					<Name><![CDATA[data_summerWeekWindGeneration_kW]]></Name>
-					<X>830</X><Y>3030</Y>
+					<X>830</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10004,7 +10011,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378194</Id>
 					<Name><![CDATA[data_summerWeekV2GSupply_kW]]></Name>
-					<X>830</X><Y>3070</Y>
+					<X>830</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10026,7 +10033,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378199</Id>
 					<Name><![CDATA[data_summerWeekPVGeneration_kW]]></Name>
-					<X>830</X><Y>3010</Y>
+					<X>830</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10114,7 +10121,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378219</Id>
 					<Name><![CDATA[data_summerWeekBatteriesSupply_kW]]></Name>
-					<X>830</X><Y>3050</Y>
+					<X>830</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10202,7 +10209,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378239</Id>
 					<Name><![CDATA[data_summerWeekNaturalGasSupply_kW]]></Name>
-					<X>830</X><Y>3090</Y>
+					<X>830</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10246,7 +10253,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378248</Id>
 					<Name><![CDATA[data_winterWeekWindGeneration_kW]]></Name>
-					<X>1280</X><Y>3030</Y>
+					<X>1280</X><Y>3070</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10268,7 +10275,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378254</Id>
 					<Name><![CDATA[data_winterWeekV2GSupply_kW]]></Name>
-					<X>1280</X><Y>3070</Y>
+					<X>1280</X><Y>3110</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10290,7 +10297,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378259</Id>
 					<Name><![CDATA[data_winterWeekPVGeneration_kW]]></Name>
-					<X>1280</X><Y>3010</Y>
+					<X>1280</X><Y>3050</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10378,7 +10385,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378279</Id>
 					<Name><![CDATA[data_winterWeekBatteriesSupply_kW]]></Name>
-					<X>1280</X><Y>3050</Y>
+					<X>1280</X><Y>3090</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10466,7 +10473,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715246378299</Id>
 					<Name><![CDATA[data_winterWeekNaturalGasSupply_kW]]></Name>
-					<X>1280</X><Y>3090</Y>
+					<X>1280</X><Y>3130</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10488,7 +10495,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715671189730</Id>
 					<Name><![CDATA[data_annualHydrogenSupply_kW]]></Name>
-					<X>390</X><Y>3110</Y>
+					<X>390</X><Y>3150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10510,7 +10517,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715671280183</Id>
 					<Name><![CDATA[data_winterWeekHydrogenSupply_kW]]></Name>
-					<X>1280</X><Y>3110</Y>
+					<X>1280</X><Y>3150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10532,7 +10539,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715671308107</Id>
 					<Name><![CDATA[data_summerWeekHydrogenSupply_kW]]></Name>
-					<X>830</X><Y>3110</Y>
+					<X>830</X><Y>3150</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10554,7 +10561,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1715671336391</Id>
 					<Name><![CDATA[data_hydrogenSupply_kW]]></Name>
-					<X>80</X><Y>1510</Y>
+					<X>80</X><Y>1550</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10578,7 +10585,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1717417117555</Id>
 					<Name><![CDATA[data_hydrogenElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1350</Y>
+					<X>80</X><Y>1390</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10602,7 +10609,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1720447715226</Id>
 					<Name><![CDATA[data_electricityCurtailment_kW]]></Name>
-					<X>80</X><Y>1410</Y>
+					<X>80</X><Y>1450</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10674,7 +10681,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1721134096132</Id>
 					<Name><![CDATA[data_summerWeekNetLoad_kW]]></Name>
-					<X>830</X><Y>3140</Y>
+					<X>830</X><Y>3180</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10696,7 +10703,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1721134140759</Id>
 					<Name><![CDATA[data_winterWeekNetLoad_kW]]></Name>
-					<X>1280</X><Y>3140</Y>
+					<X>1280</X><Y>3180</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10718,7 +10725,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1726292585769</Id>
 					<Name><![CDATA[data_districtHeatingDemand_kW]]></Name>
-					<X>80</X><Y>1590</Y>
+					<X>80</X><Y>1630</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10742,7 +10749,7 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
     			<DataSet>
 					<Id>1726292590669</Id>
 					<Name><![CDATA[data_cookingElectricityDemand_kW]]></Name>
-					<X>80</X><Y>1610</Y>
+					<X>80</X><Y>1650</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10761,6 +10768,72 @@ traceln("Finished writing trafoloads to excel!");]]></Body>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
 					<VerticalAxisExpression><![CDATA[sum(c_gridConnections, x-> x.v_electricHobConsumption_kW)]]></VerticalAxisExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1746718090884</Id>
+					<Name><![CDATA[data_annualCookingDemand_kW]]></Name>
+					<X>390</X><Y>3000</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>365</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1746718116656</Id>
+					<Name><![CDATA[data_summerWeekElectricCookingDemand_kW]]></Name>
+					<X>830</X><Y>2970</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1746718129597</Id>
+					<Name><![CDATA[data_winterWeekCookingElectricityDemand_kW]]></Name>
+					<X>1280</X><Y>2970</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -21344,6 +21417,18 @@ import zeroPackage.ZeroAccumulator;]]></Import>
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1746800553888</Id>
+					<Name><![CDATA[v_heatProduced_kWh]]></Name>
+					<X>470</X><Y>520</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658499438204</Id>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -23256,7 +23341,7 @@ v_totalEnergyConsumed_MWh = 0;
 
 v_totalElectricityConsumed_MWh = 0;
 v_totalElectricityProduced_MWh = 0;
-
+v_heatProduced_kWh = 0;
 
 v_summerWeekTotalImport_MWh = 0;
 v_summerWeekTotalExport_MWh = 0;
@@ -24346,6 +24431,7 @@ v_totalSelfConsumedEnergy_MWh = max(0, v_totalEnergyConsumed_MWh - v_totalImport
 v_totalElectricityConsumed_MWh = acc_annualElectricityConsumption_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalElectricityProduced_MWh= acc_annualElectricityProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
 v_totalHeatProduced_MWh = acc_annualHeatProduction_kW.getSum() * energyModel.p_timeStep_h / 1000;
+v_totalHeatProduced_MWh += v_heatProduced_kWh / 1000.0;
 
 // Electricity self consumption
 v_totalElectricitySelfConsumed_MWh = max(0, v_totalElectricityConsumed_MWh - v_electricityDrawnFromGrid_kWh/1000);
@@ -24530,6 +24616,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentEnergyProductionHeat_kW = -arr[9];
 	//v_totalHeatProduced_MWh += max(0,v_currentEnergyProductionHeat_kW/1000 * energyModel.p_timeStep_h);
 }
+
 	
 /*if ( caller instanceof J_EAEV) {
 	if (arr[9]>0) {
@@ -25349,6 +25436,9 @@ if (energyModel.t_h > energyModel.p_startHourWinterWeek & energyModel.t_h < ener
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if( p_BuildingThermalAsset != null){
+	v_heatProduced_kWh = p_BuildingThermalAsset.totalHeatingSolar_kWh;
+}
 
 v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
@@ -25361,6 +25451,11 @@ for (J_EA j_ea : c_electrolyserAssets) {
 	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows()[4];
 }
 //data_hydrogenElectricityDemand_kW.update();
+
+v_electricHobConsumption_kW = 0;
+for (J_EA j_ea : c_electricHobAssets) {
+	v_electricHobConsumption_kW += j_ea.getLastFlows()[4];
+}
 
 v_heatPumpElectricityConsumption_kW = 0;
 for (J_EA j_ea : c_electricHeatpumpAssets) {
@@ -27850,6 +27945,7 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
     			<TimePlot>
 					<Id>1668439095469</Id>
 					<Name><![CDATA[pl_powerFlows]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>0</X><Y>570</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -43081,7 +43177,7 @@ public void f_simpleCharging(){
 					<Id>1690363061408</Id>
 					<Name><![CDATA[v_electricHobConsumption_kWh]]></Name>
 					<Description><![CDATA[This is part of the v_fixedConsumptionElectric_kW, thus variable only exists for additional information]]></Description>
-					<X>150</X><Y>1520</Y>
+					<X>150</X><Y>1590</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -44950,6 +45046,7 @@ double[] flowsArray = p_householdEV.f_updateAllFlows(powerFraction_fr);]]></Body
     			<TimePlot>
 					<Id>1742215780300</Id>
 					<Name><![CDATA[plot]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-600</X><Y>520</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -46382,7 +46479,7 @@ public void f_operateFlexAssets(){
 				<Variable Class="Parameter">
 					<Id>1746553037332</Id>
 					<Name><![CDATA[p_maxSolarPV]]></Name>
-					<X>470</X><Y>530</Y>
+					<X>470</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -46403,7 +46500,7 @@ public void f_operateFlexAssets(){
 				<Variable Class="Parameter">
 					<Id>1746553049513</Id>
 					<Name><![CDATA[p_nbParkingSpots]]></Name>
-					<X>470</X><Y>550</Y>
+					<X>470</X><Y>570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -55010,6 +55107,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	public J_EAStorageHeatSink wallAndRoofHeatSink;
 	public J_EAStorageHeatSink interiorHeatSink;
 	public boolean justWater = false;
+	public double totalHeatingSolar_kWh = 0;
+	public double totalHeatingSolarStored_kWh = 0;
 	
     /**
      * Default constructor
@@ -55060,6 +55159,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			double deltaEnergy_kWh = wallAndRoofHeatSink.getHeatRelease( wallAndRoofHeatAbsorption_kWh );
 			energyAbsorbed_kWh += deltaEnergy_kWh;
 			updateStateOfCharge( deltaEnergy_kWh );
+			totalHeatingSolar_kWh += deltaEnergy_kWh;
 		}
 	}
 	
@@ -55176,6 +55276,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     	energyUsed_kWh = energyUsedStored_kWh;
     	energyAbsorbed_kWh = energyAbsorbedStored_kWh;
     	temperature_degC = temperatureStored_degC;
+    	totalHeatingSolar_kWh = totalHeatingSolarStored_kWh;
+    	wallAndRoofHeatSink.releaseSchedule_kWh = new double[ wallAndRoofHeatSink.releaseSchedule_kWh.length ];
+    	interiorHeatSink.releaseSchedule_kWh = new double[ interiorHeatSink.releaseSchedule_kWh.length ];
     }
 
 	/*@Override
@@ -55307,7 +55410,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			this.COP_r = this.eta_r * ( 273.15 + 60 ) / ( 60 - 10 );
 			
 		}
-		traceln(" HEATPUMP COP = " + COP_r);
+		//traceln(" HEATPUMP COP = " + COP_r);
     	//traceln("J_EAConversionHeatpump capacityHeat_kW = "+ this.capacityHeat_kW + ", sourceAssetHeatPower_kW " + this.sourceAssetHeatPower_kW );
     
 	}
