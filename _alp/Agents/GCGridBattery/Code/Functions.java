@@ -70,6 +70,8 @@ if ( p_batteryAsset != null ) {
 			f_batteryManagementPriceGrid(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP){
 			f_batteryManagementBalanceCOOP(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BATTERY_ALGORITHM_BAS){
+			f_batteryManagementBas(v_batterySOC_fr);
 		}
 		
 		
@@ -395,5 +397,17 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	}
 }
 
+/*ALCODEEND*/}
+
+double f_batteryManagementBas(double currentBatteryStateOfCharge_fr)
+{/*ALCODESTART::1746605418870*/
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	
+	double chargeSetpoint_kW = 0;
+	
+	chargeSetpoint_kW = v_batteryAlgorithmBas.calculateChargeSetpoint_kW(currentBatteryStateOfCharge_fr); // Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+
+}
 /*ALCODEEND*/}
 
