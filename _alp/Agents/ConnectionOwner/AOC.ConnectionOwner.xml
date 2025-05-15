@@ -168,57 +168,6 @@ energyModel.c_connectionOwners.add(this);]]></StartupCode>
 			<LineArrow>NONE</LineArrow>
 			<LineArrowPosition>END</LineArrowPosition>
 		</AgentLink>
-		<AgentLink>
-			<Id>1703256762219</Id>
-			<Name><![CDATA[l_subTenant]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>200</X>
-			<Y>-20</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
-			<AgentReferenceId>1658752695711</AgentReferenceId>
-			<AgentLinkBidirectional>true</AgentLinkBidirectional>
-			<BidirectionalPeerId>1703256686877</BidirectionalPeerId>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
-		<AgentLink>
-			<Id>1704895007444</Id>
-			<Name><![CDATA[l_ownedBuildings]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>310</X>
-			<Y>-20</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
-			<AgentReferenceId>1676382560905</AgentReferenceId>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
 	</AgentLinks>
 	<ContainerLinks>
 		<ContainerLink>

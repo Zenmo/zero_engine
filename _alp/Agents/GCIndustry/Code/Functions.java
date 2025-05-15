@@ -153,9 +153,9 @@ double f_operateFlexAssets_agroenergyhub()
 {/*ALCODESTART::1684397492292*/
 double heatDemand_kW = (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT));
 double biogasSupply_kW = 0;
-if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-	if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_methaneSupplier instanceof EnergyCoop ) {
-		EnergyCoop CoopParent = (EnergyCoop)(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_methaneSupplier);
+if( p_owner != null ) {
+	if( p_owner.p_methaneSupplier instanceof EnergyCoop ) {
+		EnergyCoop CoopParent = (EnergyCoop)p_owner.p_methaneSupplier;
 		//biogasSupply_kW = -CoopParent.v_methaneVolume_kWh/energyModel.p_timeStep_h + v_previousPowerMethane_kW;
 		biogasSupply_kW = -CoopParent.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.METHANE) + v_previousPowerMethane_kW;
 	}

@@ -156,8 +156,7 @@
 			<HandleReceiveInConnections>false</HandleReceiveInConnections>
 			<AgentLinkType>SINGLE_LINK</AgentLinkType>
 			<AgentReferenceId>1660224852394</AgentReferenceId>
-			<AgentLinkBidirectional>true</AgentLinkBidirectional>
-			<BidirectionalPeerId>1703256762219</BidirectionalPeerId>
+			<AgentLinkBidirectional>false</AgentLinkBidirectional>
 			<MessageType>Object</MessageType>
 			<LineStyle>SOLID</LineStyle>
 			<LineWidth>1</LineWidth>

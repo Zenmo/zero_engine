@@ -20,19 +20,17 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	
     	//double currentElectricityPriceEPEX_eurpkWh = energyModel.v_epexForecast_eurpkWh;
     	
-    	GridNode node = parentGC.l_parentNodeElectric.getConnectedAgent();
     	if (parentGC.p_batteryAsset.getStorageCapacity_kWh() != 0){	
     		double currentCoopElectricitySurplus_kW = 0;
     		double CoopConnectionCapacity_kW = 0;
     		double v_previousPowerBattery_kW = parentGC.v_previousPowerElectricity_kW;// Assumes battery is only asset on gridconnection!! p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
-    		GridNode GN = parentGC.l_parentNodeElectric.getConnectedAgent();
-    		if(parentGC.l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-    				currentCoopElectricitySurplus_kW = -GN.v_currentLoad_kW + v_previousPowerBattery_kW;			
-    				CoopConnectionCapacity_kW = 0.9*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+    		if(parentGC.p_owner != null) {
+    				currentCoopElectricitySurplus_kW = -parentGC.p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
+    				CoopConnectionCapacity_kW = 0.9*parentGC.p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
     			//}
     		} else { // Get gridload directly from node
-    			currentCoopElectricitySurplus_kW = -node.v_currentLoad_kW + v_previousPowerBattery_kW;			
-    			CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+    			currentCoopElectricitySurplus_kW = -parentGC.p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
+    			CoopConnectionCapacity_kW = 0.95*parentGC.p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
     		}
 
     		double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
@@ -47,14 +45,14 @@ public class J_BatteryAlgorithmBas implements Serializable {
     			return batteryChargeSetpoint_kW;
     		}
     		if (parentGC.energyModel.v_currentSolarPowerNormalized_r > 0.1) {
-    			if (GN.v_currentLoad_kW < 0) {
+    			if (parentGC.p_parentNodeElectric.v_currentLoad_kW < 0) {
     				batteryChargeSetpoint_kW = availableChargePower_kW;
         			return batteryChargeSetpoint_kW;
     			}
     		}
     		else {
-    			double expectedWind_kWh = node.v_totalInstalledWindPower_kW * parentGC.energyModel.v_WindYieldForecast_fr * parentGC.energyModel.p_forecastTime_h;
-    			double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * parentGC.energyModel.v_SolarYieldForecast_fr * parentGC.energyModel.p_forecastTime_h;
+    			double expectedWind_kWh = parentGC.p_parentNodeElectric.v_totalInstalledWindPower_kW * parentGC.energyModel.v_WindYieldForecast_fr * parentGC.energyModel.p_forecastTime_h;
+    			double expectedSolar_kWh = parentGC.p_parentNodeElectric.v_totalInstalledPVPower_kW * parentGC.energyModel.v_SolarYieldForecast_fr * parentGC.energyModel.p_forecastTime_h;
     			double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / parentGC.p_batteryAsset.getStorageCapacity_kWh();
     			double SOC_setp_fr = 1 - incomingPower_fr;
     		
