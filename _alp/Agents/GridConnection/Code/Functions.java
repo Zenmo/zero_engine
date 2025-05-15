@@ -1219,6 +1219,8 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionGasCHP) {
 		c_chpAssets.add(j_ea);
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+    }else if( j_ea instanceof J_EAConversionHeatDeliverySet ){
+		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -1743,6 +1745,8 @@ if (j_ea instanceof J_EAVehicle) {
 
 		} else if (j_ea instanceof J_EAConversionGasCHP) {
 			c_chpAssets.remove(j_ea);
+		}else if( j_ea instanceof J_EAConversionHeatDeliverySet ){
+		
 		}
 		if(p_primaryHeatingAsset == j_ea){
 			if(p_secondaryHeatingAsset != null){
