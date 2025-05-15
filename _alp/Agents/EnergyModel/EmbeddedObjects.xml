@@ -237,6 +237,12 @@
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1129,6 +1135,12 @@
 			<Parameter>
 				<Name><![CDATA[p_cookingMethod]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1284,6 +1296,12 @@
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1435,6 +1453,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_isSliderGC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1627,6 +1651,12 @@
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1776,6 +1806,12 @@
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1924,6 +1960,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2076,6 +2118,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_isSliderGC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2556,6 +2604,12 @@
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2738,6 +2792,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_quinaryHeatingAsset]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

@@ -1,30 +1,23 @@
 double f_connectToParents()
 {/*ALCODESTART::1658500398176*/
 GridNode myParentNodeElectric = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_parentNodeElectricID)) ;
-if( myParentNodeElectric instanceof GridNode ) {
-	l_parentNodeElectric.connectTo(myParentNodeElectric);
+if( myParentNodeElectric != null ) {
+	p_parentNodeElectric = myParentNodeElectric;
 	myParentNodeElectric.f_connectToChild(this);
-	//p_parentNodeElectric = myParentNodeElectric;
 }
 
 GridNode myParentNodeHeat = findFirst(energyModel.pop_gridNodes, p->p.p_gridNodeID.equals(p_parentNodeHeatID)) ;
-if( myParentNodeHeat instanceof GridNode ) {
-	l_parentNodeHeat.connectTo(myParentNodeHeat);
+if( myParentNodeHeat != null ) {
+	p_parentNodeHeat = myParentNodeHeat;
 	myParentNodeHeat.f_connectToChild(this);
-	//p_parentNodeHeat = myParentNodeHeat;
 }
 
-if (p_owner==null){
+if ( p_owner == null ){
 	p_owner = findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID));
 }
 
-if (p_owner!=null){
-	ConnectionOwner myParentConnectionOwner = p_owner; //findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
-	if( myParentConnectionOwner instanceof ConnectionOwner) {
-		//p_ownerActor = myParentConnectionOwner;
-		//l_ownerActor.connectTo(myParentConnectionOwner);
-		myParentConnectionOwner.f_connectToChild(this);
-	}
+if ( p_owner != null ){
+	p_owner.f_connectToChild(this);
 }
 /*EnergySupplier myParentEnergySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(p_ownerID)) ;
 if( myParentEnergySupplier instanceof EnergySupplier) {
@@ -130,7 +123,7 @@ else {
 
 double f_connectionMetering()
 {/*ALCODESTART::1660212665961*/
-if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && l_parentNodeHeat == null ) {
+if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
 	traceln((fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)));
 	traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
 	pauseSimulation();
@@ -1176,8 +1169,8 @@ if (j_ea instanceof J_EAVehicle) {
 		v_hasPV = true;
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
@@ -1186,8 +1179,8 @@ if (j_ea instanceof J_EAVehicle) {
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
-		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
@@ -1417,7 +1410,7 @@ if (p_parentNodeElectricID == null) {
 }
 
 f_connectToParents();
-if (!l_parentNodeElectric.isConnected()) {
+if ( p_parentNodeElectric == null ) {
 	traceln("GC: %s with id %s and name %s", this, p_gridConnectionID, p_name);
 	traceln("GN id %s", p_parentNodeElectricID);
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
@@ -1434,8 +1427,8 @@ else {
 			Wind_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		}
 	}
-	l_parentNodeElectric.getConnectedAgent().v_totalInstalledPVPower_kW += PV_kW;
-	l_parentNodeElectric.getConnectedAgent().v_totalInstalledWindPower_kW += Wind_kW;
+	p_parentNodeElectric.v_totalInstalledPVPower_kW += PV_kW;
+	p_parentNodeElectric.v_totalInstalledWindPower_kW += Wind_kW;
 }
 
 f_setOperatingSwitches();
@@ -1713,8 +1706,8 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
 		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
@@ -1723,8 +1716,8 @@ if (j_ea instanceof J_EAVehicle) {
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-		if (l_parentNodeElectric.getConnectedAgent() != null) {
-			l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
@@ -1950,9 +1943,9 @@ switch(p_curtailmentMode) {
 	case NODALPRICING:
 	// Prevent feedin when nodal price is negative
 	double priceTreshold_eur = -0.0;
-	if(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
+	if( p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
 	
-		double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
+		double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
 		for (J_EAProduction j_ea : c_productionAssets) {
 			j_ea.curtailElectricityProduction(v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 			if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
@@ -2037,15 +2030,14 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 	double chargeSetpoint_kW = 0;	
 	double currentElectricityPriceCharge_eurpkWh;
-	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	//double currentElectricityPriceDischarge_eurpkWh;
 	//currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
-	currentElectricityPriceCharge_eurpkWh = GN.v_currentTotalNodalPrice_eurpkWh;
+	currentElectricityPriceCharge_eurpkWh = p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh;
 	
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 
 	
-	double SOC_setp_fr = 0.9 + (GN.v_totalInstalledPVPower_kW/50_000+GN.v_totalInstalledWindPower_kW/20_000)*(0.2 - 3*GN.v_electricityYieldForecast_fr);	
+	double SOC_setp_fr = 0.9 + (p_parentNodeElectric.v_totalInstalledPVPower_kW/50_000+p_parentNodeElectric.v_totalInstalledWindPower_kW/20_000)*(0.2 - 3*p_parentNodeElectric.v_electricityYieldForecast_fr);	
 	//double SOC_setp_fr = 0.9 - 2*energyModel.v_WindYieldForecast_fr;	
 	//SOC_setp_fr = (0.5 + 0.4 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24))*(1-3*GN.v_electricityYieldForecast_fr); // Sinusoidal setpoint: aim for high SOC at 18:00h		
 	//SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
@@ -2484,8 +2476,8 @@ if (!setActive) {
 	
 
 	// update GN parents' wind / solar totals
-	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, false);
-	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, false);
+	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, false);
+	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, false);
 	energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= v_liveAssetsMetaData.totalInstalledPVPower_kW;
 	energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= v_liveAssetsMetaData.totalInstalledWindPower_kW;
 	energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
@@ -2544,8 +2536,8 @@ else {
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
 	
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
-	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
-	l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);
+	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
+	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);
 	energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += v_liveAssetsMetaData.totalInstalledPVPower_kW;
 	energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
 	energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;

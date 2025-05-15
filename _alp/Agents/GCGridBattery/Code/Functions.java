@@ -109,7 +109,6 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 	double chargeSetpoint_kW = 0;	
 	double currentElectricityPriceCharge_eurpkWh;
-	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	//double currentElectricityPriceDischarge_eurpkWh;
 	/*if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
 		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
@@ -118,13 +117,13 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	} else { // Get EPEX price plus nodal price of GridNode
 	*/
 		//currentElectricityPriceCharge_eurpkWh = energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000 + GN.v_currentTotalNodalPrice_eurpkWh;
-		currentElectricityPriceCharge_eurpkWh = GN.v_currentTotalNodalPrice_eurpkWh;
+		currentElectricityPriceCharge_eurpkWh = p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh;
 		//currentElectricityPriceCharge_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;		
 	//}
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 	
-	double currentCoopElectricitySurplus_kW = -GN.v_currentLoad_kW + v_previousPowerElectricity_kW;			
-	double CoopConnectionCapacity_kW = 0.95*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+	double currentCoopElectricitySurplus_kW = -p_parentNodeElectric.v_currentLoad_kW + v_previousPowerElectricity_kW;			
+	double CoopConnectionCapacity_kW = 0.95*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	
 	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);
 	
@@ -132,7 +131,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 	
 	
-	double SOC_setp_fr = 0.9 - 2*GN.v_electricityYieldForecast_fr;	
+	double SOC_setp_fr = 0.9 - 2*p_parentNodeElectric.v_electricityYieldForecast_fr;	
 	//SOC_setp_fr = (0.5 + 0.4 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24))*(1-3*GN.v_electricityYieldForecast_fr); // Sinusoidal setpoint: aim for high SOC at 18:00h		
 	//SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(main.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	
@@ -163,24 +162,22 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 
 double f_batteryManagementBalanceGrid(double batterySOC)
 {/*ALCODESTART::1678114662587*/
-GridNode node = l_parentNodeElectric.getConnectedAgent();
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){	
 	double currentCoopElectricitySurplus_kW = 0;
 	double CoopConnectionCapacity_kW = 0;
 	double v_previousPowerBattery_kW = v_previousPowerElectricity_kW;// Assumes battery is only asset on gridconnection!! p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
 	//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
-	GridNode GN = l_parentNodeElectric.getConnectedAgent();
 	if( p_owner != null ) {
 		/*if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent instanceof EnergyCoop ) { // get electricity balance from Coop 			
 			currentCoopElectricitySurplus_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_electricitySurplus_kW + v_previousPowerBattery_kW;
 			CoopConnectionCapacity_kW = 0.9*((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay			
 		} else { // Get gridload directly from node*/
-			currentCoopElectricitySurplus_kW = -GN.v_currentLoad_kW + v_previousPowerBattery_kW;			
-			CoopConnectionCapacity_kW = 0.9*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+			currentCoopElectricitySurplus_kW = -p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
+			CoopConnectionCapacity_kW = 0.9*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 		//}
 	} else { // Get gridload directly from node
-		currentCoopElectricitySurplus_kW = -node.v_currentLoad_kW + v_previousPowerBattery_kW;			
-		CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+		currentCoopElectricitySurplus_kW = -p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
+		CoopConnectionCapacity_kW = 0.95*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	}
 	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);	
 		
@@ -215,13 +212,13 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		return;
 	}
 	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) {
-		if (GN.v_currentLoad_kW < 0) {
-			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, -GN.v_currentLoad_kW / p_batteryAsset.getCapacityElectric_kW()));
+		if (p_parentNodeElectric.v_currentLoad_kW < 0) {
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, -p_parentNodeElectric.v_currentLoad_kW / p_batteryAsset.getCapacityElectric_kW()));
 		}
 	}
 	else {
-		double expectedWind_kWh = node.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
-		double expectedSolar_kWh = node.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
+		double expectedWind_kWh = p_parentNodeElectric.v_totalInstalledWindPower_kW * energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h;
+		double expectedSolar_kWh = p_parentNodeElectric.v_totalInstalledPVPower_kW * energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h;
 		double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
 		double SOC_setp_fr = 1 - incomingPower_fr;
 	
@@ -317,14 +314,12 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 			currentCoopElectricitySurplus_kW = p_owner.p_coopParent.v_electricitySurplus_kW + v_previousPowerBattery_kW;
 			CoopConnectionCapacity_kW = 0.9*p_owner.p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay			
 		} else { // Get gridload directly from node
-			GridNode node = l_parentNodeElectric.getConnectedAgent();
-			currentCoopElectricitySurplus_kW = -node.v_currentLoad_kW + v_previousPowerBattery_kW;			
-			CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+			currentCoopElectricitySurplus_kW = -p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
+			CoopConnectionCapacity_kW = 0.95*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 		}
 	} else { // Get gridload directly from node
-		GridNode node = l_parentNodeElectric.getConnectedAgent();
-		currentCoopElectricitySurplus_kW = -node.v_currentLoad_kW + v_previousPowerBattery_kW;			
-		CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+		currentCoopElectricitySurplus_kW = -p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
+		CoopConnectionCapacity_kW = 0.95*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	}
 	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);
 	

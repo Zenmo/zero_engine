@@ -196,54 +196,6 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;
 			<LineArrowPosition>END</LineArrowPosition>
 		</AgentLink>
 		<AgentLink>
-			<Id>1671020640665</Id>
-			<Name><![CDATA[l_parentNodeElectric]]></Name>
-			<X>57</X>
-			<Y>140</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>SINGLE_LINK</AgentLinkType>
-			<AgentReferenceId>1658477288308</AgentReferenceId>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
-		<AgentLink>
-			<Id>1671020671349</Id>
-			<Name><![CDATA[l_parentNodeHeat]]></Name>
-			<X>58</X>
-			<Y>168</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>SINGLE_LINK</AgentLinkType>
-			<AgentReferenceId>1658477288308</AgentReferenceId>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
-		<AgentLink>
 			<Id>1704894941623</Id>
 			<Name><![CDATA[l_connectedBuildings]]></Name>
 			<ExcludeFromBuild>true</ExcludeFromBuild>

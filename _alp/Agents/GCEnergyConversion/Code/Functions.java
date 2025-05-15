@@ -261,8 +261,8 @@ double forecast_time_h = ElectrolyserAsset.getStartUpTimeStandby_h()+ 2*energyMo
 //Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.getLastFlows();
 J_FlowsMap flowsMap = ElectrolyserAsset.getLastFlows();
 double previousElectrolyserConsumption_kW = max(0,flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
-double currentGridNodePowerFlow_kW = this.l_parentNodeElectric.getConnectedAgent().v_currentLoad_kW - previousElectrolyserConsumption_kW;
-data_liveWeekGridNoderPowerFlow_kW.add(energyModel.t_h, this.l_parentNodeElectric.getConnectedAgent().v_currentLoad_kW);
+double currentGridNodePowerFlow_kW = this.p_parentNodeElectric.v_currentLoad_kW - previousElectrolyserConsumption_kW;
+data_liveWeekGridNoderPowerFlow_kW.add(energyModel.t_h, this.p_parentNodeElectric.v_currentLoad_kW);
 
 
 switch (p_electrolyserOperationMode){
