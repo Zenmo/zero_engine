@@ -22,7 +22,7 @@ if (p_owner!=null){
 	ConnectionOwner myParentConnectionOwner = p_owner; //findFirst(energyModel.pop_connectionOwners, p->p.p_actorID.equals(p_ownerID)) ;
 	if( myParentConnectionOwner instanceof ConnectionOwner) {
 		//p_ownerActor = myParentConnectionOwner;
-		l_ownerActor.connectTo(myParentConnectionOwner);
+		//l_ownerActor.connectTo(myParentConnectionOwner);
 		myParentConnectionOwner.f_connectToChild(this);
 	}
 }
@@ -704,11 +704,10 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 	double chargeSetpoint_kW = 0;
 	
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
+	if( p_owner != null) {
 		//traceln("Initial Mappings are: " + ((ConnectionOwner)p_ownerActor).v_currentPriceBands);
-		double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)+100.0); // query price at 100kW charging
-		double currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)-100.0); // query price at -100kW charging
+		double currentElectricityPriceCharge_eurpkWh = p_owner.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)+100.0); // query price at 100kW charging
+		double currentElectricityPriceDischarge_eurpkWh = p_owner.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)-100.0); // query price at -100kW charging
 		//double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		
@@ -868,12 +867,12 @@ switch (p_chargingAttitudeVehicles) {
 		f_maxPowerCharging( max(0, availableChargingCapacity));
 	break;
 	case CHEAP:
-		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
+		v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;
 	case V2G:
-		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
+		v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;

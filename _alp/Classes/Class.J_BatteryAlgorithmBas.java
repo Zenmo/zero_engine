@@ -26,7 +26,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
     		double CoopConnectionCapacity_kW = 0;
     		double v_previousPowerBattery_kW = parentGC.v_previousPowerElectricity_kW;// Assumes battery is only asset on gridconnection!! p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
     		GridNode GN = parentGC.l_parentNodeElectric.getConnectedAgent();
-    		if(parentGC.l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+    		if(parentGC.p_owner != null) {
     				currentCoopElectricitySurplus_kW = -GN.v_currentLoad_kW + v_previousPowerBattery_kW;			
     				CoopConnectionCapacity_kW = 0.9*GN.p_capacity_kW; // Use only 90% of capacity for robustness against delay
     			//}

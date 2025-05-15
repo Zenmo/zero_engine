@@ -89,16 +89,16 @@ if (p_curtailer != null){
 double f_batteryManagementBalanceCoop(double batterySOC)
 {/*ALCODESTART::1707149801187*/
 if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent instanceof EnergyCoop ) {
+	if( p_owner != null ) {
+		if( p_owner.p_coopParent instanceof EnergyCoop ) {
 			//traceln("Hello?");
 //			v_previousPowerElectricity_kW = p_batteryAsset.v_powerFraction_fr * p_batteryAsset.j_ea.getElectricCapacity_kW();
 			v_previousPowerElectricity_kW = p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 			//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
-			double currentCoopElectricitySurplus_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW;
+			double currentCoopElectricitySurplus_kW = p_owner.p_coopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW;
 			//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentCoopElectricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
 			
-			double CoopConnectionCapacity_kW = 0.9*((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
+			double CoopConnectionCapacity_kW = 0.9*p_owner.p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
 			double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 			double SOC_setp_fr = 0.5;			
@@ -344,7 +344,7 @@ return elektrolyserSetpointElectric_kW;
 
 double f_electrolyserRegimeControl_Price(double excessElectricPower_kW,J_EAConversionElectrolyser ElectrolyserAsset)
 {/*ALCODESTART::1708448673879*/
-ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
+ConnectionOwner ownerActor = p_owner;
 //double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
 double currentElectricityPriceEPEX_eurpkWh = energyModel.v_epexForecast_eurpkWh;
 

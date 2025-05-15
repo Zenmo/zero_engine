@@ -40,9 +40,9 @@ if (p_BuildingThermalAsset != null && p_primaryHeatingAsset != null) {
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1664963959146*/
 double availablePowerAtPrice_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-if (l_ownerActor.getConnectedAgent()!=null){
-	v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-	availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
+if (p_owner != null){
+	v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+	availablePowerAtPrice_kW = p_owner.f_getAvailablePowerAtPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
 	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 } else {
 	//v_currentElectricityPriceConsumption_eurpkWh = 0.3;
@@ -516,8 +516,10 @@ v_copHeatpump = hp.getCOP();
 
 
 if ( p_smartHeatingEnabled ) {
-	avgElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getInputCapacity_kW() );
-	//traceln("avg electircity rprice for HP: " + avgElectricityPrice_eurpkWh);
+	if ( p_owner != null) {
+		avgElectricityPrice_eurpkWh = p_owner.f_getAveragedElectricityPrice( (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getInputCapacity_kW() );
+		//traceln("avg electircity rprice for HP: " + avgElectricityPrice_eurpkWh);
+	}
 }
 
 //heat the buffer if it requires heat
@@ -722,11 +724,10 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 	double chargeSetpoint_kW = 0;
 	
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		ConnectionOwner ownerActor = (ConnectionOwner)l_ownerActor.getConnectedAgent();
+	if(p_owner != null) {
 		//traceln("Initial Mappings are: " + ((ConnectionOwner)p_ownerActor).v_currentPriceBands);
-		double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + 10.0); // query price at 100kW charging
-		double currentElectricityPriceDischarge_eurpkWh = ownerActor.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - 10.0); // query price at -100kW charging
+		double currentElectricityPriceCharge_eurpkWh = p_owner.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + 10.0); // query price at 100kW charging
+		double currentElectricityPriceDischarge_eurpkWh = p_owner.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - 10.0); // query price at -100kW charging
 		//double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
 		//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		
@@ -853,9 +854,9 @@ boolean f_calcCheapestHeatingPrice()
 double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset).getCOP();
 boolean isGasCheaper = false;
 
-if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-	v_gasHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getMethanePrice();
-	v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), p_primaryHeatingAsset.getInputCapacity_kW() ) / HP_COP;
+if( p_owner != null ) {
+	v_gasHeatingCost_eurpkWh_TEMPORARY = p_owner.f_getMethanePrice();
+	v_eHeatingCost_eurpkWh_TEMPORARY = p_owner.f_getAveragedElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), p_primaryHeatingAsset.getInputCapacity_kW() ) / HP_COP;
 	isGasCheaper = v_gasHeatingCost_eurpkWh_TEMPORARY < v_eHeatingCost_eurpkWh_TEMPORARY ? true:false;
 }	
 

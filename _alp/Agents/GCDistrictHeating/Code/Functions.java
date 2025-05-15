@@ -16,10 +16,10 @@ double storageTemp_degC = 0;
 //v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 v_currentElectricityPriceConsumption_eurpkWh = l_parentNodeElectric.getConnectedAgent().v_currentTotalNodalPrice_eurpkWh;
 
-if (l_ownerActor.getConnectedAgent() instanceof EnergyCoop){
+//if (l_ownerActor.getConnectedAgent() instanceof EnergyCoop){
 	//electricitySurplussCoop_kW = ((EnergyCoop)l_ownerActor.getConnectedAgent()).v_electricitySurplus_kW + v_previousPowerElectricity_kW; // From last timestep! So compensate for own electric power
 	//traceln("DH function! Electricity surpluss in Coop: " + electricitySurplussCoop_kW + ", own power " + v_previousPowerElectricity_kW,1 );
-}	
+//}	
 //		((J_EAConversionHeatPump)e.j_ea).updateParameters(main.p_undergroundTemperature_degC, storageTemp_degC); // update heatpump temp levels!
 double heatTransferToNetwork_kW = max(0,l_parentNodeHeat.getConnectedAgent().v_currentLoad_kW - v_previousPowerHeat_kW);// max( storageTemp_degC - DHnetworkTemp_degC, 0 ) * heatTransferToNetworkCoefficient_kWpK;
 
