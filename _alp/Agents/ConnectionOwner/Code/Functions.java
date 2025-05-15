@@ -1,6 +1,5 @@
 double f_connectToChild(GridConnection ConnectingChildNode)
 {/*ALCODESTART::1660230297342*/
-gridConnections.connectTo(ConnectingChildNode);
 c_ownedGridConnections.add(ConnectingChildNode);
 //v_ownedGridConnection = ConnectingChildNode;
 //traceln("f_connectToChild in connectionOwner agent, connection contract type: " + v_contractConnection.connectionContractType);

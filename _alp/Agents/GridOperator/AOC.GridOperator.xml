@@ -137,60 +137,6 @@
 			<LineArrow>NONE</LineArrow>
 			<LineArrowPosition>END</LineArrowPosition>
 		</AgentLink>
-		<AgentLink>
-			<Id>1660736398362</Id>
-			<Name><![CDATA[superConnection]]></Name>
-			<Description><![CDATA[Link naar bovenliggende actor, bijv. een Coop, of energySupplier. Gebruikt om lid te worden van een Coop of aangesloten te zijn bij een energieleverancier.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-			<X>280</X>
-			<Y>-80</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
-		<AgentLink>
-			<Id>1660736398364</Id>
-			<Name><![CDATA[subConnections]]></Name>
-			<Description><![CDATA[Link naar onderliggende actor of netConnection. Gebruikt om actoren te linken aan netConnection objecten, of actoren aan actoren te linken (bijv. leden van de Coop)
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-			<X>280</X>
-			<Y>-50</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
 	</AgentLinks>
 	<ContainerLinks>
 		<ContainerLink>
