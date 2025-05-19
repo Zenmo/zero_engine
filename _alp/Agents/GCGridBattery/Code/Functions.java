@@ -401,11 +401,11 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 
 double f_batteryManagementBas(double currentBatteryStateOfCharge_fr)
 {/*ALCODESTART::1746605418870*/
-if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){ // battery_kWh =/= 0
 	
 	double chargeSetpoint_kW = 0;
-	
-	chargeSetpoint_kW = v_batteryAlgorithmBas.calculateChargeSetpoint_kW(currentBatteryStateOfCharge_fr); // Don't allow too much (dis)charging!
+
+	chargeSetpoint_kW = v_batteryAlgorithmBas.calculateChargeSetpointPriceGrid_kW(currentBatteryStateOfCharge_fr);
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
 
 }

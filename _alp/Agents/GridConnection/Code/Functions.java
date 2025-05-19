@@ -766,7 +766,7 @@ if ( p_BuildingThermalAsset == null ) {
 	if ( p_secondaryHeatingAsset == null ) { // Just one heating asset
 		if ( p_primaryHeatingAsset== null ) {
 			if (powerDemand_kW > 0) {
-				traceln("No heating assets for GridConnection " + p_gridConnectionID);
+				//traceln("No heating assets for GridConnection " + p_gridConnectionID);
 			}
 		} else {
 			if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump) { // when there is only a gas burner or DH set
