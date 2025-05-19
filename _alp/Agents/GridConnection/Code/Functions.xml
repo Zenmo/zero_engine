@@ -400,23 +400,6 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1701956274181</Id>
-		<Name><![CDATA[f_calculateKPIs]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>890</X>
-		<Y>580</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1702373771433</Id>
 		<Name><![CDATA[f_addFlows]]></Name>
 		<X>930</X>
@@ -748,23 +731,6 @@
 		<Name><![CDATA[f_initializeDataSets]]></Name>
 		<X>1070</X>
 		<Y>70</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1741258042922</Id>
-		<Name><![CDATA[f_fillLiveDataSets_old]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1320</X>
-		<Y>690</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
