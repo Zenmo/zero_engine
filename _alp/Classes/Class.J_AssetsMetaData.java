@@ -82,7 +82,7 @@ public class J_AssetsMetaData {
 	    }
 	    //Heat grid
 	    for(GridConnection GC : gcList){
-	    	if(GC.l_parentNodeHeat.getConnectedAgent() != null && GC.v_isActive){
+	    	if(GC.p_parentNodeHeat != null && GC.v_isActive){
 	    		this.hasHeatGridConnection = true;
 	    		break;
 	    	}

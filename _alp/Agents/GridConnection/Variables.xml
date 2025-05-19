@@ -1589,7 +1589,7 @@
 		<Id>1658500465208</Id>
 		<Name><![CDATA[p_parentNodeElectricID]]></Name>
 		<X>50</X>
-		<Y>235</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1639,7 +1639,7 @@
 		<Id>1660053984881</Id>
 		<Name><![CDATA[p_parentNodeHeatID]]></Name>
 		<X>50</X>
-		<Y>255</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1720,7 +1720,7 @@
 		<Id>1660229326795</Id>
 		<Name><![CDATA[p_ownerID]]></Name>
 		<X>50</X>
-		<Y>215</Y>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2161,7 +2161,7 @@
 		<Id>1704985428470</Id>
 		<Name><![CDATA[p_owner]]></Name>
 		<X>50</X>
-		<Y>195</Y>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2332,6 +2332,56 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1726146956843</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1747302864499</Id>
+		<Name><![CDATA[p_parentNodeHeat]]></Name>
+		<X>50</X>
+		<Y>220</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[GridNode]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1747302864497</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1747303156910</Id>
+		<Name><![CDATA[p_parentNodeElectric]]></Name>
+		<X>50</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[GridNode]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1747303156908</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

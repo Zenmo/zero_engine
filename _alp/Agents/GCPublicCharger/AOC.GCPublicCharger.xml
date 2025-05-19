@@ -101,6 +101,12 @@
 		<Parameter>
 			<Name><![CDATA[p_address]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_parentNodeHeat]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_parentNodeElectric]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

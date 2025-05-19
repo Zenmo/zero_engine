@@ -155,8 +155,7 @@ double f_setCongestionTariff(double price_eurpkWh)
 {/*ALCODESTART::1666556555538*/
 for (GridConnection gc: c_connectedGridConnections){
 	//traceln("Gc "+ gc.toString() + ", price "+ price_eurpkWh + ", allowance "+ allowance_kW +".");
-	ConnectionOwner owner = ((ConnectionOwner)gc.l_ownerActor.getConnectedAgent());
-	owner.v_currentNodalPrice_eurpkWh = price_eurpkWh;
+	gc.p_owner.v_currentNodalPrice_eurpkWh = price_eurpkWh;
 }
 for (EnergyCoop e: c_energyCoops){
 	e.v_currentNodalPrice_eurpkWh = price_eurpkWh;
