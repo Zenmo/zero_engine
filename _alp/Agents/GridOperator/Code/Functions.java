@@ -1,8 +1,10 @@
 double f_connectToChild(GridNode ConnectingChildNode,OL_EnergyCarriers energyType)
 {/*ALCODESTART::1660736411309*/
-subConnections.connectTo( ConnectingChildNode );
 if (energyType == OL_EnergyCarriers.ELECTRICITY) {
 	c_electricityGridNodes.add( ConnectingChildNode );
+}
+else if (energyType == OL_EnergyCarriers.HEAT) {
+	c_heatGridNodes.add( ConnectingChildNode );
 }
 else {
 	traceln( "f_connectToChild vanuit GridOperator voegt een type Node toe wat geen ELECTRICITY gridNOde is");

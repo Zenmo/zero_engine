@@ -50,16 +50,16 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 			double difference_kW = capacityElectric_kW - this.capacity_kW;
 			if (this.energyAssetType == OL_EnergyAssetType.WINDMILL && this.parentAgent instanceof GridConnection) {		
 				((GridConnection) this.parentAgent).v_liveAssetsMetaData.totalInstalledWindPower_kW += difference_kW;
-				if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-					((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, difference_kW, true);
+				if (((GridConnection) this.parentAgent).p_parentNodeElectric != null) {
+					((GridConnection) this.parentAgent).p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, difference_kW, true);
 				}
 				((GridConnection) this.parentAgent).c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += difference_kW);
 				((GridConnection) this.parentAgent).energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += difference_kW;
 			}
 			else if (this.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC && this.parentAgent instanceof GridConnection) {
 				((GridConnection) this.parentAgent).v_liveAssetsMetaData.totalInstalledPVPower_kW += difference_kW;
-				if (((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent() != null) {
-					((GridConnection) this.parentAgent).l_parentNodeElectric.getConnectedAgent().f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, difference_kW, true);
+				if (((GridConnection) this.parentAgent).p_parentNodeElectric != null) {
+					((GridConnection) this.parentAgent).p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, difference_kW, true);
 				}
 				((GridConnection) this.parentAgent).c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += difference_kW);				
 				((GridConnection) this.parentAgent).energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += difference_kW;

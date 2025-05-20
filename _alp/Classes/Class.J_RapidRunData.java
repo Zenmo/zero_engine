@@ -1,10 +1,12 @@
 import java.util.EnumSet;
+import zeroPackage.ZeroMath;
 /**
  * J_RapidRunData
  */	
 public class J_RapidRunData {
 	
 	public Agent parentAgent;
+	private double timeStep_h;
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
 	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
 	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
@@ -129,6 +131,7 @@ public class J_RapidRunData {
     }
     
     public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
+    	this.timeStep_h = timeStep_h;
     	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
     	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
@@ -505,6 +508,51 @@ public class J_RapidRunData {
     		peakFeedin_kW = max(peakFeedin_kW, -electricityBalance_kW);
     	}
     	return peakFeedin_kW;
+    }
+    
+    public Pair<Double, Double> getFlexPotential() {
+    	// Check if capacity is known
+    	Double possibleGrowthFactor_fr;
+    	Double requiredBatteryCapacity_kWh;
+    	if (connectionMetaData.contractedDeliveryCapacityKnown) {
+    		// Find day with max capacity utilisation	
+    		ZeroAccumulator acc_dailyAvgElectricityConsumption_kW = am_dailyAverageConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
+    		ZeroAccumulator acc_dailyAvgElectricityProduction_kW = am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
+    		ZeroAccumulator acc_dailyAvgNettElectricityDelivery_kW = acc_dailyAvgElectricityConsumption_kW.subtract(acc_dailyAvgElectricityProduction_kW);
+    		double[] dailyAvgs_kW = acc_dailyAvgNettElectricityDelivery_kW.getTimeSeries_kW();
+    		
+    		int maxDay = 0;
+    		for (int i = 0; i < dailyAvgs_kW.length; i++) {
+    			maxDay = dailyAvgs_kW[i] > dailyAvgs_kW[maxDay] ? i : maxDay;
+    		}
+    		traceln("Max day: %s, average power %s kW", maxDay, dailyAvgs_kW[maxDay]);
+    		// Maximum growth is when dailyAvg delivery would be equal to contracted delivery capacity.
+    		possibleGrowthFactor_fr = connectionMetaData.contractedDeliveryCapacity_kW / dailyAvgs_kW[maxDay];
+    		if ( possibleGrowthFactor_fr < 1.0) {
+    			traceln("Already overutilising contracted delivery capacity over one day!! Probably an infeasible results...Growth factor: %s", possibleGrowthFactor_fr);
+    			requiredBatteryCapacity_kWh = 0.0;
+    		} else {
+	    		traceln("possibleGrowth: %s ", possibleGrowthFactor_fr);
+	    		double[] dayProfile_kW = Arrays.copyOfRange(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(),roundToInt(24.0/timeStep_h * maxDay), roundToInt(24.0/timeStep_h * (maxDay+1)));
+	    		double[] dayProfileScaled_kW = ZeroMath.arrayMultiply(dayProfile_kW, possibleGrowthFactor_fr);
+	    		double[] SoC_kWh = new double[roundToInt(24/timeStep_h)+1];
+	    		double minSoC_kWh = 0.0;
+	    		double maxSoC_kWh = 0.0;
+	    		for(int i = 0; i < roundToInt(24/timeStep_h); i++) {
+	    			SoC_kWh[i+1] = SoC_kWh[i] + (dayProfileScaled_kW[i] - possibleGrowthFactor_fr * dailyAvgs_kW[maxDay] ) * timeStep_h;
+	    			minSoC_kWh = min(minSoC_kWh, SoC_kWh[i+1]);
+	    			maxSoC_kWh = max(maxSoC_kWh, SoC_kWh[i+1]);
+	    		}
+	    		requiredBatteryCapacity_kWh = maxSoC_kWh - minSoC_kWh;
+	    		traceln("Battery size to allow growth: %s kWh", requiredBatteryCapacity_kWh);
+    		}
+    	} else {
+    		traceln("Gridconnection contracted delivery capacity unknown!");
+    		possibleGrowthFactor_fr = null;
+    		requiredBatteryCapacity_kWh = 0.0;
+    	}    	
+    	
+    	return new Pair(possibleGrowthFactor_fr, requiredBatteryCapacity_kWh);
     }
     
     public double getTotalElectricityConsumed_MWh() { 

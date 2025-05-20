@@ -57,6 +57,8 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;
 	public double p_avgOutputTemperatureCHP_degC;
+	public double p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+	public double p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
 	/**
      * Default constructor
      */
