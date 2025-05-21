@@ -384,7 +384,7 @@ if (j_ea instanceof J_EAVehicle) {
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_hasPV = true;
+		v_liveAssetsMetaData.hasPV = true;
 		v_liveAssetsMetaData.totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if ( p_parentNodeElectric != null ) {
 			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
