@@ -1,6 +1,9 @@
 /**
  * J_BatteryAlgorithmBas
  */	
+
+//import org.apache.poi.xssf.usermodel.*;
+
 public class J_BatteryAlgorithmBas implements Serializable {
 
 	private GridConnection parentGC;
@@ -116,15 +119,15 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	double chargeSetpoint_kW = 0;	
     	double currentElectricityPriceCharge_eurpkWh;
     		
-    	GridNode GN = parentGC.l_parentNodeElectric.getConnectedAgent(); // Get parent from GCGridBattery = GridNode GN
+    	//GridNode GN = parentGC.l_parentNodeElectric.getConnectedAgent(); // Get parent from GCGridBattery = GridNode GN
     	currentElectricityPriceCharge_eurpkWh = parentGC.energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000; // Get current electricity price from coupled GridNode
     		
     	parentGC.v_electricityPriceLowPassed_eurpkWh += parentGC.v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - parentGC.v_electricityPriceLowPassed_eurpkWh );
     	// EMA_new_price = EMA_old_price + smoothing_factor * (current_Price - EMA_old_price) = smoothing_factor * current_Price + EMA_old_price*(1-smoothing_factor)
     	// Exponential Moving Average = alpha * current_Price + EMA_old_price*(1-alpha)
     		
-    	double currentCoopElectricitySurplus_kW = -GN.v_currentLoad_kW + parentGC.v_previousPowerElectricity_kW; // additional power the battery can inject or withdraw without exceeding the node’s connection capacity?
-    	double CoopConnectionCapacity_kW = 0.95*GN.p_capacity_kW; // Only allow 90-95% of nominal grid capacity
+    	double currentCoopElectricitySurplus_kW = -parentGC.p_parentNodeElectric.v_currentLoad_kW + parentGC.v_previousPowerElectricity_kW; // additional power the battery can inject or withdraw without exceeding the node’s connection capacity?
+    	double CoopConnectionCapacity_kW = 0.95*parentGC.p_parentNodeElectric.p_capacity_kW; // Only allow 90-95% of nominal grid capacity
     	//traceln("Test");
     		
     	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity  // availableChargekW = 
@@ -144,6 +147,41 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	return chargeSetpoint_kW;
     	
     }
+    
+    
+    
+  //parentGC.energyModel.v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.getDataSet(startTime_h);
+	//dataObject.getRapidRunData().ts_dailyAverageBatteriesSOC_fr.getDataSet(startTime_h);
+    
+    /*public void exportToExcel() {
+    	
+    	try {
+    		
+    		XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("Simulation Results");
+    	
+            double startTime_h = 0;
+    	
+            for (int i = 0; i < parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length; i++) {
+    		
+            	XSSFRow row = sheet.createRow(i + 1);
+            	for (int j = 0; j < parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length; j++) {
+            		row.createCell(j).setCellValue(parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[i][j]);
+            	}
+            }
+    	
+            workbook.write(out);
+            out.close();
+            workbook.close();
+
+            trace("Excel export successful!");
+    	
+    	} catch (Exception e) {
+    	    // What to do if something goes wrong
+    	    e.printStackTrace();
+    	    trace("Failed to export to Excel: " + e.getMessage());
+    	}
+    }*/
     
 	@Override
 	public String toString() {
