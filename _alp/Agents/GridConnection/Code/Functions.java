@@ -2563,7 +2563,7 @@ for(int i = 0; i < nettoBalance_kW.length; i++){
 
 //Define the amount of charging hours in the morning that the battery will charge to catch the peaks
 // -> More hours, means less charging peaks
-double amountOfChargingHours = 24; //8 geeft prima kpis
+double amountOfChargingHours = 8; //8 geeft prima kpis
 
 
 //Flatten the morning net balance while charging
@@ -2621,7 +2621,7 @@ for(int i = 0; i < nettoBalance_kW.length; i++){
 
 double f_peakShavingForecast_simple()
 {/*ALCODESTART::1748001611377*/
-
+double amountOfHoursInADay = 24;
 double[] nettoBalance_kW = new double[96];
 
 //Get elec consumption profile
@@ -2631,8 +2631,14 @@ J_EAConsumption elecConsumptionConsumptionAsset = findFirst(c_consumptionAssets,
 
 J_EAProduction elecProductionAsset = findFirst(c_productionAssets, prod -> prod.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
 
-int startTimeDayIndex = roundToInt(energyModel.t_h/energyModel.p_timeStep_h);
-int endTimeDayIndex = roundToInt((energyModel.t_h + 24)/energyModel.p_timeStep_h);
+//For simulation that cross the year end
+double hour_of_year = energyModel.t_h;
+if(hour_of_year > 8760){
+	hour_of_year -= 8760;
+}
+
+int startTimeDayIndex = roundToInt(hour_of_year/energyModel.p_timeStep_h);
+int endTimeDayIndex = roundToInt((hour_of_year + 24)/energyModel.p_timeStep_h);
 
 if(elecConsumptionProfile != null){
 	nettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/energyModel.p_timeStep_h);
@@ -2650,7 +2656,7 @@ if(elecProductionAsset != null){
 }
 
 
-////Fill chargepoint Array
+////Fill chargesetpoint Array
 
 //Initialize chargepoint array
 v_batteryChargingForecast_kW = new double[96];
@@ -2665,33 +2671,20 @@ for(int i = 0; i < nettoBalance_kW.length; i++){
 }
 	
 
-double amountOfChargingHours = 24;
-
-
 //Flatten the morning net balance while charging
-double totalMorningConsumption_kWh = 0;
+double totalDailyImport_kWh = 0;
 for(int i = 0; i < nettoBalance_kW.length; i++){
-	if(i< amountOfChargingHours/energyModel.p_timeStep_h){
-		totalMorningConsumption_kWh += max(0,nettoBalance_kW[i]*energyModel.p_timeStep_h);
+	if(i< amountOfHoursInADay/energyModel.p_timeStep_h){
+		totalDailyImport_kWh += max(0,nettoBalance_kW[i]*energyModel.p_timeStep_h);
 	}
 }
-
 double batteryEnergyNeeded_kWh = max(0,(p_batteryAsset.getStorageCapacity_kWh()*(1-p_batteryAsset.getCurrentStateOfCharge()))-totalExport_kWh);
-double averageConsumptionPerMorning_kW = (totalMorningConsumption_kWh + batteryEnergyNeeded_kWh)/amountOfChargingHours;
+double averageDailyConsumption_kW = (totalDailyImport_kWh + batteryEnergyNeeded_kWh)/amountOfHoursInADay;
 
 //If 24 hours
 for(int i = 0; i < nettoBalance_kW.length; i++){
-	v_batteryChargingForecast_kW[i] += averageConsumptionPerMorning_kW - nettoBalance_kW[i];
+	v_batteryChargingForecast_kW[i] += averageDailyConsumption_kW - nettoBalance_kW[i];
 }
-
-
-/*
-for(int i = 0; i < nettoBalance_kW.length; i++){
-	if(i< amountOfChargingHours/energyModel.p_timeStep_h){//Flatten the morning net balance during charging
-		v_batteryChargingForecast_kW[i] += averageConsumptionPerMorning_kW - max(0,nettoBalance_kW[i]);
-	}
-}
-*/
 
 /*ALCODEEND*/}
 

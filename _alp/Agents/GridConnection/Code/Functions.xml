@@ -815,7 +815,7 @@
 		<Id>1747986220281</Id>
 		<Name><![CDATA[f_peakShavingForecast]]></Name>
 		<X>950</X>
-		<Y>380</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -831,7 +831,7 @@
 		<Id>1748001611377</Id>
 		<Name><![CDATA[f_peakShavingForecast_simple]]></Name>
 		<X>950</X>
-		<Y>400</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
