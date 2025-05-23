@@ -518,7 +518,7 @@ public class J_RapidRunData {
     		// Find day with max capacity utilisation	
     		ZeroAccumulator acc_dailyAvgElectricityConsumption_kW = am_dailyAverageConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
     		ZeroAccumulator acc_dailyAvgElectricityProduction_kW = am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
-    		ZeroAccumulator acc_dailyAvgNettElectricityDelivery_kW = acc_dailyAvgElectricityConsumption_kW.subtract(acc_dailyAvgElectricityProduction_kW);
+    		ZeroAccumulator acc_dailyAvgNettElectricityDelivery_kW = acc_dailyAvgElectricityConsumption_kW.getClone().subtract(acc_dailyAvgElectricityProduction_kW);
     		double[] dailyAvgs_kW = acc_dailyAvgNettElectricityDelivery_kW.getTimeSeries_kW();
     		
     		int maxDay = 0;
