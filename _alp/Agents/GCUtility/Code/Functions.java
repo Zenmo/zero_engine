@@ -20,6 +20,10 @@ if (p_batteryAsset != null){
 			case NODAL_PRICING:
 				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 				break;
+			case PEAK_SHAVING_SIMPLE:
+			case PEAK_SHAVING:
+				f_batteryManagementPeakShaving();
+				break;
 			case EXTERNAL_SETPOINT:
 				//Management function and remaining flex should be called by external control agent -> Return.
 				if(c_parentCoops.size()>0){
