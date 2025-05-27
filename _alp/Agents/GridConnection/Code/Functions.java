@@ -2632,13 +2632,11 @@ J_EAConsumption elecConsumptionConsumptionAsset = findFirst(c_consumptionAssets,
 J_EAProduction elecProductionAsset = findFirst(c_productionAssets, prod -> prod.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
 
 //For simulation that cross the year end
-double hour_of_year = energyModel.t_h;
-if(hour_of_year > 8760){
-	hour_of_year -= 8760;
-}
+double hour_of_simulation_year = energyModel.t_h - energyModel.p_runStartTime_h;
+//traceln("hour_of_year: " + hour_of_simulation_year);
 
-int startTimeDayIndex = roundToInt(hour_of_year/energyModel.p_timeStep_h);
-int endTimeDayIndex = roundToInt((hour_of_year + 24)/energyModel.p_timeStep_h);
+int startTimeDayIndex = roundToInt(hour_of_simulation_year/energyModel.p_timeStep_h);
+int endTimeDayIndex = roundToInt((hour_of_simulation_year + 24)/energyModel.p_timeStep_h);
 
 if(elecConsumptionProfile != null){
 	nettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/energyModel.p_timeStep_h);
