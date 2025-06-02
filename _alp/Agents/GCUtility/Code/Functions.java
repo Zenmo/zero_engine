@@ -4,6 +4,19 @@ f_manageHeatingAssets();
 
 f_manageCharging();
 
+if(b_externalSetpointPeakshavingInWinterMode){
+	double modelTime = energyModel.t_h;
+	if(modelTime > 8760){
+		modelTime -= 8760;
+	}
+	if(modelTime < 1417 || modelTime > 6552){//Between oktober and feb peak shaving, else external
+		p_batteryOperationMode = OL_BatteryOperationMode.PEAK_SHAVING_SIMPLE;
+	}
+	else{
+		p_batteryOperationMode = OL_BatteryOperationMode.EXTERNAL_SETPOINT;
+	}
+}
+
 if (p_batteryAsset != null){ 
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
 		
@@ -25,8 +38,7 @@ if (p_batteryAsset != null){
 				f_batteryManagementPeakShaving();
 				break;
 			case EXTERNAL_SETPOINT:
-				//Management function and remaining flex should be called by external control agent -> Return.
-				if(c_parentCoops.size()>0){
+				if(c_parentCoops.size()>0){//Management function and remaining flex should be called by external control agent -> Return.
 					return;
 				}
 				break;

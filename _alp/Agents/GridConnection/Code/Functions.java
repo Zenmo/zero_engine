@@ -2467,7 +2467,6 @@ if (v_enableCurtailment) {
 
 f_connectionMetering();
 
-
 /*ALCODEEND*/}
 
 double f_batteryManagementPeakShaving()
