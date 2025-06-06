@@ -26,6 +26,10 @@ public class J_ProfilePointer implements Serializable {
     	return this.tableFunction.get(t_h);
     }
     
+    public double[] getAllValues() {
+    	return this.tableFunction.getValues();
+    }
+    
 	@Override
 	public String toString() {
 		return "profile: " + this.name + " current value: " + this.currentValue; 

@@ -4,8 +4,8 @@
 		<Id>1659356181110</Id>
 		<Name><![CDATA[pp_windOnshoreProduction]]></Name>
 		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-		<X>-670</X>
-		<Y>170</Y>
+		<X>-850</X>
+		<Y>153</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -106,8 +106,9 @@
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>540</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -130,7 +131,7 @@
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
 		<X>-480</X>
-		<Y>560</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -149,7 +150,7 @@
 		<Id>1666979598282</Id>
 		<Name><![CDATA[v_totalBatteryChargeAmount_MWh]]></Name>
 		<X>-480</X>
-		<Y>760</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -168,7 +169,7 @@
 		<Id>1666979615893</Id>
 		<Name><![CDATA[v_totalBatteryDischargeAmount_MWh]]></Name>
 		<X>-480</X>
-		<Y>780</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -187,7 +188,7 @@
 		<Id>1669026980656</Id>
 		<Name><![CDATA[v_totalBatteryEnergyUsed_MWh]]></Name>
 		<X>-480</X>
-		<Y>820</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -266,8 +267,9 @@
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>500</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -292,8 +294,9 @@
 
 @author: JorritvandenHouten
 @since: 27-10-2022]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>520</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -330,8 +333,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1678980412868</Id>
 		<Name><![CDATA[v_cumulativeGridCapacityMSLS_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>900</Y>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -350,7 +354,7 @@
 		<Id>1678980423977</Id>
 		<Name><![CDATA[v_cumulativeGridCapacityHSMS_kW]]></Name>
 		<X>-480</X>
-		<Y>920</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -370,7 +374,7 @@
 		<Name><![CDATA[v_gridOverloadKPI_pct]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>940</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -528,8 +532,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1695655479591</Id>
 		<Name><![CDATA[v_totalEnergyChargedOutsideModel_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>860</Y>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -614,7 +619,7 @@
 		<Id>1698924487994</Id>
 		<Name><![CDATA[v_batteryStoredEnergyDeltaSinceStart_MWh]]></Name>
 		<X>-480</X>
-		<Y>880</Y>
+		<Y>820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -835,7 +840,7 @@
 		<Id>1701965985318</Id>
 		<Name><![CDATA[v_gridOverloadDuration_h]]></Name>
 		<X>-480</X>
-		<Y>960</Y>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -853,8 +858,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1702377382300</Id>
 		<Name><![CDATA[v_deltaThermalEnergySinceStart_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>1100</Y>
+		<Y>940</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -877,7 +883,7 @@
 		<Name><![CDATA[v_avgGridLoad_fr]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-480</X>
-		<Y>980</Y>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1193,10 +1199,10 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1727107003296</Id>
-		<Name><![CDATA[pp_solarPVproduction]]></Name>
+		<Name><![CDATA[pp_solarPVproduction_35DegSouth]]></Name>
 		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-		<X>-670</X>
-		<Y>190</Y>
+		<X>-850</X>
+		<Y>113</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1214,8 +1220,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1727784890604</Id>
 		<Name><![CDATA[pf_windOnshoreProduction]]></Name>
-		<X>-670</X>
-		<Y>230</Y>
+		<X>-850</X>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1232,9 +1238,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1727784892429</Id>
-		<Name><![CDATA[pf_solarPVproduction]]></Name>
-		<X>-670</X>
-		<Y>250</Y>
+		<Name><![CDATA[pf_solarPVproduction_35DegSouth]]></Name>
+		<X>-850</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1252,8 +1258,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1729088545879</Id>
 		<Name><![CDATA[pf_dayAheadElectricityPricing_eurpMWh]]></Name>
-		<X>-670</X>
-		<Y>270</Y>
+		<X>-850</X>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1271,8 +1277,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1729088545881</Id>
 		<Name><![CDATA[pp_dayAheadElectricityPricing_eurpMWh]]></Name>
-		<X>-670</X>
-		<Y>210</Y>
+		<X>-850</X>
+		<Y>173</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1750,6 +1756,84 @@
 			<Type><![CDATA[int]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749206124686</Id>
+		<Name><![CDATA[pp_solarPVproduction_15DegEastWest]]></Name>
+		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+		<X>-850</X>
+		<Y>133</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfilePointer]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749206126234</Id>
+		<Name><![CDATA[pp_ambientTemperature_degC]]></Name>
+		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
+		<X>-850</X>
+		<Y>93</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfilePointer]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749206255808</Id>
+		<Name><![CDATA[pf_solarPVproduction_15DegEastWest]]></Name>
+		<X>-850</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfileForecaster]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749206262291</Id>
+		<Name><![CDATA[pf_ambientTemperature_degC]]></Name>
+		<X>-850</X>
+		<Y>240</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ProfileForecaster]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1658496701675</Id>
 		<Name><![CDATA[p_timeStep_h]]></Name>
@@ -1757,7 +1841,7 @@
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-		<X>-421</X>
+		<X>-401</X>
 		<Y>79</Y>
 		<Label>
 			<X>10</X>
@@ -1789,7 +1873,7 @@
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-		<X>-421</X>
+		<X>-401</X>
 		<Y>140</Y>
 		<Label>
 			<X>10</X>
@@ -1821,7 +1905,7 @@
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-		<X>-421</X>
+		<X>-401</X>
 		<Y>99</Y>
 		<Label>
 			<X>10</X>
@@ -1844,65 +1928,13 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1663239405341</Id>
-		<Name><![CDATA[j_dataOut]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-820</X>
-		<Y>730</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[DataOut]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1663239405339</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1663242364390</Id>
-		<Name><![CDATA[j_experimentSettingsData]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-820</X>
-		<Y>750</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_ExperimentSettingsData]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1663242364388</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1663577621793</Id>
 		<Name><![CDATA[b_parallelizeGridConnections]]></Name>
 		<Description><![CDATA[Boolean om paralelle berekening van gridconnections aan te zetten.
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-		<X>-421</X>
+		<X>-401</X>
 		<Y>119</Y>
 		<Label>
 			<X>10</X>
@@ -1921,32 +1953,6 @@
 			<ParameterEditor>
 				<Id>1663577621791</Id>
 				<EditorContolType>CHECK_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1666880315951</Id>
-		<Name><![CDATA[j_simulationResults]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-820</X>
-		<Y>770</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_SimulationResults]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1666880315949</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -1979,65 +1985,6 @@
 			<ParameterEditor>
 				<Id>1671636582216</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1672910307060</Id>
-		<Name><![CDATA[j_hourlyCurvesData]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-820</X>
-		<Y>790</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_HourlyCurvesData]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1672910307058</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1682945119357</Id>
-		<Name><![CDATA[b_anylogicCostsForAllContracts]]></Name>
-		<Description><![CDATA[Switch om HS en MS netload op 0 als output te geven wanneer er geen overbelasting plaats heeft gevonden. (workaround om geen greenfield kosten te hebben wanneer er geen overbelasting is!)
-
-@author: GillisHommen
-@since: 01/03/2023]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-819</X>
-		<Y>669</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[boolean]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[true]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1682945119355</Id>
-				<EditorContolType>CHECK_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -2131,7 +2078,7 @@
 	<Variable Class="Parameter">
 		<Id>1701855537716</Id>
 		<Name><![CDATA[p_truckTripsExcel]]></Name>
-		<X>-420</X>
+		<X>-400</X>
 		<Y>210</Y>
 		<Label>
 			<X>10</X>
@@ -2156,7 +2103,7 @@
 	<Variable Class="Parameter">
 		<Id>1701855572858</Id>
 		<Name><![CDATA[p_householdTripsExcel]]></Name>
-		<X>-420</X>
+		<X>-400</X>
 		<Y>230</Y>
 		<Label>
 			<X>10</X>
@@ -2181,7 +2128,7 @@
 	<Variable Class="Parameter">
 		<Id>1701855585052</Id>
 		<Name><![CDATA[p_cookingPatternExcel]]></Name>
-		<X>-420</X>
+		<X>-400</X>
 		<Y>250</Y>
 		<Label>
 			<X>10</X>
@@ -2234,8 +2181,8 @@
 	<Variable Class="Parameter">
 		<Id>1715864755905</Id>
 		<Name><![CDATA[avgc_data]]></Name>
-		<X>-420</X>
-		<Y>300</Y>
+		<X>-400</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2263,7 +2210,7 @@
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-		<X>-421</X>
+		<X>-401</X>
 		<Y>160</Y>
 		<Label>
 			<X>10</X>
@@ -2372,8 +2319,8 @@
 	<Variable Class="Parameter">
 		<Id>1731588224262</Id>
 		<Name><![CDATA[b_isInitialized]]></Name>
-		<X>-420</X>
-		<Y>320</Y>
+		<X>-400</X>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2404,7 +2351,7 @@
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-		<X>-420</X>
+		<X>-400</X>
 		<Y>180</Y>
 		<Label>
 			<X>10</X>
@@ -2583,44 +2530,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1666884023719</Id>
-		<Name><![CDATA[c_globalElectricityImportProfile_MW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>950</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>Integer</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1666884311850</Id>
-		<Name><![CDATA[c_globalElectricityExportProfile_MW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>970</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>Integer</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1666978650654</Id>
 		<Name><![CDATA[c_energyAssets]]></Name>
 		<X>379</X>
@@ -2639,86 +2548,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1666981403077</Id>
-		<Name><![CDATA[c_totalBatteryChargeAmount_MWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>1050</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1666984250257</Id>
-		<Name><![CDATA[c_totalBatteryDischargeAmount_MWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>1070</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1666984296429</Id>
-		<Name><![CDATA[c_totalBatteryInstalledCapacity_MWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>1090</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1667300034779</Id>
-		<Name><![CDATA[c_totalBatteryUnitsInstalled]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>1110</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1667553304068</Id>
 		<Name><![CDATA[c_timesOfNodePeakLoads_h]]></Name>
 		<X>-480</X>
-		<Y>580</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2729,63 +2562,6 @@
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>LinkedHashMap</CollectionClass>
 			<ElementClass>String</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1668007771830</Id>
-		<Name><![CDATA[c_globalEVChargingProfile_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>990</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>Integer</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1668007790848</Id>
-		<Name><![CDATA[c_globalEHGVChargingProfile_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>1010</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>Integer</ElementClass>
-			<ValueElementClass>Double</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1668007805687</Id>
-		<Name><![CDATA[c_globalBatteryChargingProfile_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>1030</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>Integer</ElementClass>
 			<ValueElementClass>Double</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -2793,7 +2569,7 @@
 		<Id>1669725679330</Id>
 		<Name><![CDATA[c_gridConnectionOverload_fr]]></Name>
 		<X>-480</X>
-		<Y>600</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2956,8 +2732,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1727099354305</Id>
 		<Name><![CDATA[c_profiles]]></Name>
-		<X>-670</X>
-		<Y>300</Y>
+		<X>-850</X>
+		<Y>73</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2974,8 +2750,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1727779411251</Id>
 		<Name><![CDATA[c_forecasts]]></Name>
-		<X>-670</X>
-		<Y>320</Y>
+		<X>-850</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

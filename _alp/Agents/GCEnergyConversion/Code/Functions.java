@@ -423,8 +423,8 @@ double wind_forecast_kW;
 if (c_forecast_RES_kW.size() == 0){
 		
 	for(int i = energyModel.v_timeStepsElapsed; i < energyModel.v_timeStepsElapsed + roundToInt(forecast_time_h/energyModel.p_timeStep_h); i++){
-		solar_forecast_kW = - energyModel.tf_p_solar_e_normalized(energyModel.t_h + i*energyModel.p_timeStep_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-		wind_forecast_kW = - energyModel.tf_p_wind_e_normalized(energyModel.t_h + i*energyModel.p_timeStep_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		solar_forecast_kW = - energyModel.pp_solarPVproduction_35DegSouth.getValue(energyModel.t_h + i*energyModel.p_timeStep_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		wind_forecast_kW = - energyModel.pp_windOnshoreProduction.getValue(energyModel.t_h + i*energyModel.p_timeStep_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		
 		c_forecast_RES_kW.add(solar_forecast_kW + wind_forecast_kW);
 		
@@ -442,8 +442,8 @@ else if(energyModel.v_timeStepsElapsed < (8760-forecast_time_h)/energyModel.p_ti
 	//Update forecast array RES
 	c_forecast_RES_kW.remove(0);
 	
-	solar_forecast_kW = - energyModel.tf_p_solar_e_normalized(energyModel.t_h + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	wind_forecast_kW = - energyModel.tf_p_wind_e_normalized(energyModel.t_h + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	solar_forecast_kW = - energyModel.pp_solarPVproduction_35DegSouth.getValue(energyModel.t_h + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	wind_forecast_kW = - energyModel.pp_windOnshoreProduction.getValue(energyModel.t_h + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 	
 	c_forecast_RES_kW.add(solar_forecast_kW + wind_forecast_kW); 
 	
@@ -454,8 +454,8 @@ else if(energyModel.v_timeStepsElapsed < (8760-forecast_time_h)/energyModel.p_ti
 	if (b_forecast_lastWeekBased && data_liveWeekElectrolyserPower_kW.size() > 672 - roundToInt(forecast_time_h/energyModel.p_timeStep_h)){ // Use last week to create the forecast	
 	
 		double lastWeekGridNodePowerFlow_kW = data_liveWeekGridNoderPowerFlow_kW.getY(roundToInt(forecast_time_h/energyModel.p_timeStep_h)) - data_liveWeekElectrolyserPower_kW.getY(roundToInt(forecast_time_h/energyModel.p_timeStep_h));
-		double solar_lastWeek_kW = - energyModel.tf_p_solar_e_normalized(energyModel.t_h + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-		double wind_lastWeek_kW = - energyModel.tf_p_wind_e_normalized(energyModel.t_h + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		double solar_lastWeek_kW = - energyModel.pp_solarPVproduction_35DegSouth.getValue(energyModel.t_h + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		double wind_lastWeek_kW = - energyModel.pp_windOnshoreProduction.getValue(energyModel.t_h + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 			
 		c_forecast_gridNodePowerFlow_kW.add(lastWeekGridNodePowerFlow_kW - solar_lastWeek_kW - wind_lastWeek_kW + solar_forecast_kW + wind_forecast_kW);
 	}
