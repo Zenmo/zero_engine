@@ -2,7 +2,7 @@
 <Variables>
 	<Variable Class="PlainVariable">
 		<Id>1659356181110</Id>
-		<Name><![CDATA[pp_windOnshoreProduction]]></Name>
+		<Name><![CDATA[pp_windProduction_fr]]></Name>
 		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
 		<X>-850</X>
 		<Y>153</Y>
@@ -1199,7 +1199,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1727107003296</Id>
-		<Name><![CDATA[pp_solarPVproduction_35DegSouth]]></Name>
+		<Name><![CDATA[pp_PVProduction35DegSouth_fr]]></Name>
 		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
 		<X>-850</X>
 		<Y>113</Y>
@@ -1219,7 +1219,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1727784890604</Id>
-		<Name><![CDATA[pf_windOnshoreProduction]]></Name>
+		<Name><![CDATA[pf_windProduction_fr]]></Name>
 		<X>-850</X>
 		<Y>300</Y>
 		<Label>
@@ -1238,7 +1238,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1727784892429</Id>
-		<Name><![CDATA[pf_solarPVproduction_35DegSouth]]></Name>
+		<Name><![CDATA[pf_PVProduction35DegSouth_fr]]></Name>
 		<X>-850</X>
 		<Y>260</Y>
 		<Label>
@@ -1758,7 +1758,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1749206124686</Id>
-		<Name><![CDATA[pp_solarPVproduction_15DegEastWest]]></Name>
+		<Name><![CDATA[pp_PVProduction15DegEastWest_fr]]></Name>
 		<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
 		<X>-850</X>
 		<Y>133</Y>
@@ -1798,7 +1798,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1749206255808</Id>
-		<Name><![CDATA[pf_solarPVproduction_15DegEastWest]]></Name>
+		<Name><![CDATA[pf_PVProduction15DegEastWest_fr]]></Name>
 		<X>-850</X>
 		<Y>280</Y>
 		<Label>

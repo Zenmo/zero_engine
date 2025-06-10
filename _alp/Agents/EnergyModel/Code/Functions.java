@@ -45,8 +45,8 @@ t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
 v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
 c_profiles.forEach(p -> p.updateValue(t_h));
-v_currentWindPowerNormalized_r = pp_windOnshoreProduction.getCurrentValue();
-v_currentSolarPowerNormalized_r = pp_solarPVproduction_35DegSouth.getCurrentValue();
+v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
+v_currentSolarPowerNormalized_r = pp_PVProduction35DegSouth_fr.getCurrentValue();
 //v_currentCookingDemand_fr = tf_cooking_demand(t_h);
 
 if (b_enableDLR) {
@@ -78,8 +78,8 @@ for( J_EA e : c_ambientAirDependentAssets ) {
 
 // Update forecasts,  the relevant profile pointers are already updated above
 c_forecasts.forEach(f -> f.updateForecast(t_h));
-v_SolarYieldForecast_fr = pf_solarPVproduction_35DegSouth.getForecast();
-v_WindYieldForecast_fr = pf_windOnshoreProduction.getForecast();
+v_SolarYieldForecast_fr = pf_PVProduction35DegSouth_fr.getForecast();
+v_WindYieldForecast_fr = pf_windProduction_fr.getForecast();
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
 if ( v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) {
 	v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_liveAssetsMetaData.totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_liveAssetsMetaData.totalInstalledWindPower_kW) / (v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW);
@@ -292,14 +292,14 @@ double f_initializeForecasts()
 pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_forecastTime_h, t_h, p_timeStep_h);
 c_forecasts.add(pf_ambientTemperature_degC);
 
-pf_solarPVproduction_35DegSouth = new J_ProfileForecaster(null, pp_solarPVproduction_35DegSouth, p_forecastTime_h, t_h, p_timeStep_h);
-c_forecasts.add(pf_solarPVproduction_35DegSouth);
+pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_forecastTime_h, t_h, p_timeStep_h);
+c_forecasts.add(pf_PVProduction35DegSouth_fr);
 
-pf_solarPVproduction_15DegEastWest = new J_ProfileForecaster(null, pp_solarPVproduction_15DegEastWest, p_forecastTime_h, t_h, p_timeStep_h);
-c_forecasts.add(pf_solarPVproduction_15DegEastWest);
+pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_forecastTime_h, t_h, p_timeStep_h);
+c_forecasts.add(pf_PVProduction15DegEastWest_fr);
 
-pf_windOnshoreProduction = new J_ProfileForecaster(null, pp_windOnshoreProduction, p_forecastTime_h, t_h, p_timeStep_h);
-c_forecasts.add(pf_windOnshoreProduction);
+pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_forecastTime_h, t_h, p_timeStep_h);
+c_forecasts.add(pf_windProduction_fr);
 
 pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_forecastTime_h, t_h, p_timeStep_h);
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
