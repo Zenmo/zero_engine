@@ -52330,7 +52330,7 @@ public void f_resetSpecificGCStatesAfterRapidRun(){
 				<Variable Class="Parameter">
 					<Id>1718879495372</Id>
 					<Name><![CDATA[p_CPOName]]></Name>
-					<X>50</X><Y>580</Y>
+					<X>50</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
