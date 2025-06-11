@@ -107,6 +107,9 @@
 		<Parameter>
 			<Name><![CDATA[p_parentNodeElectric]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_airco]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

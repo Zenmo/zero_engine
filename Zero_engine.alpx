@@ -349,6 +349,10 @@
 					<Id>1717159864803</Id>
 					<Name><![CDATA[FUEL_CELL]]></Name>
 				</Option>
+				<Option>
+					<Id>1749651086661</Id>
+					<Name><![CDATA[CHARGER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659525715752</Id>
@@ -1521,6 +1525,18 @@
 			<JavaClass>
 				<Id>1746606645736</Id>
 				<Name><![CDATA[J_BatteryAlgorithmBas]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749648342034</Id>
+				<Name><![CDATA[J_EAAirco]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749649002419</Id>
+				<Name><![CDATA[J_ChargingSession]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749651263461</Id>
+				<Name><![CDATA[J_EACharger]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
