@@ -87,6 +87,9 @@
 			<Parameter>
 				<Name><![CDATA[p_originalCapacity_kW]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_hasProfileData]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

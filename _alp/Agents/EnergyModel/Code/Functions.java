@@ -753,7 +753,10 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 
 ArrayList<GridConnection> f_getGridConnections()
 {/*ALCODESTART::1716890117265*/
-return c_gridConnections;
+ArrayList<GridConnection> copyOfGridConnectionList = new ArrayList<>(c_gridConnections);
+copyOfGridConnectionList.removeAll(Arrays.asList(pop_gridConnections)); // Remove all default gridconnections (no flex control, only used for gridnode profile)
+return copyOfGridConnectionList;
+
 /*ALCODEEND*/}
 
 double f_initializeEngine()
