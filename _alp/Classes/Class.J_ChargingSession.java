@@ -28,10 +28,10 @@ public class J_ChargingSession implements Serializable {
     /**
      * Default constructor
      */
-    public J_ChargingSession(int startTime, int endTime, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socket, boolean V2GCapable, double timeStep_hr) {
+    public J_ChargingSession(int startTime_quaterhours, int endTime_quaterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socket, boolean V2GCapable, double timeStep_hr) {
     
-    	this.startTime = startTime;
-    	this.endTime = endTime;
+    	this.startTime = startTime_quaterhours;
+    	this.endTime = endTime_quaterhours;
     	this.chargingDemand_kWh = chargingDemand_kWh;
     	this.batterySize_kWh = batterySize_kWh;
     	stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh;

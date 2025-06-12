@@ -20,6 +20,7 @@ double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1726749088568*/
 //Manage charging
 f_manageCharging();
+
 if ( p_charger != null && v_isActiveCharger ) {
 	f_manageCharger();
 }
@@ -160,9 +161,10 @@ return chargingPower_kW;
 
 double f_manageSocket1()
 {/*ALCODESTART::1749729536799*/
-if ( v_currentChargingSessionSocket1 == null || energyModel.t_h >= v_currentChargingSessionSocket1.endTime / 4.0) {
+if ( v_currentChargingSessionSocket1 == null ) { // || energyModel.t_h >= v_currentChargingSessionSocket1.endTime / 4.0) {
 	 // check if we are not already past the last charging session
 	if (v_currentChargingSessionIndexSocket1 >= p_charger.chargerProfile.size()) {
+		//v_currentChargingSessionSocket1 = null;
 		return;
 	}
 	while (p_charger.chargerProfile.get(v_currentChargingSessionIndexSocket1).socket != 1) {
@@ -210,6 +212,13 @@ double f_connectToJ_EA_custom(J_EA j_ea)
 {/*ALCODESTART::1749730638242*/
 if (j_ea instanceof J_EACharger) {
 	p_charger = (J_EACharger)j_ea;
+}
+/*ALCODEEND*/}
+
+double f_removeTheJ_EA_custom(J_EA j_ea)
+{/*ALCODESTART::1749732428506*/
+if (j_ea instanceof J_EACharger) {
+	p_charger = null;
 }
 /*ALCODEEND*/}
 
