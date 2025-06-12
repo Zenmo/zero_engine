@@ -20,6 +20,9 @@ double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1726749088568*/
 //Manage charging
 f_manageCharging();
+if ( p_charger != null && v_isActiveCharger ) {
+	f_manageCharger();
+}
 /*ALCODEEND*/}
 
 double f_operateChargerNew()
@@ -123,6 +126,90 @@ if( sessie != null){
 else{
 	v_sessionIndex = -1;
 	//traceln( "No new charging session available in data for " + p_chargingProfileName +  ", current session index: " + v_sessionIndex);
+}
+/*ALCODEEND*/}
+
+double f_manageCharger()
+{/*ALCODESTART::1749727270158*/
+f_manageSocket1();
+f_manageSocket2();
+
+double power_kW = 0.0;
+int currentTimeInQuarterHours = roundToInt(energyModel.t_h * 4);
+if ( currentTimeInQuarterHours >= v_currentChargingSessionSocket1.startTime && currentTimeInQuarterHours < v_currentChargingSessionSocket1.endTime ) {
+	power_kW += f_operateChargerSocket1();
+}
+if ( currentTimeInQuarterHours >= v_currentChargingSessionSocket2.startTime && currentTimeInQuarterHours < v_currentChargingSessionSocket2.endTime ) {
+	power_kW += f_operateChargerSocket2();
+}
+
+p_charger.f_updateAllFlows( power_kW / p_charger.capacityElectric_kW );
+/*ALCODEEND*/}
+
+double f_operateChargerSocket1()
+{/*ALCODESTART::1749728143688*/
+double chargingPower_kW = v_currentChargingSessionSocket1.operate();
+v_totalShiftedLoadV1G_kWh += v_currentChargingSessionSocket1.getShiftedLoadV1GCurrentTimestep();
+v_totalShiftedLoadV2G_kWh += v_currentChargingSessionSocket1.getShiftedLoadV2GCurrentTimestep();
+if ( v_currentChargingSessionSocket1.timeStepsToDisconnect == 0 ){
+	v_currentChargingSessionSocket1 = null;
+}
+
+return chargingPower_kW;
+/*ALCODEEND*/}
+
+double f_manageSocket1()
+{/*ALCODESTART::1749729536799*/
+if ( v_currentChargingSessionSocket1 == null || energyModel.t_h >= v_currentChargingSessionSocket1.endTime / 4.0) {
+	 // check if we are not already past the last charging session
+	if (v_currentChargingSessionIndexSocket1 >= p_charger.chargerProfile.size()) {
+		return;
+	}
+	while (p_charger.chargerProfile.get(v_currentChargingSessionIndexSocket1).socket != 1) {
+		v_currentChargingSessionIndexSocket1++;
+		if (v_currentChargingSessionIndexSocket1 >= p_charger.chargerProfile.size()) {
+			return;
+		}
+	}
+	v_currentChargingSessionSocket1 = p_charger.chargerProfile.get(v_currentChargingSessionIndexSocket1);
+	v_currentChargingSessionIndexSocket1++;
+}
+/*ALCODEEND*/}
+
+double f_manageSocket2()
+{/*ALCODESTART::1749729546273*/
+if ( v_currentChargingSessionSocket2 == null || energyModel.t_h >= v_currentChargingSessionSocket2.endTime / 4.0) {
+	 // check if we are not already past the last charging session
+	if (v_currentChargingSessionIndexSocket2 >= p_charger.chargerProfile.size()) {
+		return;
+	}
+	while (p_charger.chargerProfile.get(v_currentChargingSessionIndexSocket2).socket != 2) {
+		v_currentChargingSessionIndexSocket2++;
+		if (v_currentChargingSessionIndexSocket2 >= p_charger.chargerProfile.size()) {
+			return;
+		}
+	}
+	v_currentChargingSessionSocket2 = p_charger.chargerProfile.get(v_currentChargingSessionIndexSocket2);
+	v_currentChargingSessionIndexSocket2++;
+}
+/*ALCODEEND*/}
+
+double f_operateChargerSocket2()
+{/*ALCODESTART::1749730372656*/
+double chargingPower_kW = v_currentChargingSessionSocket2.operate();
+v_totalShiftedLoadV1G_kWh += v_currentChargingSessionSocket2.getShiftedLoadV1GCurrentTimestep();
+v_totalShiftedLoadV2G_kWh += v_currentChargingSessionSocket2.getShiftedLoadV2GCurrentTimestep();
+if ( v_currentChargingSessionSocket2.timeStepsToDisconnect == 0 ){
+	v_currentChargingSessionSocket2 = null;
+}
+
+return chargingPower_kW;
+/*ALCODEEND*/}
+
+double f_connectToJ_EA_custom(J_EA j_ea)
+{/*ALCODESTART::1749730638242*/
+if (j_ea instanceof J_EACharger) {
+	p_charger = (J_EACharger)j_ea;
 }
 /*ALCODEEND*/}
 

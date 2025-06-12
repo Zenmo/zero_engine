@@ -45,7 +45,7 @@
 		<Id>1749648407076</Id>
 		<Name><![CDATA[v_isActiveCharger1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>500</Y>
 		<Label>
 			<X>10</X>
@@ -65,7 +65,7 @@
 		<Id>1749648407078</Id>
 		<Name><![CDATA[v_netBewustLadenActive1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>520</Y>
 		<Label>
 			<X>10</X>
@@ -88,7 +88,7 @@
 		<Id>1749648407080</Id>
 		<Name><![CDATA[v_sessionIndex]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>720</Y>
 		<Label>
 			<X>10</X>
@@ -111,7 +111,7 @@
 		<Id>1749648407082</Id>
 		<Name><![CDATA[v_nextSessionStartTime]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>740</Y>
 		<Label>
 			<X>10</X>
@@ -134,7 +134,7 @@
 		<Id>1749648407084</Id>
 		<Name><![CDATA[v_v2gProbability]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>780</Y>
 		<Label>
 			<X>10</X>
@@ -157,7 +157,7 @@
 		<Id>1749648407086</Id>
 		<Name><![CDATA[v_nextSessionInfo]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>760</Y>
 		<Label>
 			<X>10</X>
@@ -177,7 +177,7 @@
 		<Id>1749648407088</Id>
 		<Name><![CDATA[v_shiftedLoadV1G_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>810</Y>
 		<Label>
 			<X>10</X>
@@ -197,7 +197,7 @@
 		<Id>1749648407090</Id>
 		<Name><![CDATA[v_shiftedLoadV2G_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>830</Y>
 		<Label>
 			<X>10</X>
@@ -216,9 +216,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1749648407092</Id>
 		<Name><![CDATA[v_totalShiftedLoadV1G_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1730</X>
-		<Y>810</Y>
+		<X>1580</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -236,9 +235,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1749648407094</Id>
 		<Name><![CDATA[v_totalShiftedLoadV2G_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1730</X>
-		<Y>830</Y>
+		<X>1580</X>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -257,7 +255,7 @@
 		<Id>1749648407096</Id>
 		<Name><![CDATA[v_sessionIndexStored]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1680</X>
+		<X>2060</X>
 		<Y>720</Y>
 		<Label>
 			<X>10</X>
@@ -274,6 +272,82 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0]]></Code>
 			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749727288568</Id>
+		<Name><![CDATA[v_currentChargingSessionSocket1]]></Name>
+		<X>1580</X>
+		<Y>640</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ChargingSession]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749727365845</Id>
+		<Name><![CDATA[v_currentChargingSessionIndexSocket1]]></Name>
+		<X>1580</X>
+		<Y>620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749728886542</Id>
+		<Name><![CDATA[v_currentChargingSessionSocket2]]></Name>
+		<X>1580</X>
+		<Y>680</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_ChargingSession]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1749728977849</Id>
+		<Name><![CDATA[v_currentChargingSessionIndexSocket2]]></Name>
+		<X>1580</X>
+		<Y>660</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[int]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
@@ -456,7 +530,7 @@
 		<Id>1749648407099</Id>
 		<Name><![CDATA[p_isInitialCharger1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>540</Y>
 		<Label>
 			<X>10</X>
@@ -482,7 +556,7 @@
 		<Id>1749648407102</Id>
 		<Name><![CDATA[p_chargingProfileName1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>560</Y>
 		<Label>
 			<X>10</X>
@@ -508,7 +582,7 @@
 		<Id>1749648407105</Id>
 		<Name><![CDATA[chargingSessionSocket1]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>600</Y>
 		<Label>
 			<X>10</X>
@@ -534,7 +608,7 @@
 		<Id>1749648407108</Id>
 		<Name><![CDATA[chargingSessionSocket2]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>620</Y>
 		<Label>
 			<X>10</X>
@@ -560,7 +634,7 @@
 		<Id>1749648407111</Id>
 		<Name><![CDATA[p_chargerAsset]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>580</Y>
 		<Label>
 			<X>10</X>
@@ -575,6 +649,31 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1749648407109</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1749727454285</Id>
+		<Name><![CDATA[p_charger]]></Name>
+		<X>1580</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[J_EACharger]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1749727454283</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

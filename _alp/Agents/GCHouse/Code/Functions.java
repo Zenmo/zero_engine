@@ -935,7 +935,7 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 
 double f_manageAirco()
 {/*ALCODESTART::1749648447119*/
-if( p_airco != null){
+if( p_airco != null ) {
 	if (p_airco.remainingONtimesteps == 0){
 		double switchOnProbability = 0;
 		switch (roundToInt(energyModel.v_currentAmbientTemperature_degC)) {
@@ -967,12 +967,12 @@ if( p_airco != null){
 				switchOnProbability = 0.02;
 				break;
 		}
-		int nbTimestepsOn = uniform_discr(4, 12);
 		if( randomTrue(switchOnProbability)){
+			int nbTimestepsOn = uniform_discr(4, 12);
 			p_airco.turnOnAirco( nbTimestepsOn );
 		}
 	}
-	p_airco.f_updateAllFlows( 1 );
+	p_airco.f_updateAllFlows( 1.0 );
 }
 /*ALCODEEND*/}
 

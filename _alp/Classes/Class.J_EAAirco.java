@@ -14,22 +14,20 @@ public class J_EAAirco extends zero_engine.J_EAEV implements Serializable {
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
 	}
     
+    
 	@Override
     public void operate(double ratioOfCapacity) {
 		if( remainingONtimesteps > 0) {
-			remainingONtimesteps--;
+			this.remainingONtimesteps--;
+			double electricityConsumption_kW = ratioOfCapacity * this.capacityElectric_kW;
+			this.energyUse_kW = electricityConsumption_kW;
+			this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+			this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
 		}
-		else {
-			ratioOfCapacity = 0;
-		}
-		double electricityConsumption_kW = ratioOfCapacity * capacityElectric_kW;
-    	energyUse_kW = electricityConsumption_kW;
-    	energyUsed_kWh += energyUse_kW * timestep_h;
-    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
-   	}
+	}
 
 	public void turnOnAirco(int nbTimesteps) {
-		remainingONtimesteps = nbTimesteps;
+		this.remainingONtimesteps = nbTimesteps;
 	}
 
 	@Override
