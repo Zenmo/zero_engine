@@ -39,7 +39,7 @@
 		<Id>1749648407069</Id>
 		<Name><![CDATA[f_operateChargerNew]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1570</X>
+		<X>1950</X>
 		<Y>650</Y>
 		<Label>
 			<X>10</X>
@@ -56,7 +56,7 @@
 		<Id>1749648407072</Id>
 		<Name><![CDATA[f_manageChargingSessions]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1580</X>
+		<X>1960</X>
 		<Y>670</Y>
 		<Label>
 			<X>10</X>
@@ -73,7 +73,7 @@
 		<Id>1749648407074</Id>
 		<Name><![CDATA[f_getNextSessionInfo]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1580</X>
+		<X>1960</X>
 		<Y>690</Y>
 		<Label>
 			<X>10</X>
@@ -82,6 +82,126 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749727270158</Id>
+		<Name><![CDATA[f_manageCharger]]></Name>
+		<X>1560</X>
+		<Y>500</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749728143688</Id>
+		<Name><![CDATA[f_operateChargerSocket1]]></Name>
+		<X>1580</X>
+		<Y>560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749729536799</Id>
+		<Name><![CDATA[f_manageSocket1]]></Name>
+		<X>1580</X>
+		<Y>520</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749729546273</Id>
+		<Name><![CDATA[f_manageSocket2]]></Name>
+		<X>1580</X>
+		<Y>540</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749730372656</Id>
+		<Name><![CDATA[f_operateChargerSocket2]]></Name>
+		<X>1580</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749730638242</Id>
+		<Name><![CDATA[f_connectToJ_EA_custom]]></Name>
+		<X>1130</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EA]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1749732428506</Id>
+		<Name><![CDATA[f_removeTheJ_EA_custom]]></Name>
+		<X>1130</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EA]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
