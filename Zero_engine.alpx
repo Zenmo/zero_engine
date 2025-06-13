@@ -1215,6 +1215,30 @@
 					<Name><![CDATA[GRIDNODE]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1749738812988</Id>
+				<Name><![CDATA[OL_ParkingSpaceType]]></Name>
+				<Option>
+					<Id>1749738813678</Id>
+					<Name><![CDATA[DISABLED]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738839937</Id>
+					<Name><![CDATA[PUBLIC]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738872124</Id>
+					<Name><![CDATA[PRIVATE]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738876030</Id>
+					<Name><![CDATA[ELECTRIC]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738897847</Id>
+					<Name><![CDATA[KISS_AND_RIDE]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders/>
 		<ActiveObjectClasses/>
