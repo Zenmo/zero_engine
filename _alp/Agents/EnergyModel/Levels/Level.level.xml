@@ -2,8 +2,8 @@
 <Presentation>
 	<Rectangle>
 		<Id>1665052211228</Id>
-		<Name><![CDATA[rectangle]]></Name>
-		<X>-700</X>
+		<Name><![CDATA[rect_parametersAndProfiles]]></Name>
+		<X>-880</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -21,16 +21,16 @@
 		<LineColor>-16744448</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>540</Width>
-		<Height>340</Height>
+		<Width>780</Width>
+		<Height>350</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
 	</Rectangle>
 	<Text>
 		<Id>1659709739366</Id>
-		<Name><![CDATA[text]]></Name>
-		<X>-681</X>
+		<Name><![CDATA[txt_Profiles]]></Name>
+		<X>-861</X>
 		<Y>45</Y>
 		<Label>
 			<X>0</X>
@@ -44,7 +44,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Tijdreeksdata:]]></Text>
+		<Text><![CDATA[Profiles:]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>14</Size>
@@ -55,7 +55,7 @@
 	<Text>
 		<Id>1659709765242</Id>
 		<Name><![CDATA[text1]]></Name>
-		<X>-441</X>
+		<X>-411</X>
 		<Y>49</Y>
 		<Label>
 			<X>0</X>
@@ -79,8 +79,8 @@
 	</Text>
 	<Rectangle>
 		<Id>1665052264314</Id>
-		<Name><![CDATA[rectangle1]]></Name>
-		<X>-880</X>
+		<Name><![CDATA[rect_output]]></Name>
+		<X>-500</X>
 		<Y>480</Y>
 		<Label>
 			<X>10</X>
@@ -97,8 +97,8 @@
 		<LineColor>-3308225</LineColor>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>720</Width>
-		<Height>660</Height>
+		<Width>400</Width>
+		<Height>520</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-1</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -107,7 +107,7 @@
 		<Id>1665052603927</Id>
 		<Name><![CDATA[rectangle2]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-700</X>
+		<X>-880</X>
 		<Y>0</Y>
 		<Label>
 			<X>10</X>
@@ -134,8 +134,8 @@
 		<Id>1665052191319</Id>
 		<Name><![CDATA[text3]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-665</X>
-		<Y>7</Y>
+		<X>-850</X>
+		<Y>9</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -158,8 +158,8 @@
 	</Text>
 	<Rectangle>
 		<Id>1665052678662</Id>
-		<Name><![CDATA[rectangle3]]></Name>
-		<X>-880</X>
+		<Name><![CDATA[rect_output1]]></Name>
+		<X>-500</X>
 		<Y>480</Y>
 		<Label>
 			<X>10</X>
@@ -184,8 +184,8 @@
 	</Rectangle>
 	<Text>
 		<Id>1665052678664</Id>
-		<Name><![CDATA[text5]]></Name>
-		<X>-845</X>
+		<Name><![CDATA[txt_output]]></Name>
+		<X>-465</X>
 		<Y>487</Y>
 		<Label>
 			<X>0</X>
@@ -842,4 +842,29 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 			<LabelText>View Data</LabelText>
 		</ExtendedProperties>
 	</Control>
+	<Text>
+		<Id>1749205921716</Id>
+		<Name><![CDATA[txt_Forecasters]]></Name>
+		<X>-860</X>
+		<Y>192</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Forecasters:]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>14</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>
