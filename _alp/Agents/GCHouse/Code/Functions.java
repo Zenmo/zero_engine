@@ -976,3 +976,10 @@ if( p_airco != null ) {
 }
 /*ALCODEEND*/}
 
+double f_removeTheJ_EA_house(J_EA j_ea)
+{/*ALCODESTART::1749722407831*/
+if (j_ea instanceof J_EAEV) {
+	p_householdEV = null;
+}
+/*ALCODEEND*/}
+
