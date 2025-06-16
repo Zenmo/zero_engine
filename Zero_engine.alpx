@@ -1077,6 +1077,10 @@
 					<Id>1707990736908</Id>
 					<Name><![CDATA[OTHER]]></Name>
 				</Option>
+				<Option>
+					<Id>1750078140891</Id>
+					<Name><![CDATA[PARKINGSPACE_OP]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1718560423698</Id>

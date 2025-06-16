@@ -587,7 +587,7 @@
 		<Id>1717417303620</Id>
 		<Name><![CDATA[p_nageisoleerd]]></Name>
 		<X>250</X>
-		<Y>510</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -611,8 +611,8 @@
 	<Variable Class="Parameter">
 		<Id>1722350833847</Id>
 		<Name><![CDATA[p_eigenOprit]]></Name>
-		<X>440</X>
-		<Y>510</Y>
+		<X>250</X>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -637,7 +637,7 @@
 		<Id>1726685123865</Id>
 		<Name><![CDATA[p_cookingMethod]]></Name>
 		<X>250</X>
-		<Y>460</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
