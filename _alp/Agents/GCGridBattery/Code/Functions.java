@@ -81,6 +81,9 @@ if ( p_batteryAsset != null ) {
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
+		if (p_batteryOperationMode == OL_BatteryOperationMode.BATTERY_ALGORITHM_BAS && energyModel.v_isRapidRun){
+			v_batteryAlgorithmBas.calculateTurningPointDuringRapidRun(v_batterySOC_fr);
+		}
 	}
 }
 
@@ -403,6 +406,13 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){ // battery_kWh =/= 0
 	chargeSetpoint_kW = v_batteryAlgorithmBas.calculateChargeSetpointPriceGrid_kW(currentBatteryStateOfCharge_fr);
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
 
+}
+/*ALCODEEND*/}
+
+double f_resetSpecificGCStates_GCGridBattery()
+{/*ALCODESTART::1749215594968*/
+if (v_batteryAlgorithmBas != null){
+	v_batteryAlgorithmBas.resetTurningPoints();
 }
 /*ALCODEEND*/}
 

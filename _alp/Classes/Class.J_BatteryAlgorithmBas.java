@@ -7,6 +7,9 @@
 public class J_BatteryAlgorithmBas implements Serializable {
 
 	private GridConnection parentGC;
+	private double[] previousTwoBatterySoC_fr = new double[]{0,0};
+	private ArrayList<Double> batteryTurningPoints_fr = new ArrayList();
+	private double amountOfCycles = 0; // Cycle is NOT defined as amount of chargeEnergy/batteryCapacity; but rather as a count of activities
     /**
      * Default constructor
      */
@@ -14,6 +17,92 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	
     	this.parentGC = parentGC;
     	
+    }
+    
+    public void resetTurningPoints() {
+    	previousTwoBatterySoC_fr = new double[]{0,0};
+    	batteryTurningPoints_fr = new ArrayList();
+    }
+    
+    public ArrayList<Double> getBatteryTurningPoints_fr () {
+    	return new ArrayList(batteryTurningPoints_fr);
+    }
+    
+    public double getAmountOfBatteryCycles_cycles () {
+    	return amountOfCycles;
+    }
+    
+    public void calculateTurningPointDuringRapidRun(double currentBatterySoC_fr) { 
+    	currentBatterySoC_fr = roundToDecimal(currentBatterySoC_fr,8);
+    	
+    	if (previousTwoBatterySoC_fr[0] >= previousTwoBatterySoC_fr[1] && previousTwoBatterySoC_fr[1] < currentBatterySoC_fr) {
+    		batteryTurningPoints_fr.add(previousTwoBatterySoC_fr[1]);
+    	}
+    	else if (previousTwoBatterySoC_fr[0] <= previousTwoBatterySoC_fr[1] && previousTwoBatterySoC_fr[1] > currentBatterySoC_fr) {
+    		batteryTurningPoints_fr.add(previousTwoBatterySoC_fr[1]);
+    	}
+    	
+    	previousTwoBatterySoC_fr[0] = previousTwoBatterySoC_fr[1];
+    	previousTwoBatterySoC_fr[1] = currentBatterySoC_fr;
+    }
+    
+    public double calculateAverageDoD(ArrayList<Double> batteryTurningPoints_fr) {
+    	
+    	amountOfCycles = 0; // Cycle is NOT defined as amount of chargeEnergy/batteryCapacity; but rather as a count of activities
+    	double cumulativeDoD = 0;
+    	
+    	ArrayList<Double> localBatteryTurningPoints_fr = new ArrayList(batteryTurningPoints_fr);
+    	
+    	while (localBatteryTurningPoints_fr.size() > 2) {
+    		boolean hasFoundCycle = false;
+    		for (int i=0; i < localBatteryTurningPoints_fr.size()-2; i++) {
+    			
+    			if (abs(localBatteryTurningPoints_fr.get(i+1)-localBatteryTurningPoints_fr.get(i+2)) <= abs(localBatteryTurningPoints_fr.get(i)-localBatteryTurningPoints_fr.get(i+1))) { //abs(Y-Z) <= abs(Z-Y)
+    				cumulativeDoD += abs(localBatteryTurningPoints_fr.get(i+1)-localBatteryTurningPoints_fr.get(i+2));
+    				localBatteryTurningPoints_fr.remove(i+2); //Remove Z first, otherwise order changes
+    				localBatteryTurningPoints_fr.remove(i+1); //Remove Y
+    				amountOfCycles += 1; //Remove 2 point-> 2lines -> 2 half cycles -> 1 full cycle 
+    				hasFoundCycle = true;
+    				break;
+    				// charge or discharge is or is not included in DoD -> TBD; so amountOfCycles could be 0.5 (if we had additional while loop) or 1
+    			}
+    		}
+    		if (!hasFoundCycle) {
+    			break; //fail safe to prevent stuck in loop
+    		}
+    	}
+    	
+    	//Add final residual half-cycle
+    	if (localBatteryTurningPoints_fr.size() > 1) {
+    		cumulativeDoD += abs(localBatteryTurningPoints_fr.get(0)-localBatteryTurningPoints_fr.get(1));
+    		amountOfCycles += 0.5;
+    		traceln("Residual present");
+    	}
+    	
+    	double averageDoD = cumulativeDoD/amountOfCycles;
+    	traceln("Remaining turning points are " + localBatteryTurningPoints_fr);
+    	traceln(batteryTurningPoints_fr.size());
+    	traceln(amountOfCycles);
+    	return averageDoD;
+    	
+    }
+    
+    public double calculateLifetimeBattery_yr() {
+    	
+    	 double averageDoD = calculateAverageDoD(batteryTurningPoints_fr);
+    	 
+    	 double totalYearlyCycles = parentGC.v_rapidRunData.getTotalBatteryCycles(); // Defined that total annual energy charged/battery capacity
+    	 
+    	 // function and parameters (li-ion) are extracted from source:
+    	 // https://www.researchgate.net/publication/330142356_Optimal_Operational_Planning_of_Scalable_DC_Microgrid_with_Demand_Response_Islanding_and_Battery_Degradation_Cost_Considerations
+    	 double alpha = -5440.35;
+    	 double beta = 1191.54;
+    	 
+    	 double batteryCycleLife_cycles = alpha * Math.log(averageDoD) + beta;
+    	 traceln("Battery Lifetime from totalYearlyCycles is " + batteryCycleLife_cycles/totalYearlyCycles);
+    	 double lifetimeBattery_yr = batteryCycleLife_cycles/amountOfCycles;
+    	 return lifetimeBattery_yr;
+    	 
     }
     
     public double calculateElectricityImportCosts_euro() { 
@@ -143,7 +232,9 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	chargeSetpoint_kW = parentGC.p_batteryAsset.getCapacityElectric_kW()*(WTP_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur; // battery_power * (WTP - current_price) * Gain
     						
     	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-    		
+    	
+    	
+    	
     	return chargeSetpoint_kW;
     	
     }
