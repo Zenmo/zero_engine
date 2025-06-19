@@ -76,6 +76,8 @@ if( p_batteryAsset != null){
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
 */ 
+f_manageChargers();
+
 
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); 
 
