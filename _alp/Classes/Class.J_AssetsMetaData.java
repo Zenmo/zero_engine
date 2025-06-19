@@ -144,6 +144,7 @@ public class J_AssetsMetaData {
 		return "totalInstalledPVPower_kW: " + totalInstalledPVPower_kW + 
 				", totalInstalledWindPower_kW: " + totalInstalledWindPower_kW + 
 	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh + 
+	            ", hasPV: " + hasPV +
 	            ", hasElectricHeating: " + hasElectricHeating + 
 	            ", hasElectricTransport: " + hasElectricTransport + 
 	            ", hasWindturbine: " + hasWindturbine +

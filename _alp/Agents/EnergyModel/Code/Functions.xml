@@ -260,7 +260,7 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1716890117265</Id>
-		<Name><![CDATA[f_getGridConnections]]></Name>
+		<Name><![CDATA[f_getActiveGridConnections]]></Name>
 		<X>1360</X>
 		<Y>520</Y>
 		<Label>

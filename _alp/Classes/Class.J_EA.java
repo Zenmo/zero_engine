@@ -21,6 +21,8 @@ abstract public class J_EA implements Cloneable {
 	 protected double energyUsedStored_kWh = 0.0;
   	 protected double timestep_h;
  
+  	 protected boolean isRemoved = false;
+  	 
   	 // Are these needed?
 	 protected double heatProduced_kWh = 0.0;
 	 protected double heatConsumed_kWh = 0.0;
@@ -59,7 +61,18 @@ abstract public class J_EA implements Cloneable {
     	}
     }
     
+    public void reRegisterEnergyAsset() {
+    	if (!this.isRemoved) {
+    		throw new RuntimeException("Can not register energy asset that was not removed.");
+    	}
+    	else {
+    		this.isRemoved = false;
+    		this.registerEnergyAsset();
+    	}
+    }
+    
     public void removeEnergyAsset() {
+    	this.isRemoved = true;
     	if ( parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_removeTheJ_EA(this);
     	} else {    		

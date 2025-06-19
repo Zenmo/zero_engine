@@ -1278,6 +1278,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_profileAssets.add((J_EAProfile)j_ea);
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.add((J_EACharger)j_ea);
+	c_EvAssets.add(j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -1606,6 +1607,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_profileAssets.remove((J_EAProfile)j_ea);
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.remove(j_ea);
+	c_EvAssets.remove(j_ea);	
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }

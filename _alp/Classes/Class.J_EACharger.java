@@ -37,6 +37,7 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 		    this.V2GCapable = V2GCapable;
 	    	this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);		
 			this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+			this.registerEnergyAsset();
 	    }
 	    
 	    
