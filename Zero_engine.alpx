@@ -946,6 +946,10 @@
 					<Name><![CDATA[CHEAP]]></Name>
 				</Option>
 				<Option>
+					<Id>1750246095668</Id>
+					<Name><![CDATA[V1G]]></Name>
+				</Option>
+				<Option>
 					<Id>1695825443639</Id>
 					<Name><![CDATA[V2G]]></Name>
 				</Option>

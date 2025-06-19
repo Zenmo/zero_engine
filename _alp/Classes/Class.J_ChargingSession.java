@@ -10,9 +10,10 @@ public class J_ChargingSession implements Serializable {
 	double stateOfCharge_kWh;
 	double chargingPower_kW;
 	int socket;
-	boolean V2GCapable;
 	double timeStep_hr;
 	
+	boolean V1GCapable;
+	boolean V2GCapable;
 	int availableStepsForV2G;
 	int availableStepsForV1G;
 	int timeStepsToDisconnect;
@@ -28,7 +29,7 @@ public class J_ChargingSession implements Serializable {
     /**
      * Default constructor
      */
-    public J_ChargingSession(int startTime_quaterhours, int endTime_quaterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socket, boolean V2GCapable, double timeStep_hr) {
+    public J_ChargingSession(int startTime_quaterhours, int endTime_quaterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socket, double timeStep_hr) {
     
     	this.startTime = startTime_quaterhours;
     	this.endTime = endTime_quaterhours;
@@ -37,13 +38,14 @@ public class J_ChargingSession implements Serializable {
     	stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh;
     	this.chargingPower_kW = chargingPower_kW; 
     	this.socket = socket;
-    	this.V2GCapable = V2GCapable;
     	timeStepsToDisconnect = endTime - startTime;
     	openTimeSlots = timeStepsToDisconnect - ((int)Math.ceil(4 * chargingDemand_kWh / chargingPower_kW)) ; 
     	this.timeStep_hr = timeStep_hr;
     }
     
-    public double operate() {
+    public double operate(boolean doV1G, boolean doV2G) {
+    	this.V1GCapable = doV1G;
+    	this.V2GCapable = doV2G;
     	timeStepsToDisconnect --;
     	openTimeSlots --;
     	double power = determineChargingPower();
@@ -60,7 +62,7 @@ public class J_ChargingSession implements Serializable {
     		shiftedLoadV2GThisTimestep = 2 * power;
     		V2GRemainingTimesteps--;
     		//if you are doing V2G this timestep you reduce your opentimeslots by 2
-    		openTimeSlots --; 
+    		openTimeSlots --;
     		openTimeSlots --;
     	}
     	else if( V1GRemainingTimesteps > 0){

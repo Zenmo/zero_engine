@@ -104,6 +104,10 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return new Pair(flowsMap, this.energyUse_kW);
     }
 
+    public J_ProfilePointer getProfilePointer() {
+    	return this.profilePointer;
+    }
+    
 	@Override
 	public String toString() {
 		return

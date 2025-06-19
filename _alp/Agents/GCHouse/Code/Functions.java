@@ -76,6 +76,8 @@ if( p_batteryAsset != null){
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
 */ 
+f_manageChargers();
+
 
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); 
 
@@ -973,6 +975,13 @@ if( p_airco != null ) {
 		}
 	}
 	p_airco.f_updateAllFlows( 1.0 );
+}
+/*ALCODEEND*/}
+
+double f_removeTheJ_EA_house(J_EA j_ea)
+{/*ALCODESTART::1749722407831*/
+if (j_ea instanceof J_EAEV) {
+	p_householdEV = null;
 }
 /*ALCODEEND*/}
 

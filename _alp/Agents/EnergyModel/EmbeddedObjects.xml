@@ -2631,9 +2631,6 @@
 			<Parameter>
 				<Name><![CDATA[p_chargerAsset]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_charger]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
