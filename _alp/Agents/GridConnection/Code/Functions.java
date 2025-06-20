@@ -124,9 +124,11 @@ else {
 double f_connectionMetering()
 {/*ALCODESTART::1660212665961*/
 if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
-	traceln((fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)));
-	traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
-	pauseSimulation();
+	if (p_BuildingThermalAsset == null || !p_BuildingThermalAsset.hasHeatBuffer()) {
+		traceln((fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)));
+		traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
+		pauseSimulation();
+	}
 }
 
 if (energyModel.v_isRapidRun){
@@ -1280,7 +1282,9 @@ if (j_ea instanceof J_EAVehicle) {
 	c_chargers.add((J_EACharger)j_ea);
 	c_EvAssets.add(j_ea);
 } else {
-	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
+		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+	} 
 }
 
 /*ALCODEEND*/}

@@ -1,8 +1,9 @@
 /**
  * Airco
  */	
-public class J_EAAirco extends zero_engine.J_EAEV implements Serializable {
-
+public class J_EAAirco extends zero_engine.J_EA implements Serializable {
+	
+	double capacityElectric_kW;
 	int remainingONtimesteps = 0;
     /**
      * Default constructor
@@ -12,7 +13,8 @@ public class J_EAAirco extends zero_engine.J_EAEV implements Serializable {
     	this.capacityElectric_kW = capacityElectric_kW;
     	this.timestep_h = timestep_h;	
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
-	}
+		this.registerEnergyAsset();
+    }
     
     
 	@Override
