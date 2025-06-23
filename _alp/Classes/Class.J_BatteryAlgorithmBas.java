@@ -105,15 +105,38 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	 
     }
     
+    public double calculateCapacityRate_euro() {
+    	
+    	double costsCapacityRate_euro = 0;
+    	
+    	GridNode GN_T0 = findFirst(parentGC.energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals("T0")); //.equals(p_parentNodeID)
+    	double contractedCapacity_kW = GN_T0.p_capacity_kW;
+    	
+    	double VAT_fr = 0.21;
+    	double annualConnectionRate_euro_p_yr = 5351;
+    	double annualFixedTransportRate_euro_p_yr = 2760;
+    	double annualContractCapacityRate_euro_p_kW_yr = 42.10;
+    	double monthlyPeakPowerRate_euro_p_kW_month = 4.48;
+    	
+    	costsCapacityRate_euro = (1+VAT_fr)*(annualConnectionRate_euro_p_yr + annualFixedTransportRate_euro_p_yr + annualContractCapacityRate_euro_p_kW_yr * contractedCapacity_kW + monthlyPeakPowerRate_euro_p_kW_month * contractedCapacity_kW);
+    	
+    	return contractedCapacity_kW;
+    	
+    }
+    
     public double calculateElectricityImportCosts_euro() { 
-
+    	
+    	double VAT_fr = 0.21;
+    	double ODE_eur_p_kwh = 0;
+    	double EB_eur_p_kwh = 0.03868; // https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/overige_belastingen/belastingen_op_milieugrondslag/energiebelasting/
+    	
     	double costsElectricityImport_euro = 0;
     	double currentElectricityPriceCharge_eurpkWh = 0;	
 
     	for (int i = 0; i < parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length; i++) {
     		
     		currentElectricityPriceCharge_eurpkWh = parentGC.energyModel.tf_dayAheadElectricityPricing_eurpMWh.get(i) / 1000;
-    		costsElectricityImport_euro += currentElectricityPriceCharge_eurpkWh * max(0,parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[i]) * parentGC.energyModel.p_timeStep_h;
+    		costsElectricityImport_euro += (1+VAT_fr)*((currentElectricityPriceCharge_eurpkWh + ODE_eur_p_kwh + EB_eur_p_kwh) * max(0,parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[i]) * parentGC.energyModel.p_timeStep_h);
     		    		
     	}
     	
@@ -143,7 +166,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
 
     	double costsElectricityNet_euro = 0;
 
-    	costsElectricityNet_euro = calculateElectricityImportCosts_euro() - calculateElectricityExportCosts_euro();
+    	costsElectricityNet_euro = calculateCapacityRate_euro() + calculateElectricityImportCosts_euro() - calculateElectricityExportCosts_euro();
     	
     	return costsElectricityNet_euro;
     	//traceln("%f",costsElectricityNet_euro);

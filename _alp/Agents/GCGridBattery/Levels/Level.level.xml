@@ -140,12 +140,13 @@
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor/>
 			<Enabled>true</Enabled>
-			<ActionCode>traceln("%f", v_batteryAlgorithmBas.calculateElectricityImportCosts_euro());
+			<ActionCode>traceln("%f", v_batteryAlgorithmBas.calculateCapacityRate_euro());
+traceln("%f", v_batteryAlgorithmBas.calculateElectricityImportCosts_euro());
 traceln("%f", v_batteryAlgorithmBas.calculateElectricityExportCosts_euro());
 traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());
-traceln("%f", v_batteryAlgorithmBas.calculateReturnOnInvestment(15, 1000000, 5300000));
-traceln("%f", v_batteryAlgorithmBas.calculatePaybackPeriod(1000000, 5300000));
-traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());</ActionCode>
+//traceln("%f", v_batteryAlgorithmBas.calculateReturnOnInvestment(15, 1000000, 5300000));
+//traceln("%f", v_batteryAlgorithmBas.calculatePaybackPeriod(1000000, 5300000));
+//traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
