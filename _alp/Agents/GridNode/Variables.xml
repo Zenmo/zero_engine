@@ -4,7 +4,7 @@
 		<Id>1665061187538</Id>
 		<Name><![CDATA[v_congested]]></Name>
 		<X>50</X>
-		<Y>650</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -26,7 +26,7 @@
 		<Id>1666594510176</Id>
 		<Name><![CDATA[v_congestionMode]]></Name>
 		<X>50</X>
-		<Y>670</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -148,7 +148,7 @@ geupdate vanuit
 		<Id>1668600984923</Id>
 		<Name><![CDATA[v_currentLoadElectricityLowPassed_kW]]></Name>
 		<X>50</X>
-		<Y>591</Y>
+		<Y>581</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -170,7 +170,7 @@ geupdate vanuit
 		<Id>1668603168061</Id>
 		<Name><![CDATA[v_lowPassFactor_fr]]></Name>
 		<X>50</X>
-		<Y>571</Y>
+		<Y>561</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -308,7 +308,7 @@ geupdate vanuit
 		<Id>1675683578599</Id>
 		<Name><![CDATA[v_currentCongestionPrice_eurpkWh]]></Name>
 		<X>50</X>
-		<Y>690</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -327,7 +327,7 @@ geupdate vanuit
 		<Id>1689233711411</Id>
 		<Name><![CDATA[v_filteredLoadCongestionPricing_kW]]></Name>
 		<X>50</X>
-		<Y>730</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -346,7 +346,7 @@ geupdate vanuit
 		<Id>1689234315318</Id>
 		<Name><![CDATA[v_lowPassFactorCongestionPricing_fr]]></Name>
 		<X>50</X>
-		<Y>710</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -697,7 +697,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623480</Id>
 		<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1010</Y>
 		<Label>
 			<X>10</X>
@@ -716,7 +716,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623645</Id>
 		<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1030</Y>
 		<Label>
 			<X>10</X>
@@ -735,7 +735,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623647</Id>
 		<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1050</Y>
 		<Label>
 			<X>10</X>
@@ -754,7 +754,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623649</Id>
 		<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1070</Y>
 		<Label>
 			<X>10</X>
@@ -773,7 +773,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623651</Id>
 		<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1090</Y>
 		<Label>
 			<X>10</X>
@@ -792,7 +792,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623653</Id>
 		<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1110</Y>
 		<Label>
 			<X>10</X>
@@ -811,7 +811,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623655</Id>
 		<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1130</Y>
 		<Label>
 			<X>10</X>
@@ -830,7 +830,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623657</Id>
 		<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
-		<X>37</X>
+		<X>47</X>
 		<Y>1150</Y>
 		<Label>
 			<X>10</X>
@@ -872,7 +872,7 @@ geupdate vanuit
 		<Id>1718895936296</Id>
 		<Name><![CDATA[v_currentLocalNodalPrice_eurpkWh]]></Name>
 		<X>50</X>
-		<Y>780</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -891,7 +891,7 @@ geupdate vanuit
 		<Id>1718895937973</Id>
 		<Name><![CDATA[v_currentTotalNodalPrice_eurpkWh]]></Name>
 		<X>50</X>
-		<Y>800</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -911,7 +911,7 @@ geupdate vanuit
 		<Name><![CDATA[v_currentParentNodalPrice_eurpkWh]]></Name>
 		<Description><![CDATA[Given a default value for 'top' agents, this can be seen as average market price of electricity.]]></Description>
 		<X>50</X>
-		<Y>760</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1022,7 +1022,7 @@ geupdate vanuit
 		<Id>1722498291003</Id>
 		<Name><![CDATA[v_currentDLRCapacity_kW]]></Name>
 		<X>50</X>
-		<Y>620</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1044,7 +1044,7 @@ geupdate vanuit
 		<Id>1730975924463</Id>
 		<Name><![CDATA[v_currentLoad_kW]]></Name>
 		<X>50</X>
-		<Y>520</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1905,6 +1905,34 @@ geupdate vanuit
 			<ParameterEditor>
 				<Id>1726583647248</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1749630347422</Id>
+		<Name><![CDATA[p_hasProfileData]]></Name>
+		<X>50</X>
+		<Y>470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1749630347420</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>

@@ -87,6 +87,9 @@
 			<Parameter>
 				<Name><![CDATA[p_originalCapacity_kW]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_hasProfileData]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1140,6 +1143,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2609,6 +2615,24 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_isInitialCharger1]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_chargingProfileName1]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[chargingSessionSocket1]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[chargingSessionSocket2]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_chargerAsset]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_isChargingCentre]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

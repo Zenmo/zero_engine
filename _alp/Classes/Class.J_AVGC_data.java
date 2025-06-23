@@ -59,6 +59,9 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgOutputTemperatureCHP_degC;
 	public double p_avgEfficiencyDistrictHeatingDeliverySet_fr;
 	public double p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+	public double p_v1gProbability;
+	public double p_v2gProbability;
+	public int p_avgEVsPerPublicCharger;
 	/**
      * Default constructor
      */

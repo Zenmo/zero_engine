@@ -124,9 +124,11 @@ else {
 double f_connectionMetering()
 {/*ALCODESTART::1660212665961*/
 if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
-	traceln((fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)));
-	traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
-	pauseSimulation();
+	if (p_BuildingThermalAsset == null || !p_BuildingThermalAsset.hasHeatBuffer()) {
+		traceln((fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)));
+		traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
+		pauseSimulation();
+	}
 }
 
 if (energyModel.v_isRapidRun){
@@ -1167,7 +1169,7 @@ if (j_ea instanceof J_EAVehicle) {
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_hasPV = true;
+		v_liveAssetsMetaData.hasPV = true;
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
 		if ( p_parentNodeElectric != null ) {
@@ -1276,8 +1278,13 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 } else if (j_ea instanceof J_EADieselTractor) {
 	c_profileAssets.add((J_EAProfile)j_ea);
+} else if (j_ea instanceof J_EACharger) {
+	c_chargers.add((J_EACharger)j_ea);
+	c_EvAssets.add(j_ea);
 } else {
-	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
+		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+	} 
 }
 
 /*ALCODEEND*/}
@@ -1531,7 +1538,7 @@ if (j_ea instanceof J_EAVehicle) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
 		if (otherPV == null) {
-			v_hasPV = false;
+			v_liveAssetsMetaData.hasPV = false;
 		}
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
@@ -1602,6 +1609,9 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = null;
 	c_profileAssets.remove((J_EAProfile)j_ea);
+} else if (j_ea instanceof J_EACharger) {
+	c_chargers.remove(j_ea);
+	c_EvAssets.remove(j_ea);	
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -2428,5 +2438,25 @@ dsm_summerWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int
 dsm_winterWeekDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 dsm_winterWeekSupplyDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 */
+/*ALCODEEND*/}
+
+double f_manageChargers()
+{/*ALCODESTART::1750258434630*/
+if ( c_chargers.size() > 0 ) { // && v_isActiveCharger ) {
+	switch (p_chargingAttitudeVehicles) {			
+		case V1G:
+		case MAX_POWER:
+		case MAX_SPREAD:
+			c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h, true, false) );
+			break;
+		case V2G:
+			c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h, true, true) );
+			break;
+		case SIMPLE:
+		default:
+			c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h, false, false) );
+			break;
+	}
+}
 /*ALCODEEND*/}
 
