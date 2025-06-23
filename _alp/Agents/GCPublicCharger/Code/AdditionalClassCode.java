@@ -1,3 +1,4 @@
+
 /*@Override
 public void f_operateFixedAssets(){
 	f_operateFixedAssets_overwrite();

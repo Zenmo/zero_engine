@@ -30,6 +30,7 @@ switch (p_heatingType) {
 }
 
 f_manageCookingTracker();
+f_manageAirco();
 
 if (p_BuildingThermalAsset != null && p_primaryHeatingAsset != null) {
 	p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
@@ -76,6 +77,8 @@ if( p_batteryAsset != null){
 	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
 */ 
+f_manageChargers();
+
 
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); 
 
@@ -826,7 +829,10 @@ if (j_ea instanceof J_EAEV) {
 	}
 	p_householdEV = (J_EAEV)j_ea;
 }
-
+if (j_ea instanceof J_EAAirco) {
+	p_airco = (J_EAAirco)j_ea;
+	c_electricHeatpumpAssets.add(j_ea);
+}
 /*ALCODEEND*/}
 
 double f_setAnnualEnergyDemand()
@@ -884,7 +890,7 @@ if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingTherm
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()  );
-		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
+		p_BuildingThermalAsset.v_powerFraction_fr = max(0, (p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW) / p_BuildingThermalAsset.getCapacityHeat_kW() );			
 	}
 	else { // Just supply DHW
 		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();
@@ -906,7 +912,7 @@ if ( p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet && p_Buildin
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()  );
-		p_BuildingThermalAsset.v_powerFraction_fr = (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW();			
+		p_BuildingThermalAsset.v_powerFraction_fr = max(0, (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW());			
 	}
 	else { 
 		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();
@@ -930,6 +936,60 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 	if (p_BuildingThermalAsset != null) {
 		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW();
 	}
+}
+/*ALCODEEND*/}
+
+double f_manageAirco()
+{/*ALCODESTART::1749648447119*/
+if( p_airco != null ) {
+	if (p_airco.remainingONtimesteps == 0){
+		double switchOnProbability = 0;
+		switch (roundToInt(energyModel.v_currentAmbientTemperature_degC)) {
+			case 23:
+				switchOnProbability = 0.0025;
+				break;
+			case 24:
+				switchOnProbability = 0.005;
+				break;
+			case 25:
+				switchOnProbability = 0.008;
+				break;
+			case 26:
+				switchOnProbability = 0.01;
+				break;
+			case 27:
+				switchOnProbability = 0.012;
+				break;
+			case 28:
+				switchOnProbability = 0.014;
+				break;
+			case 29:
+				switchOnProbability = 0.016;
+				break;
+			case 30:
+				switchOnProbability = 0.018;
+				break;
+			case 31:
+				switchOnProbability = 0.02;
+				break;
+		}
+		if( randomTrue(switchOnProbability)){
+			int nbTimestepsOn = uniform_discr(4, 12);
+			p_airco.turnOnAirco( nbTimestepsOn );
+		}
+	}
+	p_airco.f_updateAllFlows( 1.0 );
+}
+/*ALCODEEND*/}
+
+double f_removeTheJ_EA_house(J_EA j_ea)
+{/*ALCODESTART::1749722407831*/
+if (j_ea instanceof J_EAEV) {
+	p_householdEV = null;
+}
+if (j_ea instanceof J_EAAirco) {
+	p_airco = null;
+	c_electricHeatpumpAssets.remove(j_ea);
 }
 /*ALCODEEND*/}
 

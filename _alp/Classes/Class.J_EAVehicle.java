@@ -48,6 +48,10 @@ public abstract class J_EAVehicle extends J_EA implements Serializable {
 		return vehicleScaling;
 	}
 	
+	public double getEnergyConsumption_kWhpkm() {
+		return energyConsumption_kWhpkm * vehicleScaling;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

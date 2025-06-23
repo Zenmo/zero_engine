@@ -43,7 +43,7 @@
 		<Id>1660212665961</Id>
 		<Name><![CDATA[f_connectionMetering]]></Name>
 		<X>910</X>
-		<Y>650</Y>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -535,8 +535,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1720442672576</Id>
 		<Name><![CDATA[f_curtailment]]></Name>
-		<X>920</X>
-		<Y>630</Y>
+		<X>910</X>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -641,8 +641,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722518225504</Id>
 		<Name><![CDATA[f_fillLiveDataSets]]></Name>
-		<X>920</X>
-		<Y>670</Y>
+		<X>930</X>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -657,8 +657,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722518905501</Id>
 		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
-		<X>920</X>
-		<Y>690</Y>
+		<X>930</X>
+		<Y>590</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -832,6 +832,22 @@
 		<Name><![CDATA[f_peakShavingForecast_simple]]></Name>
 		<X>950</X>
 		<Y>380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750258434630</Id>
+		<Name><![CDATA[f_manageChargers]]></Name>
+		<X>920</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

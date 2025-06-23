@@ -162,10 +162,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public double getTotalDischargeAmount_kWh() {
 		return discharged_kWh;
 	}
- 
-	public double getEnergyConsumption_kWhpkm() {
-		return energyConsumption_kWhpkm * vehicleScaling;
-	}
 	
 	public double getEnergyNeedForNextTrip_kWh() {
 		return energyNeedForNextTrip_kWh * vehicleScaling;
