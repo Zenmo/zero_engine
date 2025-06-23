@@ -525,14 +525,14 @@ public class J_RapidRunData {
     		for (int i = 0; i < dailyAvgs_kW.length; i++) {
     			maxDay = dailyAvgs_kW[i] > dailyAvgs_kW[maxDay] ? i : maxDay;
     		}
-    		traceln("Max day: %s, average power %s kW", maxDay, dailyAvgs_kW[maxDay]);
+    		//traceln("Max day: %s, average power %s kW", maxDay, dailyAvgs_kW[maxDay]);
     		// Maximum growth is when dailyAvg delivery would be equal to contracted delivery capacity.
     		possibleGrowthFactor_fr = connectionMetaData.contractedDeliveryCapacity_kW / dailyAvgs_kW[maxDay];
     		if ( possibleGrowthFactor_fr < 1.0) {
-    			traceln("Already overutilising contracted delivery capacity over one day!! Probably an infeasible results...Growth factor: %s", possibleGrowthFactor_fr);
+    			//traceln("Already overutilising contracted delivery capacity over one day!! Probably an infeasible results...Growth factor: %s", possibleGrowthFactor_fr);
     			requiredBatteryCapacity_kWh = 0.0;
     		} else {
-	    		traceln("possibleGrowth: %s ", possibleGrowthFactor_fr);
+	    		//traceln("possibleGrowth: %s ", possibleGrowthFactor_fr);
 	    		double[] dayProfile_kW = Arrays.copyOfRange(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(),roundToInt(24.0/timeStep_h * maxDay), roundToInt(24.0/timeStep_h * (maxDay+1)));
 	    		double[] dayProfileScaled_kW = ZeroMath.arrayMultiply(dayProfile_kW, possibleGrowthFactor_fr);
 	    		double[] SoC_kWh = new double[roundToInt(24/timeStep_h)+1];

@@ -751,9 +751,12 @@ for (GridNode GNchild : GN.c_connectedGridNodes) {
 
 /*ALCODEEND*/}
 
-ArrayList<GridConnection> f_getGridConnections()
+ArrayList<GridConnection> f_getActiveGridConnections()
 {/*ALCODESTART::1716890117265*/
-return c_gridConnections;
+ArrayList<GridConnection> copyOfGridConnectionList = new ArrayList<>(c_gridConnections);
+copyOfGridConnectionList.removeAll(Arrays.asList(pop_gridConnections)); // Remove all default gridconnections (no flex control, only used for gridnode profile)
+return copyOfGridConnectionList;
+
 /*ALCODEEND*/}
 
 double f_initializeEngine()
@@ -1307,7 +1310,7 @@ double f_updateActiveAssetsMetaData()
 {/*ALCODESTART::1741710906926*/
 
 //Update main area
-v_liveAssetsMetaData.updateActiveAssetData(f_getGridConnections());
+v_liveAssetsMetaData.updateActiveAssetData(f_getActiveGridConnections());
 
 //Update coop
 if(pop_energyCoops.size()>0){
@@ -1315,7 +1318,7 @@ if(pop_energyCoops.size()>0){
 }	
 
 //Update grid connection active asset data
-for(GridConnection GC : f_getGridConnections()){
+for(GridConnection GC : f_getActiveGridConnections()){
 	GC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
 }
 

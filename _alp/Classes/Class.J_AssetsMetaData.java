@@ -23,6 +23,7 @@ public class J_AssetsMetaData {
 	public Double totalInstalledWindPower_kW = 0.0;
 	public Double totalInstalledBatteryStorageCapacity_MWh = 0.0;
 	
+	public Double initialPV_kW = 0.0;
 	public Double PVPotential_kW = 0.0;
 	public Double windPotential_kW = 0.0;
 	
@@ -143,6 +144,7 @@ public class J_AssetsMetaData {
 		return "totalInstalledPVPower_kW: " + totalInstalledPVPower_kW + 
 				", totalInstalledWindPower_kW: " + totalInstalledWindPower_kW + 
 	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh + 
+	            ", hasPV: " + hasPV +
 	            ", hasElectricHeating: " + hasElectricHeating + 
 	            ", hasElectricTransport: " + hasElectricTransport + 
 	            ", hasWindturbine: " + hasWindturbine +

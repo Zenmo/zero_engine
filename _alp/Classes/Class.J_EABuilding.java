@@ -343,6 +343,14 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     	return remainingHeatBufferHeat_kWh;
     }
     
+    public boolean hasHeatBuffer() {
+    	if (this.exteriorDelayTime_h != 0 || this.interiorDelayTime_h != 0) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed

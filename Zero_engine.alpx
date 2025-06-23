@@ -173,6 +173,10 @@
 					<Id>1739979321556</Id>
 					<Name><![CDATA[COOP]]></Name>
 				</Option>
+				<Option>
+					<Id>1749729312023</Id>
+					<Name><![CDATA[PARKING]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118426374</Id>
@@ -348,6 +352,10 @@
 				<Option>
 					<Id>1717159864803</Id>
 					<Name><![CDATA[FUEL_CELL]]></Name>
+				</Option>
+				<Option>
+					<Id>1749651086661</Id>
+					<Name><![CDATA[CHARGER]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -938,6 +946,10 @@
 					<Name><![CDATA[CHEAP]]></Name>
 				</Option>
 				<Option>
+					<Id>1750246095668</Id>
+					<Name><![CDATA[V1G]]></Name>
+				</Option>
+				<Option>
 					<Id>1695825443639</Id>
 					<Name><![CDATA[V2G]]></Name>
 				</Option>
@@ -1068,6 +1080,10 @@
 				<Option>
 					<Id>1707990736908</Id>
 					<Name><![CDATA[OTHER]]></Name>
+				</Option>
+				<Option>
+					<Id>1750078140891</Id>
+					<Name><![CDATA[PARKINGSPACE_OP]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1205,6 +1221,30 @@
 				<Option>
 					<Id>1741598233168</Id>
 					<Name><![CDATA[GRIDNODE]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1749738812988</Id>
+				<Name><![CDATA[OL_ParkingSpaceType]]></Name>
+				<Option>
+					<Id>1749738813678</Id>
+					<Name><![CDATA[DISABLED]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738839937</Id>
+					<Name><![CDATA[PUBLIC]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738872124</Id>
+					<Name><![CDATA[PRIVATE]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738876030</Id>
+					<Name><![CDATA[ELECTRIC]]></Name>
+				</Option>
+				<Option>
+					<Id>1749738897847</Id>
+					<Name><![CDATA[KISS_AND_RIDE]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
@@ -1521,6 +1561,18 @@
 			<JavaClass>
 				<Id>1746606645736</Id>
 				<Name><![CDATA[J_BatteryAlgorithmBas]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749648342034</Id>
+				<Name><![CDATA[J_EAAirco]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749649002419</Id>
+				<Name><![CDATA[J_ChargingSession]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1749651263461</Id>
+				<Name><![CDATA[J_EACharger]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
