@@ -135,7 +135,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
 
     	for (int i = 0; i < parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length; i++) {
     		
-    		currentElectricityPriceCharge_eurpkWh = parentGC.energyModel.tf_dayAheadElectricityPricing_eurpMWh.get(i) / 1000;
+    		currentElectricityPriceCharge_eurpkWh = parentGC.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getAllValues()[i] / 1000;
     		costsElectricityImport_euro += (1+VAT_fr)*((currentElectricityPriceCharge_eurpkWh + ODE_eur_p_kwh + EB_eur_p_kwh) * max(0,parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[i]) * parentGC.energyModel.p_timeStep_h);
     		    		
     	}
@@ -152,7 +152,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
 
     	for (int i = 0; i < parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW().length; i++) {
     		
-    		currentElectricityPriceCharge_eurpkWh = parentGC.energyModel.tf_dayAheadElectricityPricing_eurpMWh.get(i) / 1000;
+    		currentElectricityPriceCharge_eurpkWh = parentGC.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getAllValues()[i] / 1000;
     		costsElectricityExport_euro += currentElectricityPriceCharge_eurpkWh * max(0,-parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[i]) * parentGC.energyModel.p_timeStep_h;
     		//traceln("%f", max(0,-parentGC.energyModel.v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[i]));
     	}
