@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Functions>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1661328014569</Id>
-		<Name><![CDATA[f_returnKPIData]]></Name>
-		<Description><![CDATA[Executed on simulation end to export data.
-
-@author: JorritvandenHouten
-@since: Sprint 6]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-840</X>
-		<Y>650</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[writeToDisk]]></Name>
-			<Type><![CDATA[boolean]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -175,64 +150,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1682943799138</Id>
-		<Name><![CDATA[f_calculateContractCosts]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-819</X>
-		<Y>689</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[a]]></Name>
-			<Type><![CDATA[Actor]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1683018740227</Id>
-		<Name><![CDATA[f_contractCostsPerEnergyCarrier]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-819</X>
-		<Y>709</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[energyUsed_kWh]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[deliveryContract]]></Name>
-			<Type><![CDATA[J_DeliveryContract]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[connectionContract]]></Name>
-			<Type><![CDATA[J_ConnectionContract]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[transportContract]]></Name>
-			<Type><![CDATA[J_TransportContract]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[taxContract]]></Name>
-			<Type><![CDATA[J_TaxContract]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -507,8 +424,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1727106160366</Id>
 		<Name><![CDATA[f_addProfile]]></Name>
-		<X>-670</X>
-		<Y>390</Y>
+		<X>-740</X>
+		<Y>72</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -543,8 +460,8 @@
 		<ReturnType>J_ProfilePointer</ReturnType>
 		<Id>1727193246625</Id>
 		<Name><![CDATA[f_findProfile]]></Name>
-		<X>-670</X>
-		<Y>410</Y>
+		<X>-600</X>
+		<Y>72</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
