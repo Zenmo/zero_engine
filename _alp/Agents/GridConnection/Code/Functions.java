@@ -33,94 +33,6 @@ if( myParentEnergyCoop instanceof EnergyCoop) {
 }*/
 /*ALCODEEND*/}
 
-double f_connectToChild(J_EA ConnectingEnergyAsset)
-{/*ALCODESTART::1658752229618*/
-//assetLinks.connectTo(ConnectingChildNode);
-J_EA j_ea = ConnectingEnergyAsset;
-
-//dont add asset to list if it is not a tangible asset (i.e. a heating model for buildings)
-if( ! (j_ea instanceof J_EAStorageHeat)) {
-	c_energyAssets.add(j_ea);
-}
-if (j_ea instanceof J_EAConsumption ) {
-	if (j_ea instanceof J_EADieselVehicle) {
-		//c_vehicleAssets.add( EA );
-		//c_dieselVehicles.add( EA );
-		//c_vehicleAssets.get( v_vehicleIndex ).v_powerFraction_fr = 1;
-		/*MobilityTracker m = main.add_mobilityTrackers();
-		c_mobilityTrackers.add( m );
-		m.p_vehicleIndex = v_vehicleIndex;
-		m.p_gridConnection = this;
-		m.p_energyAsset = c_vehicleAssets.get( v_vehicleIndex );
-		m.p_vehicleInstance = (J_EADieselVehicle)m.p_energyAsset.j_ea;
-		m.p_vehicleInstance = (J_EADieselVehicle)m.p_vehicleInstance;
-		m.p_mobilityPatternType = OL_MobilityPatternType.TRUCK;
-		((J_EADieselVehicle)m.p_vehicleInstance).setMobilityTracker( m );
-		m.f_getData();*/
-		//v_vehicleIndex ++;
-	}
-	//c_consumptionAssets.add(EA);
-} 
-else if (j_ea instanceof J_EAProduction ) {
-	c_productionAssets.add((J_EAProduction)j_ea);
-} 
-else if (j_ea instanceof J_EAStorage ) {
-	if ( j_ea instanceof J_EAStorageHeat) {
-		if ( ((J_EAStorageHeat)j_ea).heatStorageType == OL_EAStorageTypes.HEATMODEL_BUILDING ) {
-			//p_BuildingThermalAsset = EA; // Obsolete
-		}
-		else if ( ((J_EAStorageHeat)j_ea).heatStorageType == OL_EAStorageTypes.HEATBUFFER ) {
-			//c_storageAssets.add(EA);
-			//p_heatBuffer = EA;
-		}
-	} 
-	else if (j_ea instanceof J_EAStorageElectric) {
-		if(j_ea instanceof J_EAEV && ((J_EAEV)j_ea).getStorageCapacity_kWh() !=0) {
-			//c_storageAssets.add(EA);
-			//c_vehicleAssets.add( EA );
-			//EA.v_powerFraction_fr = 1; //Waarom staat dit op 1? 29-01-23 PH
-			/*MobilityTracker m = main.add_mobilityTrackers();
-			c_mobilityTrackers.add( m );
-			m.p_vehicleIndex = v_vehicleIndex;
-			m.p_gridConnection = this;
-			m.p_energyAsset = EA;
-			m.p_vehicleInstance = (J_EAEV)m.p_energyAsset.j_ea;
- 			m.p_mobilityPatternType = OL_MobilityPatternType.TRUCK;
-			((J_EAEV)m.p_vehicleInstance).setMobilityTracker( m );
-			m.f_getData();*/
-			//v_vehicleIndex ++;
-		}
-		else if (((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
-			//c_storageAssets.add(EA);
-			//p_batteryAsset = EA;
-		}		
-		else{
-			traceln(getName() + "storage asset create that cannot be identified (i.e. its not an EV and not an heatstorage");
-		}
-	}
-} 
-else if (j_ea instanceof J_EAConversion) {
-	c_conversionAssets.add((J_EAConversion)j_ea);
-	if (j_ea instanceof J_EAConversionGasBurner|| j_ea instanceof J_EAConversionHeatPump || j_ea instanceof J_EAConversionHeatDeliverySet ) {
-		if (p_primaryHeatingAsset == null) {
-			p_primaryHeatingAsset = (J_EAConversion)j_ea;
-		} else if (p_secondaryHeatingAsset == null) {
-			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
-		} else {
-			traceln("House " + p_gridConnectionID + " already has two heating systems!");
-		}
-		//traceln("heatingAsset class " + p_spaceHeatingAsset.getClass().toString());
-	}
-	else if (j_ea instanceof J_EAConversionCurtailer || j_ea instanceof J_EAConversionCurtailerHeat) {
-		p_curtailer = (J_EAConversionCurtailer)j_ea;
-	} 
-}
-else {
-	traceln("f_connectToChild in GC: Exception! EnergyAsset " + ConnectingEnergyAsset + " is of unknown type: " + j_ea.energyAssetType);
-	traceln( "TEST");
-}
-/*ALCODEEND*/}
-
 double f_connectionMetering()
 {/*ALCODESTART::1660212665961*/
 if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
@@ -141,216 +53,6 @@ if (energyModel.v_isRapidRun){
 double f_operateFlexAssets()
 {/*ALCODESTART::1664961435385*/
 //Must be overwritten in child agent
-/*ALCODEEND*/}
-
-double f_instantiateEnergyAssets()
-{/*ALCODESTART::1668181559833*/
-//traceln("asset " + p_energyAssetList);
-if( p_energyAssetList != null) {
-	for( JsonNode l : p_energyAssetList ) {
-		OL_EACategories assetCategory = OL_EACategories.valueOf(l.required( "category" ).textValue());
-		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(l.required( "type" ).textValue()) ;
-		String assetName = l.required( "name" ).textValue();	
-		switch( assetCategory )  {
-			case CONSUMPTION:							
-				if ( p_gridConnectionCategory == OL_GridConnectionCategory.HOUSE) {
-					if( assetType.equals("ELECTRICITY_DEMAND") && assetName.contains("TEMPLATE House other electricity demand") ) {
-						assetName = "House_other_electricity"; 
-					} else if (assetType.equals("HOT_WATER_CONSUMPTION")) {				
-						assetName = "House_hot_water";
-					} 
-				}
-											
-				double yearlyDemandElectricity_kWh = l.path( "yearlyDemandElectricity_kWh").doubleValue();
-				double yearlyDemandHeat_kWh = l.path( "yearlyDemandHeat_kWh").doubleValue();
-				double yearlyDemandHydrogen_kWh = l.path( "yearlyDemandHydrogen_kWh").doubleValue();
-				double yearlyDemandMethane_kWh = l.path( "yearlyDemandMethane_kWh").doubleValue();
-				double yearlyDemandDiesel_kWh = l.path( "yearlyDemandDiesel_kWh").doubleValue();
-				double energyConsumption_kWhpkm = l.path( "energyConsumption_kWhpkm" ).doubleValue();
-				double vehicleScaling = l.path("vehicleScaling").asDouble(1.0);
-	
-				if (assetType == OL_EnergyAssetType.DIESEL_VEHICLE) {
-					//traceln("Adding diesel vehicle asset without EnergyAsset agent!");
-					J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(this, energyConsumption_kWhpkm, energyModel.p_timeStep_h, vehicleScaling);
-					f_connectToJ_EA(dieselVehicle);					
-				} else {
-					J_EAConsumption consumptionAsset = new J_EAConsumption(this,assetType,assetName,yearlyDemandElectricity_kWh,yearlyDemandHeat_kWh,yearlyDemandHydrogen_kWh,yearlyDemandMethane_kWh,yearlyDemandDiesel_kWh,energyModel.p_timeStep_h);
-					f_connectToJ_EA(consumptionAsset);						
-				}
-			break;
-			
-			case PRODUCTION:								
-				double capacityElectricity_kW = l.path( "capacityElectricity_kW").doubleValue();
-				double capacityHeat_kW = l.path( "capacityHeat_kW").doubleValue();
-				double yearlyProductionHydrogen_kWh = l.path( "yearlyProductionHydrogen_kWh").doubleValue();
-				double yearlyProductionMethane_kWh = l.path( "yearlyProductionMethane_kWh").doubleValue();
-				double outputTemperature_degC = l.path( "deliveryTemp_degC").doubleValue();
-				
-				J_EAProduction productionAsset = new J_EAProduction ( this, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, energyModel.p_timeStep_h, outputTemperature_degC );
-				f_connectToJ_EA(productionAsset);
-			
-				// Determine residual heat delivery temperature from coldest connected asset
-				/*if(this instanceof GCResidualHeat) {					
-					traceln("Residual heat delivery temperature = "+outputTemperature_degC);
-					((GCResidualHeat)this).p_deliveryTemp_degC = outputTemperature_degC < ((GCResidualHeat)this).p_deliveryTemp_degC? outputTemperature_degC : ((GCResidualHeat)this).p_deliveryTemp_degC;
-				}*/
-			break;
-			
-			case CONVERSION:
-				if ( assetType == OL_EnergyAssetType.GAS_PIT || assetType == OL_EnergyAssetType.GAS_BURNER || assetType == OL_EnergyAssetType.METHANE_FURNACE ){
-					// traceln("Adding gaspit!");
-					double capacityHeat_kW1 = l.required( "capacityHeat_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC1 = 0.0;
-					J_EAConversionGasBurner gasburner = new J_EAConversionGasBurner(this, assetType, capacityHeat_kW1, eta_r, energyModel.p_timeStep_h, deliveryTemp_degC1);
-					f_connectToJ_EA(gasburner);
-				} else if ( assetType == OL_EnergyAssetType.ELECTRIC_HOB){
-					//traceln("Adding electric HOB!");
-					double capacityHeat_kW1 = l.required( "capacityHeat_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC1 = 0.0;
-					J_EAElectricHob eHOB = new J_EAElectricHob(this, capacityHeat_kW1, eta_r, energyModel.p_timeStep_h, deliveryTemp_degC1);
-					f_connectToJ_EA(eHOB);
-				} else if ( assetType == OL_EnergyAssetType.HEAT_PUMP_AIR || assetType == OL_EnergyAssetType.HEAT_PUMP_GROUND || assetType == OL_EnergyAssetType.HEAT_PUMP_WATER){
-					double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC = l.path( "deliveryTemp_degC" ).doubleValue();
-					String ambientTempType = l.path( "ambientTempType" ).asText();
-					double belowZeroHeatpumpEtaReductionFactor = l.path( "etaReduction_r" ).asDouble(1.0);
-					J_EAConversionHeatPump	heatpump = new J_EAConversionHeatPump( this, energyModel.p_timeStep_h, capacityElectric_kW, eta_r, main.v_currentAmbientTemperature_degC, deliveryTemp_degC, ambientTempType, 0, belowZeroHeatpumpEtaReductionFactor );
-					main.c_ambientAirDependentAssets.add(heatpump);
-					f_connectToJ_EA(heatpump);
-				} else if ( assetType == OL_EnergyAssetType.ELECTRIC_HEATER){
-					double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC = l.path( "deliveryTemp_degC" ).doubleValue();
-					J_EAConversionElectricHeater electricHeater = new J_EAConversionElectricHeater( this, capacityElectric_kW, eta_r, energyModel.p_timeStep_h, deliveryTemp_degC);
-					f_connectToJ_EA(electricHeater);
-				} else if ( assetType == OL_EnergyAssetType.HEAT_DELIVERY_SET){
-					double capacityHeat_kW1 = l.required( "capacityHeat_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC = l.path( "deliveryTemp_degC" ).doubleValue();
-					J_EAConversionHeatDeliverySet deliverySet = new J_EAConversionHeatDeliverySet( this, capacityHeat_kW1, eta_r, deliveryTemp_degC, energyModel.p_timeStep_h );
-					f_connectToJ_EA(deliverySet);
-				} else if ( assetType == OL_EnergyAssetType.HYDROGEN_FURNACE){
-					double capacityHeat_kW1 = l.required( "capacityHeat_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC = 0.0;
-					J_EAConversionHydrogenBurner hydrogenBurner = new J_EAConversionHydrogenBurner( this, capacityHeat_kW1, eta_r, energyModel.p_timeStep_h, deliveryTemp_degC );
-					f_connectToJ_EA(hydrogenBurner);
-				} else if ( assetType == OL_EnergyAssetType.ELECTROLYSER){
-					double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					J_EAConversionElektrolyser electrolyser = new J_EAConversionElektrolyser( this, capacityElectric_kW, eta_r, energyModel.p_timeStep_h );
-					f_connectToJ_EA(electrolyser);
-				} else if ( assetType == OL_EnergyAssetType.CURTAILER){
-					double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					J_EAConversionCurtailer curtailer = new J_EAConversionCurtailer( this, capacityElectric_kW, eta_r, energyModel.p_timeStep_h );
-					f_connectToJ_EA(curtailer);
-				} else if ( assetType == OL_EnergyAssetType.CURTAILER_HEAT){
-					double capacityHeat_kW1 = l.required( "capacityHeat_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					J_EAConversionCurtailerHeat curtailerHeat = new J_EAConversionCurtailerHeat( this, capacityHeat_kW1, eta_r, energyModel.p_timeStep_h );
-					f_connectToJ_EA(curtailerHeat);
-				} else if ( assetType == OL_EnergyAssetType.METHANE_CHP){
-					double capacityHeat_kW1 = l.required( "capacityHeat_kW").doubleValue();
-					double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					double deliveryTemp_degC = 0.0;
-					J_EAConversionGasCHP GasCHP = new J_EAConversionGasCHP(this, capacityElectric_kW, capacityHeat_kW1, eta_r, energyModel.p_timeStep_h, deliveryTemp_degC);
-					f_connectToJ_EA(GasCHP);
-				} else if ( assetType == OL_EnergyAssetType.BIOGAS_METHANE_CONVERTER){
-					double capacityMethane_kW = l.required( "capacityMethane_kW").doubleValue();
-					double eta_r = l.required( "eta_r").doubleValue();
-					J_EAConversionBiogasMethane biogasMethaneConverter = new J_EAConversionBiogasMethane(this, capacityMethane_kW, eta_r, energyModel.p_timeStep_h);
-					f_connectToJ_EA(biogasMethaneConverter);
-				} else {
-					traceln("Unknown conversion energy asset! Skipping instantiation!");
-
-				} 
-			break;				
-			case STORAGE:
-				if ( assetType == OL_EnergyAssetType.ELECTRIC_VEHICLE){
-					double capacityElectric_kW1 = l.path( "capacityElectricity_kW").doubleValue();
-					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
-					double initialStateOfCharge_r = l.path( "stateOfCharge_r" ).doubleValue();
-					double energyConsumption_kWhpkm2 = l.path( "energyConsumption_kWhpkm" ).doubleValue();
-					double vehicleScalingElectric = l.path("vehicleScaling").asDouble(1.0);
-					//storageAsset.j_ea = new J_EAEV(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, energyModel.p_timeStep_h, energyConsumption_kWhpkm2, vehicleScalingElectric );  
-					
-					J_EAEV ev= new J_EAEV(this, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, energyModel.p_timeStep_h, energyConsumption_kWhpkm2, vehicleScalingElectric );  
-					f_connectToJ_EA(ev);	
-					
-				} else if ( assetType == OL_EnergyAssetType.BUILDINGTHERMALS) {										
-					double capacityHeat_kW3 = l.path( "capacityHeat_kW").doubleValue();
-			
-					double lossFactor_WpK2 = l.path( "lossFactor_WpK" ).doubleValue() * uniform(0.8, 1.2);
-					double heatCapacity_JpK2 = l.path( "heatCapacity_JpK" ).doubleValue() * uniform(0.7, 1.3);
-									
-					double minTemperature_degC2 = l.path( "minTemp_degC" ).asDouble(1.0);
-					double maxTemperature_degC2 = l.path( "maxTemp_degC" ).asDouble(90.0);
-					double initialTemperature_degC2 = l.path( "initialTemperature_degC" ).doubleValue();
-					String ambientTempType3 = l.path( "ambientTempType" ).asText("AIR"); //ALWAYS AIR!
-					double setTemperature_degC2 = 10.0; // this value does nothing for a heatmodel. But it is required to initialize the J_instance
-					double solarAbsorptionFactor_m2 = l.path("solarAbsorptionFactor_m2").asDouble(1.0);
-
-					J_EABuilding buildingThermals = new J_EABuilding(this, OL_EAStorageTypes.HEATMODEL_BUILDING, capacityHeat_kW3, lossFactor_WpK2, energyModel.p_timeStep_h, initialTemperature_degC2, minTemperature_degC2, maxTemperature_degC2, setTemperature_degC2, heatCapacity_JpK2, ambientTempType3, solarAbsorptionFactor_m2);
-					f_connectToJ_EA(buildingThermals);
-							
-				} else if (assetType == OL_EnergyAssetType.STORAGE_ELECTRIC) {
-					double capacityElectric_kW1 = l.path( "capacityElectricity_kW").doubleValue();
-					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
-					double initialStateOfCharge_r = l.path( "stateOfCharge_r" ).doubleValue();
-					J_EAStorageElectric storageAsset = new J_EAStorageElectric(this, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, energyModel.p_timeStep_h);						
-					f_connectToJ_EA(storageAsset);
-					p_batteryAsset=storageAsset;
-					c_storageAssets.add(storageAsset);
-					v_batterySOC_fr = storageAsset.getCurrentStateOfCharge();
-			
-				} else if (assetType == OL_EnergyAssetType.STORAGE_GAS) {
-					double capacityGas_kW = l.path( "capacityGas_kW").doubleValue();
-					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
-					double initialStateOfCharge_r = l.path( "stateOfCharge_r" ).doubleValue();
-					J_EAStorageGas storageAsset = new J_EAStorageGas(this, capacityGas_kW, storageCapacity_kWh, initialStateOfCharge_r, energyModel.p_timeStep_h);
-					f_connectToJ_EA(storageAsset);
-					c_storageAssets.add(storageAsset);
-					p_gasBuffer = storageAsset;
-					//traceln("gasBuffer gasCapacity_kW: " + p_gasBuffer.j_ea.getGasCapacity_kW() + " kW");
-				
-				} else if( assetType == OL_EnergyAssetType.STORAGE_HEAT) {
-					
-				    double capacityHeat_kW2 = l.path( "capacityHeat_kW").doubleValue();
-					double lossFactor_WpK = l.path( "lossFactor_WpK" ).doubleValue() * uniform(0.7, 1.3);
-					double heatCapacity_JpK = l.path( "heatCapacity_JpK" ).doubleValue();
-					double minTemperature_degC = l.path( "minTemp_degC" ).asDouble(44.0); // provide default values
-					double maxTemperature_degC = l.path( "maxTemp_degC" ).asDouble(99.0);
-					double setTemperature_degC = l.path( "setTemp_degC" ).asDouble(66.0);
-					double initialTemperature_degC = l.path( "initialTemperature_degC" ).doubleValue();
-					String ambientTempType2 = l.path( "ambientTempType" ).asText();
-					
-					if (this instanceof GCHouse ) {
-						heatCapacity_JpK = heatCapacity_JpK * uniform(0.7, 1.3);
-						initialTemperature_degC = initialTemperature_degC * uniform(0.7, 1.3);
-					}
-					
-					//traceln("gridconnection heatstorage asset initialisation check! minTemp = "+minTemperature_degC+", maxTemperature_degC = "+maxTemperature_degC+", setTemp_degC = "+ setTemperature_degC+", initialTemperature_degC = "+initialTemperature_degC);
-					J_EAStorageHeat storageAsset = new J_EAStorageHeat(this, OL_EAStorageTypes.HEATBUFFER, capacityHeat_kW2, lossFactor_WpK, energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, ambientTempType2);	
-					
-					f_connectToJ_EA(storageAsset);
-					c_storageAssets.add(storageAsset);
-				} else {
-					traceln("F_instantiateEnergyAssets: ERROR, storage asset type not available");		
-					
-				}
-			break;
-			default:
-				traceln("not a valid energy asset category." + assetCategory);
-			break;
-		}
-	}
-//traceln("GridConnection "+this.p_gridConnectionID+" has finished initializing its energyAssets!");
-}
 /*ALCODEEND*/}
 
 double f_calculateEnergyBalance()
@@ -829,22 +531,6 @@ if ( p_BuildingThermalAsset == null ) {
 	}*/
 	p_BuildingThermalAsset.f_updateAllFlows(0);
 }
-/*ALCODEEND*/}
-
-double f_setAllowedCapacity()
-{/*ALCODESTART::1669193537955*/
-v_allowedCapacity_kW = p_connectionCapacity_kW;
-//if(p_nfatoLvl_kW == 0 && p_nfatoStart_h == 0 && p_nfatoEnd_h == 0){
-if(!v_enable_nfATO_b){
-	e_startNonFirmATO.reset();
-	e_endNonFirmATO.reset();			
-}
-else {
-	e_startNonFirmATO.restartTo(p_nfatoStart_h, HOUR);
-	e_endNonFirmATO.restartTo(p_nfatoEnd_h, HOUR);
-	if(p_nfatoLvl_kW == 0.0) { p_nfatoLvl_kW = p_connectionCapacity_kW; }
-}
-//}
 /*ALCODEEND*/}
 
 double f_manageCharging()
@@ -1618,118 +1304,6 @@ if (j_ea instanceof J_EAVehicle) {
 
 /*ALCODEEND*/}
 
-double f_initializeAccumulators()
-{/*ALCODESTART::1716282675260*/
-//========== TOTAL ACCUMULATORS ==========//
-am_totalBalanceAccumulators_kW.createEmptyAccumulators( v_activeEnergyCarriers, true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h );
-am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) );
-am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(v_activeConsumptionEnergyCarriers, true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(v_activeProductionEnergyCarriers, true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-
-acc_dailyAverageEnergyProduction_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageEnergyConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-
-acc_totalEnergyCurtailed_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-
-acc_dailyAverageBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageElectricVehicleConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageBatteriesConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageElectricCookingConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageDistrictHeatingConsumption_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-
-acc_dailyAveragePVProduction_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageWindProduction_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageV2GProduction_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageBatteriesProduction_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_dailyAverageCHPElectricityProduction_kW = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-
-//acc_dailyAverageBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, 24.0, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-
-//========== SUMMER WEEK ACCUMULATORS ==========//
-am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 168.0);
-am_summerWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 168.0);
-am_summerWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 168.0);
-
-acc_summerWeekEnergyProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekEnergyConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_summerWeekEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_summerWeekFeedinCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekDeliveryCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_summerWeekBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekElectricVehicleConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekBatteriesConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekElectricCookingConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekDistrictHeatingConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_summerWeekPVProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekWindProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekV2GProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekBatteriesProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_summerWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-//acc_summerWeekBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-//========== WINTER WEEK ACCUMULATORS ==========//
-am_winterWeekBalanceAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 168.0);
-am_winterWeekConsumptionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 168.0);
-am_winterWeekProductionAccumulators_kW.createEmptyAccumulators(v_activeEnergyCarriers, true, energyModel.p_timeStep_h, 168.0);
-
-acc_winterWeekEnergyProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekEnergyConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_winterWeekEnergyCurtailed_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_winterWeekFeedinCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekDeliveryCapacity_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_winterWeekBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekElectricVehicleConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekBatteriesConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekElectricCookingConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekElectrolyserElectricityConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekDistrictHeatingConsumption_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-acc_winterWeekPVProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekWindProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekV2GProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekBatteriesProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-acc_winterWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-//acc_winterWeekBatteriesStoredEnergy_MWh = new ZeroAccumulator(true, energyModel.p_timeStep_h, 168.0);
-
-//========== DAYTIME ACCUMULATORS ==========//
-am_daytimeImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
-am_daytimeExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
-
-acc_daytimeEnergyProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
-acc_daytimeEnergyConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h,0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
-//acc_daytimeEnergyCurtailed_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_daytimeElectricityProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
-acc_daytimeElectricityConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 0.5 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h));
-
-//========== WEEKEND ACCUMULATORS ==========//
-am_weekendImports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
-am_weekendExports_kW.createEmptyAccumulators( v_activeEnergyCarriers, false, energyModel.p_timeStep_h, 2 / 7 * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
-
-acc_weekendEnergyProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
-acc_weekendEnergyConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h,2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
-//acc_weekendEnergyCurtailed_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
-acc_weekendElectricityProduction_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
-acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, energyModel.p_timeStep_h, 2 / 7  * (energyModel.p_runEndTime_h - energyModel.p_runStartTime_h) + 48);
-
-/*ALCODEEND*/}
-
 double f_resetSpecificGCStates()
 {/*ALCODESTART::1717060111619*/
 
@@ -2458,5 +2032,86 @@ if ( c_chargers.size() > 0 ) { // && v_isActiveCharger ) {
 			break;
 	}
 }
+/*ALCODEEND*/}
+
+double f_batteryManagementPeakShaving()
+{/*ALCODESTART::1750763679197*/
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+
+	int index = roundToInt((energyModel.t_h % 24)/energyModel.p_timeStep_h);
+	if(index == 0){
+		if(p_batteryOperationMode == OL_BatteryOperationMode.PEAK_SHAVING_SIMPLE){
+			f_peakShavingForecast_simple();
+		}
+	}
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargingForecast_kW[index] / p_batteryAsset.getCapacityElectric_kW()));
+}
+/*ALCODEEND*/}
+
+double f_peakShavingForecast_simple()
+{/*ALCODESTART::1750763679201*/
+double amountOfHoursInADay = 24;
+double[] nettoBalance_kW = new double[96];
+
+//Get elec consumption profile
+J_EAProfile elecConsumptionProfile = findFirst(c_profileAssets, profile -> profile.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD);
+
+J_EAConsumption elecConsumptionConsumptionAsset = findFirst(c_consumptionAssets, cons -> cons.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND);
+
+J_EAProduction elecProductionAsset = findFirst(c_productionAssets, prod -> prod.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+
+//For simulation that cross the year end
+double hour_of_simulation_year = energyModel.t_h - energyModel.p_runStartTime_h;
+//traceln("hour_of_year: " + hour_of_simulation_year);
+
+int startTimeDayIndex = roundToInt(hour_of_simulation_year/energyModel.p_timeStep_h);
+int endTimeDayIndex = roundToInt((hour_of_simulation_year + 24)/energyModel.p_timeStep_h);
+
+if(elecConsumptionProfile != null){
+	nettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/energyModel.p_timeStep_h);
+}
+if(elecConsumptionConsumptionAsset != null){
+	for(double time = energyModel.t_h; time < energyModel.t_h + 24; time += energyModel.p_timeStep_h){
+		nettoBalance_kW[roundToInt((time-energyModel.t_h)/energyModel.p_timeStep_h)] += elecConsumptionConsumptionAsset.profilePointer.getValue(time)*elecConsumptionConsumptionAsset.yearlyDemand_kWh*elecConsumptionConsumptionAsset.getConsumptionScaling_fr();
+	}
+}
+
+if(elecProductionAsset != null){
+	for(double time = energyModel.t_h; time < energyModel.t_h + 24; time += energyModel.p_timeStep_h){
+		nettoBalance_kW[roundToInt((time-energyModel.t_h)/energyModel.p_timeStep_h)] -= elecProductionAsset.profilePointer.getValue(time)*elecProductionAsset.getCapacityElectric_kW();
+	}
+}
+
+
+////Fill chargesetpoint Array
+
+//Initialize chargepoint array
+v_batteryChargingForecast_kW = new double[96];
+
+
+//Calculate the total export over the day that can be collected by the battery
+double totalExport_kWh = 0;
+for(int i = 0; i < nettoBalance_kW.length; i++){
+	if(nettoBalance_kW[i] < 0){
+		totalExport_kWh += min(p_batteryAsset.getCapacityElectric_kW(), -nettoBalance_kW[i])*energyModel.p_timeStep_h;
+	}
+}
+	
+
+//Flatten the morning net balance while charging
+double totalDailyImport_kWh = 0;
+for(int i = 0; i < nettoBalance_kW.length; i++){
+	if(i< amountOfHoursInADay/energyModel.p_timeStep_h){
+		totalDailyImport_kWh += max(0,nettoBalance_kW[i]*energyModel.p_timeStep_h);
+	}
+}
+double batteryEnergyNeeded_kWh = max(0,(p_batteryAsset.getStorageCapacity_kWh()*(1-p_batteryAsset.getCurrentStateOfCharge()))-totalExport_kWh);
+double averageDailyConsumption_kW = (totalDailyImport_kWh + batteryEnergyNeeded_kWh)/amountOfHoursInADay;
+
+//If 24 hours
+for(int i = 0; i < nettoBalance_kW.length; i++){
+	v_batteryChargingForecast_kW[i] += averageDailyConsumption_kW - nettoBalance_kW[i];
+}
+
 /*ALCODEEND*/}
 

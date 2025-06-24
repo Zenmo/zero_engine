@@ -986,6 +986,10 @@
 					<Name><![CDATA[BALANCE_COOP]]></Name>
 				</Option>
 				<Option>
+					<Id>1750764233265</Id>
+					<Name><![CDATA[PEAK_SHAVING_SIMPLE]]></Name>
+				</Option>
+				<Option>
 					<Id>1734001947459</Id>
 					<Name><![CDATA[OFF]]></Name>
 				</Option>

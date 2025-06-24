@@ -40,9 +40,6 @@
 			<Name><![CDATA[p_heatingType]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_energyAssetList]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 		</Parameter>
 		<Parameter>
