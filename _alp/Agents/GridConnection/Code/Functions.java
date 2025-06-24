@@ -124,11 +124,12 @@ else {
 double f_connectionMetering()
 {/*ALCODESTART::1660212665961*/
 if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
-	if (p_BuildingThermalAsset == null || !p_BuildingThermalAsset.hasHeatBuffer()) {
-		traceln((fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)));
+	//if (p_BuildingThermalAsset == null || !p_BuildingThermalAsset.hasHeatBuffer()) {
+		traceln("heat consumption: %s kW", fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT));
+		traceln("heat production: %s kW", fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT));
 		traceln("Heat unbalance in gridConnection: " + p_gridConnectionID);
 		pauseSimulation();
-	}
+	//}
 }
 
 if (energyModel.v_isRapidRun){
