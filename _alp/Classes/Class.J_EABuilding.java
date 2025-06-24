@@ -101,6 +101,14 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("temperature_degC %s", this.temperature_degC);
 
 	}
+	
+	@Override
+	public void f_updateAllFlows(double powerFraction_fr) {
+		if (powerFraction_fr > 1) {			
+			traceln("JEABuilding capacityHeat_kW is too low! "+ capacityHeat_kW);
+		}
+		super.f_updateAllFlows(powerFraction_fr);
+	}
 
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
@@ -111,6 +119,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		if (ratioOfChargeCapacity_r < 0) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
+		
 			
 		calculateLoss(); // Heat exchange with environment through convection
 		solarHeating(); // Heat influx from sunlight
