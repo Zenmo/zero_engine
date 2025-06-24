@@ -2037,12 +2037,9 @@ if ( c_chargers.size() > 0 ) { // && v_isActiveCharger ) {
 double f_batteryManagementPeakShaving()
 {/*ALCODESTART::1750763679197*/
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
-
 	int index = roundToInt((energyModel.t_h % 24)/energyModel.p_timeStep_h);
 	if(index == 0){
-		if(p_batteryOperationMode == OL_BatteryOperationMode.PEAK_SHAVING_SIMPLE){
-			f_peakShavingForecast_simple();
-		}
+		f_peakShavingForecast_simple();
 	}
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargingForecast_kW[index] / p_batteryAsset.getCapacityElectric_kW()));
 }
