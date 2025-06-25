@@ -840,7 +840,6 @@ if (pop_connectionOwners.size() > 500 && b_parallelizeGridConnections) {
 	b_parallelizeConnectionOwners = true;
 }
 
-
 // set initial values
 f_setInitialValues();
 

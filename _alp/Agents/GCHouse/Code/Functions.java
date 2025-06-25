@@ -512,12 +512,12 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 double f_heatWithHeatpump()
 {/*ALCODESTART::1676477303264*/
 double powerFraction_heatBuffer_fr = 0;
-double powerFraction_heatPump_fr = 0;
+//double powerFraction_heatPump_fr = 0;
 double avgElectricityPrice_eurpkWh = 10;
 J_EAConversionHeatPump hp = (J_EAConversionHeatPump)p_primaryHeatingAsset;
 v_copHeatpump = hp.getCOP();
 
-
+/*
 if ( p_smartHeatingEnabled ) {
 	if ( p_owner != null) {
 		avgElectricityPrice_eurpkWh = p_owner.f_getAveragedElectricityPrice( (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)), hp.getInputCapacity_kW() );
@@ -547,13 +547,18 @@ if ( p_heatBuffer != null ){
 	//reduce the powerfraction in the buffer with the hot water demand.
 	powerFraction_heatBuffer_fr += -v_hotwaterDemand_kW / p_heatBuffer.getCapacityHeat_kW();
 }
+*/
 
 //heat the house
-if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
+//if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the heatpump is only used for househeating if it is not ALREADY heating the buffer (Peter)
 	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC ) {
-		powerFraction_heatPump_fr = 1;
-		p_BuildingThermalAsset.v_powerFraction_fr = hp.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
+		hp.v_powerFraction_fr = 1;
+		p_BuildingThermalAsset.v_powerFraction_fr = (hp.getOutputCapacity_kW() - v_hotwaterDemand_kW) / p_BuildingThermalAsset.getCapacityHeat_kW();
 	} 
+	if (v_hotwaterDemand_kW > p_primaryHeatingAsset.getOutputCapacity_kW() ) {
+		traceln("Warning! Hotwaterdemand exceeds available heating power of house! Will lead to shortage of heat on GC!");
+	}
+	/*
 	else if( p_smartHeatingEnabled && avgElectricityPrice_eurpkWh < v_electricityPriceLowPassed_eurpkWh - p_pricelevelLowDifFromAvg_eurpkWh
 		&& p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC + 1) {
 		//also heat the house if the price is cheap, the the house is colder than desired + 1 and the vehicle does not need charging
@@ -566,20 +571,22 @@ if( powerFraction_heatPump_fr == 0 ){ // Why this check? <- to make sure the hea
 			//traceln("heat house cus of cheap");
 			p_BuildingThermalAsset.v_powerFraction_fr = hp.getOutputCapacity_kW() / p_BuildingThermalAsset.getCapacityHeat_kW();
 		}
-	} 
+	}*/ 
 	else {
+		hp.v_powerFraction_fr = v_hotwaterDemand_kW/hp.getOutputCapacity_kW();
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 	}
-} 
+//} 
+/*
 else {
 	p_BuildingThermalAsset.v_powerFraction_fr = 0; // Whut?
 }
 if ( p_heatBuffer != null ){
 	p_heatBuffer.v_powerFraction_fr = powerFraction_heatBuffer_fr;
 	p_heatBuffer.f_updateAllFlows(powerFraction_heatBuffer_fr);
-}
-p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
-//traceln( "heatpumpt power fraction: " + powerFraction_heatPump_fr);
+}*/
+//p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
+//traceln( "heatpump power fraction: " + hp.v_powerFraction_fr );
 
 /*ALCODEEND*/}
 
@@ -891,6 +898,9 @@ if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner && p_BuildingTherm
 		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
 		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()  );
 		p_BuildingThermalAsset.v_powerFraction_fr = max(0, (p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW) / p_BuildingThermalAsset.getCapacityHeat_kW() );			
+		if (v_hotwaterDemand_kW > p_primaryHeatingAsset.getOutputCapacity_kW() ) {
+			traceln("Warning! Hotwaterdemand exceeds available heating power of house! Will lead to shortage of heat on GC!");
+		}
 	}
 	else { // Just supply DHW
 		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();

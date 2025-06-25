@@ -23,6 +23,9 @@ if (p_batteryAsset != null){ // TEST CODE
 			case NODAL_PRICING:
 				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
 				break;
+			case PEAK_SHAVING_SIMPLE:
+				f_batteryManagementPeakShaving();
+				break;
 		}
 		
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
