@@ -970,8 +970,8 @@ v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProducti
 v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, sum(c_gridNodesTopLevel.stream().filter(x -> x.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY).toList(), x -> x.v_currentLoad_kW));
 
 //Grid capacity
-v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, sum(c_gridNodesTopLevel, x -> x.p_capacity_kW));
-v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, sum(c_gridNodesTopLevel, x -> -x.p_capacity_kW));
+v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.physicalCapacity_kW);
+v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, -v_liveConnectionMetaData.physicalCapacity_kW);
 
 ////Specific assets
 
