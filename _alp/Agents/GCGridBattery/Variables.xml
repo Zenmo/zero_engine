@@ -48,7 +48,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1746606592165</Id>
 		<Name><![CDATA[v_batteryAlgorithmBas]]></Name>
-		<X>1160</X>
+		<X>1180</X>
 		<Y>800</Y>
 		<Label>
 			<X>10</X>
@@ -64,6 +64,28 @@
 			<Type><![CDATA[J_BatteryAlgorithmBas]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_BatteryAlgorithmBas(this)]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1750860527819</Id>
+		<Name><![CDATA[v_batteryChargingPeakShavingForecast_kW]]></Name>
+		<X>1200</X>
+		<Y>760</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double[]]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new double[96]]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

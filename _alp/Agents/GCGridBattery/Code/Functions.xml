@@ -64,7 +64,7 @@
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
 		<X>1160</X>
-		<Y>700</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -88,7 +88,7 @@
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
 		<X>1160</X>
-		<Y>680</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -150,7 +150,7 @@
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
 		<X>1160</X>
-		<Y>720</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -174,7 +174,7 @@
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
 		<X>1160</X>
-		<Y>750</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -215,6 +215,38 @@
 		<Name><![CDATA[f_resetSpecificGCStates_GCGridBattery]]></Name>
 		<X>1250</X>
 		<Y>550</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750860323602</Id>
+		<Name><![CDATA[f_batteryManagementPeakShavingGrid]]></Name>
+		<X>1160</X>
+		<Y>720</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1750860487224</Id>
+		<Name><![CDATA[f_peakShavingGridForecast]]></Name>
+		<X>1180</X>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

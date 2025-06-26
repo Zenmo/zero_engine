@@ -3,6 +3,7 @@
 	<Id>1666956363819</Id>
 	<Name><![CDATA[GCGridBattery]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Import><![CDATA[import zeroPackage.ZeroMath;]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>GridConnection</ClassName>
