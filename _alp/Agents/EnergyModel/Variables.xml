@@ -2077,7 +2077,7 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1701855537716</Id>
-		<Name><![CDATA[p_truckTripsExcel]]></Name>
+		<Name><![CDATA[p_truckTripsCsv]]></Name>
 		<X>-400</X>
 		<Y>210</Y>
 		<Label>
@@ -2088,7 +2088,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[ExcelFile]]></Type>
+			<Type><![CDATA[TextFile]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
@@ -2102,7 +2102,7 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1701855572858</Id>
-		<Name><![CDATA[p_householdTripsExcel]]></Name>
+		<Name><![CDATA[p_householdTripsCsv]]></Name>
 		<X>-400</X>
 		<Y>230</Y>
 		<Label>
@@ -2113,7 +2113,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[ExcelFile]]></Type>
+			<Type><![CDATA[TextFile]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
@@ -2127,7 +2127,7 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1701855585052</Id>
-		<Name><![CDATA[p_cookingPatternExcel]]></Name>
+		<Name><![CDATA[p_cookingPatternCsv]]></Name>
 		<X>-400</X>
 		<Y>250</Y>
 		<Label>
@@ -2138,7 +2138,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[ExcelFile]]></Type>
+			<Type><![CDATA[TextFile]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>

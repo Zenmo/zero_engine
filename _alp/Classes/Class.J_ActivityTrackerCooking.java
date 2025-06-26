@@ -19,27 +19,37 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     public J_ActivityTrackerCooking() {
     }
 
-    public J_ActivityTrackerCooking(ExcelFile inputCookingActivities, int rowIndex, double time_min, J_EAConversion HOB) {
-    	//this.energyModel = main;
+    public J_ActivityTrackerCooking(TextFile inputCookingActivities, int rowIndex, double time_min, J_EAConversion HOB) {
+  
     	this.rowIndex = rowIndex;
     	this.HOB=HOB;
     	//int rowIndex = uniform_discr(2, 300); 
-    	//traceln("RowIndex: %s", this.rowIndex);
-    	//traceln(this.HOB.getParentAgent());
-    	
+
     	this.timeStep_min = 60 * this.HOB.timestep_h;
     	
-    	double v_cookingPatternIndex = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 1);
-    	int nbOfCookingSessions = (int)(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 2));
-
-    	for (int i = 0; i < nbOfCookingSessions; i++){
-    		starttimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
-    		endtimes_min.add(inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
+    	inputCookingActivities.close();
+    	inputCookingActivities.canReadMore();
+    	inputCookingActivities.readLine(); // Skips first line
+    	
+    	while (roundToInt(inputCookingActivities.readDouble())!=rowIndex && inputCookingActivities.canReadMore()) { // Skip until rowIndex found
+    		inputCookingActivities.readLine(); 
+    		//String line = tripsCsv.readLine(); // Does this also skip to the next line?
+    		//traceln("Skipping line: " + line);
+    	}
+    	int currentLineNb = inputCookingActivities.getLineNumber();
+    	traceln("rowIndex %s found on line: %s", rowIndex, currentLineNb);
+    	int nbActivities = inputCookingActivities.readInt();
+    	traceln("Number of trips: %s", nbActivities);    	
+   	
+    			
+    	for (int i = 0; i < nbActivities; i++){
+    		starttimes_min.add(inputCookingActivities.readDouble());
+    		endtimes_min.add(inputCookingActivities.readDouble());
     		
-    		double ratio = inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / HOB.getOutputCapacity_kW();
+    		double ratio = inputCookingActivities.readDouble() / HOB.getOutputCapacity_kW();
     		powerFractions_fr.add(ratio);
     	}
-
+    	
     	while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
     		starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
     		endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
