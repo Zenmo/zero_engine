@@ -997,6 +997,10 @@
 					<Id>1746607342910</Id>
 					<Name><![CDATA[BATTERY_ALGORITHM_BAS]]></Name>
 				</Option>
+				<Option>
+					<Id>1750949936449</Id>
+					<Name><![CDATA[PEAK_SHAVING_ADVANCED]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1668693527447</Id>

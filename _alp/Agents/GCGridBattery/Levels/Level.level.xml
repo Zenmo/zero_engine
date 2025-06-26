@@ -126,8 +126,8 @@
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1747305185180</Id>
 		<Name><![CDATA[button_getEconomicKPIs]]></Name>
-		<X>1150</X>
-		<Y>820</Y>
+		<X>1580</X>
+		<Y>630</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -157,8 +157,8 @@ traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1749216411455</Id>
 		<Name><![CDATA[buttonTurningPoints]]></Name>
-		<X>1150</X>
-		<Y>860</Y>
+		<X>1580</X>
+		<Y>670</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -182,8 +182,8 @@ traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1749216568747</Id>
 		<Name><![CDATA[buttonAverageDoD]]></Name>
-		<X>1150</X>
-		<Y>900</Y>
+		<X>1580</X>
+		<Y>710</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -207,8 +207,8 @@ traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1749216609092</Id>
 		<Name><![CDATA[buttonLifetimeBattery]]></Name>
-		<X>1150</X>
-		<Y>940</Y>
+		<X>1580</X>
+		<Y>750</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
