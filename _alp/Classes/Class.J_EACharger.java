@@ -20,7 +20,9 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 		
 		private double dischargedStored_kWh;
 		private double chargedStored_kWh;
+		private J_ChargingSession currentChargingSessionSocket1Stored;
 		private int currentChargingSessionIndexSocket1Stored;
+		private J_ChargingSession currentChargingSessionSocket2Stored;
 		private int currentChargingSessionIndexSocket2Stored;
 		private double totalShiftedLoadV1GStored_kWh;
 		private double totalShiftedLoadV2GStored_kWh;
@@ -55,10 +57,11 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 			// Calculate the power output of the sockets
 			double power_kW = 0.0;
 			int currentTimeInQuarterHours = roundToInt(t_h * 4);
-			if ( currentTimeInQuarterHours >= this.currentChargingSessionSocket1.startTime && currentTimeInQuarterHours < this.currentChargingSessionSocket1.endTime ) {
+			if ( this.currentChargingSessionSocket1 != null && currentTimeInQuarterHours >= this.currentChargingSessionSocket1.startTime && currentTimeInQuarterHours < this.currentChargingSessionSocket1.endTime ) {		
+				//null check for currentChargingSessionSocket1 (and 2) is required for end of year when there are no more scheduled sessions
 				power_kW += this.operateChargerSocket1(doV1G, doV2G);
 			}
-			if ( currentTimeInQuarterHours >= this.currentChargingSessionSocket2.startTime && currentTimeInQuarterHours < this.currentChargingSessionSocket2.endTime ) {
+			if ( this.currentChargingSessionSocket2 != null && currentTimeInQuarterHours >= this.currentChargingSessionSocket2.startTime && currentTimeInQuarterHours < this.currentChargingSessionSocket2.endTime ) {	
 				power_kW += this.operateChargerSocket2(doV1G, doV2G);
 			}
 			
@@ -99,7 +102,7 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 						return;
 					}
 				}
-				this.currentChargingSessionSocket1 = this.chargerProfile.get(this.currentChargingSessionIndexSocket1);
+				this.currentChargingSessionSocket1 = this.chargerProfile.get(this.currentChargingSessionIndexSocket1).getClone();
 				this.currentChargingSessionIndexSocket1++;
 			}
 		}
@@ -116,7 +119,7 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 						return;
 					}
 				}
-				this.currentChargingSessionSocket2 = this.chargerProfile.get(this.currentChargingSessionIndexSocket2);
+				this.currentChargingSessionSocket2 = this.chargerProfile.get(this.currentChargingSessionIndexSocket2).getClone();
 				this.currentChargingSessionIndexSocket2++;
 			}
 		}
@@ -149,10 +152,17 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 			discharged_kWh = 0.0;
 			chargedStored_kWh = charged_kWh;
 			charged_kWh = 0.0;
+			
+			currentChargingSessionSocket1Stored = currentChargingSessionSocket1;
+			currentChargingSessionSocket1 = null;
 			currentChargingSessionIndexSocket1Stored = currentChargingSessionIndexSocket1;
 			currentChargingSessionIndexSocket1 = 0;
+			
+			currentChargingSessionSocket2Stored = currentChargingSessionSocket2;
+			currentChargingSessionSocket2 = null;
 			currentChargingSessionIndexSocket2Stored = currentChargingSessionIndexSocket2;
 			currentChargingSessionIndexSocket2 = 0;
+			
 			totalShiftedLoadV1GStored_kWh = totalShiftedLoadV1G_kWh;
 			totalShiftedLoadV1G_kWh = 0.0;
 			totalShiftedLoadV2GStored_kWh = totalShiftedLoadV2G_kWh;
@@ -165,8 +175,13 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 	    	energyUsed_kWh = energyUsedStored_kWh;
 			discharged_kWh = dischargedStored_kWh;
 			charged_kWh = chargedStored_kWh;
+			
+			currentChargingSessionSocket1 = currentChargingSessionSocket1Stored;
 			currentChargingSessionIndexSocket1 = currentChargingSessionIndexSocket1Stored;
+			
+			currentChargingSessionSocket2 = currentChargingSessionSocket2Stored;
 			currentChargingSessionIndexSocket2 = currentChargingSessionIndexSocket2Stored;
+			
 			totalShiftedLoadV1G_kWh = totalShiftedLoadV1GStored_kWh;
 			totalShiftedLoadV2G_kWh = totalShiftedLoadV2GStored_kWh;
 		}

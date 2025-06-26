@@ -41,6 +41,10 @@ public class J_ChargingSession implements Serializable {
     	timeStepsToDisconnect = endTime - startTime;
     	openTimeSlots = timeStepsToDisconnect - ((int)Math.ceil(4 * chargingDemand_kWh / chargingPower_kW)) ; 
     	this.timeStep_hr = timeStep_hr;
+    	
+    	if(this.startTime > this.endTime){
+    		new RuntimeException("StartTime is later then the endtime for J_ChargingSession");
+    	}
     }
     
     public double operate(boolean doV1G, boolean doV2G) {
@@ -125,6 +129,11 @@ public class J_ChargingSession implements Serializable {
     	return shiftedLoadV2GThisTimestep;
     }
 
+    
+    public J_ChargingSession getClone() {
+    	return new J_ChargingSession(this.startTime, this.endTime, this.chargingDemand_kWh, this.batterySize_kWh, this.chargingPower_kW, this.socket, this.timeStep_hr);
+    }
+    
     
 	@Override
 	public String toString() {

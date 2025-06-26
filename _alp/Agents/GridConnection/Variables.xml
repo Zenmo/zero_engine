@@ -1366,6 +1366,9 @@
 			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[OL_GridConnectionHeatingType.NONE]]></Code>
+			</DefaultValue>
 			<ParameterEditor>
 				<Id>1665487815860</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
