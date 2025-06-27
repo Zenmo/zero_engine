@@ -285,16 +285,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1668499200000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[15]]></Code>
-			<Unit Class="TimeUnits">MINUTE</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011894104</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1668499200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[15]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>500</Width>
 		<Height>280</Height>
@@ -329,7 +332,7 @@
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
 			<Title>Electricity Consumption</Title>
-			<Id>0</Id>
+			<Id>1658477089930</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-2448096</Color>
 			<Expression2>v_currentConsumptionElectricity_kW</Expression2>
@@ -339,7 +342,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Electricity Production</Title>
-			<Id>0</Id>
+			<Id>1658477089929</Id>
 			<Expression>my_dataset1</Expression>
 			<Color>-9728477</Color>
 			<Expression2>v_currentProductionElectricity_kW</Expression2>
@@ -349,7 +352,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>State of Charge</Title>
-			<Id>0</Id>
+			<Id>1658477089928</Id>
 			<Expression>my_dataset2</Expression>
 			<Color>-16728065</Color>
 			<Expression2>v_currentStateOfCharge_r</Expression2>
@@ -402,16 +405,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1676534400000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[1]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011894107</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1676534400000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>440</Width>
 		<Height>210</Height>
@@ -446,7 +452,7 @@
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
 			<Title>Temperature</Title>
-			<Id>0</Id>
+			<Id>1658477089927</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-16728065</Color>
 			<Expression2>j_ea.getCurrentTemperature()</Expression2>
@@ -456,7 +462,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Buffer SoC</Title>
-			<Id>0</Id>
+			<Id>1658477089926</Id>
 			<Expression>my_dataset1</Expression>
 			<Color>-4565549</Color>
 			<Expression2>v_currentStateOfCharge_r</Expression2>
@@ -486,8 +492,8 @@
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="100" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<FillColor/>
-			<TextColor/>
+			<FillColor>-1</FillColor>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>int assetNr = ed_assetNr.getIntValue();
 j_ea = energyModel.c_energyAssets.get(assetNr);
@@ -543,16 +549,19 @@ p_parentAgent = j_ea.parentAgent;
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1716019200000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[1]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011894111</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1716019200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>500</Width>
 		<Height>280</Height>

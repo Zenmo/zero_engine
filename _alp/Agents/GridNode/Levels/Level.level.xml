@@ -282,16 +282,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>false</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1670400000000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[0.25]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011893992</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1670400000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[0.25]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>470</Width>
 		<Height>270</Height>
@@ -326,7 +329,7 @@
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
 			<Title>Node capacity</Title>
-			<Id>0</Id>
+			<Id>1658477089937</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-65536</Color>
 			<Expression2>p_capacity_kW</Expression2>
@@ -336,7 +339,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Current load on grid [kW]</Title>
-			<Id>0</Id>
+			<Id>1658477089936</Id>
 			<Expression>my_dataset2</Expression>
 			<Color>-12004916</Color>
 			<Expression2>v_currentLoadElectricity_kW</Expression2>
@@ -346,7 +349,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title/>
-			<Id>0</Id>
+			<Id>1658477089935</Id>
 			<Expression>my_dataset1</Expression>
 			<Color>-65536</Color>
 			<Expression2>- p_capacity_kW</Expression2>
@@ -356,7 +359,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Filtered load on grid [kW]</Title>
-			<Id>0</Id>
+			<Id>1658477089934</Id>
 			<Expression>my_dataset3</Expression>
 			<Color>-8097537</Color>
 			<Expression2>v_currentLoadElectricityLowPassed_kW</Expression2>

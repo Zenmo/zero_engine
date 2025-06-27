@@ -145,7 +145,7 @@
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="140" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>traceln("f_getAveragedElectricityPrice(-5, 10): " + f_getAveragedElectricityPrice(-5, 10));
 traceln("f_getAveragedElectricityPrice(-5, 5): " + f_getAveragedElectricityPrice(-5, 5));

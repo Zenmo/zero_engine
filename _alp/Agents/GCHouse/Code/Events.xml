@@ -22,6 +22,7 @@
 				<Code><![CDATA[1]]></Code>
 				<Unit Class="RateUnits">PER_HOUR</Unit>
 			</Rate>
+			<Id>1658477089954</Id>
 			<OccurrenceAtTime>true</OccurrenceAtTime>
 			<OccurrenceDate>1674979200000</OccurrenceDate>
 			<OccurrenceTime Class="CodeUnitValue">

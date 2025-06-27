@@ -438,16 +438,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1668499200000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[15]]></Code>
-			<Unit Class="TimeUnits">MINUTE</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011893811</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1668499200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[15]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>500</Width>
 		<Height>280</Height>
@@ -522,7 +525,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Battery load [kW]</Title>
-			<Id>0</Id>
+			<Id>1658477089943</Id>
 			<Expression>my_dataset4</Expression>
 			<Color>-8388608</Color>
 			<Expression2>v_batteryPowerElectric_kW</Expression2>
@@ -532,7 +535,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>GRID LOAD</Title>
-			<Id>0</Id>
+			<Id>1658477089942</Id>
 			<Expression>my_dataset5</Expression>
 			<Color>-16776961</Color>
 			<Expression2>fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)</Expression2>
@@ -542,7 +545,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Grid connection limit</Title>
-			<Id>0</Id>
+			<Id>1658477089941</Id>
 			<Expression>my_dataset6</Expression>
 			<Color>-65536</Color>
 			<Expression2>v_liveConnectionMetaData.contractedDeliveryCapacity_kW</Expression2>
@@ -552,7 +555,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title> Grid connection limit</Title>
-			<Id>0</Id>
+			<Id>1658477089940</Id>
 			<Expression>my_dataset7</Expression>
 			<Color>-65536</Color>
 			<Expression2>- v_liveConnectionMetaData.contractedFeedinCapacity_kW</Expression2>
@@ -562,7 +565,7 @@
 		</DatasetExpression>
 		<DatasetExpression>
 			<Title>Current load low passed</Title>
-			<Id>0</Id>
+			<Id>1658477089939</Id>
 			<Expression>my_dataset8</Expression>
 			<Color>-16728065</Color>
 			<Expression2>v_currentLoadLowPassed_kW</Expression2>
@@ -792,7 +795,7 @@
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="100" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>energyModel.energyDataViewer.f_fillEnergyDataViewer(this);
 energyModel.energyDataViewer.viewArea.navigateTo();</ActionCode>
@@ -818,7 +821,7 @@ energyModel.energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<BasicProperties Width="100" Height="30">
 			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor/>
+			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
 			<ActionCode>v_rapidRunData.getFlexPotential();</ActionCode>
 		</BasicProperties>
