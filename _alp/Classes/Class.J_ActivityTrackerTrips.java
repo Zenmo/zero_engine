@@ -20,19 +20,36 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     public J_ActivityTrackerTrips() {
     }
     
-    public J_ActivityTrackerTrips(EnergyModel main, ExcelFile tripsExcel, int rowIndex, double time_min, J_EAVehicle Vehicle) {
+    public J_ActivityTrackerTrips(EnergyModel main, TextFile tripsCsv, int rowIndex, double time_min, J_EAVehicle Vehicle) {
     	this.energyModel = main;
     	this.rowIndex = rowIndex;
     	this.Vehicle = Vehicle;		
-		this.nbActivities = roundToInt(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 2));
-		this.tripPatternIdentifier = "";// tripsExcel.getCellStringValue("sheet1", rowIndex + 2, 1);
-		
-	    for (int i = 0; i < nbActivities; i++){
-	    	starttimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
-	    	endtimes_min.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-	    	distances_km.add(tripsExcel.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));		    
-	    }
+    	
+    	tripsCsv.close();
+    	tripsCsv.canReadMore();
+
+		tripsCsv.readLine(); // Skips first line
+		 
+    	while (roundToInt(tripsCsv.readDouble())!=rowIndex && tripsCsv.canReadMore()) { // Skip until rowIndex found
+    		tripsCsv.readLine(); 
+    		//String line = tripsCsv.readLine(); // Does this also skip to the next line?
+    		//traceln("Skipping line: " + line);
+    	}
+    	int currentLineNb = tripsCsv.getLineNumber();
+    	//traceln("rowIndex %s found on line: %s", rowIndex, currentLineNb);
+    	int nbActivities = tripsCsv.readInt();
+    	//traceln("Number of trips: %s", nbActivities);    	
+    			
+    	for (int i = 0; i < nbActivities; i++){
+    		starttimes_min.add(tripsCsv.readDouble());
+    		endtimes_min.add(tripsCsv.readDouble());
+    		distances_km.add(tripsCsv.readDouble());
+    	}
 	    
+	    /*traceln("Starttimes: %s", starttimes_min);
+	    traceln("Endtimes: %s", endtimes_min);
+	    traceln("Distances: %s", distances_km);*/
+    	
 	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
     	if (endtimes_min.get(nbActivities-1) < 10080) {
 		    for (int weeks = 1; weeks < 53; weeks++) {

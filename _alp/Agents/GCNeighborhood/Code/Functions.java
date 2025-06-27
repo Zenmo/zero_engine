@@ -350,15 +350,15 @@ if (j_ea instanceof J_EAVehicle) {
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
 		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, energyModel.t_h*60, vehicle);
 		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, energyModel.t_h*60, vehicle);
 			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
 			int rowIndex = uniform_discr(0, 200);//getIndex() % 200;
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsCsv, rowIndex, energyModel.t_h*60, vehicle);
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
@@ -409,7 +409,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternExcel, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternCsv, rowIndex, energyModel.t_h*60, (J_EAConversion)j_ea );			
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
