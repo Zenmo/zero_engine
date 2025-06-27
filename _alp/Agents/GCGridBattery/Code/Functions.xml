@@ -194,7 +194,7 @@
 		<Id>1746605418870</Id>
 		<Name><![CDATA[f_batteryManagementBas]]></Name>
 		<X>1160</X>
-		<Y>840</Y>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -279,6 +279,22 @@
 		<Name><![CDATA[f_peakShavingGridAdvancedForecast]]></Name>
 		<X>1180</X>
 		<Y>800</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1751016595990</Id>
+		<Name><![CDATA[f_valleyFillingGridAdvancedForecast]]></Name>
+		<X>1180</X>
+		<Y>820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

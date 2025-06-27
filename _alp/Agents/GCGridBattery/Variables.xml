@@ -49,7 +49,7 @@
 		<Id>1746606592165</Id>
 		<Name><![CDATA[v_batteryAlgorithmBas]]></Name>
 		<X>1180</X>
-		<Y>860</Y>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -91,9 +91,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1750941712486</Id>
-		<Name><![CDATA[v_batteryChargingPeakShavingAdvancedForecast_kW]]></Name>
+		<Name><![CDATA[v_batteryDischargingPeakShavingAdvancedForecast_kW]]></Name>
 		<X>1200</X>
-		<Y>820</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -108,6 +108,72 @@
 			<Type><![CDATA[double[]]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new double[96]]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1751016760126</Id>
+		<Name><![CDATA[v_batteryChargingValleyFillingAdvancedForecast_kW]]></Name>
+		<X>1200</X>
+		<Y>880</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double[]]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new double[96]]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1751034242196</Id>
+		<Name><![CDATA[prevPeakSurface_kWh]]></Name>
+		<X>1200</X>
+		<Y>840</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1751043162771</Id>
+		<Name><![CDATA[prevMaxPeak_kW]]></Name>
+		<X>1380</X>
+		<Y>840</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
