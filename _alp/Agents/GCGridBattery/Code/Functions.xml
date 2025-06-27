@@ -108,8 +108,8 @@
 		<Id>1688369593905</Id>
 		<Name><![CDATA[f_calculateEnergyBalance_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>890</X>
-		<Y>180</Y>
+		<X>840</X>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

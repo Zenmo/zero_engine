@@ -56,6 +56,11 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1666956527771*/
+if(energyModel.t_h == 0){ // Load at gridnode is not known yet (due to time step delay)
+	p_batteryAsset.v_powerFraction_fr = 0;
+	return;
+}
+
 if ( p_batteryAsset != null ) {
 	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0 && p_batteryAsset.getCapacityElectric_kW() != 0.0) {
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
@@ -72,8 +77,9 @@ if ( p_batteryAsset != null ) {
 			f_batteryManagementBalanceCOOP(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BATTERY_ALGORITHM_BAS){
 			f_batteryManagementBas(v_batterySOC_fr);
-		}
-		
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.SELF_CONSUMPTION){
+			f_batteryManagementSelfConsumption();
+		}		
 		
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		//J_FlowsMap flowsMap = flowsPair.getFirst();
@@ -164,7 +170,7 @@ double f_batteryManagementBalanceGrid(double batterySOC)
 {/*ALCODESTART::1678114662587*/
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){	
 	double currentCoopElectricitySurplus_kW = 0;
-	double CoopConnectionCapacity_kW = 0;
+	double CoopConnectionCapacity_kW = 0.9*p_parentNodeElectric.p_capacity_kW;
 	double v_previousPowerBattery_kW = v_previousPowerElectricity_kW;// Assumes battery is only asset on gridconnection!! p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
 	//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
 	if( p_owner != null ) {
@@ -182,7 +188,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);	
 		
 	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
-	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
+	double availableDischargePower_kW = CoopConnectionCapacity_kW - currentCoopElectricitySurplus_kW; // Max discharging power within grid capacity
 	double FeedbackGain_kWpSOC = 3 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
@@ -200,20 +206,24 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power	
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 	//traceln("hello?");
-	
 	*/
 	
+
 	
-	// ----------------------------------------------------
-	// p_forecastTime_h = 10
-	//traceln("availableDischargePower_kW: %s", availableDischargePower_kW);
-	if (availableChargePower_kW < 0) { // prevent congestion
+	// prevent congestion
+	if (availableChargePower_kW < 0) { //Delivery side
 		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getCapacityElectric_kW());
 		return;
 	}
+	if (availableDischargePower_kW < 0) { //Feedin side
+		p_batteryAsset.v_powerFraction_fr = min(1, -availableDischargePower_kW / p_batteryAsset.getCapacityElectric_kW());
+		return;
+	}
+	
+	
 	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) {
 		if (p_parentNodeElectric.v_currentLoad_kW < 0) {
-			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, -p_parentNodeElectric.v_currentLoad_kW / p_batteryAsset.getCapacityElectric_kW()));
+			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, currentCoopElectricitySurplus_kW / p_batteryAsset.getCapacityElectric_kW()));
 		}
 	}
 	else {
