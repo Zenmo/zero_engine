@@ -120,7 +120,7 @@
 	<ElementsLimitValue>100</ElementsLimitValue>
 	<MakeDefaultViewArea>true</MakeDefaultViewArea>
 	<SceneGridColor/>
-	<SceneBackgroundColor/>
+	<SceneBackgroundColor>-4144960</SceneBackgroundColor>
 	<SceneSkybox>null</SceneSkybox>
 	<AgentProperties>
 		<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
@@ -165,6 +165,7 @@
 	</EnvironmentProperties>
 	<DatasetsCreationProperties>
 		<AutoCreate>true</AutoCreate>
+		<Id>1658477089956</Id>
 		<OccurrenceAtTime>true</OccurrenceAtTime>
 		<OccurrenceDate>1663833600000</OccurrenceDate>
 		<OccurrenceTime Class="CodeUnitValue">
@@ -213,16 +214,19 @@
 			<PresentationFlag>true</PresentationFlag>
 			<ShowLabel>true</ShowLabel>
 			<AutoUpdate>true</AutoUpdate>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1674979200000</OccurrenceDate>
-			<OccurrenceTime Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">DAY</Unit>
-			</OccurrenceTime>
-			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">DAY</Unit>
-			</RecurrenceCode>
+			<RecurrenceProperties>
+				<Id>1751011893431</Id>
+				<OccurrenceAtTime>true</OccurrenceAtTime>
+				<OccurrenceDate>1674979200000</OccurrenceDate>
+				<OccurrenceTime Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="TimeUnits">DAY</Unit>
+				</OccurrenceTime>
+				<RecurrenceCode Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="TimeUnits">DAY</Unit>
+				</RecurrenceCode>
+			</RecurrenceProperties>
 			<FreezeXAxis>true</FreezeXAxis>
 			<VerticalAxisExpression>v_dailyHPConsumption_kWh</VerticalAxisExpression>
 			<SamplesToKeep>100</SamplesToKeep>

@@ -14,16 +14,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1682150400000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[energyModel.p_timeStep_h]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011893340</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1682150400000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[energyModel.p_timeStep_h]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>510</Width>
 		<Height>270</Height>
@@ -58,7 +61,7 @@
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
 			<Title>SOC</Title>
-			<Id>0</Id>
+			<Id>1658477089957</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-10496</Color>
 			<Expression2>v_batterySOC_fr</Expression2>

@@ -192,16 +192,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1670400000000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[0.25]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011894154</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1670400000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[0.25]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>150</Width>
 		<Height>130</Height>
@@ -326,16 +329,19 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<AutoUpdate>false</AutoUpdate>
-				<OccurrenceAtTime>true</OccurrenceAtTime>
-				<OccurrenceDate>1671004800000</OccurrenceDate>
-				<OccurrenceTime Class="CodeUnitValue">
-					<Code><![CDATA[0]]></Code>
-					<Unit Class="TimeUnits">HOUR</Unit>
-				</OccurrenceTime>
-				<RecurrenceCode Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="TimeUnits">HOUR</Unit>
-				</RecurrenceCode>
+				<RecurrenceProperties>
+					<Id>1751011894158</Id>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1671004800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits">HOUR</Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits">HOUR</Unit>
+					</RecurrenceCode>
+				</RecurrenceProperties>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Width>480</Width>
 				<Height>210</Height>
@@ -365,7 +371,7 @@
 				<TimeWindowUnits>HOUR</TimeWindowUnits>
 				<TimeWindowExpression>48</TimeWindowExpression>
 				<DatasetExpression>
-					<Id>0</Id>
+					<Id>1658477089923</Id>
 					<Expression>my_dataset</Expression>
 					<Color>-6632142</Color>
 					<Expression2>v_vehicleProduction_kW</Expression2>
@@ -373,7 +379,7 @@
 					<Title>Vehicle to X</Title>
 				</DatasetExpression>
 				<DatasetExpression>
-					<Id>0</Id>
+					<Id>1658477089922</Id>
 					<Expression>my_dataset</Expression>
 					<Color>-256</Color>
 					<Expression2>v_localProduction_kW</Expression2>
@@ -381,7 +387,7 @@
 					<Title>Local production [kW]</Title>
 				</DatasetExpression>
 				<DatasetExpression>
-					<Id>0</Id>
+					<Id>1658477089921</Id>
 					<Expression>my_dataset</Expression>
 					<Color>-23296</Color>
 					<Expression2>v_batteryProduction_kW</Expression2>
@@ -407,16 +413,19 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<AutoUpdate>false</AutoUpdate>
-				<OccurrenceAtTime>true</OccurrenceAtTime>
-				<OccurrenceDate>1671004800000</OccurrenceDate>
-				<OccurrenceTime Class="CodeUnitValue">
-					<Code><![CDATA[0]]></Code>
-					<Unit Class="TimeUnits">HOUR</Unit>
-				</OccurrenceTime>
-				<RecurrenceCode Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="TimeUnits">HOUR</Unit>
-				</RecurrenceCode>
+				<RecurrenceProperties>
+					<Id>1751011894160</Id>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1671004800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits">HOUR</Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits">HOUR</Unit>
+					</RecurrenceCode>
+				</RecurrenceProperties>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Width>490</Width>
 				<Height>230</Height>
@@ -462,7 +471,7 @@
 					<Title>Charging vehicle [kW]</Title>
 				</DatasetExpression>
 				<DatasetExpression>
-					<Id>0</Id>
+					<Id>1658477089920</Id>
 					<Expression>my_dataset</Expression>
 					<Color>-5952982</Color>
 					<Expression2>v_electricHeatingConsumption_kW</Expression2>
@@ -478,7 +487,7 @@
 					<Title>charging Battery [kW]</Title>
 				</DatasetExpression>
 				<DatasetExpression>
-					<Id>0</Id>
+					<Id>1658477089919</Id>
 					<Expression>my_dataset</Expression>
 					<Color>-2461482</Color>
 					<Expression2>v_electricCookingPower_kW</Expression2>
@@ -554,16 +563,19 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<AutoUpdate>false</AutoUpdate>
-				<OccurrenceAtTime>true</OccurrenceAtTime>
-				<OccurrenceDate>1668499200000</OccurrenceDate>
-				<OccurrenceTime Class="CodeUnitValue">
-					<Code><![CDATA[0]]></Code>
-					<Unit Class="TimeUnits">HOUR</Unit>
-				</OccurrenceTime>
-				<RecurrenceCode Class="CodeUnitValue">
-					<Code><![CDATA[15]]></Code>
-					<Unit Class="TimeUnits">MINUTE</Unit>
-				</RecurrenceCode>
+				<RecurrenceProperties>
+					<Id>1751011894164</Id>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1668499200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits">HOUR</Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[15]]></Code>
+						<Unit Class="TimeUnits">MINUTE</Unit>
+					</RecurrenceCode>
+				</RecurrenceProperties>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Width>480</Width>
 				<Height>280</Height>
@@ -648,7 +660,7 @@
 				</DatasetExpression>
 				<DatasetExpression>
 					<Title>Consumption other [kW]</Title>
-					<Id>0</Id>
+					<Id>1658477089918</Id>
 					<Expression>my_dataset6</Expression>
 					<Color>-3137392</Color>
 					<Expression2>v_fixedConsumptionProfiles_kW</Expression2>
@@ -675,16 +687,19 @@
 				<ShowLabel>false</ShowLabel>
 				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 				<AutoUpdate>true</AutoUpdate>
-				<OccurrenceAtTime>true</OccurrenceAtTime>
-				<OccurrenceDate>1668499200000</OccurrenceDate>
-				<OccurrenceTime Class="CodeUnitValue">
-					<Code><![CDATA[0]]></Code>
-					<Unit Class="TimeUnits">HOUR</Unit>
-				</OccurrenceTime>
-				<RecurrenceCode Class="CodeUnitValue">
-					<Code><![CDATA[15]]></Code>
-					<Unit Class="TimeUnits">MINUTE</Unit>
-				</RecurrenceCode>
+				<RecurrenceProperties>
+					<Id>1751011894166</Id>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1668499200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits">HOUR</Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[15]]></Code>
+						<Unit Class="TimeUnits">MINUTE</Unit>
+					</RecurrenceCode>
+				</RecurrenceProperties>
 				<EmbeddedIcon>false</EmbeddedIcon>
 				<Width>480</Width>
 				<Height>220</Height>

@@ -15,16 +15,19 @@
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>false</AutoUpdate>
-		<OccurrenceAtTime>true</OccurrenceAtTime>
-		<OccurrenceDate>1674979200000</OccurrenceDate>
-		<OccurrenceTime Class="CodeUnitValue">
-			<Code><![CDATA[0]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</OccurrenceTime>
-		<RecurrenceCode Class="CodeUnitValue">
-			<Code><![CDATA[1]]></Code>
-			<Unit Class="TimeUnits">HOUR</Unit>
-		</RecurrenceCode>
+		<RecurrenceProperties>
+			<Id>1751011893401</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1674979200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[1]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Width>490</Width>
 		<Height>260</Height>
@@ -59,7 +62,7 @@
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
 			<Title>Heatpump daily consumption kWh </Title>
-			<Id>0</Id>
+			<Id>1658477089955</Id>
 			<Expression>d_heatpumpDailyConsumption</Expression>
 			<Color>-2987746</Color>
 			<Expression2>0</Expression2>

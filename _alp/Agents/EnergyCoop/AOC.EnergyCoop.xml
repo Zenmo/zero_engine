@@ -49,7 +49,7 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;
 	<ElementsLimitValue>100</ElementsLimitValue>
 	<MakeDefaultViewArea>true</MakeDefaultViewArea>
 	<SceneGridColor/>
-	<SceneBackgroundColor/>
+	<SceneBackgroundColor>-4144960</SceneBackgroundColor>
 	<SceneSkybox>null</SceneSkybox>
 	<AgentProperties>
 		<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
@@ -94,6 +94,7 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;
 	</EnvironmentProperties>
 	<DatasetsCreationProperties>
 		<AutoCreate>true</AutoCreate>
+		<Id>1658477089993</Id>
 		<OccurrenceAtTime>true</OccurrenceAtTime>
 		<OccurrenceDate>1660809600000</OccurrenceDate>
 		<OccurrenceTime Class="CodeUnitValue">
