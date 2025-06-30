@@ -183,7 +183,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		//}
 	} else { // Get gridload directly from node
 		currentCoopElectricitySurplus_kW = -p_parentNodeElectric.v_currentLoad_kW + v_previousPowerBattery_kW;			
-		CoopConnectionCapacity_kW = 0.95*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+		CoopConnectionCapacity_kW = 0.9*p_parentNodeElectric.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	}
 	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);	
 		
@@ -207,21 +207,17 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 	//traceln("hello?");
 	*/
-	
-
-	
-	// prevent congestion
-	if (availableChargePower_kW < 0) { //Delivery side
+		// prevent congestion
+	/*if (availableChargePower_kW < 0) { //Delivery side; if availableChargePower is negative, battery will have to discharge!
 		p_batteryAsset.v_powerFraction_fr = max(-1, availableChargePower_kW / p_batteryAsset.getCapacityElectric_kW());
 		return;
 	}
-	if (availableDischargePower_kW < 0) { //Feedin side
+	if (availableDischargePower_kW < 0) { //Feedin side, if availableDiscrhagePower is negative, battery will have to charge!
 		p_batteryAsset.v_powerFraction_fr = min(1, -availableDischargePower_kW / p_batteryAsset.getCapacityElectric_kW());
 		return;
-	}
-	
-	
-	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) {
+	}*/
+
+	if (energyModel.v_currentSolarPowerNormalized_r > 0.1) { // 
 		if (p_parentNodeElectric.v_currentLoad_kW < 0) {
 			p_batteryAsset.v_powerFraction_fr = max(-1, min(1, currentCoopElectricitySurplus_kW / p_batteryAsset.getCapacityElectric_kW()));
 		}
@@ -233,9 +229,12 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		double SOC_setp_fr = 1 - incomingPower_fr;
 	
 		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
-		chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
+		
 	}
+	
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // // prevent congestion Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // normalize charge setpoint and cap between -1 and 1.
+		
 }
 
 /*ALCODEEND*/}
