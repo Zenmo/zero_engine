@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Presentation>
 	<Rectangle>
+		<Id>1751294560330</Id>
+		<Name><![CDATA[rect_save]]></Name>
+		<X>1643</X>
+		<Y>64</Y>
+		<Label>
+			<X>10</X>
+			<Y>10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<Width>297</Width>
+		<Height>106</Height>
+		<Rotation>0.0</Rotation>
+		<FillColor>-1</FillColor>
+		<FillMaterial>null</FillMaterial>
+	</Rectangle>
+	<Rectangle>
 		<Id>1740491441996</Id>
 		<Name><![CDATA[rect_energyBalanceMonitor]]></Name>
 		<X>0</X>
@@ -414,4 +440,29 @@ energyModel.energyDataViewer.viewArea.navigateTo();</ActionCode>
 			<LabelText>View Data</LabelText>
 		</ExtendedProperties>
 	</Control>
+	<Text>
+		<Id>1751294560328</Id>
+		<Name><![CDATA[txt_save]]></Name>
+		<X>1653</X>
+		<Y>74</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Bewaren (neg dataset bug)]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>10</Size>
+			<Style>1</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>
