@@ -400,6 +400,10 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.add(j_ea);
 	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+		v_liveAssetsMetaData.hasPT = true;
+		c_ptAssets.add(j_ea);
+	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){

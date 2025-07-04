@@ -36,6 +36,7 @@ public class J_RapidRunData {
     
     public ZeroAccumulator acc_dailyAveragePVProduction_kW;
     public ZeroAccumulator acc_dailyAverageWindProduction_kW;
+    public ZeroAccumulator acc_dailyAveragePTProduction_kW;
     public ZeroAccumulator acc_dailyAverageV2GProduction_kW;
     public ZeroAccumulator acc_dailyAverageBatteriesProduction_kW;
     public ZeroAccumulator acc_dailyAverageCHPElectricityProduction_kW;
@@ -64,6 +65,7 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekDistrictHeatingConsumption_kW;
     public ZeroAccumulator acc_summerWeekPVProduction_kW;
     public ZeroAccumulator acc_summerWeekWindProduction_kW;
+    public ZeroAccumulator acc_summerWeekPTProduction_kW;
     public ZeroAccumulator acc_summerWeekV2GProduction_kW;
     public ZeroAccumulator acc_summerWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_summerWeekCHPElectricityProduction_kW;
@@ -93,6 +95,7 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekDistrictHeatingConsumption_kW;
     public ZeroAccumulator acc_winterWeekPVProduction_kW;
     public ZeroAccumulator acc_winterWeekWindProduction_kW;
+    public ZeroAccumulator acc_winterWeekPTProduction_kW;
     public ZeroAccumulator acc_winterWeekV2GProduction_kW;
     public ZeroAccumulator acc_winterWeekBatteriesProduction_kW;
     public ZeroAccumulator acc_winterWeekCHPElectricityProduction_kW;
@@ -157,6 +160,7 @@ public class J_RapidRunData {
 	    
 	    acc_dailyAveragePVProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageWindProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
+	    acc_dailyAveragePTProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageV2GProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageBatteriesProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageCHPElectricityProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -188,6 +192,7 @@ public class J_RapidRunData {
 	
 	    acc_summerWeekPVProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekWindProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_summerWeekPTProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekV2GProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekBatteriesProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_summerWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
@@ -219,6 +224,7 @@ public class J_RapidRunData {
 	
 	    acc_winterWeekPVProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekWindProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
+	    acc_winterWeekPTProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekV2GProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekBatteriesProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
 	    acc_winterWeekCHPElectricityProduction_kW = new ZeroAccumulator(true, timeStep_h, 168.0);
@@ -277,6 +283,7 @@ public class J_RapidRunData {
     	
     	acc_dailyAveragePVProduction_kW.reset();
     	acc_dailyAverageWindProduction_kW.reset();
+    	acc_dailyAveragePTProduction_kW.reset();
     	acc_dailyAverageV2GProduction_kW.reset();
     	acc_dailyAverageBatteriesProduction_kW.reset();
     	acc_dailyAverageCHPElectricityProduction_kW.reset();
@@ -308,6 +315,7 @@ public class J_RapidRunData {
 
     	acc_summerWeekPVProduction_kW.reset();
     	acc_summerWeekWindProduction_kW.reset();
+    	acc_summerWeekPTProduction_kW.reset();
     	acc_summerWeekV2GProduction_kW.reset();
     	acc_summerWeekBatteriesProduction_kW.reset();
     	acc_summerWeekCHPElectricityProduction_kW.reset();
@@ -339,6 +347,7 @@ public class J_RapidRunData {
 
     	acc_winterWeekPVProduction_kW.reset();
     	acc_winterWeekWindProduction_kW.reset();
+    	acc_winterWeekPTProduction_kW.reset();
     	acc_winterWeekV2GProduction_kW.reset();
     	acc_winterWeekBatteriesProduction_kW.reset();
     	acc_winterWeekCHPElectricityProduction_kW.reset();
@@ -392,6 +401,7 @@ public class J_RapidRunData {
         clone.acc_dailyAverageDistrictHeatingConsumption_kW=this.acc_dailyAverageDistrictHeatingConsumption_kW.getClone();
         clone.acc_dailyAveragePVProduction_kW=this.acc_dailyAveragePVProduction_kW.getClone();
         clone.acc_dailyAverageWindProduction_kW=this.acc_dailyAverageWindProduction_kW.getClone();
+        clone.acc_dailyAveragePTProduction_kW=this.acc_dailyAveragePTProduction_kW.getClone();
         clone.acc_dailyAverageV2GProduction_kW=this.acc_dailyAverageV2GProduction_kW.getClone();
         clone.acc_dailyAverageBatteriesProduction_kW=this.acc_dailyAverageBatteriesProduction_kW.getClone();
         clone.acc_dailyAverageCHPElectricityProduction_kW=this.acc_dailyAverageCHPElectricityProduction_kW.getClone();
@@ -415,6 +425,7 @@ public class J_RapidRunData {
         clone.acc_summerWeekDistrictHeatingConsumption_kW=this.acc_summerWeekDistrictHeatingConsumption_kW.getClone();
         clone.acc_summerWeekPVProduction_kW=this.acc_summerWeekPVProduction_kW.getClone();
         clone.acc_summerWeekWindProduction_kW=this.acc_summerWeekWindProduction_kW.getClone();
+        clone.acc_summerWeekPTProduction_kW=this.acc_summerWeekPTProduction_kW.getClone();
         clone.acc_summerWeekV2GProduction_kW=this.acc_summerWeekV2GProduction_kW.getClone();
         clone.acc_summerWeekBatteriesProduction_kW=this.acc_summerWeekBatteriesProduction_kW.getClone();
         clone.acc_summerWeekCHPElectricityProduction_kW=this.acc_summerWeekCHPElectricityProduction_kW.getClone();
@@ -439,6 +450,7 @@ public class J_RapidRunData {
         clone.acc_winterWeekDistrictHeatingConsumption_kW = this.acc_winterWeekDistrictHeatingConsumption_kW.getClone();
         clone.acc_winterWeekPVProduction_kW = this.acc_winterWeekPVProduction_kW.getClone();
         clone.acc_winterWeekWindProduction_kW = this.acc_winterWeekWindProduction_kW.getClone();
+        clone.acc_winterWeekPTProduction_kW = this.acc_winterWeekPTProduction_kW.getClone();
         clone.acc_winterWeekV2GProduction_kW = this.acc_winterWeekV2GProduction_kW.getClone();
         clone.acc_winterWeekBatteriesProduction_kW = this.acc_winterWeekBatteriesProduction_kW.getClone();
         clone.acc_winterWeekCHPElectricityProduction_kW = this.acc_winterWeekCHPElectricityProduction_kW.getClone();

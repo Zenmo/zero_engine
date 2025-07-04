@@ -24,6 +24,8 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	protected double energyAbsorbed_kWh=0;
 	protected double energyAbsorbedStored_kWh=0;
 	
+	//Secureing updates
+	private boolean updateAmbientTemperatureHasBeenCalled = false;
 
 
     /**
@@ -57,6 +59,12 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 
 	@Override
 	public void calculateLoss() {
+		if(!this.updateAmbientTemperatureHasBeenCalled) {
+			new RuntimeException("Ambient temperature has not been updated for the heat storage asset, make sure to call the updateAmbientTemperature() method while using a heat storage");
+		}
+		else {
+			updateAmbientTemperatureHasBeenCalled = false;
+		}
 		double heatLoss_W = lossFactor_WpK * ( temperature_degC - ambientTemperature_degC );
 		double deltaEnergy_kWh = ( -heatLoss_W / 1000 ) * timestep_h;
 		energyUse_kW = heatLoss_W / 1000;
@@ -204,7 +212,8 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
     }*/
 
 	@Override
-	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
+	public void updateAmbientTemperature(double currentAmbientTemperature_degC) {
+		this.updateAmbientTemperatureHasBeenCalled = true;
 		ambientTemperature_degC = currentAmbientTemperature_degC;
 	}
 	/**

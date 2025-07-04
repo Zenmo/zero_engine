@@ -5,8 +5,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1664441996771</Id>
 		<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-		<X>810</X>
-		<Y>340</Y>
+		<X>920</X>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -21,7 +21,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1664963959146</Id>
 		<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
-		<X>800</X>
+		<X>910</X>
 		<Y>220</Y>
 		<Label>
 			<X>10</X>
@@ -38,8 +38,8 @@
 		<Id>1665498948452</Id>
 		<Name><![CDATA[f_connectToChild_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>780</X>
-		<Y>150</Y>
+		<X>820</X>
+		<Y>-100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -59,8 +59,8 @@
 		<Id>1669203453155</Id>
 		<Name><![CDATA[f_createThermalStorageModel]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>770</X>
-		<Y>-30</Y>
+		<X>820</X>
+		<Y>-210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -76,8 +76,8 @@
 		<Id>1674402121915</Id>
 		<Name><![CDATA[f_chargeOnPrice_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>830</X>
-		<Y>440</Y>
+		<X>1230</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -100,8 +100,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1675014184707</Id>
 		<Name><![CDATA[f_manageCharging_overwrite]]></Name>
-		<X>810</X>
-		<Y>360</Y>
+		<X>920</X>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -117,8 +117,8 @@
 		<Id>1675033218897</Id>
 		<Name><![CDATA[f_simpleCharging_overwrite]]></Name>
 		<Description><![CDATA[Charging when arriving home, not taking grid limits into account]]></Description>
-		<X>830</X>
-		<Y>380</Y>
+		<X>940</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -134,8 +134,8 @@
 		<Id>1675034695162</Id>
 		<Name><![CDATA[f_determineChargingDemandOfEV]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>800</X>
-		<Y>480</Y>
+		<X>1230</X>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -183,8 +183,8 @@
 		<Id>1677664183773</Id>
 		<Name><![CDATA[f_chargeOnPriceSimpler]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>910</X>
-		<Y>460</Y>
+		<X>1240</X>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -204,8 +204,8 @@
 		<Id>1678708804201</Id>
 		<Name><![CDATA[f_batteryManagementLoad]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>810</X>
-		<Y>320</Y>
+		<X>1240</X>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -220,7 +220,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1678709047802</Id>
 		<Name><![CDATA[f_batteryManagementPrice_overwrite]]></Name>
-		<X>810</X>
+		<X>920</X>
 		<Y>300</Y>
 		<Label>
 			<X>10</X>
@@ -240,7 +240,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1693300820997</Id>
 		<Name><![CDATA[f_connectTo_J_EA_House]]></Name>
-		<X>1140</X>
+		<X>1090</X>
 		<Y>90</Y>
 		<Label>
 			<X>10</X>
@@ -260,8 +260,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1696923950404</Id>
 		<Name><![CDATA[f_setAnnualEnergyDemand]]></Name>
-		<X>970</X>
-		<Y>150</Y>
+		<X>1090</X>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -276,8 +276,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1696924006982</Id>
 		<Name><![CDATA[f_setEnergyLabel]]></Name>
-		<X>970</X>
-		<Y>170</Y>
+		<X>1090</X>
+		<Y>60</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -324,8 +324,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726129903799</Id>
 		<Name><![CDATA[f_removeCurrentHeatingSystem]]></Name>
-		<X>970</X>
-		<Y>-20</Y>
+		<X>1090</X>
+		<Y>20</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -372,8 +372,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726334759211</Id>
 		<Name><![CDATA[f_manageCookingTracker]]></Name>
-		<X>780</X>
-		<Y>630</Y>
+		<X>1230</X>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -388,8 +388,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1749648447119</Id>
 		<Name><![CDATA[f_manageAirco]]></Name>
-		<X>1500</X>
-		<Y>850</Y>
+		<X>1230</X>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -404,7 +404,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1749722407831</Id>
 		<Name><![CDATA[f_removeTheJ_EA_house]]></Name>
-		<X>1140</X>
+		<X>1090</X>
 		<Y>110</Y>
 		<Label>
 			<X>10</X>

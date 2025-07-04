@@ -1,6 +1,14 @@
 double f_manageHeatingAssets_overwrite()
 {/*ALCODESTART::1664441996771*/
 v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
+
+//Check if there is hot water being produced by the pt
+double ptProduction_kW = 0; //NEEDS TO BE A LOCAL
+for (J_EA j_ea : c_ptAssets) {
+	ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
+}
+v_hotwaterDemand_kW = max(0, v_hotwaterDemand_kW - ptProduction_kW);
+
 setHeatingTargetTemp();
  
 switch (p_heatingType) {	

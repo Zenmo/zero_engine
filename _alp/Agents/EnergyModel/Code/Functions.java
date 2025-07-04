@@ -1006,6 +1006,9 @@ v_liveData.data_PVGeneration_kW.add(currentTime_h, roundToDecimal(sum(c_gridConn
 //Wind
 v_liveData.data_windGeneration_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections,x->x.v_windProductionElectric_kW), 3));
 
+//PT
+v_liveData.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x->x.v_ptProductionHeat_kW), 3));
+
 //Battery discharge
 v_liveData.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x -> max(0, -x.v_batteryPowerElectric_kW)), 3));
 
@@ -1119,6 +1122,7 @@ double v_districtHeatDelivery_kW = sum(c_gridConnections, x->x.v_districtHeatDel
 
 double v_pvProductionElectric_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 double v_windProductionElectric_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
+double v_ptProductionHeat_kW = sum(c_gridConnections, x->x.v_ptProductionHeat_kW);
 double currentBatteriesProduction_kW = sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW));
 double currentV2GProduction_kW = sum(c_gridConnections, x-> max(0, -x.v_evChargingPowerElectric_kW));
 double v_CHPProductionElectric_kW = sum(c_gridConnections, x->x.v_CHPProductionElectric_kW);
@@ -1211,6 +1215,7 @@ if (b_isSummerWeek){
 	
 	v_rapidRunData.acc_summerWeekPVProduction_kW.addStep( v_pvProductionElectric_kW );
 	v_rapidRunData.acc_summerWeekWindProduction_kW.addStep( v_windProductionElectric_kW );
+	v_rapidRunData.acc_summerWeekPTProduction_kW.addStep( v_ptProductionHeat_kW );	
 	v_rapidRunData.acc_summerWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_summerWeekBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 	v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1255,6 +1260,7 @@ if (b_isWinterWeek){
 	
 	v_rapidRunData.acc_winterWeekPVProduction_kW.addStep( v_pvProductionElectric_kW );
 	v_rapidRunData.acc_winterWeekWindProduction_kW.addStep( v_windProductionElectric_kW );
+	v_rapidRunData.acc_winterWeekPTProduction_kW.addStep( v_ptProductionHeat_kW );	
 	v_rapidRunData.acc_winterWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_winterWeekBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1291,6 +1297,7 @@ v_rapidRunData.acc_dailyAverageDistrictHeatingConsumption_kW.addStep( v_district
 
 v_rapidRunData.acc_dailyAveragePVProduction_kW.addStep( v_pvProductionElectric_kW );
 v_rapidRunData.acc_dailyAverageWindProduction_kW.addStep( v_windProductionElectric_kW );
+v_rapidRunData.acc_dailyAveragePTProduction_kW.addStep( v_ptProductionHeat_kW );
 v_rapidRunData.acc_dailyAverageV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
