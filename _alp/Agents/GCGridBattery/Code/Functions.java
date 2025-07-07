@@ -530,18 +530,18 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	if(index == 48){ //daily valley-filling forecast
 		f_valleyFillingGridAdvancedForecast();					
 	}
+	
 	if(time < 6){
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargingValleyFillingAdvancedForecast_kW[index_shifted] / p_batteryAsset.getCapacityElectric_kW()));
 		//traceln("Start of the year. Charging right now with " + v_batteryChargingValleyFillingAdvancedForecast_kW[index_shifted] + " kW");
 		//traceln("Start of the year. Charging right now with " + p_batteryAsset.v_powerFraction_fr);
-	}/* if else(time >= ((energyModel.p_runEndTime_h - 6)))){
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargingValleyFillingAdvancedForecast_kW[index_shifted] / p_batteryAsset.getCapacityElectric_kW()));
-	}*/
-	if (index >= 24 && index < 72) {
+	} else if(time >= (energyModel.p_runEndTime_h - 6)){
+		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargingValleyFillingAdvancedForecast_kW[index] / p_batteryAsset.getCapacityElectric_kW()));
+	} else if(time >= 6 && time < (energyModel.p_runEndTime_h - 6) && index >= 24 && index < 72) {
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryDischargingPeakShavingAdvancedForecast_kW[index] / p_batteryAsset.getCapacityElectric_kW()));
 		//traceln("Discharging right now with " + v_batteryDischargingPeakShavingAdvancedForecast_kW[index] + " kW");
 		//traceln("Discharging right now with " + p_batteryAsset.v_powerFraction_fr);
-	} else if (index < 24 || index >= 72){
+	} else if(time >= 6 && time < (energyModel.p_runEndTime_h - 6) && (index < 24 || index >= 72)){
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, v_batteryChargingValleyFillingAdvancedForecast_kW[index_shifted] / p_batteryAsset.getCapacityElectric_kW()));
 		//traceln("Charging right now with " + v_batteryChargingValleyFillingAdvancedForecast_kW[index_shifted] + " kW");
 		//traceln("Charging right now with " + p_batteryAsset.v_powerFraction_fr);
