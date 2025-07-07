@@ -745,20 +745,20 @@ while(valleySurface_kWh < batteryStorageCapacity_kWh){ //assumption that battery
 		}
 	}
 }
-traceln("The minimum valley power is " + Arrays.stream(nettoBalance_kW).min().getAsDouble() + " kW");
-traceln("The limit it starts valley filling is below " + prevMinValley_kW + " kW");
-traceln("Previous peak surface is "+ prevPeakSurface_kWh + " kWh");
-traceln("Valley surface is "+ valleySurface_kWh + " kWh");
-traceln("Previous valley surface is "+ prevValleySurface_kWh + " kWh");
+//traceln("The minimum valley power is " + Arrays.stream(nettoBalance_kW).min().getAsDouble() + " kW");
+//traceln("The limit it starts valley filling is below " + prevMinValley_kW + " kW");
+//traceln("Previous peak surface is "+ prevPeakSurface_kWh + " kWh");
+//traceln("Valley surface is "+ valleySurface_kWh + " kWh");
+//traceln("Previous valley surface is "+ prevValleySurface_kWh + " kWh");
 
 //Initialize chargepoint array
 v_batteryChargingValleyFillingAdvancedForecast_kW = new double[96];
 
 for(int i = 0; i < nettoBalance_kW.length; i++){
-  	traceln("The netto balance is "+ nettoBalance_kW[i] + " kW");
+  	//traceln("The netto balance is "+ nettoBalance_kW[i] + " kW");
   	if(nettoBalance_kW[i] < prevMinValley_kW){//Flatten the peaks above the maximum defined peak after shaving
   		v_batteryChargingValleyFillingAdvancedForecast_kW[i] += prevMinValley_kW - nettoBalance_kW[i];
-  		traceln("Charging Power is "+ v_batteryChargingValleyFillingAdvancedForecast_kW[i] + " kW");
+  		//traceln("Charging Power is "+ v_batteryChargingValleyFillingAdvancedForecast_kW[i] + " kW");
   	}
   	else{
   		v_batteryChargingValleyFillingAdvancedForecast_kW[i] += 0;

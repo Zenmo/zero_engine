@@ -143,17 +143,17 @@
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor/>
 			<Enabled>true</Enabled>
-			<ActionCode>traceln("%f", v_batteryAlgorithmBas.calculateCapacityRate_euro());
-traceln("%f", v_batteryAlgorithmBas.calculateElectricityImportCosts_euro());
-traceln("%f", v_batteryAlgorithmBas.calculateElectricityExportCosts_euro());
-traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());
+			<ActionCode>traceln("My yearly capacity rate is %.2f euros", v_batteryAlgorithmBas.calculateCapacityRate_euro());
+traceln("My yearly import of electricity is %.2f euros", v_batteryAlgorithmBas.calculateElectricityImportCosts_euro());
+traceln("My yearly export of electricity is %.2f kWh", v_batteryAlgorithmBas.calculateElectricityExportCosts_euro());
+traceln("My yearly net electricity is %.2f kWh", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());
 //traceln("%f", v_batteryAlgorithmBas.calculateReturnOnInvestment(15, 1000000, 5300000));
 //traceln("%f", v_batteryAlgorithmBas.calculatePaybackPeriod(1000000, 5300000));
 //traceln("%f", v_batteryAlgorithmBas.calculateElectricityNetCosts_euro());</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>calculateEconomicKPIs</LabelText>
+			<LabelText>Calculate Economic KPIs</LabelText>
 		</ExtendedProperties>
 	</Control>
 	<Control Type="Button">
