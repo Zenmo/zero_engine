@@ -38,7 +38,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	int currentLineNb = tripsCsv.getLineNumber();
     	//traceln("rowIndex %s found on line: %s", rowIndex, currentLineNb);
     	int nbActivities = tripsCsv.readInt();
-    	//traceln("Number of trips: %s", nbActivities);    	
+    	
     			
     	for (int i = 0; i < nbActivities; i++){
     		starttimes_min.add(tripsCsv.readDouble());
@@ -46,9 +46,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     		distances_km.add(tripsCsv.readDouble());
     	}
 	    
-	    /*traceln("Starttimes: %s", starttimes_min);
-	    traceln("Endtimes: %s", endtimes_min);
-	    traceln("Distances: %s", distances_km);*/
+	    //traceln("Starttimes: %s", starttimes_min);
+	    //traceln("Endtimes: %s", endtimes_min);
+	    //traceln("Distances: %s", distances_km);
     	
 	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
     	if (endtimes_min.get(nbActivities-1) < 10080) {
@@ -61,6 +61,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    }
 	    }
     	
+    	double currentAnnualDistance_km = distances_km.stream().mapToDouble(a -> a).sum();
+    	//traceln("Number of trips: %s, total annual distance: %s km", nbActivities, currentAnnualDistance_km);    	
+    	//traceln("Total annual distance: %s", currentAnnualDistance_km);
 	    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
 	    while ( starttimes_min.get(v_eventIndex) < time_min ) {	
 	    	v_eventIndex++;
