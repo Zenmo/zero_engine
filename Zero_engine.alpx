@@ -418,6 +418,7 @@
 			<OptionList>
 				<Id>1659525748543</Id>
 				<Name><![CDATA[OL_EAStorageTypes]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1659535943908</Id>
 					<Name><![CDATA[ELECTRIC_BATTERY]]></Name>
@@ -1249,6 +1250,30 @@
 				<Option>
 					<Id>1749738897847</Id>
 					<Name><![CDATA[KISS_AND_RIDE]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1751886660644</Id>
+				<Name><![CDATA[OL_AmbientTempType]]></Name>
+				<Option>
+					<Id>1751886662187</Id>
+					<Name><![CDATA[FIXED]]></Name>
+				</Option>
+				<Option>
+					<Id>1751886672826</Id>
+					<Name><![CDATA[AMBIENT_AIR]]></Name>
+				</Option>
+				<Option>
+					<Id>1751886676413</Id>
+					<Name><![CDATA[BUILDING]]></Name>
+				</Option>
+				<Option>
+					<Id>1751886681120</Id>
+					<Name><![CDATA[HEAT_GRID]]></Name>
+				</Option>
+				<Option>
+					<Id>1751888823414</Id>
+					<Name><![CDATA[HEAT_STORAGE]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>

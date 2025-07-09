@@ -18,6 +18,8 @@ public class J_AVGC_data implements Serializable {
 	public double p_gas_kWhpm3;
 	public double p_diesel_kWhpl;
 	public double p_gasoline_kWhpl;
+	public double p_waterHeatCapacity_JpkgK;
+	public double p_waterDensity_kgpm3;
 	public OL_GridConnectionHeatingType p_avgUtilityHeatingMethod;
 	public double p_avgUtilityConnectionCapacity_kW;
 	public double p_avgUtilityPVPower_kWp;
@@ -62,6 +64,11 @@ public class J_AVGC_data implements Serializable {
 	public double p_v1gProbability;
 	public double p_v2gProbability;
 	public int p_avgEVsPerPublicCharger;
+	public double p_avgPTPower_kWpm2;
+	public double p_avgMaxHeatBufferTemperature_degC;
+	public double p_avgMinHeatBufferTemperature_degC;
+	public double p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
+	public double p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
 	/**
      * Default constructor
      */

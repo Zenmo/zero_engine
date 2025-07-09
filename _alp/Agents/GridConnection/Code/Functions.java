@@ -234,10 +234,16 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 double f_manageHeatingAssets()
 {/*ALCODESTART::1669025846794*/
 // TODO: This only works for fixed heat demands; also need to implement heating of a building modeled as a ThermalStorageAsset! [GH 21/11/2022]
+if(p_heatBuffer != null){
+	double chargeSetpoint_kW = -fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+	p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / p_heatBuffer.getCapacityHeat_kW();
+	p_heatBuffer.f_updateAllFlows(p_heatBuffer.v_powerFraction_fr);
+}
+
 double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
-if(powerDemand_kW < 0 && v_liveAssetsMetaData.hasPT){
-	return;
+if(powerDemand_kW < 0 && v_liveAssetsMetaData.hasPT){//If there is 'overproduction' of heat, that can not be collected by the heat buffer: no power demand -> will be curtailed.
+	powerDemand_kW = 0;
 }
 
 if ( p_BuildingThermalAsset == null ) {
@@ -681,7 +687,7 @@ if (j_ea instanceof J_EAVehicle) {
 			p_primaryHeatingAsset = (J_EAConversion)j_ea;
 		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		energyModel.c_ambientDependentAssets.add(j_ea);
 		c_electricHeatpumpAssets.add(j_ea);
 		//c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
@@ -714,7 +720,7 @@ if (j_ea instanceof J_EAVehicle) {
 			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
 		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
 		//v_tempSetpoint_degC = p_BuildingThermalAsset.setTemperature_degC;		
-		energyModel.c_ambientAirDependentAssets.add(p_BuildingThermalAsset);
+		energyModel.c_ambientDependentAssets.add(p_BuildingThermalAsset);
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
@@ -727,7 +733,7 @@ if (j_ea instanceof J_EAVehicle) {
 		
 	} else if (j_ea instanceof J_EAStorageHeat) {
 		p_heatBuffer = (J_EAStorageHeat)j_ea;
-		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		energyModel.c_ambientDependentAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
@@ -1052,7 +1058,7 @@ if (j_ea instanceof J_EAVehicle) {
 		if (j_ea instanceof J_EAConversionGasBurner) {
 	
 		} else if (j_ea instanceof J_EAConversionHeatPump) {
-			energyModel.c_ambientAirDependentAssets.remove(j_ea);
+			energyModel.c_ambientDependentAssets.remove(j_ea);
 			c_electricHeatpumpAssets.remove(j_ea);
 		} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 
@@ -1075,7 +1081,7 @@ if (j_ea instanceof J_EAVehicle) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
-		energyModel.c_ambientAirDependentAssets.remove(j_ea);
+		energyModel.c_ambientDependentAssets.remove(j_ea);
 		p_BuildingThermalAsset = null;
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = null;
@@ -1177,9 +1183,6 @@ if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) < 0) {//Heat (for now 
 		}
 	}
 }
-
-
-
 /*ALCODEEND*/}
 
 double f_nfatoUpdateConnectionCapacity()
