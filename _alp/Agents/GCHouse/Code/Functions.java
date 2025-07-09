@@ -25,27 +25,25 @@ setHeatingTargetTemp();
 switch (p_heatingType) {	
 	case GASBURNER:
 		f_heatWithGasburner( );
-	break;
-	
+		break;
 	case HEATPUMP_AIR:
 		f_heatWithHeatpump( );
-	break;
-	
+		break;
 	case HEATPUMP_GASPEAK:
 		f_heatWithHybridHeatpump();
-	break;
-	
+		break;
 	case HEATPUMP_BOILERPEAK:
-		traceln("House " + p_gridConnectionID + " has anunsupported heating asset!");
-	break;
-	
+		traceln("House " + p_gridConnectionID + " has an unsupported heating asset!");
+		break;
 	case DISTRICTHEAT:
 		f_heatWithDistrictHeat();
-	break;
-	
+		break;
+	case LT_DISTRICTHEAT:
+		f_heatWithLTDistrictHeat();
+		break;
 	default:
-		traceln("Ubsupported heatingtype in household");
-	break;
+		traceln("Unsupported heatingtype in household");
+		break;
 }
 
 f_manageCookingTracker();
@@ -812,20 +810,20 @@ if (j_ea instanceof J_EAConversion) {
 		switch (p_heatingType) {
         	case HEATPUMP_AIR:
         		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-        	break;
+        		break;
         	case HEATPUMP_GASPEAK:
 				p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionHeatPump? (J_EAConversion)j_ea : p_primaryHeatingAsset;
 	            p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-            break;
+            	break;
             case HEATPUMP_BOILERPEAK:    // ambigue wat we met boiler bedoelen; eboiler of grootschalige DH_boiler = gasburner!
                 p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionHeatPump? (J_EAConversion)j_ea : p_primaryHeatingAsset;
                 p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
                 p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionElectricHeater? (J_EAConversion)j_ea : p_secondaryHeatingAsset;                                          
-            break;
+            	break;
             case GASBURNER:
                 p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_primaryHeatingAsset;
                 p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasCHP? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-            break;
+            	break;
             case DISTRICTHEAT:
                 if( j_ea instanceof J_EAConversionHeatDeliverySet ){
 					p_primaryHeatingAsset = (J_EAConversion)j_ea;
@@ -841,8 +839,11 @@ if (j_ea instanceof J_EAConversion) {
 					}
 					*/
 				}	
-            break;
-            default: throw new IllegalStateException("Invalid DistrictHeating HeatingType: " + p_heatingType);
+            	break;
+            case LT_DISTRICTHEAT:
+            	p_primaryHeatingAsset = (J_EAConversion)j_ea;
+            	break;
+            default: throw new IllegalStateException("Invalid HeatingType: " + p_heatingType);
       	}
     }
 }
@@ -950,7 +951,7 @@ if ( p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet && p_Buildin
 }
 else {
 	traceln("House " + p_gridConnectionID + " has heatingtype DISTRICT HEAT, but no delivery set or building asset!");
-}	
+}
 /*ALCODEEND*/}
 
 double f_manageCookingTracker()
@@ -1018,6 +1019,27 @@ if (j_ea instanceof J_EAEV) {
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
 	c_electricHeatpumpAssets.remove(j_ea);
+}
+/*ALCODEEND*/}
+
+double f_heatWithLTDistrictHeat()
+{/*ALCODESTART::1752073360816*/
+if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump && p_BuildingThermalAsset != null) { 
+	// The only supported combination is currently a heatpump as booster and heatdemand from a building asset (and hot water)
+	if (p_BuildingThermalAsset.getCurrentTemperature() < v_tempSetpoint_degC - p_heatingKickinTreshold_degC) {
+		double powerDemand_kW = v_hotwaterDemand_kW + (v_tempSetpoint_degC - p_BuildingThermalAsset.getCurrentTemperature()) * p_BuildingThermalAsset.getHeatCapacity_JpK() / 3.6e6;
+		p_primaryHeatingAsset.v_powerFraction_fr = min(1, powerDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()  );
+		p_BuildingThermalAsset.v_powerFraction_fr = max(0, (  p_primaryHeatingAsset.v_powerFraction_fr * p_primaryHeatingAsset.getOutputCapacity_kW()  - v_hotwaterDemand_kW ) / p_BuildingThermalAsset.getCapacityHeat_kW());			
+	}
+	else { 
+		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr = 0;
+	}
+	// Put the heat imported from the heat grid back into the balance flowsmap
+	fm_currentBalanceFlows_kW.put(OL_EnergyCarriers.HEAT, p_primaryHeatingAsset.v_powerFraction_fr * ( p_primaryHeatingAsset.getOutputCapacity_kW() - p_primaryHeatingAsset.getInputCapacity_kW() ) );
+}
+else {
+	throw new RuntimeException("House " + p_gridConnectionID + " has heatingtype LT DISTRICTHEAT, but no booster or building asset!");
 }
 /*ALCODEEND*/}
 

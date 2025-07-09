@@ -1070,7 +1070,7 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
-	if (j_ea instnaceof J_EAStorageHeat) {
+	if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientDependentAssets.remove(j_ea);
 		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
 			p_BuildingThermalAsset = null;
@@ -1451,7 +1451,9 @@ v_liveData.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(v_ptProduction
 
 
 //District heating
-v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+//if (p_heatingType != LT_DISTRICTHEAT) { // LT District heating calculates this from the HP Output - HP Input
+	v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+//}
 v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(v_districtHeatDelivery_kW, 3));	
 
 
