@@ -821,10 +821,10 @@ if (energyModel.v_isRapidRun){
 	
 	//Energy carrier flows
 	for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
-		v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+		v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, roundToDecimal(fm_currentConsumptionFlows_kW.get(EC), 3) );
 	}
 	for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
-		v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
+		v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, roundToDecimal(fm_currentProductionFlows_kW.get(EC), 3) );
 	}
 	
 	
@@ -848,39 +848,39 @@ if (energyModel.v_isRapidRun){
 	v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
 	
 	//Cooking
-	v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
+	v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, roundToDecimal(v_electricHobConsumption_kW, 3));
 	
 	//Hydrogen elec consumption
-	v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
+	v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, roundToDecimal(max(0, v_hydrogenElectricityConsumption_kW), 3));
 	
 	//Heatpump elec consumption
-	v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
+	v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, roundToDecimal(max(0, v_heatPumpElectricityConsumption_kW), 3));
 	
 	//EVs
-	v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
-	v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
+	v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, roundToDecimal(max(0,v_evChargingPowerElectric_kW), 3));
+	v_liveData.data_V2GSupply_kW.add(currentTime_h, roundToDecimal(max(0, -v_evChargingPowerElectric_kW), 3));
 	
 	//Batteries
-	v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
-	v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
+	v_liveData.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(max(0, v_batteryPowerElectric_kW), 3));		
+	v_liveData.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(max(0, -v_batteryPowerElectric_kW), 3));	
 	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
 	double currentSOC = 0;
 	if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
 		currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
-	v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
+	v_liveData.data_batterySOC_fr.add(currentTime_h, roundToDecimal(currentSOC, 3));
 	
 	//CHP production
-	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
+	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, roundToDecimal(v_CHPProductionElectric_kW, 3));
 	
 	//PV production
-	v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
+	v_liveData.data_PVGeneration_kW.add(currentTime_h, roundToDecimal(v_pvProductionElectric_kW, 3));
 	
 	//Wind production
-	v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
+	v_liveData.data_windGeneration_kW.add(currentTime_h, roundToDecimal(v_windProductionElectric_kW, 3));	
 	
 	//District heating
-	v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
+	v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)), 3));	
 
 }
 
@@ -1467,10 +1467,10 @@ for (int i=0; i < liveWeekSize; i++){
 	}
 	
 	for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers) {
-		v_liveData.dsm_liveDemand_kW.get(EC_consumption).add(timeAxisValue, fm_demand_kW.get(EC_consumption));
+		v_liveData.dsm_liveDemand_kW.get(EC_consumption).add(timeAxisValue, roundToDecimal(fm_demand_kW.get(EC_consumption), 3));
 	}
 	for (OL_EnergyCarriers EC_production : v_activeProductionEnergyCarriers) {
-		v_liveData.dsm_liveSupply_kW.get(EC_production).add(timeAxisValue, fm_supply_kW.get(EC_production));
+		v_liveData.dsm_liveSupply_kW.get(EC_production).add(timeAxisValue, roundToDecimal(fm_supply_kW.get(EC_production), 3));
 	}
 	
 		
@@ -1479,19 +1479,19 @@ for (int i=0; i < liveWeekSize; i++){
 	v_liveData.data_liveElectricityBalance_kW.add(timeAxisValue, netLoadLiveWeek_kW);
 	
 	v_liveData.data_baseloadElectricityDemand_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
-	v_liveData.data_heatPumpElectricityDemand_kW.add(timeAxisValue, electricityForHeatDemandLiveWeek_kW);
-	v_liveData.data_electricVehicleDemand_kW.add(timeAxisValue, electricityForTransportDemandLiveWeek_kW);
-	v_liveData.data_batteryCharging_kW.add(timeAxisValue, electricityForStorageDemandLiveWeek_kW);
-	v_liveData.data_hydrogenElectricityDemand_kW.add(timeAxisValue, electricityForHydrogenDemandLiveWeek_kW);
-	v_liveData.data_cookingElectricityDemand_kW.add(timeAxisValue, electricityForCookingConsumptionLiveWeek_kW);
-	v_liveData.data_districtHeatDelivery_kW.add(timeAxisValue, districtHeatingDemandLiveWeek_kW);
+	v_liveData.data_heatPumpElectricityDemand_kW.add(timeAxisValue, roundToDecimal(electricityForHeatDemandLiveWeek_kW, 3));
+	v_liveData.data_electricVehicleDemand_kW.add(timeAxisValue, roundToDecimal(electricityForTransportDemandLiveWeek_kW, 3));
+	v_liveData.data_batteryCharging_kW.add(timeAxisValue, roundToDecimal(electricityForStorageDemandLiveWeek_kW, 3));
+	v_liveData.data_hydrogenElectricityDemand_kW.add(timeAxisValue, roundToDecimal(electricityForHydrogenDemandLiveWeek_kW, 3));
+	v_liveData.data_cookingElectricityDemand_kW.add(timeAxisValue, roundToDecimal(electricityForCookingConsumptionLiveWeek_kW, 3));
+	v_liveData.data_districtHeatDelivery_kW.add(timeAxisValue, roundToDecimal(districtHeatingDemandLiveWeek_kW, 3));
 	
 	// Supply
-	v_liveData.data_windGeneration_kW.add(timeAxisValue, windElectricitySupplyLiveWeek_kW);
-	v_liveData.data_PVGeneration_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
-	v_liveData.data_batteryDischarging_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
-	v_liveData.data_V2GSupply_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
-	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
+	v_liveData.data_windGeneration_kW.add(timeAxisValue, roundToDecimal(windElectricitySupplyLiveWeek_kW, 3));
+	v_liveData.data_PVGeneration_kW.add(timeAxisValue, roundToDecimal(PVElectricitySupplyLiveWeek_kW, 3));
+	v_liveData.data_batteryDischarging_kW.add(timeAxisValue, roundToDecimal(storageElectricitySupplyLiveWeek_kW, 3));
+	v_liveData.data_V2GSupply_kW.add(timeAxisValue, roundToDecimal(V2GElectricitySupplyLiveWeek_kW, 3));
+	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(timeAxisValue, roundToDecimal(CHPElectricitySupplyLiveWeek_kW, 3));
 	
 	//Stored
 	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(timeAxisValue, batteryStoredEnergyLiveWeek_MWh);
@@ -1781,6 +1781,212 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 
 double f_recalculateSOCDataSet_live()
 {/*ALCODESTART::1744271942642*/
+double totalInstalledBatteryStorageCapacity_MWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+
+
+double currentSOC = 0;
+int liveWeekSize = v_liveData.data_batteryStoredEnergyLiveWeek_MWh.size();
+
+for (int i=0; i < liveWeekSize; i++){
+	if(totalInstalledBatteryStorageCapacity_MWh > 0){
+		currentSOC = v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(i)/totalInstalledBatteryStorageCapacity_MWh;
+	}
+	else{
+		currentSOC = 0;
+	}
+	v_liveData.data_batterySOC_fr.add(v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getX(i), roundToDecimal(currentSOC, 3));
+}
+/*ALCODEEND*/}
+
+double f_updateLiveDataSets1()
+{/*ALCODESTART::1751294580400*/
+if (energyModel.v_isRapidRun){
+	f_rapidRunDataLogging();
+} else {
+	//Current timestep
+	double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
+	
+	//Energy carrier flows
+	for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
+		v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, fm_currentConsumptionFlows_kW.get(EC) );
+	}
+	for (OL_EnergyCarriers EC : v_activeProductionEnergyCarriers) {
+		v_liveData.dsm_liveSupply_kW.get(EC).add( currentTime_h, fm_currentProductionFlows_kW.get(EC) );
+	}
+	
+	
+	//Electricity balance
+	v_liveData.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+	
+	
+	//Total demand and supply
+	v_liveData.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
+	v_liveData.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
+	
+	
+	//Live capacity datasets
+	v_liveData.data_gridCapacityDemand_kW.add(currentTime_h, v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
+	v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, -v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+	
+	
+	//// Gather specific electricity flows from corresponding energy assets
+	
+	//Baseload electricity
+	v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
+	
+	//Cooking
+	v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, v_electricHobConsumption_kW);
+	
+	//Hydrogen elec consumption
+	v_liveData.data_hydrogenElectricityDemand_kW.add(currentTime_h, max(0, v_hydrogenElectricityConsumption_kW));
+	
+	//Heatpump elec consumption
+	v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, max(0, v_heatPumpElectricityConsumption_kW));
+	
+	//EVs
+	v_liveData.data_electricVehicleDemand_kW.add(currentTime_h, max(0,v_evChargingPowerElectric_kW));
+	v_liveData.data_V2GSupply_kW.add(currentTime_h, max(0, -v_evChargingPowerElectric_kW));
+	
+	//Batteries
+	v_liveData.data_batteryCharging_kW.add(currentTime_h, max(0, v_batteryPowerElectric_kW));		
+	v_liveData.data_batteryDischarging_kW.add(currentTime_h, max(0, -v_batteryPowerElectric_kW));	
+	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, v_batteryStoredEnergy_kWh/1000);
+	double currentSOC = 0;
+	if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+		currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
+	v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
+	
+	//CHP production
+	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, v_CHPProductionElectric_kW);
+	
+	//PV production
+	v_liveData.data_PVGeneration_kW.add(currentTime_h, v_pvProductionElectric_kW);
+	
+	//Wind production
+	v_liveData.data_windGeneration_kW.add(currentTime_h, v_windProductionElectric_kW);	
+	
+	//District heating
+	v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT)));	
+
+}
+
+/*ALCODEEND*/}
+
+double f_collectGridConnectionLiveData1()
+{/*ALCODESTART::1751300044792*/
+ArrayList<GridConnection> gcList = f_getAllChildMemberGridConnections();
+
+int liveWeekSize = gcList.get(0).v_liveData.data_gridCapacityDemand_kW.size();
+
+for (int i=0; i < liveWeekSize; i++){
+	
+	double timeAxisValue = gcList.get(0).v_liveData.data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
+	
+	// Demand
+	J_FlowsMap fm_demand_kW = new J_FlowsMap();
+	
+	double electricityDemandCapacityLiveWeek_kW = 0;
+	double electricitySupplyCapacityLiveWeek_kW = 0;
+	double netLoadLiveWeek_kW = 0;
+	
+	double baseloadElectricityDemandLiveWeek_kW = 0;
+	double electricityForHeatDemandLiveWeek_kW = 0;
+	double electricityForTransportDemandLiveWeek_kW = 0;
+	double petroleumProductsDemandLiveWeek_kW = 0;
+	double naturalGasDemandLiveWeek_kW = 0;
+	double electricityForStorageDemandLiveWeek_kW = 0;
+	double electricityForHydrogenDemandLiveWeek_kW = 0;
+	double electricityForCookingConsumptionLiveWeek_kW = 0;
+	
+	double districtHeatingDemandLiveWeek_kW = 0;
+	
+	// Supply
+	J_FlowsMap fm_supply_kW = new J_FlowsMap();
+
+	double windElectricitySupplyLiveWeek_kW = 0;
+	double PVElectricitySupplyLiveWeek_kW = 0;
+	double storageElectricitySupplyLiveWeek_kW = 0;
+	double V2GElectricitySupplyLiveWeek_kW = 0;
+	double hydrogenSupplyLiveWeek_kW = 0;
+	double CHPElectricitySupplyLiveWeek_kW = 0;
+	
+	//Other
+	double batteryStoredEnergyLiveWeek_MWh = 0;
+	
+	for (GridConnection gc : gcList){
+		for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
+			fm_demand_kW.addFlow( EC_consumption, gc.v_liveData.dsm_liveDemand_kW.get(EC_consumption).getY(i));
+		}
+		for (OL_EnergyCarriers EC_production : gc.v_activeProductionEnergyCarriers) {
+			fm_supply_kW.addFlow( EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(i));
+		}
+		
+		electricityDemandCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacityDemand_kW.getY(i);
+		electricitySupplyCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacitySupply_kW.getY(i);
+		netLoadLiveWeek_kW  += gc.v_liveData.data_liveElectricityBalance_kW.getY(i);
+	
+		baseloadElectricityDemandLiveWeek_kW  += gc.v_liveData.data_baseloadElectricityDemand_kW.getY(i);
+		electricityForHeatDemandLiveWeek_kW  += gc.v_liveData.data_heatPumpElectricityDemand_kW.getY(i);
+		electricityForTransportDemandLiveWeek_kW += gc.v_liveData.data_electricVehicleDemand_kW.getY(i);
+		electricityForStorageDemandLiveWeek_kW  += gc.v_liveData.data_batteryCharging_kW.getY(i);
+		electricityForHydrogenDemandLiveWeek_kW  += gc.v_liveData.data_hydrogenElectricityDemand_kW.getY(i);
+		electricityForCookingConsumptionLiveWeek_kW += gc.v_liveData.data_cookingElectricityDemand_kW.getY(i);
+		districtHeatingDemandLiveWeek_kW += gc.v_liveData.data_districtHeatDelivery_kW.getY(i);
+		
+		// Supply
+		windElectricitySupplyLiveWeek_kW  += gc.v_liveData.data_windGeneration_kW.getY(i);
+		PVElectricitySupplyLiveWeek_kW  += gc.v_liveData.data_PVGeneration_kW.getY(i);
+		storageElectricitySupplyLiveWeek_kW  += gc.v_liveData.data_batteryDischarging_kW.getY(i);
+		V2GElectricitySupplyLiveWeek_kW  += gc.v_liveData.data_V2GSupply_kW.getY(i);
+		CHPElectricitySupplyLiveWeek_kW  += gc.v_liveData.data_CHPElectricityProductionLiveWeek_kW.getY(i);
+		
+		//Other 
+		batteryStoredEnergyLiveWeek_MWh += 	gc.v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(i);
+	}
+	
+	for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers) {
+		v_liveData.dsm_liveDemand_kW.get(EC_consumption).add(timeAxisValue, fm_demand_kW.get(EC_consumption));
+	}
+	for (OL_EnergyCarriers EC_production : v_activeProductionEnergyCarriers) {
+		v_liveData.dsm_liveSupply_kW.get(EC_production).add(timeAxisValue, fm_supply_kW.get(EC_production));
+	}
+	
+		
+	v_liveData.data_gridCapacityDemand_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
+	v_liveData.data_gridCapacitySupply_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
+	v_liveData.data_liveElectricityBalance_kW.add(timeAxisValue, netLoadLiveWeek_kW);
+	
+	v_liveData.data_baseloadElectricityDemand_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
+	v_liveData.data_heatPumpElectricityDemand_kW.add(timeAxisValue, electricityForHeatDemandLiveWeek_kW);
+	v_liveData.data_electricVehicleDemand_kW.add(timeAxisValue, electricityForTransportDemandLiveWeek_kW);
+	v_liveData.data_batteryCharging_kW.add(timeAxisValue, electricityForStorageDemandLiveWeek_kW);
+	v_liveData.data_hydrogenElectricityDemand_kW.add(timeAxisValue, electricityForHydrogenDemandLiveWeek_kW);
+	v_liveData.data_cookingElectricityDemand_kW.add(timeAxisValue, electricityForCookingConsumptionLiveWeek_kW);
+	v_liveData.data_districtHeatDelivery_kW.add(timeAxisValue, districtHeatingDemandLiveWeek_kW);
+	
+	// Supply
+	v_liveData.data_windGeneration_kW.add(timeAxisValue, windElectricitySupplyLiveWeek_kW);
+	v_liveData.data_PVGeneration_kW.add(timeAxisValue, PVElectricitySupplyLiveWeek_kW);
+	v_liveData.data_batteryDischarging_kW.add(timeAxisValue, storageElectricitySupplyLiveWeek_kW);
+	v_liveData.data_V2GSupply_kW.add(timeAxisValue, V2GElectricitySupplyLiveWeek_kW);
+	v_liveData.data_CHPElectricityProductionLiveWeek_kW.add(timeAxisValue, CHPElectricitySupplyLiveWeek_kW);
+	
+	//Stored
+	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(timeAxisValue, batteryStoredEnergyLiveWeek_MWh);
+}
+
+
+//Calculate cumulative asset capacities
+f_getTotalInstalledCapacityOfAssets_live();
+
+//Recalculate SOC ts for energycoop
+f_recalculateSOCDataSet_live();
+
+/*ALCODEEND*/}
+
+double f_recalculateSOCDataSet_live1()
+{/*ALCODESTART::1751300243591*/
 double totalInstalledBatteryStorageCapacity_MWh = v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 
 

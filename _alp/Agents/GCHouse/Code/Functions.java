@@ -93,8 +93,9 @@ if ( p_batteryAsset != null ) {
 			f_batteryManagementPrice(v_batterySOC_fr);
 		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
 			f_batteryManagementNodalPricing(v_batterySOC_fr);
+		} else if (p_batteryOperationMode == OL_BatteryOperationMode.SELF_CONSUMPTION){
+			f_batteryManagementSelfConsumption();
 		}
-
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
 		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 	}

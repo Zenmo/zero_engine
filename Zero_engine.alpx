@@ -1393,6 +1393,7 @@
 			<JavaClass>
 				<Id>1661266990567</Id>
 				<Name><![CDATA[J_ExperimentSettingsData]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</JavaClass>
 			<JavaClass>
 				<Id>1661349111073</Id>
@@ -1419,6 +1420,7 @@
 			<JavaClass>
 				<Id>1666879973864</Id>
 				<Name><![CDATA[J_SimulationResults]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 			</JavaClass>
 			<JavaClass>
 				<Id>1666879973865</Id>

@@ -21,7 +21,8 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectric_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-		this.stateOfCharge_r = stateOfCharge_r;
+		this.initialStateOfCharge_r = stateOfCharge_r;
+		this.stateOfCharge_r = this.initialStateOfCharge_r;
 		this.timestep_h = timestep_h;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
 		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
