@@ -119,8 +119,8 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
     }
-
-    //public Pair<J_FlowsMap, Double> curtailElectricityProduction(double curtailmentSetpoint_kW) {
+	
+    // This function could be removed, now that we have the more generic: curtailEnergyCarrierProduction
     public void curtailElectricityProduction(double curtailmentSetpoint_kW) {  // This variable is called curtailmentSetpoint, but maybe its better to call it curtailment amount? it represents the amount of production we need to curtail, not the amount we want to produce.
     	double currentProduction_kW = -this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
     	//traceln("currentProduction_kW: " + currentProduction_kW);

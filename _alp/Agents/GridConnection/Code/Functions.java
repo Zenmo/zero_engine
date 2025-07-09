@@ -706,21 +706,14 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
-		//traceln("Adding buildingThermals to gridconnection");	
-		p_BuildingThermalAsset = (J_EABuilding)j_ea;
-			/*if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
-				double lossFactor_WpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("lossFactor_WpK").doubleValue();
-				double heatCapacity_JpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("heatCapacity_JpK").doubleValue();
-				p_BuildingThermalAsset.lossFactor_WpK = lossFactor_WpK2;
-				p_BuildingThermalAsset.heatCapacity_JpK = heatCapacity_JpK2;
-				traceln("House thermal model updated!");
-				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_energyLabel);
-				traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
-			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
-		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
-		//v_tempSetpoint_degC = p_BuildingThermalAsset.setTemperature_degC;		
-		energyModel.c_ambientDependentAssets.add(p_BuildingThermalAsset);
+	if (j_ea instanceof J_EAStorageHeat) {
+		energyModel.c_ambientDependentAssets.add(j_ea);
+		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+			p_BuildingThermalAsset = (J_EABuilding)j_ea;
+		}
+		else {
+			p_heatBuffer = (J_EAStorageHeat)j_ea;
+		}
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
@@ -731,9 +724,6 @@ if (j_ea instanceof J_EAVehicle) {
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		
-	} else if (j_ea instanceof J_EAStorageHeat) {
-		p_heatBuffer = (J_EAStorageHeat)j_ea;
-		energyModel.c_ambientDependentAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
@@ -1080,9 +1070,14 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+	if (j_ea instnaceof J_EAStorageHeat) {
 		energyModel.c_ambientDependentAssets.remove(j_ea);
-		p_BuildingThermalAsset = null;
+		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
+			p_BuildingThermalAsset = null;
+		}
+		else {
+			p_heatBuffer = null;
+		}
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = null;
 	} else if (j_ea instanceof J_EAStorageElectric) {
