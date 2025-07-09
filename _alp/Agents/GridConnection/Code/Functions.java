@@ -1070,7 +1070,7 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
-	if (j_ea instnaceof J_EAStorageHeat) {
+	if (j_ea instanceof J_EAStorageHeat) {
 		energyModel.c_ambientDependentAssets.remove(j_ea);
 		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
 			p_BuildingThermalAsset = null;
