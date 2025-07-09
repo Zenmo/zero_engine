@@ -625,10 +625,10 @@ while(peakSurface_kWh < batteryStorageCapacity_kWh && maxPeak_kW > 0){ //assumpt
 		}
 	}
 }
-traceln("The maximum peak power is " + Arrays.stream(nettoBalance_kW).max().getAsDouble() + " kW");
-traceln("The limit it starts shaving is above " + prevMaxPeak_kW + " kW");
-traceln("Previous peak surface is "+ prevPeakSurface_kWh + " kWh");
-traceln("Peak surface is "+ peakSurface_kWh + " kWh");
+//traceln("The maximum peak power is " + Arrays.stream(nettoBalance_kW).max().getAsDouble() + " kW");
+//traceln("The limit it starts shaving is above " + prevMaxPeak_kW + " kW");
+//traceln("Previous peak surface is "+ prevPeakSurface_kWh + " kWh");
+//traceln("Peak surface is "+ peakSurface_kWh + " kWh");
 //Initialize chargepoint array
 v_batteryDischargingPeakShavingAdvancedForecast_kW = new double[96];
 
