@@ -8,9 +8,9 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 	protected double stateOfCharge_r;
 	protected double initialStateOfCharge_r;
 	protected double stateOfChargeStored_r;
-	protected double lossFactor_r;
-	protected double ambientTemperature_degC;
-	protected String ambientTempType;
+	//protected double lossFactor_r;
+	//protected double ambientTemperature_degC;
+	//protected String ambientTempType;
 	protected double discharged_kWh = 0;
 	protected double charged_kWh = 0;
 
@@ -18,23 +18,6 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
      * Default constructor
      */
     public J_EAStorage() {
-    }
-
-    /**
-     * Constructor initializing the fields
-     */
-    public J_EAStorage(Agent parentAgent, double chargeCapacityElectric_kW, double chargeCapacityHeat_kW, OL_EnergyCarriers storageMedium, double storageCapacity_kWh, double stateOfCharge, double lossFactor, double timestep_h, String ambientTempType) {
-		this.parentAgent = parentAgent;
-		//this.capacityElectric_kW = chargeCapacityElectric_kW;  // capacity for charging/discharging in kW
-		//this.capacityHeat_kW = chargeCapacityHeat_kW;				// capacity for charging/discharging in kW
-		this.storageMedium = storageMedium;
-		this.storageCapacity_kWh = storageCapacity_kWh;
-		this.initialStateOfCharge_r = stateOfCharge;
-		this.stateOfCharge_r = initialStateOfCharge_r;
-		this.lossFactor_r = lossFactor;
-		this.timestep_h = timestep_h;
-		this.ambientTempType = ambientTempType;
-		registerEnergyAsset();
     }
 
     public void calculateLoss() {

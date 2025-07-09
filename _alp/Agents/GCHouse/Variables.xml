@@ -3,8 +3,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1674397034293</Id>
 		<Name><![CDATA[v_vehicleSOC_fr]]></Name>
-		<X>1120</X>
-		<Y>470</Y>
+		<X>1260</X>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -22,8 +22,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1674414939371</Id>
 		<Name><![CDATA[v_vehicleChargingNeed]]></Name>
-		<X>1120</X>
-		<Y>490</Y>
+		<X>1260</X>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -83,8 +83,8 @@
 		<Id>1675025488988</Id>
 		<Name><![CDATA[v_currentPriceLevel]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1120</X>
-		<Y>510</Y>
+		<X>1230</X>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -315,8 +315,8 @@
 	<Variable Class="Parameter">
 		<Id>1674464900101</Id>
 		<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
-		<X>540</X>
-		<Y>640</Y>
+		<X>570</X>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -343,8 +343,8 @@
 	<Variable Class="Parameter">
 		<Id>1675032836511</Id>
 		<Name><![CDATA[p_householdEV]]></Name>
-		<X>640</X>
-		<Y>320</Y>
+		<X>600</X>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -368,8 +368,8 @@
 	<Variable Class="Parameter">
 		<Id>1675169216646</Id>
 		<Name><![CDATA[p_minChargingPower_kW]]></Name>
-		<X>540</X>
-		<Y>660</Y>
+		<X>570</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -426,8 +426,8 @@
 		<Id>1702369144256</Id>
 		<Name><![CDATA[p_hasElectricHob]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>540</X>
-		<Y>560</Y>
+		<X>570</X>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -454,8 +454,8 @@
 	<Variable Class="Parameter">
 		<Id>1702369144261</Id>
 		<Name><![CDATA[p_smartHeatingEnabled]]></Name>
-		<X>540</X>
-		<Y>580</Y>
+		<X>570</X>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -482,8 +482,8 @@
 	<Variable Class="Parameter">
 		<Id>1702369144264</Id>
 		<Name><![CDATA[p_pricelevelLowDifFromAvg_eurpkWh]]></Name>
-		<X>540</X>
-		<Y>600</Y>
+		<X>570</X>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -507,8 +507,8 @@
 	<Variable Class="Parameter">
 		<Id>1702369144267</Id>
 		<Name><![CDATA[p_pricelevelHighDifFromAvg_eurpkWh]]></Name>
-		<X>540</X>
-		<Y>620</Y>
+		<X>570</X>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -533,8 +533,8 @@
 		<Id>1702369144270</Id>
 		<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 		<Description><![CDATA[[degrees]]]></Description>
-		<X>540</X>
-		<Y>540</Y>
+		<X>570</X>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -664,8 +664,8 @@
 	<Variable Class="Parameter">
 		<Id>1749653249111</Id>
 		<Name><![CDATA[p_airco]]></Name>
-		<X>1510</X>
-		<Y>870</Y>
+		<X>1240</X>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

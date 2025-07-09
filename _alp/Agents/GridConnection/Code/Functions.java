@@ -80,6 +80,7 @@ v_evChargingPowerElectric_kW = 0;
 v_batteryPowerElectric_kW = 0;
 v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
+v_ptProductionHeat_kW = 0;
 v_conversionPowerElectric_kW = 0;
 v_CHPProductionElectric_kW = 0;
 v_districtHeatDelivery_kW = 0;
@@ -93,9 +94,7 @@ c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_ru
 f_operateFixedAssets();
 f_operateFlexAssets();
 
-if (v_enableCurtailment) {
-	f_curtailment();
-}
+f_curtailment();
 
 f_connectionMetering();
 
@@ -235,7 +234,17 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 double f_manageHeatingAssets()
 {/*ALCODESTART::1669025846794*/
 // TODO: This only works for fixed heat demands; also need to implement heating of a building modeled as a ThermalStorageAsset! [GH 21/11/2022]
+if(p_heatBuffer != null){
+	double chargeSetpoint_kW = -fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+	p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / p_heatBuffer.getCapacityHeat_kW();
+	p_heatBuffer.f_updateAllFlows(p_heatBuffer.v_powerFraction_fr);
+}
+
 double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+
+if(powerDemand_kW < 0 && v_liveAssetsMetaData.hasPT){//If there is 'overproduction' of heat, that can not be collected by the heat buffer: no power demand -> will be curtailed.
+	powerDemand_kW = 0;
+}
 
 if ( p_BuildingThermalAsset == null ) {
 	if ( p_secondaryHeatingAsset == null ) { // Just one heating asset
@@ -644,6 +653,7 @@ if (j_ea instanceof J_EAVehicle) {
 		c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		v_liveAssetsMetaData.hasWindturbine = true;
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 		if ( p_parentNodeElectric != null ) {
@@ -652,6 +662,10 @@ if (j_ea instanceof J_EAVehicle) {
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 		c_windAssets.add(j_ea);
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+		v_liveAssetsMetaData.hasPT = true;
+		c_ptAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
@@ -673,7 +687,7 @@ if (j_ea instanceof J_EAVehicle) {
 			p_primaryHeatingAsset = (J_EAConversion)j_ea;
 		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		energyModel.c_ambientDependentAssets.add(j_ea);
 		c_electricHeatpumpAssets.add(j_ea);
 		//c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
@@ -692,21 +706,14 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
-		//traceln("Adding buildingThermals to gridconnection");	
-		p_BuildingThermalAsset = (J_EABuilding)j_ea;
-			/*if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
-				double lossFactor_WpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("lossFactor_WpK").doubleValue();
-				double heatCapacity_JpK2 = energyModel.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("heatCapacity_JpK").doubleValue();
-				p_BuildingThermalAsset.lossFactor_WpK = lossFactor_WpK2;
-				p_BuildingThermalAsset.heatCapacity_JpK = heatCapacity_JpK2;
-				traceln("House thermal model updated!");
-				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_energyLabel);
-				traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
-			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
-		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
-		//v_tempSetpoint_degC = p_BuildingThermalAsset.setTemperature_degC;		
-		energyModel.c_ambientAirDependentAssets.add(p_BuildingThermalAsset);
+	if (j_ea instanceof J_EAStorageHeat) {
+		energyModel.c_ambientDependentAssets.add(j_ea);
+		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+			p_BuildingThermalAsset = (J_EABuilding)j_ea;
+		}
+		else {
+			p_heatBuffer = (J_EAStorageHeat)j_ea;
+		}
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
@@ -717,8 +724,6 @@ if (j_ea instanceof J_EAVehicle) {
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		
-	} else if (j_ea instanceof J_EAStorageHeat) {
-		energyModel.c_ambientAirDependentAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
@@ -1023,6 +1028,12 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
 		c_windAssets.remove(j_ea);
 	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+		if (c_ptAssets.size() <= 1) {
+			v_liveAssetsMetaData.hasPT = false;
+		}
+		c_ptAssets.remove(j_ea);
+	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
@@ -1037,7 +1048,7 @@ if (j_ea instanceof J_EAVehicle) {
 		if (j_ea instanceof J_EAConversionGasBurner) {
 	
 		} else if (j_ea instanceof J_EAConversionHeatPump) {
-			energyModel.c_ambientAirDependentAssets.remove(j_ea);
+			energyModel.c_ambientDependentAssets.remove(j_ea);
 			c_electricHeatpumpAssets.remove(j_ea);
 		} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 
@@ -1059,9 +1070,14 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
 	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
-	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
-		energyModel.c_ambientAirDependentAssets.remove(j_ea);
-		p_BuildingThermalAsset = null;
+	if (j_ea instnaceof J_EAStorageHeat) {
+		energyModel.c_ambientDependentAssets.remove(j_ea);
+		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
+			p_BuildingThermalAsset = null;
+		}
+		else {
+			p_heatBuffer = null;
+		}
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = null;
 	} else if (j_ea instanceof J_EAStorageElectric) {
@@ -1109,45 +1125,58 @@ double f_resetSpecificGCStatesAfterRapidRun()
 
 double f_curtailment()
 {/*ALCODESTART::1720442672576*/
-switch(p_curtailmentMode) {
-	case CAPACITY:
-	// Keep feedin power within connection capacity
-	if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
-		for (J_EAProduction j_ea : c_productionAssets) {
-			j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-			if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
-				break;
-			}
-		}
-	}
-	break;
-	case MARKETPRICE:
-	if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
-		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
+//Electricity
+if (v_enableCurtailment) {
+	switch(p_curtailmentMode) {
+		case CAPACITY:
+		// Keep feedin power within connection capacity
+		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
 			for (J_EAProduction j_ea : c_productionAssets) {
-				j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
+				j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
 					break;
 				}
 			}
 		}
-	}
-	break;
-	case NODALPRICING:
-	// Prevent feedin when nodal price is negative
-	double priceTreshold_eur = -0.0;
-	if( p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
-	
-		double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
-		for (J_EAProduction j_ea : c_productionAssets) {
-			j_ea.curtailElectricityProduction(v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-			if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
-				break;
+		break;
+		case MARKETPRICE:
+		if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
+			if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
+				for (J_EAProduction j_ea : c_productionAssets) {
+					j_ea.curtailElectricityProduction( - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+					if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
+						break;
+					}
+				}
 			}
 		}
+		break;
+		case NODALPRICING:
+		// Prevent feedin when nodal price is negative
+		double priceTreshold_eur = -0.0;
+		if( p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
+		
+			double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
+			for (J_EAProduction j_ea : c_productionAssets) {
+				j_ea.curtailElectricityProduction(v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
+					break;
+				}
+			}
+		}
+		break;
+		default:
 	}
-	break;
-	default:
+}
+
+
+if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) < 0) {//Heat (for now always curtail over produced heat!)
+	for (J_EAProduction j_ea : c_productionAssets) {
+		j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+		if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) < 0)) {
+			break;
+		}
+	}
 }
 /*ALCODEEND*/}
 
@@ -1413,6 +1442,14 @@ for (J_EA j_ea : c_windAssets) {
 v_liveData.data_windGeneration_kW.add(currentTime_h, roundToDecimal(v_windProductionElectric_kW, 3));	
 
 
+//PT production
+v_ptProductionHeat_kW = 0;
+for (J_EA j_ea : c_ptAssets) {
+	v_ptProductionHeat_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
+}
+v_liveData.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(v_ptProductionHeat_kW, 3));
+
+
 //District heating
 v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
 v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(v_districtHeatDelivery_kW, 3));	
@@ -1527,6 +1564,11 @@ for (J_EA j_ea : c_windAssets) {
 	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
 
+v_ptProductionHeat_kW = 0;
+for (J_EA j_ea : c_ptAssets) {
+	v_ptProductionHeat_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
+}
+
 //District heating
 v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));	
 
@@ -1562,6 +1604,7 @@ if (energyModel.b_isSummerWeek){
 	
 	v_rapidRunData.acc_summerWeekPVProduction_kW.addStep( v_pvProductionElectric_kW );
 	v_rapidRunData.acc_summerWeekWindProduction_kW.addStep( v_windProductionElectric_kW );
+	v_rapidRunData.acc_summerWeekPTProduction_kW.addStep( v_ptProductionHeat_kW );
 	v_rapidRunData.acc_summerWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_summerWeekBatteriesProduction_kW.addStep( max(0,-v_batteryPowerElectric_kW) );
 	v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1606,6 +1649,7 @@ if (energyModel.b_isWinterWeek){
 	
 	v_rapidRunData.acc_winterWeekPVProduction_kW.addStep( v_pvProductionElectric_kW );
 	v_rapidRunData.acc_winterWeekWindProduction_kW.addStep( v_windProductionElectric_kW );
+	v_rapidRunData.acc_winterWeekPTProduction_kW.addStep( v_ptProductionHeat_kW );
 	v_rapidRunData.acc_winterWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_winterWeekBatteriesProduction_kW.addStep( max(0,-v_batteryPowerElectric_kW) );
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1641,6 +1685,7 @@ v_rapidRunData.acc_dailyAverageDistrictHeatingConsumption_kW.addStep( v_district
 
 v_rapidRunData.acc_dailyAveragePVProduction_kW.addStep( v_pvProductionElectric_kW );
 v_rapidRunData.acc_dailyAverageWindProduction_kW.addStep( v_windProductionElectric_kW );
+v_rapidRunData.acc_dailyAveragePTProduction_kW.addStep( v_ptProductionHeat_kW );
 v_rapidRunData.acc_dailyAverageV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.addStep( max(0,-v_batteryPowerElectric_kW) );
 v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1714,6 +1759,7 @@ if (!setActive) {
 	v_batteryPowerElectric_kW = 0;
 	v_windProductionElectric_kW = 0;
 	v_pvProductionElectric_kW = 0;
+	v_ptProductionHeat_kW = 0;
 	v_conversionPowerElectric_kW = 0;
 	v_CHPProductionElectric_kW = 0;
 	
