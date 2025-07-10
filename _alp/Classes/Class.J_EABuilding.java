@@ -3,7 +3,7 @@
  */
 public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Serializable {
 
-	public OL_EAStorageTypes heatStorageType;
+	//public OL_EAStorageTypes heatStorageType;
 
 	private double stateOfCharge_r;
 
@@ -37,14 +37,14 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
      */
     public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
 		this.parentAgent = parentAgent;
-		this.heatStorageType = OL_EAStorageTypes.HEATMODEL_BUILDING;
+		//this.heatStorageType = OL_EAStorageTypes.HEATMODEL_BUILDING;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
 		this.timestep_h = timestep_h;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
 		this.heatCapacity_JpK = heatCapacity_JpK;
-		this.ambientTempType = "AIR";
+		this.ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
 		this.energyAssetType = OL_EnergyAssetType.BUILDINGTHERMALS;

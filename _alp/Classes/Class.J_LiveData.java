@@ -21,6 +21,7 @@ public class J_LiveData {
 	public DataSet data_batteryCharging_kW = new DataSet(672);
 	public DataSet data_PVGeneration_kW = new DataSet(672);
 	public DataSet data_windGeneration_kW = new DataSet(672);
+	public DataSet data_PTGeneration_kW = new DataSet(672);
 	public DataSet data_batteryDischarging_kW = new DataSet(672);
 	public DataSet data_V2GSupply_kW = new DataSet(672);
 	public DataSet data_CHPElectricityProductionLiveWeek_kW = new DataSet(672);
@@ -65,6 +66,7 @@ public class J_LiveData {
 	    	data_batteryCharging_kW.add( t, 0);
 	    	data_PVGeneration_kW.add( t, 0);
 	    	data_windGeneration_kW.add( t, 0);
+	    	data_PTGeneration_kW.add( t, 0);
 	    	data_batteryDischarging_kW.add( t, 0);
 	    	data_V2GSupply_kW.add( t, 0);
 	    	data_CHPElectricityProductionLiveWeek_kW.add( t, 0);

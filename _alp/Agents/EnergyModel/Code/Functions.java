@@ -63,18 +63,8 @@ if (b_enableDLR) {
 //traceln("Current DLR factor: %s, ", v_currentDLRfactor_fr);
 //traceln("Time hour " + time(HOUR) + ", t_h " + t_h + ", fleet demand " + v_currentLogisticsFleetEDemand_fr);
 
-// Update environmental conditions for relevant energy assets
-for( J_EA e : c_ambientAirDependentAssets ) {
-	if( e instanceof J_EABuilding ) {
-		((J_EABuilding)e).updateSolarRadiation(v_currentSolarPowerNormalized_r*1000);
-	}
-	if( e instanceof J_EAStorageHeat) { // includes J_EABuilding
-		((J_EAStorageHeat)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
-	}
-	if (e instanceof J_EAConversionHeatPump) {
-		((J_EAConversionHeatPump)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );		
-	}
-}
+//Update ambient dependent assets
+f_updateAmbientDependentAssets();
 
 // Update forecasts,  the relevant profile pointers are already updated above
 c_forecasts.forEach(f -> f.updateForecast(t_h));
@@ -1006,6 +996,9 @@ v_liveData.data_PVGeneration_kW.add(currentTime_h, roundToDecimal(sum(c_gridConn
 //Wind
 v_liveData.data_windGeneration_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections,x->x.v_windProductionElectric_kW), 3));
 
+//PT
+v_liveData.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x->x.v_ptProductionHeat_kW), 3));
+
 //Battery discharge
 v_liveData.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x -> max(0, -x.v_batteryPowerElectric_kW)), 3));
 
@@ -1119,6 +1112,7 @@ double v_districtHeatDelivery_kW = sum(c_gridConnections, x->x.v_districtHeatDel
 
 double v_pvProductionElectric_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
 double v_windProductionElectric_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
+double v_ptProductionHeat_kW = sum(c_gridConnections, x->x.v_ptProductionHeat_kW);
 double currentBatteriesProduction_kW = sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW));
 double currentV2GProduction_kW = sum(c_gridConnections, x-> max(0, -x.v_evChargingPowerElectric_kW));
 double v_CHPProductionElectric_kW = sum(c_gridConnections, x->x.v_CHPProductionElectric_kW);
@@ -1211,6 +1205,7 @@ if (b_isSummerWeek){
 	
 	v_rapidRunData.acc_summerWeekPVProduction_kW.addStep( v_pvProductionElectric_kW );
 	v_rapidRunData.acc_summerWeekWindProduction_kW.addStep( v_windProductionElectric_kW );
+	v_rapidRunData.acc_summerWeekPTProduction_kW.addStep( v_ptProductionHeat_kW );	
 	v_rapidRunData.acc_summerWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_summerWeekBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 	v_rapidRunData.acc_summerWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1255,6 +1250,7 @@ if (b_isWinterWeek){
 	
 	v_rapidRunData.acc_winterWeekPVProduction_kW.addStep( v_pvProductionElectric_kW );
 	v_rapidRunData.acc_winterWeekWindProduction_kW.addStep( v_windProductionElectric_kW );
+	v_rapidRunData.acc_winterWeekPTProduction_kW.addStep( v_ptProductionHeat_kW );	
 	v_rapidRunData.acc_winterWeekV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 	v_rapidRunData.acc_winterWeekBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 	v_rapidRunData.acc_winterWeekCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1291,6 +1287,7 @@ v_rapidRunData.acc_dailyAverageDistrictHeatingConsumption_kW.addStep( v_district
 
 v_rapidRunData.acc_dailyAveragePVProduction_kW.addStep( v_pvProductionElectric_kW );
 v_rapidRunData.acc_dailyAverageWindProduction_kW.addStep( v_windProductionElectric_kW );
+v_rapidRunData.acc_dailyAveragePTProduction_kW.addStep( v_ptProductionHeat_kW );
 v_rapidRunData.acc_dailyAverageV2GProduction_kW.addStep( max(0, -v_evChargingPowerElectric_kW) );
 v_rapidRunData.acc_dailyAverageBatteriesProduction_kW.addStep( currentBatteriesProduction_kW );
 v_rapidRunData.acc_dailyAverageCHPElectricityProduction_kW.addStep( v_CHPProductionElectric_kW );
@@ -1413,5 +1410,71 @@ if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
 }
 v_liveData.data_batterySOC_fr.add(currentTime_h, currentSOC);
 
+/*ALCODEEND*/}
+
+double f_updateAmbientDependentAssets()
+{/*ALCODESTART::1751886925823*/
+// Update environmental conditions for relevant energy assets
+for( J_EA e : c_ambientDependentAssets ) {
+	if( e instanceof J_EAStorageHeat) { // includes J_EABuilding
+		switch(((J_EAStorageHeat) e).getAmbientTempType()){
+			case FIXED:
+				//Do nothing, use preset ambient temp
+				break;
+			case AMBIENT_AIR:
+				((J_EAStorageHeat)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );
+				break;
+			case BUILDING:
+				new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAStorageHeat!");
+				/*
+				GridConnection parentGC = (GridConnection)e.getParentAgent();
+				if(parentGC.p_BuildingThermalAsset == null){
+					new RuntimeException("GC has heat storage with AmbientTempType 'Building', with no J_EABuilding present");
+				}
+				else{
+					((J_EAStorageHeat)e).updateAmbientTemperature(parentGC.p_BuildingThermalAsset.getCurrentTemperature());
+				}
+				*/
+				break;
+			case HEAT_GRID:
+				new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAStorageHeat!");
+				break;
+			case HEAT_STORAGE:
+				new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAStorageHeat!");
+				break;
+		}	
+	}
+	if (e instanceof J_EAConversionHeatPump) {
+			switch(((J_EAConversionHeatPump) e).getAmbientTempType()){
+			case FIXED:
+				//Do nothing, use preset ambient temp
+				break;
+			case AMBIENT_AIR:
+				((J_EAConversionHeatPump)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );
+				break;
+			case BUILDING:
+				new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAConversionHeatPump!");
+				/*
+				GridConnection parentGC = (GridConnection)e.getParentAgent();
+				if(parentGC.p_BuildingThermalAsset == null){
+					new RuntimeException("GC has heatpump with AmbientTempType 'Building', with no J_EABuilding present");
+				}
+				else{
+					((J_EAConversionHeatPump)e).updateAmbientTemperature(parentGC.p_BuildingThermalAsset.getCurrentTemperature());
+				}
+				*/
+				break;
+			case HEAT_GRID:
+				new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAConversionHeatPump!");
+				break;
+			case HEAT_STORAGE:
+				new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAConversionHeatPump!");
+				break;
+			}		
+	}
+	if( e instanceof J_EABuilding ) {
+		((J_EABuilding)e).updateSolarRadiation(v_currentSolarPowerNormalized_r*1000);
+	}
+}
 /*ALCODEEND*/}
 

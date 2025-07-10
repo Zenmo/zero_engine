@@ -7,7 +7,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	protected double outputTemperature_degC;
 	private double baseTemperature_degC;
 	private double sourceAssetHeatPower_kW; // for water-water heatpump functionality
-	//protected String ambientTempType;
+	protected OL_AmbientTempType ambientTempType;
 	public double totalElectricityConsumed_kWh =0;
 	public J_EA p_linkedSourceEnergyAsset;
 	public double p_baseTemperatureReference;
@@ -23,13 +23,14 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionHeatPump(Agent parentAgent, double inputElectricCapacity_kW, double eta_r, double timestep_h, double outputTemperature_degC, double baseTemperature_degC, double sourceAssetHeatPower_kW, double belowZeroHeatpumpEtaReductionFactor ) {
+    public J_EAConversionHeatPump(Agent parentAgent, double inputElectricCapacity_kW, double eta_r, double timestep_h, double outputTemperature_degC, double baseTemperature_degC, double sourceAssetHeatPower_kW, double belowZeroHeatpumpEtaReductionFactor, OL_AmbientTempType ambientTempType ) {
 	    this.parentAgent = parentAgent;
 	    this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.timestep_h = timestep_h;
 	    this.eta_r = eta_r;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    this.COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
+	    this.ambientTempType = ambientTempType;
 	    
 	    this.updateAmbientTemperature( this.baseTemperature_degC );
 	    
@@ -183,7 +184,10 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r;
 	}
     
-    
+	public OL_AmbientTempType getAmbientTempType() {
+		return this.ambientTempType;
+	}
+	
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed

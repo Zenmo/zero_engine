@@ -1,6 +1,25 @@
 double f_manageHeatingAssets_overwrite()
 {/*ALCODESTART::1664441996771*/
 v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
+
+//Check if there is hot water being produced by the pt
+double ptProduction_kW = 0; //NEEDS TO BE A LOCAL
+for (J_EA j_ea : c_ptAssets) {
+	ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
+}
+v_hotwaterDemand_kW = max(0, v_hotwaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value
+
+if(p_heatBuffer != null){
+	double chargeSetpoint_kW = -fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+	p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / p_heatBuffer.getCapacityHeat_kW();
+	p_heatBuffer.f_updateAllFlows(p_heatBuffer.v_powerFraction_fr);
+
+	if(v_hotwaterDemand_kW > 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have discharged
+		double heatBufferDischarge_kW = -p_heatBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
+		v_hotwaterDemand_kW = max(0, v_hotwaterDemand_kW - heatBufferDischarge_kW);
+	}
+}
+
 setHeatingTargetTemp();
  
 switch (p_heatingType) {	
@@ -48,8 +67,6 @@ if (p_owner != null){
 } else {
 	//v_currentElectricityPriceConsumption_eurpkWh = 0.3;
 }
-
-
 
 f_manageHeatingAssets();
 

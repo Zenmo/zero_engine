@@ -1791,6 +1791,25 @@
 			<Type><![CDATA[J_ConnectionMetaData]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1751630239580</Id>
+		<Name><![CDATA[v_ptProductionHeat_kW]]></Name>
+		<X>421</X>
+		<Y>1163</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1669037234222</Id>
 		<Name><![CDATA[p_actorContractList]]></Name>

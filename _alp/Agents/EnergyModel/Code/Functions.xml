@@ -6,7 +6,7 @@
 		<Id>1664894248130</Id>
 		<Name><![CDATA[f_updatePricesForNextTimestep]]></Name>
 		<X>677</X>
-		<Y>280</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -46,7 +46,7 @@
 		<Id>1665051878402</Id>
 		<Name><![CDATA[f_calculateGridnodeFlows]]></Name>
 		<X>677</X>
-		<Y>240</Y>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -66,7 +66,7 @@
 		<Id>1665051962956</Id>
 		<Name><![CDATA[f_calculateActorFlows]]></Name>
 		<X>677</X>
-		<Y>260</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -122,7 +122,7 @@
 		<Id>1668528129020</Id>
 		<Name><![CDATA[f_calculateGridConnectionFlows]]></Name>
 		<X>677</X>
-		<Y>220</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -481,7 +481,7 @@
 		<Id>1731329529733</Id>
 		<Name><![CDATA[f_updateLiveData]]></Name>
 		<X>678</X>
-		<Y>323</Y>
+		<Y>343</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -573,7 +573,7 @@
 		<Id>1741622740564</Id>
 		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
 		<X>677</X>
-		<Y>301</Y>
+		<Y>321</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -627,6 +627,22 @@
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>910</X>
 		<Y>-140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1751886925823</Id>
+		<Name><![CDATA[f_updateAmbientDependentAssets]]></Name>
+		<X>700</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -400,6 +400,10 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		c_windAssets.add(j_ea);
 	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+		v_liveAssetsMetaData.hasPT = true;
+		c_ptAssets.add(j_ea);
+	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
@@ -417,7 +421,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		if(p_secondaryHeatingAsset == null){
-			energyModel.c_ambientAirDependentAssets.add(j_ea);
+			energyModel.c_ambientDependentAssets.add(j_ea);
 			c_electricHeatpumpAssets.add(j_ea);
 			//c_conversionElectricAssets.add(j_ea);
 			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
@@ -452,7 +456,7 @@ if (j_ea instanceof J_EAVehicle) {
 			}*/ // Deprecated get lossfactor and heatcapacity from json-input. Replace with other datasource!
 		p_BuildingThermalAsset.updateAmbientTemperature( energyModel.v_currentAmbientTemperature_degC );
 		//v_tempSetpoint_degC = p_BuildingThermalAsset.setTemperature_degC;		
-		energyModel.c_ambientAirDependentAssets.add(p_BuildingThermalAsset);
+		energyModel.c_ambientDependentAssets.add(p_BuildingThermalAsset);
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
@@ -462,7 +466,7 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 		
 	} else if (j_ea instanceof J_EAStorageHeat) {
-		energyModel.c_ambientAirDependentAssets.add(j_ea);
+		energyModel.c_ambientDependentAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;

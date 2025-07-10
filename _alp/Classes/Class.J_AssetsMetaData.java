@@ -12,13 +12,14 @@ public class J_AssetsMetaData {
 	public boolean hasElectricTransport = false;
 	public boolean hasPV = false;
 	public boolean hasWindturbine = false;
+	public boolean hasPT = false;
 	public boolean hasBattery = false;
 	public boolean hasHeatGridConnection = false;
 	public boolean hasElectrolyser = false;
 	public boolean hasCHP = false;
 	public boolean hasV2G = false;
 	public boolean hasElectricCooking = false;
-
+	
 	public Double totalInstalledPVPower_kW = 0.0;
 	public Double totalInstalledWindPower_kW = 0.0;
 	public Double totalInstalledBatteryStorageCapacity_MWh = 0.0;
@@ -74,6 +75,13 @@ public class J_AssetsMetaData {
 	    		break;
 	    	}
 	    }
+	    //PT
+	    for(GridConnection GC : gcList){
+	    	if (GC.c_ptAssets.size()>0 && GC.v_isActive) {
+	    		this.hasPT = true;
+	    		break;	    		
+	    	}
+	    }
 	    //Battery
 	    for(GridConnection GC : gcList){
 	    	if (GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0 && GC.v_isActive) {
@@ -124,6 +132,7 @@ public class J_AssetsMetaData {
     	clone.hasElectricTransport = this.hasElectricTransport;
     	clone.hasPV = this.hasPV;
     	clone.hasWindturbine = this.hasWindturbine;
+    	clone.hasPT = this.hasPT;
     	clone.hasBattery = this.hasBattery;
     	clone.hasHeatGridConnection = this.hasHeatGridConnection;
     	clone.hasElectrolyser = this.hasElectrolyser;
@@ -148,6 +157,7 @@ public class J_AssetsMetaData {
 	            ", hasElectricHeating: " + hasElectricHeating + 
 	            ", hasElectricTransport: " + hasElectricTransport + 
 	            ", hasWindturbine: " + hasWindturbine +
+	            ", hasPT: " + hasPT +
 		        ", hasBattery: " + hasBattery +
 		        ", hasHeatGridConnection: " + hasHeatGridConnection +
 		        ", hasElectrolyser: " + hasElectrolyser +
