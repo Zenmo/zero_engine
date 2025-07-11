@@ -1035,8 +1035,6 @@ if ( p_primaryHeatingAsset instanceof J_EAConversionHeatPump && p_BuildingTherma
 		p_primaryHeatingAsset.v_powerFraction_fr = v_hotwaterDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW();
 		p_BuildingThermalAsset.v_powerFraction_fr = 0;
 	}
-	// Put the heat imported from the heat grid back into the balance flowsmap
-	fm_currentBalanceFlows_kW.put(OL_EnergyCarriers.HEAT, p_primaryHeatingAsset.v_powerFraction_fr * ( p_primaryHeatingAsset.getOutputCapacity_kW() - p_primaryHeatingAsset.getInputCapacity_kW() ) );
 }
 else {
 	throw new RuntimeException("House " + p_gridConnectionID + " has heatingtype LT DISTRICTHEAT, but no booster or building asset!");

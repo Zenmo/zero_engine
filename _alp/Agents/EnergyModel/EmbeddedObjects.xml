@@ -1119,7 +1119,7 @@
 				<Name><![CDATA[p_bouwjaar]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_nageisoleerd]]></Name>
+				<Name><![CDATA[p_hasAdditionalInsulation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_purposeBAG]]></Name>
