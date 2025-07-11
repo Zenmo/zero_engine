@@ -119,11 +119,17 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 //    		this.ownerAsset.p_linkedSourceEnergyAsset.j_ea.heatProduction_kW += this.heatConsumption_kW;
        	}
        	*/
-    	this.energyUse_kW = electricityConsumption_kW - heatProduction_kW; 
+    	if (this.ambientTempType == OL_AmbientTempType.HEAT_GRID ) {
+    		this.energyUse_kW = 0;
+    		flowsMap.put(OL_EnergyCarriers.HEAT, -electricityConsumption_kW);
+    		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
+    	}
+    	else {
+	    	this.energyUse_kW = electricityConsumption_kW - heatProduction_kW; 		
+			flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
+			flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
+	    	}
 		this.energyUsed_kWh += energyUse_kW * timestep_h;
-		
-		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
-		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
 	}
 
 	/*

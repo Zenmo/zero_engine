@@ -585,8 +585,8 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1717417303620</Id>
-		<Name><![CDATA[p_nageisoleerd]]></Name>
-		<X>250</X>
+		<Name><![CDATA[p_hasAdditionalInsulation]]></Name>
+		<X>50</X>
 		<Y>530</Y>
 		<Label>
 			<X>10</X>
@@ -596,12 +596,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[String]]></Type>
+			<Type><![CDATA[boolean]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
+			</DefaultValue>
 			<ParameterEditor>
 				<Id>1717417303618</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
+				<EditorContolType>CHECK_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>

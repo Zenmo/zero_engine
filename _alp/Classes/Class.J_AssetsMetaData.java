@@ -41,7 +41,7 @@ public class J_AssetsMetaData {
 	    this.hasPV = false;
 	    this.hasWindturbine = false;
 	    this.hasBattery = false;
-	    this.hasHeatGridConnection = false;
+	    this.hasHeatGridConnection = false;  // read as: has heatgrid connection, not has heat gridconnection
 	    this.hasElectrolyser = false;
 	    this.hasCHP = false;
 	    this.hasV2G = false;
