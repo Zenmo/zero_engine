@@ -129,6 +129,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
                 }
             }
             monthlyPeakDemand_kW[month] = maxLoad_kW;
+            //traceln(monthlyPeakDemand_kW[month]);
     		sampleCounter += samplesInMonth;
     	}
     	
@@ -142,7 +143,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	
     	GridNode GN_T0 = findFirst(parentGC.energyModel.pop_gridNodes, p -> p.p_gridNodeID.equals("T0")); //.equals(p_parentNodeID)
     	double contractedCapacity_kW = GN_T0.p_capacity_kW;
-    	
+    	//traceln("The contracted capacity is " + contractedCapacity_kW + " kW");
     	double VAT_fr = 0.21;
     	double annualConnectionRate_euro_p_yr = 5351;
     	double annualFixedTransportRate_euro_p_yr = 2760;
@@ -152,8 +153,8 @@ public class J_BatteryAlgorithmBas implements Serializable {
     	double[] monthlyPeakDemand_kW = calculateMonthlyPeakDemand_kW();
     	
     	costsCapacityRate_euro = (1+VAT_fr)*(annualConnectionRate_euro_p_yr + annualFixedTransportRate_euro_p_yr + annualContractCapacityRate_euro_p_kW_yr * contractedCapacity_kW + monthlyPeakPowerRate_euro_p_kW_month * Arrays.stream(monthlyPeakDemand_kW).sum());
-    	
-    	return contractedCapacity_kW;
+    	//traceln("The sum of peak is " + Arrays.stream(monthlyPeakDemand_kW).sum() + " kW");
+    	return costsCapacityRate_euro;
     	
     }
     
