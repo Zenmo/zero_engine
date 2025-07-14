@@ -206,6 +206,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		return this.lossFactor_WpK;
 	}
 	
+	public void setLossFactor_WpK( double lossFactor_WpK) {
+		this.lossFactor_WpK = lossFactor_WpK;
+	}
+	
 	public double getInitialTemperature_degC() {
 		return this.initialTemperature_degC;
 	}

@@ -1451,7 +1451,9 @@ v_liveData.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(v_ptProduction
 
 
 //District heating
-v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+//if (p_heatingType != LT_DISTRICTHEAT) { // LT District heating calculates this from the HP Output - HP Input
+	v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+//}
 v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(v_districtHeatDelivery_kW, 3));	
 
 
