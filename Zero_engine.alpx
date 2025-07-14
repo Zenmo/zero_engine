@@ -874,6 +874,10 @@
 					<Id>1715094777291</Id>
 					<Name><![CDATA[MIXED]]></Name>
 				</Option>
+				<Option>
+					<Id>1752073245369</Id>
+					<Name><![CDATA[LT_DISTRICTHEAT]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1665487983362</Id>

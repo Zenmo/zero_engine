@@ -1437,7 +1437,8 @@ for( J_EA e : c_ambientDependentAssets ) {
 				*/
 				break;
 			case HEAT_GRID:
-				new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAStorageHeat!");
+				// Do Nothing, keep fixed temp for now
+				//new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAStorageHeat!");
 				break;
 			case HEAT_STORAGE:
 				new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAStorageHeat!");
