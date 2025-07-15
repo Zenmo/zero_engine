@@ -57,7 +57,6 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	public boolean startTrip() {
 		if (available) {
 			this.available = false;
-			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
 			//traceln("Diesel vehicle starting trip!");
 			return true;
 		} else {

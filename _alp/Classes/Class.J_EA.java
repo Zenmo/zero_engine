@@ -39,9 +39,6 @@ abstract public class J_EA implements Cloneable {
      */
     public J_EA(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double capacityGas_kW) {
 		this.parentAgent = parentAgent;
-		//this.capacityElectric_kW = capacityElectric_kW;
-		//this.capacityHeat_kW = capacityHeat_kW;
-		//this.capacityGas_kW = capacityGas_kW;
 		registerEnergyAsset();
     }
     
@@ -81,16 +78,11 @@ abstract public class J_EA implements Cloneable {
     	
     }
    
-    //public Pair<J_FlowsMap, Double> f_updateAllFlows(double powerFraction_fr) {
     public void f_updateAllFlows(double powerFraction_fr) {
 
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
-     	//Pair<J_FlowsMap, Double> flowsPair = operate(powerFractionBounded_fr);
      	operate(powerFractionBounded_fr);
-     	//J_FlowsMap flowsMap = flowsPair.getFirst();
-     	//return arr;
     	if (parentAgent instanceof GridConnection) {    		
-    		//((GridConnection)parentAgent).f_addFlows(arr, this);
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
     	}
     	/*
@@ -102,12 +94,6 @@ abstract public class J_EA implements Cloneable {
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
-    	/*traceln("flowsMap: %s", flowsMap);
-    	flowsMap.clear();
-    	traceln("flowsMap after reset: %s", flowsMap);
-    	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);
-    	//return arr;*/
-    	//return this.flowsMap;
     }
     
     public void f_updateAllFlows() {
@@ -126,10 +112,6 @@ abstract public class J_EA implements Cloneable {
 
 	public abstract void operate(double ratioOfCapacity);
      
-    public double getCurrentStateOfCharge() {
-    	return 0;
-    }
-
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
     	energyUsedStored_kWh = energyUsed_kWh;

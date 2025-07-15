@@ -51,7 +51,6 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	public boolean startTrip() {
 		if (available) {
 			available = false;
-			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_r);
 			//traceln("Hydrogen vehicle starting trip!");
 			return true;
 		} else {

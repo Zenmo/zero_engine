@@ -133,8 +133,8 @@ f_manageCharging();
 if (p_batteryAsset != null){ // TEST CODE
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0) {
 		//f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
-		f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
-		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+		f_batteryManagementNodalPricing();
+		p_batteryAsset.f_updateAllFlows();
 		//J_FlowsMap flowsMap = flowsPair.getFirst();
 		//traceln("flows:" + Arrays.toString(arr));
 		//v_batteryPowerElectric_kW = flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
@@ -181,7 +181,7 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 		double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset).getCOP();
 		double HP_powerDemand_kW = heatDemand_kW / HP_COP;
 		// Decide to use CHP or HeatPump to fulfill heat demand based on 'SoC' of gasbuffer and current electricity use on site
-		if ( (-(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)) > 0.5*v_liveConnectionMetaData.contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge()-0.5) | p_gasBuffer.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.getCurrentStateOfCharge() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
+		if ( (-(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY)) > 0.5*v_liveConnectionMetaData.contractedFeedinCapacity_kW*2*(p_gasBuffer.getCurrentStateOfCharge_fr()-0.5) | p_gasBuffer.getCurrentStateOfCharge_fr() < 0.05) & p_gasBuffer.getCurrentStateOfCharge_fr() < 0.9) { // Use heatpump when it can be done selfsufficiently or when methane supply is zero
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_secondaryHeatingAsset.v_powerFraction_fr = 0;
 			p_primaryHeatingAsset.v_powerFraction_fr = min(1,HP_powerDemand_kW / p_primaryHeatingAsset.getInputCapacity_kW());
@@ -193,14 +193,14 @@ if ( p_secondaryHeatingAsset == null) { // Just one heating asset
 			p_primaryHeatingAsset.v_powerFraction_fr = max(0,min(1,(heatDemand_kW-p_secondaryHeatingAsset.v_powerFraction_fr*p_secondaryHeatingAsset.getOutputCapacity_kW()) / p_primaryHeatingAsset.getOutputCapacity_kW())); // Let gas burner fill the heatdemandgap
 		}
 	} else if ( p_primaryHeatingAsset instanceof J_EAConversionGasCHP & p_secondaryHeatingAsset instanceof J_EAConversionGasBurner) { // CHP & gas burner
-		if ( p_gasBuffer.getCurrentStateOfCharge() < 0.05) { // Use regular gas burner when biogas buffer is nearly empty
+		if ( p_gasBuffer.getCurrentStateOfCharge_fr() < 0.05) { // Use regular gas burner when biogas buffer is nearly empty
 //		if ( (-v_currentPowerElectricity_kW > 0.5*p_connectionCapacity_kW*2*(p_gasBuffer.j_ea.getCurrentStateOfCharge()-0.5) | p_gasBuffer.j_ea.getCurrentStateOfCharge() < 0.05) & p_gasBuffer.j_ea.getCurrentStateOfCharge() < 0.9) { // Use gas burner when biogas is depleted or when there is too much PV and CHP would lead to curtailment
 			//traceln("HeatPump in operation with COP " + HP_COP);
 			p_primaryHeatingAsset.v_powerFraction_fr = 0;
 			p_secondaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_secondaryHeatingAsset.getOutputCapacity_kW());
 		} else { // CHP when there is sufficient biogas
 			//traceln("CHP capacityHeat_kW: " + p_primaryHeatingAsset.j_ea.getHeatCapacity_kW());
-			if ( p_gasBuffer.getCurrentStateOfCharge() < 0.9 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.
+			if ( p_gasBuffer.getCurrentStateOfCharge_fr() < 0.9 ) { // Biogas tank not full, allow reduced CHP power when it prevents curtailment.
 				p_primaryHeatingAsset.v_powerFraction_fr = min(min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW()),(v_liveConnectionMetaData.contractedFeedinCapacity_kW + (fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))) / p_primaryHeatingAsset.getInputCapacity_kW());
 			} else {
 				p_primaryHeatingAsset.v_powerFraction_fr = min(1,heatDemand_kW / p_primaryHeatingAsset.getOutputCapacity_kW());

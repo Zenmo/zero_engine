@@ -963,44 +963,52 @@
 				<Id>1668693527446</Id>
 				<Name><![CDATA[OL_BatteryOperationMode]]></Name>
 				<Option>
-					<Id>1668693549846</Id>
-					<Name><![CDATA[BALANCE]]></Name>
-				</Option>
-				<Option>
-					<Id>1668693554312</Id>
-					<Name><![CDATA[PRICE]]></Name>
-				</Option>
-				<Option>
-					<Id>1678708484242</Id>
-					<Name><![CDATA[HOUSEHOLD_LOAD]]></Name>
-				</Option>
-				<Option>
-					<Id>1710163149238</Id>
-					<Name><![CDATA[BALANCE_SUPPLY]]></Name>
-				</Option>
-				<Option>
-					<Id>1720602442837</Id>
-					<Name><![CDATA[NODAL_PRICING]]></Name>
+					<Id>1734001947459</Id>
+					<Name><![CDATA[OFF]]></Name>
 				</Option>
 				<Option>
 					<Id>1725879557284</Id>
 					<Name><![CDATA[SELF_CONSUMPTION]]></Name>
 				</Option>
 				<Option>
-					<Id>1742557314771</Id>
-					<Name><![CDATA[BALANCE_COOP]]></Name>
-				</Option>
-				<Option>
 					<Id>1750764233265</Id>
 					<Name><![CDATA[PEAK_SHAVING_SIMPLE]]></Name>
 				</Option>
 				<Option>
-					<Id>1734001947459</Id>
-					<Name><![CDATA[OFF]]></Name>
+					<Id>1668693554312</Id>
+					<Name><![CDATA[PRICE]]></Name>
+				</Option>
+				<Option>
+					<Id>1752585441102</Id>
+					<Name><![CDATA[PEAK_SHAVING_FORECAST]]></Name>
+				</Option>
+				<Option>
+					<Id>1752590273811</Id>
+					<Name><![CDATA[BALANCE_GRID]]></Name>
+				</Option>
+				<Option>
+					<Id>1710163149238</Id>
+					<Name><![CDATA[BALANCE_SUPPLY]]></Name>
+				</Option>
+				<Option>
+					<Id>1742557314771</Id>
+					<Name><![CDATA[BALANCE_COOP]]></Name>
 				</Option>
 				<Option>
 					<Id>1746607342910</Id>
 					<Name><![CDATA[BATTERY_ALGORITHM_BAS]]></Name>
+				</Option>
+				<Option>
+					<Id>1752585822134</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
+				</Option>
+				<Option>
+					<Id>1752587464847</Id>
+					<Name><![CDATA[BALANCE]]></Name>
+				</Option>
+				<Option>
+					<Id>1720602442837</Id>
+					<Name><![CDATA[NODAL_PRICING]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>

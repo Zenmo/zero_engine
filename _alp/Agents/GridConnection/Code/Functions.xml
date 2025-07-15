@@ -101,8 +101,10 @@
 		<ReturnType>double</ReturnType>
 		<Id>1669022552777</Id>
 		<Name><![CDATA[f_batteryManagementBalance]]></Name>
-		<X>920</X>
-		<Y>280</Y>
+		<Description><![CDATA[This algorithm tries to aim for a suitable SOC so that it can take the connection capacity of the GC into account and prevent any peaks when they occur. The SOC to aim for is determined by other assets in the GridConnection, such as: EVs or Wind and PV.]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1500</X>
+		<Y>890</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -110,19 +112,16 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[batterySOC]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1669022552780</Id>
-		<Name><![CDATA[f_batteryManagementPrice]]></Name>
-		<X>920</X>
-		<Y>300</Y>
+		<Name><![CDATA[f_batteryManagementPrice_OLD]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1500</X>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -130,10 +129,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[currentBatteryStateOfCharge]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -520,8 +515,9 @@
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
-		<X>920.6</X>
-		<Y>319.4</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1500.6</X>
+		<Y>929.4</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -529,10 +525,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[currentBatteryStateOfCharge_fr]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -641,8 +633,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1725629047745</Id>
 		<Name><![CDATA[f_batteryManagementSelfConsumption]]></Name>
-		<X>920</X>
-		<Y>260</Y>
+		<Description><![CDATA[One of the simplest battery algorithms. This algorithm tries to steer the GridConnection load towards 0. If there is overproduction and room in the battery it will charge. If there is more consumption than production it will discharge the battery to make up for the difference untill the battery is empty.]]></Description>
+		<X>1500</X>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -688,9 +681,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1750763679197</Id>
-		<Name><![CDATA[f_batteryManagementPeakShaving]]></Name>
-		<X>920</X>
-		<Y>340</Y>
+		<Name><![CDATA[f_batteryManagementPeakShavingForecast]]></Name>
+		<X>1500</X>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -704,9 +697,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1750763679201</Id>
-		<Name><![CDATA[f_peakShavingForecast_simple]]></Name>
-		<X>950</X>
-		<Y>360</Y>
+		<Name><![CDATA[f_peakShavingForecast]]></Name>
+		<X>1520</X>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -724,6 +717,72 @@
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1610</X>
 		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752570332887</Id>
+		<Name><![CDATA[f_manageBattery]]></Name>
+		<X>930</X>
+		<Y>290</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752584903021</Id>
+		<Name><![CDATA[f_batteryManagementPeakShavingSimple]]></Name>
+		<Description><![CDATA[This algorithm tries to aim for a fixed SOC (0.5 by default) so that it can take the connection capacity of the GC into account and prevent any peaks when they occur.]]></Description>
+		<X>1500</X>
+		<Y>790</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752585859908</Id>
+		<Name><![CDATA[f_batteryManagementCustom]]></Name>
+		<X>1500</X>
+		<Y>870</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1752586627671</Id>
+		<Name><![CDATA[f_batteryManagementPrice]]></Name>
+		<Description><![CDATA[This algorithm determines the battery behaviour with the historical national EPEX price. It has a boolean flag wether or not to take the GC's connection capacity into account.]]></Description>
+		<X>1500</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

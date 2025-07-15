@@ -5,8 +5,8 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 
 	protected OL_EnergyCarriers storageMedium;
 	protected double storageCapacity_kWh;
-	protected double stateOfCharge_r;
-	protected double initialStateOfCharge_r;
+	protected double stateOfCharge_fr;
+	protected double initialstateOfCharge_fr;
 	protected double stateOfChargeStored_r;
 	//protected double lossFactor_r;
 	//protected double ambientTemperature_degC;
@@ -21,13 +21,10 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
     }
 
     public void calculateLoss() {
-    	//
     }
 
-    //public abstract Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r);
-
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
-		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
+		stateOfCharge_fr += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 	
     @Override
@@ -35,8 +32,8 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
     	// Each energy asset that has some states should overwrite this function!
     	energyUsedStored_kWh = energyUsed_kWh;
     	energyUsed_kWh = 0.0;
-    	stateOfChargeStored_r = stateOfCharge_r;
-    	stateOfCharge_r = initialStateOfCharge_r;    
+    	stateOfChargeStored_r = stateOfCharge_fr;
+    	stateOfCharge_fr = initialstateOfCharge_fr;    
     	charged_kWh = 0;
     	discharged_kWh = 0;
     	clear();    	
@@ -46,19 +43,21 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
     public void restoreStates() {
     	// Each energy asset that has some states should overwrite this function!
     	energyUsed_kWh = energyUsedStored_kWh;    	
-    	stateOfCharge_r = stateOfChargeStored_r;
+    	stateOfCharge_fr = stateOfChargeStored_r;
     }
     
-	// acces current state of charge
-	@Override
-	public double getCurrentStateOfCharge() {
-    	return stateOfCharge_r;
+	public double getCurrentStateOfCharge_fr() {
+    	return this.stateOfCharge_fr;
 	}
 
 	public double getStorageCapacity_kWh() {
-		return storageCapacity_kWh;
+		return this.storageCapacity_kWh;
 	}
-	
+
+	public double getCurrentStateOfCharge_kWh() {
+		return this.stateOfCharge_fr * this.storageCapacity_kWh;
+	}
+		
 	@Override
 	public double getCurrentTemperature() {
 		return 0;
@@ -66,7 +65,6 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) {
-		//
 	}
 
     @Override

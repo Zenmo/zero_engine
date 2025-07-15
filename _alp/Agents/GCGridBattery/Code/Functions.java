@@ -61,34 +61,7 @@ if(energyModel.t_h == 0){ // Load at gridnode is not known yet (due to time step
 	return;
 }
 
-if ( p_batteryAsset != null ) {
-	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0 && p_batteryAsset.getCapacityElectric_kW() != 0.0) {
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
-			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalanceGrid(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
-			f_batteryManagementBalanceSupply(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
-			f_batteryManagementPrice(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
-			f_batteryManagementPriceGrid(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP){
-			f_batteryManagementBalanceCOOP(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BATTERY_ALGORITHM_BAS){
-			f_batteryManagementBas(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.SELF_CONSUMPTION){
-			f_batteryManagementSelfConsumption();
-		}		
-		
-		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		//J_FlowsMap flowsMap = flowsPair.getFirst();
-		//v_batteryPowerElectric_kW = flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-	}
-}
+f_manageBattery();
 
 /*ALCODEEND*/}
 
@@ -105,7 +78,7 @@ for(EnergyAsset e : c_consumptionAssets) {
 }
 /*ALCODEEND*/}
 
-double f_batteryManagementPriceGrid(double currentBatteryStateOfCharge_fr)
+double f_batteryManagementPriceGrid()
 {/*ALCODESTART::1669022533963*/
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//double willingnessToPayDefault_eurpkWh = 0.3;
@@ -141,7 +114,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//SOC_setp_fr = (0.5 + 0.4 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24))*(1-3*GN.v_electricityYieldForecast_fr); // Sinusoidal setpoint: aim for high SOC at 18:00h		
 	//SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(main.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	
-	double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge_fr;
+	double SOC_deficit_fr = SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr();
 	
 	// Define WTP price for charging and discharging!
 //	double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
@@ -166,7 +139,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 }
 /*ALCODEEND*/}
 
-double f_batteryManagementBalanceGrid(double batterySOC)
+double f_batteryManagementBalanceGrid()
 {/*ALCODESTART::1678114662587*/
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){	
 	double currentCoopElectricitySurplus_kW = 0;
@@ -228,7 +201,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
 		double SOC_setp_fr = 1 - incomingPower_fr;
 	
-		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
+		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr());
 		
 	}
 	
@@ -309,7 +282,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_batteryManagementBalanceSupply(double batterySOC)
+double f_batteryManagementBalanceSupply()
 {/*ALCODESTART::1710163119414*/
 // Simply tries to prevent exceeding feedin grid capacity, but otherwise aims for an empty battery (so there is always 'absorbtion capacity' available)
 
@@ -342,7 +315,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double SOC_setp_fr = 0.0;
 
 	
-	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr()) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
@@ -351,7 +324,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 
 /*ALCODEEND*/}
 
-double f_batteryManagementBalanceCOOP(double batterySOC)
+double f_batteryManagementBalanceCOOP()
 {/*ALCODESTART::1742557292690*/
 
 if(c_parentCoops.isEmpty()){
@@ -395,23 +368,79 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 		double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / p_batteryAsset.getStorageCapacity_kWh();
 		double SOC_setp_fr = 1 - incomingPower_fr;
 	
-		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge());
-		chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr());
+		chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
 	}
 }
 
 /*ALCODEEND*/}
 
-double f_batteryManagementBas(double currentBatteryStateOfCharge_fr)
+double f_batteryManagementBas()
 {/*ALCODESTART::1746605418870*/
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 	double chargeSetpoint_kW = 0;
 	
-	chargeSetpoint_kW = v_batteryAlgorithmBas.calculateChargeSetpoint_kW(currentBatteryStateOfCharge_fr); // Don't allow too much (dis)charging!
+	chargeSetpoint_kW = v_batteryAlgorithmBas.calculateChargeSetpoint_kW(p_batteryAsset.getCurrentStateOfCharge_fr()); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW()));
 
+}
+/*ALCODEEND*/}
+
+double f_manageBattery_overwrite()
+{/*ALCODESTART::1752589957306*/
+if (p_batteryAsset != null) {
+	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
+		// We have a battery asset we want to operate, choose the management function that will set the powerfraction
+		switch (p_batteryOperationMode) {
+			case OFF:
+				break;
+			case SELF_CONSUMPTION:
+				throw new RuntimeException("current implementation of SELF_CONSUMPTION is not a valid algorithm for GCGridBattery");
+				// TODO: Need to write a (or 2) functions for the GCGridBattery that do selfconsumption on the level of gridnode (or coop)
+				//f_batteryManagementSelfConsumption();
+				//break;
+			case BALANCE:
+				throw new RuntimeException("BatteryOperationMode Balance is deprecated, please use PEAK_SHAVING_SIMPLE or write your own custom algorithm");
+				//f_batteryManagementBalance();
+				//break;
+			case PRICE:
+				f_batteryManagementPrice();
+				break;
+			case NODAL_PRICING:
+				throw new RuntimeException("BatteryOperationMode NodalPrice is deprecated, no direct equivalent available. Use PRICE or write your own custom algorithm");
+				//f_batteryManagementNodalPricing();
+				//break;
+			case PEAK_SHAVING_SIMPLE:
+				throw new RuntimeException("current implementation of PEAK_SHAVING_SIMPLE is not a valid algorithm for GCGridBattery");			
+				//f_batteryManagementPeakShavingSimple();
+				//break;
+			case PEAK_SHAVING_FORECAST:
+				throw new RuntimeException("current implementation of PEAK_SHAVING_FORECAST is not a valid algorithm for GCGridBattery");						
+				//f_batteryManagementPeakShavingForecast();
+				//break;
+			case BALANCE_GRID:
+				f_batteryManagementBalanceGrid();
+				break;
+			case BALANCE_COOP:
+				f_batteryManagementBalanceCOOP();
+				break;
+			case BALANCE_SUPPLY:
+				f_batteryManagementBalanceSupply();
+				break;
+			case BATTERY_ALGORITHM_BAS:
+				f_batteryManagementBas();
+				break;
+			case CUSTOM:
+				f_batteryManagementCustom();
+				break;
+			default:
+				throw new RuntimeException("Chosen battery operation mode: " + p_batteryOperationMode.toString() + " unavailable for GridConnection of type: " + this.getClass());
+		}
+		// Now actually operate the asset and update the flows in the GC, f_updateAllFlows will automatically limit the powerFraction between -1 and 1
+		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
+	}
 }
 /*ALCODEEND*/}
 

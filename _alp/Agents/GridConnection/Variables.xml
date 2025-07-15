@@ -208,28 +208,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1668695288485</Id>
-		<Name><![CDATA[v_batterySOC_fr]]></Name>
-		<X>1270</X>
-		<Y>350</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0.7]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1669725778092</Id>
 		<Name><![CDATA[v_maxConnectionLoad_fr]]></Name>
 		<X>1270</X>
@@ -406,25 +384,6 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0.1]]></Code>
 			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1678710234329</Id>
-		<Name><![CDATA[v_currentLoadLowPassed_kW]]></Name>
-		<X>1270</X>
-		<Y>450</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1093,8 +1052,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1750763679203</Id>
 		<Name><![CDATA[v_batteryChargingForecast_kW]]></Name>
-		<X>970</X>
-		<Y>380</Y>
+		<X>1540</X>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

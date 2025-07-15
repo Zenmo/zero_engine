@@ -14,21 +14,20 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0 && p_
 	switch (p_batteryOperationMode){
 		case BALANCE:
 			if(p_ignoreGridCapacityBattery){
-				f_batteryManagementBalanceNoGCCapacity_NBH(v_batterySOC_fr);
+				f_batteryManagementBalanceNoGCCapacity_NBH();
 			}
 			else{
-				f_batteryManagementBalance_NBH(v_batterySOC_fr);
+				f_batteryManagementBalance_NBH();
 			}
 		break;
 		case PRICE:
-			f_batteryManagementPrice_NBH(v_batterySOC_fr);
+			f_batteryManagementPrice_NBH();
 		break;
 		default:
 		break;
 	}
 	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	v_batteryPowerElectric_kW =  p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
 }
 
 /*ALCODEEND*/}
@@ -491,7 +490,7 @@ if (j_ea instanceof J_EAVehicle) {
 
 /*ALCODEEND*/}
 
-double f_batteryManagementBalance_NBH(double batterySOC)
+double f_batteryManagementBalance_NBH()
 {/*ALCODESTART::1730897215443*/
 //traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
@@ -524,7 +523,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
-	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr()) * FeedbackGain_kWpSOC;
 	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	//traceln("v_powerFraction_fr" + p_batteryAsset.v_powerFraction_fr);
@@ -532,7 +531,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 }
 /*ALCODEEND*/}
 
-double f_batteryManagementPrice_NBH(double currentBatteryStateOfCharge)
+double f_batteryManagementPrice_NBH()
 {/*ALCODESTART::1730897215446*/
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//double willingnessToPayDefault_eurpkWh = 0.3;
@@ -561,7 +560,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
 			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 		}*/
-		double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge; // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
+		double SOC_deficit_fr = SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr(); // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
 		
 		// Define WTP price for charging and discharging!
 		double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
@@ -649,9 +648,10 @@ v_amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
 double f_resetSpecificGCStates_override()
 {/*ALCODESTART::1734716016619*/
 v_batteryMoneyMade_euro = 0;
+v_currentLoadLowPassed_kW = 0;
 /*ALCODEEND*/}
 
-double f_batteryManagementBalanceNoGCCapacity_NBH(double batterySOC)
+double f_batteryManagementBalanceNoGCCapacity_NBH()
 {/*ALCODESTART::1736869275213*/
 //traceln("Battery storage capacity: " + ((J_EAStorageElectric)p_batteryAsset.j_ea).getStorageCapacity_kWh());
 if (p_batteryAsset.getStorageCapacity_kWh() != 0){
@@ -684,7 +684,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	double FeedforwardGain_kWpKw = 1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
-	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = -FeedforwardGain_kWpKw * currentLoadDeviation_kW + (SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr()) * FeedbackGain_kWpSOC;
 	//chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 	//traceln("v_powerFraction_fr" + p_batteryAsset.v_powerFraction_fr);

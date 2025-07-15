@@ -56,7 +56,7 @@ public class J_BatteryAlgorithmBas implements Serializable {
     			double incomingPower_fr = (expectedSolar_kWh + expectedWind_kWh) / parentGC.p_batteryAsset.getStorageCapacity_kWh();
     			double SOC_setp_fr = 1 - incomingPower_fr;
     		
-    			chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - parentGC.p_batteryAsset.getCurrentStateOfCharge());
+    			chargeSetpoint_kW = FeedbackGain_kWpSOC*(SOC_setp_fr - parentGC.p_batteryAsset.getCurrentStateOfCharge_fr());
     			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
     			batteryChargeSetpoint_kW = availableChargePower_kW;
     			return batteryChargeSetpoint_kW;

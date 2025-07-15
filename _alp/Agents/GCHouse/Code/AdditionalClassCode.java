@@ -36,8 +36,8 @@ public void f_chargeOnPrice(double a, double b){
 }*/
 
 @Override
-public void f_batteryManagementPrice(double currentBatteryStateOfCharge) {
-	f_batteryManagementPrice_overwrite(currentBatteryStateOfCharge);
+public void f_batteryManagementPrice() {
+	f_batteryManagementPrice_overwrite();
 }
 
 @Override

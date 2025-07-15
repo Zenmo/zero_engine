@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1665480522864</Id>
 	<Name><![CDATA[GCIndustry]]></Name>
+	<ExcludeFromBuild>true</ExcludeFromBuild>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>

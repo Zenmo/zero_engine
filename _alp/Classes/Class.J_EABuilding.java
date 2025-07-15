@@ -5,8 +5,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	//public OL_EAStorageTypes heatStorageType;
 
-	private double stateOfCharge_r;
-
 	private double temperature_degC;
 	private double temperatureStored_degC;
 	private double initialTemperature_degC;
@@ -180,8 +178,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		double tempDelta_degC = deltaEnergy_kWh / (this.heatCapacity_JpK / 3.6E6 );
 		//traceln("heatCapacity_JpK: %s", heatCapacity_JpK);
 		this.temperature_degC += tempDelta_degC;
-		//this.stateOfCharge_r = ( this.temperature_degC - this.minTemperature_degC) / (this.maxTemperature_degC - this.minTemperature_degC);
-		//traceln("SOC: " + stateOfCharge_r);
+		//this.stateOfCharge_fr = ( this.temperature_degC - this.minTemperature_degC) / (this.maxTemperature_degC - this.minTemperature_degC);
+		//traceln("SOC: " + stateOfCharge_fr);
 		
 		/*if (temperature_degC < setTemperature_degC) {
 			requiresHeat = true;
@@ -189,11 +187,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		else if ( temperature_degC >= maxTemperature_degC ) {
 			requiresHeat = false;
 		}*/
-	}
-
-	@Override
-	public double getCurrentStateOfCharge() {
-    	return this.stateOfCharge_r;
 	}
 
 	@Override

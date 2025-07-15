@@ -6,49 +6,9 @@ for( J_EA v : c_conversionAssets ){
 	}
 }
 
-// Determine EV charging
 f_manageCharging();
-//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 
-// Operate battery
-/*if (p_batteryAsset != null){
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
-		f_batteryManagementBalanceCoop( v_batterySOC_fr );
-	}
-	else {
-		f_batteryManagementPriceGrid( v_batterySOC_fr );
-	}
-	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batteryPowerElectric_kW = arr[4] - arr[0];
-	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-}*/
-
-if ( p_batteryAsset != null ) {
-	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
-			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalance(v_batterySOC_fr);
-//		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
-//			f_batteryManagementBalanceSupply(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
-			f_batteryManagementPrice(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
-			f_batteryManagementNodalPricing(v_batterySOC_fr);
-		}
-
-		//Pair<J_FlowsMap, Double> flowsPair = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		//J_FlowsMap flowsMap = flowsPair.getFirst();
-		
-		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		
-		//v_batteryPowerElectric_kW = flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
-		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-	}
-}
+f_manageBattery();
 
 /*ALCODEEND*/}
 
