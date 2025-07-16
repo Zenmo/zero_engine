@@ -6,6 +6,10 @@ import zeroPackage.ZeroMath;
 import java.lang.Math;
 import java.util.Arrays;
 import java.lang.RuntimeException;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
+@JsonIgnoreType
+
 public class ZeroTimeSeries implements Serializable {
 
 	    private double[] timeSeries;

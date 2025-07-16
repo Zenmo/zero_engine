@@ -2,7 +2,12 @@
  * J_EA
  */
 import java.util.EnumSet;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
+@JsonIdentityInfo(
+		   generator = ObjectIdGenerators.UUIDGenerator.class,
+		   property = "id")
 abstract public class J_EA implements Cloneable {
 	
 	 protected Agent parentAgent;

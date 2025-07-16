@@ -2,7 +2,10 @@
 <ActiveObjectClass>
 	<Id>1705600400154</Id>
 	<Name><![CDATA[EnergyDataViewer]]></Name>
-	<Import><![CDATA[import java.util.EnumSet;]]></Import>
+	<Import><![CDATA[import java.util.EnumSet;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
+@JsonIgnoreType]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1705600400160</Id>

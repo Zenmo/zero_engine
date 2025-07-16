@@ -1,6 +1,10 @@
 /**
  * J_ProfileForecaster
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class J_ProfileForecaster implements Serializable {
 	
 	private String name = "";

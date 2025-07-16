@@ -8,7 +8,12 @@
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;
 
-import java.util.EnumSet;]]></Import>
+import java.util.EnumSet;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+@JsonIdentityInfo(
+		   generator = ObjectIdGenerators.UUIDGenerator.class,
+		   property = "id")]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>Actor</ClassName>

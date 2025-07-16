@@ -1,6 +1,10 @@
 /**
  * J_ProfilePointer
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class J_ProfilePointer implements Serializable {
 	public String name = "";
 	private double currentValue = 0;
