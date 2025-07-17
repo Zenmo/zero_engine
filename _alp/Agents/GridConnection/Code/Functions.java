@@ -1558,12 +1558,12 @@ for (J_EA j_ea : c_chpAssets) {
 
 v_pvProductionElectric_kW = 0;
 for (J_EA j_ea : c_pvAssets) {
-	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+	v_pvProductionElectric_kW -= roundToDecimal(j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY), 3);
 }
 
 v_windProductionElectric_kW = 0;
 for (J_EA j_ea : c_windAssets) {
-	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+	v_windProductionElectric_kW -= roundToDecimal(j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY), 3);
 }
 
 v_ptProductionHeat_kW = 0;

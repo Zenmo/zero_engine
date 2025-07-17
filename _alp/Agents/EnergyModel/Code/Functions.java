@@ -1102,23 +1102,34 @@ v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 double f_rapidRunDataLogging()
 {/*ALCODESTART::1741622740564*/
 // Further Subdivision of asset types within energy carriers
-double v_fixedConsumptionElectric_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
-double v_heatPumpElectricityConsumption_kW = sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW);
-double v_evChargingPowerElectric_kW = sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW));
-double currentBatteriesConsumption_kW = sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW));
-double v_hydrogenElectricityConsumption_kW = sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW);
-double v_electricHobConsumption_kW = sum(c_gridConnections, x->x.v_electricHobConsumption_kW);
-double v_districtHeatDelivery_kW = sum(c_gridConnections, x->x.v_districtHeatDelivery_kW);
+double v_fixedConsumptionElectric_kW = roundToDecimal(sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW),2);
+double v_heatPumpElectricityConsumption_kW = roundToDecimal(sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW),2);
+double v_evChargingPowerElectric_kW = roundToDecimal(sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW)),2);
+double currentBatteriesConsumption_kW = roundToDecimal(sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW)),2);
+double v_hydrogenElectricityConsumption_kW = roundToDecimal(sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW),2);
+double v_electricHobConsumption_kW = roundToDecimal(sum(c_gridConnections, x->x.v_electricHobConsumption_kW),2);
+double v_districtHeatDelivery_kW = roundToDecimal(sum(c_gridConnections, x->x.v_districtHeatDelivery_kW),2);
 
-double v_pvProductionElectric_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
-double v_windProductionElectric_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
+double v_pvProductionElectric_kW = roundToDecimal(sum(c_gridConnections, x->x.v_pvProductionElectric_kW),2);
+double v_windProductionElectric_kW = roundToDecimal(sum(c_gridConnections, x->x.v_windProductionElectric_kW),2);
+
+if(v_pvProductionElectric_kW < 0){
+	traceln("ERROR: PV production = " + v_pvProductionElectric_kW );
+}
+if(v_windProductionElectric_kW < 0){
+	traceln("ERROR: wind production = " + v_windProductionElectric_kW );
+}
+
 double v_ptProductionHeat_kW = sum(c_gridConnections, x->x.v_ptProductionHeat_kW);
-double currentBatteriesProduction_kW = sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW));
+double currentBatteriesProduction_kW = roundToDecimal(sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW)), 2);
 double currentV2GProduction_kW = sum(c_gridConnections, x-> max(0, -x.v_evChargingPowerElectric_kW));
 double v_CHPProductionElectric_kW = sum(c_gridConnections, x->x.v_CHPProductionElectric_kW);
 
 double currentStoredEnergyBatteries_MWh = sum(c_gridConnections, x->x.v_batteryStoredEnergy_kWh)/1000;
 
+if(currentBatteriesProduction_kW < 0){
+	traceln("ERROR: battery production = " + currentBatteriesProduction_kW );
+}
 //v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / p_contractedDeliveryCapacity_kW ));
 
 //double currentImport_kW = 0.0;
@@ -1298,7 +1309,8 @@ if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
 }
 else{
 	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.addStep(0);	
-}	
+}
+
 
 /*ALCODEEND*/}
 

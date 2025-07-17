@@ -586,6 +586,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	
 		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 		
+		
 		//double chargedPower_kW = max(0,p_batteryAsset.v_powerFraction_fr*p_batteryAsset.getCapacityElectric_kW());
 		//double dischargedPower_kW = min(0,p_batteryAsset.v_powerFraction_fr*p_batteryAsset.getCapacityElectric_kW());
 		
