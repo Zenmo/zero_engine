@@ -1712,7 +1712,7 @@ else{
 
 double f_connectCoopBattery()
 {/*ALCODESTART::1742569887460*/
-GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP);
+GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_batteryAlgorithm instanceof J_BatteryPeakShaving && ((J_BatteryPeakShaving)bat.p_batteryAlgorithm).getTargetType() == OL_ResultScope.ENERGYCOOP);
 
 if(coopBattery != null){
 	//Reset previous state

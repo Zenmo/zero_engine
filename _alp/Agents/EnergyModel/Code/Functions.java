@@ -1073,7 +1073,9 @@ for(Agent CO : energyCoop.c_coopMembers){
 // Removing this coop from the list of coops in the GC
 for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 	GC.c_parentCoops.remove(energyCoop);
-	if(GC instanceof GCGridBattery && GC.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP){
+	if(GC instanceof GCGridBattery && GC.p_batteryAlgorithm instanceof J_BatteryPeakShaving && ((J_BatteryPeakShaving)GC.p_batteryAlgorithm).getTargetType() == OL_ResultScope.ENERGYCOOP){
+		((J_BatteryPeakShaving)GC.p_batteryAlgorithm).setTarget(null);
+		((J_BatteryPeakShaving)GC.p_batteryAlgorithm).setTargetType( OL_ResultScope.ENERGYCOOP );
 		GC.f_setActive(false);
 	}
 }

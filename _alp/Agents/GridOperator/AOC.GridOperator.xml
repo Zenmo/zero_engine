@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1660731380915</Id>
 	<Name><![CDATA[GridOperator]]></Name>
+	<Folder>1752677829820</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>Actor</ClassName>

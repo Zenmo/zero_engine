@@ -1052,6 +1052,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1750763679203</Id>
 		<Name><![CDATA[v_batteryChargingForecast_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1540</X>
 		<Y>850</Y>
 		<Label>
@@ -1387,6 +1388,7 @@
 	<Variable Class="Parameter">
 		<Id>1668693418082</Id>
 		<Name><![CDATA[p_batteryOperationMode]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>270</X>
 		<Y>140</Y>
 		<Label>
@@ -1494,7 +1496,7 @@
 		<Id>1684919785784</Id>
 		<Name><![CDATA[p_gasBuffer]]></Name>
 		<X>600</X>
-		<Y>470</Y>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1918,6 +1920,31 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1747303156908</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1752752664510</Id>
+		<Name><![CDATA[p_batteryAlgorithm]]></Name>
+		<X>620</X>
+		<Y>470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[I_BatteryAlgorithm]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1752752664508</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -2362,7 +2389,7 @@
 		<Id>1750258408126</Id>
 		<Name><![CDATA[c_chargers]]></Name>
 		<X>600</X>
-		<Y>491</Y>
+		<Y>511</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

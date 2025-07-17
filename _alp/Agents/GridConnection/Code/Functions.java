@@ -2075,6 +2075,17 @@ double f_manageBattery()
 {/*ALCODESTART::1752570332887*/
 if (p_batteryAsset != null) {
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
+		if (p_batteryAlgorithm == null) {
+			throw new RuntimeException("Tried to operate battery without algorithm in GC: " + p_gridConnectionID);
+		}
+		double powerFraction_fr = p_batteryAlgorithm.determineBatteryBehaviour();
+		p_batteryAsset.f_updateAllFlows(powerFraction_fr);
+	}
+}
+
+/*
+if (p_batteryAsset != null) {
+	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
 		// We have a battery asset we want to operate, choose the management function that will set the powerfraction
 		switch (p_batteryOperationMode) {
 			case OFF:
@@ -2109,6 +2120,7 @@ if (p_batteryAsset != null) {
 		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
 	}
 }
+*/
 /*ALCODEEND*/}
 
 double f_batteryManagementPeakShavingSimple()

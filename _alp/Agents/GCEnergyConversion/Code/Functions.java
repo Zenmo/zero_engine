@@ -234,6 +234,8 @@ f_manageCharging();
 //v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 
 // Operate battery
+f_manageBattery();
+/*
 if (p_batteryAsset != null){
 	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
 		f_batteryManagementBalanceCoop();
@@ -245,7 +247,7 @@ if (p_batteryAsset != null){
 	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
 	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW; 
 }
-
+*/
 
 /*ALCODEEND*/}
 

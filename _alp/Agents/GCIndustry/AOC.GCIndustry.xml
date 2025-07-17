@@ -4,6 +4,7 @@
 	<Name><![CDATA[GCIndustry]]></Name>
 	<ExcludeFromBuild>true</ExcludeFromBuild>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1752737189062</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>GridConnection</ClassName>
@@ -104,6 +105,9 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_parentNodeElectric]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_batteryAlgorithm]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
