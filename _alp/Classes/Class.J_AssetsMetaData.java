@@ -4,7 +4,7 @@
 
 import java.util.EnumSet;
 
-public class J_AssetsMetaData {
+public class J_AssetsMetaData implements Serializable{
 	
 	public Agent parentAgent;
 

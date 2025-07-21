@@ -7,7 +7,7 @@ import java.lang.Math;
 import java.util.Arrays;
 import java.lang.RuntimeException;
 
-public class ZeroAccumulator {
+public class ZeroAccumulator implements Serializable{
     public boolean hasTimeSeries = false;
     private double[] timeSeries;
     private double duration_h;

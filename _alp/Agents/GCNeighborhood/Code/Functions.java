@@ -21,7 +21,8 @@ if( p_batteryAsset != null && p_batteryAsset.getStorageCapacity_kWh() != 0 && p_
 			}
 		break;
 		case PRICE:
-			f_batteryManagementPrice_NBH(v_batterySOC_fr);
+			//f_batteryManagementPrice_NBH(v_batterySOC_fr);
+			f_batteryProfilePrice_NBH();
 		break;
 		default:
 		break;
@@ -686,5 +687,14 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//traceln("v_powerFraction_fr" + p_batteryAsset.v_powerFraction_fr);
 	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 }
+/*ALCODEEND*/}
+
+double f_batteryProfilePrice_NBH()
+{/*ALCODESTART::1752745444410*/
+if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+	p_batteryAsset.v_powerFraction_fr = 2*p_marketBatteryChargeProfile_fr.getValue(energyModel.t_h); // factor 2 because profile is from a 0.5kW/1kWh battery
+}
+//traceln("Batteryprofile active, current powerfraction: %s", p_batteryAsset.v_powerFraction_fr);
+
 /*ALCODEEND*/}
 

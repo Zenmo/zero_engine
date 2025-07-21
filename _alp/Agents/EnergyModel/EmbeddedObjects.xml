@@ -2814,6 +2814,9 @@
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_marketBatteryChargeProfile_fr]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

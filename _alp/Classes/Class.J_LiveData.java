@@ -2,7 +2,7 @@ import java.util.EnumSet;
 /**
  * J_LiveData
  */	
-public class J_LiveData {
+public class J_LiveData implements Serializable{
 	
 	public Agent parentAgent;
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;

@@ -3,7 +3,7 @@ import zeroPackage.ZeroMath;
 /**
  * J_RapidRunData
  */	
-public class J_RapidRunData {
+public class J_RapidRunData implements Serializable{
 	
 	public Agent parentAgent;
 	private double timeStep_h;

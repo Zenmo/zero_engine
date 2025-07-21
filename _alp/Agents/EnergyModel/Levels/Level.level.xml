@@ -918,4 +918,41 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Control Type="Button">
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Id>1753091136812</Id>
+		<Name><![CDATA[serialize]]></Name>
+		<X>-360</X>
+		<Y>1060</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<BasicProperties Width="100" Height="30">
+			<EmbeddedIcon>false</EmbeddedIcon>
+			<TextColor>-16777216</TextColor>
+			<Enabled>true</Enabled>
+			<ActionCode>try {    
+    FileOutputStream fileOutputStream
+      = new FileOutputStream("yourfile.txt");
+    ObjectOutputStream objectOutputStream 
+      = new ObjectOutputStream(fileOutputStream);
+    objectOutputStream.writeObject(this);
+    objectOutputStream.flush();
+    objectOutputStream.close();
+} catch (IOException e) {
+	e.printStackTrace();
+}
+
+	</ActionCode>
+		</BasicProperties>
+		<ExtendedProperties>
+			<Font Name="Dialog" Size="11" Style="0"/>
+			<LabelText>button</LabelText>
+		</ExtendedProperties>
+	</Control>
 </Presentation>
