@@ -332,7 +332,6 @@ if (j_ea instanceof J_EAProduction ) {
 //}
 } else if (j_ea instanceof J_EAStorageHeat ) {
 	p_DHheatStorage = (J_EAStorageHeat)j_ea;
-	energyModel.c_storageAssets.add((J_EAStorage)j_ea);
 } else {
 	traceln("f_connectToChild in EnergyAsset: Exception! EnergyAsset " + j_ea + " is of unknown type or null! ");
 }

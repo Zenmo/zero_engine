@@ -20,11 +20,6 @@ public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
 }
 
-@Override
-public void f_manageHeatingAssets(){
-	f_manageHeatingAssets_overwrite();
-}
-
 @Override 
 public void f_manageCharging(){
 	f_manageCharging_overwrite();

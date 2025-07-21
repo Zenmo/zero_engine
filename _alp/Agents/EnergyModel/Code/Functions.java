@@ -229,7 +229,7 @@ if (b_parallelizeGridConnections) {
 		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
 		v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
 	}
-} 
+}
 else {
 	for(GridConnection gc : c_gridConnections) {
 		gc.f_calculateEnergyBalance();

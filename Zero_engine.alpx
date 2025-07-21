@@ -1611,6 +1611,26 @@
 				<Id>1749651263461</Id>
 				<Name><![CDATA[J_EACharger]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1753088272170</Id>
+				<Name><![CDATA[I_HeatingManagement]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753088398654</Id>
+				<Name><![CDATA[J_HeatingManagementBuildingSimple]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753090559114</Id>
+				<Name><![CDATA[J_HeatingManagementProfileSimple]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753100278618</Id>
+				<Name><![CDATA[J_HeatingManagementHybridHeatPump]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753102129145</Id>
+				<Name><![CDATA[J_HeatingManagementDistrictHeating]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

@@ -140,7 +140,8 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1669025846794</Id>
-		<Name><![CDATA[f_manageHeatingAssets]]></Name>
+		<Name><![CDATA[f_manageHeatingAssets_OLD]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>920</X>
 		<Y>420</Y>
 		<Label>
@@ -724,6 +725,22 @@
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1610</X>
 		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753099764237</Id>
+		<Name><![CDATA[f_manageHeating]]></Name>
+		<X>920</X>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

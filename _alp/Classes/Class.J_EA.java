@@ -156,22 +156,6 @@ abstract public class J_EA implements Cloneable {
     	return energyUsed_kWh;
     }
     
-    public double getElectricityProduced_kWh() {
-    	return electricityProduced_kWh;
-	}
-
-    public double getSetTemperature_degC() {
-    	return 0;
-    }
-    
-    public double getMinTemperature_degC() {
-    	return 0;
-    }
-    
-    public double getMaxTemperature_degC() {
-    	return 0;
-    }
-    
     public Agent getParentAgent() {
     	return parentAgent;
     }

@@ -184,17 +184,14 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		return temperature_degC;
 	}
 
-	@Override
 	public double getSetTemperature_degC() {
 		return setTemperature_degC;
 	}
 	
-	@Override
 	public double getMinTemperature_degC() {
 		return minTemperature_degC;
 	}
 	
-	@Override
 	public double getMaxTemperature_degC() {
 		return maxTemperature_degC;
 	}

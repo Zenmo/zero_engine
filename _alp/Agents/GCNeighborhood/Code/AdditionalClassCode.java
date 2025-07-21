@@ -4,7 +4,7 @@ public void f_operateFlexAssets(){
 }
 
 @Override
-public void f_manageHeatingAssets(){
+public void f_manageHeating(){
 	f_manageHeatingAssets_overwrite();
 }
 

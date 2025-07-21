@@ -61,8 +61,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722585552607</Id>
 		<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-		<X>920</X>
-		<Y>340</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1760</X>
+		<Y>-20</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -114,8 +115,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1730370456790</Id>
 		<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-		<X>1090</X>
-		<Y>90</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1760</X>
+		<Y>-40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -1,6 +1,6 @@
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1698936515692*/
-f_manageHeatingAssets();
+f_manageHeating();
 /*for ( J_EAStorage e : c_storageAssets ) {
 	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
 }*/

@@ -183,6 +183,7 @@
 	<Variable Class="Parameter">
 		<Id>1721810038977</Id>
 		<Name><![CDATA[p_DHheatStorage]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>480</X>
 		<Y>430</Y>
 		<Label>

@@ -231,7 +231,7 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 
 /*ALCODEEND*/}
 
-double f_manageHeatingAssets()
+double f_manageHeatingAssets_OLD()
 {/*ALCODESTART::1669025846794*/
 // TODO: This only works for fixed heat demands; also need to implement heating of a building modeled as a ThermalStorageAsset! [GH 21/11/2022]
 if(p_heatBuffer != null){
@@ -669,10 +669,10 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
+	// Non Heating Assets
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 			c_electricHobAssets.add(j_ea);
-			//c_conversionElectricAssets.add(j_ea);
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
@@ -680,28 +680,21 @@ if (j_ea instanceof J_EAVehicle) {
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
-	} else if (j_ea instanceof J_EAConversionGasBurner) {
-		if(p_heatingType == OL_GridConnectionHeatingType.HYBRID_HEATPUMP)
-			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
-		else{
-			p_primaryHeatingAsset = (J_EAConversion)j_ea;
-		}
-	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		energyModel.c_ambientDependentAssets.add(j_ea);
-		c_electricHeatpumpAssets.add(j_ea);
-		//c_conversionElectricAssets.add(j_ea);
-		//traceln("added heatpump to the GC as primary heating asset.");
-
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
 		c_electrolyserAssets.add(j_ea);
-	} else if (j_ea instanceof J_EAConversionGasCHP) {
-		c_chpAssets.add(j_ea);
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-    }else if( j_ea instanceof J_EAConversionHeatDeliverySet ){
-		p_primaryHeatingAsset = (J_EAConversion)j_ea;
+	} else {
+		// Heating Assets
+		c_heatingAssets.add((J_EAConversion)j_ea);
+		if (p_heatingManagement != null) {
+			p_heatingManagement.notInitialized();
+		}
+		// Special Heating Assets
+		if (j_ea instanceof J_EAConversionHeatPump) {
+			energyModel.c_ambientDependentAssets.add(j_ea);
+			c_electricHeatpumpAssets.add(j_ea);
+		} else if (j_ea instanceof J_EAConversionGasCHP) {
+			c_chpAssets.add(j_ea);
+		}
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
@@ -710,9 +703,15 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.c_ambientDependentAssets.add(j_ea);
 		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
 			p_BuildingThermalAsset = (J_EABuilding)j_ea;
+			if (p_heatingManagement != null) {
+				p_heatingManagement.notInitialized();
+			}
 		}
 		else {
 			p_heatBuffer = (J_EAStorageHeat)j_ea;
+			if (p_heatingMangement != null) {
+				p_heatingManagement.notInitialized();
+			}
 		}
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
@@ -930,8 +929,6 @@ for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
 	energyModel.v_activeConsumptionEnergyCarriers.add(EC_consumption);
 }
 
-
-
 /*ALCODEEND*/}
 
 double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_EA caller)
@@ -1036,6 +1033,7 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
+	// Non Heating Assets
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 		c_electricHobAssets.remove(j_ea);
 	}
@@ -1045,26 +1043,17 @@ if (j_ea instanceof J_EAVehicle) {
 		c_electrolyserAssets.remove(j_ea);
 	}
 	else{
-		if (j_ea instanceof J_EAConversionGasBurner) {
-	
-		} else if (j_ea instanceof J_EAConversionHeatPump) {
+		// Heating Assets
+		c_heatingAssets.remove(j_ea);
+		if (p_heatingManagement != null) {
+			p_heatingManagement.notInitialized();
+		}
+		// Special Heating Assets
+		if (j_ea instanceof J_EAConversionHeatPump) {
 			energyModel.c_ambientDependentAssets.remove(j_ea);
 			c_electricHeatpumpAssets.remove(j_ea);
-		} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
-
 		} else if (j_ea instanceof J_EAConversionGasCHP) {
 			c_chpAssets.remove(j_ea);
-		}else if( j_ea instanceof J_EAConversionHeatDeliverySet ){
-		
-		}
-		if(p_primaryHeatingAsset == j_ea){
-			if(p_secondaryHeatingAsset != null){
-				p_primaryHeatingAsset = p_secondaryHeatingAsset;
-				p_secondaryHeatingAsset = null;
-			}
-		}
-		if(p_secondaryHeatingAsset == j_ea){
-			p_secondaryHeatingAsset = null;
 		}
 	}
 } else if  (j_ea instanceof J_EAStorage) {
@@ -1074,9 +1063,15 @@ if (j_ea instanceof J_EAVehicle) {
 		energyModel.c_ambientDependentAssets.remove(j_ea);
 		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
 			p_BuildingThermalAsset = null;
+			if (p_heatingManagement != null) {
+				p_heatingManagement.notInitialized();
+			}
 		}
 		else {
 			p_heatBuffer = null;
+			if (p_heatingManagement != null) {
+				p_heatingManagement.notInitialized();
+			}
 		}
 	} else if (j_ea instanceof J_EAStorageGas) {
 		p_gasBuffer = null;
@@ -2064,5 +2059,12 @@ v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarrier
 v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, v_districtHeatDelivery_kW);	
 
 
+/*ALCODEEND*/}
+
+double f_manageHeating()
+{/*ALCODESTART::1753099764237*/
+if (p_heatingManagement != null) {
+	p_heatingManagement.manageHeating();
+}
 /*ALCODEEND*/}
 

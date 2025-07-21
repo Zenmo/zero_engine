@@ -164,13 +164,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -233,9 +227,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -243,6 +234,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1029,13 +1023,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -1131,9 +1119,6 @@
 				<Name><![CDATA[p_eigenOprit]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_name]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1150,6 +1135,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_airco]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1224,13 +1212,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -1293,9 +1275,6 @@
 				<Name><![CDATA[p_DHheatStorage]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1309,6 +1288,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1383,13 +1365,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -1452,9 +1428,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1465,6 +1438,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1542,13 +1518,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -1650,9 +1620,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1660,6 +1627,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1737,13 +1707,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -1803,9 +1767,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1813,6 +1774,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1887,13 +1851,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -1956,9 +1914,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1966,6 +1921,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2040,13 +1998,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -2109,9 +2061,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2122,6 +2071,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2514,13 +2466,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -2592,9 +2538,6 @@
 				<Name><![CDATA[p_chargingProfileName]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2626,6 +2569,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_isChargingCentre]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2704,13 +2650,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingType]]></Name>
@@ -2770,9 +2710,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2813,6 +2750,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
