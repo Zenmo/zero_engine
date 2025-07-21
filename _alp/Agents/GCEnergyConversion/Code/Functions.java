@@ -216,38 +216,13 @@ for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElectrolyser) {
 		f_manageElectrolyser((J_EAConversionElectrolyser)v);
 	}
-	//if (v instanceof J_EAConversionCurtailer) {
-		// Must go last! 
-	//} 
-	/*else {		
-		v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-		v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-		v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-		v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-		v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-		v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-	} */
 }
 
 // Determine EV charging
 f_manageCharging();
-//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 
 // Operate battery
 f_manageBattery();
-/*
-if (p_batteryAsset != null){
-	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
-		f_batteryManagementBalanceCoop();
-	}
-	else {
-		f_batteryManagementPrice();
-	}
-	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW; 
-}
-*/
 
 /*ALCODEEND*/}
 

@@ -1,7 +1,7 @@
 /**
- * J_BatteryPrice
+ * J_BatteryManagementPrice
  */	
-public class J_BatteryPrice implements I_BatteryAlgorithm {
+public class J_BatteryManagementPrice implements I_BatteryManagement {
 
     private GridConnection gc;
     // Parameters used:
@@ -17,11 +17,11 @@ public class J_BatteryPrice implements I_BatteryAlgorithm {
     /**
      * Default constructor
      */
-    public J_BatteryPrice( GridConnection gc ) {
+    public J_BatteryManagementPrice( GridConnection gc ) {
     	this.gc = gc;
     }
     
-    public J_BatteryPrice( GridConnection gc, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
+    public J_BatteryManagementPrice( GridConnection gc, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
     	this.gc = gc;
     	this.stayWithinConnectionLimits = stayWithinConnectionLimits;
     	this.chargeDischarge_offset_eurpkWh = chargeDischarge_offset_eurpkWh;
@@ -34,7 +34,7 @@ public class J_BatteryPrice implements I_BatteryAlgorithm {
      * This algorithm determines the battery behaviour with the historical national EPEX price. 
      * It has a boolean flag wether or not to take the GC's connection capacity into account.
      */
-    public double determineBatteryBehaviour() {
+    public void manageBattery() {
 	    // Get the national EPEX price
 	    double currentElectricityPriceCharge_eurpkWh = gc.energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;
 	
@@ -64,7 +64,7 @@ public class J_BatteryPrice implements I_BatteryAlgorithm {
 	    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	    }
 	
-	    return chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW();
+	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
 
 	@Override

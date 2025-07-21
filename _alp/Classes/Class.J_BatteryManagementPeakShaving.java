@@ -1,7 +1,7 @@
 /**
- * J_BatteryPeakShaving
+ * J_BatteryManagementPeakShaving
  */	
-public class J_BatteryPeakShaving implements I_BatteryAlgorithm {
+public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
 
 	private GridConnection gc;
 	private Agent target = gc;
@@ -14,7 +14,7 @@ public class J_BatteryPeakShaving implements I_BatteryAlgorithm {
     /**
      * Default constructor
      */
-    public J_BatteryPeakShaving( GridConnection gc ) {
+    public J_BatteryManagementPeakShaving( GridConnection gc ) {
     	this.gc = gc;
     	if (gc instanceof GCGridBattery) {
     		target = null;
@@ -22,7 +22,7 @@ public class J_BatteryPeakShaving implements I_BatteryAlgorithm {
     	}
     }
     
-    public J_BatteryPeakShaving( GridConnection gc, double SOC_setpoint_fr, double feedbackGain_fr ) {
+    public J_BatteryManagementPeakShaving( GridConnection gc, double SOC_setpoint_fr, double feedbackGain_fr ) {
     	this.gc = gc;
     	this.SOC_setpoint_fr = SOC_setpoint_fr;
     	this.feedbackGain_fr = feedbackGain_fr;
@@ -36,9 +36,10 @@ public class J_BatteryPeakShaving implements I_BatteryAlgorithm {
      * This algorithm tries to aim for a fixed SOC (0.5 by default) 
      * so that it can take the connection capacity of the GC into account and prevent any peaks when they occur.
      */
-    public double determineBatteryBehaviour() {
+    public void manageBattery() {
     	if (this.target == null) {
-    		return 0;
+    		gc.p_batteryAsset.f_updateAllFlows(0);
+    		return;
     	}
     	double feedbackGain_kWpSOC = feedbackGain_fr * gc.p_batteryAsset.getCapacityElectric_kW();
     	double chargeSetpoint_kW = (SOC_setpoint_fr - gc.p_batteryAsset.getCurrentStateOfCharge_fr()) * feedbackGain_kWpSOC;
@@ -51,7 +52,7 @@ public class J_BatteryPeakShaving implements I_BatteryAlgorithm {
     	double availableDischargePower_kW = v_allowedFeedinCapacity_kW + balanceElectricity_kW; // Max discharging power within safety margins
     	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 
-    	return chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW();
+    	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
   
     public void setTarget( Agent agent ) {
@@ -90,45 +91,41 @@ public class J_BatteryPeakShaving implements I_BatteryAlgorithm {
     
     // TODO: Make an interface with at least these 3 functions and make the agents implement it.
     private double getDeliveryCapacity_kW() {
-    	if (target instanceof GridConnection) {
-    		return gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-    	}
-    	else if (target instanceof GridNode) {
-    		return ((GridNode)target).p_capacity_kW;
-    	}
-    	else if (target instanceof EnergyCoop) {
-    		return ((EnergyCoop)target).v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-    	}
-    	else {
-    		throw new RuntimeException("Was not able to find the delivery capacity of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
-    	}
+	    	switch (targetType) {
+			case GRIDCONNECTION:
+	    		return gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+			case GRIDNODE:
+	    		return ((GridNode)target).p_capacity_kW;
+			case ENERGYCOOP:
+	    		return ((EnergyCoop)target).v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+	    	default:
+	    		throw new RuntimeException("Was not able to find the delivery capacity of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
+		}
     }
+    
     private double getFeedinCapacity_kW() {
-    	if (target instanceof GridConnection) {
-    		return gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
-    	}
-    	else if (target instanceof GridNode) {
-    		return ((GridNode)target).p_capacity_kW;
-    	}
-    	else if (target instanceof EnergyCoop) {
-    		return ((EnergyCoop)target).v_liveConnectionMetaData.contractedFeedinCapacity_kW;
-    	}
-    	else {
-    		throw new RuntimeException("Was not able to find the feedin capacity of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
-    	}
+    	switch (targetType) {
+			case GRIDCONNECTION:
+	    		return gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+			case GRIDNODE:
+	    		return ((GridNode)target).p_capacity_kW;
+			case ENERGYCOOP:
+	    		return ((EnergyCoop)target).v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+	    	default:
+	    		throw new RuntimeException("Was not able to find the feedin capacity of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
+		}
     }
+    
     private double getBalanceElectricity_kW() {
-    	if (target instanceof GridConnection) {
-    		return gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-    	}
-    	else if (target instanceof GridNode) {
-    		return ((GridNode)target).v_currentLoad_kW;
-    	}
-    	else if (target instanceof EnergyCoop) {
-    		return ((EnergyCoop)target).fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-    	}
-    	else {
-    		throw new RuntimeException("Was not able to find the electricity balance of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
+    	switch (targetType) {
+    		case GRIDCONNECTION:
+        		return gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+    		case GRIDNODE:
+        		return ((GridNode)target).v_currentLoad_kW;
+    		case ENERGYCOOP:
+        		return ((EnergyCoop)target).fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+        	default:
+        		throw new RuntimeException("Was not able to find the electricity balance of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
     	}
     }
     

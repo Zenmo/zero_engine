@@ -134,8 +134,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1730897215443</Id>
 		<Name><![CDATA[f_batteryManagementBalance_NBH]]></Name>
-		<X>920</X>
-		<Y>280</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1300</X>
+		<Y>780</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -150,8 +151,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1730897215446</Id>
 		<Name><![CDATA[f_batteryManagementPrice_NBH]]></Name>
-		<X>920</X>
-		<Y>300</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1300</X>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

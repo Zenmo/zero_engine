@@ -179,9 +179,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1047,9 +1044,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1245,9 +1239,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1407,9 +1398,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1567,9 +1555,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
@@ -1767,9 +1752,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1918,9 +1900,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
@@ -2074,9 +2053,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
@@ -2553,9 +2529,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2744,9 +2717,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>

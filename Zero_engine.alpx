@@ -1289,7 +1289,6 @@
 			<Folder>
 				<Id>1752679379816</Id>
 				<Name><![CDATA[DataStructures]]></Name>
-				<ParentId>1752680962144</ParentId>
 			</Folder>
 			<Folder>
 				<Id>1752680962144</Id>
@@ -1673,11 +1672,6 @@
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1746606645736</Id>
-				<Name><![CDATA[J_BatteryAlgorithmBas]]></Name>
-				<Folder>1752677826356</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1749648342034</Id>
 				<Name><![CDATA[J_EAAirco]]></Name>
 				<Folder>1752677832758</Folder>
@@ -1693,27 +1687,27 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1752677257516</Id>
-				<Name><![CDATA[I_BatteryAlgorithm]]></Name>
+				<Name><![CDATA[I_BatteryManagement]]></Name>
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752677992581</Id>
-				<Name><![CDATA[J_BatterySelfConsumption]]></Name>
+				<Name><![CDATA[J_BatteryManagementSelfConsumption]]></Name>
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678003039</Id>
-				<Name><![CDATA[J_BatteryPrice]]></Name>
+				<Name><![CDATA[J_BatteryManagementPrice]]></Name>
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678015847</Id>
-				<Name><![CDATA[J_BatteryPeakShaving]]></Name>
+				<Name><![CDATA[J_BatteryManagementPeakShaving]]></Name>
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678031327</Id>
-				<Name><![CDATA[J_BatteryPeakShavingForecast]]></Name>
+				<Name><![CDATA[J_BatteryManagementPeakShavingForecast]]></Name>
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 		</JavaClasses>

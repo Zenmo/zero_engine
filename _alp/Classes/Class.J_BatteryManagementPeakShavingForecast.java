@@ -1,27 +1,27 @@
 import zeroPackage.ZeroMath;
 /**
- * J_BatteryPeakShavingForecast
+ * J_BatteryManagementPeakShavingForecast
  */	
-public class J_BatteryPeakShavingForecast implements I_BatteryAlgorithm {
+public class J_BatteryManagementPeakShavingForecast implements I_BatteryManagement {
 	
 	private double[] batteryChargingForecast_kW = new double[96];
     private GridConnection gc;
 	/**
      * Default constructor
      */
-    public J_BatteryPeakShavingForecast( GridConnection gc ) {
+    public J_BatteryManagementPeakShavingForecast( GridConnection gc ) {
     	this.gc = gc;
     }
 
     /**
      * 
      */
-    public double determineBatteryBehaviour() {
+    public void manageBattery() {
 		int index = roundToInt((gc.energyModel.t_h % 24)/gc.energyModel.p_timeStep_h);
 		if(index == 0){
 			this.f_peakShavingForecast();
 		}
-		return this.batteryChargingForecast_kW[index] / gc.p_batteryAsset.getCapacityElectric_kW();
+		gc.p_batteryAsset.f_updateAllFlows( this.batteryChargingForecast_kW[index] / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
     
     private void f_peakShavingForecast() {
