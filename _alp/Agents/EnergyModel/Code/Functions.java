@@ -218,33 +218,77 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
 if (b_parallelizeGridConnections) {
 	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance());
-	for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
-		
-		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
-		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
-		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-
-		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
-		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
-		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
-		v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
-	}
 } 
 else {
 	for(GridConnection gc : c_gridConnections) {
 		gc.f_calculateEnergyBalance();
-		
-		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
-		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
-		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-		
-		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
-		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
-		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
-		v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
 	}
 }
 
+double fixedConsumptionElectric_kW = 0;
+double heatPumpElectricityConsumption_kW = 0;
+double evChargingPowerElectric_kW = 0;
+double currentBatteriesConsumption_kW = 0;
+double hydrogenElectricityConsumption_kW = 0;
+double electricHobConsumption_kW = 0;
+double districtHeatDelivery_kW = 0;
+double pvProductionElectric_kW = 0;
+double windProductionElectric_kW = 0;
+double ptProductionHeat_kW = 0;
+double CHPProductionElectric_kW = 0;
+double currentBatteriesProduction_kW = 0;
+double currentV2GProduction_kW = 0;
+double currentStoredEnergyBatteries_MWh = 0;
+
+v_assetFlows.reset();
+for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
+	
+	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
+	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
+	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
+
+	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
+	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
+	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
+	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
+	
+	v_assetFlows.addFlows(gc.v_assetFlows);
+	
+}
+	/*
+	fixedConsumptionElectric_kW += gc.v_fixedConsumptionElectric_kW;
+	heatPumpElectricityConsumption_kW += gc.v_heatPumpElectricityConsumption_kW;
+	evChargingPowerElectric_kW += max(0,gc.v_evChargingPowerElectric_kW);
+	currentBatteriesConsumption_kW += max(0,gc.v_batteryPowerElectric_kW);
+	hydrogenElectricityConsumption_kW += gc.v_hydrogenElectricityConsumption_kW;
+	electricHobConsumption_kW += gc.v_electricHobConsumption_kW;
+	districtHeatDelivery_kW += gc.v_districtHeatDelivery_kW;
+	pvProductionElectric_kW += gc.v_pvProductionElectric_kW;
+	windProductionElectric_kW += gc.v_windProductionElectric_kW;
+	ptProductionHeat_kW += gc.v_ptProductionHeat_kW;
+	CHPProductionElectric_kW += gc.v_CHPProductionElectric_kW;
+	currentBatteriesProduction_kW += max(0,-gc.v_batteryPowerElectric_kW);
+	currentV2GProduction_kW += max(0,-gc.v_evChargingPowerElectric_kW);
+	currentStoredEnergyBatteries_MWh += gc.v_batteryStoredEnergy_kWh/1000;
+	*/
+
+
+/*v_assetFlows.setFlows(fixedConsumptionElectric_kW,
+	heatPumpElectricityConsumption_kW,
+	evChargingPowerElectric_kW,
+	currentBatteriesConsumption_kW,
+	hydrogenElectricityConsumption_kW,
+	electricHobConsumption_kW,
+	districtHeatDelivery_kW,
+	pvProductionElectric_kW,
+	windProductionElectric_kW,
+	ptProductionHeat_kW,
+	CHPProductionElectric_kW,
+	currentBatteriesProduction_kW,
+	currentV2GProduction_kW,
+	currentStoredEnergyBatteries_MWh);*/
+
+// TODO: Is this still needed??
 for (GridConnection gc : c_subGridConnections) {
 	gc.f_calculateEnergyBalance();
 }
@@ -1101,6 +1145,9 @@ v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 
 double f_rapidRunDataLogging()
 {/*ALCODESTART::1741622740564*/
+v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, fm_currentConsumptionFlows_kW, fm_currentProductionFlows_kW, v_currentPrimaryEnergyProduction_kW, v_currentFinalEnergyConsumption_kW, v_currentPrimaryEnergyProductionHeatpumps_kW, v_currentEnergyCurtailed_kW, v_assetFlows, this);
+
+/*
 // Further Subdivision of asset types within energy carriers
 double v_fixedConsumptionElectric_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
 double v_heatPumpElectricityConsumption_kW = sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW);
@@ -1299,6 +1346,7 @@ if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
 else{
 	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.addStep(0);	
 }	
+*/
 
 /*ALCODEEND*/}
 

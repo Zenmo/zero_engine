@@ -1611,6 +1611,10 @@
 				<Id>1749651263461</Id>
 				<Name><![CDATA[J_EACharger]]></Name>
 			</JavaClass>
+			<JavaClass>
+				<Id>1753106536266</Id>
+				<Name><![CDATA[J_AssetFlows]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

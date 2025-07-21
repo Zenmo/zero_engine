@@ -1525,9 +1525,24 @@ acc_totalOwnElectricityProduction_kW.addStep( v_currentOwnElectricityProduction_
 acc_totalCustomerDelivery_kW.addStep( v_currentCustomerDelivery_kW );
 acc_totalCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW );
 
-// Copied from GridConnection
-//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / p_contractedDeliveryCapacity_kW ));
+v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
+	v_heatPumpElectricityConsumption_kW,
+	max(0,v_evChargingPowerElectric_kW),
+	max(0,v_batteryPowerElectric_kW),
+	v_hydrogenElectricityConsumption_kW,
+	v_electricHobConsumption_kW,
+	v_districtHeatDelivery_kW,
+	v_pvProductionElectric_kW,
+	v_windProductionElectric_kW,
+	v_ptProductionHeat_kW,
+	v_CHPProductionElectric_kW,
+	max(0,-v_batteryPowerElectric_kW),
+	max(0,-v_evChargingPowerElectric_kW),
+	v_batteryStoredEnergy_kWh/1000);
 
+v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, fm_currentConsumptionFlows_kW, fm_currentProductionFlows_kW, v_currentPrimaryEnergyProduction_kW, v_currentFinalEnergyConsumption_kW, v_currentPrimaryEnergyProductionHeatpumps_kW, v_currentEnergyCurtailed_kW, v_assetFlows, energyModel);
+
+/*
 double currentImport_kW = 0.0;
 double currentExport_kW = 0.0;
 for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
@@ -1707,6 +1722,7 @@ if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
 else{
 	v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.addStep(0);	
 }
+*/
 
 /*ALCODEEND*/}
 
