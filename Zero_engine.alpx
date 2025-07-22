@@ -963,6 +963,10 @@
 				<Id>1668693527446</Id>
 				<Name><![CDATA[OL_BatteryOperationMode]]></Name>
 				<Option>
+					<Id>1753170751446</Id>
+					<Name><![CDATA[OFF]]></Name>
+				</Option>
+				<Option>
 					<Id>1725879557284</Id>
 					<Name><![CDATA[SELF_CONSUMPTION]]></Name>
 				</Option>
@@ -1708,6 +1712,11 @@
 			<JavaClass>
 				<Id>1752678031327</Id>
 				<Name><![CDATA[J_BatteryManagementPeakShavingForecast]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753169766770</Id>
+				<Name><![CDATA[J_BatteryManagementOff]]></Name>
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 		</JavaClasses>
