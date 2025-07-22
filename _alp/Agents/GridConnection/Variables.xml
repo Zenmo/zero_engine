@@ -1796,7 +1796,7 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
-<Variable Class="Parameter">
+	<Variable Class="Parameter">
 		<Id>1752752664510</Id>
 		<Name><![CDATA[p_batteryAlgorithm]]></Name>
 		<X>620</X>

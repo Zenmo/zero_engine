@@ -1310,6 +1310,10 @@
 				<Id>1752737189062</Id>
 				<Name><![CDATA[Deprecated]]></Name>
 			</Folder>
+			<Folder>
+				<Id>1753194088788</Id>
+				<Name><![CDATA[HeatingManagement]]></Name>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -1722,30 +1726,37 @@
 			<JavaClass>
 				<Id>1753088272170</Id>
 				<Name><![CDATA[I_HeatingManagement]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753088398654</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingSimple]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753090559114</Id>
 				<Name><![CDATA[J_HeatingManagementProfileSimple]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753100278618</Id>
 				<Name><![CDATA[J_HeatingManagementProfileHybridHeatPump]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753102129145</Id>
 				<Name><![CDATA[J_HeatingManagementDistrictHeating]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753172542012</Id>
 				<Name><![CDATA[J_HeatingManagementNeighborhood]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
-			<JavaClass>				
+			<JavaClass>
 				<Id>1753167599716</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingHybridHeatPump]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

@@ -133,7 +133,7 @@ f_resetSpecificGCStates();
 
 /*ALCODEEND*/}
 
-double f_manageHeatingAssets()
+double f_manageHeatingAssets_OLD()
 {/*ALCODESTART::1669025846794*/
 // TODO: This only works for fixed heat demands; also need to implement heating of a building modeled as a ThermalStorageAsset! [GH 21/11/2022]
 if(p_heatBuffer != null){
