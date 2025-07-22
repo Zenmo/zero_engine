@@ -2,7 +2,7 @@ double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1719849166911*/
 //Manage the heating assets
 
-f_manageHeatingAssets();
+f_manageHeating();
 
 f_manageCharging();
 

@@ -21,6 +21,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722514612938</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_services]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>60</Y>
 		<Label>
@@ -41,6 +42,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722514620314</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_houses]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>200</Y>
 		<Label>
@@ -78,6 +80,7 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1722587530130</Id>
 		<Name><![CDATA[f_dividePowerDemandHeatingAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>340</Y>
 		<Label>
@@ -176,6 +179,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732550952237</Id>
 		<Name><![CDATA[f_setH2HeatingFr_industry]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>140</Y>
 		<Label>
@@ -196,6 +200,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732636739570</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_industry]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>40</Y>
 		<Label>
@@ -216,6 +221,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732636773704</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_agriculture]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>200</Y>
 		<Label>
