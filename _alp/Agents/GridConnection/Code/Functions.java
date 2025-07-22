@@ -1208,7 +1208,7 @@ v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
 	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 }
-v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
+v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(v_fixedConsumptionElectric_kW, 3));
 
 
 //Cooking

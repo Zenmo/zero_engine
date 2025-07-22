@@ -848,7 +848,7 @@ if (energyModel.v_isRapidRun){
 	//// Gather specific electricity flows from corresponding energy assets
 	
 	//Baseload electricity
-	v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, v_fixedConsumptionElectric_kW);
+	v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(v_fixedConsumptionElectric_kW, 3));
 	
 	//Cooking
 	v_liveData.data_cookingElectricityDemand_kW.add(currentTime_h, roundToDecimal(v_electricHobConsumption_kW, 3));
@@ -1489,7 +1489,7 @@ for (int i=0; i < liveWeekSize; i++){
 	v_liveData.data_gridCapacitySupply_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
 	v_liveData.data_liveElectricityBalance_kW.add(timeAxisValue, netLoadLiveWeek_kW);
 	
-	v_liveData.data_baseloadElectricityDemand_kW.add(timeAxisValue, baseloadElectricityDemandLiveWeek_kW);
+	v_liveData.data_baseloadElectricityDemand_kW.add(timeAxisValue, roundToDecimal(baseloadElectricityDemandLiveWeek_kW, 3));
 	v_liveData.data_heatPumpElectricityDemand_kW.add(timeAxisValue, roundToDecimal(electricityForHeatDemandLiveWeek_kW, 3));
 	v_liveData.data_electricVehicleDemand_kW.add(timeAxisValue, roundToDecimal(electricityForTransportDemandLiveWeek_kW, 3));
 	v_liveData.data_batteryCharging_kW.add(timeAxisValue, roundToDecimal(electricityForStorageDemandLiveWeek_kW, 3));

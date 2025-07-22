@@ -968,7 +968,7 @@ v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, -v_liveConnectionMetaDa
 //Demand
 
 //Base load electricity
-v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW));
+v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW), 3));
 
 //Heatpump consumption (electric)
 v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW), 3));
