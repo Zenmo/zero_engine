@@ -50,8 +50,9 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     	double balanceElectricity_kW = getBalanceElectricity_kW();
     	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - balanceElectricity_kW; // Max battery charging power within safety margins
     	double availableDischargePower_kW = v_allowedFeedinCapacity_kW + balanceElectricity_kW; // Max discharging power within safety margins
-    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 
+    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+    	
     	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
   
@@ -121,9 +122,9 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     		case GRIDCONNECTION:
         		return gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
     		case GRIDNODE:
-        		return ((GridNode)target).v_currentLoad_kW;
+        		return ((GridNode)target).v_currentLoad_kW - gc.p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
     		case ENERGYCOOP:
-        		return ((EnergyCoop)target).fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+        		return ((EnergyCoop)target).fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - gc.p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
         	default:
         		throw new RuntimeException("Was not able to find the electricity balance of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
     	}
