@@ -1,7 +1,7 @@
 /**
- * J_HeatingManagementHybridHeatPump
+ * J_HeatingManagementProfileHybridHeatPump
  */	
-public class J_HeatingManagementHybridHeatPump implements I_HeatingManagement {
+public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManagement {
 	
 	private boolean isInitialized = false;
 	private GridConnection gc;
@@ -11,7 +11,7 @@ public class J_HeatingManagementHybridHeatPump implements I_HeatingManagement {
 	/**
      * Default constructor
      */
-    public J_HeatingManagementHybridHeatPump( GridConnection gc ) {
+    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc ) {
     	this.gc = gc;
     }
 

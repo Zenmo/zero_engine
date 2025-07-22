@@ -1625,7 +1625,7 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1753100278618</Id>
-				<Name><![CDATA[J_HeatingManagementHybridHeatPump]]></Name>
+				<Name><![CDATA[J_HeatingManagementProfileHybridHeatPump]]></Name>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753102129145</Id>
@@ -1634,6 +1634,10 @@
 			<JavaClass>
 				<Id>1753172542012</Id>
 				<Name><![CDATA[J_HeatingManagementNeighborhood]]></Name>
+			</JavaClass>
+			<JavaClass>				
+				<Id>1753167599716</Id>
+				<Name><![CDATA[J_HeatingManagementBuildingHybridHeatPump]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
