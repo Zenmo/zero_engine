@@ -399,16 +399,12 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionGasBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		if(p_secondaryHeatingAsset == null){
-			energyModel.c_ambientDependentAssets.add(j_ea);
-			c_electricHeatpumpAssets.add(j_ea);
-			//c_conversionElectricAssets.add(j_ea);
+		energyModel.c_ambientDependentAssets.add(j_ea);
+		c_electricHeatpumpAssets.add(j_ea);
+		if(((J_EAConversionHeatPump)j_ea).getAmbientTempType() == OL_AmbientTempType.AMBIENT_AIR){
 			p_secondaryHeatingAsset = (J_EAConversion)j_ea;
 		}
-		else{//Lowtemp heat grid heatpump
-			//energyModel.c_ambientAirDependentAssets.add(j_ea);
-			c_electricHeatpumpAssets.add(j_ea);
-			//c_conversionElectricAssets.add(j_ea);
+		else if(((J_EAConversionHeatPump)j_ea).getAmbientTempType() == OL_AmbientTempType.HEAT_GRID){
 			p_quinaryHeatingAsset = (J_EAConversion)j_ea;
 		}
 	} else if (j_ea instanceof J_EAConversionHeatDeliverySet) {
