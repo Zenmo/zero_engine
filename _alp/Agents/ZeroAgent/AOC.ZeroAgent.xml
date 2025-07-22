@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ActiveObjectClass>
 	<Id>1660731364525</Id>
-	<Name><![CDATA[ZeroAgent]]></Name>
-	<ExcludeFromBuild>true</ExcludeFromBuild>
-	<Import><![CDATA[import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
-@JsonAutoDetect(
-    fieldVisibility = Visibility.PUBLIC_ONLY,    // ✅ only public fields are serialized
-    getterVisibility = Visibility.NONE,
-    isGetterVisibility = Visibility.NONE,
-    setterVisibility = Visibility.NONE,
-    creatorVisibility = Visibility.NONE
-)]]></Import>
+	<Name><![CDATA[GovernmentLayer]]></Name>
+	<Folder>1752677829820</Folder>
+	<ExtendsReference>
+		<PackageName>zero_engine</PackageName>
+		<ClassName>Actor</ClassName>
+	</ExtendsReference>
+	<Parameters>
+		<Parameter>
+			<Name><![CDATA[p_actorID]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_actorType]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_actorSubgroup]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_actorGroup]]></Name>
+		</Parameter>
+	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660731364523</Id>

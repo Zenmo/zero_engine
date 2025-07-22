@@ -86,7 +86,7 @@ if (p_curtailer != null){
 }
 /*ALCODEEND*/}
 
-double f_batteryManagementBalanceCoop(double batterySOC)
+double f_batteryManagementBalanceCoop()
 {/*ALCODESTART::1707149801187*/
 if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
 	if( p_owner != null ) {
@@ -112,7 +112,7 @@ if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
 			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 			double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 			double chargeSetpoint_kW = 0;
-			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr()) * FeedbackGain_kWpSOC;
 			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
 			//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
@@ -216,37 +216,13 @@ for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElectrolyser) {
 		f_manageElectrolyser((J_EAConversionElectrolyser)v);
 	}
-	//if (v instanceof J_EAConversionCurtailer) {
-		// Must go last! 
-	//} 
-	/*else {		
-		v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-		v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-		v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-		v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-		v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-		v_currentPowerDiesel_kW += v.dieselConsumption_kW;
-	} */
 }
 
 // Determine EV charging
 f_manageCharging();
-//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 
 // Operate battery
-if (p_batteryAsset != null){
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
-		f_batteryManagementBalanceCoop( v_batterySOC_fr );
-	}
-	else {
-		f_batteryManagementPrice( v_batterySOC_fr );
-	}
-	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW; 
-}
-
+f_manageBattery();
 
 /*ALCODEEND*/}
 

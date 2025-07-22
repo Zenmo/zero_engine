@@ -1012,7 +1012,7 @@ v_liveData.data_gridCapacitySupply_kW.add(currentTime_h, -v_liveConnectionMetaDa
 //Demand
 
 //Base load electricity
-v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW));
+v_liveData.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW), 3));
 
 //Heatpump consumption (electric)
 v_liveData.data_heatPumpElectricityDemand_kW.add(currentTime_h, roundToDecimal(sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW), 3));
@@ -1117,7 +1117,9 @@ for(Agent CO : energyCoop.c_coopMembers){
 // Removing this coop from the list of coops in the GC
 for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 	GC.c_parentCoops.remove(energyCoop);
-	if(GC instanceof GCGridBattery && GC.p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_COOP){
+	if(GC instanceof GCGridBattery && GC.p_batteryAlgorithm instanceof J_BatteryManagementPeakShaving && ((J_BatteryManagementPeakShaving)GC.p_batteryAlgorithm).getTargetType() == OL_ResultScope.ENERGYCOOP){
+		((J_BatteryManagementPeakShaving)GC.p_batteryAlgorithm).setTarget(null);
+		((J_BatteryManagementPeakShaving)GC.p_batteryAlgorithm).setTargetType( OL_ResultScope.ENERGYCOOP );
 		GC.f_setActive(false);
 	}
 }

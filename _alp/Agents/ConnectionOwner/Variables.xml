@@ -1651,6 +1651,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1704196760553</Id>
 		<Name><![CDATA[c_subTenants]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>60</X>
 		<Y>440</Y>
 		<Label>

@@ -64,7 +64,7 @@
 			<Id>1658477089957</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-10496</Color>
-			<Expression2>v_batterySOC_fr</Expression2>
+			<Expression2>p_batteryAsset != null ? p_batteryAsset.getCurrentStateOfCharge_fr() : 0</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
@@ -102,7 +102,7 @@
 	</Rectangle>
 	<Text>
 		<Id>1724948367410</Id>
-		<Name><![CDATA[text3]]></Name>
+		<Name><![CDATA[txt_whateverthisis]]></Name>
 		<X>1450</X>
 		<Y>30</Y>
 		<Label>

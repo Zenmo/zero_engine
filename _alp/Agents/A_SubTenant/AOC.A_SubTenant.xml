@@ -2,6 +2,8 @@
 <ActiveObjectClass>
 	<Id>1658752695711</Id>
 	<Name><![CDATA[A_SubTenant]]></Name>
+	<ExcludeFromBuild>true</ExcludeFromBuild>
+	<Folder>1752737189062</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>Actor</ClassName>

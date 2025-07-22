@@ -1,65 +1,14 @@
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1698936515692*/
 f_manageHeatingAssets();
-/*for ( J_EAStorage e : c_storageAssets ) {
-	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
-}*/
 
 f_manageCharging();
 
-if (p_batteryAsset != null){ // TEST CODE
-	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
-		
-		switch (p_batteryOperationMode) {
-			case BALANCE:
-				f_batteryManagementBalance(p_batteryAsset.getCurrentStateOfCharge());
-				break;
-			case SELF_CONSUMPTION:
-				f_batteryManagementSelfConsumption();
-				break;
-			case PRICE:
-				f_batteryManagementPrice(p_batteryAsset.getCurrentStateOfCharge());
-				break;
-			case NODAL_PRICING:
-				f_batteryManagementNodalPricing(p_batteryAsset.getCurrentStateOfCharge());
-				break;
-			case PEAK_SHAVING_SIMPLE:
-				f_batteryManagementPeakShaving();
-				break;
-		}
-		
-		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		//traceln("flows:" + Arrays.toString(arr));
-		//v_batteryPowerElectric_kW = arr[4] - arr[0];
-	}
-}
-/*for( J_EAVehicle v: c_vehicleAssets) {
-	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-}*/
-
-//v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
+f_manageBattery();
 
 if (v_enableFuelCell) {
 	f_manageFuelCell();
 }
-
-/*if( p_batteryAsset != null){
-	switch (p_batteryOperationMode){
-		case HOUSEHOLD_LOAD:
-			f_batteryManagementBalance(v_batterySOC_fr);
-		break;
-		case PRICE:
-			f_batteryManagementPrice_overwrite(v_batterySOC_fr);
-		break;
-		default:
-		break;
-	}
-	v_batteryPowerElectric_kW =  p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-}*/
-
 /*ALCODEEND*/}
 
 double f_manageFuelCell()

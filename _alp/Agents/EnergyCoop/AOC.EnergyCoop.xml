@@ -3,6 +3,7 @@
 	<Id>1660731375016</Id>
 	<Name><![CDATA[EnergyCoop]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1752677829820</Folder>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
 
 import zeroPackage.ZeroMath;

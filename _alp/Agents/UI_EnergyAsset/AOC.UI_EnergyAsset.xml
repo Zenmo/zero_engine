@@ -4,6 +4,7 @@
 	<Name><![CDATA[UI_EnergyAsset]]></Name>
 	<ExcludeFromBuild>true</ExcludeFromBuild>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1752737189062</Folder>
 	<StartupCode><![CDATA[// f_connectToParentNode() --> made explicit function in main to avoid nested functions for easy profiling
 //if( assetCategory == PRODUCTION){
 //	main.c_productionAssets.add(this);
