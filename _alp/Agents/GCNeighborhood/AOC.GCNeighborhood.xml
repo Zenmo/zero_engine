@@ -3,6 +3,7 @@
 	<Id>1718724980083</Id>
 	<Name><![CDATA[GCNeighborhood]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
+	<Folder>1752677823817</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>GridConnection</ClassName>
@@ -34,9 +35,6 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_batteryOperationMode]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_batteryAsset]]></Name>
@@ -97,6 +95,9 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_heatingManagement]]></Name>
+		</Parameter>
+		<Parameter>			
+			<Name><![CDATA[p_batteryAlgorithm]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>

@@ -208,28 +208,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1668695288485</Id>
-		<Name><![CDATA[v_batterySOC_fr]]></Name>
-		<X>1270</X>
-		<Y>350</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0.7]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1669725778092</Id>
 		<Name><![CDATA[v_maxConnectionLoad_fr]]></Name>
 		<X>1270</X>
@@ -367,26 +345,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1677585426154</Id>
-		<Name><![CDATA[v_currentAveraged7kWElectricityPrice_eurpkWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1270</X>
-		<Y>490</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1678710234324</Id>
 		<Name><![CDATA[v_lowPassFactorLoad_fr]]></Name>
 		<X>1270</X>
@@ -406,25 +364,6 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0.1]]></Code>
 			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1678710234329</Id>
-		<Name><![CDATA[v_currentLoadLowPassed_kW]]></Name>
-		<X>1270</X>
-		<Y>450</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1091,28 +1030,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1750763679203</Id>
-		<Name><![CDATA[v_batteryChargingForecast_kW]]></Name>
-		<X>970</X>
-		<Y>380</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double[]]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new double[96]]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1751442438903</Id>
 		<Name><![CDATA[v_ptProductionHeat_kW]]></Name>
 		<X>530</X>
@@ -1370,34 +1287,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1668693418082</Id>
-		<Name><![CDATA[p_batteryOperationMode]]></Name>
-		<X>270</X>
-		<Y>140</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[OL_BatteryOperationMode]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_BatteryOperationMode.BALANCE]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1668693418080</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1668695364192</Id>
 		<Name><![CDATA[p_batteryAsset]]></Name>
 		<X>600</X>
@@ -1479,7 +1368,7 @@
 		<Id>1684919785784</Id>
 		<Name><![CDATA[p_gasBuffer]]></Name>
 		<X>600</X>
-		<Y>470</Y>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1900,6 +1789,31 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1753099355799</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+<Variable Class="Parameter">
+		<Id>1752752664510</Id>
+		<Name><![CDATA[p_batteryAlgorithm]]></Name>
+		<X>620</X>
+		<Y>470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[I_BatteryManagement]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1752752664508</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
@@ -2344,7 +2258,7 @@
 		<Id>1750258408126</Id>
 		<Name><![CDATA[c_chargers]]></Name>
 		<X>600</X>
-		<Y>491</Y>
+		<Y>511</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

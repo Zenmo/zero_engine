@@ -57,54 +57,6 @@
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1669022533963</Id>
-		<Name><![CDATA[f_batteryManagementPriceGrid]]></Name>
-		<Description><![CDATA[Regeling voor prijsgestuurd balancering van Coop-load.
-
-@author: Gillis Hommen
-@since: 28-12-2022]]></Description>
-		<X>1160</X>
-		<Y>700</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[currentBatteryStateOfCharge_fr]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1678114662587</Id>
-		<Name><![CDATA[f_batteryManagementBalanceGrid]]></Name>
-		<Description><![CDATA[Regeling voor balancering van Coop-load.
-
-@author: Gillis Hommen
-@since: 28-12-2022]]></Description>
-		<X>1160</X>
-		<Y>680</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[batterySOC]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1688369593905</Id>
 		<Name><![CDATA[f_calculateEnergyBalance_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -137,74 +89,6 @@
 		<Parameter>
 			<Name><![CDATA[CurtailerAsset]]></Name>
 			<Type><![CDATA[J_EAConversionCurtailer]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1710163119414</Id>
-		<Name><![CDATA[f_batteryManagementBalanceSupply]]></Name>
-		<Description><![CDATA[Regeling voor balancering van Coop-load.
-
-@author: Gillis Hommen
-@since: 28-12-2022]]></Description>
-		<X>1160</X>
-		<Y>720</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[batterySOC]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1742557292690</Id>
-		<Name><![CDATA[f_batteryManagementBalanceCOOP]]></Name>
-		<Description><![CDATA[Regeling voor balancering van Coop-load.
-
-@author: Gillis Hommen
-@since: 28-12-2022]]></Description>
-		<X>1160</X>
-		<Y>750</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[batterySOC]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1746605418870</Id>
-		<Name><![CDATA[f_batteryManagementBas]]></Name>
-		<X>1160</X>
-		<Y>780</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[currentBatteryStateOfCharge_fr]]></Name>
-			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

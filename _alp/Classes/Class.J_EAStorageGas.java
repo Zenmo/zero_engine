@@ -6,7 +6,6 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	private OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.METHANE;
 	private double lossFactor_r = 0;
 	protected double capacityGas_kW;
-	//public double capacityGas_kW = 0;
 
     /**
      * Default constructor
@@ -17,11 +16,11 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageGas(Agent parentAgent, double capacityGas_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h ) {
+    public J_EAStorageGas(Agent parentAgent, double capacityGas_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
 		this.parentAgent = parentAgent;
 		this.capacityGas_kW = capacityGas_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-		this.stateOfCharge_r = stateOfCharge_r;
+		this.stateOfCharge_fr = stateOfCharge_fr;
 		this.timestep_h = timestep_h;
 	    this.activeProductionEnergyCarriers.add(this.energyCarrier);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
@@ -36,14 +35,13 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	}
 
 	@Override
-	//public Pair<J_FlowsMap, Double> operate(double ratioOfChargeCapacity_r) {
 	public void operate(double ratioOfChargeCapacity_r) {
     	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
     	double inputPower_kW = ratioOfChargeCapacity_r * capacityGas_kW; // Gas power going into Storage, negative if going out.
 
     	deltaEnergy_kWh = inputPower_kW * timestep_h;
-    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
-    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
+    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * storageCapacity_kWh) ); // Prevent negative charge
+    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * storageCapacity_kWh ); // Prevent overcharge
 
     	inputPower_kW = deltaEnergy_kWh / timestep_h;
 
@@ -53,12 +51,7 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		charged_kWh += methaneConsumption_kW * timestep_h;
 		
 		updateStateOfCharge( deltaEnergy_kWh );
-		//double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW };
-    	//return arr;
-		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW-methaneProduction_kW);		
-		
-		//return this.flowsMap;
-
+		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW-methaneProduction_kW);
 	}
 
 	@Override
@@ -66,7 +59,7 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 		return 
 			"type = " + this.getClass().toString() + " " +
 			"parentAgent = " + parentAgent +" " +
-			"stateOfCharge_r = " + this.stateOfCharge_r+" "+
+			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
 			"storageCapacity_kWh = " + this.storageCapacity_kWh +" "+
 			"capacityGas_kW = " + this.capacityGas_kW +" "+
 			"discharged_kWh " + this.discharged_kWh+" "+
@@ -75,21 +68,16 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 
 	@Override
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
-		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
-	}
-
-	@Override
-	public double getCurrentStateOfCharge() {
-    	return stateOfCharge_r;
+		stateOfCharge_fr += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 
 	public double getCapacityAvailable_kW() {
 		double availableCapacity_kW;
-		if ( stateOfCharge_r * storageCapacity_kWh  > capacityGas_kW * timestep_h) {
+		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityGas_kW * timestep_h) {
 			availableCapacity_kW = capacityGas_kW;
 		}
 		else {
-			availableCapacity_kW =  stateOfCharge_r * storageCapacity_kWh / timestep_h; // Allow to drain completely
+			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timestep_h; // Allow to drain completely
 		}
 		return availableCapacity_kW;
 	}

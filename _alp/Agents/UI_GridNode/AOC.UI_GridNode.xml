@@ -3,6 +3,7 @@
 	<Id>1658752913454</Id>
 	<Name><![CDATA[UI_GridNode]]></Name>
 	<ExcludeFromBuild>true</ExcludeFromBuild>
+	<Folder>1752737189062</Folder>
 	<StartupCode><![CDATA[f_setNodeVisual();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>

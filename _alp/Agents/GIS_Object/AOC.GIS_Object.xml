@@ -3,6 +3,7 @@
 	<Id>1667726338857</Id>
 	<Name><![CDATA[GIS_Object]]></Name>
 	<Description><![CDATA[Generic Object for GISRegions. Is used for GridConnections of type: GCEnergyProduction, GCEnergyConversion, GCGridBattery, GCPublicCharger.]]></Description>
+	<Folder>1752681631114</Folder>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1667726338855</Id>

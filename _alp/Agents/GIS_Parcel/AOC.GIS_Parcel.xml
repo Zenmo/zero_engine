@@ -3,6 +3,7 @@
 	<Id>1660572036696</Id>
 	<Name><![CDATA[GIS_Parcel]]></Name>
 	<Description><![CDATA[Object for GISRegions of empty parcels. c_containedGridConnections should always be empty, hence the address]]></Description>
+	<Folder>1752681631114</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>GIS_Object</ClassName>

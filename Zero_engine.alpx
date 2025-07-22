@@ -963,44 +963,36 @@
 				<Id>1668693527446</Id>
 				<Name><![CDATA[OL_BatteryOperationMode]]></Name>
 				<Option>
-					<Id>1668693549846</Id>
-					<Name><![CDATA[BALANCE]]></Name>
-				</Option>
-				<Option>
-					<Id>1668693554312</Id>
-					<Name><![CDATA[PRICE]]></Name>
-				</Option>
-				<Option>
-					<Id>1678708484242</Id>
-					<Name><![CDATA[HOUSEHOLD_LOAD]]></Name>
-				</Option>
-				<Option>
-					<Id>1710163149238</Id>
-					<Name><![CDATA[BALANCE_SUPPLY]]></Name>
-				</Option>
-				<Option>
-					<Id>1720602442837</Id>
-					<Name><![CDATA[NODAL_PRICING]]></Name>
+					<Id>1753170751446</Id>
+					<Name><![CDATA[OFF]]></Name>
 				</Option>
 				<Option>
 					<Id>1725879557284</Id>
 					<Name><![CDATA[SELF_CONSUMPTION]]></Name>
 				</Option>
 				<Option>
-					<Id>1742557314771</Id>
-					<Name><![CDATA[BALANCE_COOP]]></Name>
+					<Id>1668693554312</Id>
+					<Name><![CDATA[PRICE]]></Name>
 				</Option>
 				<Option>
 					<Id>1750764233265</Id>
-					<Name><![CDATA[PEAK_SHAVING_SIMPLE]]></Name>
+					<Name><![CDATA[PEAK_SHAVING]]></Name>
 				</Option>
 				<Option>
-					<Id>1734001947459</Id>
-					<Name><![CDATA[OFF]]></Name>
+					<Id>1752753649099</Id>
+					<Name><![CDATA[PEAK_SHAVING_PARENT_NODE]]></Name>
 				</Option>
 				<Option>
-					<Id>1746607342910</Id>
-					<Name><![CDATA[BATTERY_ALGORITHM_BAS]]></Name>
+					<Id>1752753659151</Id>
+					<Name><![CDATA[PEAK_SHAVING_COOP]]></Name>
+				</Option>
+				<Option>
+					<Id>1752585441102</Id>
+					<Name><![CDATA[PEAK_SHAVING_FORECAST]]></Name>
+				</Option>
+				<Option>
+					<Id>1752585822134</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1281,7 +1273,44 @@
 				</Option>
 			</OptionList>
 		</OptionLists>
-		<Folders/>
+		<Folders>
+			<Folder>
+				<Id>1752677823817</Id>
+				<Name><![CDATA[GridConnections]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752677826356</Id>
+				<Name><![CDATA[BatteryAlgorithms]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752677829820</Id>
+				<Name><![CDATA[Actors]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752677832758</Id>
+				<Name><![CDATA[EnergyAssets]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752679379816</Id>
+				<Name><![CDATA[DataStructures]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752680962144</Id>
+				<Name><![CDATA[DataClasses]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752681631114</Id>
+				<Name><![CDATA[GIS]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752681639768</Id>
+				<Name><![CDATA[ActivityTrackers]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1752737189062</Id>
+				<Name><![CDATA[Deprecated]]></Name>
+			</Folder>
+		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
 		<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
@@ -1357,120 +1386,148 @@
 			<JavaClass>
 				<Id>1659091451342</Id>
 				<Name><![CDATA[J_EAProduction]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659091479591</Id>
 				<Name><![CDATA[J_EAStorage]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659091488030</Id>
 				<Name><![CDATA[J_EAConversion]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659104834899</Id>
 				<Name><![CDATA[J_EAConsumption]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659108919926</Id>
 				<Name><![CDATA[J_EA]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659117174456</Id>
 				<Name><![CDATA[J_EAConversionGasBurner]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659117174457</Id>
 				<Name><![CDATA[J_EAConversionBiogasMethane]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659117174458</Id>
 				<Name><![CDATA[J_EAProfile]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659446215929</Id>
 				<Name><![CDATA[J_EAStorageElectric]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659446215929</Id>
 				<Name><![CDATA[J_EAStorageGas]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659447107390</Id>
 				<Name><![CDATA[J_EAStorageHeat]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659447107391</Id>
 				<Name><![CDATA[J_EABuilding]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659513814164</Id>
 				<Name><![CDATA[J_EAConversionHeatPump]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1659534704067</Id>
 				<Name><![CDATA[J_EAEV]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1660131551684</Id>
 				<Name><![CDATA[J_EAConversionHeatDeliverySet]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1661266990567</Id>
 				<Name><![CDATA[J_ExperimentSettingsData]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1661349111073</Id>
 				<Name><![CDATA[DataOut]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1663238817163</Id>
 				<Name><![CDATA[J_ActorData]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1665502017804</Id>
 				<Name><![CDATA[J_EAConversionHydrogenBurner]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1666189454452</Id>
 				<Name><![CDATA[J_EAConversionElectricHeater]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1666189454453</Id>
 				<Name><![CDATA[J_EAConversionCurtailer]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1666879973864</Id>
 				<Name><![CDATA[J_SimulationResults]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1666879973865</Id>
 				<Name><![CDATA[J_HourlyCurvesData]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1668600448637</Id>
 				<Name><![CDATA[J_EAHydrogenVehicle]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1671107396262</Id>
 				<Name><![CDATA[J_EAConversionElektrolyser]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1671522756085</Id>
 				<Name><![CDATA[J_EAConversionGasCHP]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1673445448881</Id>
 				<Name><![CDATA[J_EAElectricHob]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1673445438882</Id>
 				<Name><![CDATA[J_Contract]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1673445448882</Id>
@@ -1487,47 +1544,58 @@
 			<JavaClass>
 				<Id>1673445448885</Id>
 				<Name><![CDATA[J_ConnectionContract]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1678469210821</Id>
 				<Name><![CDATA[J_EAConversionCurtailerHeat]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1692861398767</Id>
 				<Name><![CDATA[J_ActivityTracker]]></Name>
+				<Folder>1752681639768</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1692862190945</Id>
 				<Name><![CDATA[J_ActivityTrackerTrips]]></Name>
+				<Folder>1752681639768</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1692862773194</Id>
 				<Name><![CDATA[J_EAVehicle]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1692876125447</Id>
 				<Name><![CDATA[J_ActivityTrackerCooking]]></Name>
+				<Folder>1752681639768</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1707991094535</Id>
 				<Name><![CDATA[J_EAConversionElectrolyser]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1707992650964</Id>
 				<Name><![CDATA[J_EAConversionFuelCell]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1711009967838</Id>
 				<Name><![CDATA[J_EADieselVehicle]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1715862850276</Id>
 				<Name><![CDATA[J_AVGC_data]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1726148464063</Id>
 				<Name><![CDATA[J_Address]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1727774738469</Id>
@@ -1541,23 +1609,28 @@
 				<Id>1729171686537</Id>
 				<Name><![CDATA[J_FlowsMapEnumMap]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1729262288167</Id>
 				<Name><![CDATA[J_DataSetMap]]></Name>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1729510354900</Id>
 				<Name><![CDATA[J_AccumulatorMap]]></Name>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1729586334721</Id>
 				<Name><![CDATA[J_ReducedFlowsMap]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1731483284975</Id>
 				<Name><![CDATA[J_FlowsMap]]></Name>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1737025326025</Id>
@@ -1566,14 +1639,17 @@
 			<JavaClass>
 				<Id>1737633433233</Id>
 				<Name><![CDATA[J_EADieselTractor]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1740048926477</Id>
 				<Name><![CDATA[ZeroAccumulator]]></Name>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1740048926478</Id>
 				<Name><![CDATA[ZeroTimeSeries]]></Name>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1741163937278</Id>
@@ -1582,26 +1658,27 @@
 			<JavaClass>
 				<Id>1741180550081</Id>
 				<Name><![CDATA[J_RapidRunData]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1741180880935</Id>
 				<Name><![CDATA[J_LiveData]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1741361867834</Id>
 				<Name><![CDATA[J_AssetsMetaData]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1741864496371</Id>
 				<Name><![CDATA[J_ConnectionMetaData]]></Name>
-			</JavaClass>
-			<JavaClass>
-				<Id>1746606645736</Id>
-				<Name><![CDATA[J_BatteryAlgorithmBas]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1749648342034</Id>
 				<Name><![CDATA[J_EAAirco]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1749649002419</Id>
@@ -1610,6 +1687,37 @@
 			<JavaClass>
 				<Id>1749651263461</Id>
 				<Name><![CDATA[J_EACharger]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1752677257516</Id>
+				<Name><![CDATA[I_BatteryManagement]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1752677992581</Id>
+				<Name><![CDATA[J_BatteryManagementSelfConsumption]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1752678003039</Id>
+				<Name><![CDATA[J_BatteryManagementPrice]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1752678015847</Id>
+				<Name><![CDATA[J_BatteryManagementPeakShaving]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1752678031327</Id>
+				<Name><![CDATA[J_BatteryManagementPeakShavingForecast]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753169766770</Id>
+				<Name><![CDATA[J_BatteryManagementOff]]></Name>
+				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753088272170</Id>

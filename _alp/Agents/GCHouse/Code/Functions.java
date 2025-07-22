@@ -94,28 +94,7 @@ if( p_batteryAsset != null){
 */ 
 f_manageChargers();
 
-
-v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); 
-
-if ( p_batteryAsset != null ) {
-	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		if( p_batteryOperationMode == OL_BatteryOperationMode.HOUSEHOLD_LOAD){
-			f_batteryManagementBalance(v_batterySOC_fr);
-//		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
-//			f_batteryManagementBalanceSupply(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
-			f_batteryManagementPrice(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
-			f_batteryManagementNodalPricing(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.SELF_CONSUMPTION){
-			f_batteryManagementSelfConsumption();
-		}
-		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-	}
-}
-
+f_manageBattery();
 /*ALCODEEND*/}
 
 double f_connectToChild_overwrite(Agent ConnectingParentNode)
@@ -455,7 +434,7 @@ double f_manageCharging_overwrite()
 double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge();
+v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge_fr();
 
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
@@ -479,7 +458,7 @@ double f_simpleCharging_overwrite()
 {/*ALCODESTART::1675033218897*/
 
 double powerFraction_fr = 0;
-if( p_householdEV.getCurrentStateOfCharge() < 1 ) {
+if( p_householdEV.getCurrentStateOfCharge_fr() < 1 ) {
 	powerFraction_fr = 1;
 	/*if ( p_hasSmartFlexAssets ){
 		ConnectionOwner owner = ((ConnectionOwner)l_ownerActor.getConnectedAgent());
@@ -737,70 +716,6 @@ else if ( v_batterySOC_fr < 0.6 && v_currentPowerElectricity_kW < 1 && v_current
 p_batteryAsset.v_powerFraction_fr = powerfraction_fr;
 p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 
-/*ALCODEEND*/}
-
-double f_batteryManagementPrice_overwrite(double currentBatteryStateOfCharge)
-{/*ALCODESTART::1678709047802*/
-if (p_batteryAsset.getStorageCapacity_kWh() != 0){
-	//double willingnessToPayDefault_eurpkWh = 0.3;
-	double chargeDischarge_offset_eurpkWh = 0.0;
-	double WTPfeedbackGain_eurpSOC = 0.25; // When SOC-error is 100%, adjust WTP price by 1 eurpkWh
-	double priceGain = 2; // How strongly to ramp up power with price-delta's
-	//double congestionTariffCoop_eurpkWh = -(((ConnectionOwner)p_ownerActor).p_CoopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW)/1200*0.1;
-	
-	double chargeSetpoint_kW = 0;
-	
-	if(p_owner != null) {
-		//traceln("Initial Mappings are: " + ((ConnectionOwner)p_ownerActor).v_currentPriceBands);
-		double currentElectricityPriceCharge_eurpkWh = p_owner.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) + 10.0); // query price at 100kW charging
-		double currentElectricityPriceDischarge_eurpkWh = p_owner.f_getElectricityPrice(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - 10.0); // query price at -100kW charging
-		//double lowPassFraction = min(1,1*1.2*energyModel.p_timeStep_h); // smaller value results in more filtering
-		//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-		
-		//double currentPricePowerBandPos_kW = ownerActor.v_priceBandsDelivery.ceilingKey(10.0); // Up to what power does this price hold?
-		//double currentPricePowerBandNeg_kW = ownerActor.v_priceBandsDelivery.floorKey(10.0); // Down to what power does this price hold?
-		
-		double SOC_setp_fr = 0.5;
-		//traceln("Current price is " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, between " + currentPricePowerBandNeg_kW + " kW and " + currentPricePowerBandPos_kW + " kW");
-		if (!c_vehicleAssets.isEmpty()) {
-			SOC_setp_fr = 0.5 + 0.25 * Math.sin(2*Math.PI*(energyModel.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		} else if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) {
-			SOC_setp_fr = 0.9 - 0.8 * energyModel.v_WindYieldForecast_fr;
-			//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
-		}
-		double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge; // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
-		
-		// Define WTP price for charging and discharging!
-		double WTP_charge_eurpkWh = v_electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-		double WTP_discharge_eurpkWh = v_electricityPriceLowPassed_eurpkWh + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-		
-		//traceln("WTP charge is " + WTP_charge_eurpkWh + " eurpkWh, discharge is " + WTP_discharge_eurpkWh + " eurpkWh");
-		// Choose charging power based on prices and desired SOC level
-		if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) { // if willingness to pay higher than current electricity price
-			//chargeSetpoint_kW = min(p_batteryAsset.getElectricCapacity_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW)  ;
-			chargeSetpoint_kW = p_batteryAsset.getCapacityElectric_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain;
-			//traceln("WTP charge " + WTP_charge_eurpkWh + " eurpkWh is high than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so charge!") ;
-		} else if (WTP_discharge_eurpkWh < currentElectricityPriceDischarge_eurpkWh) {
-			//chargeSetpoint_kW = -min(p_batteryAsset.getElectricCapacity_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain, currentPricePowerBandPos_kW);
-			chargeSetpoint_kW = -p_batteryAsset.getCapacityElectric_kW()*(currentElectricityPriceDischarge_eurpkWh - WTP_discharge_eurpkWh)*priceGain;
-			//traceln("WTP discharge " + WTP_discharge_eurpkWh + " eurpkWh is lower than electricity price " + currentElectricityPriceCharge_eurpkWh + " eurpkWh, so discharge!") ;
-		}
-		
-		// limit charging power to available connection capacity
-		boolean b_stayWithinConnectionLimits = true;
-		if( b_stayWithinConnectionLimits ) {	
-	
-			double electricitySurplus_kW = - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-			
-			double availableChargePower_kW = electricitySurplus_kW + v_liveConnectionMetaData.contractedDeliveryCapacity_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = electricitySurplus_kW - v_liveConnectionMetaData.contractedFeedinCapacity_kW; // Max discharging power within grid capacity
-			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-		}			
-	
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
-	}
-	p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
-}
 /*ALCODEEND*/}
 
 double f_connectTo_J_EA_House(J_EA j_ea)
