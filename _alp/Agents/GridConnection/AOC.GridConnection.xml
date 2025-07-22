@@ -20,7 +20,11 @@ import java.io.*;
 
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;
-import javax.management.RuntimeErrorException;]]></Import>
+import javax.management.RuntimeErrorException;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")]]></Import>
 	<Implements>I_EnergyData</Implements>
 	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);
 v_liveData = new J_LiveData(this);

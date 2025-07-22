@@ -133,6 +133,7 @@
 		<EmbeddedIcon>false</EmbeddedIcon>
 		<Id>1675071708039</Id>
 		<Name><![CDATA[button]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>660</X>
 		<Y>350</Y>
 		<Label>

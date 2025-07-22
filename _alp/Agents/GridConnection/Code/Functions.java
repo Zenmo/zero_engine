@@ -44,6 +44,78 @@ if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentP
 	//}
 }
 
+// Further Subdivision of asset types within energy carriers
+v_fixedConsumptionElectric_kW = 0;
+for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
+	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_hydrogenElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electrolyserAssets) {
+	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_heatPumpElectricityConsumption_kW = 0;
+for (J_EA j_ea : c_electricHeatpumpAssets) {
+	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_evChargingPowerElectric_kW = 0;
+for (J_EA j_ea : c_EvAssets) {
+	if (j_ea instanceof J_EAEV) {
+		if (((J_EAEV)j_ea).vehicleScaling == 0) {
+			continue;
+		}
+	}
+	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_batteryPowerElectric_kW = 0;
+v_batteryStoredEnergy_kWh = 0;
+for (J_EA j_ea : c_batteryAssets) {
+	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
+		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
+		
+	}
+}
+
+v_CHPProductionElectric_kW = 0;
+for (J_EA j_ea : c_chpAssets) {
+	v_CHPProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_pvProductionElectric_kW = 0;
+for (J_EA j_ea : c_pvAssets) {
+	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_windProductionElectric_kW = 0;
+for (J_EA j_ea : c_windAssets) {
+	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+}
+
+v_ptProductionHeat_kW = 0;
+for (J_EA j_ea : c_ptAssets) {
+	v_ptProductionHeat_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
+}
+
+v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
+	v_heatPumpElectricityConsumption_kW,
+	max(0,v_evChargingPowerElectric_kW),
+	max(0,v_batteryPowerElectric_kW),
+	v_hydrogenElectricityConsumption_kW,
+	v_electricHobConsumption_kW,
+	v_districtHeatDelivery_kW,
+	v_pvProductionElectric_kW,
+	v_windProductionElectric_kW,
+	v_ptProductionHeat_kW,
+	v_CHPProductionElectric_kW,
+	max(0,-v_batteryPowerElectric_kW),
+	max(0,-v_evChargingPowerElectric_kW),
+	v_batteryStoredEnergy_kWh/1000);
+
+// 
 if (energyModel.v_isRapidRun){
 	f_rapidRunDataLogging();
 } else {
@@ -1326,6 +1398,24 @@ double f_fillLiveDataSets()
 //Current timestep
 double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
 
+v_liveData.addTimeStep(currentTime_h,
+	fm_currentBalanceFlows_kW,
+	fm_currentConsumptionFlows_kW,
+	fm_currentProductionFlows_kW,
+	v_currentPrimaryEnergyProduction_kW, 
+	v_currentFinalEnergyConsumption_kW, 
+	v_currentPrimaryEnergyProductionHeatpumps_kW, 
+	v_currentEnergyCurtailed_kW, 
+	v_assetFlows 
+);
+
+double currentSOC = 0;
+if(v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+	currentSOC = (v_batteryStoredEnergy_kWh/1000)/v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+}
+v_liveData.data_batterySOC_fr.add(currentTime_h, roundToDecimal(currentSOC, 3));
+
+/*
 //Energy carrier flows
 for (OL_EnergyCarriers EC : v_activeConsumptionEnergyCarriers) {
 	v_liveData.dsm_liveDemand_kW.get(EC).add( currentTime_h, roundToDecimal(fm_currentConsumptionFlows_kW.get(EC), 3) );
@@ -1455,7 +1545,7 @@ v_liveData.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(v_ptProduction
 	v_districtHeatDelivery_kW = max(0,fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
 //}
 v_liveData.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(v_districtHeatDelivery_kW, 3));	
-
+*/
 
 /*ALCODEEND*/}
 
@@ -1463,78 +1553,15 @@ double f_rapidRunDataLogging()
 {/*ALCODESTART::1722518905501*/
 v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / v_liveConnectionMetaData.contractedDeliveryCapacity_kW ));
 
-// Further Subdivision of asset types within energy carriers
-v_fixedConsumptionElectric_kW = 0;
-for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
-	v_fixedConsumptionElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_hydrogenElectricityConsumption_kW = 0;
-for (J_EA j_ea : c_electrolyserAssets) {
-	v_hydrogenElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_heatPumpElectricityConsumption_kW = 0;
-for (J_EA j_ea : c_electricHeatpumpAssets) {
-	v_heatPumpElectricityConsumption_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_evChargingPowerElectric_kW = 0;
-for (J_EA j_ea : c_EvAssets) {
-	if (j_ea instanceof J_EAEV) {
-		if (((J_EAEV)j_ea).vehicleScaling == 0) {
-			continue;
-		}
-	}
-	v_evChargingPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_batteryPowerElectric_kW = 0;
-v_batteryStoredEnergy_kWh = 0;
-for (J_EA j_ea : c_batteryAssets) {
-	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
-		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
-		
-	}
-}
-
-v_CHPProductionElectric_kW = 0;
-for (J_EA j_ea : c_chpAssets) {
-	v_CHPProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_pvProductionElectric_kW = 0;
-for (J_EA j_ea : c_pvAssets) {
-	v_pvProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_windProductionElectric_kW = 0;
-for (J_EA j_ea : c_windAssets) {
-	v_windProductionElectric_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-}
-
-v_ptProductionHeat_kW = 0;
-for (J_EA j_ea : c_ptAssets) {
-	v_ptProductionHeat_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
-}
-
-v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
-	v_heatPumpElectricityConsumption_kW,
-	max(0,v_evChargingPowerElectric_kW),
-	max(0,v_batteryPowerElectric_kW),
-	v_hydrogenElectricityConsumption_kW,
-	v_electricHobConsumption_kW,
-	v_districtHeatDelivery_kW,
-	v_pvProductionElectric_kW,
-	v_windProductionElectric_kW,
-	v_ptProductionHeat_kW,
-	v_CHPProductionElectric_kW,
-	max(0,-v_batteryPowerElectric_kW),
-	max(0,-v_evChargingPowerElectric_kW),
-	v_batteryStoredEnergy_kWh/1000);
-
-v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, fm_currentConsumptionFlows_kW, fm_currentProductionFlows_kW, v_currentPrimaryEnergyProduction_kW, v_currentFinalEnergyConsumption_kW, v_currentPrimaryEnergyProductionHeatpumps_kW, v_currentEnergyCurtailed_kW, v_assetFlows, energyModel);
+v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
+	fm_currentConsumptionFlows_kW,
+	fm_currentProductionFlows_kW,
+	v_currentPrimaryEnergyProduction_kW, 
+	v_currentFinalEnergyConsumption_kW, 
+	v_currentPrimaryEnergyProductionHeatpumps_kW, 
+	v_currentEnergyCurtailed_kW, 
+	v_assetFlows, 
+	energyModel);
 
 /*
 double currentImport_kW = 0.0;

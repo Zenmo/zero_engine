@@ -1,4 +1,4 @@
-/**
+	/**
  * J_AssetFlows
  */	
 public class J_AssetFlows implements Serializable {
@@ -57,20 +57,20 @@ public class J_AssetFlows implements Serializable {
     }
 
     public void addFlows(J_AssetFlows assetFlows){    	
-    	this.fixedConsumptionElectric_kW += fixedConsumptionElectric_kW;
-    	this.heatPumpElectricityConsumption_kW += heatPumpElectricityConsumption_kW;
-    	this.evChargingPowerElectric_kW += evChargingPowerElectric_kW;
-    	this.currentBatteriesConsumption_kW += currentBatteriesConsumption_kW;
-    	this.hydrogenElectricityConsumption_kW += hydrogenElectricityConsumption_kW;
-    	this.electricHobConsumption_kW += electricHobConsumption_kW;
-    	this.districtHeatDelivery_kW += districtHeatDelivery_kW;
-    	this.pvProductionElectric_kW += pvProductionElectric_kW;
-    	this.windProductionElectric_kW += windProductionElectric_kW;
-    	this.ptProductionHeat_kW += ptProductionHeat_kW;
-    	this.CHPProductionElectric_kW += CHPProductionElectric_kW;
-    	this.currentBatteriesProduction_kW += currentBatteriesProduction_kW;
-    	this.currentV2GProduction_kW += currentV2GProduction_kW;
-    	this.currentStoredEnergyBatteries_MWh += currentStoredEnergyBatteries_MWh;
+    	this.fixedConsumptionElectric_kW += assetFlows.fixedConsumptionElectric_kW;
+    	this.heatPumpElectricityConsumption_kW += assetFlows.heatPumpElectricityConsumption_kW;
+    	this.evChargingPowerElectric_kW += assetFlows.evChargingPowerElectric_kW;
+    	this.currentBatteriesConsumption_kW += assetFlows.currentBatteriesConsumption_kW;
+    	this.hydrogenElectricityConsumption_kW += assetFlows.hydrogenElectricityConsumption_kW;
+    	this.electricHobConsumption_kW += assetFlows.electricHobConsumption_kW;
+    	this.districtHeatDelivery_kW += assetFlows.districtHeatDelivery_kW;
+    	this.pvProductionElectric_kW += assetFlows.pvProductionElectric_kW;
+    	this.windProductionElectric_kW += assetFlows.windProductionElectric_kW;
+    	this.ptProductionHeat_kW += assetFlows.ptProductionHeat_kW;
+    	this.CHPProductionElectric_kW += assetFlows.CHPProductionElectric_kW;
+    	this.currentBatteriesProduction_kW += assetFlows.currentBatteriesProduction_kW;
+    	this.currentV2GProduction_kW += assetFlows.currentV2GProduction_kW;
+    	this.currentStoredEnergyBatteries_MWh += assetFlows.currentStoredEnergyBatteries_MWh;
     }    
     
     

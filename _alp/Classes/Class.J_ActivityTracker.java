@@ -11,7 +11,6 @@ public class J_ActivityTracker implements Serializable {
     public int nbActivities = 0;
 	public int v_eventIndex = 0;
 	protected int v_eventIndexStored =0;
-
 	
     /**
      * Default constructor

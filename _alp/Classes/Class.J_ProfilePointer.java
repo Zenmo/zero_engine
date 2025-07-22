@@ -9,6 +9,10 @@ public class J_ProfilePointer implements Serializable {
     /**
      * Default constructor
      */
+	public J_ProfilePointer() {
+	
+	}
+	
     public J_ProfilePointer(String name, TableFunction tableFunction) {
     	this.name = name;
     	this.tableFunction = tableFunction;
