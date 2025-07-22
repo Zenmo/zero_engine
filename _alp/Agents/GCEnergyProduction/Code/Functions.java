@@ -6,49 +6,9 @@ for( J_EA v : c_conversionAssets ){
 	}
 }
 
-// Determine EV charging
 f_manageCharging();
-//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 
-// Operate battery
-/*if (p_batteryAsset != null){
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
-		f_batteryManagementBalanceCoop( v_batterySOC_fr );
-	}
-	else {
-		f_batteryManagementPriceGrid( v_batterySOC_fr );
-	}
-	double[] arr = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batteryPowerElectric_kW = arr[4] - arr[0];
-	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-}*/
-
-if ( p_batteryAsset != null ) {
-	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
-		v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-		if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE){
-			//f_batteryManagementGridLoad(v_batterySOC_fr);
-			f_batteryManagementBalance(v_batterySOC_fr);
-//		} else if (p_batteryOperationMode == OL_BatteryOperationMode.BALANCE_SUPPLY){ // Tries to minimize supply peaks
-//			f_batteryManagementBalanceSupply(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.PRICE){
-			f_batteryManagementPrice(v_batterySOC_fr);
-		} else if (p_batteryOperationMode == OL_BatteryOperationMode.NODAL_PRICING){
-			f_batteryManagementNodalPricing(v_batterySOC_fr);
-		}
-
-		//Pair<J_FlowsMap, Double> flowsPair = p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		//J_FlowsMap flowsMap = flowsPair.getFirst();
-		
-		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
-		
-		//v_batteryPowerElectric_kW = flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
-		//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-		//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-	}
-}
+f_manageBattery();
 
 /*ALCODEEND*/}
 
@@ -89,41 +49,6 @@ if (ElektrolyserAsset.getInputCapacity_kW()>0) {
 	ElektrolyserAsset.f_updateAllFlows(elektrolyserSetpointElectric_kW/ElektrolyserAsset.getInputCapacity_kW());
 	
 	v_hydrogenProductionDeficit_kWh += ProductionSetpoint_kW - max(0,-ElektrolyserAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN));	// Update hydrogen production deficit
-}
-/*ALCODEEND*/}
-
-double f_batteryManagementBalanceCoop(double batterySOC)
-{/*ALCODESTART::1677836046815*/
-if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
-	if( p_owner != null) {
-		if( p_owner.p_coopParent instanceof EnergyCoop ) {
-			//traceln("Hello?");
-//			v_previousPowerElectricity_kW = p_batteryAsset.v_powerFraction_fr * p_batteryAsset.j_ea.getElectricCapacity_kW();
-			v_previousPowerElectricity_kW = p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-			//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
-			double currentCoopElectricitySurplus_kW = p_owner.p_coopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW;
-			//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentCoopElectricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
-			
-			double CoopConnectionCapacity_kW = 0.9*p_owner.p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-			double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
-			double SOC_setp_fr = 0.5;			
-			if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 10000) {
-				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
-				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
-			} else {
-				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-			}
-			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
-			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
-			double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
-			double chargeSetpoint_kW = 0;
-			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
-			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
-			//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
-		}
-	}
 }
 /*ALCODEEND*/}
 

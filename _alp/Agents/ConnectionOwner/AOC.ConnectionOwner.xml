@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1660224852394</Id>
 	<Name><![CDATA[ConnectionOwner]]></Name>
+	<Folder>1752677829820</Folder>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>

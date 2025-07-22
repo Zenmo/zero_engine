@@ -179,9 +179,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -243,6 +240,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1044,9 +1044,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1151,6 +1148,9 @@
 			<Parameter>
 				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1239,9 +1239,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1309,6 +1306,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1398,9 +1398,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1465,6 +1462,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1555,9 +1555,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
@@ -1661,6 +1658,9 @@
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1752,9 +1752,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1813,6 +1810,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1902,9 +1902,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1966,6 +1963,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2055,9 +2055,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2122,6 +2119,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2529,9 +2529,6 @@
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2627,6 +2624,9 @@
 			<Parameter>
 				<Name><![CDATA[p_isChargingCentre]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2717,9 +2717,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAsset]]></Name>
@@ -2813,6 +2810,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

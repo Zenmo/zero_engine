@@ -17,12 +17,12 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageElectric(Agent parentAgent, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_r, double timestep_h ) {
+    public J_EAStorageElectric(Agent parentAgent, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectric_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-		this.initialStateOfCharge_r = stateOfCharge_r;
-		this.stateOfCharge_r = this.initialStateOfCharge_r;
+		this.initialstateOfCharge_fr = stateOfCharge_fr;
+		this.stateOfCharge_fr = this.initialstateOfCharge_fr;
 		this.timestep_h = timestep_h;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
 		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
@@ -46,8 +46,8 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     	}
 
     	// Limit SoC to feasible range (0-1)
-    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_r * storageCapacity_kWh) ); // Prevent negative charge
-    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_r) * storageCapacity_kWh ); // Prevent overcharge
+    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * storageCapacity_kWh) ); // Prevent negative charge
+    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * storageCapacity_kWh ); // Prevent overcharge
     	
     	double electricityConsumption_kW = 0;
     	double electricityProduction_kW = 0;
@@ -68,10 +68,8 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		charged_kWh += electricityConsumption_kW * timestep_h; // Not the change-in-SoC, but the energy flowing into the battery before losses.
 		
 		updateStateOfCharge( deltaEnergy_kWh );
-		//traceln("Battery SoC: %s", stateOfCharge_r);
+		//traceln("Battery SoC: %s", stateOfCharge_fr);
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW-electricityProduction_kW);		
-				
-		//return new Pair(this.flowsMap, this.energyUse_kW);
 	}
 	
 	public void setBatteryEfficiency_r(double eta_r) {
@@ -90,7 +88,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		return 
 			"type = " + this.getClass().toString() + " " +
 			"parentAgent = " + parentAgent +" " +
-			"stateOfCharge_r = " + this.stateOfCharge_r+" "+
+			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
 			"storageCapacity_kWh = " + this.storageCapacity_kWh +" "+
 			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
 			"discharged_kWh " + this.discharged_kWh+" "+
@@ -99,31 +97,22 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	@Override
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
-		stateOfCharge_r += deltaEnergy_kWh / storageCapacity_kWh;
-	}
-
-	@Override
-	public double getCurrentStateOfCharge() {
-    	return this.stateOfCharge_r;
+		stateOfCharge_fr += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 
 	public double getCapacityAvailable_kW() {
 		double availableCapacity_kW;
-		if ( stateOfCharge_r * storageCapacity_kWh  > capacityElectric_kW * timestep_h) {
+		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityElectric_kW * timestep_h) {
 			availableCapacity_kW = capacityElectric_kW;
 		}
 		else {
-			availableCapacity_kW =  stateOfCharge_r * storageCapacity_kWh / timestep_h; // Allow to drain completely
+			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timestep_h; // Allow to drain completely
 		}
 		return availableCapacity_kW;
 	}
 	
 	public double getCapacityElectric_kW() {
 		return this.capacityElectric_kW;
-	}
-	
-	public double getStorageCapacity_kWh() {
-		return this.storageCapacity_kWh;
 	}
 
 	public double getTotalChargeAmount_kWh() {
@@ -149,9 +138,6 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
 		this.capacityElectric_kW = capacityElectric_kW;
-		//if (capacityElectric_kW == 0) {			
-			//Arrays.fill(lastFlowsArray,0);			
-		//}
 	}
 	/**
 	 * This number is here for model snapshot storing purpose<br>

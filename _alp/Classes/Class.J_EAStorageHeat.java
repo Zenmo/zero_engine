@@ -7,7 +7,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	public OL_EnergyCarriers storageMedium = OL_EnergyCarriers.HEAT;
 	private double storageCapacity_kWh;
 	
-	private double stateOfCharge_r;
+	private double stateOfCharge_fr;
 	protected double lossFactor_WpK;
 	protected double capacityHeat_kW;
 	
@@ -58,7 +58,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.heatCapacity_JpK = heatCapacity_JpK;
 		this.ambientTempType = ambientTempType;
 		this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
-		this.stateOfCharge_r = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
+		this.stateOfCharge_fr = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		registerEnergyAsset();
@@ -151,7 +151,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 			"parentAgent = " + parentAgent +" " +
 			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
 			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
-			"stateOfCharge_r = " + this.stateOfCharge_r+" "+
+			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
 			"minTemperature_degC = " + this.minTemperature_degC+" "+
 			"maxTemperature_degC = " + this.maxTemperature_degC+" "+
 			"setTemperature_degC = " + this.setTemperature_degC+" "+			
@@ -165,18 +165,13 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		double tempDelta_degC = deltaEnergy_kWh / (heatCapacity_JpK / 3.6E6 );
 		temperature_degC += tempDelta_degC;
-		stateOfCharge_r = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
+		stateOfCharge_fr = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 		if (temperature_degC < setTemperature_degC) {
 			requiresHeat = true;
 		}
 		else if ( temperature_degC >= maxTemperature_degC ) {
 			requiresHeat = false;
 		}
-	}
-
-	@Override
-	public double getCurrentStateOfCharge() {
-    	return stateOfCharge_r;
 	}
 
 	@Override

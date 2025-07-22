@@ -510,16 +510,6 @@
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
-			<Title>Consumption assets demand [kW]</Title>
-			<Id>1668439095463</Id>
-			<Expression>my_dataset</Expression>
-			<Color>-10496</Color>
-			<Expression2>v_fixedConsumptionElectric_kW</Expression2>
-			<Expression2Flag>true</Expression2Flag>
-			<PointStyle>NONE</PointStyle>
-			<LineWidth>1.0</LineWidth>
-		</DatasetExpression>
-		<DatasetExpression>
 			<Title>Production assets output [kW]</Title>
 			<Id>1668439095464</Id>
 			<Expression>my_dataset1</Expression>
@@ -585,16 +575,6 @@
 			<Expression>my_dataset7</Expression>
 			<Color>-65536</Color>
 			<Expression2>- v_liveConnectionMetaData.contractedFeedinCapacity_kW</Expression2>
-			<Expression2Flag>true</Expression2Flag>
-			<PointStyle>NONE</PointStyle>
-			<LineWidth>1.0</LineWidth>
-		</DatasetExpression>
-		<DatasetExpression>
-			<Title>Current load low passed</Title>
-			<Id>1658477089939</Id>
-			<Expression>my_dataset8</Expression>
-			<Color>-16728065</Color>
-			<Expression2>v_currentLoadLowPassed_kW</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
@@ -829,31 +809,6 @@ energyModel.energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<ExtendedProperties>
 			<Font Name="Dialog" Size="11" Style="0"/>
 			<LabelText>View Data</LabelText>
-		</ExtendedProperties>
-	</Control>
-	<Control Type="Button">
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Id>1746437702494</Id>
-		<Name><![CDATA[button]]></Name>
-		<X>510</X>
-		<Y>-60</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<BasicProperties Width="100" Height="30">
-			<EmbeddedIcon>false</EmbeddedIcon>
-			<TextColor>-16777216</TextColor>
-			<Enabled>true</Enabled>
-			<ActionCode>v_rapidRunData.getFlexPotential();</ActionCode>
-		</BasicProperties>
-		<ExtendedProperties>
-			<Font Name="Dialog" Size="11" Style="0"/>
-			<LabelText>notBenuttingsgraad</LabelText>
 		</ExtendedProperties>
 	</Control>
 	<Text>
