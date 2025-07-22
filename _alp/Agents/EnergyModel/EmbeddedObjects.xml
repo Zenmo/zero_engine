@@ -1288,7 +1288,7 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatingManagement]]></Name>
-			<Parameter>
+			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
