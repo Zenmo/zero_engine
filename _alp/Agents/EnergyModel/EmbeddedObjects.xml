@@ -244,6 +244,9 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1144,6 +1147,9 @@
 			<Parameter>
 				<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1303,6 +1309,9 @@
 			<Parameter>
 				<Name><![CDATA[p_DHheatStorage]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1458,6 +1467,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_isSliderGC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1654,6 +1666,9 @@
 			<Parameter>
 				<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1807,6 +1822,9 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1959,6 +1977,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2116,6 +2137,9 @@
 			<Parameter>
 				<Name><![CDATA[p_isSliderGC]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2242,6 +2266,15 @@
 			<Parameter>
 				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultFillColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineStyleString]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2332,6 +2365,15 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_annotation]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultFillColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineStyleString]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2426,6 +2468,15 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultFillColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineStyleString]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2617,6 +2668,9 @@
 			<Parameter>
 				<Name><![CDATA[p_chargingProfileName]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2803,6 +2857,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_quinaryHeatingAsset]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

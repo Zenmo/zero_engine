@@ -597,6 +597,9 @@ getExperiment().getEngine().setStartDate(startDate);
 f_buildGridNodeTree();
 c_gridConnections.forEach(GC -> GC.f_initialize());
 
+// Only relevant for deserialisation:
+c_pausedGridConnections.forEach(GC -> GC.f_initialize());
+
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
 

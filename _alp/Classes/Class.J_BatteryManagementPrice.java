@@ -1,6 +1,18 @@
 /**
  * J_BatteryManagementPrice
  */	
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // ✅ only public fields are serialized
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
 public class J_BatteryManagementPrice implements I_BatteryManagement {
 
     private GridConnection gc;

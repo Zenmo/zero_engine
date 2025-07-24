@@ -10,12 +10,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = J_BatteryManagementOff.class, name = "I_BatteryManagementOff"),
-    @JsonSubTypes.Type(value = J_BatteryManagementPeakShaving.class, name = "I_BatteryManagementPeakShaving"),
-    @JsonSubTypes.Type(value = J_BatteryManagementPeakShavingForecast.class, name = "I_BatteryManagementPeakShavingForecast"),
-    @JsonSubTypes.Type(value = J_BatteryManagementPrice.class, name = "I_BatteryManagementPrice"),
-    @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumption.class, name = "I_BatteryManagementSelfConsumption"),
-    @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumptionGridNode.class, name = "I_BatteryManagementSelfConsumptionGridNode"),
+    @JsonSubTypes.Type(value = J_BatteryManagementOff.class, name = "J_BatteryManagementOff"),
+    @JsonSubTypes.Type(value = J_BatteryManagementPeakShaving.class, name = "J_BatteryManagementPeakShaving"),
+    @JsonSubTypes.Type(value = J_BatteryManagementPeakShavingForecast.class, name = "J_BatteryManagementPeakShavingForecast"),
+    @JsonSubTypes.Type(value = J_BatteryManagementPrice.class, name = "J_BatteryManagementPrice"),
+    @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumption.class, name = "J_BatteryManagementSelfConsumption"),
+    @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumptionGridNode.class, name = "J_BatteryManagementSelfConsumptionGridNode"),
 })
     
     // Add other known subtypes here if needed
