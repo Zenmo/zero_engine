@@ -486,26 +486,6 @@ public class J_RapidRunData {
     	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		this.am_totalBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
     	}
-    	
-    	/*
-    	// Further Subdivision of asset types within energy carriers
-    	double v_fixedConsumptionElectric_kW = sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW);
-    	double v_heatPumpElectricityConsumption_kW = sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW);
-    	double v_evChargingPowerElectric_kW = sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW));
-    	double currentBatteriesConsumption_kW = sum(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW));
-    	double v_hydrogenElectricityConsumption_kW = sum(c_gridConnections, x->x.v_hydrogenElectricityConsumption_kW);
-    	double v_electricHobConsumption_kW = sum(c_gridConnections, x->x.v_electricHobConsumption_kW);
-    	double v_districtHeatDelivery_kW = sum(c_gridConnections, x->x.v_districtHeatDelivery_kW);
-
-    	double v_pvProductionElectric_kW = sum(c_gridConnections, x->x.v_pvProductionElectric_kW);
-    	double v_windProductionElectric_kW = sum(c_gridConnections, x->x.v_windProductionElectric_kW);
-    	double v_ptProductionHeat_kW = sum(c_gridConnections, x->x.v_ptProductionHeat_kW);
-    	double currentBatteriesProduction_kW = sum(c_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW));
-    	double currentV2GProduction_kW = sum(c_gridConnections, x-> max(0, -x.v_evChargingPowerElectric_kW));
-    	double v_CHPProductionElectric_kW = sum(c_gridConnections, x->x.v_CHPProductionElectric_kW);
-
-    	double currentStoredEnergyBatteries_MWh = sum(c_gridConnections, x->x.v_batteryStoredEnergy_kWh)/1000;
-    	*/
 
     	// Daytime totals. Use overal-total minus daytime total to get nighttime totals.
     	if(energyModel.b_isDaytime) { 
@@ -670,7 +650,6 @@ public class J_RapidRunData {
     	else{
     		ts_dailyAverageBatteriesSOC_fr.addStep(0);	
     	}	
-
     }
     
     public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {

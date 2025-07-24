@@ -110,29 +110,6 @@ f_operateFixedAssets();
 f_operateFlexAssets();
 f_curtailment();
 f_connectionMetering();
-
-//v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
-//- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh + v_electricityChargedByBattery_kWh - v_electricityDischargedByBattery_kWh;
-
-/*
-// Total Energy Use and Production
-v_totalEnergyUsed_kWh = 0;
-v_totalEnergyProduced_kWh = 0;
-for (EnergyAsset EA : c_energyAssets ) {
-	double energyUse_kWh=EA.j_ea.getEnergyUsed_kWh();
-	if (EA.j_ea instanceof J_EAConversionCurtailer) {
-		v_totalEnergyProduced_kWh -= max(0, energyUse_kWh);
-	} else {
-		v_totalEnergyUsed_kWh += max(0, energyUse_kWh);
-		v_totalEnergyProduced_kWh -= min(0, energyUse_kWh);
-	}
-}
-
-v_selfConsumption_fr = 1 - (v_electricityDeliveredToGrid_kWh + v_heatDelivered_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh + v_dieselDelivered_kWh ) / v_totalEnergyProduced_kWh; // Doesn't make sense to sum different energy carriers!
-v_selfSufficiency_fr = 1 - (v_electricityDrawnFromGrid_kWh + v_heatDrawn_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh) / v_totalEnergyUsed_kWh; // Need to account for energy in storages
-v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
-*/
-
 /*ALCODEEND*/}
 
 double f_manageCurtailer(J_EAConversionCurtailer CurtailerAsset)
