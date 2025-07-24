@@ -11,7 +11,10 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     List<GridConnection> c_targetGridConnections = new ArrayList<GridConnection>();
     double p_timestep_h;
 	
-    
+	public J_BatteryManagementPeakShavingForecast() {
+		
+	}
+	
     
 	public J_BatteryManagementPeakShavingForecast( GridConnection parentGC ) {
     	this.parentGC = parentGC;

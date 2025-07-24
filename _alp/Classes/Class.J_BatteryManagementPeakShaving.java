@@ -14,6 +14,10 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     /**
      * Default constructor
      */
+	public J_BatteryManagementPeakShaving() {
+		
+	}
+	
     public J_BatteryManagementPeakShaving( GridConnection gc ) {
     	this.gc = gc;
     	if (gc instanceof GCGridBattery) {

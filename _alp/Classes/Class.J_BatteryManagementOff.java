@@ -8,6 +8,10 @@ public class J_BatteryManagementOff implements I_BatteryManagement {
     /**
      * Default constructor
      */
+	public J_BatteryManagementOff( ) {
+
+    }
+	
     public J_BatteryManagementOff( GridConnection gc) {
     	this.gc = gc;
     }

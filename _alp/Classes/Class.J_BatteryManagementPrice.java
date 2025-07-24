@@ -17,6 +17,11 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     /**
      * Default constructor
      */
+    
+    public J_BatteryManagementPrice() {
+		
+	}
+    
     public J_BatteryManagementPrice( GridConnection gc ) {
     	this.gc = gc;
     }
