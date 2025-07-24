@@ -110,56 +110,46 @@ public class J_LiveData {
     	//// Gather specific electricity flows from corresponding energy assets
 
     	//Baseload electricity
-    	
     	this.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(assetFlows.fixedConsumptionElectric_kW,3));
 
-
     	//Cooking
-  
     	this.data_cookingElectricityDemand_kW.add(currentTime_h, roundToDecimal(assetFlows.electricHobConsumption_kW, 3));
 
-
     	//Hydrogen elec consumption
-
     	this.data_hydrogenElectricityDemand_kW.add(currentTime_h, roundToDecimal(max(0, assetFlows.hydrogenElectricityConsumption_kW), 3));
 
-
     	//Heatpump elec consumption
-
     	this.data_heatPumpElectricityDemand_kW.add(currentTime_h, roundToDecimal(max(0, assetFlows.heatPumpElectricityConsumption_kW), 3));
 
-
     	//EVs
-
     	this.data_electricVehicleDemand_kW.add(currentTime_h, roundToDecimal(max(0,assetFlows.evChargingPowerElectric_kW), 3));
     	this.data_V2GSupply_kW.add(currentTime_h, roundToDecimal(max(0, -assetFlows.evChargingPowerElectric_kW), 3));
-
 
     	//Batteries
     	this.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(assetFlows.currentBatteriesConsumption_kW, 3));		
     	this.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(assetFlows.currentBatteriesProduction_kW, 3));	
     	this.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, assetFlows.currentStoredEnergyBatteries_MWh);
-
+    	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+    		this.data_batterySOC_fr.add(currentTime_h, assetFlows.currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+    	}
+    	else{
+    		this.data_batterySOC_fr.add(currentTime_h, 0);	
+    	}	
+    	
     	//CHP production
     	this.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, roundToDecimal(assetFlows.CHPProductionElectric_kW, 3));
-
 
     	//PV production
     	if (assetFlows.pvProductionElectric_kW < 0) {
     		throw new RuntimeException("Negative assetFlows.pvProductionElectric_kW! Curtailment error? Value: " + assetFlows.pvProductionElectric_kW );
-    		
-    		//pauseSimulation();
     	}
     	this.data_PVGeneration_kW.add(currentTime_h, roundToDecimal(assetFlows.pvProductionElectric_kW , 3));
-
 
     	//Wind production
     	this.data_windGeneration_kW.add(currentTime_h, roundToDecimal(assetFlows.windProductionElectric_kW, 3));	
 
-
     	//PT production
     	this.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(assetFlows.ptProductionHeat_kW, 3));
-
 
     	//District heating
     	this.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(assetFlows.districtHeatDelivery_kW, 3));	

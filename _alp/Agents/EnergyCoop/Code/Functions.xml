@@ -6,7 +6,7 @@
 		<Id>1660736326703</Id>
 		<Name><![CDATA[f_connectToChild]]></Name>
 		<X>660</X>
-		<Y>50</Y>
+		<Y>70</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -31,7 +31,7 @@
 		<Name><![CDATA[f_updateFinances]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>660</X>
-		<Y>180</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -78,7 +78,7 @@
 @since: Sprint 6
 @author: HOUJ]]></Description>
 		<X>670</X>
-		<Y>100</Y>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -94,7 +94,7 @@
 		<Id>1667983361355</Id>
 		<Name><![CDATA[f_calculateEnergyBalance]]></Name>
 		<X>670</X>
-		<Y>200</Y>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -114,7 +114,7 @@
 
 ]]></Description>
 		<X>661</X>
-		<Y>279</Y>
+		<Y>299</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -151,7 +151,7 @@
 		<Id>1669037224999</Id>
 		<Name><![CDATA[f_setContractValues]]></Name>
 		<X>670</X>
-		<Y>120</Y>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -167,7 +167,7 @@
 		<Id>1669042410671</Id>
 		<Name><![CDATA[f_initialize]]></Name>
 		<X>660</X>
-		<Y>80</Y>
+		<Y>100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -183,7 +183,7 @@
 		<Id>1676553303568</Id>
 		<Name><![CDATA[f_updateIncentives]]></Name>
 		<X>661</X>
-		<Y>301</Y>
+		<Y>321</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -200,7 +200,7 @@
 		<Name><![CDATA[f_setElectricityPriceBands]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>681</X>
-		<Y>321</Y>
+		<Y>341</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -233,8 +233,8 @@
 		<Id>1692111928489</Id>
 		<Name><![CDATA[f_totalFinances]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2320</X>
-		<Y>100</Y>
+		<X>-1080</X>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -250,8 +250,8 @@
 		<Id>1692112062708</Id>
 		<Name><![CDATA[f_totalAssetDepreciation]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2350</X>
-		<Y>120</Y>
+		<X>-1050</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -267,8 +267,8 @@
 		<Id>1692112229224</Id>
 		<Name><![CDATA[f_totalMembersBalance]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2350</X>
-		<Y>160</Y>
+		<X>-1050</X>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -284,7 +284,7 @@
 		<Id>1704371824571</Id>
 		<Name><![CDATA[f_resetStates]]></Name>
 		<X>660</X>
-		<Y>20</Y>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -300,7 +300,7 @@
 		<Id>1715857260657</Id>
 		<Name><![CDATA[f_updateLiveDataSets]]></Name>
 		<X>680</X>
-		<Y>220</Y>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -316,8 +316,8 @@
 		<Id>1723103918133</Id>
 		<Name><![CDATA[f_fillAnnualDatasetsOLD]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2360</X>
-		<Y>300</Y>
+		<X>-1040</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -333,7 +333,7 @@
 		<Id>1731081139333</Id>
 		<Name><![CDATA[f_calculateKPIs]]></Name>
 		<X>660</X>
-		<Y>340</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -348,8 +348,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1739970817879</Id>
 		<Name><![CDATA[f_collectGridConnectionRapidRunData]]></Name>
-		<X>970</X>
-		<Y>170</Y>
+		<X>990</X>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -364,8 +364,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1739974426481</Id>
 		<Name><![CDATA[f_initializeCustomCoop]]></Name>
-		<X>960</X>
-		<Y>80</Y>
+		<X>980</X>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -416,8 +416,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740475013848</Id>
 		<Name><![CDATA[f_getCumulativeIndividualGCValues]]></Name>
-		<X>1420</X>
-		<Y>550</Y>
+		<X>1430</X>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -432,8 +432,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740480839774</Id>
 		<Name><![CDATA[f_getTotalInstalledCapacityOfAssets_rapidRun]]></Name>
-		<X>990</X>
-		<Y>210</Y>
+		<X>1010</X>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -522,8 +522,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740502128178</Id>
 		<Name><![CDATA[f_collectAssetSpecificEnergyFlows_rapidRun]]></Name>
-		<X>990</X>
-		<Y>190</Y>
+		<X>1010</X>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -538,86 +538,6 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740502128180</Id>
 		<Name><![CDATA[f_collectGridConnectionLiveData]]></Name>
-		<X>970</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1741626527076</Id>
-		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
-		<X>689.2</X>
-		<Y>239.2</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1742569887460</Id>
-		<Name><![CDATA[f_connectCoopBattery]]></Name>
-		<X>970</X>
-		<Y>260</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1744211126429</Id>
-		<Name><![CDATA[f_recalculateSOC_rapidrun]]></Name>
-		<X>990</X>
-		<Y>230</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1744211359139</Id>
-		<Name><![CDATA[f_getTotalInstalledCapacityOfAssets_live]]></Name>
-		<X>990</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1744271942642</Id>
-		<Name><![CDATA[f_recalculateSOCDataSet_live]]></Name>
 		<X>990</X>
 		<Y>140</Y>
 		<Label>
@@ -632,28 +552,10 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1751294580400</Id>
-		<Name><![CDATA[f_updateLiveDataSets1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1660</X>
-		<Y>110</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1751300044792</Id>
-		<Name><![CDATA[f_collectGridConnectionLiveData1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1660</X>
-		<Y>130</Y>
+		<Id>1741626527076</Id>
+		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
+		<X>680</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -666,11 +568,58 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1751300243591</Id>
-		<Name><![CDATA[f_recalculateSOCDataSet_live1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1660</X>
-		<Y>150</Y>
+		<Id>1742569887460</Id>
+		<Name><![CDATA[f_connectCoopBattery]]></Name>
+		<X>990</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1744211126429</Id>
+		<Name><![CDATA[f_recalculateSOC_rapidrun]]></Name>
+		<X>1010</X>
+		<Y>270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1744211359139</Id>
+		<Name><![CDATA[f_getTotalInstalledCapacityOfAssets_live]]></Name>
+		<X>1010</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1744271942642</Id>
+		<Name><![CDATA[f_recalculateSOCDataSet_live]]></Name>
+		<X>1010</X>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

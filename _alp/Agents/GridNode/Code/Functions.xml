@@ -162,7 +162,7 @@
 		<Id>1698919552330</Id>
 		<Name><![CDATA[f_resetStates]]></Name>
 		<X>780</X>
-		<Y>300</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -179,23 +179,6 @@
 		<Name><![CDATA[f_calculateKPIs]]></Name>
 		<X>780</X>
 		<Y>260</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>DataSet</ReturnType>
-		<Id>1718111675053</Id>
-		<Name><![CDATA[f_getDuurkromme]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>800</X>
-		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -245,7 +228,7 @@
 		<Id>1718896086734</Id>
 		<Name><![CDATA[f_propagateNodalPricing]]></Name>
 		<X>780</X>
-		<Y>380</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -261,7 +244,7 @@
 		<Id>1719300860382</Id>
 		<Name><![CDATA[f_initializeGridnode]]></Name>
 		<X>780</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -277,7 +260,7 @@
 		<Id>1719302290904</Id>
 		<Name><![CDATA[f_updateForecasts]]></Name>
 		<X>780</X>
-		<Y>350</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -375,8 +358,8 @@
 		<ReturnType>J_LoadDurationCurves</ReturnType>
 		<Id>1753341238941</Id>
 		<Name><![CDATA[f_getDuurkrommes]]></Name>
-		<X>940</X>
-		<Y>280</Y>
+		<X>780</X>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
