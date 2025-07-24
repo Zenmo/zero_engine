@@ -13,6 +13,10 @@ import java.util.EnumSet;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"va_coop","_origin_VA"})
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
@@ -30,42 +34,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_actorSubgroup]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorContractList]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_gridNodeUnderResponsibility]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_parentActorID]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_electricitySupplier]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_CoopParent]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_gridOperator]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_methaneSupplier]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_hydrogenSupplier]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_heatSupplier]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_yearlyOperationalCosts_eur]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_applyKostprijsPlus]]></Name>
 		</Parameter>
 	</Parameters>
 	<Implements>I_EnergyData</Implements>

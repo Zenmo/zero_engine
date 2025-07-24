@@ -1314,7 +1314,7 @@ HashSet<GridConnection> f_getAllChildMemberGridConnections_recursion(HashSet<Gri
 allMemberGridConnections.addAll(this.c_memberGridConnections);
 
 //Recursive loop (repeat this function till bottom)
-List<Agent> childCoops = findAll(c_coopMembers, coopMember -> coopMember instanceof EnergyCoop);
+List<Actor> childCoops = findAll(c_coopMembers, coopMember -> coopMember instanceof EnergyCoop);
 
 if(childCoops.size() == 0){
 	return allMemberGridConnections;
@@ -1339,7 +1339,7 @@ HashSet<GridConnection> f_getAllChildCustomerGridConnections_recursion(HashSet<G
 allCustomerGridConnections.addAll(this.c_customerGridConnections);
 
 //Recursive loop (repeat this function till bottom)
-List<Agent> childCoops = findAll(c_coopCustomers, coopCustomer -> coopCustomer instanceof EnergyCoop);
+List<Actor> childCoops = findAll(c_coopCustomers, coopCustomer -> coopCustomer instanceof EnergyCoop);
 if(childCoops.size() == 0){
 	return allCustomerGridConnections;
 }

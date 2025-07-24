@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.io.*;
+import java.lang.reflect.Field;
 
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;
@@ -25,6 +26,30 @@ import javax.management.RuntimeErrorException;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "type"  // 👈 this will be the field name in your JSON
+	)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = GCDistrictHeating.class, name = "GCDistrictHeating"),
+    @JsonSubTypes.Type(value = GCEnergyConversion.class, name = "GCEnergyConversion"),
+    @JsonSubTypes.Type(value = GCEnergyProduction.class, name = "GCEnergyProduction"),
+    @JsonSubTypes.Type(value = GCGridBattery.class, name = "GCGridBattery"),
+    @JsonSubTypes.Type(value = GCHouse.class, name = "GCHouse"),
+    @JsonSubTypes.Type(value = GCNeighborhood.class, name = "GCNeighborhood"),
+    @JsonSubTypes.Type(value = GCPublicCharger.class, name = "GCPublicCharger"),
+    @JsonSubTypes.Type(value = GCUtility.class, name = "GCUtility"),
+    //@JsonSubTypes.Type(value = J_EAEV.class, name = "J_EAEV"),
+    //@JsonSubTypes.Type(value = J_EADieselVehicle.class, name = "J_EADieselVehicle"),
+    
+    // Add other known subtypes here if needed
+})
+
+@JsonIgnoreProperties({"va_gridConnection","_origin_VA","_pl_powerFlows_autoUpdateEvent_xjal","_SOC_plot_autoUpdateEvent_xjal"})
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")]]></Import>
 	<Implements>I_EnergyData</Implements>
 	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);

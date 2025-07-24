@@ -14,6 +14,11 @@ public class J_TransportContract extends zero_engine.J_Contract implements Seria
 	  /**
      * Constructor initializing the fields
      */
+	
+	public J_TransportContract() {
+		
+	}
+	
     public J_TransportContract(String contractScope, OL_TransportContractType transportContractType, OL_EnergyCarriers energyCarrier, double bandwidthTreshold_kW, double bandwidthTariff_eurpkWh, double annualFee_eur ) {
 	    this.contractScope = contractScope; // ID of actor that is the other 'end' of this contract.	    
 	    this.energyCarrier = energyCarrier;

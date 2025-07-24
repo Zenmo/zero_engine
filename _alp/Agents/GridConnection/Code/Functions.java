@@ -75,7 +75,7 @@ v_batteryStoredEnergy_kWh = 0;
 for (J_EA j_ea : c_batteryAssets) {
 	if (((J_EAStorageElectric)j_ea).getCapacityElectric_kW() != 0 && ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh() != 0) {
 		v_batteryPowerElectric_kW += j_ea.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()*((J_EAStorageElectric)j_ea).getCurrentStateOfCharge();
+		v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)j_ea).getCurrentStateOfCharge_kWh();
 		
 	}
 }

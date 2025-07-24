@@ -3,6 +3,8 @@ import zeroPackage.ZeroMath;
 /**
  * J_RapidRunData
  */	
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+@JsonIgnoreType
 public class J_RapidRunData {
 	
 	public Agent parentAgent;

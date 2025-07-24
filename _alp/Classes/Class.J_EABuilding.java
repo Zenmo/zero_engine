@@ -1,6 +1,8 @@
 /**
  * J_EABuilding
  */
+//import com.fasterxml.jackson.annotation.JsonTypeName;
+//@JsonTypeName("J_EABuilding")
 public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Serializable {
 
 	//public OL_EAStorageTypes heatStorageType;

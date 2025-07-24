@@ -1,10 +1,13 @@
 /**
- * J_ProfilePointer
+ * AgentMixin
  */	
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonAutoDetect(
     fieldVisibility = Visibility.PUBLIC_ONLY,    // ✅ only public fields are serialized
@@ -13,44 +16,42 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+//@JsonIgnoreProperties({"connections"})
+@JsonIgnoreProperties({"_origin_VA",
+	"gisRegion","p_uniqueColor","p_defaultFillColor","p_defaultLineColor",
+	"data_liveLoad_kW","data_liveCapacitySupply_kW", "data_liveCapacityDemand_kW",
+	"data_totalLoad_kW",
+	"data_summerWeekLoad_kW",
+	"data_winterWeekLoad_kW",
+	"va_gridNode",
+	"_pl_powerFlows_autoUpdateEvent_xjal"})
 
-public class J_ProfilePointer implements Serializable {
-	public String name = "";
-	private double currentValue = 0;
-	private TableFunction tableFunction;
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+public abstract class AgentMixin implements Serializable {
+	
+    	/*@JsonIgnore
+    	public abstract void setLocation();
+
+    	@JsonIgnore
+    	public abstract void getLocation();
+		
+	
+    	@JsonIgnore
+    	public abstract void setNetworkNode();
+
+    	@JsonIgnore
+    	public abstract void getNetworkNode();*/
+	
 	
     /**
      * Default constructor
      */
-	public J_ProfilePointer() {
-	
-	}
-	
-    public J_ProfilePointer(String name, TableFunction tableFunction) {
-    	this.name = name;
-    	this.tableFunction = tableFunction;
-    }
+    /*public PopuplationMixin() {
+    }*/
 
-    public void updateValue(double t_h) {
-    	this.currentValue = this.tableFunction.get(t_h);
-    }
-    
-    public double getCurrentValue() {
-    	return this.currentValue;
-    }
-    
-    public double getValue(double t_h) {
-    	return this.tableFunction.get(t_h);
-    }
-    
-    public double[] getAllValues() {
-    	return this.tableFunction.getValues();
-    }
-    
 	@Override
 	public String toString() {
-		return "profile: " + this.name + " current value: " + this.currentValue; 
+		return super.toString();
 	}
 
 	/**
