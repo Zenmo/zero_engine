@@ -1,42 +1,7 @@
 /**
  * J_EAConversion
  */
-public class 
-public void initializeAssets() {
-	if (gc.p_heatBuffer != null) {
-		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
-	}
-	if (gc.p_BuildingThermalAsset != null) {
-		throw new RuntimeException(this.getClass() + " does not support a building asset.");
-	}
-	J_EAConsumption heatProfile = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
-	if (heatProfile == null) {
-		throw new RuntimeException(this.getClass() + " requires a HEAT_DEMAND profile.");
-	}
-	if (gc.c_heatingAssets.size() != 2) {
-		throw new RuntimeException(this.getClass() + " requires exactly two heating assets.");
-	}
-	// TODO: Add a check if the power of the asset is sufficient?
-	if (gc.c_heatingAssets.get(0) instanceof J_EAConversionGasBurner) {
-		this.gasBurnerAsset = (J_EAConversionGasBurner)gc.c_heatingAssets.get(0);
-	}
-	else if (gc.c_heatingAssets.get(1) instanceof J_EAConversionGasBurner) {
-		this.gasBurnerAsset = (J_EAConversionGasBurner)gc.c_heatingAssets.get(1);    		
-	}
-	else {
-		throw new RuntimeException(this.getClass() + " requires a Gas Burner");
-	}
-	if (gc.c_heatingAssets.get(0) instanceof J_EAConversionHeatPump) {
-		this.heatPumpAsset = (J_EAConversionHeatPump)gc.c_heatingAssets.get(0);
-	}
-	else if (gc.c_heatingAssets.get(1) instanceof J_EAConversionHeatPump) {
-		this.heatPumpAsset = (J_EAConversionHeatPump)gc.c_heatingAssets.get(1);    		
-	}
-	else {
-		throw new RuntimeException(this.getClass() + " requires a Heat Pump");
-	}
-	this.isInitialized = true;
-} extends zero_engine.J_EA implements Serializable {
+public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	protected OL_EnergyCarriers energyCarrierProduced;
 	protected OL_EnergyCarriers energyCarrierConsumed;
 	protected double eta_r;
