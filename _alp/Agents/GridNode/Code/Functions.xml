@@ -193,6 +193,7 @@
 		<ReturnType>DataSet</ReturnType>
 		<Id>1718111675053</Id>
 		<Name><![CDATA[f_getDuurkromme]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>800</X>
 		<Y>280</Y>
 		<Label>
@@ -360,6 +361,22 @@
 		<Description><![CDATA[Function that gets all the directly connected grid connections]]></Description>
 		<X>1110</X>
 		<Y>270</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_LoadDurationCurves</ReturnType>
+		<Id>1753341238941</Id>
+		<Name><![CDATA[f_getDuurkrommes]]></Name>
+		<X>940</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -1,5 +1,9 @@
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
@@ -18,5 +22,5 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 public interface I_BatteryManagement
 {
-void manageBattery();
+	void manageBattery();
 }

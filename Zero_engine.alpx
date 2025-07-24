@@ -1314,6 +1314,10 @@
 				<Id>1752737189062</Id>
 				<Name><![CDATA[Deprecated]]></Name>
 			</Folder>
+			<Folder>
+				<Id>1753342021373</Id>
+				<Name><![CDATA[SerialisationMixins]]></Name>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -1735,26 +1739,37 @@
 			<JavaClass>
 				<Id>1753277071863</Id>
 				<Name><![CDATA[AgentMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753277071874</Id>
 				<Name><![CDATA[PopulationMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753277292016</Id>
 				<Name><![CDATA[IgnoreClassMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753279653467</Id>
 				<Name><![CDATA[DataSetMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753279891115</Id>
 				<Name><![CDATA[EnergyModelMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753280103414</Id>
 				<Name><![CDATA[TableFunctionMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753342010985</Id>
+				<Name><![CDATA[ActorMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

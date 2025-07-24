@@ -25,7 +25,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	"EnergyConversionSites",
 	"PublicChargers",
 	"Neighborhoods",
-	"va_engine"})
+	"va_engine",
+	"_origin_VA"})
+	
 //JsonIgnoreProperties({"color","VA_engine","_origin_VA","energyDataViewer"})
 
 

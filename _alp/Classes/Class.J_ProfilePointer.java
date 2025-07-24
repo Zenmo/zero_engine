@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonAutoDetect(
-    fieldVisibility = Visibility.PUBLIC_ONLY,    // ✅ only public fields are serialized
+    fieldVisibility = Visibility.ANY,    // ✅ only public fields are serialized
     getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE,

@@ -370,7 +370,7 @@ acc_annualElectricityBalance_kW.reset();
 
 double f_calculateKPIs()
 {/*ALCODESTART::1713181018774*/
-f_getDuurkromme();
+//f_getDuurkromme();
 
 // Calcs nighttime
 v_nighttimeImport_MWh = v_totalImport_MWh - v_daytimeExcessImport_MWh;
@@ -694,5 +694,10 @@ for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
 AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
 
 return AllLowerLVLConnectedGridConnections;
+/*ALCODEEND*/}
+
+J_LoadDurationCurves f_getDuurkrommes()
+{/*ALCODESTART::1753341238941*/
+return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
 /*ALCODEEND*/}
 
