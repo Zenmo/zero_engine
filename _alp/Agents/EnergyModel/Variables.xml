@@ -1571,9 +1571,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1593,9 +1590,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1615,9 +1609,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -2763,7 +2754,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>J_ProfilePointer</ElementClass>
 			<ValueElementClass>String</ValueElementClass>

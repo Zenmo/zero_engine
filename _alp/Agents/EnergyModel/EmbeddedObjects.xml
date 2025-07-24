@@ -1138,6 +1138,12 @@
 			<Parameter>
 				<Name><![CDATA[p_cookingMethod]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

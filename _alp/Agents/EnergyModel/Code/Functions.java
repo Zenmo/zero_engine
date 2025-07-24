@@ -979,7 +979,8 @@ J_ProfilePointer f_findProfile(String assetName)
 {/*ALCODESTART::1727193246625*/
 J_ProfilePointer profilePointer = findFirst(c_profiles, p -> p.name.equals(assetName));
 //traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
-if (profilePointer == null) {    		
+if (profilePointer == null) {
+	traceln("No profilePointer with name %s found", assetName);
 	throw new RuntimeException(String.format("Consumption or production asset without valid profile!") );
 }
 return profilePointer;
@@ -1524,6 +1525,7 @@ for( J_EA e : c_ambientDependentAssets ) {
 			}		
 	}
 	if( e instanceof J_EABuilding ) {
+		//traceln("v_currentSolarPowerNormalized_r: %s", v_currentSolarPowerNormalized_r);
 		((J_EABuilding)e).updateSolarRadiation(v_currentSolarPowerNormalized_r*1000);
 	}
 }

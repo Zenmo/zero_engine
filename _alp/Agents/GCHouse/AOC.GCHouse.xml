@@ -105,6 +105,12 @@
 		<Parameter>
 			<Name><![CDATA[p_batteryAlgorithm]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>
