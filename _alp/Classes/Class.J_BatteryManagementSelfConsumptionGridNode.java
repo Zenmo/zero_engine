@@ -1,5 +1,5 @@
 /**
- * J_BatteryManagementSelfConsumption
+ * J_BatteryManagementSelfConsumption1
  */	
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -12,18 +12,19 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
-public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
+
+public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryManagement {
 
     private GridConnection gc;
 
     /**
      * Default constructor
      */
-    public J_BatteryManagementSelfConsumption() {
+    public J_BatteryManagementSelfConsumptionGridNode() {
     	
     }
     
-    public J_BatteryManagementSelfConsumption( GridConnection gc ) {
+    public J_BatteryManagementSelfConsumptionGridNode( GridConnection gc ) {
     	this.gc = gc;
     }
     
@@ -34,7 +35,10 @@ public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
      * If there is more consumption than production it will discharge the battery to make up for the difference untill the battery is empty.
      */
     public void manageBattery() {
-    	gc.p_batteryAsset.f_updateAllFlows( -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / gc.p_batteryAsset.getCapacityElectric_kW() );
+    	double nodePreviousLoad_kW = gc.p_parentNodeElectric.v_currentLoad_kW;
+    	double chargeSetpoint_kW = -(nodePreviousLoad_kW - gc.p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY));
+    	
+    	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
 
 	@Override

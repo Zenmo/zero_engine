@@ -3,7 +3,8 @@
  */	
 import zeroPackage.ZeroMath;
 import java.util.EnumSet;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+@JsonIgnoreType
 public class J_FlowsMap implements Serializable {
 	
 	private double[] valuesArray = new double[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;

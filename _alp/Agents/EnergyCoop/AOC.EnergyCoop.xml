@@ -9,7 +9,15 @@
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;
 
-import java.util.EnumSet;]]></Import>
+import java.util.EnumSet;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"va_coop","_origin_VA"})
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>Actor</ClassName>
@@ -22,10 +30,10 @@ import java.util.EnumSet;]]></Import>
 			<Name><![CDATA[p_actorType]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_actorSubgroup]]></Name>
+			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_actorGroup]]></Name>
+			<Name><![CDATA[p_actorSubgroup]]></Name>
 		</Parameter>
 	</Parameters>
 	<Implements>I_EnergyData</Implements>

@@ -697,6 +697,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623480</Id>
 		<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1010</Y>
 		<Label>
@@ -716,6 +717,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623645</Id>
 		<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1030</Y>
 		<Label>
@@ -735,6 +737,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623647</Id>
 		<Name><![CDATA[data_summerWeekNetbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1050</Y>
 		<Label>
@@ -754,6 +757,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623649</Id>
 		<Name><![CDATA[data_winterWeekNetbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1070</Y>
 		<Label>
@@ -773,6 +777,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623651</Id>
 		<Name><![CDATA[data_daytimeNetbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1090</Y>
 		<Label>
@@ -792,6 +797,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623653</Id>
 		<Name><![CDATA[data_nighttimeNetbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1110</Y>
 		<Label>
@@ -811,6 +817,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623655</Id>
 		<Name><![CDATA[data_weekdayNetbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1130</Y>
 		<Label>
@@ -830,6 +837,7 @@ geupdate vanuit
 	<Variable Class="PlainVariable">
 		<Id>1718111623657</Id>
 		<Name><![CDATA[data_weekendNetbelastingDuurkromme_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>47</X>
 		<Y>1150</Y>
 		<Label>

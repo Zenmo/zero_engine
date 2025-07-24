@@ -1,6 +1,9 @@
 /**
 * J_EAEV
 */
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+//@JsonTypeName("J_EAEV")
 public class J_EAEV extends J_EAVehicle implements Serializable {
  
  

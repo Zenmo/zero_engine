@@ -505,7 +505,7 @@
 		<Id>1722518225504</Id>
 		<Name><![CDATA[f_fillLiveDataSets]]></Name>
 		<X>930</X>
-		<Y>650</Y>
+		<Y>670</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -521,7 +521,7 @@
 		<Id>1722518905501</Id>
 		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
 		<X>930</X>
-		<Y>670</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

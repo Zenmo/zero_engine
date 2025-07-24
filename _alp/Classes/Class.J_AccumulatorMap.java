@@ -5,6 +5,8 @@
 import java.util.EnumSet;
 //import zeroPackage.ZeroAccumulator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+@JsonIgnoreType
 public class J_AccumulatorMap implements Serializable {
 	
 	private ZeroAccumulator[] accumulatorArray = new ZeroAccumulator[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;

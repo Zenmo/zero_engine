@@ -1,6 +1,10 @@
 /**
  * J_EAVehicle
  */	
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
 public abstract class J_EAVehicle extends J_EA implements Serializable {
 	public boolean available = true;
 	protected boolean availableStored = true;

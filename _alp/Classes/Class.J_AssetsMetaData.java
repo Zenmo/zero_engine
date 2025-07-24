@@ -3,7 +3,10 @@
  */	
 
 import java.util.EnumSet;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class J_AssetsMetaData {
 	
 	public Agent parentAgent;
@@ -31,6 +34,10 @@ public class J_AssetsMetaData {
 	/**
      * Default constructor
      */
+	public J_AssetsMetaData() {
+		
+	}
+	
     public J_AssetsMetaData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
     }

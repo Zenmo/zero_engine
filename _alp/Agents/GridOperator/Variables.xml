@@ -136,6 +136,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1675355743791</Id>
 		<Name><![CDATA[j_ActorData]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>60</X>
 		<Y>270</Y>
 		<Label>
@@ -172,6 +173,29 @@
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[0.2]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753281672894</Id>
+		<Name><![CDATA[p_hasCongestionPricing]]></Name>
+		<Description><![CDATA[Euro per kW]]></Description>
+		<X>60</X>
+		<Y>150</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[false]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -378,9 +402,10 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1675688426540</Id>
-		<Name><![CDATA[p_hasCongestionPricing]]></Name>
-		<X>60</X>
-		<Y>140</Y>
+		<Name><![CDATA[p_hasCongestionPricing2]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>480</X>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -1,3 +1,17 @@
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "type"  // 👈 this will be the field name in your JSON
+	)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = J_DeliveryContract.class, name = "J_DeliveryContract"),
+    @JsonSubTypes.Type(value = J_ConnectionContract.class, name = "J_ConnectionContract"),
+    @JsonSubTypes.Type(value = J_TransportContract.class, name = "J_TransportContract"),
+    @JsonSubTypes.Type(value = J_TaxContract.class, name = "J_TaxContract"),
+})
 
 public class J_Contract implements Serializable {
 

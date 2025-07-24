@@ -1834,6 +1834,28 @@
 			<Type><![CDATA[J_ProfileForecaster]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753110053329</Id>
+		<Name><![CDATA[v_assetFlows]]></Name>
+		<X>840</X>
+		<Y>320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AssetFlows]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AssetFlows()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1658496701675</Id>
 		<Name><![CDATA[p_timeStep_h]]></Name>
@@ -2413,7 +2435,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>ConnectionOwner</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
@@ -2467,7 +2489,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
@@ -2631,7 +2653,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>Actor</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
@@ -2780,6 +2802,24 @@
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>List&lt;J_ChargingSession&gt;</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1753288831771</Id>
+		<Name><![CDATA[c_gridNodes]]></Name>
+		<X>87</X>
+		<Y>-105</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>GridNode</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
