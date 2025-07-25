@@ -48,6 +48,10 @@ public class J_ProfilePointer implements Serializable {
     	return this.tableFunction.getValues();
     }
     
+    public TableFunction getTableFunction() {
+    	return tableFunction;
+    }
+    
     public void setTableFunction(TableFunction tf) {
     	this.tableFunction = tf;
     }
