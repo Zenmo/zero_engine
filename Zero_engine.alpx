@@ -1118,6 +1118,10 @@
 					<Id>1734018498969</Id>
 					<Name><![CDATA[METHANEDEMAND]]></Name>
 				</Option>
+				<Option>
+					<Id>1753774385666</Id>
+					<Name><![CDATA[HEATPUMP_ELECTRICITY_CONSUMPTION]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1722411204920</Id>

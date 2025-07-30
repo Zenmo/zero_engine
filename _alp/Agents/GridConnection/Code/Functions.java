@@ -714,6 +714,8 @@ if (j_ea instanceof J_EAVehicle) {
 			//Do nothing
 		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
 			//Do nothing
+		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
+			c_electricHeatpumpAssets.add(j_ea);
 		} else {
 			traceln( "Unrecognized profile type!");
 		}
@@ -1061,6 +1063,9 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = null;
 	c_profileAssets.remove((J_EAProfile)j_ea);
+	if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
+		c_electricHeatpumpAssets.add(j_ea);
+	}
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.remove(j_ea);
 	c_EvAssets.remove(j_ea);	
