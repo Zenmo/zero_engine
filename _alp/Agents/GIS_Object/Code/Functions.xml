@@ -5,7 +5,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1721720983063</Id>
 		<Name><![CDATA[f_style]]></Name>
-		<X>560</X>
+		<X>390</X>
 		<Y>30</Y>
 		<Label>
 			<X>10</X>
@@ -37,8 +37,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753363771985</Id>
 		<Name><![CDATA[f_writeStyleStrings]]></Name>
-		<X>560</X>
-		<Y>110</Y>
+		<X>820</X>
+		<Y>40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -53,7 +53,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753364192780</Id>
 		<Name><![CDATA[f_resetStyle]]></Name>
-		<X>560</X>
+		<X>820</X>
 		<Y>140</Y>
 		<Label>
 			<X>10</X>
