@@ -5,7 +5,15 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
-    private J_EABuilding building;	
+	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
+		OL_GridConnectionHeatingType.GASBURNER, 
+		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
+		OL_GridConnectionHeatingType.HYDROGENBURNER,
+		OL_GridConnectionHeatingType.HEATPUMP_AIR,
+		OL_GridConnectionHeatingType.DISTRICTHEAT,
+		OL_GridConnectionHeatingType.LT_DISTRICTHEAT
+	);
+	private J_EABuilding building;	
     private J_EAConversion heatingAsset;
     
     private double startOfDay_h = 8;
@@ -72,6 +80,9 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     }
     
     public void initializeAssets() {
+    	if (!validHeatingTypes.contains(gc.p_heatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
@@ -96,6 +107,10 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     
     public void notInitialized() {
     	this.isInitialized = false;
+    }
+    
+    public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
+    	return this.validHeatingTypes;
     }
     
 	@Override

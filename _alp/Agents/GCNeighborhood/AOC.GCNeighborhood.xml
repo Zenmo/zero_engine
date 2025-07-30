@@ -31,9 +31,6 @@
 			<Name><![CDATA[p_ownerID]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_heatingType]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
 		</Parameter>
 		<Parameter>

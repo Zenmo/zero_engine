@@ -1,11 +1,14 @@
 /**
  * J_HeatingManagementBuildingHybridHeatPump
  */	
-public class J_HeatingManagementBuildingHybridHeatPump implements Serializable {
+public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManagement {
 
 	private boolean isInitialized = false;
 	private GridConnection gc;
-    private J_EABuilding building;	
+	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
+		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
+	);
+	private J_EABuilding building;	
 	private J_EAConversionHeatPump heatPumpAsset;
 	private J_EAConversionGasBurner gasBurnerAsset;
 	
@@ -79,6 +82,9 @@ public class J_HeatingManagementBuildingHybridHeatPump implements Serializable {
     }
 
     public void initializeAssets() {
+    	if (!validHeatingTypes.contains(gc.p_heatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
@@ -111,6 +117,10 @@ public class J_HeatingManagementBuildingHybridHeatPump implements Serializable {
     }
     public void notInitialized() {
     	this.isInitialized = false;
+    }
+    
+    public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
+    	return this.validHeatingTypes;
     }
     
 	@Override
