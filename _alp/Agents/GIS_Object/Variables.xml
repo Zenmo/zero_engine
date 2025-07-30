@@ -155,7 +155,7 @@
 		<Id>1721720988124</Id>
 		<Name><![CDATA[p_defaultLineColor]]></Name>
 		<X>390</X>
-		<Y>50</Y>
+		<Y>70</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -181,7 +181,7 @@
 		<Id>1721720988128</Id>
 		<Name><![CDATA[p_defaultFillColor]]></Name>
 		<X>390</X>
-		<Y>30</Y>
+		<Y>50</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -207,7 +207,7 @@
 		<Id>1721809734127</Id>
 		<Name><![CDATA[p_defaultLineWidth]]></Name>
 		<X>390</X>
-		<Y>70</Y>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -236,7 +236,7 @@
 		<Id>1721809794729</Id>
 		<Name><![CDATA[p_defaultLineStyle]]></Name>
 		<X>390</X>
-		<Y>90</Y>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -286,11 +286,89 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753363681727</Id>
+		<Name><![CDATA[p_defaultFillColorString]]></Name>
+		<X>820</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<UnitOfValue Class="LengthUnits">METER</UnitOfValue>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1753363681725</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753363694080</Id>
+		<Name><![CDATA[p_defaultLineColorString]]></Name>
+		<X>820</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<UnitOfValue Class="LengthUnits">METER</UnitOfValue>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1753363694078</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753363711888</Id>
+		<Name><![CDATA[p_defaultLineStyleString]]></Name>
+		<X>820</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[String]]></Type>
+			<UnitType>NONE</UnitType>
+			<UnitOfValue Class="LengthUnits">METER</UnitOfValue>
+			<SdArray>false</SdArray>
+			<ParameterEditor>
+				<Id>1753363711886</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1721726757949</Id>
 		<Name><![CDATA[c_containedGridConnections]]></Name>
 		<X>390</X>
-		<Y>120</Y>
+		<Y>140</Y>
 		<Label>
 			<X>13</X>
 			<Y>4</Y>

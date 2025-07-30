@@ -34,9 +34,13 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     @JsonSubTypes.Type(value = J_EAProduction.class, name = "J_EAProduction"),
     @JsonSubTypes.Type(value = J_EAProfile.class, name = "J_EAProfile"),
     @JsonSubTypes.Type(value = J_EAConversionGasBurner.class, name = "J_EAConversionGasBurner"),
+    @JsonSubTypes.Type(value = J_EAConversionElectrolyser.class, name = "J_EAConversionElectrolyser"),
+    @JsonSubTypes.Type(value = J_EAConversionGasCHP.class, name = "J_EAConversionGasCHP"),
     @JsonSubTypes.Type(value = J_EAConversionHeatPump.class, name = "J_EAConversionHeatPump"),
     @JsonSubTypes.Type(value = J_EAEV.class, name = "J_EAEV"),
     @JsonSubTypes.Type(value = J_EADieselVehicle.class, name = "J_EADieselVehicle"),
+    @JsonSubTypes.Type(value = J_EAConversionHeatDeliverySet.class, name = "J_EAConversionHeatDeliverySet"),
+    
     
     // Add other known subtypes here if needed
 })

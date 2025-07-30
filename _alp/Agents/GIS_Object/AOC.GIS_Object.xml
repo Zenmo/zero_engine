@@ -3,7 +3,26 @@
 	<Id>1667726338857</Id>
 	<Name><![CDATA[GIS_Object]]></Name>
 	<Description><![CDATA[Generic Object for GISRegions. Is used for GridConnections of type: GCEnergyProduction, GCEnergyConversion, GCGridBattery, GCPublicCharger.]]></Description>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752681631114</Folder>
+	<Import><![CDATA[import java.lang.reflect.Field;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "type"  // 👈 this will be the field name in your JSON
+	)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = GIS_Building.class, name = "GIS_Building"),
+    @JsonSubTypes.Type(value = GIS_Parcel.class, name = "GIS_Parcel"),
+   
+    // Add other known subtypes here if needed
+})
+
+@JsonIgnoreProperties({"va_building", "va_parcel", "_origin_VA","gisRegion",
+	"p_defaultFillColor", "p_defaultLineColor", "p_defaultLineStyle"})]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1667726338855</Id>
@@ -101,6 +120,7 @@
 		<AgentLink>
 			<Id>1667726338852</Id>
 			<Name><![CDATA[connections]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>50</X>
 			<Y>-50</Y>
 			<Label>
@@ -157,6 +177,7 @@
 			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 			<Z>0</Z>
 			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+			<Presentation xmlns:al="http://anylogic.com"/>
 		</Level>
 	</Presentation>
 </ActiveObjectClass>

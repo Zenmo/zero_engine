@@ -2,6 +2,18 @@ import zeroPackage.ZeroMath;
 /**
  * J_BatteryManagementPeakShavingForecastGrid
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // 
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
+
 public class J_BatteryManagementPeakShavingForecast implements I_BatteryManagement {
 
 	private double[] batteryChargingSchedule_kW = new double[96];
@@ -11,7 +23,10 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     List<GridConnection> c_targetGridConnections = new ArrayList<GridConnection>();
     double p_timestep_h;
 	
-    
+	public J_BatteryManagementPeakShavingForecast() {
+		
+	}
+	
     
 	public J_BatteryManagementPeakShavingForecast( GridConnection parentGC ) {
     	this.parentGC = parentGC;

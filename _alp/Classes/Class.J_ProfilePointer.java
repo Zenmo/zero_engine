@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonAutoDetect(
-    fieldVisibility = Visibility.ANY,    // ✅ only public fields are serialized
+    fieldVisibility = Visibility.PROTECTED_AND_PUBLIC,    // ✅ only public fields are serialized
     getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE,
@@ -46,6 +46,14 @@ public class J_ProfilePointer implements Serializable {
     
     public double[] getAllValues() {
     	return this.tableFunction.getValues();
+    }
+    
+    public TableFunction getTableFunction() {
+    	return tableFunction;
+    }
+    
+    public void setTableFunction(TableFunction tf) {
+    	this.tableFunction = tf;
     }
     
 	@Override

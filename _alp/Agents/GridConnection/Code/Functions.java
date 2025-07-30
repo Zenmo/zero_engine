@@ -1436,3 +1436,12 @@ if (p_batteryAsset != null) {
 }
 /*ALCODEEND*/}
 
+double f_startAfterDeserialisation()
+{/*ALCODESTART::1753348699140*/
+v_liveData = new J_LiveData(this);
+//v_liveConnectionMetaData = new J_ConnectionMetaData(this);
+//v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.connectionMetaData = v_liveConnectionMetaData;
+v_liveData.assetsMetaData = v_liveAssetsMetaData;
+/*ALCODEEND*/}
+

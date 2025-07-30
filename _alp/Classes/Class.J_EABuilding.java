@@ -60,6 +60,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	@Override
 	public void calculateLoss() {
 		double heatLoss_kW = this.lossFactor_WpK * ( this.temperature_degC - this.ambientTemperature_degC ) / 1000;
+		//traceln("ambientTemperature_degC in J_EABuilding: %s", this.ambientTemperature_degC);
 		//traceln("heatLoss_kW: %s", heatLoss_kW);
 		double deltaEnergy_kWh = -heatLoss_kW * this.timestep_h;
 		this.energyUse_kW += heatLoss_kW;

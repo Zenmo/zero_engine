@@ -1,6 +1,17 @@
 /**
  * J_BatteryManagementPeakShaving
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // 
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
 public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
 
 	private GridConnection gc;
@@ -14,6 +25,10 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     /**
      * Default constructor
      */
+	public J_BatteryManagementPeakShaving() {
+		
+	}
+	
     public J_BatteryManagementPeakShaving( GridConnection gc ) {
     	this.gc = gc;
     	if (gc instanceof GCGridBattery) {
