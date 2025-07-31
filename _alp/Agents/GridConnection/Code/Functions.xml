@@ -325,6 +325,10 @@
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>
+			<Name><![CDATA[assetFlowsMap]]></Name>
+			<Type><![CDATA[J_AssetFlowsMap]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[caller]]></Name>
 			<Type><![CDATA[J_EA]]></Type>
 		</Parameter>

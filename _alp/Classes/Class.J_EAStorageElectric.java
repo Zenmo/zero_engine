@@ -8,6 +8,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	private double etaCharge_r; // charging efficiency
 	private double etaDischarge_r;
 	protected double capacityElectric_kW;
+	
     /**
      * Default constructor
      */
@@ -30,6 +31,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.etaDischarge_r = Math.sqrt(eta_r);
 	    this.activeProductionEnergyCarriers.add(this.storageMedium);		
 		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
+		this.assetFlowCategory = OL_AssetFlowCategories.batteriesCharingPower_kW;
 		registerEnergyAsset();
     }
     
@@ -70,6 +72,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("Battery SoC: %s", stateOfCharge_fr);
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW-electricityProduction_kW);		
+		assetFlowsMap.put(this.assetFlowCategory, electricityConsumption_kW-electricityProduction_kW);		
 	}
 	
 	public void setBatteryEfficiency_r(double eta_r) {

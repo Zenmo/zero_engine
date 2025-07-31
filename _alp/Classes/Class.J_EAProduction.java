@@ -20,6 +20,13 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, double timestep_h, J_ProfilePointer profile) {
 	    this.parentAgent = parentAgent;
 	    this.energyAssetType = type;
+	    if (type == OL_EnergyAssetType.PHOTOVOLTAIC) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.pvProductionElectric_kW;
+	    } else if (type == OL_EnergyAssetType.WINDMILL) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.windProductionElectric_kW;
+	    } else if (type == OL_EnergyAssetType.PHOTOTHERMAL) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.ptProductionHeat_kW;
+	    }
 	    this.energyAssetName = name;
 	    this.energyCarrier = energyCarrier;
 	    this.capacity_kW = capacity_kW;
@@ -95,7 +102,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    	this.energyUse_kW = -currentProduction_kW;
 	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
-	    	
+	    	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
 		}
 	}
 	
@@ -109,9 +116,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    	this.energyUse_kW = -currentProduction_kW;
 	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
+	       	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
 	       	if (parentAgent instanceof GridConnection) {    		
 	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
-	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
 	    	}
 
 		}

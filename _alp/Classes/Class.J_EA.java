@@ -49,10 +49,12 @@ abstract public class J_EA implements Cloneable {
 	
 	 protected Agent parentAgent;
 	 public OL_EnergyAssetType energyAssetType;
+	 public OL_AssetFlowCategories assetFlowCategory;
 	 public String energyAssetName;
 	 protected double v_powerFraction_fr = 0; // Better to make this one protected? Public is needed to access from other packages, for example when inheriting a GC-type in your project with its own flexmanagement functions
 	 protected J_FlowsMap flowsMap = new J_FlowsMap();
 	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
+	 protected J_AssetFlowsMap assetFlowsMap = new J_AssetFlowsMap();
 	 protected double lastEnergyUse_kW = 0.0;
 	 
 	 protected EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeProductionEnergyCarriers in GridConnections and EnergyModel	
@@ -125,7 +127,7 @@ abstract public class J_EA implements Cloneable {
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
      	operate(powerFractionBounded_fr);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
     	}
     	/*
     	if (ui_energyAsset!= null) {
@@ -147,7 +149,8 @@ abstract public class J_EA implements Cloneable {
     }
     
     public void clear() {
-	    flowsMap.clear();   	  	
+	    flowsMap.clear();
+	    assetFlowsMap.clear();
     	energyUse_kW = 0;
     	v_powerFraction_fr = 0;
     }
@@ -236,7 +239,9 @@ abstract public class J_EA implements Cloneable {
 		 this.energyAssetType = assetType;
 	 }
 	 
-
+	 public void setAssetFlowCategory(OL_AssetFlowCategories assetFlowCat) {
+		 this.assetFlowCategory = assetFlowCat;
+	 }
     
 //    public double getOutputTemperature_degC() {
 //   	return 0;

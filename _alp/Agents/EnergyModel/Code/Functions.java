@@ -159,7 +159,7 @@ double f_calculateGridConnectionFlows(double t_h)
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
-
+fm_currentAssetFlows_kW.clear();
 
 v_currentFinalEnergyConsumption_kW = 0;
 v_currentPrimaryEnergyProduction_kW = 0;
@@ -175,21 +175,17 @@ else {
 	}
 }
 
-v_assetFlows.reset();
-
 for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
 	
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-
+	fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
 	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
 	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
 	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
-	
-	v_assetFlows.addFlows(gc.v_assetFlows);
-	
+		
 }
 
 for (GridConnection gc : c_subGridConnections) {
@@ -350,11 +346,12 @@ for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
 	v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, 
 								fm_currentConsumptionFlows_kW, 
 								fm_currentProductionFlows_kW, 
+								fm_currentAssetFlows_kW,
 								v_currentPrimaryEnergyProduction_kW, 
 								v_currentFinalEnergyConsumption_kW, 
 								v_currentPrimaryEnergyProductionHeatpumps_kW, 
-								v_currentEnergyCurtailed_kW, 
-								v_assetFlows, 
+								v_currentEnergyCurtailed_kW,
+								//v_assetFlows, 
 								this);
 	v_timeStepsElapsed++;
 }	
@@ -731,11 +728,12 @@ v_liveData.addTimeStep(currentTime_h,
 	fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
-	v_currentEnergyCurtailed_kW, 
-	v_assetFlows 
+	v_currentEnergyCurtailed_kW//, 
+	//v_assetFlows 
 );
 /*
 //Energy carrier flows

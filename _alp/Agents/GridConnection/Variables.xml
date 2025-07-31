@@ -468,7 +468,6 @@
 	<Variable Class="PlainVariable">
 		<Id>1720447120435</Id>
 		<Name><![CDATA[v_curtailmentPowerElectric_kW]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>110</X>
 		<Y>1150</Y>
 		<Label>
@@ -1024,6 +1023,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1753110629668</Id>
 		<Name><![CDATA[v_assetFlows]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>570</X>
 		<Y>840</Y>
 		<Label>
@@ -1040,6 +1040,28 @@
 			<Type><![CDATA[J_AssetFlows]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_AssetFlows()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753970741239</Id>
+		<Name><![CDATA[fm_currentAssetFlows_kW]]></Name>
+		<X>840</X>
+		<Y>970</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AssetFlowsMap]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AssetFlowsMap()]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

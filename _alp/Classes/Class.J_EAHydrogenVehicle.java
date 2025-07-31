@@ -34,7 +34,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
     	flowsMap.put(OL_EnergyCarriers.HYDROGEN, this.energyUse_kW);
     	    	
     	if (parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
     	}
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;

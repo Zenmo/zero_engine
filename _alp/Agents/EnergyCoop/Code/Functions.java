@@ -176,26 +176,26 @@ v_currentCustomerDelivery_kW = 0; // Delivery to customers (self-consumption beh
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
+fm_currentAssetFlows_kW.clear();
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentFinalEnergyConsumption_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
-v_assetFlows.reset();
 
 for(GridConnection gc : c_memberGridConnections) { // Can't do this in parallel due to different threads writing to the same values!
 	
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-
+	fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
 	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
 	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
 	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
 	v_currentOwnElectricityProduction_kW += gc.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	 	
-	v_assetFlows.addFlows(gc.v_assetFlows);
+
 }
 
 // gather electricity flows
@@ -206,7 +206,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		fm_currentBalanceFlows_kW.addFlows(EC.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(EC.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(EC.fm_currentConsumptionFlows_kW);
-
+		fm_currentAssetFlows_kW.addFlows(EC.fm_currentAssetFlows_kW);
 		v_currentPrimaryEnergyProduction_kW += EC.v_currentPrimaryEnergyProduction_kW;
 		v_currentFinalEnergyConsumption_kW += EC.v_currentFinalEnergyConsumption_kW;
 		v_currentEnergyCurtailed_kW += EC.v_currentEnergyCurtailed_kW;
@@ -214,7 +214,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_currentOwnElectricityProduction_kW += EC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
 		
 		// Asset flows
-		v_assetFlows.addFlows(EC.v_assetFlows);
+		//v_assetFlows.addFlows(EC.v_assetFlows);
 	}
 }
 
@@ -224,6 +224,7 @@ for (GridConnection GC : c_customerGridConnections) { // Take 'behind the meter'
 		fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
 		fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
 		fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
+		
 		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 			v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
 			v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
@@ -238,7 +239,7 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 		fm_currentBalanceFlows_kW.addFlows(EC.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(EC.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(EC.fm_currentConsumptionFlows_kW);
-		
+		fm_currentAssetFlows_kW.addFlows(EC.fm_currentAssetFlows_kW);
 		v_currentCustomerFeedIn_kW += EC.v_currentCustomerFeedIn_kW;
 		v_currentCustomerDelivery_kW += EC.v_currentCustomerDelivery_kW;
 	}
@@ -768,11 +769,12 @@ v_liveData.addTimeStep(currentTime_h,
 	fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
-	v_currentEnergyCurtailed_kW, 
-	v_assetFlows 
+	v_currentEnergyCurtailed_kW//, 
+	//v_assetFlows 
 );
 /*
 	//Current timestep
@@ -1483,11 +1485,12 @@ acc_totalCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW );
 v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, 
 							fm_currentConsumptionFlows_kW, 
 							fm_currentProductionFlows_kW, 
+							fm_currentAssetFlows_kW,
 							v_currentPrimaryEnergyProduction_kW, 
 							v_currentFinalEnergyConsumption_kW, 
 							v_currentPrimaryEnergyProductionHeatpumps_kW, 
 							v_currentEnergyCurtailed_kW, 
-							v_assetFlows, 
+							//v_assetFlows, 
 							energyModel);
 /*ALCODEEND*/}
 
