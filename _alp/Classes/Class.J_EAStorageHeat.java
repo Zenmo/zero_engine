@@ -11,11 +11,11 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	protected double lossFactor_WpK;
 	protected double capacityHeat_kW;
 	
-	private double temperature_degC;
-	private double temperatureStored_degC;
-	private double initialTemperature_degC;
-	private double minTemperature_degC;
-	private double maxTemperature_degC;
+	protected double temperature_degC;
+	protected double temperatureStored_degC;
+	protected double initialTemperature_degC;
+	protected double minTemperature_degC;
+	protected double maxTemperature_degC;
 	private double setTemperature_degC;
 	protected double heatCapacity_JpK;
 	protected double ambientTemperature_degC;
