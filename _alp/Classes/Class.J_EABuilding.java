@@ -206,10 +206,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.lossFactor_WpK = lossFactor_WpK;
 	}
 	
-	public double getInitialTemperature_degC() {
-		return this.initialTemperature_degC;
-	}
-	
 	/*@Override
 	public double getHeatCapacity_JpK() {
 		return heatCapacity_JpK;
@@ -335,6 +331,13 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     	this.exteriorReleaseScheduleIndex = this.exteriorReleaseScheduleIndex % this.exteriorReleaseSchedule_kWh.length;
     	
     	return heatReleased_kWh;
+    }
+    
+    @Override
+	public double getRemainingHeatStorageHeat_kWh() {
+    	double remainingHeatStorageHeat_kWh = super.getRemainingHeatStorageHeat_kWh(); 
+    	remainingHeatStorageHeat_kWh += getRemainingHeatBufferHeat_kWh();
+    	return remainingHeatStorageHeat_kWh;
     }
     
     public double getRemainingHeatBufferHeat_kWh() {

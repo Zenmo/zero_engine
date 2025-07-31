@@ -174,6 +174,10 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		}
 	}
 
+	public double getInitialTemperature_degC() {
+		return this.initialTemperature_degC;
+	}
+	
 	@Override
 	public double getCurrentTemperature() {
 		return temperature_degC;
@@ -213,7 +217,14 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	public OL_AmbientTempType getAmbientTempType() {
 		return this.ambientTempType;
 	}
+
+	public double getStartingHeatStorageHeat_kWh() {
+		return (this.initialTemperature_degC - this.minTemperature_degC) * heatCapacity_JpK /3.6e6;
+	}
 	
+	public double getRemainingHeatStorageHeat_kWh() {
+		return (this.temperature_degC - this.minTemperature_degC) * heatCapacity_JpK /3.6e6;
+	}
 	/*
 	@Override
 	public double getHeatCapacity_kW() {

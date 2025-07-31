@@ -65,6 +65,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_v2gProbability;
 	public int p_avgEVsPerPublicCharger;
 	public double p_avgPTPower_kWpm2;
+	public double p_avgPTPanelSize_m2;
 	public double p_avgMaxHeatBufferTemperature_degC;
 	public double p_avgMinHeatBufferTemperature_degC;
 	public double p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
