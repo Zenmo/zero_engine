@@ -1,7 +1,7 @@
 /**
  * J_HeatingManagementDistrictHeating
  */	
-public class J_HeatingManagementDistrictHeating implements Serializable {
+public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
 
 	private boolean isInitialized = false;
 	private GridConnection gc;
@@ -10,6 +10,7 @@ public class J_HeatingManagementDistrictHeating implements Serializable {
 		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
 		OL_GridConnectionHeatingType.HYDROGENBURNER
 	);
+	private OL_GridConnectionHeatingType currentHeatingType;
 	private J_EAConversion heatingAsset;
 	
 	private double previousHeatFeedin_kW = 0;
@@ -38,9 +39,9 @@ public class J_HeatingManagementDistrictHeating implements Serializable {
     }
     
     public void initializeAssets() {
-    	if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	}
+    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
+    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	//}
     	if (gc.p_parentNodeHeat == null) {
     		throw new RuntimeException(this.getClass() + " requires the GC: " + gc.p_gridConnectionID + " to be connected to a GridNodeHeat");
     	}
@@ -66,6 +67,10 @@ public class J_HeatingManagementDistrictHeating implements Serializable {
     
     public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
     	return this.validHeatingTypes;
+    }
+    
+    public OL_GridConnectionHeatingType getCurrentHeatingType() {
+    	return this.currentHeatingType;
     }
     
 	@Override

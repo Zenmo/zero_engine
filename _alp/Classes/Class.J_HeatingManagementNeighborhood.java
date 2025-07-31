@@ -6,8 +6,10 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     private boolean isInitialized = false;
     private GridConnection gc;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
-		OL_GridConnectionHeatingType.OTHER
+		OL_GridConnectionHeatingType.CUSTOM
 	);
+	private OL_GridConnectionHeatingType currentHeatingType;
+
     private J_EAConversionGasBurner gasBurner;
     private J_EAConversionHeatPump heatPump;
     private J_EAConversionHeatDeliverySet heatDeliverySet;
@@ -153,9 +155,9 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     }
     
     public void initializeAssets() {
-    	if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	}
+    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
+    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	//}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
@@ -224,6 +226,10 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     
     public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
     	return this.validHeatingTypes;
+    }
+    
+    public OL_GridConnectionHeatingType getCurrentHeatingType() {
+    	return this.currentHeatingType;
     }
     
     public void setHeatingMethodPct_services( double[] pctArray ) {

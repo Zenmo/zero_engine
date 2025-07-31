@@ -1843,3 +1843,10 @@ if (p_batteryAsset != null) {
 }
 /*ALCODEEND*/}
 
+double f_removeAllHeatingAssets()
+{/*ALCODESTART::1753969724598*/
+while (c_heatingAssets.size() > 0) {
+	c_heatingAssets.get(0).removeEnergyAsset();
+}
+/*ALCODEEND*/}
+

@@ -1086,6 +1086,10 @@
 					<Id>1734018498969</Id>
 					<Name><![CDATA[METHANEDEMAND]]></Name>
 				</Option>
+				<Option>
+					<Id>1753971820159</Id>
+					<Name><![CDATA[HEATPUMP_ELECTRICITY_CONSUMPTION]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1722411204920</Id>
@@ -1728,6 +1732,11 @@
 			<JavaClass>
 				<Id>1753795104493</Id>
 				<Name><![CDATA[I_HeatingManagement]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753972840287</Id>
+				<Name><![CDATA[J_HeatingManagementGhost]]></Name>
 				<Folder>1753194088788</Folder>
 			</JavaClass>
 		</JavaClasses>

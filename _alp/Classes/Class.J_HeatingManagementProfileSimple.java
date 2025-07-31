@@ -32,12 +32,12 @@ public class J_HeatingManagementProfileSimple implements I_HeatingManagement {
     }
     
     public void initializeAssets() {
-    	if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	}
-    	if (gc.c_heatingTypes.size() != 1) {
-    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	}
+    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
+    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	//}
+    	//if (gc.c_heatingTypes.size() != 1) {
+    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	//}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}

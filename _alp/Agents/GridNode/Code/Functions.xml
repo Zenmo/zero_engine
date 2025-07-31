@@ -190,9 +190,9 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>DataSet</ReturnType>
+		<ReturnType>J_LoadDurationCurves</ReturnType>
 		<Id>1718111675053</Id>
-		<Name><![CDATA[f_getDuurkromme]]></Name>
+		<Name><![CDATA[f_getDuurkrommes]]></Name>
 		<X>800</X>
 		<Y>280</Y>
 		<Label>

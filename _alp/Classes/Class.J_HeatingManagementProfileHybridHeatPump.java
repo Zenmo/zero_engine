@@ -8,6 +8,7 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
+	private OL_GridConnectionHeatingType currentHeatingType;
 	private J_EAConversionHeatPump heatPumpAsset;
 	private J_EAConversionGasBurner gasBurnerAsset;
     
@@ -56,9 +57,9 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     }
     
     public void initializeAssets() {
-    	if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	}
+    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
+    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
+    	//}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
@@ -100,6 +101,10 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     
     public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
     	return this.validHeatingTypes;
+    }
+    
+    public OL_GridConnectionHeatingType getCurrentHeatingType() {
+    	return this.currentHeatingType;
     }
     
 	@Override
