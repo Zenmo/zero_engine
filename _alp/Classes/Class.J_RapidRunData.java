@@ -6,7 +6,7 @@ import zeroPackage.ZeroMath;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
 public class J_RapidRunData {
-	
+	public boolean storesTotalAssetFlows = false;
 	public Agent parentAgent;
 	private double timeStep_h;
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
@@ -152,6 +152,7 @@ public class J_RapidRunData {
 	    acc_totalEnergyCurtailed_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	
+	    //========== ASSET FLOWS ==========//
 	    acc_dailyAverageBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageElectricVehicleConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);

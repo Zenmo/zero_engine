@@ -245,6 +245,7 @@ for (GridConnection GC : c_gridConnections) {
 	} else {
 		GC.v_rapidRunData = new J_RapidRunData(GC);
 		GC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, GC.v_activeEnergyCarriers, GC.v_activeConsumptionEnergyCarriers, GC.v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+		
 	}
 	GC.f_resetStates();
 	GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();

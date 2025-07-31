@@ -96,7 +96,7 @@ public class J_FlowsMap implements Serializable {
             sb.append(key);
             sb.append(" = ");
             sb.append(value);
-            sb.append(", ");
+            sb.append("\n ");
         }
         sb.delete(sb.length()-2, sb.length());
         sb.append('}');
