@@ -190,6 +190,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	@Override
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
+		
     	energyUsedStored_kWh = energyUsed_kWh;
     	energyUsed_kWh = 0.0;
     	stateOfChargeStored_r = stateOfCharge_fr;
@@ -201,6 +202,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	mileage_km = 0;
     	charged_kWh = 0;
     	discharged_kWh = 0;
+    	//traceln("J_EAEV battery content at start of simulation: %s kWh", this.getCurrentStateOfCharge_kWh() );
     	clear();    	
     }
     

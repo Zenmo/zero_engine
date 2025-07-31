@@ -1,6 +1,10 @@
 /**
  * J_ActivityTrackerCooking
  */	
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker implements Serializable {
 	private ArrayList<Double> powerFractions_fr = new ArrayList<>();
 	public J_EAConversion HOB;

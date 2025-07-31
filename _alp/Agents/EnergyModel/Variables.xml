@@ -2419,6 +2419,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753288831771</Id>
 		<Name><![CDATA[c_gridNodes]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>87</X>
 		<Y>-105</Y>
 		<Label>
@@ -2437,6 +2438,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1753361227218</Id>
 		<Name><![CDATA[c_GISObjects]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>240</X>
 		<Y>-110</Y>
 		<Label>

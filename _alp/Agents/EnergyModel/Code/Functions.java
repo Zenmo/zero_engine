@@ -143,6 +143,7 @@ for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 	}
+	
 }
 
 //Calculate delta stored energy in battery for energy balance check
@@ -1098,5 +1099,15 @@ if ( Math.abs(energyBalanceCheck_MWh) > 1e-6 ) {
 	traceln("");
 
 }
+/*ALCODEEND*/}
+
+double f_startAfterDeserialisation()
+{/*ALCODESTART::1753963201170*/
+
+v_liveData = new J_LiveData(this);
+v_liveConnectionMetaData = new J_ConnectionMetaData(this);
+v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.connectionMetaData = v_liveConnectionMetaData;
+v_liveData.assetsMetaData = v_liveAssetsMetaData;
 /*ALCODEEND*/}
 
