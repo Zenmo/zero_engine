@@ -874,8 +874,8 @@ double f_manageCookingTracker()
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
 	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
-	v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
-	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
+	//v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
+	//v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	if (p_BuildingThermalAsset != null) {
 		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW();

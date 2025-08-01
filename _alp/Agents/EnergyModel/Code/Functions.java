@@ -159,7 +159,7 @@ double f_calculateGridConnectionFlows(double t_h)
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
-
+fm_currentAssetFlows_kW.clear();
 
 v_currentFinalEnergyConsumption_kW = 0;
 v_currentPrimaryEnergyProduction_kW = 0;
@@ -175,21 +175,17 @@ else {
 	}
 }
 
-v_assetFlows.reset();
-
 for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
 	
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-
+	fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
 	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
 	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
 	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
-	
-	v_assetFlows.addFlows(gc.v_assetFlows);
-	
+		
 }
 
 for (GridConnection gc : c_subGridConnections) {
@@ -242,21 +238,22 @@ for (J_EA EA : c_energyAssets) {
 }
 
 for (GridConnection GC : c_gridConnections) {
+	
 	if (GC.v_rapidRunData != null) {
 		if (b_storePreviousRapidRunData) {
 			GC.v_previousRunData = GC.v_rapidRunData.getClone();
 		}
+		GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();
+		GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
 	} else {
 		GC.v_rapidRunData = new J_RapidRunData(GC);
+		GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();
+		GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
 		GC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, GC.v_activeEnergyCarriers, GC.v_activeConsumptionEnergyCarriers, GC.v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+		
 	}
+	
 	GC.f_resetStates();
-	GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();
-	GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
-
-	//GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
-	//GC.c_tripTrackers.forEach(tt->tt.setStartIndex(p_runStartTime_h));
-	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(p_runStartTime_h*60));
 	
 	GC.c_tripTrackers.forEach(tt->{
 		tt.storeAndResetState();
@@ -286,14 +283,17 @@ for (EnergyCoop EC : pop_energyCoops) {
 		if (b_storePreviousRapidRunData) {
 			EC.v_previousRunData = EC.v_rapidRunData.getClone();
 		}
+		EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
+		EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
 	} else {
 		EC.v_rapidRunData = new J_RapidRunData(EC);
+		EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
+		EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
 		
 		EC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, EC.v_activeEnergyCarriers, EC.v_activeConsumptionEnergyCarriers, EC.v_activeProductionEnergyCarriers);
 	}
 	EC.f_resetStates();
-	EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
-	EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
+
 }
 
 
@@ -307,14 +307,17 @@ if (v_rapidRunData != null) {
 	if (b_storePreviousRapidRunData) {
 		v_previousRunData = v_rapidRunData.getClone();
 	}
+	v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();	
+	v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 } else {
 	v_rapidRunData = new J_RapidRunData(this);
+	v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();	
+	v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 	v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();	
 }
 
 f_resetAnnualValues();
-v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();	
-v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
+traceln("Active asset flows in this model: %s", v_rapidRunData.assetsMetaData.activeAssetFlows);
 
 
 v_isRapidRun = true;
@@ -350,11 +353,12 @@ for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
 	v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, 
 								fm_currentConsumptionFlows_kW, 
 								fm_currentProductionFlows_kW, 
+								fm_currentAssetFlows_kW,
 								v_currentPrimaryEnergyProduction_kW, 
 								v_currentFinalEnergyConsumption_kW, 
 								v_currentPrimaryEnergyProductionHeatpumps_kW, 
-								v_currentEnergyCurtailed_kW, 
-								v_assetFlows, 
+								v_currentEnergyCurtailed_kW,
+								//v_assetFlows, 
 								this);
 	v_timeStepsElapsed++;
 }	
@@ -731,11 +735,12 @@ v_liveData.addTimeStep(currentTime_h,
 	fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
-	v_currentEnergyCurtailed_kW, 
-	v_assetFlows 
+	v_currentEnergyCurtailed_kW//, 
+	//v_assetFlows 
 );
 /*
 //Energy carrier flows

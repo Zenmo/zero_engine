@@ -46,7 +46,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     public void f_updateAllFlows( double powerFraction_fr ) {
 		this.operate( min(1, max(0,powerFraction_fr)) );
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);		
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);		
     	}
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
@@ -71,6 +71,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
 		flowsMap.put(OL_EnergyCarriers.HYDROGEN, -hydrogenProduction_kW);
+		assetFlowsMap.put(OL_AssetFlowCategories.electrolyserElectricityConsumption_kW, electricityConsumption_kW);
     }
     
     public void setElectrolyserState(OL_ElectrolyserState electrolyserState) { // Used for regime control

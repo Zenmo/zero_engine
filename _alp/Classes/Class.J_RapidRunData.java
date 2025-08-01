@@ -6,7 +6,7 @@ import zeroPackage.ZeroMath;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
 public class J_RapidRunData {
-	
+	public boolean storesTotalAssetFlows = true;
 	public Agent parentAgent;
 	private double timeStep_h;
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
@@ -17,17 +17,18 @@ public class J_RapidRunData {
 	public J_ConnectionMetaData connectionMetaData;
 	
 	////Full simulation
-	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap();
-	
+	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+
     public ZeroAccumulator acc_totalEnergyCurtailed_kW;
     public ZeroAccumulator acc_totalPrimaryEnergyProductionHeatpumps_kW;
     
-    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
 	public ZeroAccumulator acc_dailyAverageFinalEnergyConsumption_kW;
 	public ZeroAccumulator acc_dailyAverageEnergyProduction_kW;
-	
+
+	public J_AccumulatorMap am_assetFlowsAccumulators_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
 	public ZeroAccumulator acc_dailyAverageBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageHeatPumpElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageElectricVehicleConsumption_kW;
@@ -46,7 +47,7 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_dailyAverageBatteriesSOC_fr;
     
     ////Summer week
-    public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
     public ZeroAccumulator acc_summerWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_summerWeekFeedinCapacity_kW;
@@ -55,8 +56,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekEnergyCurtailed_kW;
     public ZeroAccumulator acc_summerWeekEnergyProduction_kW;
 
-    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
     public ZeroAccumulator acc_summerWeekBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_summerWeekHeatPumpElectricityConsumption_kW;
@@ -76,7 +77,7 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_summerWeekBatteriesSOC_fr;
     
     ////Winter week
-    public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
     public ZeroAccumulator acc_winterWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_winterWeekFeedinCapacity_kW;
@@ -85,8 +86,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekEnergyProduction_kW;
     public ZeroAccumulator acc_winterWeekEnergyCurtailed_kW;
     
-    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW = new J_AccumulatorMap();  
+    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);  
     
     public ZeroAccumulator acc_winterWeekBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_winterWeekHeatPumpElectricityConsumption_kW;
@@ -106,8 +107,8 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_winterWeekBatteriesSOC_fr;
     
     ////Daytime / Nighttime
-	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap();
+	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
     public ZeroAccumulator acc_daytimeFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
@@ -117,8 +118,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_daytimePrimaryEnergyProductionHeatpumps_kW;
     
     //Weekend/day
-    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
     public ZeroAccumulator acc_weekendElectricityConsumption_kW;
     public ZeroAccumulator acc_weekendElectricityProduction_kW;
@@ -133,6 +134,11 @@ public class J_RapidRunData {
      */
     public J_RapidRunData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
+    	if (parentAgent instanceof GridConnection) {
+    		if (!((GridConnection)parentAgent).v_hasQuarterHourlyValues ) {
+    			storesTotalAssetFlows = false;
+    		}
+    	}
     }
     
     public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
@@ -152,6 +158,10 @@ public class J_RapidRunData {
 	    acc_totalEnergyCurtailed_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	
+	    //========== ASSET FLOWS ==========//
+	    if (storesTotalAssetFlows) {
+	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
+	    }
 	    acc_dailyAverageBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageElectricVehicleConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -275,6 +285,9 @@ public class J_RapidRunData {
     	acc_totalEnergyCurtailed_kW.reset();
     	acc_totalPrimaryEnergyProductionHeatpumps_kW.reset();
 
+    	if (storesTotalAssetFlows) {
+  	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
+  	    }
     	acc_dailyAverageBaseloadElectricityConsumption_kW.reset();
     	acc_dailyAverageHeatPumpElectricityConsumption_kW.reset();
     	acc_dailyAverageElectricVehicleConsumption_kW.reset();
@@ -394,6 +407,10 @@ public class J_RapidRunData {
         clone.am_dailyAverageProductionAccumulators_kW=this.am_dailyAverageProductionAccumulators_kW.getClone();
         clone.acc_dailyAverageFinalEnergyConsumption_kW=this.acc_dailyAverageFinalEnergyConsumption_kW.getClone();
     	clone.acc_dailyAverageEnergyProduction_kW=this.acc_dailyAverageEnergyProduction_kW.getClone();
+    	if (storesTotalAssetFlows) {
+  	    	clone.am_assetFlowsAccumulators_kW = this.am_assetFlowsAccumulators_kW.getClone();
+  	    }
+    	
     	clone.acc_dailyAverageBaseloadElectricityConsumption_kW=this.acc_dailyAverageBaseloadElectricityConsumption_kW.getClone();
         clone.acc_dailyAverageHeatPumpElectricityConsumption_kW=this.acc_dailyAverageHeatPumpElectricityConsumption_kW.getClone();
         clone.acc_dailyAverageElectricVehicleConsumption_kW=this.acc_dailyAverageElectricVehicleConsumption_kW.getClone();
@@ -482,12 +499,18 @@ public class J_RapidRunData {
 
     }
     
-    public void addTimeStep(J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, J_AssetFlows assetFlows, EnergyModel energyModel) {
+    public void addTimeStep(J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap fm_currentAssetFlows_kW, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, EnergyModel energyModel) {
+    	//J_AssetFlows assetFlows = new J_AssetFlows();
+    	
     	for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     		this.am_totalBalanceAccumulators_kW.get(EC).addStep(  fm_currentBalanceFlows_kW.get(EC) );
     	}
-
-    	// Daytime totals. Use overal-total minus daytime total to get nighttime totals.
+    	if (storesTotalAssetFlows) {
+	    	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
+	    		this.am_assetFlowsAccumulators_kW.get(AC).addStep ( fm_currentAssetFlows_kW.get(AC) );
+	    	}
+    	}
+	    // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
     	if(energyModel.b_isDaytime) { 
     		
     		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
@@ -549,28 +572,27 @@ public class J_RapidRunData {
     		acc_summerWeekDeliveryCapacity_kW.addStep( connectionMetaData.physicalCapacity_kW );
     		acc_summerWeekFeedinCapacity_kW.addStep( -connectionMetaData.physicalCapacity_kW );
     		
-    		acc_summerWeekBaseloadElectricityConsumption_kW.addStep( assetFlows.fixedConsumptionElectric_kW );
-    		acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( assetFlows.heatPumpElectricityConsumption_kW );
+    		acc_summerWeekBaseloadElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.fixedConsumptionElectric_kW));
+    		acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW));
+    		acc_summerWeekElectricVehicleConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
+    		acc_summerWeekBatteriesConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)) );
+    		acc_summerWeekElectricCookingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electricHobConsumption_kW) );
+    		acc_summerWeekElectrolyserElectricityConsumption_kW.addStep( max(0, fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electrolyserElectricityConsumption_kW)) );
+    		acc_summerWeekDistrictHeatingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.districtHeatDelivery_kW));
+    		acc_summerWeekPVProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.pvProductionElectric_kW));
+    		acc_summerWeekWindProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.windProductionElectric_kW));
+    		acc_summerWeekPTProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.ptProductionHeat_kW));	
+    		acc_summerWeekV2GProduction_kW.addStep( max(0, -fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
+    		acc_summerWeekBatteriesProduction_kW.addStep( max(0,-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)));
+    		acc_summerWeekCHPElectricityProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.CHPProductionElectric_kW));
+    		//ts_summerWeekBatteriesStoredEnergy_MWh.addStep(assetFlows.currentStoredEnergyBatteries_MWh);
     		
-    		acc_summerWeekElectricVehicleConsumption_kW.addStep( max(0,assetFlows.evChargingPowerElectric_kW) );
-    		acc_summerWeekBatteriesConsumption_kW.addStep( assetFlows.currentBatteriesConsumption_kW );
-    		acc_summerWeekElectricCookingConsumption_kW.addStep( assetFlows.electricHobConsumption_kW );
-    		acc_summerWeekElectrolyserElectricityConsumption_kW.addStep( max(0, assetFlows.hydrogenElectricityConsumption_kW) );
-    		acc_summerWeekDistrictHeatingConsumption_kW.addStep( assetFlows.districtHeatDelivery_kW );
-    		acc_summerWeekPVProduction_kW.addStep( assetFlows.pvProductionElectric_kW );
-    		acc_summerWeekWindProduction_kW.addStep( assetFlows.windProductionElectric_kW );
-    		acc_summerWeekPTProduction_kW.addStep( assetFlows.ptProductionHeat_kW );	
-    		acc_summerWeekV2GProduction_kW.addStep( max(0, -assetFlows.evChargingPowerElectric_kW) );
-    		acc_summerWeekBatteriesProduction_kW.addStep( assetFlows.currentBatteriesProduction_kW );
-    		acc_summerWeekCHPElectricityProduction_kW.addStep( assetFlows.CHPProductionElectric_kW );
-    		ts_summerWeekBatteriesStoredEnergy_MWh.addStep(assetFlows.currentStoredEnergyBatteries_MWh);
-    		
-    		if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+    		/*if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
     			ts_summerWeekBatteriesSOC_fr.addStep(assetFlows.currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
     		}
     		else{
     			ts_summerWeekBatteriesSOC_fr.addStep(0);	
-    		}
+    		}*/
     	}
 
     	//========== WINTER WEEK ==========// 
@@ -594,20 +616,21 @@ public class J_RapidRunData {
     		acc_winterWeekDeliveryCapacity_kW.addStep( connectionMetaData.physicalCapacity_kW );
     		acc_winterWeekFeedinCapacity_kW.addStep( -connectionMetaData.physicalCapacity_kW );
 
-    		acc_winterWeekBaseloadElectricityConsumption_kW.addStep( assetFlows.fixedConsumptionElectric_kW );
-    		acc_winterWeekHeatPumpElectricityConsumption_kW.addStep( assetFlows.heatPumpElectricityConsumption_kW );
-
-    		acc_winterWeekElectricVehicleConsumption_kW.addStep( max(0,assetFlows.evChargingPowerElectric_kW) );
-    		acc_winterWeekBatteriesConsumption_kW.addStep( assetFlows.currentBatteriesConsumption_kW );
-    		acc_winterWeekElectricCookingConsumption_kW.addStep( assetFlows.electricHobConsumption_kW );
-    		acc_winterWeekElectrolyserElectricityConsumption_kW.addStep( max(0, assetFlows.hydrogenElectricityConsumption_kW) );
-    		acc_winterWeekDistrictHeatingConsumption_kW.addStep( assetFlows.districtHeatDelivery_kW );
-    		acc_winterWeekPVProduction_kW.addStep( assetFlows.pvProductionElectric_kW );
-    		acc_winterWeekWindProduction_kW.addStep( assetFlows.windProductionElectric_kW );
-    		acc_winterWeekPTProduction_kW.addStep( assetFlows.ptProductionHeat_kW );	
-    		acc_winterWeekV2GProduction_kW.addStep( max(0, -assetFlows.evChargingPowerElectric_kW) );
-    		acc_winterWeekBatteriesProduction_kW.addStep( assetFlows.currentBatteriesProduction_kW );
-    		acc_winterWeekCHPElectricityProduction_kW.addStep( assetFlows.CHPProductionElectric_kW );
+    		acc_winterWeekBaseloadElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.fixedConsumptionElectric_kW));
+    		acc_winterWeekHeatPumpElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW));
+    		acc_winterWeekElectricVehicleConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
+    		acc_winterWeekBatteriesConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)) );
+    		acc_winterWeekElectricCookingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electricHobConsumption_kW) );
+    		acc_winterWeekElectrolyserElectricityConsumption_kW.addStep( max(0, fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electrolyserElectricityConsumption_kW)) );
+    		acc_winterWeekDistrictHeatingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.districtHeatDelivery_kW));
+    		acc_winterWeekPVProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.pvProductionElectric_kW));
+    		acc_winterWeekWindProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.windProductionElectric_kW));
+    		acc_winterWeekPTProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.ptProductionHeat_kW));	
+    		acc_winterWeekV2GProduction_kW.addStep( max(0, -fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
+    		acc_winterWeekBatteriesProduction_kW.addStep( max(0,-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)));
+    		acc_winterWeekCHPElectricityProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.CHPProductionElectric_kW));
+    		
+    		/*
     		ts_winterWeekBatteriesStoredEnergy_MWh.addStep(assetFlows.currentStoredEnergyBatteries_MWh);
 
     		if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
@@ -615,7 +638,7 @@ public class J_RapidRunData {
     		}
     		else{
     			ts_winterWeekBatteriesSOC_fr.addStep(0);	
-    		}
+    		}*/
     	}
 
     	//========== TOTALS / DAILY AVERAGES ==========//
@@ -629,6 +652,7 @@ public class J_RapidRunData {
     	acc_dailyAverageFinalEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
     	acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     	acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
+    	/*
     	acc_dailyAverageBaseloadElectricityConsumption_kW.addStep( assetFlows.fixedConsumptionElectric_kW );
     	acc_dailyAverageHeatPumpElectricityConsumption_kW.addStep( assetFlows.heatPumpElectricityConsumption_kW );
     	acc_dailyAverageElectricVehicleConsumption_kW.addStep( max(0,assetFlows.evChargingPowerElectric_kW) );
@@ -642,6 +666,22 @@ public class J_RapidRunData {
     	acc_dailyAverageV2GProduction_kW.addStep( max(0, -assetFlows.evChargingPowerElectric_kW) );
     	acc_dailyAverageBatteriesProduction_kW.addStep( assetFlows.currentBatteriesProduction_kW );
     	acc_dailyAverageCHPElectricityProduction_kW.addStep( assetFlows.CHPProductionElectric_kW );
+    	*/
+    	acc_dailyAverageBaseloadElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.fixedConsumptionElectric_kW));
+    	acc_dailyAverageHeatPumpElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW));
+    	acc_dailyAverageElectricVehicleConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
+    	acc_dailyAverageBatteriesConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)) );
+    	acc_dailyAverageElectricCookingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electricHobConsumption_kW) );
+    	acc_dailyAverageElectrolyserElectricityConsumption_kW.addStep( max(0, fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electrolyserElectricityConsumption_kW)) );
+    	acc_dailyAverageDistrictHeatingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.districtHeatDelivery_kW));
+    	acc_dailyAveragePVProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.pvProductionElectric_kW));
+    	acc_dailyAverageWindProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.windProductionElectric_kW));
+    	acc_dailyAveragePTProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.ptProductionHeat_kW));	
+    	acc_dailyAverageV2GProduction_kW.addStep( max(0, -fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
+    	acc_dailyAverageBatteriesProduction_kW.addStep( max(0,-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)));
+    	acc_dailyAverageCHPElectricityProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.CHPProductionElectric_kW));
+    	
+    	/*
     	ts_dailyAverageBatteriesStoredEnergy_MWh.addStep(assetFlows.currentStoredEnergyBatteries_MWh);
     	
     	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
@@ -649,7 +689,7 @@ public class J_RapidRunData {
     	}
     	else{
     		ts_dailyAverageBatteriesSOC_fr.addStep(0);	
-    	}	
+    	}	*/
     }
     
     public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {

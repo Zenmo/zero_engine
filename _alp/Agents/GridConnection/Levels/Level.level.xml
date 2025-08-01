@@ -488,7 +488,7 @@
 			<Id>1668439095464</Id>
 			<Expression>my_dataset1</Expression>
 			<Color>-3137392</Color>
-			<Expression2>v_pvProductionElectric_kW + v_windProductionElectric_kW</Expression2>
+			<Expression2>fm_currentAssetFlows_kW.get(windProductionElectric_kW) + fm_currentAssetFlows_kW.get(pvProductionElectric_kW)</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
@@ -498,7 +498,7 @@
 			<Id>1668439095465</Id>
 			<Expression>my_dataset2</Expression>
 			<Color>-32944</Color>
-			<Expression2>v_conversionPowerElectric_kW</Expression2>
+			<Expression2>fm_currentAssetFlows_kW.get(heatPumpElectricityConsumption_kW)</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
@@ -508,7 +508,7 @@
 			<Id>1668439095466</Id>
 			<Expression>my_dataset3</Expression>
 			<Color>-13447886</Color>
-			<Expression2>v_evChargingPowerElectric_kW</Expression2>
+			<Expression2>fm_currentAssetFlows_kW.get(evChargingPower_kW)</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>2.0</LineWidth>
@@ -518,7 +518,7 @@
 			<Id>1658477089943</Id>
 			<Expression>my_dataset4</Expression>
 			<Color>-8388608</Color>
-			<Expression2>v_batteryPowerElectric_kW</Expression2>
+			<Expression2>fm_currentAssetFlows_kW.get(batteriesChargingPower_kW)</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

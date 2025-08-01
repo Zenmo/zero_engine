@@ -44,6 +44,7 @@ if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentP
 	//}
 }
 
+/*
 // Further Subdivision of asset types within energy carriers
 v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
@@ -115,7 +116,7 @@ v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
 	max(0,-v_batteryPowerElectric_kW),
 	max(0,-v_evChargingPowerElectric_kW),
 	v_batteryStoredEnergy_kWh/1000);
-
+*/
 // 
 if (energyModel.v_isRapidRun){
 	f_rapidRunDataLogging();
@@ -137,6 +138,7 @@ v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
+fm_currentAssetFlows_kW.clear();
 
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentFinalEnergyConsumption_kW = 0;
@@ -145,7 +147,7 @@ v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
 // Categorical power flows
-v_fixedConsumptionElectric_kW = 0;
+/*v_fixedConsumptionElectric_kW = 0;
 v_electricHobConsumption_kW = 0;
 v_heatPumpElectricityConsumption_kW = 0;
 v_hydrogenElectricityConsumption_kW = 0;
@@ -156,7 +158,7 @@ v_pvProductionElectric_kW = 0;
 v_ptProductionHeat_kW = 0;
 v_conversionPowerElectric_kW = 0;
 v_CHPProductionElectric_kW = 0;
-v_districtHeatDelivery_kW = 0;
+v_districtHeatDelivery_kW = 0;*/
 
 if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
@@ -908,7 +910,7 @@ for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
 
 /*ALCODEEND*/}
 
-double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_EA caller)
+double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_ValueMap assetFlowsMap,J_EA caller)
 {/*ALCODESTART::1702373771433*/
 if (caller instanceof J_EAStorageElectric) { 
 	fm_currentBalanceFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
@@ -934,6 +936,8 @@ if (caller instanceof J_EAStorageElectric) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW -= energyUse_kW;
 }
+
+fm_currentAssetFlows_kW.addFlows(assetFlowsMap);
 /*ALCODEEND*/}
 
 double f_removeTheJ_EA(J_EA j_ea)
@@ -1254,11 +1258,12 @@ v_liveData.addTimeStep(currentTime_h,
 	fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
-	v_currentEnergyCurtailed_kW, 
-	v_assetFlows 
+	v_currentEnergyCurtailed_kW 
+	//v_assetFlows 
 );
 /*ALCODEEND*/}
 
@@ -1267,11 +1272,12 @@ double f_rapidRunDataLogging()
 v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
 	v_currentEnergyCurtailed_kW, 
-	v_assetFlows, 
+	//v_assetFlows, 
 	energyModel);
 /*ALCODEEND*/}
 
@@ -1315,18 +1321,11 @@ if (!setActive) {
 	
 	v_previousPowerElectricity_kW = 0;
 	v_previousPowerHeat_kW = 0;
-	//v_currentPowerElectricity_kW = 0;
-	//v_currentPowerMethane_kW = 0;
-	//v_currentPowerHydrogen_kW = 0;
-	//v_currentPowerHeat_kW = 0;
-	//v_currentPowerDiesel_kW = 0;
-	//v_currentElectricityConsumption_kW = 0;
-	//v_currentElectricityProduction_kW = 0;
-	//v_currentEnergyConsumption_kW = 0;
-	//v_currentEnergyProduction_kW = 0;
+
 	v_currentEnergyCurtailed_kW = 0;
 	v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-	v_fixedConsumptionElectric_kW = 0;
+
+/*	v_fixedConsumptionElectric_kW = 0;
 	v_electricHobConsumption_kW = 0;
 	v_heatPumpElectricityConsumption_kW = 0;
 	v_hydrogenElectricityConsumption_kW = 0;
@@ -1337,7 +1336,7 @@ if (!setActive) {
 	v_pvProductionElectric_kW = 0;
 	v_ptProductionHeat_kW = 0;
 	v_conversionPowerElectric_kW = 0;
-	v_CHPProductionElectric_kW = 0;
+	v_CHPProductionElectric_kW = 0;*/
 	
 }
 else {

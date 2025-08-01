@@ -52,7 +52,7 @@ public class J_EADieselTractor extends J_EAProfile implements Serializable {
     public void f_updateAllFlows(double t_h) {
          operate(t_h);
          if (parentAgent instanceof GridConnection) {        
-            ((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+            ((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
         }
         this.lastFlowsMap.cloneMap(this.flowsMap);
         this.lastEnergyUse_kW = this.energyUse_kW;
