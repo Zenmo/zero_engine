@@ -147,7 +147,7 @@ v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
 // Categorical power flows
-v_fixedConsumptionElectric_kW = 0;
+/*v_fixedConsumptionElectric_kW = 0;
 v_electricHobConsumption_kW = 0;
 v_heatPumpElectricityConsumption_kW = 0;
 v_hydrogenElectricityConsumption_kW = 0;
@@ -158,7 +158,7 @@ v_pvProductionElectric_kW = 0;
 v_ptProductionHeat_kW = 0;
 v_conversionPowerElectric_kW = 0;
 v_CHPProductionElectric_kW = 0;
-v_districtHeatDelivery_kW = 0;
+v_districtHeatDelivery_kW = 0;*/
 
 if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
@@ -1321,18 +1321,11 @@ if (!setActive) {
 	
 	v_previousPowerElectricity_kW = 0;
 	v_previousPowerHeat_kW = 0;
-	//v_currentPowerElectricity_kW = 0;
-	//v_currentPowerMethane_kW = 0;
-	//v_currentPowerHydrogen_kW = 0;
-	//v_currentPowerHeat_kW = 0;
-	//v_currentPowerDiesel_kW = 0;
-	//v_currentElectricityConsumption_kW = 0;
-	//v_currentElectricityProduction_kW = 0;
-	//v_currentEnergyConsumption_kW = 0;
-	//v_currentEnergyProduction_kW = 0;
+
 	v_currentEnergyCurtailed_kW = 0;
 	v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-	v_fixedConsumptionElectric_kW = 0;
+
+/*	v_fixedConsumptionElectric_kW = 0;
 	v_electricHobConsumption_kW = 0;
 	v_heatPumpElectricityConsumption_kW = 0;
 	v_hydrogenElectricityConsumption_kW = 0;
@@ -1343,7 +1336,7 @@ if (!setActive) {
 	v_pvProductionElectric_kW = 0;
 	v_ptProductionHeat_kW = 0;
 	v_conversionPowerElectric_kW = 0;
-	v_CHPProductionElectric_kW = 0;
+	v_CHPProductionElectric_kW = 0;*/
 	
 }
 else {

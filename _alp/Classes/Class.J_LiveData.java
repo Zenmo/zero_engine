@@ -127,8 +127,8 @@ public class J_LiveData {
     	this.data_V2GSupply_kW.add(currentTime_h, roundToDecimal(max(0, -assetFlowsMap.get(OL_AssetFlowCategories.evChargingPower_kW)), 3));
 
     	//Batteries
-    	this.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.batteriesCharingPower_kW)), 3));		
-    	this.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(max(0,-assetFlowsMap.get(OL_AssetFlowCategories.batteriesCharingPower_kW)), 3));	
+    	this.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.batteriesChargingPower_kW)), 3));		
+    	this.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(max(0,-assetFlowsMap.get(OL_AssetFlowCategories.batteriesChargingPower_kW)), 3));	
     	/*this.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, assetFlows.currentStoredEnergyBatteries_MWh);
     	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
     		this.data_batterySOC_fr.add(currentTime_h, assetFlows.currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	

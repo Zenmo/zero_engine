@@ -31,7 +31,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		this.etaDischarge_r = Math.sqrt(eta_r);
 	    this.activeProductionEnergyCarriers.add(this.storageMedium);		
 		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
-		this.assetFlowCategory = OL_AssetFlowCategories.batteriesCharingPower_kW;
+		this.assetFlowCategory = OL_AssetFlowCategories.batteriesChargingPower_kW;
 		registerEnergyAsset();
     }
     

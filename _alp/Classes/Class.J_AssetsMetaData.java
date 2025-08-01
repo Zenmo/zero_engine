@@ -11,6 +11,7 @@ public class J_AssetsMetaData {
 	
 	public Agent parentAgent;
 
+	public EnumSet<OL_AssetFlowCategories> activeAssetFlows = EnumSet.noneOf(OL_AssetFlowCategories.class);
 	public boolean hasElectricHeating = false;
 	public boolean hasElectricTransport = false;
 	public boolean hasPV = false;
@@ -43,6 +44,17 @@ public class J_AssetsMetaData {
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
+    	activeAssetFlows.clear();
+    	for(GridConnection GC : gcList){
+    		if (GC.v_isActive) {
+	    		for (J_EA ea : GC.c_energyAssets) {
+	    			if (ea.assetFlowCategory!=null) {
+	    				activeAssetFlows.add(ea.assetFlowCategory);
+	    			}
+	    		}
+    		}
+    	}    	
+    	
     	this.hasElectricHeating = false;
 	    this.hasElectricTransport = false;
 	    this.hasPV = false;
@@ -135,6 +147,7 @@ public class J_AssetsMetaData {
 
     public J_AssetsMetaData getClone() {
     	J_AssetsMetaData clone = new J_AssetsMetaData(this.parentAgent);
+    	clone.activeAssetFlows = this.activeAssetFlows.clone();
     	clone.hasElectricHeating = this.hasElectricHeating;
     	clone.hasElectricTransport = this.hasElectricTransport;
     	clone.hasPV = this.hasPV;

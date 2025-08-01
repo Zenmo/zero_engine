@@ -122,6 +122,7 @@
 		<Id>1690363061408</Id>
 		<Name><![CDATA[v_electricHobConsumption_kWh]]></Name>
 		<Description><![CDATA[This is part of the v_fixedConsumptionElectric_kW, thus variable only exists for additional information]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>150</X>
 		<Y>1520</Y>
 		<Label>

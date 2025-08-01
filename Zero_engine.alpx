@@ -1297,7 +1297,7 @@
 				</Option>
 				<Option>
 					<Id>1753968826415</Id>
-					<Name><![CDATA[batteriesCharingPower_kW]]></Name>
+					<Name><![CDATA[batteriesChargingPower_kW]]></Name>
 				</Option>
 				<Option>
 					<Id>1753968826416</Id>
@@ -1678,7 +1678,7 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1729510354900</Id>
-				<Name><![CDATA[J_AccumulatorMap]]></Name>
+				<Name><![CDATA[J_AssetFlowsAccumulatorMap]]></Name>
 				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1828,6 +1828,11 @@
 			<JavaClass>
 				<Id>1753968339982</Id>
 				<Name><![CDATA[J_AssetFlowsMap]]></Name>
+				<Folder>1752679379816</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1754038055004</Id>
+				<Name><![CDATA[J_AccumulatorMap]]></Name>
 				<Folder>1752679379816</Folder>
 			</JavaClass>
 		</JavaClasses>

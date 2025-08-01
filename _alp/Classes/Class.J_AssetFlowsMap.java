@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreType;
 public class J_AssetFlowsMap implements Serializable {
 
 	private double[] valuesArray = new double[OL_AssetFlowCategories.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
-	private EnumSet<OL_AssetFlowCategories> flowCategories = EnumSet.noneOf(OL_AssetFlowCategories.class);
+	private EnumSet<OL_AssetFlowCategories> assetFlowsList = EnumSet.noneOf(OL_AssetFlowCategories.class);
   
     /**
      * Default constructor
@@ -24,11 +24,11 @@ public class J_AssetFlowsMap implements Serializable {
 
 	public final void put(OL_AssetFlowCategories key, double value) {
 		valuesArray[key.ordinal()] = value;
-		flowCategories.add(key);
+		assetFlowsList.add(key);
 	}
 	
 	public final void clear() {
-		flowCategories.clear();
+		assetFlowsList.clear();
 		Arrays.fill(valuesArray, 0.0);
 		/*for(int i=0; i<valuesArray.length; i++) {
 			valuesArray[i]=0.0;
@@ -37,7 +37,7 @@ public class J_AssetFlowsMap implements Serializable {
     
     //public J_AssetFlowsMap addFlows( J_AssetFlowsMap f) {
     public final J_AssetFlowsMap addFlowsSlow( J_AssetFlowsMap f) {
-    	for (OL_AssetFlowCategories key : f.flowCategories) {
+    	for (OL_AssetFlowCategories key : f.assetFlowsList) {
     		this.addFlow(key, f.get(key));
     	}
     	return this;
@@ -50,12 +50,12 @@ public class J_AssetFlowsMap implements Serializable {
 			//this.valuesArray[i]=this.valuesArray[i]+f.valuesArray[i];
 			this.valuesArray[i]+=f.valuesArray[i];
 		}
-		this.flowCategories.addAll(f.flowCategories); 
+		this.assetFlowsList.addAll(f.assetFlowsList); 
     	return this;
     }
     
     public final J_AssetFlowsMap addFlow( OL_AssetFlowCategories key, double value) {
-    	flowCategories.add(key);
+    	assetFlowsList.add(key);
     	this.valuesArray[key.ordinal()]+=value;
     	//double currentValue = this.get(key);
     	//this.put(key, currentValue + value);
@@ -73,8 +73,8 @@ public class J_AssetFlowsMap implements Serializable {
 		}
 		
 		//this.flowCategories = flowMap.flowCategories.clone(); // This or first clear list and then addAll? Which is faster?
-		this.flowCategories.clear();
-		this.flowCategories.addAll(flowMap.flowCategories); 
+		this.assetFlowsList.clear();
+		this.assetFlowsList.addAll(flowMap.assetFlowsList); 
     	return this;    	
     }
     
@@ -83,16 +83,16 @@ public class J_AssetFlowsMap implements Serializable {
     }
     
     public final EnumSet<OL_AssetFlowCategories> keySet(){
-    	return flowCategories;
+    	return assetFlowsList;
     }
         
     public String toString() {
-        if (this.flowCategories.size() == 0) {
+        if (this.assetFlowsList.size() == 0) {
             return "{}";        	
         }
         StringBuilder sb = new StringBuilder();
         sb.append('{');
-        for (OL_AssetFlowCategories key : this.flowCategories) {
+        for (OL_AssetFlowCategories key : this.assetFlowsList) {
         	double value = this.get(key);
             sb.append(key);
             sb.append(" = ");
