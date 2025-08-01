@@ -1072,9 +1072,9 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[J_AssetFlowsMap]]></Type>
+			<Type><![CDATA[J_ValueMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_AssetFlowsMap()]]></Code>
+				<Code><![CDATA[new J_ValueMap(OL_AssetFlowCategories.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

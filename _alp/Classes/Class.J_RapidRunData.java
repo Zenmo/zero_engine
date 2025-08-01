@@ -19,7 +19,6 @@ public class J_RapidRunData {
 	////Full simulation
 	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
-	
     public ZeroAccumulator acc_totalEnergyCurtailed_kW;
     public ZeroAccumulator acc_totalPrimaryEnergyProductionHeatpumps_kW;
     
@@ -500,7 +499,7 @@ public class J_RapidRunData {
 
     }
     
-    public void addTimeStep(J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_AssetFlowsMap fm_currentAssetFlows_kW, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, EnergyModel energyModel) {
+    public void addTimeStep(J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap fm_currentAssetFlows_kW, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, EnergyModel energyModel) {
     	//J_AssetFlows assetFlows = new J_AssetFlows();
     	
     	for (OL_EnergyCarriers EC : activeEnergyCarriers) {

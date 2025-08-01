@@ -910,7 +910,7 @@ for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
 
 /*ALCODEEND*/}
 
-double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_AssetFlowsMap assetFlowsMap,J_EA caller)
+double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_ValueMap assetFlowsMap,J_EA caller)
 {/*ALCODESTART::1702373771433*/
 if (caller instanceof J_EAStorageElectric) { 
 	fm_currentBalanceFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));

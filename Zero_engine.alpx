@@ -1828,7 +1828,7 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1753968339982</Id>
-				<Name><![CDATA[J_AssetFlowsMap]]></Name>
+				<Name><![CDATA[J_ValueMap]]></Name>
 				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>

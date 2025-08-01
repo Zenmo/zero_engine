@@ -326,7 +326,7 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[assetFlowsMap]]></Name>
-			<Type><![CDATA[J_AssetFlowsMap]]></Type>
+			<Type><![CDATA[J_ValueMap]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[caller]]></Name>
