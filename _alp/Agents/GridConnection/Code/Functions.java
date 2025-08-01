@@ -1850,3 +1850,13 @@ while (c_heatingAssets.size() > 0) {
 }
 /*ALCODEEND*/}
 
+OL_GridConnectionHeatingType f_getCurrentHeatingType()
+{/*ALCODESTART::1754051705071*/
+if (p_heatingManagement != null) {
+	return p_heatingManagement.getCurrentHeatingType();
+}
+else {
+	return OL_GridConnectionHeatingType.NONE;
+}
+/*ALCODEEND*/}
+

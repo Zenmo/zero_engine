@@ -7,8 +7,8 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
 	private GridConnection gc;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.GAS_BURNER,
-		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
-		OL_GridConnectionHeatingType.HYDROGENBURNER
+		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP,
+		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
 	
@@ -31,6 +31,9 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
     }
     
     public void initializeAssets() {
+    	if (!validHeatingTypes.contains(this.currentHeatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
+    	}
     	this.isInitialized = true;
     }
     

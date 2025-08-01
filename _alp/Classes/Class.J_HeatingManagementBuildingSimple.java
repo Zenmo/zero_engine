@@ -26,13 +26,19 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
 	/**
      * Default constructor
      */
-    public J_HeatingManagementBuildingSimple( GridConnection gc ) {
+    public J_HeatingManagementBuildingSimple() {
+    	
+    }
+    
+    public J_HeatingManagementBuildingSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
+    	this.currentHeatingType = heatingType;
     	this.building = gc.p_BuildingThermalAsset;
     }
 
-    public J_HeatingManagementBuildingSimple( GridConnection gc, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
+    public J_HeatingManagementBuildingSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
     	this.gc = gc;
+    	this.currentHeatingType = heatingType;
     	this.building = gc.p_BuildingThermalAsset;
     	this.startOfDay_h = startOfDay_h;
         this.startOfNight_h = startOfNight_h;
@@ -51,9 +57,11 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
     		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
     			// Nighttime and building temperature too low
-    			double buildingPower_kW = heatingAsset.getOutputCapacity_kW() - heatDemand_kW;
+       			double buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+    			double buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
+    			double assetPower_kW = buildingPower_kW + heatDemand_kW;
     			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
-    			heatingAsset.f_updateAllFlows( 1.0 );
+    			heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
     			return;
     		}
     		else {
@@ -66,9 +74,11 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     	else {
     		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
     			// Daytime and building temperature too low
-    			double buildingPower_kW = heatingAsset.getOutputCapacity_kW() - heatDemand_kW;
+       			double buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+    			double buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
+    			double assetPower_kW = buildingPower_kW + heatDemand_kW;
     			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
-    			heatingAsset.f_updateAllFlows( 1.0 );
+    			heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
     			return;
     		}
     		else {
@@ -81,9 +91,9 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     }
     
     public void initializeAssets() {
-    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	//}
+    	if (!validHeatingTypes.contains(this.currentHeatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
+    	}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
@@ -128,5 +138,4 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
 	 * It needs to be changed when this class gets changed
 	 */ 
 	private static final long serialVersionUID = 1L;
-
 }

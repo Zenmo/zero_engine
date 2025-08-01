@@ -15,8 +15,13 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	/**
      * Default constructor
      */
-    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc ) {
+	public J_HeatingManagementProfileHybridHeatPump() {
+		
+	}
+	
+    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
+    	this.currentHeatingType = heatingType;
     }
 
     public void manageHeating() {
@@ -57,9 +62,9 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     }
     
     public void initializeAssets() {
-    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	//}
+    	if (!validHeatingTypes.contains(this.currentHeatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
+    	}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}

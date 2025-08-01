@@ -18,11 +18,16 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
 	/**
      * Default constructor
      */
-    public J_HeatingManagementDistrictHeating( GridConnection gc ) {
+	public J_HeatingManagementDistrictHeating() {
+		
+	}
+	
+    public J_HeatingManagementDistrictHeating( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	if (!(gc instanceof GCDistrictHeating)) {
     		throw new RuntimeException("Impossible to connect " + this.getClass() + " to a GC that is not GCDistrictHeating");
     	}
     	this.gc = gc;
+    	this.currentHeatingType = heatingType;
     }
 
     public void manageHeating() {
@@ -39,9 +44,9 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     }
     
     public void initializeAssets() {
-    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	//}
+    	if (!validHeatingTypes.contains(this.currentHeatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
+    	}
     	if (gc.p_parentNodeHeat == null) {
     		throw new RuntimeException(this.getClass() + " requires the GC: " + gc.p_gridConnectionID + " to be connected to a GridNodeHeat");
     	}

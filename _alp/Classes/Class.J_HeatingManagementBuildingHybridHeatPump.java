@@ -23,12 +23,18 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
 	/**
      * Default constructor
      */
-    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc ) {
+    public J_HeatingManagementBuildingHybridHeatPump() {
+    	
+    }
+    
+    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
+    	this.currentHeatingType = heatingType;
     }
 
-    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
+    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
     	this.gc = gc;
+    	this.currentHeatingType = heatingType;
     	this.building = gc.p_BuildingThermalAsset;
     	this.startOfDay_h = startOfDay_h;
         this.startOfNight_h = startOfNight_h;
@@ -42,51 +48,38 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     		this.initializeAssets();
     	}
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-    	boolean heatBuilding = false;
+    	double buildingPower_kW = 0;
+    	double assetOutputPower_kW = heatPumpAsset.getCOP() > 3.0 ? heatPumpAsset.getOutputCapacity_kW() : gasBurnerAsset.getOutputCapacity_kW();
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-    			heatBuilding = true;
+    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {       			
+    			double buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+    			buildingPower_kW = min(assetOutputPower_kW - heatDemand_kW, buildingPowerSetpoint_kW);
     		}
     	}
     	else {
     		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-    			heatBuilding = true;
+    			double buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+    			buildingPower_kW = min(assetOutputPower_kW - heatDemand_kW, buildingPowerSetpoint_kW);
     		}
     	}
-    	if (heatBuilding) {
-        	if (heatPumpAsset.getCOP() > 3.0 ) {
-        		double buildingPower_kW = heatPumpAsset.getOutputCapacity_kW() - heatDemand_kW;
-        		heatPumpAsset.f_updateAllFlows( 1.0 );
-        		building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
-        		gasBurnerAsset.f_updateAllFlows( 0.0 );
-        	}
-        	else {
-        		double buildingPower_kW = gasBurnerAsset.getOutputCapacity_kW() - heatDemand_kW;
-        		gasBurnerAsset.f_updateAllFlows( 1.0 );
-        		building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
-        		heatPumpAsset.f_updateAllFlows( 0.0 );
-        	}
+    	if (heatPumpAsset.getCOP() > 3.0 ) {
+    		heatPumpAsset.f_updateAllFlows( (buildingPower_kW + heatDemand_kW) / heatPumpAsset.getOutputCapacity_kW() );
+    		building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+    		gasBurnerAsset.f_updateAllFlows( 0.0 );
     	}
     	else {
-        	if (heatPumpAsset.getCOP() > 3.0 ) {
-        		heatPumpAsset.f_updateAllFlows( heatDemand_kW / heatPumpAsset.getOutputCapacity_kW() );
-        		gasBurnerAsset.f_updateAllFlows( 0.0 );
-        		building.f_updateAllFlows( 0.0 );
-        	}
-        	else {
-        		gasBurnerAsset.f_updateAllFlows( heatDemand_kW / gasBurnerAsset.getOutputCapacity_kW() );
-        		heatPumpAsset.f_updateAllFlows( 0.0 );
-        		building.f_updateAllFlows( 0.0 );
-        	}
+    		gasBurnerAsset.f_updateAllFlows( (buildingPower_kW + heatDemand_kW) / gasBurnerAsset.getOutputCapacity_kW() );
+    		building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+    		heatPumpAsset.f_updateAllFlows( 0.0 );
     	}
     }
 
     public void initializeAssets() {
-    	//if (!validHeatingTypes.contains(gc.p_heatingType)) {
-    		//throw new RuntimeException(this.getClass() + " does not support heating type: " + gc.p_heatingType);
-    	//}
+    	if (!validHeatingTypes.contains(this.currentHeatingType)) {
+    		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
+    	}
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
