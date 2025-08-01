@@ -264,12 +264,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     	double[] arr = operate(limitedRatioOfCapacity);
     	return arr;
     }*/
-	/*
-	@Override
-	public double getInitialTemperature_degC() {
-		return this.initialTemperature_degC;
-	}
-	*/
 	
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
