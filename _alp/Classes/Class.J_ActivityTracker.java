@@ -1,6 +1,21 @@
 /**
  * J_ActivityTracker
  */	
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(
+	    fieldVisibility = Visibility.ANY,
+	    getterVisibility = Visibility.NONE,
+	    isGetterVisibility = Visibility.NONE,
+	    setterVisibility = Visibility.NONE,
+	    creatorVisibility = Visibility.NONE
+	)
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class J_ActivityTracker implements Serializable {
 	protected EnergyModel energyModel;
 
@@ -11,7 +26,6 @@ public class J_ActivityTracker implements Serializable {
     public int nbActivities = 0;
 	public int v_eventIndex = 0;
 	protected int v_eventIndexStored =0;
-
 	
     /**
      * Default constructor

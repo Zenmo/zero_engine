@@ -3,6 +3,48 @@
  */
 import java.util.EnumSet;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // ✅ only public fields are serialized
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property = "type"  // 👈 this will be the field name in your JSON
+	)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = J_EABuilding.class, name = "J_EABuilding"),
+    @JsonSubTypes.Type(value = J_EAStorageElectric.class, name = "J_EAStorageElectric"),
+    @JsonSubTypes.Type(value = J_EAStorageHeat.class, name = "J_EAStorageHeat"),
+    @JsonSubTypes.Type(value = J_EAConsumption.class, name = "J_EAConsumption"),
+    @JsonSubTypes.Type(value = J_EAProduction.class, name = "J_EAProduction"),
+    @JsonSubTypes.Type(value = J_EAProfile.class, name = "J_EAProfile"),
+    @JsonSubTypes.Type(value = J_EAConversionGasBurner.class, name = "J_EAConversionGasBurner"),
+    @JsonSubTypes.Type(value = J_EAConversionElectrolyser.class, name = "J_EAConversionElectrolyser"),
+    @JsonSubTypes.Type(value = J_EAConversionGasCHP.class, name = "J_EAConversionGasCHP"),
+    @JsonSubTypes.Type(value = J_EAConversionHeatPump.class, name = "J_EAConversionHeatPump"),
+    @JsonSubTypes.Type(value = J_EAEV.class, name = "J_EAEV"),
+    @JsonSubTypes.Type(value = J_EADieselVehicle.class, name = "J_EADieselVehicle"),
+    @JsonSubTypes.Type(value = J_EAConversionHeatDeliverySet.class, name = "J_EAConversionHeatDeliverySet"),
+    
+    
+    // Add other known subtypes here if needed
+})
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
 	
 	 protected Agent parentAgent;

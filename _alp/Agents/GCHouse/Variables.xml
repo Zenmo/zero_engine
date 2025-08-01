@@ -226,9 +226,10 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1704447555069</Id>
-		<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
+		<Name><![CDATA[v_dayTempSetpoint_degC1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1460</X>
-		<Y>110</Y>
+		<Y>-40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -248,9 +249,10 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1704447555071</Id>
-		<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
+		<Name><![CDATA[v_nightTempSetpoint_degC1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1460</X>
-		<Y>90</Y>
+		<Y>-20</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -682,6 +684,62 @@
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1749653249109</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753354062572</Id>
+		<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
+		<X>1460</X>
+		<Y>108</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1753354062570</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753354182380</Id>
+		<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
+		<X>1460</X>
+		<Y>90</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1753354182378</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

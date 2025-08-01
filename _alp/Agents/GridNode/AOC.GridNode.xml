@@ -2,8 +2,9 @@
 <ActiveObjectClass>
 	<Id>1658477288308</Id>
 	<Name><![CDATA[GridNode]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
-
+import java.lang.reflect.Field;
 import zeroPackage.ZeroMath;
 //import zeroPackage.ZeroAccumulator;]]></Import>
 	<StartupCode><![CDATA[/*

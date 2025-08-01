@@ -1,6 +1,10 @@
 /**
  * J_ActivityTrackerTrips
  */	
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 public class J_ActivityTrackerTrips extends J_ActivityTracker implements Serializable {
 	
 	public ArrayList<Double> distances_km = new ArrayList<>();

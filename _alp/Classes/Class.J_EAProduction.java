@@ -167,6 +167,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	return this.totalEnergyCurtailed_kWh;
     }
     
+    public J_ProfilePointer getProfilePointer() {
+    	return this.profilePointer;
+    }
+    
     @Override
     public void storeStatesAndReset() {
     	this.totalEnergyCurtailed_kWh = 0;

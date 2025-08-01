@@ -208,25 +208,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1669725778092</Id>
-		<Name><![CDATA[v_maxConnectionLoad_fr]]></Name>
-		<X>1270</X>
-		<Y>160</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1671027786040</Id>
 		<Name><![CDATA[v_windProductionElectric_kW]]></Name>
 		<X>110</X>
@@ -619,8 +600,9 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1722584654288</Id>
-		<Name><![CDATA[v_isActive]]></Name>
-		<X>270</X>
+		<Name><![CDATA[v_isActive1]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>370</X>
 		<Y>380</Y>
 		<Label>
 			<X>10</X>
@@ -844,9 +826,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -866,9 +845,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -888,9 +864,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -935,7 +908,7 @@
 		<Id>1741182119260</Id>
 		<Name><![CDATA[v_rapidRunData]]></Name>
 		<X>570</X>
-		<Y>810</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -954,7 +927,7 @@
 		<Id>1741182119264</Id>
 		<Name><![CDATA[v_liveData]]></Name>
 		<X>570</X>
-		<Y>740</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -973,7 +946,7 @@
 		<Id>1741277722819</Id>
 		<Name><![CDATA[v_previousRunData]]></Name>
 		<X>570</X>
-		<Y>830</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -995,7 +968,7 @@
 		<Id>1741871129695</Id>
 		<Name><![CDATA[v_liveAssetsMetaData]]></Name>
 		<X>590</X>
-		<Y>760</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1014,7 +987,7 @@
 		<Id>1741942930553</Id>
 		<Name><![CDATA[v_liveConnectionMetaData]]></Name>
 		<X>590</X>
-		<Y>780</Y>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1046,6 +1019,28 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1753110629668</Id>
+		<Name><![CDATA[v_assetFlows]]></Name>
+		<X>570</X>
+		<Y>840</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[J_AssetFlows]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new J_AssetFlows()]]></Code>
+			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
@@ -1787,6 +1782,34 @@
 			<ParameterEditor>
 				<Id>1752752664508</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1753366605959</Id>
+		<Name><![CDATA[v_isActive]]></Name>
+		<X>270</X>
+		<Y>380</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[boolean]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[true]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1753366605957</Id>
+				<EditorContolType>CHECK_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>

@@ -3,7 +3,11 @@
 	<Id>1660224852394</Id>
 	<Name><![CDATA[ConnectionOwner]]></Name>
 	<Folder>1752677829820</Folder>
-	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;]]></Import>
+	<Import><![CDATA[//import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"va_ConnectionOwner","_origin_VA"})
+]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>Actor</ClassName>

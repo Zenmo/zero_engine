@@ -10,6 +10,9 @@ public class J_TaxContract extends zero_engine.J_Contract implements Serializabl
 	public double proportionalTax_pct;
 	public double idx;
 	//public OL_EnergyCarriers energyCarrier;
+    public J_TaxContract() {
+    	
+    }
 	
 	  /**
      * Constructor initializing the fields

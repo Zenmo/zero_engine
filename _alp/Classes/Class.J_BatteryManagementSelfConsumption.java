@@ -1,6 +1,17 @@
 /**
  * J_BatteryManagementSelfConsumption
  */	
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
 public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
 
     private GridConnection gc;
@@ -8,6 +19,10 @@ public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
     /**
      * Default constructor
      */
+    public J_BatteryManagementSelfConsumption() {
+    	
+    }
+    
     public J_BatteryManagementSelfConsumption( GridConnection gc ) {
     	this.gc = gc;
     }

@@ -84,8 +84,6 @@ double f_nodeMetering()
 //v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteElectricity_kW);
 
 if (energyModel.v_isRapidRun){
-	//v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
-	
 	/*if (energyModel.b_enableDLR) {
 		acc_annualElectricityBalance_kW.addStep(100*v_currentLoadElectricity_kW/ (p_capacity_kW * energyModel.v_currentDLRfactor_fr));
 		//acc_DLR_kW.addStep( p_capacity_kW * energyModel.v_currentDLRfactor_fr);
@@ -297,7 +295,6 @@ f_nodeMetering();
 
 double f_addGridBatteryLoad()
 {/*ALCODESTART::1688372319365*/
-
 for( Agent a : subConnections.getConnections() ) {
 	if ( a instanceof GCGridBattery){
 		v_currentLoadElectricity_kW += ((GCGridBattery)a).v_currentPowerElectricity_kW;
@@ -370,8 +367,6 @@ acc_annualElectricityBalance_kW.reset();
 
 double f_calculateKPIs()
 {/*ALCODESTART::1713181018774*/
-f_getDuurkrommes();
-
 // Calcs nighttime
 v_nighttimeImport_MWh = v_totalImport_MWh - v_daytimeExcessImport_MWh;
 v_nighttimeExport_MWh = v_totalExport_MWh - v_daytimeExcessExport_MWh;
@@ -383,11 +378,6 @@ v_weekendImport_MWh = v_totalImport_MWh - v_weekdayImport_MWh;
 v_weekendExport_MWh = v_totalExport_MWh - v_weekdayExport_MWh;
 v_weekendExcessImport_MWh = v_annualExcessImport_MWh - v_weekdayExcessImport_MWh;
 v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh;
-/*ALCODEEND*/}
-
-J_LoadDurationCurves f_getDuurkrommes()
-{/*ALCODESTART::1718111675053*/
-return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
 /*ALCODEEND*/}
 
 ArrayList<GridNode> f_getConnectedGridNodes()
@@ -520,5 +510,10 @@ for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
 AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
 
 return AllLowerLVLConnectedGridConnections;
+/*ALCODEEND*/}
+
+J_LoadDurationCurves f_getDuurkrommes()
+{/*ALCODESTART::1753341238941*/
+return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
 /*ALCODEEND*/}
 

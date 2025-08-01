@@ -3,7 +3,7 @@
 	<Id>1658477103140</Id>
 	<Name><![CDATA[EnergyModel]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
-	<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
+	<Import><![CDATA[
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -13,6 +13,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.core.type.TypeReference;
+
+// For deserialisation
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import java.lang.reflect.Field;
+
 import java.io.FileOutputStream;
 import java.util.stream.Stream;
 import java.util.Dictionary.*;
@@ -43,9 +50,14 @@ import com.anylogic.engine.markup.GISPoint;
 //import zero_engine.OL_EnergyCarriers;
 import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAStorageElectric;
-//import zero_engine.J_EAConsumption;]]></Import>
+//import zero_engine.J_EAConsumption;
+]]></Import>
 	<Implements>I_EnergyData</Implements>
-	<StartupCode><![CDATA[v_liveData = new J_LiveData(this);
+	<StartupCode><![CDATA[v_activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+
+v_liveData = new J_LiveData(this);
 v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
@@ -142,12 +154,12 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;]]></StartupCode>
 	<CurrentLevel>1658477103139</CurrentLevel>
 	<ConnectionsId>1658477103135</ConnectionsId>
 	<Variables xmlns:al="http://anylogic.com"/>
-	<Events xmlns:al="http://anylogic.com"/>
 	<Functions xmlns:al="http://anylogic.com"/>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1658477103135</Id>
 			<Name><![CDATA[connections]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>50</X>
 			<Y>-50</Y>
 			<Label>
@@ -171,6 +183,7 @@ v_liveData.assetsMetaData = v_liveAssetsMetaData;]]></StartupCode>
 		<AgentLink>
 			<Id>1696520909218</Id>
 			<Name><![CDATA[connections1]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>40</X>
 			<Y>-180</Y>
 			<Label>

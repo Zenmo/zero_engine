@@ -42,6 +42,15 @@
 		<Parameter>
 			<Name><![CDATA[p_annotation]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_defaultFillColorString]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_defaultLineColorString]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_defaultLineStyleString]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

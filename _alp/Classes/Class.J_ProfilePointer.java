@@ -1,6 +1,20 @@
 /**
  * J_ProfilePointer
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.PROTECTED_AND_PUBLIC,    // ✅ only public fields are serialized
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 public class J_ProfilePointer implements Serializable {
 	public String name = "";
 	private double currentValue = 0;
@@ -9,6 +23,10 @@ public class J_ProfilePointer implements Serializable {
     /**
      * Default constructor
      */
+	public J_ProfilePointer() {
+	
+	}
+	
     public J_ProfilePointer(String name, TableFunction tableFunction) {
     	this.name = name;
     	this.tableFunction = tableFunction;
@@ -28,6 +46,14 @@ public class J_ProfilePointer implements Serializable {
     
     public double[] getAllValues() {
     	return this.tableFunction.getValues();
+    }
+    
+    public TableFunction getTableFunction() {
+    	return tableFunction;
+    }
+    
+    public void setTableFunction(TableFunction tf) {
+    	this.tableFunction = tf;
     }
     
 	@Override

@@ -3,7 +3,8 @@
  */	
 //import java.util.EnumMap;
 import java.util.EnumSet;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+@JsonIgnoreType
 public class J_DataSetMap implements Serializable {
 	private DataSet[] datasetArray = new DataSet[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
 	private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);

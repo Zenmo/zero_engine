@@ -943,6 +943,10 @@
 					<Name><![CDATA[SELF_CONSUMPTION]]></Name>
 				</Option>
 				<Option>
+					<Id>1753200020960</Id>
+					<Name><![CDATA[SELF_CONSUMPTION_PARENT_NODE]]></Name>
+				</Option>
+				<Option>
 					<Id>1668693554312</Id>
 					<Name><![CDATA[PRICE]]></Name>
 				</Option>
@@ -1087,7 +1091,7 @@
 					<Name><![CDATA[METHANEDEMAND]]></Name>
 				</Option>
 				<Option>
-					<Id>1753971820159</Id>
+					<Id>1753774385666</Id>
 					<Name><![CDATA[HEATPUMP_ELECTRICITY_CONSUMPTION]]></Name>
 				</Option>
 			</OptionList>
@@ -1289,6 +1293,10 @@
 			<Folder>
 				<Id>1753194088788</Id>
 				<Name><![CDATA[HeatingManagement]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1753342021373</Id>
+				<Name><![CDATA[SerialisationMixins]]></Name>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1738,6 +1746,50 @@
 				<Id>1753972840287</Id>
 				<Name><![CDATA[J_HeatingManagementGhost]]></Name>
 				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753106536266</Id>
+				<Name><![CDATA[J_AssetFlows]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753199813037</Id>
+				<Name><![CDATA[J_BatteryManagementSelfConsumptionGridNode]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753277071863</Id>
+				<Name><![CDATA[AgentMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753277071874</Id>
+				<Name><![CDATA[PopulationMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753277292016</Id>
+				<Name><![CDATA[IgnoreClassMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753279653467</Id>
+				<Name><![CDATA[DataSetMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753279891115</Id>
+				<Name><![CDATA[EnergyModelMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753280103414</Id>
+				<Name><![CDATA[TableFunctionMixin]]></Name>
+				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753342010985</Id>
+				<Name><![CDATA[ActorMixin]]></Name>
+				<Folder>1753342021373</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

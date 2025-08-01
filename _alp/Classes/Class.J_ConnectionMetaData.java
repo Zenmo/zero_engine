@@ -15,6 +15,10 @@ public class J_ConnectionMetaData implements Serializable {
     /**
      * Default constructor
      */
+	public J_ConnectionMetaData() {
+		
+	}
+	
     public J_ConnectionMetaData( Agent parentAgent) {
     	this.parentAgent = parentAgent;
     	if (parentAgent instanceof GridConnection) {

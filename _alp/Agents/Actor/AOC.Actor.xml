@@ -2,7 +2,9 @@
 <ActiveObjectClass>
 	<Id>1674662535386</Id>
 	<Name><![CDATA[Actor]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677829820</Folder>
+	<Import><![CDATA[import java.lang.reflect.Field;]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1674662535384</Id>

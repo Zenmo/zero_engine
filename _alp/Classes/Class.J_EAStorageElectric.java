@@ -122,6 +122,14 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		return this.discharged_kWh;
 	}
 	
+	public double getChargingEfficiency_r() {
+		return this.etaCharge_r;
+	}
+	
+	public double getDischargingEfficiency_r() {
+		return this.etaDischarge_r;
+	}
+	
 	public void setStorageCapacity_kWh(double storageCapacity_kWh) {
 		double difference_kWh = storageCapacity_kWh - this.storageCapacity_kWh;
 		this.storageCapacity_kWh = storageCapacity_kWh;

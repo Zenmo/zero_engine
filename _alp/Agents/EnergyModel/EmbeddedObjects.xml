@@ -3,7 +3,7 @@
 	<EmbeddedObject>
 		<Id>1658477403183</Id>
 		<Name><![CDATA[pop_gridNodes]]></Name>
-		<X>380</X>
+		<X>400</X>
 		<Y>50</Y>
 		<Label>
 			<X>15</X>
@@ -235,6 +235,9 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -271,8 +274,8 @@
 	<EmbeddedObject>
 		<Id>1658499722957</Id>
 		<Name><![CDATA[energyDataViewer]]></Name>
-		<X>377</X>
-		<Y>362</Y>
+		<X>397</X>
+		<Y>342</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -338,8 +341,8 @@
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-		<X>90</X>
-		<Y>450</Y>
+		<X>400</X>
+		<Y>550</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -360,9 +363,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_mainTenantID]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_actorID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -373,6 +373,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_actorSubgroup]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_mainTenantID]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_connectedGridConnection]]></Name>
@@ -417,7 +420,7 @@
 		<Id>1660730126216</Id>
 		<Name><![CDATA[pop_connectionOwners]]></Name>
 		<X>90</X>
-		<Y>350</Y>
+		<Y>340</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -438,6 +441,18 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
+				<Name><![CDATA[p_actorID]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorType]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorSubgroup]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorGroup]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_coopParent]]></Name>
 			</Parameter>
 			<Parameter>
@@ -457,12 +472,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_electricitySupplier]]></Name>
@@ -487,12 +496,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatSupplier]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorSubgroup]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorGroup]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_connectionOwnerType]]></Name>
@@ -552,7 +555,7 @@
 		<Id>1660731786332</Id>
 		<Name><![CDATA[pop_energySuppliers]]></Name>
 		<X>90</X>
-		<Y>370</Y>
+		<Y>360</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -577,6 +580,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_actorType]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorSubgroup]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorGroup]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentActorID]]></Name>
@@ -604,12 +613,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_salderenActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorSubgroup]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorGroup]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -648,7 +651,7 @@
 		<Id>1660731820965</Id>
 		<Name><![CDATA[pop_energyCoops]]></Name>
 		<X>90</X>
-		<Y>390</Y>
+		<Y>380</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -669,6 +672,12 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
+				<Name><![CDATA[p_actorID]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorType]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_actorContractList]]></Name>
 			</Parameter>
 			<Parameter>
@@ -676,12 +685,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gridNodeUnderResponsibility]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentActorID]]></Name>
@@ -711,10 +714,10 @@
 				<Name><![CDATA[p_applyKostprijsPlus]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_actorSubgroup]]></Name>
+				<Name><![CDATA[p_actorGroup]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_actorGroup]]></Name>
+				<Name><![CDATA[p_actorSubgroup]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -753,7 +756,7 @@
 		<Id>1660731850501</Id>
 		<Name><![CDATA[pop_gridOperators]]></Name>
 		<X>90</X>
-		<Y>430</Y>
+		<Y>420</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -780,6 +783,12 @@
 				<Name><![CDATA[p_actorType]]></Name>
 			</Parameter>
 			<Parameter>
+				<Name><![CDATA[p_actorSubgroup]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorGroup]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_parentActorID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -795,13 +804,7 @@
 				<Name><![CDATA[p_hasCapacityPricing]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_hasCongestionPricing]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorSubgroup]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorGroup]]></Name>
+				<Name><![CDATA[p_hasCongestionPricing2]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -840,7 +843,7 @@
 		<Id>1660731876775</Id>
 		<Name><![CDATA[nationalEnergyMarket]]></Name>
 		<X>90</X>
-		<Y>590</Y>
+		<Y>540</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -914,7 +917,7 @@
 		<Name><![CDATA[pop_governmentLayer]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>90</X>
-		<Y>410</Y>
+		<Y>400</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -924,29 +927,16 @@
 		<ShowLabel>true</ShowLabel>
 		<ActiveObjectClass>
 			<PackageName>zero_engine</PackageName>
-			<ClassName>GovernmentLayer</ClassName>
+			<ClassName>ZeroAgent</ClassName>
 		</ActiveObjectClass>
 		<GenericParameterSubstitute>
 			<GenericParameterSubstituteReference>
 				<PackageName>zero_engine</PackageName>
-				<ClassName>GovernmentLayer</ClassName>
+				<ClassName>ZeroAgent</ClassName>
 				<ItemName>1660731364523</ItemName>
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
-		<Parameters>
-			<Parameter>
-				<Name><![CDATA[p_actorID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorType]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorSubgroup]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorGroup]]></Name>
-			</Parameter>
-		</Parameters>
+		<Parameters/>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
 			<Code><![CDATA[100]]></Code>
@@ -1032,19 +1022,7 @@
 				<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_householdEV]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_minChargingPower_kW]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_heatBuffer]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gasBuffer]]></Name>
@@ -1074,6 +1052,51 @@
 				<Name><![CDATA[p_GISPoint]]></Name>
 			</Parameter>
 			<Parameter>
+				<Name><![CDATA[p_owner]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_purposeBAG]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_curtailmentMode]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_name]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_address]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_householdEV]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_minChargingPower_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_hasElectricHob]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1089,22 +1112,10 @@
 				<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_owner]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_bouwjaar]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_hasAdditionalInsulation]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_purposeBAG]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_eigenOprit]]></Name>
@@ -1119,10 +1130,10 @@
 				<Name><![CDATA[p_cookingMethod]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_parentNodeHeat]]></Name>
+				<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_parentNodeElectric]]></Name>
+				<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_airco]]></Name>
@@ -1132,6 +1143,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+				</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1170,7 +1184,7 @@
 		<Id>1663774441970</Id>
 		<Name><![CDATA[DistrictHeatingSystems]]></Name>
 		<X>90</X>
-		<Y>105</Y>
+		<Y>85</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -1219,9 +1233,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_heatBuffer]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_residualHeatLTSource]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gasBuffer]]></Name>
@@ -1283,6 +1294,15 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_residualHeatLTSource]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_DHheatStorage]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1320,7 +1340,7 @@
 		<Id>1663774461816</Id>
 		<Name><![CDATA[EnergyProductionSites]]></Name>
 		<X>90</X>
-		<Y>145</Y>
+		<Y>125</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -1416,9 +1436,6 @@
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isSliderGC]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeHeat]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1429,6 +1446,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_isSliderGC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1467,7 +1490,7 @@
 		<Id>1663774484695</Id>
 		<Name><![CDATA[EnergyConversionSites]]></Name>
 		<X>90</X>
-		<Y>185</Y>
+		<Y>165</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -1548,6 +1571,33 @@
 				<Name><![CDATA[p_owner]]></Name>
 			</Parameter>
 			<Parameter>
+				<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_purposeBAG]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_name]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_curtailmentMode]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_address]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_conversionEfficiency]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1587,9 +1637,6 @@
 				<Name><![CDATA[p_minProductionRatio]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1615,6 +1662,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1653,7 +1703,7 @@
 		<Id>1663774484696</Id>
 		<Name><![CDATA[UtilityConnections]]></Name>
 		<X>90</X>
-		<Y>165</Y>
+		<Y>145</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -1760,6 +1810,9 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1796,8 +1849,8 @@
 	<EmbeddedObject>
 		<Id>1665480562790</Id>
 		<Name><![CDATA[Industries]]></Name>
-		<X>90</X>
-		<Y>85</Y>
+		<X>400</X>
+		<Y>530</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -1904,6 +1957,9 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1941,7 +1997,7 @@
 		<Id>1666957373353</Id>
 		<Name><![CDATA[GridBatteries]]></Name>
 		<X>90</X>
-		<Y>125</Y>
+		<Y>105</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -2037,9 +2093,6 @@
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isSliderGC]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeHeat]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2050,6 +2103,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_isSliderGC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2087,8 +2146,8 @@
 	<EmbeddedObject>
 		<Id>1676382641979</Id>
 		<Name><![CDATA[pop_GIS_Buildings]]></Name>
-		<X>377</X>
-		<Y>422</Y>
+		<X>397</X>
+		<Y>402</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -2177,6 +2236,15 @@
 			<Parameter>
 				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultFillColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineStyleString]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2214,8 +2282,8 @@
 	<EmbeddedObject>
 		<Id>1676382641980</Id>
 		<Name><![CDATA[pop_GIS_Objects]]></Name>
-		<X>377</X>
-		<Y>382</Y>
+		<X>397</X>
+		<Y>362</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -2268,6 +2336,15 @@
 			<Parameter>
 				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultFillColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineStyleString]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2305,8 +2382,8 @@
 	<EmbeddedObject>
 		<Id>1676382641981</Id>
 		<Name><![CDATA[pop_GIS_Parcels]]></Name>
-		<X>377</X>
-		<Y>400</Y>
+		<X>397</X>
+		<Y>380</Y>
 		<Label>
 			<X>15</X>
 			<Y>0</Y>
@@ -2362,6 +2439,15 @@
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultFillColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineColorString]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_defaultLineStyleString]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2400,7 +2486,7 @@
 		<Id>1717960182623</Id>
 		<Name><![CDATA[PublicChargers]]></Name>
 		<X>90</X>
-		<Y>205</Y>
+		<Y>185</Y>
 		<Label>
 			<X>16</X>
 			<Y>1</Y>
@@ -2420,9 +2506,6 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters>
-			<Parameter>
-				<Name><![CDATA[p_gisregion]]></Name>
-			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gridConnectionCategory]]></Name>
 			</Parameter>
@@ -2487,18 +2570,6 @@
 				<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_nbOfChargers]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_maxChargingPower_kW]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingVehicleType]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_CPOName]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2546,6 +2617,27 @@
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_gisregion]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_nbOfChargers]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_maxChargingPower_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_chargingVehicleType]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_isInitialCharger]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_chargingProfileName]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2584,7 +2676,7 @@
 		<Id>1718797587108</Id>
 		<Name><![CDATA[Neighborhoods]]></Name>
 		<X>90</X>
-		<Y>226</Y>
+		<Y>206</Y>
 		<Label>
 			<X>15</X>
 			<Y>-1</Y>
@@ -2683,6 +2775,18 @@
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_nbCompaniesTotal]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2717,6 +2821,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

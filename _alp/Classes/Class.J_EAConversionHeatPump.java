@@ -122,45 +122,9 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		this.energyUsed_kWh += energyUse_kW * timestep_h;
 	}
 
-	/*
-	@Override
-	public String toString() {
-		return
-			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + parentAgent +" " +
-			"capacityElectricity_kW = " + capacityElectric_kW +" "+
-			"capacityHeat_kW = " + capacityHeat_kW +" "+
-			"baseTemperature_degC = " + baseTemperature_degC + " "+
-			"ambientTempType = " + ambientTempType + " "+
-			"sourceAssetHeatPower_kW = " + sourceAssetHeatPower_kW + " " +
-			"outputTemperature_degC = " + outputTemperature_degC +" "+
-			"energyUsed_kWh = " + energyUsed_kWh + " "+
-			"heatProduced_kWh = " + heatProduced_kWh + " "+
-			"heatConsumed_kWh = " + heatConsumed_kWh + " ";
-	}
-	*/
-	
 	public void setSourceAssetHeatPower(double sourceAssetHeatPower_kW) {
 		this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
 		//traceln("sourceAssetHeatPower_kW is set to: "+sourceAssetHeatPower_kW);
-	}
-	
-	public void f_setLinkedVariable(EnergyModel main, String ambientTempType, J_EA j_ea) {
-		switch( ambientTempType ) {
-		case "AIR":
-			this.p_baseTemperatureReference = main.v_currentAmbientTemperature_degC ;
-		break;
-		case "GROUND":
-			this.p_baseTemperatureReference= main.p_undergroundTemperature_degC ;
-		break;
-		case "WATER":
-			//traceln("f_setLinkedVariable: water type parameter update!");
-			this.p_baseTemperatureReference = j_ea.getCurrentTemperature() ;
-			this.updateAmbientTemperature( p_baseTemperatureReference );
-		break;
-		default:
-			traceln("EXCEPTION: ENERGY ASSET WITH A NON-EXISTENT AMBIENT TEMPERATURE TYPE");				
-	}
 	}
 	
 	@Override
@@ -184,6 +148,23 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		return this.ambientTempType;
 	}
 	
+	/*
+	@Override
+	public String toString() {
+		return
+			"type = " + this.getClass().toString() + " " +
+			"parentAgent = " + parentAgent +" " +
+			"capacityElectricity_kW = " + capacityElectric_kW +" "+
+			"capacityHeat_kW = " + capacityHeat_kW +" "+
+			"baseTemperature_degC = " + baseTemperature_degC + " "+
+			"ambientTempType = " + ambientTempType + " "+
+			"sourceAssetHeatPower_kW = " + sourceAssetHeatPower_kW + " " +
+			"outputTemperature_degC = " + outputTemperature_degC +" "+
+			"energyUsed_kWh = " + energyUsed_kWh + " "+
+			"heatProduced_kWh = " + heatProduced_kWh + " "+
+			"heatConsumed_kWh = " + heatConsumed_kWh + " ";
+	}
+	*/	
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
