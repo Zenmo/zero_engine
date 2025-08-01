@@ -17,14 +17,14 @@ fm_weekendImports_MWh = new J_FlowsMap();
 fm_weekendExports_MWh = new J_FlowsMap();
 
 // DataSetMaps
-dsm_liveConsumption_kW = new J_DataSetMap();
-dsm_liveProduction_kW = new J_DataSetMap();
-dsm_dailyAverageConsumptionDataSets_kW = new J_DataSetMap();
-dsm_dailyAverageProductionDataSets_kW = new J_DataSetMap();
-dsm_summerWeekConsumptionDataSets_kW = new J_DataSetMap();
-dsm_summerWeekProductionDataSets_kW = new J_DataSetMap();
-dsm_winterWeekConsumptionDataSets_kW = new J_DataSetMap();
-dsm_winterWeekProductionDataSets_kW = new J_DataSetMap();
+dsm_liveConsumption_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_liveProduction_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_dailyAverageConsumptionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_dailyAverageProductionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_summerWeekConsumptionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_summerWeekProductionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_winterWeekConsumptionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_winterWeekProductionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
 
 /*ALCODEEND*/}
 

@@ -1679,6 +1679,7 @@
 			<JavaClass>
 				<Id>1729510354900</Id>
 				<Name><![CDATA[J_AssetFlowsAccumulatorMap]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>

@@ -14,8 +14,8 @@ public class J_LiveData {
 	public J_AssetsMetaData assetsMetaData;
 	public J_ConnectionMetaData connectionMetaData;
 
-	public J_DataSetMap dsm_liveDemand_kW = new J_DataSetMap(); 
-	public J_DataSetMap dsm_liveSupply_kW = new J_DataSetMap(); 
+	public J_DataSetMap dsm_liveDemand_kW = new J_DataSetMap(OL_EnergyCarriers.class); 
+	public J_DataSetMap dsm_liveSupply_kW = new J_DataSetMap(OL_EnergyCarriers.class); 
 	public DataSet data_baseloadElectricityDemand_kW = new DataSet(672);
 	public DataSet data_hydrogenElectricityDemand_kW = new DataSet(672);
 	public DataSet data_heatPumpElectricityDemand_kW = new DataSet(672);

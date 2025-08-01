@@ -2762,7 +2762,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2784,7 +2784,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2806,7 +2806,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2828,7 +2828,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2850,7 +2850,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2872,7 +2872,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2894,7 +2894,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -2916,7 +2916,7 @@
               StaticVariable="false">
 			<Type><![CDATA[J_DataSetMap]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_DataSetMap()]]></Code>
+				<Code><![CDATA[new J_DataSetMap(OL_EnergyCarriers.class)]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

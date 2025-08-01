@@ -17,19 +17,19 @@ public class J_RapidRunData {
 	public J_ConnectionMetaData connectionMetaData;
 	
 	////Full simulation
-	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap();
+	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
 	
     public ZeroAccumulator acc_totalEnergyCurtailed_kW;
     public ZeroAccumulator acc_totalPrimaryEnergyProductionHeatpumps_kW;
     
-    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
 	public ZeroAccumulator acc_dailyAverageFinalEnergyConsumption_kW;
 	public ZeroAccumulator acc_dailyAverageEnergyProduction_kW;
 
-	public J_AssetFlowsAccumulatorMap am_assetFlowsAccumulators_kW = new J_AssetFlowsAccumulatorMap();
+	public J_AccumulatorMap am_assetFlowsAccumulators_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
 	public ZeroAccumulator acc_dailyAverageBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageHeatPumpElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageElectricVehicleConsumption_kW;
@@ -48,7 +48,7 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_dailyAverageBatteriesSOC_fr;
     
     ////Summer week
-    public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
     public ZeroAccumulator acc_summerWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_summerWeekFeedinCapacity_kW;
@@ -57,8 +57,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_summerWeekEnergyCurtailed_kW;
     public ZeroAccumulator acc_summerWeekEnergyProduction_kW;
 
-    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_summerWeekConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_summerWeekProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
     public ZeroAccumulator acc_summerWeekBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_summerWeekHeatPumpElectricityConsumption_kW;
@@ -78,7 +78,7 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_summerWeekBatteriesSOC_fr;
     
     ////Winter week
-    public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_winterWeekBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
     public ZeroAccumulator acc_winterWeekDeliveryCapacity_kW;
     public ZeroAccumulator acc_winterWeekFeedinCapacity_kW;
@@ -87,8 +87,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_winterWeekEnergyProduction_kW;
     public ZeroAccumulator acc_winterWeekEnergyCurtailed_kW;
     
-    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW = new J_AccumulatorMap();  
+    public J_AccumulatorMap am_winterWeekConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_winterWeekProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);  
     
     public ZeroAccumulator acc_winterWeekBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_winterWeekHeatPumpElectricityConsumption_kW;
@@ -108,8 +108,8 @@ public class J_RapidRunData {
     public ZeroTimeSeries ts_winterWeekBatteriesSOC_fr;
     
     ////Daytime / Nighttime
-	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap();
+	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
     public ZeroAccumulator acc_daytimeFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
@@ -119,8 +119,8 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_daytimePrimaryEnergyProductionHeatpumps_kW;
     
     //Weekend/day
-    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap();
-    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap();
+    public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
     public ZeroAccumulator acc_weekendElectricityConsumption_kW;
     public ZeroAccumulator acc_weekendElectricityProduction_kW;
