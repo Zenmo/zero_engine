@@ -171,6 +171,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	return profileScaling_fr;
     }
     
+    public OL_EnergyCarriers getEnergyCarrier() {
+    	return this.energyCarrier;
+    }
+    
 	@Override
 	public String toString() {
 		return
