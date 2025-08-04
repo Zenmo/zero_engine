@@ -55,6 +55,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgAnnualProductionPV_kWhpWp;
 	public double p_avgRatioRoofPotentialPV;
 	public double p_avgRatioBatteryCapacity_v_Power;
+	public double p_avgRatioHouseBatteryStorageCapacity_v_PVPower;
 	public double p_avgSolarFieldPower_kWppha;
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;
