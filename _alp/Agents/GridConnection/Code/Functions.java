@@ -1438,6 +1438,15 @@ if (p_batteryAsset != null) {
 }
 /*ALCODEEND*/}
 
+double f_startAfterDeserialisation()
+{/*ALCODESTART::1753348699140*/
+v_liveData = new J_LiveData(this);
+//v_liveConnectionMetaData = new J_ConnectionMetaData(this);
+//v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.connectionMetaData = v_liveConnectionMetaData;
+v_liveData.assetsMetaData = v_liveAssetsMetaData;
+/*ALCODEEND*/}
+
 double f_removeAllHeatingAssets()
 {/*ALCODESTART::1753969724598*/
 while (c_heatingAssets.size() > 0) {
@@ -1453,14 +1462,5 @@ if (p_heatingManagement != null) {
 else {
 	return OL_GridConnectionHeatingType.NONE;
 }
-/*ALCODEEND*/}
-
-double f_startAfterDeserialisation()
-{/*ALCODESTART::1753348699140*/
-v_liveData = new J_LiveData(this);
-//v_liveConnectionMetaData = new J_ConnectionMetaData(this);
-//v_liveAssetsMetaData = new J_AssetsMetaData(this);
-v_liveData.connectionMetaData = v_liveConnectionMetaData;
-v_liveData.assetsMetaData = v_liveAssetsMetaData;
 /*ALCODEEND*/}
 

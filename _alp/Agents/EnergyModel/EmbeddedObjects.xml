@@ -1064,9 +1064,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_name]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1143,7 +1140,7 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-				</Parameter>
+			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
@@ -1581,9 +1578,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>

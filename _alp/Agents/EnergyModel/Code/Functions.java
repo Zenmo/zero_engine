@@ -993,41 +993,6 @@ for( J_EA e : c_ambientDependentAssets ) {
 }
 /*ALCODEEND*/}
 
-double f_addHeatManagementToGC(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
-{/*ALCODESTART::1754054965795*/
-if (heatingType == OL_GridConnectionHeatingType.NONE) {
-	return;
-}
-if (isGhost) {
-	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
-	return;
-}
-if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
-	throw new RuntimeException("f_addHeatManagementToGC called with heating type CUSTOM");
-}
-
-boolean hasThermalBuilding = engineGC.p_BuildingThermalAsset != null;
-boolean hasHeatBuffer = engineGC.p_heatBuffer != null;
-Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
-Class<? extends I_HeatingManagement> managementClass = c_defaultHeatingStrategies.get(triple);
-
-if (managementClass == null) {
-	throw new RuntimeException("No heating strategy available for heatingType: " + heatingType + " with hasThermalBuilding: " + hasThermalBuilding + " and hasHeatBuffer: " + hasHeatBuffer);
-}
-
-I_HeatingManagement heatingManagement = null;
-try {
-	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(engineGC, heatingType);
-}
-catch (Exception e) {
-	e.printStackTrace();
-}
-
-engineGC.p_heatingManagement = heatingManagement;
-/*ALCODEEND*/}
-
-
-
 double f_performEnergyBalanceCheck()
 {/*ALCODESTART::1753350603730*/
 //Get battery energy use for balance check
@@ -1141,5 +1106,38 @@ v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+/*ALCODEEND*/}
+
+double f_addHeatManagementToGC(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
+{/*ALCODESTART::1754054965795*/
+if (heatingType == OL_GridConnectionHeatingType.NONE) {
+	return;
+}
+if (isGhost) {
+	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
+	return;
+}
+if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
+	throw new RuntimeException("f_addHeatManagementToGC called with heating type CUSTOM");
+}
+
+boolean hasThermalBuilding = engineGC.p_BuildingThermalAsset != null;
+boolean hasHeatBuffer = engineGC.p_heatBuffer != null;
+Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
+Class<? extends I_HeatingManagement> managementClass = c_defaultHeatingStrategies.get(triple);
+
+if (managementClass == null) {
+	throw new RuntimeException("No heating strategy available for heatingType: " + heatingType + " with hasThermalBuilding: " + hasThermalBuilding + " and hasHeatBuffer: " + hasHeatBuffer);
+}
+
+I_HeatingManagement heatingManagement = null;
+try {
+	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(engineGC, heatingType);
+}
+catch (Exception e) {
+	e.printStackTrace();
+}
+
+engineGC.p_heatingManagement = heatingManagement;
 /*ALCODEEND*/}
 
