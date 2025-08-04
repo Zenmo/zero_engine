@@ -248,8 +248,8 @@ public class J_RapidRunData {
 
     	acc_winterWeekFeedinCapacity_kW.reset();
     	acc_winterWeekDeliveryCapacity_kW.reset();
-    	
-    	am_assetFlowsSummerWeek_kW.createEmptyAccumulators(this.assetsMetaData.activeAssetFlows, true, timeStep_h, 24*7);
+    	am_assetFlowsWinterWeek_kW.createEmptyAccumulators(this.assetsMetaData.activeAssetFlows, true, timeStep_h, 24*7);    	
+
     	ts_winterWeekBatteriesStoredEnergy_MWh.reset();
 	    ts_winterWeekBatteriesSOC_fr.reset();
 	    
