@@ -237,7 +237,7 @@ public class ZeroAccumulator {
     	if (this.hasTimeSeries) {
 			DataSet ds = new DataSet(timeSeries.length);
 			for (int i = 0; i < timeSeries.length; i++) {
-				ds.add(startTime_h + i * this.signalResolution_h, this.timeSeries[i] );
+				ds.add(startTime_h + i * this.signalResolution_h, roundToDecimal(this.timeSeries[i],3) );
 			}
 			return ds;
     	} else {

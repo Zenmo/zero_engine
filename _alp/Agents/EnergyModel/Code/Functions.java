@@ -184,6 +184,7 @@ for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to
 	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
 	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
+	v_batteryStoredEnergy_kWh += gc.v_batteryStoredEnergy_kWh;
 	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
 		
 }
@@ -358,7 +359,7 @@ for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
 								v_currentFinalEnergyConsumption_kW, 
 								v_currentPrimaryEnergyProductionHeatpumps_kW, 
 								v_currentEnergyCurtailed_kW,
-								//v_assetFlows, 
+								v_batteryStoredEnergy_kWh/1000, 
 								this);
 	v_timeStepsElapsed++;
 }	
@@ -739,8 +740,8 @@ v_liveData.addTimeStep(currentTime_h,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
-	v_currentEnergyCurtailed_kW//, 
-	//v_assetFlows 
+	v_currentEnergyCurtailed_kW, 
+	v_batteryStoredEnergy_kWh/1000 
 );
 /*
 //Energy carrier flows
@@ -823,6 +824,7 @@ double f_initializeLiveDataSets()
 {/*ALCODESTART::1731573713521*/
 v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_timeStep_h));
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int) (168 / p_timeStep_h));
+v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / p_timeStep_h));
 /*ALCODEEND*/}
 
 EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList)

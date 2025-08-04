@@ -923,7 +923,7 @@
 		<Id>1709644748300</Id>
 		<Name><![CDATA[v_currentOwnElectricityProduction_kW]]></Name>
 		<X>60</X>
-		<Y>1300</Y>
+		<Y>1320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -964,7 +964,7 @@
 		<Id>1730133371154</Id>
 		<Name><![CDATA[v_currentCustomerFeedIn_kW]]></Name>
 		<X>60</X>
-		<Y>1340</Y>
+		<Y>1360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1150,7 +1150,7 @@
 		<Id>1731400607488</Id>
 		<Name><![CDATA[v_currentCustomerDelivery_kW]]></Name>
 		<X>60</X>
-		<Y>1320</Y>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1575,6 +1575,25 @@
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_ValueMap(OL_AssetFlowCategories.class)]]></Code>
 			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1754320819135</Id>
+		<Name><![CDATA[v_batteryStoredEnergy_kWh]]></Name>
+		<X>60</X>
+		<Y>1290</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">

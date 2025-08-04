@@ -16,24 +16,14 @@ public class J_LiveData {
 
 	public J_DataSetMap dsm_liveDemand_kW = new J_DataSetMap(OL_EnergyCarriers.class); 
 	public J_DataSetMap dsm_liveSupply_kW = new J_DataSetMap(OL_EnergyCarriers.class); 
-	public DataSet data_baseloadElectricityDemand_kW = new DataSet(672);
-	public DataSet data_hydrogenElectricityDemand_kW = new DataSet(672);
-	public DataSet data_heatPumpElectricityDemand_kW = new DataSet(672);
-	public DataSet data_electricVehicleDemand_kW = new DataSet(672);
-	public DataSet data_batteryCharging_kW = new DataSet(672);
-	public DataSet data_PVGeneration_kW = new DataSet(672);
-	public DataSet data_windGeneration_kW = new DataSet(672);
-	public DataSet data_PTGeneration_kW = new DataSet(672);
-	public DataSet data_batteryDischarging_kW = new DataSet(672);
-	public DataSet data_V2GSupply_kW = new DataSet(672);
-	public DataSet data_CHPElectricityProductionLiveWeek_kW = new DataSet(672);
+	
 	public DataSet data_totalDemand_kW = new DataSet(672); 
 	public DataSet data_totalSupply_kW = new DataSet(672);
 	public DataSet data_liveElectricityBalance_kW = new DataSet(672);
 	public DataSet data_gridCapacityDemand_kW = new DataSet(672); 
 	public DataSet data_gridCapacitySupply_kW = new DataSet(672);
-	public DataSet data_cookingElectricityDemand_kW = new DataSet(672);
-	public DataSet data_districtHeatDelivery_kW = new DataSet(672);
+
+	public J_DataSetMap<OL_AssetFlowCategories> dsm_liveAssetFlows_kW = new J_DataSetMap(OL_AssetFlowCategories.class); 
 	public DataSet data_batteryStoredEnergyLiveWeek_MWh = new DataSet(672);
 	public DataSet data_batterySOC_fr = new DataSet(672);
     /**
@@ -61,30 +51,23 @@ public class J_LiveData {
     	}
     	
 		for (double t = startTime; t <= endTime; t += timeStep_h) {
-	    	data_baseloadElectricityDemand_kW.add( t, 0);
-	    	data_hydrogenElectricityDemand_kW.add( t, 0);
-	    	data_heatPumpElectricityDemand_kW.add( t, 0);
-	    	data_electricVehicleDemand_kW.add( t, 0);
-	    	data_batteryCharging_kW.add( t, 0);
-	    	data_PVGeneration_kW.add( t, 0);
-	    	data_windGeneration_kW.add( t, 0);
-	    	data_PTGeneration_kW.add( t, 0);
-	    	data_batteryDischarging_kW.add( t, 0);
-	    	data_V2GSupply_kW.add( t, 0);
-	    	data_CHPElectricityProductionLiveWeek_kW.add( t, 0);
+			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
+				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
+			}
+
 	    	data_totalDemand_kW.add( t, 0); 
 	    	data_totalSupply_kW.add( t, 0);
 	    	data_liveElectricityBalance_kW.add( t, 0);
 	    	data_gridCapacityDemand_kW.add( t, 0); 
 	    	data_gridCapacitySupply_kW.add( t, 0);
-	    	data_cookingElectricityDemand_kW.add( t, 0);
-	    	data_districtHeatDelivery_kW.add( t, 0);
+
+
 	    	data_batteryStoredEnergyLiveWeek_MWh.add( t, 0);
 	    	data_batterySOC_fr.add( t, 0);	
-    	}
+		}
     }
     
-    public void addTimeStep(double currentTime_h, J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap assetFlowsMap, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW) {
+    public void addTimeStep(double currentTime_h, J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap<OL_AssetFlowCategories> assetFlowsMap, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, double currentStoredEnergyBatteries_MWh) {
 
     	//Energy carrier flows
     	for (OL_EnergyCarriers EC : activeConsumptionEnergyCarriers) {
@@ -109,8 +92,27 @@ public class J_LiveData {
 
 
     	//// Gather specific electricity flows from corresponding energy assets
-
-    	//Baseload electricity
+		for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
+			/*traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
+			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
+				traceln("Trying to add assetflow: %s", AC);
+			}*/
+			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, assetFlowsMap.get(AC));
+		}
+    	
+		//Batteries    
+    	this.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, currentStoredEnergyBatteries_MWh);
+    	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+    		this.data_batterySOC_fr.add(currentTime_h, currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+    	}
+    	else{
+    		this.data_batterySOC_fr.add(currentTime_h, 0);	
+    	}	
+    	
+		/*
+		this.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.batteriesChargingPower_kW)), 3));		
+    	this.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.batteriesDischargingPower_kW), 3));	
+		//Baseload electricity 
     	this.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.fixedConsumptionElectric_kW),3));
 
     	//Cooking
@@ -125,17 +127,6 @@ public class J_LiveData {
     	//EVs
     	this.data_electricVehicleDemand_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.evChargingPower_kW)), 3));
     	this.data_V2GSupply_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.V2GPower_kW), 3));
-
-    	//Batteries
-    	this.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.batteriesChargingPower_kW)), 3));		
-    	this.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.batteriesDischargingPower_kW), 3));	
-    	/*this.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, assetFlows.currentStoredEnergyBatteries_MWh);
-    	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
-    		this.data_batterySOC_fr.add(currentTime_h, assetFlows.currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
-    	}
-    	else{
-    		this.data_batterySOC_fr.add(currentTime_h, 0);	
-    	}*/	
     	
     	//CHP production
     	this.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.CHPProductionElectric_kW), 3));
@@ -154,6 +145,8 @@ public class J_LiveData {
 
     	//District heating
     	this.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.districtHeatDelivery_kW), 3));	
+    	*/
+		
 
     }
     

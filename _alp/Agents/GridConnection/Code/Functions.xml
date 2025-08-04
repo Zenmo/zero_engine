@@ -498,6 +498,10 @@
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>
+			<Name><![CDATA[assetFlowsMap_kW]]></Name>
+			<Type><![CDATA[J_ValueMap<OL_AssetFlowCategories>]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[caller]]></Name>
 			<Type><![CDATA[J_EA]]></Type>
 		</Parameter>

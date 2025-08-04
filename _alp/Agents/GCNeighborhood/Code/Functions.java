@@ -363,7 +363,7 @@ if (j_ea instanceof J_EAVehicle) {
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_liveAssetsMetaData.hasPV = true;
+		//v_liveAssetsMetaData.hasPV = true;
 		v_liveAssetsMetaData.totalInstalledPVPower_kW += ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		if ( p_parentNodeElectric != null ) {
 			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, ((J_EAProduction)j_ea).getCapacityElectric_kW(), true);
@@ -380,7 +380,7 @@ if (j_ea instanceof J_EAVehicle) {
 		c_windAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-		v_liveAssetsMetaData.hasPT = true;
+		//v_liveAssetsMetaData.hasPT = true;
 		c_ptAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {

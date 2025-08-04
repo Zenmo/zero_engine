@@ -179,6 +179,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1741858724892</Id>
 		<Name><![CDATA[f_updateLiveActiveAssetBooleans]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1246</X>
 		<Y>-130</Y>
 		<Label>

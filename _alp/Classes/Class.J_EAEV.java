@@ -77,8 +77,11 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);
 		// Split charging and discharing power 'at the source'!
-		assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
-		assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+		if (discharge_kW <= 0) { // charging
+			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
+		} else {
+			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+		}
 	}
  
 	public void updateStateOfCharge( double power_kW ) {

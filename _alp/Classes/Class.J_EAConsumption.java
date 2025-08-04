@@ -78,6 +78,9 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 
     	J_FlowsMap flowsMap = new J_FlowsMap();
     	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
+    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	
     	this.energyUse_kW = -curtailmentPower_kW;
 
     	this.lastFlowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY) - curtailmentPower_kW);
@@ -85,7 +88,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	this.lastEnergyUse_kW -= curtailmentPower_kW;
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	return new Pair(flowsMap, this.energyUse_kW);
     }

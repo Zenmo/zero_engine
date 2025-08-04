@@ -42,6 +42,10 @@ public class J_DataSetMap <E extends Enum<E>> implements Serializable {
 		enumSet.clear();
 	}
     
+	public EnumSet<E> keySet() {
+		return enumSet;
+	}
+	
 	@Override
 	public String toString() {
         if (this.enumSet.size() == 0) {

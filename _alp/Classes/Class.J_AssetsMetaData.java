@@ -12,6 +12,8 @@ public class J_AssetsMetaData {
 	public Agent parentAgent;
 
 	public EnumSet<OL_AssetFlowCategories> activeAssetFlows = EnumSet.noneOf(OL_AssetFlowCategories.class);
+	
+	/*
 	public boolean hasElectricHeating = false;
 	public boolean hasElectricTransport = false;
 	public boolean hasPV = false;
@@ -23,6 +25,7 @@ public class J_AssetsMetaData {
 	public boolean hasCHP = false;
 	public boolean hasV2G = false;
 	public boolean hasElectricCooking = false;
+	*/
 	
 	public Double totalInstalledPVPower_kW = 0.0;
 	public Double totalInstalledWindPower_kW = 0.0;
@@ -57,6 +60,7 @@ public class J_AssetsMetaData {
     	if (activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW); }
     	if (activeAssetFlows.contains(OL_AssetFlowCategories.V2GPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW); }
     	
+    	/*
     	this.hasElectricHeating = false;
 	    this.hasElectricTransport = false;
 	    this.hasPV = false;
@@ -145,11 +149,13 @@ public class J_AssetsMetaData {
 	    		break;
 	    	}
 	    }
+	    */
 	}
 
     public J_AssetsMetaData getClone() {
     	J_AssetsMetaData clone = new J_AssetsMetaData(this.parentAgent);
     	clone.activeAssetFlows = this.activeAssetFlows.clone();
+    	/*
     	clone.hasElectricHeating = this.hasElectricHeating;
     	clone.hasElectricTransport = this.hasElectricTransport;
     	clone.hasPV = this.hasPV;
@@ -161,6 +167,7 @@ public class J_AssetsMetaData {
     	clone.hasCHP = this.hasCHP;
     	clone.hasV2G = this.hasV2G;
     	clone.hasElectricCooking = this.hasElectricCooking;
+    	*/
     	clone.totalInstalledPVPower_kW = this.totalInstalledPVPower_kW.doubleValue();
     	clone.totalInstalledWindPower_kW = this.totalInstalledWindPower_kW.doubleValue();
     	clone.totalInstalledBatteryStorageCapacity_MWh = this.totalInstalledBatteryStorageCapacity_MWh.doubleValue();
@@ -174,8 +181,9 @@ public class J_AssetsMetaData {
 	public String toString() {
 		return "totalInstalledPVPower_kW: " + totalInstalledPVPower_kW + 
 				", totalInstalledWindPower_kW: " + totalInstalledWindPower_kW + 
-	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh + 
-	            ", hasPV: " + hasPV +
+	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh +
+	            activeAssetFlows.toString();
+	            /*", hasPV: " + hasPV +
 	            ", hasElectricHeating: " + hasElectricHeating + 
 	            ", hasElectricTransport: " + hasElectricTransport + 
 	            ", hasWindturbine: " + hasWindturbine +
@@ -185,6 +193,6 @@ public class J_AssetsMetaData {
 		        ", hasElectrolyser: " + hasElectrolyser +
 		        ", hasCHP: " + hasCHP +
 		        ", hasV2G: " + hasV2G +
-		        ", hasElectricCooking: " + hasElectricCooking;
+		        ", hasElectricCooking: " + hasElectricCooking;*/
 	}
 }

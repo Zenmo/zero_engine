@@ -137,13 +137,16 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
+    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	
     	this.energyUse_kW = -curtailmentPower_kW;
     	this.lastFlowsMap.addFlow(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);
     	this.lastEnergyUse_kW += curtailmentPower_kW;
     	
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	clear();
     	
@@ -160,13 +163,15 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(curtailedEnergyCarrier, -curtailmentPower_kW);
+    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
     	this.energyUse_kW = -curtailmentPower_kW;
     	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW);
     	this.lastEnergyUse_kW += curtailmentPower_kW;
     	
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	clear();
     }
