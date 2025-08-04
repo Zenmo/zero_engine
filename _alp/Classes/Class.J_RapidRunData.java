@@ -163,8 +163,8 @@ public class J_RapidRunData {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
 	    } else {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);
-	    	am_assetFlowSummer_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, 7*24);
-	    	am_assetFlowWinter_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, 7*24);
+	    	//am_assetFlowSummer_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, 7*24);
+	    	//am_assetFlowWinter_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, 7*24);
 	    }
 	    acc_dailyAverageBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
