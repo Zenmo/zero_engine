@@ -1296,8 +1296,16 @@
 					<Name><![CDATA[evChargingPower_kW]]></Name>
 				</Option>
 				<Option>
+					<Id>1754291180994</Id>
+					<Name><![CDATA[V2GPower_kW]]></Name>
+				</Option>
+				<Option>
 					<Id>1753968826415</Id>
 					<Name><![CDATA[batteriesChargingPower_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1754291194949</Id>
+					<Name><![CDATA[batteriesDischargingPower_kW]]></Name>
 				</Option>
 				<Option>
 					<Id>1753968826416</Id>

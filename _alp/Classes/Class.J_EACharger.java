@@ -87,6 +87,9 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 	    	energyUsed_kWh += energyUse_kW * timestep_h;
 	    	
 			flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);	
+			// Split charging and discharing power 'at the source'!
+			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
+			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 	   	}
 		
 		private void manageSocket1() {

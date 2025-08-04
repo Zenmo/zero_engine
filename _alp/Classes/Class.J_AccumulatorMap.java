@@ -46,6 +46,10 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		accumulatorArray[key.ordinal()] = acc;
 		enumSet.add(key);		
 	}
+	
+	public Set<E> keySet() {
+		return enumSet;
+	}
     /*
 	public double totalSum() {
 		double totalSum = 0.0;

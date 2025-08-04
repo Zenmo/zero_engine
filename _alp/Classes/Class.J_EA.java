@@ -127,7 +127,7 @@ abstract public class J_EA implements Cloneable {
      	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
      	operate(powerFractionBounded_fr);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
     	}
     	/*
     	if (ui_energyAsset!= null) {

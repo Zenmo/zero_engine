@@ -17,18 +17,18 @@ public class J_RapidRunData {
 	public J_ConnectionMetaData connectionMetaData;
 	
 	////Full simulation
-	public J_AccumulatorMap am_totalBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+	public J_AccumulatorMap<OL_EnergyCarriers> am_totalBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
 
     public ZeroAccumulator acc_totalEnergyCurtailed_kW;
     public ZeroAccumulator acc_totalPrimaryEnergyProductionHeatpumps_kW;
     
-    public J_AccumulatorMap am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
-    public J_AccumulatorMap am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap<OL_EnergyCarriers> am_dailyAverageConsumptionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
+    public J_AccumulatorMap<OL_EnergyCarriers> am_dailyAverageProductionAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     
 	public ZeroAccumulator acc_dailyAverageFinalEnergyConsumption_kW;
 	public ZeroAccumulator acc_dailyAverageEnergyProduction_kW;
 
-	public J_AccumulatorMap am_assetFlowsAccumulators_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
+	public J_AccumulatorMap<OL_AssetFlowCategories> am_assetFlowsAccumulators_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
 	public ZeroAccumulator acc_dailyAverageBaseloadElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageHeatPumpElectricityConsumption_kW;
     public ZeroAccumulator acc_dailyAverageElectricVehicleConsumption_kW;
@@ -161,6 +161,10 @@ public class J_RapidRunData {
 	    //========== ASSET FLOWS ==========//
 	    if (storesTotalAssetFlows) {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
+	    } else {
+	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);
+	    	am_assetFlowSummer_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, 7*24);
+	    	am_assetFlowWinter_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, 7*24);
 	    }
 	    acc_dailyAverageBaseloadElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	    acc_dailyAverageHeatPumpElectricityConsumption_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -574,6 +578,8 @@ public class J_RapidRunData {
     		
     		acc_summerWeekBaseloadElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.fixedConsumptionElectric_kW));
     		acc_summerWeekHeatPumpElectricityConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW));
+    		
+    		
     		acc_summerWeekElectricVehicleConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
     		acc_summerWeekBatteriesConsumption_kW.addStep( max(0,fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)) );
     		acc_summerWeekElectricCookingConsumption_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.electricHobConsumption_kW) );
@@ -582,8 +588,8 @@ public class J_RapidRunData {
     		acc_summerWeekPVProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.pvProductionElectric_kW));
     		acc_summerWeekWindProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.windProductionElectric_kW));
     		acc_summerWeekPTProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.ptProductionHeat_kW));	
-    		acc_summerWeekV2GProduction_kW.addStep( max(0, -fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
-    		acc_summerWeekBatteriesProduction_kW.addStep( max(0,-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)));
+    		acc_summerWeekV2GProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.V2GPower_kW) );
+    		acc_summerWeekBatteriesProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW));
     		acc_summerWeekCHPElectricityProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.CHPProductionElectric_kW));
     		//ts_summerWeekBatteriesStoredEnergy_MWh.addStep(assetFlows.currentStoredEnergyBatteries_MWh);
     		
@@ -626,8 +632,8 @@ public class J_RapidRunData {
     		acc_winterWeekPVProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.pvProductionElectric_kW));
     		acc_winterWeekWindProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.windProductionElectric_kW));
     		acc_winterWeekPTProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.ptProductionHeat_kW));	
-    		acc_winterWeekV2GProduction_kW.addStep( max(0, -fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
-    		acc_winterWeekBatteriesProduction_kW.addStep( max(0,-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)));
+    		acc_winterWeekV2GProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.V2GPower_kW) );
+    		acc_winterWeekBatteriesProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW));
     		acc_winterWeekCHPElectricityProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.CHPProductionElectric_kW));
     		
     		/*
@@ -677,8 +683,8 @@ public class J_RapidRunData {
     	acc_dailyAveragePVProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.pvProductionElectric_kW));
     	acc_dailyAverageWindProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.windProductionElectric_kW));
     	acc_dailyAveragePTProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.ptProductionHeat_kW));	
-    	acc_dailyAverageV2GProduction_kW.addStep( max(0, -fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.evChargingPower_kW)) );
-    	acc_dailyAverageBatteriesProduction_kW.addStep( max(0,-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW)));
+    	acc_dailyAverageV2GProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.V2GPower_kW) );
+    	acc_dailyAverageBatteriesProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW));
     	acc_dailyAverageCHPElectricityProduction_kW.addStep( fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.CHPProductionElectric_kW));
     	
     	/*

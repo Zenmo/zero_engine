@@ -54,6 +54,8 @@ public class J_AssetsMetaData {
 	    		}
     		}
     	}    	
+    	if (activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW); }
+    	if (activeAssetFlows.contains(OL_AssetFlowCategories.V2GPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW); }
     	
     	this.hasElectricHeating = false;
 	    this.hasElectricTransport = false;

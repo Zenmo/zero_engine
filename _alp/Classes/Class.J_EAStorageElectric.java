@@ -72,7 +72,11 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("Battery SoC: %s", stateOfCharge_fr);
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW-electricityProduction_kW);		
-		assetFlowsMap.put(this.assetFlowCategory, electricityConsumption_kW-electricityProduction_kW);		
+		//assetFlowsMap.put(this.assetFlowCategory, electricityConsumption_kW-electricityProduction_kW);		
+		
+		// Split charging and discharing power 'at the source'!
+		assetFlowsMap.put(OL_AssetFlowCategories.batteriesChargingPower_kW, electricityConsumption_kW);
+		assetFlowsMap.put(OL_AssetFlowCategories.batteriesDischargingPower_kW, electricityProduction_kW);
 	}
 	
 	public void setBatteryEfficiency_r(double eta_r) {

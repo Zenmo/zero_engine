@@ -6,7 +6,7 @@
 		<Id>1664894248130</Id>
 		<Name><![CDATA[f_updatePricesForNextTimestep]]></Name>
 		<X>1090</X>
-		<Y>260</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -26,7 +26,7 @@
 		<Id>1664952601107</Id>
 		<Name><![CDATA[f_updateTimeseries]]></Name>
 		<X>1090</X>
-		<Y>160</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -46,7 +46,7 @@
 		<Id>1665051878402</Id>
 		<Name><![CDATA[f_calculateGridnodeFlows]]></Name>
 		<X>1090</X>
-		<Y>220</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -66,7 +66,7 @@
 		<Id>1665051962956</Id>
 		<Name><![CDATA[f_calculateActorFlows]]></Name>
 		<X>1090</X>
-		<Y>240</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -102,7 +102,7 @@
 		<Id>1668528129020</Id>
 		<Name><![CDATA[f_calculateGridConnectionFlows]]></Name>
 		<X>1090</X>
-		<Y>200</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -190,7 +190,7 @@
 		<Id>1701162826549</Id>
 		<Name><![CDATA[f_runTimestep]]></Name>
 		<X>1070</X>
-		<Y>138</Y>
+		<Y>168</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -444,7 +444,7 @@
 		<Id>1731329529733</Id>
 		<Name><![CDATA[f_updateLiveData]]></Name>
 		<X>1091</X>
-		<Y>283</Y>
+		<Y>313</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -572,7 +572,7 @@
 		<Id>1751886925823</Id>
 		<Name><![CDATA[f_updateAmbientDependentAssets]]></Name>
 		<X>1113</X>
-		<Y>180</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -605,6 +605,22 @@
 		<Name><![CDATA[f_startAfterDeserialisation]]></Name>
 		<X>1096</X>
 		<Y>-64</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Pair&lt;J_DataSetMap, J_DataSetMap&gt;</ReturnType>
+		<Id>1754052061419</Id>
+		<Name><![CDATA[f_getPeakWeekDataSets]]></Name>
+		<X>1071</X>
+		<Y>132</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

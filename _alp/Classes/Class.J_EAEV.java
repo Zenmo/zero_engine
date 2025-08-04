@@ -51,6 +51,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    }
 	    this.activeProductionEnergyCarriers.add(this.storageMedium);   	
 		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
+		this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
 		registerEnergyAsset();
     }
  
@@ -74,8 +75,10 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		//traceln("new state of charge: " + stateOfCharge_fr * storageCapacity_kWh);
 		updateChargingHistory( electricityProduction_kW, electricityConsumption_kW );
 
-		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);				
-		//return new Pair(this.flowsMap, this.energyUse_kW);
+		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);
+		// Split charging and discharing power 'at the source'!
+		assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
+		assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 	}
  
 	public void updateStateOfCharge( double power_kW ) {
@@ -87,8 +90,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		}
 	}
  
-
-	
 	@Override
 	public boolean startTrip() {
 		if (available) {
@@ -127,7 +128,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			if (stateOfCharge_fr < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				//traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_fr );
+				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_fr );
 						
 				//energyChargedOutsideModelArea_kWh += -stateOfCharge_fr * storageCapacity_kWh;
 				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);

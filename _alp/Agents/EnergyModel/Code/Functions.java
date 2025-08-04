@@ -1116,3 +1116,45 @@ v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
 /*ALCODEEND*/}
 
+Pair<J_DataSetMap, J_DataSetMap> f_getPeakWeekDataSets()
+{/*ALCODESTART::1754052061419*/
+double[] elecBalance_kW = v_rapidRunData.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+int maxIndex = 0; // index with peak import
+for (int i = 1; i < elecBalance_kW.length; i++) {
+    if (elecBalance_kW[i] > elecBalance_kW[maxIndex]) {
+        maxIndex = i;
+    }
+}
+
+int minIndex = 0; // index with peak export
+for (int i = 1; i < elecBalance_kW.length; i++) {
+    if (elecBalance_kW[i] < elecBalance_kW[minIndex]) {
+        minIndex = i;
+    }
+}
+
+int startIdx = max(0,maxIndex - 7*48);
+int endIdx = max(startIdx + 7*96, maxIndex + 7*48);
+J_DataSetMap peakImportWeekAssetFlows = new J_DataSetMap(OL_AssetFlowCategories.class);
+for (OL_AssetFlowCategories AC : v_rapidRunData.am_assetFlowsAccumulators_kW.keySet()) {
+	double[] assetFlowArray_kW = v_rapidRunData.am_assetFlowsAccumulators_kW.get(AC).getTimeSeries_kW();
+	for (int i=startIdx; i<endIdx; i++) {
+		peakImportWeekAssetFlows.get(AC).add(p_timeStep_h * i, assetFlowArray_kW[i]);
+	}
+}
+
+startIdx = max(0,minIndex - 7*48);
+endIdx = max(startIdx + 7*96, minIndex + 7*48);
+J_DataSetMap peakExportWeekAssetFlows = new J_DataSetMap(OL_AssetFlowCategories.class);
+for (OL_AssetFlowCategories AC : v_rapidRunData.am_assetFlowsAccumulators_kW.keySet()) {
+	double[] assetFlowArray_kW = v_rapidRunData.am_assetFlowsAccumulators_kW.get(AC).getTimeSeries_kW();
+	for (int i=startIdx; i<endIdx; i++) {
+		peakExportWeekAssetFlows.get(AC).add(p_timeStep_h * i, assetFlowArray_kW[i]);
+	}
+}
+
+return new Pair<>(peakImportWeekAssetFlows, peakExportWeekAssetFlows);
+
+/*ALCODEEND*/}
+
