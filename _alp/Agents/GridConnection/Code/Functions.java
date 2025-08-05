@@ -1136,16 +1136,6 @@ if (v_enableCurtailment) {
 		default:
 	}
 }
-
-
-if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) < 0) {//Heat (for now always curtail over produced heat!)
-	for (J_EAProduction j_ea : c_productionAssets) {
-		j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
-		if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) < 0)) {
-			break;
-		}
-	}
-}
 /*ALCODEEND*/}
 
 double f_nfatoUpdateConnectionCapacity()

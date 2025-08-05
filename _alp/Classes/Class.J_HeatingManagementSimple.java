@@ -1,7 +1,7 @@
 /**
- * J_HeatingManagementBuildingWithPTBufferSimple
+ * J_HeatingManagementSimple
  */	
-public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingManagement {
+public class J_HeatingManagementSimple implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
@@ -26,17 +26,16 @@ public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingM
 	/**
      * Default constructor
      */
-    public J_HeatingManagementBuildingWithPTBufferSimple() {
+    public J_HeatingManagementSimple() {
     	
     }
     
-    public J_HeatingManagementBuildingWithPTBufferSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.building = gc.p_BuildingThermalAsset;
     }
 
-    public J_HeatingManagementBuildingWithPTBufferSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
+    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.building = gc.p_BuildingThermalAsset;
@@ -77,7 +76,7 @@ public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingM
     		if(remainingHotWater_kW > 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge
     			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);
     		}
-    		else {//Curtail the remaining pt
+    		else {//Curtail the remaining pt that is not used for hot water
     			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);
     	    	if (remainingPTProduction_kW > 0) {//Heat (for now always curtail over produced heat!)
     	    		for (J_EAProduction j_ea : ptAssets) {
@@ -98,47 +97,45 @@ public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingM
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
+    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
-    	//Adjust the hot water demand with the buffer and pt
+    	//Adjust the hot water and overall heat demand with the buffer and pt
     	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
+    	heatDemand_kW -= (hotWaterDemand_kW - remainingHotWaterDemand_kW);
     	
-    	double buildingTemp_degC = building.getCurrentTemperature();
-    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
-    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-    			// Nighttime and building temperature too low
-       			double buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-    			double buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - remainingHotWaterDemand_kW, buildingPowerSetpoint_kW);
-    			double assetPower_kW = buildingPower_kW + remainingHotWaterDemand_kW;
-    			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
-    			heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
-    			return;
-    		}
-    		else {
-    			// Nighttime and building temperature acceptable
-    			building.f_updateAllFlows( 0.0 );
-    			heatingAsset.f_updateAllFlows( remainingHotWaterDemand_kW / heatingAsset.getOutputCapacity_kW() );
-    			return;
-    		}
+    	double buildingPower_kW = 0;
+    	if(this.building != null) {
+	    	double buildingTemp_degC = building.getCurrentTemperature();
+	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+	    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
+	    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
+	    			// Nighttime and building temperature too low
+	       			double buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
+	    			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+	    		}
+	    		else {
+	    			// Nighttime and building temperature acceptable
+	    		}
+	    	}
+	    	else {
+	    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
+	    			// Daytime and building temperature too low
+	       			double buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
+	    			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+	    		}
+	    		else {
+	    			// Daytime and building temperature acceptable
+	    		}
+	    	}
+			building.f_updateAllFlows( buildingPower_kW );
     	}
-    	else {
-    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-    			// Daytime and building temperature too low
-       			double buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-    			double buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - remainingHotWaterDemand_kW, buildingPowerSetpoint_kW);
-    			double assetPower_kW = buildingPower_kW + remainingHotWaterDemand_kW;
-    			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
-    			heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
-    			return;
-    		}
-    		else {
-    			// Daytime and building temperature acceptable
-    			building.f_updateAllFlows( 0.0 );
-    			heatingAsset.f_updateAllFlows( remainingHotWaterDemand_kW / heatingAsset.getOutputCapacity_kW() );
-    			return;
-    		}
-    	}
+    	
+    	double assetPower_kW = buildingPower_kW + heatDemand_kW;
+		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
     }
     
     
@@ -146,23 +143,24 @@ public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingM
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
     	}
-    	if(gc.p_DHWAsset == null) {
-    		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use.");
-    	}
     	J_EAProduction ptAsset = findFirst(gc.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);
-    	if (ptAsset == null) {
-    		throw new RuntimeException(this.getClass() + " requires a pt asset.");
+    	if (ptAsset != null) {
+        	if(gc.p_DHWAsset == null) {
+        		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with PT.");
+        	}
     	}
-    	if (gc.p_heatBuffer == null) {
-    		throw new RuntimeException(this.getClass() + " requires a heat buffer.");
+    	if (gc.p_heatBuffer != null) {
+        	if(gc.p_DHWAsset == null && ptAsset == null) {
+        		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");
+        	}
     	}
-    	if (building == null) {
-    		throw new RuntimeException(this.getClass() + " requires a building asset.");
+    	if(gc.p_BuildingThermalAsset != null) {
+        	this.building = gc.p_BuildingThermalAsset;
     	}
     	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
     	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-    	if (heatProfile != null || heatConsumption != null) {
-    		throw new RuntimeException(this.getClass() + " does not support HEAT_DEMAND profiles.");
+    	if (heatProfile == null && heatConsumption == null && this.building == null) {
+    		throw new RuntimeException(this.getClass() + " requires a heat demand asset.");
     	}
     	if (gc.c_heatingAssets.size() == 0) {
     		throw new RuntimeException(this.getClass() + " requires at least one heating asset.");
