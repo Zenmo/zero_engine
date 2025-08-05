@@ -165,6 +165,7 @@ v_currentFinalEnergyConsumption_kW = 0;
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
+v_batteryStoredEnergy_kWh = 0;
 
 if (b_parallelizeGridConnections) {
 	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance());

@@ -50,7 +50,18 @@ public class J_LiveData {
     		dsm_liveSupply_kW.put( EC, dsSupply);
     	}
     	
+    	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
+			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
+				DataSet dsAsset = new DataSet((int)(168 / timeStep_h));
+				/*for (double t = startTime; t <= endTime; t += timeStep_h) {
+	    			dsAsset.add( t, 0);
+	    		}*/
+				dsm_liveAssetFlows_kW.put(AC, dsAsset);
+			}
+    	}
+    	
 		for (double t = startTime; t <= endTime; t += timeStep_h) {
+			
 			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
 				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
 			}
@@ -93,8 +104,8 @@ public class J_LiveData {
 
     	//// Gather specific electricity flows from corresponding energy assets
 		for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
-			/*traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
-			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
+			//traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
+			/*if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
 				traceln("Trying to add assetflow: %s", AC);
 			}*/
 			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, assetFlowsMap.get(AC));

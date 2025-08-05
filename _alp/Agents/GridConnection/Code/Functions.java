@@ -565,6 +565,22 @@ for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
 	}
 }
 
+if(!v_liveAssetsMetaData.activeAssetFlows.contains(j_ea.assetFlowCategory)) { // add live dataset
+	if (energyModel.b_isInitialized) {
+	
+		//Initialize datasets
+		DataSet ds = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+		double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+		double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+		for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+			ds.add( t, 0);
+		}
+		v_liveData.dsm_liveAssetFlows_kW.put(j_ea.assetFlowCategory, ds);
+	}
+
+
+}
+
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
@@ -1302,8 +1318,7 @@ if (!setActive) {
 	// Set GIS Region visibility
 	for (GIS_Object obj : c_connectedGISObjects) {
 		obj.gisRegion.setVisible(false);
-	}
-	
+	}	
 
 	// update GN parents' wind / solar totals
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, false);
@@ -1325,6 +1340,7 @@ if (!setActive) {
 	fm_currentProductionFlows_kW.clear();
 	fm_currentConsumptionFlows_kW.clear();
 	fm_currentBalanceFlows_kW.clear();
+	fm_currentAssetFlows_kW.clear();
 	
 	v_previousPowerElectricity_kW = 0;
 	v_previousPowerHeat_kW = 0;
@@ -1344,9 +1360,10 @@ if (!setActive) {
 	v_ptProductionHeat_kW = 0;
 	v_conversionPowerElectric_kW = 0;
 	v_CHPProductionElectric_kW = 0;*/
-	
+	v_isActive = setActive;
 }
 else {
+	//traceln("Activating gridConnection");
 	energyModel.c_gridConnections.add(this);
 	energyModel.c_pausedGridConnections.remove(this);
 
@@ -1358,8 +1375,9 @@ else {
 	// Set Connection Capacity according to NFATO
 	f_nfatoSetConnectionCapacity(false);
 	
+	v_isActive = setActive; // v_isActive must be true before calling updateActiveAssetData!
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
-	
+	//v_isActive = !setActive; // v_isActive must be true before calling updateActiveAssetData!
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);
@@ -1372,17 +1390,16 @@ else {
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
-	
-	
+		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 	v_liveData.resetLiveDatasets(startTime, endTime, energyModel.p_timeStep_h);
-
+	//v_isActive = setActive; // 
 }
 
 //Update the 'isActive' variable
-v_isActive = setActive;
+
 /*ALCODEEND*/}
 
 double f_getChargeDeadline(J_EAEV ev)
