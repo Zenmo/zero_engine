@@ -528,11 +528,37 @@ public class J_RapidRunData {
     }
     
     public double getPeakFeedin_kW() {
-    	double peakFeedin_kW = 0.0;
+    	double peakFeedin_kW = -am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[0];
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
     		peakFeedin_kW = max(peakFeedin_kW, -electricityBalance_kW);
     	}
     	return peakFeedin_kW;
+    }
+    
+    public Double getPeakDeliveryTime_h() {
+    	double[] elecBalance_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+    	Integer maxIndex = 0; // index with peak import
+    	for (int i = 1; i < elecBalance_kW.length; i++) {
+    	    if (elecBalance_kW[i] > elecBalance_kW[maxIndex]) {
+    	        maxIndex = i;
+    	    }
+    	}
+    	
+    	return maxIndex*timeStep_h;
+    }
+    
+    public Double getPeakFeedinTime_h() {
+    	double[] elecBalance_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+
+    	Integer minIndex = 0; // index with peak export
+    	for (int i = 1; i < elecBalance_kW.length; i++) {
+    	    if (elecBalance_kW[i] < elecBalance_kW[minIndex]) {
+    	        minIndex = i;
+    	    }
+    	}
+    	
+    	return minIndex*timeStep_h;
     }
     
     public Pair<Double, Double> getFlexPotential() {

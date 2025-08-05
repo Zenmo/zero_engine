@@ -245,6 +245,30 @@ public class ZeroAccumulator {
     	}
     }
 	
+    public DataSet getDataSet(double startTime_h, double accStartTime_h, double accEndTime_h) {
+    	
+    	double dataSetDuration_h = accEndTime_h - accStartTime_h;
+    	if (dataSetDuration_h > duration_h) {    		
+    		throw new RuntimeException("Too long dataSet interval requested from ZeroAccumulator.getDataSet().");    	
+    	}
+    	int startIdx = roundToInt(accStartTime_h / signalResolution_h);
+    	int endIdx = roundToInt(accEndTime_h / signalResolution_h);
+    	startIdx = max(0,startIdx);
+    	//endIdx = max(endIdx, roundToInt(dataSetDuration_h/signalResolution_h));
+    	endIdx = min(endIdx, arraySize);
+    	//startIdx = min(startIdx, endIdx - roundToInt(dataSetDuration_h/signalResolution_h));
+    	
+    	if (this.hasTimeSeries) {
+			DataSet ds = new DataSet(endIdx-startIdx);
+			for (int i = startIdx; i < endIdx; i++) {
+				ds.add(startTime_h + i * this.signalResolution_h, roundToDecimal(this.timeSeries[i],3) );
+			}
+			return ds;
+    	} else {
+    		throw new RuntimeException("Impossible to create DataSet from accumulator without timeSeries.");    		
+    	}
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

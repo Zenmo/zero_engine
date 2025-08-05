@@ -88,23 +88,21 @@ public class J_LiveData {
     	//Electricity balance
     	this.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 
-
     	//Total demand and supply
     	this.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
     	this.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
-
 
     	//Live capacity datasets
     	this.data_gridCapacityDemand_kW.add(currentTime_h, connectionMetaData.contractedDeliveryCapacity_kW);
     	this.data_gridCapacitySupply_kW.add(currentTime_h, -connectionMetaData.contractedFeedinCapacity_kW);
 
-
     	//// Gather specific electricity flows from corresponding energy assets
 		for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
 			//traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
-			/*if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
+			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
 				traceln("Trying to add assetflow: %s", AC);
-			}*/
+				traceln("Parent GC: %s", ((GridConnection)parentAgent).p_gridConnectionID);
+			}
 			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, assetFlowsMap.get(AC));
 		}
     	

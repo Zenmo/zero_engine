@@ -571,7 +571,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
 		energyModel.c_EVs.add((J_EAEV)vehicle);	
-		c_EvAssets.add(j_ea);
+		//c_EvAssets.add(j_ea);
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
@@ -602,10 +602,10 @@ if (j_ea instanceof J_EAVehicle) {
 		p_DHWAsset = (J_EAConsumption)j_ea;	
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-		c_fixedConsumptionElectricAssets.add(j_ea);
+		//c_fixedConsumptionElectricAssets.add(j_ea);
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-		c_electricHobAssets.add(j_ea);
+		//c_electricHobAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.add((J_EAProduction)j_ea);
@@ -620,7 +620,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-		c_pvAssets.add(j_ea);
+		//c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		//v_liveAssetsMetaData.hasWindturbine = true;
@@ -631,17 +631,17 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
-		c_windAssets.add(j_ea);
+		//c_windAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
 		//v_liveAssetsMetaData.hasPT = true;
-		c_ptAssets.add(j_ea);
+		//c_ptAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-			c_electricHobAssets.add(j_ea);
+			//c_electricHobAssets.add(j_ea);
 			//c_conversionElectricAssets.add(j_ea);
 		}
 		if (p_cookingTracker == null) {
@@ -658,7 +658,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 	} else if (j_ea instanceof J_EAConversionHeatPump) {
 		energyModel.c_ambientDependentAssets.add(j_ea);
-		c_electricHeatpumpAssets.add(j_ea);
+//		c_electricHeatpumpAssets.add(j_ea);
 		//c_conversionElectricAssets.add(j_ea);
 		//traceln("added heatpump to the GC as primary heating asset.");
 
@@ -666,9 +666,9 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
-		c_electrolyserAssets.add(j_ea);
+		//c_electrolyserAssets.add(j_ea);
 	} else if (j_ea instanceof J_EAConversionGasCHP) {
-		c_chpAssets.add(j_ea);
+		//c_chpAssets.add(j_ea);
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
     }else if( j_ea instanceof J_EAConversionHeatDeliverySet ){
 		p_primaryHeatingAsset = (J_EAConversion)j_ea;
@@ -688,7 +688,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
-		c_batteryAssets.add(j_ea);
+		//c_batteryAssets.add(j_ea);
 		double capacity_MWh = ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
@@ -698,30 +698,31 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
 	c_profileAssets.add((J_EAProfile)j_ea);
+	/*
 	if (((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHARGING){
-			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-			c_EvAssets.add(j_ea);
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
-			//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
-			c_fixedConsumptionElectricAssets.add(j_ea);
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
-			//v_windProductionElectric_kW += flowsArray[0];
-			c_windAssets.add(j_ea);
-			// TODO: Add some to the total installed wind (of this GC, its GN, the energymodel (and its parent coop))
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
-			//Do nothing
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
-			//Do nothing
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
-			c_electricHeatpumpAssets.add(j_ea);
-		} else {
-			traceln( "Unrecognized profile type!");
-		}
+		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
+		//c_EvAssets.add(j_ea);
+	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
+		//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
+		//c_fixedConsumptionElectricAssets.add(j_ea);
+	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
+		//v_windProductionElectric_kW += flowsArray[0];
+		//c_windAssets.add(j_ea);
+		// TODO: Add some to the total installed wind (of this GC, its GN, the energymodel (and its parent coop))
+	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
+		//Do nothing
+	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
+		//Do nothing
+	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
+		//c_electricHeatpumpAssets.add(j_ea);
+	} else {
+		traceln( "Unrecognized profile type!");
+	}*/
 } else if (j_ea instanceof J_EADieselTractor) {
 	c_profileAssets.add((J_EAProfile)j_ea);
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.add((J_EACharger)j_ea);
-	c_EvAssets.add(j_ea);
+	//c_EvAssets.add(j_ea);
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
 		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
@@ -957,7 +958,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
-		c_EvAssets.remove(j_ea);
+		//c_EvAssets.remove(j_ea);
 	}
 	c_vehicleAssets.remove(j_ea);
 		
@@ -971,10 +972,10 @@ if (j_ea instanceof J_EAVehicle) {
 		p_DHWAsset = null;	
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-		c_fixedConsumptionElectricAssets.remove(j_ea);
+		//c_fixedConsumptionElectricAssets.remove(j_ea);
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-		c_electricHobAssets.remove(j_ea);
+		//c_electricHobAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
@@ -991,7 +992,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
 		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-		c_pvAssets.remove(j_ea);
+		//c_pvAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
@@ -1001,34 +1002,34 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-		c_windAssets.remove(j_ea);
+		//c_windAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-		if (c_ptAssets.size() <= 1) {
+		/*if (c_ptAssets.size() <= 1) {
 			//v_liveAssetsMetaData.hasPT = false;
 		}
-		c_ptAssets.remove(j_ea);
+		c_ptAssets.remove(j_ea);*/
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-		c_electricHobAssets.remove(j_ea);
+		//c_electricHobAssets.remove(j_ea);
 	}
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
 	} else if (j_ea instanceof J_EAConversionElectrolyser) {
-		c_electrolyserAssets.remove(j_ea);
+		//c_electrolyserAssets.remove(j_ea);
 	}
 	else{
 		if (j_ea instanceof J_EAConversionGasBurner) {
 	
 		} else if (j_ea instanceof J_EAConversionHeatPump) {
 			energyModel.c_ambientDependentAssets.remove(j_ea);
-			c_electricHeatpumpAssets.remove(j_ea);
+			//c_electricHeatpumpAssets.remove(j_ea);
 		} else if (j_ea instanceof J_EAConversionHydrogenBurner) {
 
 		} else if (j_ea instanceof J_EAConversionGasCHP) {
-			c_chpAssets.remove(j_ea);
+			//c_chpAssets.remove(j_ea);
 		}else if( j_ea instanceof J_EAConversionHeatDeliverySet ){
 		
 		}
@@ -1057,7 +1058,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_gasBuffer = null;
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = null;
-		c_batteryAssets.remove(j_ea);
+		//c_batteryAssets.remove(j_ea);
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 	}
@@ -1065,11 +1066,11 @@ if (j_ea instanceof J_EAVehicle) {
 	//p_energyProfile = null;
 	c_profileAssets.remove((J_EAProfile)j_ea);
 	if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
-		c_electricHeatpumpAssets.add(j_ea);
+		//c_electricHeatpumpAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.remove(j_ea);
-	c_EvAssets.remove(j_ea);	
+	//c_EvAssets.remove(j_ea);	
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }

@@ -35,6 +35,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			profilePointer = profile;
 		}		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
+		this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //
 		registerEnergyAsset();
     }
 
@@ -63,7 +64,9 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
 
 		flowsMap.put(this.energyCarrier, consumption_kW);		
-
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, consumption_kW);
+		}
    	}
 	
     public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {

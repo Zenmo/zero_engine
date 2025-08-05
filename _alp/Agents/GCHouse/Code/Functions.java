@@ -4,9 +4,9 @@ v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.getLastFlows().get(OL_Ener
 
 //Check if there is hot water being produced by the pt
 double ptProduction_kW = 0; //NEEDS TO BE A LOCAL
-for (J_EA j_ea : c_ptAssets) {
+/*for (J_EA j_ea : c_ptAssets) {
 	ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
-}
+}*/
 v_hotwaterDemand_kW = max(0, v_hotwaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value
 
 if(p_heatBuffer != null){
@@ -772,7 +772,7 @@ if (j_ea instanceof J_EAEV) {
 }
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
-	c_electricHeatpumpAssets.add(j_ea);
+	//c_electricHeatpumpAssets.add(j_ea);
 }
 /*ALCODEEND*/}
 
@@ -933,7 +933,7 @@ if (j_ea instanceof J_EAEV) {
 }
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
-	c_electricHeatpumpAssets.remove(j_ea);
+	//c_electricHeatpumpAssets.remove(j_ea);
 }
 /*ALCODEEND*/}
 

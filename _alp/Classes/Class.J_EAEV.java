@@ -59,27 +59,35 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public void operate(double ratioOfChargeCapacity_r) {
 		//traceln( "ratio: " + ratioOfChargeCapacity_r);
 
-    	double discharge_kW = 0;
-    	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
+    	double chargeSetpoint_kW = min(1,max(-1,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
+    	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / timestep_h), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / timestep_h); // Limit charge power to stay within SoC 0-100
+    			
+    	/*double deltaEnergy_kWh;   // to check the request with the energy currently in storage
     	
     	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ) ;
-    	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
+    	deltaEnergy_kWh = max( deltaEnergy_kWh, -(stateOfCharge_fr * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
+    	
+    	//deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent charging faster than allowed
+    	deltaEnergy_kWh = max(deltaEnergy_kWh, -ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent discharging faster than allowed
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * (storageCapacity_kWh * vehicleScaling) ); // Prevent overcharge
-    
-		discharge_kW = -deltaEnergy_kWh / timestep_h;
+    	 */
+		
 		//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
-		double electricityProduction_kW = max(discharge_kW, 0);
-		double electricityConsumption_kW = max(-discharge_kW, 0);
-		updateStateOfCharge( discharge_kW );
+		double electricityProduction_kW = max(-chargePower_kW, 0);
+		double electricityConsumption_kW = max(chargePower_kW, 0);
+		updateStateOfCharge( -chargePower_kW );
 		//traceln("new state of charge: " + stateOfCharge_fr * storageCapacity_kWh);
 		updateChargingHistory( electricityProduction_kW, electricityConsumption_kW );
 
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);
 		// Split charging and discharing power 'at the source'!
-		if (discharge_kW <= 0) { // charging
+		if (chargePower_kW >= 0) { // charging
 			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
 		} else {
+			traceln("Charge Power: %s", chargePower_kW);
+			traceln("Vehicle scaling: %s", vehicleScaling);
+			traceln("charge capacity: %s", capacityElectric_kW);
 			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 		}
 	}

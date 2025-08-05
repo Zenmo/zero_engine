@@ -2174,6 +2174,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516437894</Id>
 		<Name><![CDATA[c_fixedConsumptionElectricAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>980</Y>
 		<Label>
@@ -2192,6 +2193,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516468629</Id>
 		<Name><![CDATA[c_electricHobAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1050</Y>
 		<Label>
@@ -2211,7 +2213,7 @@
 		<Id>1722516515981</Id>
 		<Name><![CDATA[c_conversionElectricAssets]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>-360</X>
+		<X>-280</X>
 		<Y>1020</Y>
 		<Label>
 			<X>10</X>
@@ -2229,6 +2231,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516532968</Id>
 		<Name><![CDATA[c_electricHeatpumpAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1070</Y>
 		<Label>
@@ -2247,6 +2250,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516544883</Id>
 		<Name><![CDATA[c_electrolyserAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1090</Y>
 		<Label>
@@ -2265,6 +2269,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516559744</Id>
 		<Name><![CDATA[c_EvAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1110</Y>
 		<Label>
@@ -2283,6 +2288,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516579645</Id>
 		<Name><![CDATA[c_pvAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1200</Y>
 		<Label>
@@ -2301,6 +2307,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722516597938</Id>
 		<Name><![CDATA[c_windAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1220</Y>
 		<Label>
@@ -2319,6 +2326,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1722517079192</Id>
 		<Name><![CDATA[c_batteryAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1130</Y>
 		<Label>
@@ -2337,6 +2345,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1734089799023</Id>
 		<Name><![CDATA[c_chpAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1260</Y>
 		<Label>
@@ -2391,6 +2400,7 @@
 	<Variable Class="CollectionVariable">
 		<Id>1751442406691</Id>
 		<Name><![CDATA[c_ptAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-280</X>
 		<Y>1240</Y>
 		<Label>
