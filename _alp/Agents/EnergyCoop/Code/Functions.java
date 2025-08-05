@@ -1574,3 +1574,69 @@ v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
 /*ALCODEEND*/}
 
+EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
+{/*ALCODESTART::1754380102233*/
+if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
+	v_activeEnergyCarriers.add(EC);
+	v_activeConsumptionEnergyCarriers.add(EC);
+	
+	DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	
+	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		dsDemand.add( t, 0);
+	}
+	v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
+}
+/*ALCODEEND*/}
+
+EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
+{/*ALCODESTART::1754380102235*/
+if (!v_activeProductionEnergyCarriers.contains(EC)) {
+	v_activeEnergyCarriers.add(EC);
+	v_activeProductionEnergyCarriers.add(EC);
+	
+	DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		dsSupply.add( t, 0);
+	}
+	v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+}
+/*ALCODEEND*/}
+
+EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
+{/*ALCODESTART::1754380102237*/
+if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
+	v_liveAssetsMetaData.activeAssetFlows.add(AC);
+	
+	DataSet dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	
+	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		dsAsset.add( t, 0);
+	}
+	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
+	
+	if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
+		dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+		
+		for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+			dsAsset.add( t, 0);
+		}
+		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
+	}
+	if (AC == OL_AssetFlowCategories.V2GPower_kW) { // also add evCharging!
+		dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+		
+		for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+			dsAsset.add( t, 0);
+		}
+		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
+	}			
+}
+/*ALCODEEND*/}
+

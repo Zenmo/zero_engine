@@ -53,9 +53,6 @@ public class J_LiveData {
     	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
 			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
 				DataSet dsAsset = new DataSet((int)(168 / timeStep_h));
-				/*for (double t = startTime; t <= endTime; t += timeStep_h) {
-	    			dsAsset.add( t, 0);
-	    		}*/
 				dsm_liveAssetFlows_kW.put(AC, dsAsset);
 			}
     	}
@@ -119,45 +116,7 @@ public class J_LiveData {
     	else{
     		this.data_batterySOC_fr.add(currentTime_h, 0);	
     	}	
-    	
-		/*
-		this.data_batteryCharging_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.batteriesChargingPower_kW)), 3));		
-    	this.data_batteryDischarging_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.batteriesDischargingPower_kW), 3));	
-		//Baseload electricity 
-    	this.data_baseloadElectricityDemand_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.fixedConsumptionElectric_kW),3));
-
-    	//Cooking
-    	this.data_cookingElectricityDemand_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.electricHobConsumption_kW), 3));
-
-    	//Hydrogen elec consumption
-    	this.data_hydrogenElectricityDemand_kW.add(currentTime_h, roundToDecimal(max(0, assetFlowsMap.get(OL_AssetFlowCategories.electrolyserElectricityConsumption_kW)), 3));
-
-    	//Heatpump elec consumption
-    	this.data_heatPumpElectricityDemand_kW.add(currentTime_h, roundToDecimal(max(0, assetFlowsMap.get(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW)), 3));
-
-    	//EVs
-    	this.data_electricVehicleDemand_kW.add(currentTime_h, roundToDecimal(max(0,assetFlowsMap.get(OL_AssetFlowCategories.evChargingPower_kW)), 3));
-    	this.data_V2GSupply_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.V2GPower_kW), 3));
-    	
-    	//CHP production
-    	this.data_CHPElectricityProductionLiveWeek_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.CHPProductionElectric_kW), 3));
-
-    	//PV production
-    	if (assetFlowsMap.get(OL_AssetFlowCategories.pvProductionElectric_kW) < 0) {
-    		throw new RuntimeException("Negative assetFlows.pvProductionElectric_kW! Curtailment error? Value: " + assetFlowsMap.get(OL_AssetFlowCategories.pvProductionElectric_kW) );
-    	}
-    	this.data_PVGeneration_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.pvProductionElectric_kW) , 3));
-
-    	//Wind production
-    	this.data_windGeneration_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.windProductionElectric_kW), 3));	
-
-    	//PT production
-    	this.data_PTGeneration_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.ptProductionHeat_kW), 3));
-
-    	//District heating
-    	this.data_districtHeatDelivery_kW.add(currentTime_h, roundToDecimal(assetFlowsMap.get(OL_AssetFlowCategories.districtHeatDelivery_kW), 3));	
-    	*/
-		
+	
 
     }
     

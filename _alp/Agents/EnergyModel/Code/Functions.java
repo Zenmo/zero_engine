@@ -888,17 +888,19 @@ remove_pop_energyCoops(energyCoop);
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1740056275008*/
-v_activeEnergyCarriers.add(EC);
-v_activeConsumptionEnergyCarriers.add(EC);
-
-DataSet dsDemand = new DataSet( (int)(168 / p_timeStep_h) );
-
-double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-for (double t = startTime; t <= endTime; t += p_timeStep_h) {
-	dsDemand.add( t, 0);
+if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
+	v_activeEnergyCarriers.add(EC);
+	v_activeConsumptionEnergyCarriers.add(EC);
+	
+	DataSet dsDemand = new DataSet( (int)(168 / p_timeStep_h) );
+	
+	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+		dsDemand.add( t, 0);
+	}
+	v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 }
-v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 /*ALCODEEND*/}
 
 double f_updateActiveAssetsMetaData()
@@ -921,16 +923,18 @@ for(GridConnection GC : f_getActiveGridConnections()){
 
 EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1746021439807*/
-v_activeEnergyCarriers.add(EC);
-v_activeProductionEnergyCarriers.add(EC);
-
-DataSet dsSupply = new DataSet( (int)(168 / p_timeStep_h) );
-double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-for (double t = startTime; t <= endTime; t += p_timeStep_h) {
-	dsSupply.add( t, 0);
+if (!v_activeProductionEnergyCarriers.contains(EC)) {
+	v_activeEnergyCarriers.add(EC);
+	v_activeProductionEnergyCarriers.add(EC);
+	
+	DataSet dsSupply = new DataSet( (int)(168 / p_timeStep_h) );
+	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+		dsSupply.add( t, 0);
+	}
+	v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 }
-v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 /*ALCODEEND*/}
 
 double f_updateAmbientDependentAssets()
@@ -1159,5 +1163,21 @@ for (OL_AssetFlowCategories AC : v_rapidRunData.am_assetFlowsAccumulators_kW.key
 
 return new Pair<>(peakImportWeekAssetFlows, peakExportWeekAssetFlows);
 
+/*ALCODEEND*/}
+
+EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
+{/*ALCODESTART::1754379679149*/
+if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
+	v_liveAssetsMetaData.activeAssetFlows.add(AC);
+	
+	DataSet dsAsset = new DataSet( (int)(168 / p_timeStep_h) );
+	
+	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+		dsAsset.add( t, 0);
+	}
+	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
+}
 /*ALCODEEND*/}
 
