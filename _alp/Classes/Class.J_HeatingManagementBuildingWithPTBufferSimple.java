@@ -1,7 +1,7 @@
 /**
- * J_HeatingManagementBuildingSimple
+ * J_HeatingManagementBuildingWithPTBufferSimple
  */	
-public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
+public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
@@ -26,17 +26,17 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
 	/**
      * Default constructor
      */
-    public J_HeatingManagementBuildingSimple() {
+    public J_HeatingManagementBuildingWithPTBufferSimple() {
     	
     }
     
-    public J_HeatingManagementBuildingSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementBuildingWithPTBufferSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.building = gc.p_BuildingThermalAsset;
     }
 
-    public J_HeatingManagementBuildingSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
+    public J_HeatingManagementBuildingWithPTBufferSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.building = gc.p_BuildingThermalAsset;
@@ -47,11 +47,27 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
         this.heatingKickinTreshhold_degC = heatingKickinTreshhold_degC;	
     }
     
+    public double  manageHeatBufferAndPT(double heatDemand_kW){
+    	
+    	
+    	
+    	double adjustedHeatDemand = 0;
+    	
+    	
+    	
+    	return adjustedHeatDemand;
+    }
+    
+    
     public void manageHeating() {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	
+    	//Adjust the heat demand with the buffer and pt
+    	heatDemand_kW = manageHeatBufferAndPT(heatDemand_kW);
+    	
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
@@ -94,13 +110,13 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
     	}
-    	if (gc.p_heatBuffer != null) {
-    		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
+    	if (gc.p_heatBuffer == null) {
+    		throw new RuntimeException(this.getClass() + " requires a heat buffer.");
     	}
     	if (building == null) {
     		throw new RuntimeException(this.getClass() + " requires a building asset.");
     	}
-    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
+    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
     	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
     	if (heatProfile != null || heatConsumption != null) {
     		throw new RuntimeException(this.getClass() + " does not support HEAT_DEMAND profiles.");

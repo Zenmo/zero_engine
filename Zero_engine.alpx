@@ -1791,6 +1791,11 @@
 				<Name><![CDATA[ActorMixin]]></Name>
 				<Folder>1753342021373</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1754405220949</Id>
+				<Name><![CDATA[J_HeatingManagementBuildingWithPTBufferSimple]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

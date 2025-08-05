@@ -2422,8 +2422,8 @@
 		<Description><![CDATA[The keys are triples: ( heatingType, boolean hasBuildingThermalModel, boolean hasHeatBuffer ). These map to classes (not instances!) that implement the heating interface. The classes are usually instantiated with the GridConnection as an argument of the constructor.
 An example of how to use this mapping to create an instance for a triple t, and GridConnection gc: 
 I_HeatingManagement x = c_defaultHeatingStrategies.get(t).getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(gc, heatingType);]]></Description>
-		<X>-400</X>
-		<Y>330</Y>
+		<X>-360</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
