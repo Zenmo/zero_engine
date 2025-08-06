@@ -103,7 +103,7 @@ public class J_LiveData {
 				traceln("Trying to add assetflow: %s", AC);
 				traceln("Parent GC: %s", ((GridConnection)parentAgent).p_gridConnectionID);
 			}
-			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, assetFlowsMap.get(AC));
+			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, roundToDecimal(assetFlowsMap.get(AC),3));
 		}
     	
 		//Batteries    

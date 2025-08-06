@@ -779,8 +779,7 @@
 		<Parameter>
 			<Name><![CDATA[AC]]></Name>
 			<Type><![CDATA[OL_AssetFlowCategories]]></Type>
-					</Parameter>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-
 </Functions>

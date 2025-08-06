@@ -1445,6 +1445,56 @@ v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
 /*ALCODEEND*/}
 
+double f_removeAllHeatingAssets()
+{/*ALCODESTART::1753969724598*/
+while (c_heatingAssets.size() > 0) {
+	c_heatingAssets.get(0).removeEnergyAsset();
+}
+/*ALCODEEND*/}
+
+OL_GridConnectionHeatingType f_getCurrentHeatingType()
+{/*ALCODESTART::1754051705071*/
+if (p_heatingManagement != null) {
+	return p_heatingManagement.getCurrentHeatingType();
+}
+else {
+	return OL_GridConnectionHeatingType.NONE;
+}
+/*ALCODEEND*/}
+
+double f_addHeatManagementToGC(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
+{/*ALCODESTART::1754393382442*/
+if (heatingType == OL_GridConnectionHeatingType.NONE) {
+	return;
+}
+if (isGhost) {
+	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
+	return;
+}
+if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
+	throw new RuntimeException("f_addHeatManagementToGC called with heating type CUSTOM");
+}
+
+boolean hasThermalBuilding = engineGC.p_BuildingThermalAsset != null;
+boolean hasHeatBuffer = engineGC.p_heatBuffer != null;
+Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
+Class<? extends I_HeatingManagement> managementClass = energyModel.c_defaultHeatingStrategies.get(triple);
+
+if (managementClass == null) {
+	throw new RuntimeException("No heating strategy available for heatingType: " + heatingType + " with hasThermalBuilding: " + hasThermalBuilding + " and hasHeatBuffer: " + hasHeatBuffer);
+}
+
+I_HeatingManagement heatingManagement = null;
+try {
+	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(engineGC, heatingType);
+}
+catch (Exception e) {
+	e.printStackTrace();
+}
+
+engineGC.p_heatingManagement = heatingManagement;
+/*ALCODEEND*/}
+
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1754380684463*/
 v_activeEnergyCarriers.add(EC);
@@ -1502,54 +1552,5 @@ if (AC == OL_AssetFlowCategories.V2GPower_kW) { // also add evCharging!
 	}
 	v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
 }			
-/*ALCODEEND*/}
-double f_removeAllHeatingAssets()
-{/*ALCODESTART::1753969724598*/
-while (c_heatingAssets.size() > 0) {
-	c_heatingAssets.get(0).removeEnergyAsset();
-}
-/*ALCODEEND*/}
-
-OL_GridConnectionHeatingType f_getCurrentHeatingType()
-{/*ALCODESTART::1754051705071*/
-if (p_heatingManagement != null) {
-	return p_heatingManagement.getCurrentHeatingType();
-}
-else {
-	return OL_GridConnectionHeatingType.NONE;
-}
-/*ALCODEEND*/}
-
-double f_addHeatManagementToGC(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
-{/*ALCODESTART::1754393382442*/
-if (heatingType == OL_GridConnectionHeatingType.NONE) {
-	return;
-}
-if (isGhost) {
-	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
-	return;
-}
-if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
-	throw new RuntimeException("f_addHeatManagementToGC called with heating type CUSTOM");
-}
-
-boolean hasThermalBuilding = engineGC.p_BuildingThermalAsset != null;
-boolean hasHeatBuffer = engineGC.p_heatBuffer != null;
-Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
-Class<? extends I_HeatingManagement> managementClass = energyModel.c_defaultHeatingStrategies.get(triple);
-
-if (managementClass == null) {
-	throw new RuntimeException("No heating strategy available for heatingType: " + heatingType + " with hasThermalBuilding: " + hasThermalBuilding + " and hasHeatBuffer: " + hasHeatBuffer);
-}
-
-I_HeatingManagement heatingManagement = null;
-try {
-	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(engineGC, heatingType);
-}
-catch (Exception e) {
-	e.printStackTrace();
-}
-
-engineGC.p_heatingManagement = heatingManagement;
 /*ALCODEEND*/}
 

@@ -72,7 +72,7 @@ public class J_RapidRunData {
     ////Daytime / Nighttime
 	public J_AccumulatorMap am_daytimeExports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     public J_AccumulatorMap am_daytimeImports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
-    
+    	
     public ZeroAccumulator acc_daytimeFinalEnergyConsumption_kW;
     public ZeroAccumulator acc_daytimeEnergyProduction_kW;
     public ZeroAccumulator acc_daytimeElectricityConsumption_kW;
@@ -124,10 +124,18 @@ public class J_RapidRunData {
 	    //========== ASSET FLOWS ==========//
 	    if (storesTotalAssetFlows) {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
-	    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
+	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
+		    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
+	    	} else {
+	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(simDuration_h, simDuration_h);
+	    	}
 	    } else {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);
-		    ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24.0, simDuration_h);
+	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
+	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24.0, simDuration_h);
+	    	} else {
+	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(simDuration_h, simDuration_h);	    		
+	    	}
 	    }	  
 
 	    //ts_dailyAverageBatteriesSOC_fr = new ZeroTimeSeries(24.0, simDuration_h);
@@ -580,10 +588,9 @@ public class J_RapidRunData {
     public ZeroTimeSeries getBatteriesSOCAcc_fr() {
     	double[] array = this.ts_dailyAverageBatteriesStoredEnergy_MWh.getTimeSeries();
     	double factor_fr = 1/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
-    	double[] scaledArray = ZeroMath.arrayMultiply(array, factor_fr);
     	ZeroTimeSeries ts = new ZeroTimeSeries(ts_dailyAverageBatteriesStoredEnergy_MWh.getSignalResolution_h(), ts_dailyAverageBatteriesStoredEnergy_MWh.getDuration());
     	for (int i=0; i<array.length; i++) {
-    		ts.addStep(scaledArray[i]);
+    		ts.addStep(array[i]*factor_fr);
     	}
     	return ts;
     }
