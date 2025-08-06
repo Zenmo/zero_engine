@@ -33,13 +33,15 @@ public class J_HeatingManagementProfileWithPTBufferSimple implements I_HeatingMa
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
-    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	
     	
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	//Adjust the hot water and overall heat demand with the buffer and pt
     	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
-    	heatDemand_kW -= (hotWaterDemand_kW - remainingHotWaterDemand_kW);
+    	
+    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	//heatDemand_kW = heatDemand_kW - (hotWaterDemand_kW - remainingHotWaterDemand_kW);
     	
     	//Run the asset
     	heatingAsset.f_updateAllFlows( heatDemand_kW / heatingAsset.getOutputCapacity_kW() );

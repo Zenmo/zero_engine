@@ -103,6 +103,11 @@ public class J_HeatingManagementBuildingWithPTBufferSimple implements I_HeatingM
     	//Adjust the hot water demand with the buffer and pt
     	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
     	
+    	if(gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) != remainingHotWaterDemand_kW) {
+    		traceln("Current balanceflow heat and remainingHotWaterDemand dif: " + (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) - remainingHotWaterDemand_kW));
+    		throw new RuntimeException("Current balance flow heat does not match remainingHotWaterDemand in BuildingWithPTBufferSimple management");
+    	}
+    	
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {

@@ -97,24 +97,23 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
-    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	//Adjust the hot water and overall heat demand with the buffer and pt
     	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
-    	heatDemand_kW -= (hotWaterDemand_kW - remainingHotWaterDemand_kW);
+    	
+    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	
     	double buildingPower_kW = 0;
     	if(this.building != null) {
 	    	double buildingTemp_degC = building.getCurrentTemperature();
 	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+	    	double buildingPowerSetpoint_kW = 0;
 	    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
 	    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
 	    			// Nighttime and building temperature too low
-	       			double buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-	    			buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
-	    			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+	       			buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
 	    		}
 	    		else {
 	    			// Nighttime and building temperature acceptable
@@ -123,15 +122,14 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 	    	else {
 	    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
 	    			// Daytime and building temperature too low
-	       			double buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-	    			buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
-	    			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+	       			buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
 	    		}
 	    		else {
 	    			// Daytime and building temperature acceptable
 	    		}
 	    	}
-			building.f_updateAllFlows( buildingPower_kW );
+			buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
+			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
     	}
     	
     	double assetPower_kW = buildingPower_kW + heatDemand_kW;
