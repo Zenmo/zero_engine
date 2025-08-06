@@ -21,6 +21,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722514612938</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_services]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>60</Y>
 		<Label>
@@ -41,6 +42,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722514620314</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_houses]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>200</Y>
 		<Label>
@@ -61,8 +63,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722585552607</Id>
 		<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
-		<X>920</X>
-		<Y>340</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1760</X>
+		<Y>-20</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -77,6 +80,7 @@
 		<ReturnType>double[]</ReturnType>
 		<Id>1722587530130</Id>
 		<Name><![CDATA[f_dividePowerDemandHeatingAssets]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>340</Y>
 		<Label>
@@ -114,8 +118,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1730370456790</Id>
 		<Name><![CDATA[f_connectToJ_EA_default_overwrite]]></Name>
-		<X>1090</X>
-		<Y>90</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1760</X>
+		<Y>-40</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -134,6 +139,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732550952237</Id>
 		<Name><![CDATA[f_setH2HeatingFr_industry]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>140</Y>
 		<Label>
@@ -154,6 +160,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732636739570</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_industry]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>40</Y>
 		<Label>
@@ -174,6 +181,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1732636773704</Id>
 		<Name><![CDATA[f_setHeatingMethodPct_agriculture]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>200</Y>
 		<Label>

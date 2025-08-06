@@ -100,7 +100,8 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1669025846794</Id>
-		<Name><![CDATA[f_manageHeatingAssets]]></Name>
+		<Name><![CDATA[f_manageHeatingAssets_OLD]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>920</X>
 		<Y>290</Y>
 		<Label>
@@ -615,6 +616,22 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
+		<Id>1753099764237</Id>
+		<Name><![CDATA[f_manageHeating]]></Name>
+		<X>920</X>
+		<Y>400</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
 		<Id>1752570332887</Id>
 		<Name><![CDATA[f_manageBattery]]></Name>
 		<X>920</X>
@@ -642,6 +659,67 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1753969724598</Id>
+		<Name><![CDATA[f_removeAllHeatingAssets]]></Name>
+		<X>450</X>
+		<Y>-130</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
+		<Id>1754051705071</Id>
+		<Name><![CDATA[f_getCurrentHeatingType]]></Name>
+		<X>450</X>
+		<Y>-110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754393382442</Id>
+		<Name><![CDATA[f_addHeatManagementToGC]]></Name>
+		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
+		<X>1430</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[engineGC]]></Name>
+			<Type><![CDATA[GridConnection]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[heatingType]]></Name>
+			<Type><![CDATA[OL_GridConnectionHeatingType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[isGhost]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -701,7 +779,8 @@
 		<Parameter>
 			<Name><![CDATA[AC]]></Name>
 			<Type><![CDATA[OL_AssetFlowCategories]]></Type>
-		</Parameter>
+					</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
+
 </Functions>

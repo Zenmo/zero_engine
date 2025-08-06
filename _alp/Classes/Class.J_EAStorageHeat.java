@@ -11,11 +11,11 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	protected double lossFactor_WpK;
 	protected double capacityHeat_kW;
 	
-	private double temperature_degC;
-	private double temperatureStored_degC;
-	private double initialTemperature_degC;
-	private double minTemperature_degC;
-	private double maxTemperature_degC;
+	protected double temperature_degC;
+	protected double temperatureStored_degC;
+	protected double initialTemperature_degC;
+	protected double minTemperature_degC;
+	protected double maxTemperature_degC;
 	private double setTemperature_degC;
 	protected double heatCapacity_JpK;
 	protected double ambientTemperature_degC;
@@ -174,22 +174,23 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		}
 	}
 
+	public double getInitialTemperature_degC() {
+		return this.initialTemperature_degC;
+	}
+	
 	@Override
 	public double getCurrentTemperature() {
 		return temperature_degC;
 	}
 
-	@Override
 	public double getSetTemperature_degC() {
 		return setTemperature_degC;
 	}
 	
-	@Override
 	public double getMinTemperature_degC() {
 		return minTemperature_degC;
 	}
 	
-	@Override
 	public double getMaxTemperature_degC() {
 		return maxTemperature_degC;
 	}
@@ -213,7 +214,14 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	public OL_AmbientTempType getAmbientTempType() {
 		return this.ambientTempType;
 	}
+
+	public double getStartingHeatStorageHeat_kWh() {
+		return (this.initialTemperature_degC - this.minTemperature_degC) * heatCapacity_JpK /3.6e6;
+	}
 	
+	public double getRemainingHeatStorageHeat_kWh() {
+		return (this.temperature_degC - this.minTemperature_degC) * heatCapacity_JpK /3.6e6;
+	}
 	/*
 	@Override
 	public double getHeatCapacity_kW() {

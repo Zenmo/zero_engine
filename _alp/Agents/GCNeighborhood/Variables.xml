@@ -3,6 +3,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514794122</Id>
 		<Name><![CDATA[v_amountOfGasBurners_services_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>80</Y>
 		<Label>
@@ -22,6 +23,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514798317</Id>
 		<Name><![CDATA[v_amountOfHybridHeatpump_services_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>100</Y>
 		<Label>
@@ -41,6 +43,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514800696</Id>
 		<Name><![CDATA[v_amountOfElectricHeatpumps_services_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>120</Y>
 		<Label>
@@ -60,6 +63,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514802997</Id>
 		<Name><![CDATA[v_amountOfDistrictHeating_services_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>140</Y>
 		<Label>
@@ -79,6 +83,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514805108</Id>
 		<Name><![CDATA[v_amountOfGasBurners_houses_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>220</Y>
 		<Label>
@@ -98,6 +103,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514809527</Id>
 		<Name><![CDATA[v_amountOfHybridHeatpump_houses_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>240</Y>
 		<Label>
@@ -117,6 +123,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514811890</Id>
 		<Name><![CDATA[v_amountOfElectricHeatpumps_houses_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>260</Y>
 		<Label>
@@ -136,6 +143,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1722514815083</Id>
 		<Name><![CDATA[v_amountOfDistrictHeating_houses_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>280</Y>
 		<Label>
@@ -175,6 +183,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636587634</Id>
 		<Name><![CDATA[v_amountOfGasBurners_industry_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>60</Y>
 		<Label>
@@ -194,6 +203,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636587636</Id>
 		<Name><![CDATA[v_amountOfHybridHeatpump_industry_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>80</Y>
 		<Label>
@@ -213,6 +223,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636587638</Id>
 		<Name><![CDATA[v_amountOfElectricHeatpumps_industry_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>100</Y>
 		<Label>
@@ -232,6 +243,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636587640</Id>
 		<Name><![CDATA[v_amountOfDistrictHeating_industry_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>120</Y>
 		<Label>
@@ -251,6 +263,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636587642</Id>
 		<Name><![CDATA[v_amountOfHydrogenUseForHeating_industry_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>160</Y>
 		<Label>
@@ -273,6 +286,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636647667</Id>
 		<Name><![CDATA[v_amountOfGasBurners_agriculture_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>220</Y>
 		<Label>
@@ -292,6 +306,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636647669</Id>
 		<Name><![CDATA[v_amountOfHybridHeatpump_agriculture_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>240</Y>
 		<Label>
@@ -311,6 +326,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636647671</Id>
 		<Name><![CDATA[v_amountOfElectricHeatpumps_agriculture_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>260</Y>
 		<Label>
@@ -330,6 +346,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1732636647673</Id>
 		<Name><![CDATA[v_amountOfDistrictHeating_agriculture_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>2170</X>
 		<Y>280</Y>
 		<Label>
@@ -459,6 +476,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1738663322715</Id>
 		<Name><![CDATA[v_amountOfLowTempHeatgrid_services_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>160</Y>
 		<Label>
@@ -478,6 +496,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1738663467936</Id>
 		<Name><![CDATA[v_amountOfLowTempHeatgrid_houses_fr]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>300</Y>
 		<Label>
@@ -517,6 +536,7 @@
 		<Id>1722588367044</Id>
 		<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 		<Description><![CDATA[Threshold for when the gas burner needs to kick in in a hybrid heatpump system]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1720</X>
 		<Y>360</Y>
 		<Label>
@@ -693,34 +713,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1732697933587</Id>
-		<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-		<X>580</X>
-		<Y>140</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_EAConversion]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[null]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1732697933585</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1736870299796</Id>
 		<Name><![CDATA[p_ignoreGridCapacityBattery]]></Name>
 		<X>1680</X>
@@ -773,37 +765,10 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
-	<Variable Class="Parameter">
-		<Id>1738663289483</Id>
-		<Name><![CDATA[p_quinaryHeatingAsset]]></Name>
-		<X>590</X>
-		<Y>520</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_EAConversion]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[null]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1738663289481</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1722589144737</Id>
 		<Name><![CDATA[c_heatDemandEA]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1690</X>
 		<Y>390</Y>
 		<Label>

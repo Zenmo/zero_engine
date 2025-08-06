@@ -5,14 +5,6 @@
 //@JsonTypeName("J_EABuilding")
 public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Serializable {
 
-	//public OL_EAStorageTypes heatStorageType;
-
-	private double temperature_degC;
-	private double temperatureStored_degC;
-	private double initialTemperature_degC;
-	private double minTemperature_degC;
-	private double maxTemperature_degC;
-
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
 	
@@ -206,10 +198,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.lossFactor_WpK = lossFactor_WpK;
 	}
 	
-	public double getInitialTemperature_degC() {
-		return this.initialTemperature_degC;
-	}
-	
 	/*@Override
 	public double getHeatCapacity_JpK() {
 		return heatCapacity_JpK;
@@ -276,7 +264,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     	double[] arr = operate(limitedRatioOfCapacity);
     	return arr;
     }*/
-
+	
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
 		this.ambientTemperature_degC = currentAmbientTemperature_degC;
@@ -335,6 +323,13 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     	this.exteriorReleaseScheduleIndex = this.exteriorReleaseScheduleIndex % this.exteriorReleaseSchedule_kWh.length;
     	
     	return heatReleased_kWh;
+    }
+    
+    @Override
+	public double getRemainingHeatStorageHeat_kWh() {
+    	double remainingHeatStorageHeat_kWh = super.getRemainingHeatStorageHeat_kWh(); 
+    	remainingHeatStorageHeat_kWh += getRemainingHeatBufferHeat_kWh();
+    	return remainingHeatStorageHeat_kWh;
     }
     
     public double getRemainingHeatBufferHeat_kWh() {

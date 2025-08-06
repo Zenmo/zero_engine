@@ -152,14 +152,15 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	
     }
     
-    public void curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentSetpoint_kW) {  // This variable is called curtailmentSetpoint, but maybe its better to call it curtailment amount? it represents the amount of production we need to curtail, not the amount we want to produce.
+    public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // This variable is called curtailmentSetpoint, but maybe its better to call it curtailment amount? it represents the amount of production we need to curtail, not the amount we want to produce.
     	
     	if(this.energyCarrier != curtailedEnergyCarrier) {
-    		return;
+    		//new RuntimeException("Trying to curtail the wrong a production asset with the wrong energyCarrier");
+    		return 0;
     	}
     	
     	double currentProduction_kW = -this.lastFlowsMap.get(curtailedEnergyCarrier);
-    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentSetpoint_kW));
+    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW));
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(curtailedEnergyCarrier, -curtailmentPower_kW);
@@ -174,6 +175,8 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	clear();
+    	
+    	return curtailmentPower_kW;
     }
     
     public double getEnergyCurtailed_kWh() {

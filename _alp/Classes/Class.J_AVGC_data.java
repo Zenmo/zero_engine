@@ -55,6 +55,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgAnnualProductionPV_kWhpWp;
 	public double p_avgRatioRoofPotentialPV;
 	public double p_avgRatioBatteryCapacity_v_Power;
+	public double p_avgRatioHouseBatteryStorageCapacity_v_PVPower;
 	public double p_avgSolarFieldPower_kWppha;
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;
@@ -65,6 +66,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_v2gProbability;
 	public int p_avgEVsPerPublicCharger;
 	public double p_avgPTPower_kWpm2;
+	public double p_avgPTPanelSize_m2;
 	public double p_avgMaxHeatBufferTemperature_degC;
 	public double p_avgMinHeatBufferTemperature_degC;
 	public double p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;

@@ -164,16 +164,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -230,9 +221,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -240,6 +228,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -1019,16 +1010,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -1080,9 +1062,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_name]]></Name>
@@ -1139,6 +1118,12 @@
 				<Name><![CDATA[p_eigenOprit]]></Name>
 			</Parameter>
 			<Parameter>
+				<Name><![CDATA[p_name]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_address]]></Name>
+			</Parameter>
+			<Parameter>
 				<Name><![CDATA[p_cookingMethod]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1146,6 +1131,15 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
@@ -1223,16 +1217,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -1283,7 +1268,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
+				<Name><![CDATA[p_DHheatStorage]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -1299,6 +1284,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -1385,16 +1373,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -1451,9 +1430,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1461,6 +1437,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -1547,16 +1526,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -1608,9 +1578,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
@@ -1665,6 +1632,30 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_purposeBAG]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_name]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_curtailmentMode]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_address]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
@@ -1745,16 +1736,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -1808,9 +1790,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1818,6 +1797,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -1898,16 +1880,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -1964,9 +1937,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1974,6 +1944,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -2054,16 +2027,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -2120,9 +2084,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2130,6 +2091,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -2555,16 +2519,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -2612,7 +2567,10 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
+				<Name><![CDATA[p_isInitialCharger]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_chargingProfileName]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -2646,6 +2604,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_isChargingCentre]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
@@ -2748,16 +2709,7 @@
 				<Name><![CDATA[p_BuildingThermalAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_primaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ownerID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
@@ -2811,7 +2763,7 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_tertiaryHeatingAsset]]></Name>
+				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
@@ -2847,16 +2799,22 @@
 				<Name><![CDATA[p_nbAgriculture]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_quaternaryHeatingAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_ignoreGridCapacityBattery]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_chpAsset]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_quinaryHeatingAsset]]></Name>
+				<Name><![CDATA[p_parentNodeHeat]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_parentNodeElectric]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatingManagement]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>

@@ -66,7 +66,7 @@ if (p_owner != null){
 	//v_currentElectricityPriceConsumption_eurpkWh = 0.3;
 }
 
-f_manageHeatingAssets();
+f_manageHeating();
 
 if( p_householdEV != null){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
@@ -720,6 +720,7 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 
 double f_connectTo_J_EA_House(J_EA j_ea)
 {/*ALCODESTART::1693300820997*/
+/*
 if (j_ea instanceof J_EAConversion) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.GAS_BURNER || j_ea instanceof J_EAConversionHeatPump || j_ea instanceof J_EAConversionHeatDeliverySet || j_ea instanceof J_EAConversionElectricHeater ) {
 		switch (p_heatingType) {
@@ -747,12 +748,12 @@ if (j_ea instanceof J_EAConversion) {
 				else {
 					p_secondaryHeatingAsset = (J_EAConversion)j_ea;
 					// set water/water heatpump source energy-asset
-					/*
-					if( j_ea instanceof J_EAConversionHeatPump && ((J_EAConversionHeatPump)j_ea).getAmbientTempType().equals("WATER") && p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet ) {
-						((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset = p_primaryHeatingAsset;
-						j_ea.updateAmbientTemperature( ((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset.getCurrentTemperature() );
-					}
-					*/
+					
+					//if( j_ea instanceof J_EAConversionHeatPump && ((J_EAConversionHeatPump)j_ea).getAmbientTempType().equals("WATER") && p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet ) {
+						//((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset = p_primaryHeatingAsset;
+						//j_ea.updateAmbientTemperature( ((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset.getCurrentTemperature() );
+					//}
+					
 				}	
             	break;
             case LT_DISTRICTHEAT:
@@ -762,7 +763,7 @@ if (j_ea instanceof J_EAConversion) {
       	}
     }
 }
-
+*/
 
 if (j_ea instanceof J_EAEV) {
 	if (p_householdEV != null){
