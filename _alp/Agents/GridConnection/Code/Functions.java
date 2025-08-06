@@ -638,6 +638,9 @@ if (j_ea instanceof J_EAVehicle) {
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
 		v_liveAssetsMetaData.hasPT = true;
 		c_ptAssets.add(j_ea);
+		if (p_heatingManagement != null) {
+			p_heatingManagement.notInitialized();
+		}
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
