@@ -1127,7 +1127,7 @@ acc_totalOwnElectricityProduction_kW = v_rapidRunData.am_dailyAverageProductionA
 f_getTotalInstalledCapacityOfAssets_rapidRun();
 
 //Recalculate SOC ts for energycoop
-f_recalculateSOC_rapidrun();
+//f_recalculateSOC_rapidrun();
 
 /*ALCODEEND*/}
 
@@ -1479,9 +1479,9 @@ if(coopBattery != null){
 
 double f_recalculateSOC_rapidrun()
 {/*ALCODESTART::1744211126429*/
-double[] dailyAverageBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesSOC_fr.getLength()];
-double[] summerWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_summerWeekBatteriesSOC_fr.getLength()];
-double[] winterWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_winterWeekBatteriesSOC_fr.getLength()];
+double[] dailyAverageBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength()];
+double[] summerWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength()];
+double[] winterWeekBatteriesSOC_fr = new double[v_rapidRunData.ts_dailyAverageBatteriesStoredEnergy_MWh.getLength()];
 
 double totalInstalledBatteryStorageCapacity_MWh = v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 

@@ -110,25 +110,66 @@ public class ZeroAccumulator {
     }
 
     public double getIntegral_kWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegral_kWh(0, this.duration_h);
+    }
+    public double getIntegral_kWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
         if (this.hasTimeSeries) {
-        	this.totalEnergy_kWh = ZeroMath.arraySum(this.timeSeries) * this.signalResolution_h;
+        	if (startTime_h < 0 || endTime_h > duration_h || startTime_h > endTime_h) {
+        		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
+        	}
+        	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
+        	return ZeroMath.arraySum(interval) * this.signalResolution_h;
+        } else if (startTime_h == 0 && endTime_h == duration_h) {
+        	return this.totalEnergy_kWh;
+        } else {
+        	throw new IllegalArgumentException("Impossible to get integral of this interval because no timeseries data is available");
         }
-    	return this.totalEnergy_kWh;
     }
     
     public double getIntegralPos_kWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralPos_kWh(0, this.duration_h);
+    }
+    public double getIntegralPos_kWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
         if (this.hasTimeSeries) {
-        	this.totalPositiveEnergy_kWh = ZeroMath.arraySumPos(this.timeSeries) * this.signalResolution_h;
+        	if (startTime_h < 0 || endTime_h > duration_h || startTime_h > endTime_h) {
+        		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
+        	}
+        	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
+        	return ZeroMath.arraySumPos(interval) * this.signalResolution_h;
+        } else if (startTime_h == 0 && endTime_h == duration_h) {
+        	return this.totalPositiveEnergy_kWh;
+        } else {
+        	throw new IllegalArgumentException("Impossible to get integral of this interval because no timeseries data is available");
         }
-        return this.totalPositiveEnergy_kWh;
     }
     
-
     public double getIntegralNeg_kWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralNeg_kWh(0, this.duration_h);
+    }
+    public double getIntegralNeg_kWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
         if (this.hasTimeSeries) {
-        	this.totalNegativeEnergy_kWh = ZeroMath.arraySumNeg(this.timeSeries) * this.signalResolution_h;
-        }
-        return this.totalNegativeEnergy_kWh;
+        	if (startTime_h < 0 || endTime_h > duration_h || startTime_h > endTime_h) {
+        		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
+        	}
+        	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
+        	return ZeroMath.arraySumNeg(interval) * this.signalResolution_h;
+        } else if (startTime_h == 0 && endTime_h == duration_h) {
+        	return this.totalNegativeEnergy_kWh;
+        } else {
+         	throw new IllegalArgumentException("Impossible to get integral of this interval because no timeseries data is available");
+        }	
+    }
+    
+    public double getIntegral_MWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegral_kWh(startTime_h, endTime_h)/1000;
+    }
+    
+    public double getIntegralPos_MWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralPos_kWh(startTime_h, endTime_h)/1000;
+    }
+
+    public double getIntegralNeg_MWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralNeg_kWh(startTime_h, endTime_h)/1000;
     }
     
     public double getIntegral_MWh() { // For getting total energy when addSteps was called with power as value
@@ -142,7 +183,6 @@ public class ZeroAccumulator {
     public double getIntegralNeg_MWh() { // For getting total energy when addSteps was called with power as value
     	return this.getIntegralNeg_kWh()/1000;
     }
-    
     
     public double[] getTimeSeries_kW() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
@@ -187,6 +227,9 @@ public class ZeroAccumulator {
     	return this.signalResolution_h;
     }
 
+    public double getDuration() {
+    	return duration_h;
+    }
     public ZeroAccumulator add(ZeroAccumulator acc) {
         if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
                 && (this.signalResolution_h == acc.signalResolution_h)) {

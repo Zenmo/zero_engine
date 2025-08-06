@@ -35,7 +35,7 @@ public class J_LoadDurationCurves implements Serializable {
     	this.energyModel = energyModel;
     	calculateLoadDurationCurves(loadArray_kW);	
     }    
-     
+    
     public void calculateLoadDurationCurves(double[] loadArray_kW) {
     	this.arraySize = loadArray_kW.length;
     	if (ds_loadDurationCurveTotal_kW != null) {	
@@ -64,22 +64,51 @@ public class J_LoadDurationCurves implements Serializable {
     	int i_weekday=0;
     	int i_weekend=0;
 
+    	int maxIndex = 0; // index with peak import
+    	for (int i = 1; i < loadArray_kW.length; i++) {
+    	    if (loadArray_kW[i] > loadArray_kW[maxIndex]) {
+    	        maxIndex = i;
+    	    }
+    	}
+    	
+    	int minIndex = 0; // index with peak export
+    	for (int i = 1; i < loadArray_kW.length; i++) {
+    	    if (loadArray_kW[i] < loadArray_kW[minIndex]) {
+    	        minIndex = i;
+    	    }
+    	}
     	//double[] annualElectricityBalanceTimeSeries_kW = acc_annualElectricityBalance_kW.getTimeSeries();
-
+    	boolean replaceSummerWinterWithPeaks = true;
+    	
     	for(int i=0; i<arraySize ; i++) {
     		if (!firstRun) {
     			// First we make sure to store our previous Load Curve
     			ds_previousLoadDurationCurveTotal_kW.add(i*energyModel.p_timeStep_h,ds_loadDurationCurveTotal_kW.getY(i));		
     		}
-    		// summer/winter
-    		if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfSummerWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfSummerWeek_h+24*7) {
-    			netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
-    			i_summer++;
-    		}
-    		if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfWinterWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfWinterWeek_h+24*7) {
-    			netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
-    			i_winter++;
-    		}
+    		
+    		if (replaceSummerWinterWithPeaks) {
+	    		// peak weeks
+	    		if (i >= (minIndex - roundToInt(84 / energyModel.p_timeStep_h)) && i < (minIndex + roundToInt(84 / energyModel.p_timeStep_h)) ) {
+	    			netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
+	    			i_summer++;
+	    		}
+	    		
+	    		if (i >= (maxIndex - roundToInt(84 / energyModel.p_timeStep_h)) && i < (maxIndex + roundToInt(84 / energyModel.p_timeStep_h)) ) {
+	    			netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
+	    			i_winter++;
+	    		}
+			} else {
+				// summer/winter
+				if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfSummerWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfSummerWeek_h+24*7) {
+					netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
+					i_summer++;
+				}
+				if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfWinterWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfWinterWeek_h+24*7) {
+					netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
+					i_winter++;
+				}
+			}
+    		
     		// day/night
     		if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
     			netLoadArrayDaytime_kW[i_day]=-netLoadArrayAnnual_kW[i];

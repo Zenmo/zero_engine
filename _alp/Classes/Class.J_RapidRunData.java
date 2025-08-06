@@ -31,7 +31,7 @@ public class J_RapidRunData {
 	public J_AccumulatorMap<OL_AssetFlowCategories> am_assetFlowsAccumulators_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
 
     public ZeroTimeSeries ts_dailyAverageBatteriesStoredEnergy_MWh;
-    public ZeroTimeSeries ts_dailyAverageBatteriesSOC_fr;
+    //public ZeroTimeSeries ts_dailyAverageBatteriesSOC_fr;
     
     ////Summer week
     public J_AccumulatorMap am_summerWeekBalanceAccumulators_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
@@ -124,12 +124,13 @@ public class J_RapidRunData {
 	    //========== ASSET FLOWS ==========//
 	    if (storesTotalAssetFlows) {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
+	    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
 	    } else {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);
-	    }
-	  
-	    ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24.0, simDuration_h);
-	    ts_dailyAverageBatteriesSOC_fr = new ZeroTimeSeries(24.0, simDuration_h);
+		    ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24.0, simDuration_h);
+	    }	  
+
+	    //ts_dailyAverageBatteriesSOC_fr = new ZeroTimeSeries(24.0, simDuration_h);
 	    
 	    //========== SUMMER WEEK ACCUMULATORS ==========//
 	    am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 168.0);
@@ -215,7 +216,7 @@ public class J_RapidRunData {
   	    }
 
         ts_dailyAverageBatteriesStoredEnergy_MWh.reset();
-        ts_dailyAverageBatteriesSOC_fr.reset();
+        //ts_dailyAverageBatteriesSOC_fr.reset();
         
     	//Summerweek
     	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 24*7);
@@ -293,7 +294,7 @@ public class J_RapidRunData {
     	
     	clone.am_assetFlowsAccumulators_kW = this.am_assetFlowsAccumulators_kW.getClone();
   	    clone.ts_dailyAverageBatteriesStoredEnergy_MWh=this.ts_dailyAverageBatteriesStoredEnergy_MWh.getClone();
-        clone.ts_dailyAverageBatteriesSOC_fr=this.ts_dailyAverageBatteriesSOC_fr.getClone();
+        //clone.ts_dailyAverageBatteriesSOC_fr=this.ts_dailyAverageBatteriesSOC_fr.getClone();
         
         ////Summer week
         clone.am_summerWeekBalanceAccumulators_kW=this.am_summerWeekBalanceAccumulators_kW.getClone();
@@ -483,14 +484,14 @@ public class J_RapidRunData {
     	acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     	acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
     	
-    	ts_dailyAverageBatteriesStoredEnergy_MWh.addStep(currentStoredEnergyBatteries_MWh);
+   		ts_dailyAverageBatteriesStoredEnergy_MWh.addStep(currentStoredEnergyBatteries_MWh);
     	
-    	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
+   		/*if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
     		ts_dailyAverageBatteriesSOC_fr.addStep(currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
     	}
     	else{
     		ts_dailyAverageBatteriesSOC_fr.addStep(0);	
-    	}
+    	}*/
     }
     
     public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {
@@ -548,6 +549,21 @@ public class J_RapidRunData {
     	return maxIndex*timeStep_h;
     }
     
+    public double getPeakDeliveryWeekStart_h() {
+    	double peakTime_h = getPeakDeliveryTime_h();
+    	return getWeekStart_h(peakTime_h);
+    }
+ 
+    public double getPeakFeedinWeekStart_h() {
+    	double peakTime_h = getPeakFeedinTime_h();
+    	return getWeekStart_h(peakTime_h);
+    }
+    
+    public double getWeekStart_h(double peakTime_h) {
+    	double duration_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDuration();
+    	return min(duration_h-7*24,max(0,peakTime_h - 3.5*24)); // return start of week hour, capped between 0 and simDuration_h - 7*24
+    }
+    
     public Double getPeakFeedinTime_h() {
     	double[] elecBalance_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
 
@@ -559,6 +575,17 @@ public class J_RapidRunData {
     	}
     	
     	return minIndex*timeStep_h;
+    }
+    
+    public ZeroTimeSeries getBatteriesSOCAcc_fr() {
+    	double[] array = this.ts_dailyAverageBatteriesStoredEnergy_MWh.getTimeSeries();
+    	double factor_fr = 1/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+    	double[] scaledArray = ZeroMath.arrayMultiply(array, factor_fr);
+    	ZeroTimeSeries ts = new ZeroTimeSeries(ts_dailyAverageBatteriesStoredEnergy_MWh.getSignalResolution_h(), ts_dailyAverageBatteriesStoredEnergy_MWh.getDuration());
+    	for (int i=0; i<array.length; i++) {
+    		ts.addStep(scaledArray[i]);
+    	}
+    	return ts;
     }
     
     public Pair<Double, Double> getFlexPotential() {

@@ -517,3 +517,41 @@ J_LoadDurationCurves f_getDuurkrommes()
 return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
 /*ALCODEEND*/}
 
+DataSet f_getPeakImportWeekDataSet()
+{/*ALCODESTART::1754461654982*/
+double[] elecBalance_kW = acc_annualElectricityBalance_kW.getTimeSeries_kW();
+
+Integer maxIndex = 0; // index with peak import
+for (int i = 1; i < elecBalance_kW.length; i++) {
+    if (elecBalance_kW[i] > elecBalance_kW[maxIndex]) {
+        maxIndex = i;
+    }
+}
+
+double peakTime_h = maxIndex*energyModel.p_timeStep_h;
+double duration_h = acc_annualElectricityBalance_kW.getDuration();
+double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
+DataSet ds = acc_annualElectricityBalance_kW.getDataSet(energyModel.p_runStartTime_h, accStartTime_h, accStartTime_h+24*7);
+   
+return ds;
+/*ALCODEEND*/}
+
+DataSet f_getPeakExportWeekDataSet()
+{/*ALCODESTART::1754462048041*/
+double[] elecBalance_kW = acc_annualElectricityBalance_kW.getTimeSeries_kW();
+
+Integer minIndex = 0; // index with peak import
+for (int i = 1; i < elecBalance_kW.length; i++) {
+    if (elecBalance_kW[i] < elecBalance_kW[minIndex]) {
+        minIndex = i;
+    }
+}
+
+double peakTime_h = minIndex*energyModel.p_timeStep_h;
+double duration_h = acc_annualElectricityBalance_kW.getDuration();
+double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
+DataSet ds = acc_annualElectricityBalance_kW.getDataSet(energyModel.p_runStartTime_h, accStartTime_h, accStartTime_h+24*7);
+   
+return ds;
+/*ALCODEEND*/}
+

@@ -124,6 +124,10 @@ public class ZeroTimeSeries implements Serializable {
 	    	return this.signalResolution_h;
 	    }
 
+	    public double getDuration() {
+	    	return duration_h;
+	    }
+	    
 	    public ZeroTimeSeries add(ZeroTimeSeries zts) {
 	        if ((this.duration_h == zts.duration_h) && (this.signalResolution_h == zts.signalResolution_h)) {
 	            for (int i = 0; i < this.timeSeries.length; i++) {

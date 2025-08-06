@@ -586,6 +586,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744211126429</Id>
 		<Name><![CDATA[f_recalculateSOC_rapidrun]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1010</X>
 		<Y>270</Y>
 		<Label>
