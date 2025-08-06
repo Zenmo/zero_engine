@@ -5,6 +5,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1664441996771</Id>
 		<Name><![CDATA[f_manageHeatingAssets_overwrite]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>920</X>
 		<Y>420</Y>
 		<Label>
@@ -150,6 +151,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1676477303264</Id>
 		<Name><![CDATA[f_heatWithHeatpump]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1700</X>
 		<Y>110</Y>
 		<Label>
@@ -166,6 +168,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1676976246060</Id>
 		<Name><![CDATA[f_heatWithHybridHeatpump]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1700</X>
 		<Y>170</Y>
 		<Label>
@@ -272,6 +275,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1702369252216</Id>
 		<Name><![CDATA[setHeatingTargetTemp]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1700</X>
 		<Y>90</Y>
 		<Label>
@@ -288,6 +292,7 @@
 		<ReturnType>boolean</ReturnType>
 		<Id>1702369294416</Id>
 		<Name><![CDATA[f_calcCheapestHeatingPrice]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1720</X>
 		<Y>190</Y>
 		<Label>
@@ -304,6 +309,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726129903799</Id>
 		<Name><![CDATA[f_removeCurrentHeatingSystem]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1090</X>
 		<Y>20</Y>
 		<Label>
@@ -320,6 +326,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726301776809</Id>
 		<Name><![CDATA[f_heatWithGasburner]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1700</X>
 		<Y>130</Y>
 		<Label>
@@ -336,6 +343,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1726301785545</Id>
 		<Name><![CDATA[f_heatWithDistrictHeat]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1700</X>
 		<Y>150</Y>
 		<Label>
@@ -404,6 +412,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1752073360816</Id>
 		<Name><![CDATA[f_heatWithLTDistrictHeat]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1700</X>
 		<Y>210</Y>
 		<Label>

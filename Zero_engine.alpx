@@ -815,40 +815,12 @@
 				<Id>1665486884039</Id>
 				<Name><![CDATA[OL_GridConnectionHeatingType]]></Name>
 				<Option>
-					<Id>1665486892834</Id>
-					<Name><![CDATA[HEATPUMP_AIR]]></Name>
-				</Option>
-				<Option>
 					<Id>1665486901407</Id>
 					<Name><![CDATA[NONE]]></Name>
 				</Option>
 				<Option>
-					<Id>1665488083020</Id>
-					<Name><![CDATA[HEATPUMP_GASPEAK]]></Name>
-				</Option>
-				<Option>
-					<Id>1666258251099</Id>
-					<Name><![CDATA[HEATPUMP_BOILERPEAK]]></Name>
-				</Option>
-				<Option>
-					<Id>1676468183199</Id>
-					<Name><![CDATA[GASFIRED_CHPPEAK]]></Name>
-				</Option>
-				<Option>
-					<Id>1677498067952</Id>
-					<Name><![CDATA[LT_RESIDUAL_HEATPUMP_GASPEAK]]></Name>
-				</Option>
-				<Option>
-					<Id>1678098224204</Id>
-					<Name><![CDATA[DISTRICTHEATDECENTRAL]]></Name>
-				</Option>
-				<Option>
-					<Id>1678457573856</Id>
-					<Name><![CDATA[DISTRICT_EBOILER_CHP]]></Name>
-				</Option>
-				<Option>
 					<Id>1665486884694</Id>
-					<Name><![CDATA[GASBURNER]]></Name>
+					<Name><![CDATA[GAS_BURNER]]></Name>
 				</Option>
 				<Option>
 					<Id>1711395634190</Id>
@@ -863,20 +835,20 @@
 					<Name><![CDATA[HYDROGENBURNER]]></Name>
 				</Option>
 				<Option>
+					<Id>1753785520927</Id>
+					<Name><![CDATA[GAS_CHP]]></Name>
+				</Option>
+				<Option>
 					<Id>1665486897604</Id>
 					<Name><![CDATA[DISTRICTHEAT]]></Name>
 				</Option>
 				<Option>
-					<Id>1711395650860</Id>
-					<Name><![CDATA[OTHER]]></Name>
-				</Option>
-				<Option>
-					<Id>1715094777291</Id>
-					<Name><![CDATA[MIXED]]></Name>
-				</Option>
-				<Option>
 					<Id>1752073245369</Id>
 					<Name><![CDATA[LT_DISTRICTHEAT]]></Name>
+				</Option>
+				<Option>
+					<Id>1753795270678</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1319,8 +1291,17 @@
 				<Name><![CDATA[Deprecated]]></Name>
 			</Folder>
 			<Folder>
+				<Id>1753194088788</Id>
+				<Name><![CDATA[HeatingManagement]]></Name>
+			</Folder>
+			<Folder>
 				<Id>1753342021373</Id>
 				<Name><![CDATA[SerialisationMixins]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1754486787558</Id>
+				<Name><![CDATA[Unused]]></Name>
+				<ParentId>1753194088788</ParentId>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1732,6 +1713,46 @@
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
+				<Id>1753088398654</Id>
+				<Name><![CDATA[J_HeatingManagementBuildingSimple]]></Name>
+				<Folder>1754486787558</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753090559114</Id>
+				<Name><![CDATA[J_HeatingManagementProfileSimple]]></Name>
+				<Folder>1754486787558</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753100278618</Id>
+				<Name><![CDATA[J_HeatingManagementProfileHybridHeatPump]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753102129145</Id>
+				<Name><![CDATA[J_HeatingManagementDistrictHeating]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753172542012</Id>
+				<Name><![CDATA[J_HeatingManagementNeighborhood]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753167599716</Id>
+				<Name><![CDATA[J_HeatingManagementBuildingHybridHeatPump]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753795104493</Id>
+				<Name><![CDATA[I_HeatingManagement]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753972840287</Id>
+				<Name><![CDATA[J_HeatingManagementGhost]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
 				<Id>1753106536266</Id>
 				<Name><![CDATA[J_AssetFlows]]></Name>
 			</JavaClass>
@@ -1774,6 +1795,21 @@
 				<Id>1753342010985</Id>
 				<Name><![CDATA[ActorMixin]]></Name>
 				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1754405220949</Id>
+				<Name><![CDATA[J_HeatingManagementBuildingWithPTBufferSimple]]></Name>
+				<Folder>1754486787558</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1754412462104</Id>
+				<Name><![CDATA[J_HeatingManagementProfileWithPTBufferSimple]]></Name>
+				<Folder>1754486787558</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1754413726650</Id>
+				<Name><![CDATA[J_HeatingManagementSimple]]></Name>
+				<Folder>1753194088788</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

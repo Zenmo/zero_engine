@@ -242,7 +242,7 @@
 		<Id>1716890117265</Id>
 		<Name><![CDATA[f_getActiveGridConnections]]></Name>
 		<X>1580</X>
-		<Y>720</Y>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -274,7 +274,7 @@
 		<Id>1716897568717</Id>
 		<Name><![CDATA[f_getConnectionOwners]]></Name>
 		<X>1580</X>
-		<Y>760</Y>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -290,7 +290,7 @@
 		<Id>1716899946694</Id>
 		<Name><![CDATA[f_getTopLevelGridCapacity_kW]]></Name>
 		<X>1580</X>
-		<Y>780</Y>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -306,7 +306,7 @@
 		<Id>1717058801652</Id>
 		<Name><![CDATA[f_getEnergyAssets]]></Name>
 		<X>1580</X>
-		<Y>800</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -322,7 +322,7 @@
 		<Id>1718289616227</Id>
 		<Name><![CDATA[f_getGridNodesTopLevel]]></Name>
 		<X>1580</X>
-		<Y>850</Y>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -338,7 +338,7 @@
 		<Id>1718289761647</Id>
 		<Name><![CDATA[f_getGridNodesNotTopLevel]]></Name>
 		<X>1580</X>
-		<Y>870</Y>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -408,7 +408,7 @@
 		<Id>1727167397666</Id>
 		<Name><![CDATA[f_getPausedGridConnections]]></Name>
 		<X>1580</X>
-		<Y>740</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

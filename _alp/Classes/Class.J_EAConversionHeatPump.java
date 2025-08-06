@@ -89,16 +89,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		//traceln("Heatpump output temperature: " + this.outputTemperature_degC);
 		return this.COP_r;
 	}
-
-	@Override
-	public void f_updateAllFlows(double powerFraction_fr) {
-		if (powerFraction_fr > 0) {
-			super.f_updateAllFlows(powerFraction_fr);
-		}
-		else {
-			this.lastFlowsMap.clear();
-		}
-	}
 	
 	@Override
 	public void operate(double ratioOfCapacity) {
