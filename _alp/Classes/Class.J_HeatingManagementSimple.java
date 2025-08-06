@@ -21,7 +21,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     private double startOfNight_h = 23;
     private double dayTimeSetPoint_degC = 19;
     private double nightTimeSetPoint_degC = 19;
-    private double heatingKickinTreshhold_degC = 1;
+    private double heatingKickinTreshhold_degC = 0;// -> If not 0, need to create better management / system definition, else on/off/on/off behaviour.
     
 	/**
      * Default constructor
