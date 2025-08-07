@@ -654,7 +654,7 @@ if (j_ea instanceof J_EAVehicle) {
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
-	//} else if (j_ea instanceof J_EAConversionElectrolyser) {
+	} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		//c_electrolyserAssets.add(j_ea);
 	} else {
 		// Heating Assets

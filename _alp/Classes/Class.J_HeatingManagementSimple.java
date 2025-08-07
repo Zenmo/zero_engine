@@ -30,7 +30,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	
     }
     
-    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementSimple( GridConnection gc,OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     }
@@ -169,6 +169,22 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	// TODO: Add a check if the power of the asset is sufficient?
     	// TODO: Add a check if the heatingAsset is of the correct type, e.g. not a hydrogen burner or not a CHP.
     	this.heatingAsset = gc.c_heatingAssets.get(0);
+    	if (heatingAsset instanceof J_EAConversionGasBurner) {
+    		this.currentHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
+    	} else if (heatingAsset instanceof J_EAConversionHeatPump) {
+    		if (gc.p_parentNodeHeatID != null) {
+    			this.currentHeatingType = OL_GridConnectionHeatingType.LT_DISTRICTHEAT;
+    		} else {
+    			this.currentHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
+    		}
+    	} else if (heatingAsset instanceof J_EAConversionHeatDeliverySet) {
+    		this.currentHeatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
+    	} else if (heatingAsset instanceof J_EAConversionHydrogenBurner) {
+    		this.currentHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
+    	} else {
+    		throw new RuntimeException(this.getClass() + " Unsupported heating asset!");    		
+    	}
+
     	this.isInitialized = true;
     }
     
