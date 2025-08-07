@@ -96,14 +96,15 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     public void operate(double ratioOfCapacity) {
 		ratioOfCapacity = profilePointer.getCurrentValue();
 		
-		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
+		//if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
 			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
 			
 	    	this.energyUse_kW = -currentProduction_kW;
 	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
 	    	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
-		}
+		//}
+	    throw new RuntimeException("J_EAProduction operate override is called!");
 	}
 	
 	@Override

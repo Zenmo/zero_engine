@@ -1561,6 +1561,7 @@
 			<JavaClass>
 				<Id>1671107396262</Id>
 				<Name><![CDATA[J_EAConversionElektrolyser]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>

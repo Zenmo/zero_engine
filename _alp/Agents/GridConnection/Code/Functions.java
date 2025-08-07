@@ -654,7 +654,7 @@ if (j_ea instanceof J_EAVehicle) {
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
-	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
+	//} else if (j_ea instanceof J_EAConversionElectrolyser) {
 		//c_electrolyserAssets.add(j_ea);
 	} else {
 		// Heating Assets
@@ -701,26 +701,6 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
 	c_profileAssets.add((J_EAProfile)j_ea);
-	/*
-	if (((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHARGING){
-		//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-		//c_EvAssets.add(j_ea);
-	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
-		//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
-		//c_fixedConsumptionElectricAssets.add(j_ea);
-	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
-		//v_windProductionElectric_kW += flowsArray[0];
-		//c_windAssets.add(j_ea);
-		// TODO: Add some to the total installed wind (of this GC, its GN, the energymodel (and its parent coop))
-	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
-		//Do nothing
-	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
-		//Do nothing
-	} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
-		//c_electricHeatpumpAssets.add(j_ea);
-	} else {
-		traceln( "Unrecognized profile type!");
-	}*/
 } else if (j_ea instanceof J_EADieselTractor) {
 	c_profileAssets.add((J_EAProfile)j_ea);
 } else if (j_ea instanceof J_EACharger) {
@@ -1317,18 +1297,6 @@ if (!setActive) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 	v_batteryStoredEnergy_kWh = 0;
 
-/*	v_fixedConsumptionElectric_kW = 0;
-	v_electricHobConsumption_kW = 0;
-	v_heatPumpElectricityConsumption_kW = 0;
-	v_hydrogenElectricityConsumption_kW = 0;
-	v_evChargingPowerElectric_kW = 0;
-	v_districtHeatDelivery_kW = 0;
-	v_batteryPowerElectric_kW = 0;
-	v_windProductionElectric_kW = 0;
-	v_pvProductionElectric_kW = 0;
-	v_ptProductionHeat_kW = 0;
-	v_conversionPowerElectric_kW = 0;
-	v_CHPProductionElectric_kW = 0;*/
 	v_isActive = setActive;
 }
 else {
@@ -1346,7 +1314,8 @@ else {
 	
 	v_isActive = setActive; // v_isActive must be true before calling updateActiveAssetData!
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
-	//v_isActive = !setActive; // v_isActive must be true before calling updateActiveAssetData!
+	v_liveAssetsMetaData.activeAssetFlows.forEach(x->energyModel.f_addAssetFlow(x));
+	
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, v_liveAssetsMetaData.totalInstalledWindPower_kW, true);

@@ -97,12 +97,13 @@ public class J_LiveData {
     	this.data_gridCapacitySupply_kW.add(currentTime_h, -connectionMetaData.contractedFeedinCapacity_kW);
 
     	//// Gather specific electricity flows from corresponding energy assets
-		for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
+		//for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
+		for (OL_AssetFlowCategories AC : dsm_liveAssetFlows_kW.keySet()) {	
 			//traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
-			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
+			/*if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
 				traceln("Trying to add assetflow: %s", AC);
 				traceln("Parent GC: %s", ((GridConnection)parentAgent).p_gridConnectionID);
-			}
+			}*/
 			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, roundToDecimal(assetFlowsMap.get(AC),3));
 		}
     	

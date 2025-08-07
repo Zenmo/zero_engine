@@ -1,10 +1,10 @@
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1671111800831*/
-for( J_EA v : c_conversionAssets ){
+/*for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElektrolyser) {
 		f_manageElektrolyser((J_EAConversionElektrolyser)v);
 	}
-}
+}*/
 
 f_manageCharging();
 

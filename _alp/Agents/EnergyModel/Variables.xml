@@ -1602,7 +1602,7 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[J_ValueMap]]></Type>
+			<Type><![CDATA[J_ValueMap<OL_AssetFlowCategories>]]></Type>
 			<InitialValue Class="CodeValue">
 				<Code><![CDATA[new J_ValueMap(OL_AssetFlowCategories.class)]]></Code>
 			</InitialValue>

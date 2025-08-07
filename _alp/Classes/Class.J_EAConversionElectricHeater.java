@@ -23,6 +23,7 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
+		this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
 		registerEnergyAsset();
 	}
 	

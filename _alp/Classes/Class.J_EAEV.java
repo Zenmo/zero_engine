@@ -85,9 +85,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		if (chargePower_kW >= 0) { // charging
 			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
 		} else {
-			traceln("Charge Power: %s", chargePower_kW);
-			traceln("Vehicle scaling: %s", vehicleScaling);
-			traceln("charge capacity: %s", capacityElectric_kW);
 			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 		}
 	}

@@ -1629,7 +1629,7 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 		}
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
 	}
-	if (AC == OL_AssetFlowCategories.V2GPower_kW) { // also add evCharging!
+	if (AC == OL_AssetFlowCategories.V2GPower_kW && !v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
 		dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 		
 		for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {

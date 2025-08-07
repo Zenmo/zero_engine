@@ -21,6 +21,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1671112355094</Id>
 		<Name><![CDATA[f_manageElektrolyser]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>800</X>
 		<Y>480</Y>
 		<Label>

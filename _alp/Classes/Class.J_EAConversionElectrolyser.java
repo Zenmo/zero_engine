@@ -35,7 +35,8 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 		this.energyAssetType = OL_EnergyAssetType.ELECTROLYSER;
 
 	    this.energyCarrierProduced = OL_EnergyCarriers.HYDROGEN;
-	    this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;	   
+	    this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;	
+	    this.assetFlowCategory = OL_AssetFlowCategories.electrolyserElectricityConsumption_kW;
 	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);

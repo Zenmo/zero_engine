@@ -39,9 +39,13 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 		    this.V2GCapable = V2GCapable;
 	    	this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);		
 			this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+			if(V2GCapable) {
+				this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
+			} else {
+				this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+			}
 			this.registerEnergyAsset();
 	    }
-	    
 	    
 	    public void f_updateAllFlows( double t_h, boolean doV1G, boolean doV2G) {
 	    	// Powerfraction is calculated below, argument is the current time (energyModel.t_h)

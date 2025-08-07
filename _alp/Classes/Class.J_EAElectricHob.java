@@ -19,6 +19,7 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 		this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 		this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
 	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_HOB;
+	    this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW;
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
@@ -32,7 +33,8 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW - heatProduction_kW); // This represents losses!
 		this.heatProduced_kWh += heatProduction_kW * timestep_h;
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
-		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
+		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);	
+		assetFlowsMap.put(this.assetFlowCategory, electricityConsumption_kW);
     }
     
 	@Override

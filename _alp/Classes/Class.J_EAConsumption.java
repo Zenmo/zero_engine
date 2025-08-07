@@ -35,7 +35,9 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			profilePointer = profile;
 		}		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
-		this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //
+		if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+			this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //
+		}
 		registerEnergyAsset();
     }
 
