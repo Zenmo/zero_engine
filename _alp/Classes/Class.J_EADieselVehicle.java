@@ -35,9 +35,9 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     public void f_updateAllFlows(double powerFraction_fr) {
     	
     	flowsMap.put(OL_EnergyCarriers.DIESEL, this.energyUse_kW);
-    	    	
+
     	if (parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
     	}
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;

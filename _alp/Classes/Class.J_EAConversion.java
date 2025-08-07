@@ -52,6 +52,9 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 		this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
     	this.flowsMap.put(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
     	this.flowsMap.addFlow(this.energyCarrierProduced, -ratioOfCapacity * this.outputCapacity_kW); // We don't put here, in case the energy carrier is the same
+    	if (this.assetFlowCategory != null) {
+    		this.assetFlowsMap.put(this.assetFlowCategory, ratioOfCapacity * this.outputCapacity_kW);
+    	}
 	}
 	
 	public void setInputCapacity_kW ( double inputCapacity_kW ) {

@@ -17,14 +17,14 @@ fm_weekendImports_MWh = new J_FlowsMap();
 fm_weekendExports_MWh = new J_FlowsMap();
 
 // DataSetMaps
-dsm_liveConsumption_kW = new J_DataSetMap();
-dsm_liveProduction_kW = new J_DataSetMap();
-dsm_dailyAverageConsumptionDataSets_kW = new J_DataSetMap();
-dsm_dailyAverageProductionDataSets_kW = new J_DataSetMap();
-dsm_summerWeekConsumptionDataSets_kW = new J_DataSetMap();
-dsm_summerWeekProductionDataSets_kW = new J_DataSetMap();
-dsm_winterWeekConsumptionDataSets_kW = new J_DataSetMap();
-dsm_winterWeekProductionDataSets_kW = new J_DataSetMap();
+dsm_liveConsumption_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_liveProduction_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_dailyAverageConsumptionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_dailyAverageProductionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_summerWeekConsumptionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_summerWeekProductionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_winterWeekConsumptionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
+dsm_winterWeekProductionDataSets_kW = new J_DataSetMap(OL_EnergyCarriers.class);
 
 /*ALCODEEND*/}
 
@@ -62,7 +62,8 @@ v_activeConsumptionEnergyCarriers = data.getLiveData().activeConsumptionEnergyCa
 v_activeProductionEnergyCarriers = data.getLiveData().activeProductionEnergyCarriers;
 
 //Update active asset booleans
-f_updateLiveActiveAssetBooleans(data);
+//f_updateLiveActiveAssetBooleans(data);
+v_activeAssetFlows = data.getLiveData().assetsMetaData.activeAssetFlows;
 
 //Update variables
 f_updateVariables(data);
@@ -265,6 +266,8 @@ double f_updateLiveDatasets(I_EnergyData data)
 //Datasets for live charts
 //========== CONSUMPTION ==========//
 dsm_liveConsumption_kW = data.getLiveData().dsm_liveDemand_kW;
+dsm_liveAssetFlowsAccumulators_kW = data.getLiveData().dsm_liveAssetFlows_kW;
+/*
 v_dataElectricityBaseloadConsumptionLiveWeek_kW = data.getLiveData().data_baseloadElectricityDemand_kW;
 v_dataElectricityForHeatConsumptionLiveWeek_kW = data.getLiveData().data_heatPumpElectricityDemand_kW;
 v_dataElectricityForTransportConsumptionLiveWeek_kW = data.getLiveData().data_electricVehicleDemand_kW;
@@ -272,15 +275,16 @@ v_dataElectricityForStorageConsumptionLiveWeek_kW = data.getLiveData().data_batt
 v_dataElectricityForHydrogenConsumptionLiveWeek_kW = data.getLiveData().data_hydrogenElectricityDemand_kW;
 v_dataElectricityForCookingConsumptionLiveWeek_kW = data.getLiveData().data_cookingElectricityDemand_kW;
 v_dataDistrictHeatConsumptionLiveWeek_kW = data.getLiveData().data_districtHeatDelivery_kW;
-
+*/
 //========== PRODUCTION ==========//
 dsm_liveProduction_kW = data.getLiveData().dsm_liveSupply_kW;
+/*
 v_dataWindElectricityProductionLiveWeek_kW = data.getLiveData().data_windGeneration_kW;
 v_dataPVElectricityProductionLiveWeek_kW = data.getLiveData().data_PVGeneration_kW;
 v_dataStorageElectricityProductionLiveWeek_kW = data.getLiveData().data_batteryDischarging_kW;
 v_dataV2GElectricityProductionLiveWeek_kW = data.getLiveData().data_V2GSupply_kW;
 v_dataCHPElectricityProductionLiveWeek_kW = data.getLiveData().data_CHPElectricityProductionLiveWeek_kW;
-
+*/
 //SOC
 v_dataBatterySOCLiveWeek_fr.reset();
 for (int i = 0; i < data.getLiveData().data_batteryStoredEnergyLiveWeek_MWh.size(); i++) {
@@ -310,6 +314,10 @@ double f_updateWeeklyDatasets(I_EnergyData data)
 // Consumption
 double summerWeekStartTime_h = energyModel.p_startOfSummerWeek_h - energyModel.p_runStartTime_h;
 dsm_summerWeekConsumptionDataSets_kW = data.getRapidRunData().am_summerWeekConsumptionAccumulators_kW.getDataSetMap(summerWeekStartTime_h);
+for (OL_AssetFlowCategories AC : data.getRapidRunData().am_assetFlowsSummerWeek_kW.keySet()) {
+	dsm_assetFlowsSummerWeek_kW.put(AC, data.getRapidRunData().am_assetFlowsSummerWeek_kW.get(AC).getDataSet(summerWeekStartTime_h));
+}
+/*
 v_dataElectricityBaseloadConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekBaseloadElectricityConsumption_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityForHeatConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekHeatPumpElectricityConsumption_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityForTransportConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekElectricVehicleConsumption_kW.getDataSet(summerWeekStartTime_h);
@@ -317,15 +325,16 @@ v_dataElectricityForStorageConsumptionSummerWeek_kW = data.getRapidRunData().acc
 v_dataElectricityForCookingConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekElectricCookingConsumption_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityForHydrogenConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekElectrolyserElectricityConsumption_kW.getDataSet(summerWeekStartTime_h);
 v_dataDistrictHeatConsumptionSummerWeek_kW = data.getRapidRunData().acc_summerWeekDistrictHeatingConsumption_kW.getDataSet(summerWeekStartTime_h);
-
+*/
 // Production
 dsm_summerWeekProductionDataSets_kW = data.getRapidRunData().am_summerWeekProductionAccumulators_kW.getDataSetMap(summerWeekStartTime_h);
+/*
 v_dataElectricityWindProductionSummerWeek_kW = data.getRapidRunData().acc_summerWeekWindProduction_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityPVProductionSummerWeek_kW = data.getRapidRunData().acc_summerWeekPVProduction_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityStorageProductionSummerWeek_kW = data.getRapidRunData().acc_summerWeekBatteriesProduction_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityV2GProductionSummerWeek_kW = data.getRapidRunData().acc_summerWeekV2GProduction_kW.getDataSet(summerWeekStartTime_h);
 v_dataElectricityCHPProductionSummerWeek_kW = data.getRapidRunData().acc_summerWeekCHPElectricityProduction_kW.getDataSet(summerWeekStartTime_h);
-
+*/
 // Other
 v_dataNetLoadSummerWeek_kW = data.getRapidRunData().am_summerWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDataSet(summerWeekStartTime_h);
 
@@ -347,22 +356,27 @@ for (int i = 0; i < summerWeekBatteryStorage.size(); i++) {
 // Consumption
 double winterWeekStartTime_h = energyModel.p_startOfWinterWeek_h - energyModel.p_runStartTime_h;
 dsm_winterWeekConsumptionDataSets_kW = data.getRapidRunData().am_winterWeekConsumptionAccumulators_kW.getDataSetMap(winterWeekStartTime_h);
-v_dataElectricityBaseloadConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekBaseloadElectricityConsumption_kW.getDataSet(winterWeekStartTime_h);
+for (OL_AssetFlowCategories AC : data.getRapidRunData().am_assetFlowsWinterWeek_kW.keySet()) {
+	dsm_assetFlowsWinterWeek_kW.put(AC, data.getRapidRunData().am_assetFlowsWinterWeek_kW.get(AC).getDataSet(winterWeekStartTime_h));
+}
+
+/*v_dataElectricityBaseloadConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekBaseloadElectricityConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityForHeatConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekHeatPumpElectricityConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityForTransportConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekElectricVehicleConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityForStorageConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekBatteriesConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityForCookingConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekElectricCookingConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityForHydrogenConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekElectrolyserElectricityConsumption_kW.getDataSet(winterWeekStartTime_h);
 v_dataDistrictHeatConsumptionWinterWeek_kW = data.getRapidRunData().acc_winterWeekDistrictHeatingConsumption_kW.getDataSet(winterWeekStartTime_h);
-
+*/
 // Production
 dsm_winterWeekProductionDataSets_kW = data.getRapidRunData().am_winterWeekProductionAccumulators_kW.getDataSetMap(winterWeekStartTime_h);
+/*
 v_dataElectricityWindProductionWinterWeek_kW = data.getRapidRunData().acc_winterWeekWindProduction_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityPVProductionWinterWeek_kW = data.getRapidRunData().acc_winterWeekPVProduction_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityStorageProductionWinterWeek_kW = data.getRapidRunData().acc_winterWeekBatteriesProduction_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityV2GProductionWinterWeek_kW = data.getRapidRunData().acc_winterWeekV2GProduction_kW.getDataSet(winterWeekStartTime_h);
 v_dataElectricityCHPProductionWinterWeek_kW = data.getRapidRunData().acc_winterWeekCHPElectricityProduction_kW.getDataSet(winterWeekStartTime_h);
-
+*/
 // Other
 v_dataNetLoadWinterWeek_kW = data.getRapidRunData().am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDataSet(winterWeekStartTime_h);
 
@@ -388,6 +402,8 @@ double f_updateYearlyDatasets(I_EnergyData data)
 double startTime_h = energyModel.p_runStartTime_h;
 dsm_dailyAverageConsumptionDataSets_kW = data.getRapidRunData().am_dailyAverageConsumptionAccumulators_kW.getDataSetMap(startTime_h);
 dsm_dailyAverageProductionDataSets_kW = data.getRapidRunData().am_dailyAverageProductionAccumulators_kW.getDataSetMap(startTime_h);
+dsm_assetFlowsAccumulators_kW = data.getRapidRunData().am_assetFlowsAccumulators_kW.getDataSetMap(startTime_h);
+/*
 v_dataElectricityBaseloadConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageBaseloadElectricityConsumption_kW.getDataSet(startTime_h);
 v_dataElectricityForHeatConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageHeatPumpElectricityConsumption_kW.getDataSet(startTime_h);
 v_dataElectricityForTransportConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectricVehicleConsumption_kW.getDataSet(startTime_h);
@@ -395,15 +411,17 @@ v_dataElectricityForStorageConsumptionYear_kW = data.getRapidRunData().acc_daily
 v_dataElectricityForHydrogenConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectrolyserElectricityConsumption_kW.getDataSet(startTime_h);
 v_dataElectricityForCookingConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageElectricCookingConsumption_kW.getDataSet(startTime_h);
 v_dataDistrictHeatConsumptionYear_kW = data.getRapidRunData().acc_dailyAverageDistrictHeatingConsumption_kW.getDataSet(startTime_h);
+*/
 data_dailyAverageFinalEnergyConsumption_kW = data.getRapidRunData().acc_dailyAverageFinalEnergyConsumption_kW.getDataSet(startTime_h);
 
 //Supply
+/*
 v_dataElectricityWindProductionYear_kW = data.getRapidRunData().acc_dailyAverageWindProduction_kW.getDataSet(startTime_h);
 v_dataElectricityPVProductionYear_kW = data.getRapidRunData().acc_dailyAveragePVProduction_kW.getDataSet(startTime_h);
 v_dataElectricityStorageProductionYear_kW = data.getRapidRunData().acc_dailyAverageBatteriesProduction_kW.getDataSet(startTime_h);
 v_dataElectricityV2GProductionYear_kW = data.getRapidRunData().acc_dailyAverageV2GProduction_kW.getDataSet(startTime_h);
 v_dataElectricityCHPProductionYear_kW = data.getRapidRunData().acc_dailyAverageCHPElectricityProduction_kW.getDataSet(startTime_h);
-
+*/
 DataSet totalBatteryStorage = data.getRapidRunData().ts_dailyAverageBatteriesStoredEnergy_MWh.getDataSet(startTime_h);
 v_dataBatterySOCYear_fr.reset();
 for (int i = 0; i < totalBatteryStorage.size(); i++) {

@@ -110,25 +110,66 @@ public class ZeroAccumulator {
     }
 
     public double getIntegral_kWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegral_kWh(0, this.duration_h);
+    }
+    public double getIntegral_kWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
         if (this.hasTimeSeries) {
-        	this.totalEnergy_kWh = ZeroMath.arraySum(this.timeSeries) * this.signalResolution_h;
+        	if (startTime_h < 0 || endTime_h > duration_h || startTime_h > endTime_h) {
+        		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
+        	}
+        	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
+        	return ZeroMath.arraySum(interval) * this.signalResolution_h;
+        } else if (startTime_h == 0 && endTime_h == duration_h) {
+        	return this.totalEnergy_kWh;
+        } else {
+        	throw new IllegalArgumentException("Impossible to get integral of this interval because no timeseries data is available");
         }
-    	return this.totalEnergy_kWh;
     }
     
     public double getIntegralPos_kWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralPos_kWh(0, this.duration_h);
+    }
+    public double getIntegralPos_kWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
         if (this.hasTimeSeries) {
-        	this.totalPositiveEnergy_kWh = ZeroMath.arraySumPos(this.timeSeries) * this.signalResolution_h;
+        	if (startTime_h < 0 || endTime_h > duration_h || startTime_h > endTime_h) {
+        		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
+        	}
+        	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
+        	return ZeroMath.arraySumPos(interval) * this.signalResolution_h;
+        } else if (startTime_h == 0 && endTime_h == duration_h) {
+        	return this.totalPositiveEnergy_kWh;
+        } else {
+        	throw new IllegalArgumentException("Impossible to get integral of this interval because no timeseries data is available");
         }
-        return this.totalPositiveEnergy_kWh;
     }
     
-
     public double getIntegralNeg_kWh() { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralNeg_kWh(0, this.duration_h);
+    }
+    public double getIntegralNeg_kWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
         if (this.hasTimeSeries) {
-        	this.totalNegativeEnergy_kWh = ZeroMath.arraySumNeg(this.timeSeries) * this.signalResolution_h;
-        }
-        return this.totalNegativeEnergy_kWh;
+        	if (startTime_h < 0 || endTime_h > duration_h || startTime_h > endTime_h) {
+        		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
+        	}
+        	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
+        	return ZeroMath.arraySumNeg(interval) * this.signalResolution_h;
+        } else if (startTime_h == 0 && endTime_h == duration_h) {
+        	return this.totalNegativeEnergy_kWh;
+        } else {
+         	throw new IllegalArgumentException("Impossible to get integral of this interval because no timeseries data is available");
+        }	
+    }
+    
+    public double getIntegral_MWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegral_kWh(startTime_h, endTime_h)/1000;
+    }
+    
+    public double getIntegralPos_MWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralPos_kWh(startTime_h, endTime_h)/1000;
+    }
+
+    public double getIntegralNeg_MWh(double startTime_h, double endTime_h) { // For getting total energy when addSteps was called with power as value
+    	return this.getIntegralNeg_kWh(startTime_h, endTime_h)/1000;
     }
     
     public double getIntegral_MWh() { // For getting total energy when addSteps was called with power as value
@@ -142,7 +183,6 @@ public class ZeroAccumulator {
     public double getIntegralNeg_MWh() { // For getting total energy when addSteps was called with power as value
     	return this.getIntegralNeg_kWh()/1000;
     }
-    
     
     public double[] getTimeSeries_kW() {
         if (!hasTimeSeries) { // Fill timeseries with constant value
@@ -187,6 +227,9 @@ public class ZeroAccumulator {
     	return this.signalResolution_h;
     }
 
+    public double getDuration() {
+    	return duration_h;
+    }
     public ZeroAccumulator add(ZeroAccumulator acc) {
         if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
                 && (this.signalResolution_h == acc.signalResolution_h)) {
@@ -237,7 +280,7 @@ public class ZeroAccumulator {
     	if (this.hasTimeSeries) {
 			DataSet ds = new DataSet(timeSeries.length);
 			for (int i = 0; i < timeSeries.length; i++) {
-				ds.add(startTime_h + i * this.signalResolution_h, this.timeSeries[i] );
+				ds.add(startTime_h + i * this.signalResolution_h, roundToDecimal(this.timeSeries[i],3) );
 			}
 			return ds;
     	} else {
@@ -245,6 +288,30 @@ public class ZeroAccumulator {
     	}
     }
 	
+    public DataSet getDataSet(double startTime_h, double accStartTime_h, double accEndTime_h) {
+    	
+    	double dataSetDuration_h = accEndTime_h - accStartTime_h;
+    	if (dataSetDuration_h > duration_h) {    		
+    		throw new RuntimeException("Too long dataSet interval requested from ZeroAccumulator.getDataSet().");    	
+    	}
+    	int startIdx = roundToInt(accStartTime_h / signalResolution_h);
+    	int endIdx = roundToInt(accEndTime_h / signalResolution_h);
+    	startIdx = max(0,startIdx);
+    	//endIdx = max(endIdx, roundToInt(dataSetDuration_h/signalResolution_h));
+    	endIdx = min(endIdx, arraySize);
+    	//startIdx = min(startIdx, endIdx - roundToInt(dataSetDuration_h/signalResolution_h));
+    	
+    	if (this.hasTimeSeries) {
+			DataSet ds = new DataSet(endIdx-startIdx);
+			for (int i = startIdx; i < endIdx; i++) {
+				ds.add(startTime_h + i * this.signalResolution_h, roundToDecimal(this.timeSeries[i],3) );
+			}
+			return ds;
+    	} else {
+    		throw new RuntimeException("Impossible to create DataSet from accumulator without timeSeries.");    		
+    	}
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

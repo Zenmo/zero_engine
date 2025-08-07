@@ -44,6 +44,13 @@ if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentP
 	//}
 }
 
+if (energyModel.v_isRapidRun){
+	f_rapidRunDataLogging();
+} else {
+	f_fillLiveDataSets();
+}
+
+/*
 // Further Subdivision of asset types within energy carriers
 v_fixedConsumptionElectric_kW = 0;
 for (J_EA j_ea : c_fixedConsumptionElectricAssets) {
@@ -115,13 +122,9 @@ v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
 	max(0,-v_batteryPowerElectric_kW),
 	max(0,-v_evChargingPowerElectric_kW),
 	v_batteryStoredEnergy_kWh/1000);
-
+*/
 // 
-if (energyModel.v_isRapidRun){
-	f_rapidRunDataLogging();
-} else {
-	f_fillLiveDataSets();
-}
+
 /*ALCODEEND*/}
 
 double f_operateFlexAssets()
@@ -137,15 +140,16 @@ v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
+fm_currentAssetFlows_kW.clear();
 
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentFinalEnergyConsumption_kW = 0;
 
 v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-
+v_batteryStoredEnergy_kWh = 0;
 // Categorical power flows
-v_fixedConsumptionElectric_kW = 0;
+/*v_fixedConsumptionElectric_kW = 0;
 v_electricHobConsumption_kW = 0;
 v_heatPumpElectricityConsumption_kW = 0;
 v_hydrogenElectricityConsumption_kW = 0;
@@ -156,7 +160,7 @@ v_pvProductionElectric_kW = 0;
 v_ptProductionHeat_kW = 0;
 v_conversionPowerElectric_kW = 0;
 v_CHPProductionElectric_kW = 0;
-v_districtHeatDelivery_kW = 0;
+v_districtHeatDelivery_kW = 0;*/
 
 if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
@@ -214,7 +218,7 @@ if(p_heatBuffer != null){
 
 double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
-if(powerDemand_kW < 0 && v_liveAssetsMetaData.hasPT){//If there is 'overproduction' of heat, that can not be collected by the heat buffer: no power demand -> will be curtailed.
+if(powerDemand_kW < 0 && v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.ptProductionHeat_kW)){//If there is 'overproduction' of heat, that can not be collected by the heat buffer: no power demand -> will be curtailed.
 	powerDemand_kW = 0;
 }
 
@@ -521,43 +525,37 @@ double f_connectToJ_EA_default(J_EA j_ea)
 {/*ALCODESTART::1692799608559*/
 for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
 	if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
-		v_activeEnergyCarriers.add(EC);
 		v_activeConsumptionEnergyCarriers.add(EC);
-			
-		if (energyModel.b_isInitialized) {
+		v_activeEnergyCarriers.add(EC);
+		if (energyModel.b_isInitialized && v_isActive) {
+			f_addConsumptionEnergyCarrier(EC);	
 			//Add EC to energyModel
 			energyModel.f_addConsumptionEnergyCarrier(EC);
-			
-			//Initialize dataset
-			DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
-			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
-				dsDemand.add( t, 0);
-			}
-			v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
+			c_parentCoops.forEach(x -> x.f_addConsumptionEnergyCarrier(EC));
 		}
 	}
 }
 
 for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
 	if (!v_activeProductionEnergyCarriers.contains(EC)) {
+		v_activeProductionEnergyCarriers.add(EC);
 		v_activeEnergyCarriers.add(EC);
-		v_activeProductionEnergyCarriers.add(EC);		
-		if (energyModel.b_isInitialized) {
-		
+		if (energyModel.b_isInitialized && v_isActive) {		
+			f_addProductionEnergyCarrier(EC);
 			//Add EC to energyModel
 			energyModel.f_addProductionEnergyCarrier(EC);
-			
-			//Initialize datasets
-			DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
-			double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-			double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-			for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
-				dsSupply.add( t, 0);
-			}
-			v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+			c_parentCoops.forEach(x -> x.f_addProductionEnergyCarrier(EC));			
 		}
+	}
+}
+
+if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.contains(j_ea.assetFlowCategory)) { // add live dataset
+	OL_AssetFlowCategories AC = j_ea.assetFlowCategory;
+	v_liveAssetsMetaData.activeAssetFlows.add(AC);
+	if (energyModel.b_isInitialized && v_isActive) {		
+		f_addAssetFlow(AC);
+		energyModel.f_addAssetFlow(AC);
+		c_parentCoops.forEach(x->x.f_addAssetFlow(AC));		
 	}
 }
 
@@ -573,7 +571,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
 		energyModel.c_EVs.add((J_EAEV)vehicle);	
-		c_EvAssets.add(j_ea);
+		//c_EvAssets.add(j_ea);
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
@@ -604,17 +602,17 @@ if (j_ea instanceof J_EAVehicle) {
 		p_DHWAsset = (J_EAConsumption)j_ea;	
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-		c_fixedConsumptionElectricAssets.add(j_ea);
+		//c_fixedConsumptionElectricAssets.add(j_ea);
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-		c_electricHobAssets.add(j_ea);
+		//c_electricHobAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.add((J_EAProduction)j_ea);
 	//energyModel.c_productionAssets.add((J_EAProduction)j_ea);
 	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_liveAssetsMetaData.hasPV = true;
+		//v_liveAssetsMetaData.hasPV = true;
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
 		if ( p_parentNodeElectric != null ) {
@@ -622,10 +620,10 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-		c_pvAssets.add(j_ea);
+		//c_pvAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		v_liveAssetsMetaData.hasWindturbine = true;
+		//v_liveAssetsMetaData.hasWindturbine = true;
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 		if ( p_parentNodeElectric != null ) {
@@ -633,11 +631,11 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
-		c_windAssets.add(j_ea);
+		//c_windAssets.add(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-		v_liveAssetsMetaData.hasPT = true;
-		c_ptAssets.add(j_ea);
+		//v_liveAssetsMetaData.hasPT = true;
+		//c_ptAssets.add(j_ea);
 		if (p_heatingManagement != null) {
 			p_heatingManagement.notInitialized();
 		}
@@ -647,7 +645,8 @@ if (j_ea instanceof J_EAVehicle) {
 	// Non Heating Assets
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-			c_electricHobAssets.add(j_ea);
+			//c_electricHobAssets.add(j_ea);
+			//c_conversionElectricAssets.add(j_ea);
 		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
@@ -655,8 +654,8 @@ if (j_ea instanceof J_EAVehicle) {
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
-	} else if (j_ea instanceof J_EAConversionElectrolyser || j_ea instanceof J_EAConversionElektrolyser) {
-		c_electrolyserAssets.add(j_ea);
+	//} else if (j_ea instanceof J_EAConversionElectrolyser) {
+		//c_electrolyserAssets.add(j_ea);
 	} else {
 		// Heating Assets
 		c_heatingAssets.add((J_EAConversion)j_ea);
@@ -666,9 +665,9 @@ if (j_ea instanceof J_EAVehicle) {
 		// Special Heating Assets
 		if (j_ea instanceof J_EAConversionHeatPump) {
 			energyModel.c_ambientDependentAssets.add(j_ea);
-			c_electricHeatpumpAssets.add(j_ea);
+			//c_electricHeatpumpAssets.add(j_ea);
 		} else if (j_ea instanceof J_EAConversionGasCHP) {
-			c_chpAssets.add(j_ea);
+			//c_chpAssets.add(j_ea);
 		}
 	}
 } else if  (j_ea instanceof J_EAStorage) {
@@ -692,7 +691,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_gasBuffer = (J_EAStorageGas)j_ea;
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
-		c_batteryAssets.add(j_ea);
+		//c_batteryAssets.add(j_ea);
 		double capacity_MWh = ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
@@ -702,30 +701,11 @@ if (j_ea instanceof J_EAVehicle) {
 } else if  (j_ea instanceof J_EAProfile) {
 	//p_energyProfile = (J_EAProfile)j_ea;
 	c_profileAssets.add((J_EAProfile)j_ea);
-	if (((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.CHARGING){
-			//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-			c_EvAssets.add(j_ea);
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD){
-			//v_fixedConsumptionElectric_kW += flowsArray[4] - flowsArray[0];
-			c_fixedConsumptionElectricAssets.add(j_ea);
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.WINDTURBINE){
-			//v_windProductionElectric_kW += flowsArray[0];
-			c_windAssets.add(j_ea);
-			// TODO: Add some to the total installed wind (of this GC, its GN, the energymodel (and its parent coop))
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATDEMAND){
-			//Do nothing
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.METHANEDEMAND){
-			//Do nothing
-		} else if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
-			c_electricHeatpumpAssets.add(j_ea);
-		} else {
-			traceln( "Unrecognized profile type!");
-		}
 } else if (j_ea instanceof J_EADieselTractor) {
 	c_profileAssets.add((J_EAProfile)j_ea);
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.add((J_EACharger)j_ea);
-	c_EvAssets.add(j_ea);
+	//c_EvAssets.add(j_ea);
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
 		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
@@ -908,7 +888,7 @@ for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
 
 /*ALCODEEND*/}
 
-double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_EA caller)
+double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_ValueMap assetFlowsMap,J_EA caller)
 {/*ALCODESTART::1702373771433*/
 if (caller instanceof J_EAStorageElectric) { 
 	fm_currentBalanceFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
@@ -916,6 +896,7 @@ if (caller instanceof J_EAStorageElectric) {
 	// Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need an element in flowsmap indicating power into storage??
 	fm_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
 	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
+	v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)caller).getCurrentStateOfCharge_kWh();
 } else {
 	fm_currentBalanceFlows_kW.addFlows(flowsMap);
 	for (OL_EnergyCarriers EC : flowsMap.keySet()) {
@@ -934,6 +915,8 @@ if (caller instanceof J_EAStorageElectric) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW -= energyUse_kW;
 }
+
+fm_currentAssetFlows_kW.addFlows(assetFlowsMap);
 /*ALCODEEND*/}
 
 double f_removeTheJ_EA(J_EA j_ea)
@@ -956,7 +939,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAEV) {
 		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
-		c_EvAssets.remove(j_ea);
+		//c_EvAssets.remove(j_ea);
 	}
 	c_vehicleAssets.remove(j_ea);
 		
@@ -970,10 +953,10 @@ if (j_ea instanceof J_EAVehicle) {
 		p_DHWAsset = null;	
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-		c_fixedConsumptionElectricAssets.remove(j_ea);
+		//c_fixedConsumptionElectricAssets.remove(j_ea);
 	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-		c_electricHobAssets.remove(j_ea);
+		//c_electricHobAssets.remove(j_ea);
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
@@ -981,7 +964,7 @@ if (j_ea instanceof J_EAVehicle) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
 		if (otherPV == null) {
-			v_liveAssetsMetaData.hasPV = false;
+			//v_liveAssetsMetaData.hasPV = false;
 		}
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
@@ -990,7 +973,7 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
 		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-		c_pvAssets.remove(j_ea);
+		//c_pvAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
@@ -1000,24 +983,24 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-		c_windAssets.remove(j_ea);
+		//c_windAssets.remove(j_ea);
 	}
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-		if (c_ptAssets.size() <= 1) {
-			v_liveAssetsMetaData.hasPT = false;
+		/*if (c_ptAssets.size() <= 1) {
+			//v_liveAssetsMetaData.hasPT = false;
 		}
-		c_ptAssets.remove(j_ea);
+		c_ptAssets.remove(j_ea);*/
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.remove((J_EAConversion)j_ea);
 	// Non Heating Assets
 	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-		c_electricHobAssets.remove(j_ea);
+		//c_electricHobAssets.remove(j_ea);
 	}
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
 	} else if (j_ea instanceof J_EAConversionElectrolyser) {
-		c_electrolyserAssets.remove(j_ea);
+		//c_electrolyserAssets.remove(j_ea);
 	}
 	else{
 		// Heating Assets
@@ -1028,9 +1011,9 @@ if (j_ea instanceof J_EAVehicle) {
 		// Special Heating Assets
 		if (j_ea instanceof J_EAConversionHeatPump) {
 			energyModel.c_ambientDependentAssets.remove(j_ea);
-			c_electricHeatpumpAssets.remove(j_ea);
+			//c_electricHeatpumpAssets.remove(j_ea);
 		} else if (j_ea instanceof J_EAConversionGasCHP) {
-			c_chpAssets.remove(j_ea);
+			//c_chpAssets.remove(j_ea);
 		}
 	}
 } else if  (j_ea instanceof J_EAStorage) {
@@ -1054,7 +1037,7 @@ if (j_ea instanceof J_EAVehicle) {
 		p_gasBuffer = null;
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = null;
-		c_batteryAssets.remove(j_ea);
+		//c_batteryAssets.remove(j_ea);
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 	}
@@ -1062,11 +1045,11 @@ if (j_ea instanceof J_EAVehicle) {
 	//p_energyProfile = null;
 	c_profileAssets.remove((J_EAProfile)j_ea);
 	if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
-		c_electricHeatpumpAssets.add(j_ea);
+		//c_electricHeatpumpAssets.add(j_ea);
 	}
 } else if (j_ea instanceof J_EACharger) {
 	c_chargers.remove(j_ea);
-	c_EvAssets.remove(j_ea);	
+	//c_EvAssets.remove(j_ea);	
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -1203,7 +1186,7 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_removeFlows(J_FlowsMap flowsMap,double energyUse_kW,J_EA caller)
+double f_removeFlows(J_FlowsMap flowsMap,double energyUse_kW,J_ValueMap<OL_AssetFlowCategories> assetFlowsMap_kW,J_EA caller)
 {/*ALCODESTART::1722512642645*/
 for (OL_EnergyCarriers EC : flowsMap.keySet()) {
 	fm_currentBalanceFlows_kW.addFlow(EC, -flowsMap.get(EC));
@@ -1231,6 +1214,10 @@ if (caller instanceof J_EAStorageElectric) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW += energyUse_kW;
 }
+
+for(var AC : assetFlowsMap_kW.keySet()) {
+	fm_currentAssetFlows_kW.addFlow(AC, -assetFlowsMap_kW.get(AC));
+}
 /*ALCODEEND*/}
 
 double f_fillLiveDataSets()
@@ -1242,11 +1229,12 @@ v_liveData.addTimeStep(currentTime_h,
 	fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
-	v_currentEnergyCurtailed_kW, 
-	v_assetFlows 
+	v_currentEnergyCurtailed_kW,
+	v_batteryStoredEnergy_kWh/1000 
 );
 /*ALCODEEND*/}
 
@@ -1255,11 +1243,12 @@ double f_rapidRunDataLogging()
 v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
 	v_currentEnergyCurtailed_kW, 
-	v_assetFlows, 
+	v_batteryStoredEnergy_kWh/1000,
 	energyModel);
 /*ALCODEEND*/}
 
@@ -1277,8 +1266,7 @@ if (!setActive) {
 	// Set GIS Region visibility
 	for (GIS_Object obj : c_connectedGISObjects) {
 		obj.gisRegion.setVisible(false);
-	}
-	
+	}	
 
 	// update GN parents' wind / solar totals
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, false);
@@ -1300,35 +1288,19 @@ if (!setActive) {
 	fm_currentProductionFlows_kW.clear();
 	fm_currentConsumptionFlows_kW.clear();
 	fm_currentBalanceFlows_kW.clear();
+	fm_currentAssetFlows_kW.clear();
 	
 	v_previousPowerElectricity_kW = 0;
 	v_previousPowerHeat_kW = 0;
-	//v_currentPowerElectricity_kW = 0;
-	//v_currentPowerMethane_kW = 0;
-	//v_currentPowerHydrogen_kW = 0;
-	//v_currentPowerHeat_kW = 0;
-	//v_currentPowerDiesel_kW = 0;
-	//v_currentElectricityConsumption_kW = 0;
-	//v_currentElectricityProduction_kW = 0;
-	//v_currentEnergyConsumption_kW = 0;
-	//v_currentEnergyProduction_kW = 0;
+
 	v_currentEnergyCurtailed_kW = 0;
 	v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-	v_fixedConsumptionElectric_kW = 0;
-	v_electricHobConsumption_kW = 0;
-	v_heatPumpElectricityConsumption_kW = 0;
-	v_hydrogenElectricityConsumption_kW = 0;
-	v_evChargingPowerElectric_kW = 0;
-	v_districtHeatDelivery_kW = 0;
-	v_batteryPowerElectric_kW = 0;
-	v_windProductionElectric_kW = 0;
-	v_pvProductionElectric_kW = 0;
-	v_ptProductionHeat_kW = 0;
-	v_conversionPowerElectric_kW = 0;
-	v_CHPProductionElectric_kW = 0;
-	
+	v_batteryStoredEnergy_kWh = 0;
+
+	v_isActive = setActive;
 }
 else {
+	//traceln("Activating gridConnection");
 	energyModel.c_gridConnections.add(this);
 	energyModel.c_pausedGridConnections.remove(this);
 
@@ -1340,7 +1312,9 @@ else {
 	// Set Connection Capacity according to NFATO
 	f_nfatoSetConnectionCapacity(false);
 	
+	v_isActive = setActive; // v_isActive must be true before calling updateActiveAssetData!
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
+	v_liveAssetsMetaData.activeAssetFlows.forEach(x->energyModel.f_addAssetFlow(x));
 	
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
@@ -1354,17 +1328,16 @@ else {
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
 	}
-	
-	
+		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
 	v_liveData.resetLiveDatasets(startTime, endTime, energyModel.p_timeStep_h);
-
+	//v_isActive = setActive; // 
 }
 
 //Update the 'isActive' variable
-v_isActive = setActive;
+
 /*ALCODEEND*/}
 
 double f_getChargeDeadline(J_EAEV ev)
@@ -1378,8 +1351,9 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 
 double f_initializeDataSets()
 {/*ALCODESTART::1730728785333*/
-v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / energyModel.p_timeStep_h));
 
 /*
 dsm_dailyAverageDemandDataSets_kW.createEmptyDataSets(v_activeEnergyCarriers, 365);
@@ -1488,5 +1462,64 @@ catch (Exception e) {
 }
 
 engineGC.p_heatingManagement = heatingManagement;
+/*ALCODEEND*/}
+
+EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
+{/*ALCODESTART::1754380684463*/
+v_activeEnergyCarriers.add(EC);
+v_activeConsumptionEnergyCarriers.add(EC);
+
+DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+
+double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+	dsDemand.add( t, 0);
+}
+v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
+
+/*ALCODEEND*/}
+
+EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
+{/*ALCODESTART::1754380684465*/
+v_activeEnergyCarriers.add(EC);
+v_activeProductionEnergyCarriers.add(EC);
+
+DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+	dsSupply.add( t, 0);
+}
+v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+
+/*ALCODEEND*/}
+
+EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
+{/*ALCODESTART::1754380684467*/
+DataSet dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
+double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+	dsAsset.add( t, 0);
+}
+v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
+
+if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
+	v_liveAssetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+	dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		dsAsset.add( t, 0);
+	}
+	v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
+}
+if (AC == OL_AssetFlowCategories.V2GPower_kW) { // also add evCharging!
+	v_liveAssetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW);	
+	dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		dsAsset.add( t, 0);
+	}
+	v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
+}			
 /*ALCODEEND*/}
 

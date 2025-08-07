@@ -5,46 +5,55 @@
 import java.util.EnumSet;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
-public class J_DataSetMap implements Serializable {
-	private DataSet[] datasetArray = new DataSet[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
-	private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
-
+public class J_DataSetMap <E extends Enum<E>> implements Serializable {
+	private DataSet[] datasetArray; // = new DataSet[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	//private EnumSet<OL_EnergyCarriers> enumSet = EnumSet.noneOf(OL_EnergyCarriers.class);
+	private final EnumSet<E> enumSet;
+	private final Class<E> enumClass;
+	
     /**
      * Default constructor
      */
-    public J_DataSetMap() {
+    public J_DataSetMap(Class<E> enumClass) {
+        this.enumClass = enumClass;
+        this.enumSet = EnumSet.noneOf(enumClass);
+        this.datasetArray = new DataSet[enumClass.getEnumConstants().length];
     	//super(OL_EnergyCarriers.class);
     }
 
-    public void createEmptyDataSets(EnumSet<OL_EnergyCarriers> selectedFlows, int size) {
-    	for (OL_EnergyCarriers key : selectedFlows) {
+    public void createEmptyDataSets(EnumSet<E> selectedFlows, int size) {
+    	for (E key : selectedFlows) {
     		this.put(key, new DataSet(size));
     	}
     }
     
-    public DataSet get(OL_EnergyCarriers key) {
+    public DataSet get(E key) {
 		return datasetArray[key.ordinal()];
 	}
     	
 
-	public void put(OL_EnergyCarriers key, DataSet ds) {
+	public void put(E key, DataSet ds) {
 		datasetArray[key.ordinal()] = ds;
-		energyCarrierList.add(key);		
+		enumSet.add(key);		
 	}
 	
 	public void clear() {
-		datasetArray = new DataSet[OL_EnergyCarriers.values().length];
-		energyCarrierList.clear();
+		datasetArray = new DataSet[enumClass.getEnumConstants().length];
+		enumSet.clear();
 	}
     
+	public EnumSet<E> keySet() {
+		return enumSet;
+	}
+	
 	@Override
 	public String toString() {
-        if (this.energyCarrierList.size() == 0) {
+        if (this.enumSet.size() == 0) {
             return "{}";        	
         }
         StringBuilder sb = new StringBuilder();
         sb.append('{');
-        for (OL_EnergyCarriers key : this.energyCarrierList) {
+        for (E key : this.enumSet) {
         	DataSet value = this.get(key);
         	int len = value.toString().length();
             sb.append(key);

@@ -586,6 +586,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1744211126429</Id>
 		<Name><![CDATA[f_recalculateSOC_rapidrun]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1010</X>
 		<Y>270</Y>
 		<Label>
@@ -643,6 +644,66 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>EnergyCoop</ReturnType>
+		<Id>1754380102233</Id>
+		<Name><![CDATA[f_addConsumptionEnergyCarrier]]></Name>
+		<X>1438</X>
+		<Y>536</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[EC]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>EnergyCoop</ReturnType>
+		<Id>1754380102235</Id>
+		<Name><![CDATA[f_addProductionEnergyCarrier]]></Name>
+		<X>1438</X>
+		<Y>556</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[EC]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>EnergyCoop</ReturnType>
+		<Id>1754380102237</Id>
+		<Name><![CDATA[f_addAssetFlow]]></Name>
+		<X>1438</X>
+		<Y>576</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[AC]]></Name>
+			<Type><![CDATA[OL_AssetFlowCategories]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>

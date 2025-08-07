@@ -20,6 +20,13 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, double timestep_h, J_ProfilePointer profile) {
 	    this.parentAgent = parentAgent;
 	    this.energyAssetType = type;
+	    if (type == OL_EnergyAssetType.PHOTOVOLTAIC) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.pvProductionElectric_kW;
+	    } else if (type == OL_EnergyAssetType.WINDMILL) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.windProductionElectric_kW;
+	    } else if (type == OL_EnergyAssetType.PHOTOTHERMAL) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.ptProductionHeat_kW;
+	    }
 	    this.energyAssetName = name;
 	    this.energyCarrier = energyCarrier;
 	    this.capacity_kW = capacity_kW;
@@ -89,14 +96,15 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     public void operate(double ratioOfCapacity) {
 		ratioOfCapacity = profilePointer.getCurrentValue();
 		
-		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
+		//if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
 			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
 			
 	    	this.energyUse_kW = -currentProduction_kW;
 	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
-	    	
-		}
+	    	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
+		//}
+	    throw new RuntimeException("J_EAProduction operate override is called!");
 	}
 	
 	@Override
@@ -109,9 +117,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    	this.energyUse_kW = -currentProduction_kW;
 	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
+	       	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
 	       	if (parentAgent instanceof GridConnection) {    		
 	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
-	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
 	    	}
 
 		}
@@ -129,13 +138,16 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
+    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	
     	this.energyUse_kW = -curtailmentPower_kW;
     	this.lastFlowsMap.addFlow(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);
     	this.lastEnergyUse_kW += curtailmentPower_kW;
     	
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	clear();
     	
@@ -153,13 +165,15 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	energyUsed_kWh += curtailmentPower_kW * timestep_h;
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(curtailedEnergyCarrier, -curtailmentPower_kW);
+    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
     	this.energyUse_kW = -curtailmentPower_kW;
     	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW);
     	this.lastEnergyUse_kW += curtailmentPower_kW;
     	
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	clear();
     	

@@ -37,6 +37,18 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    	this.timestep_h = profileTimestep_h;
 	    }
 	    
+	    if (profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW;
+	    } else if (profileType == OL_ProfileAssetType.CHARGING) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+	    } else if (profileType == OL_ProfileAssetType.WINDTURBINE) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.windProductionElectric_kW;
+	    } else if (profileType == OL_ProfileAssetType.SOLARPANELS) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.pvProductionElectric_kW;	    	
+	    } else if (profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
+	    } 
+	    
 	    //this.activeProductionEnergyCarriers.add(this.energyCarrier);
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 	    
@@ -56,7 +68,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	operate(time_h-this.profileStarTime_h);
     	//J_FlowsMap flowsMap = flowsPair.getFirst();
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
     	}
     	//if (ui_energyAsset!= null) {
     		//ui_energyAsset.f_addFlows(flowsMap);
@@ -85,37 +97,22 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	}
     	if ( time_h < 0 ) {
     		traceln("Time out of lower bound for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
-    		//time_h = 0;
     		throw new RuntimeException(String.format("Time out of lower bound for evaluating J_EAProfile power! Time is: %s", time_h));
     	}
-    	/*if (energyCarrierConsumed == OL_EnergyCarriers.ELECTRICITY) {
-    		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-        	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);        	
-    	} else if (energyCarrierConsumed == OL_EnergyCarriers.METHANE) {
-    		this.methaneConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-        	this.methaneProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);    		    		
-    	} else if (energyCarrierConsumed == OL_EnergyCarriers.HYDROGEN) {
-    		this.hydrogenConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-        	this.hydrogenProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-    	} else if  (energyCarrierConsumed == OL_EnergyCarriers.HEAT) {
-    		this.heatConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-        	this.heatProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-        	//traceln("Current heat consumption: %s", this.heatConsumption_kW);
-    	} else if  (energyCarrierConsumed == OL_EnergyCarriers.DIESEL) {
-    		this.dieselConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h);
-    	}*/
-		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_energyProfile_kWh.length);	
+
     	double currentPower_kW = a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h;
     	this.energyUse_kW = currentPower_kW;
 		this.energyUsed_kWh += timestep_h * energyUse_kW; 
 		this.flowsMap.put(this.energyCarrier, currentPower_kW);		
+		if (this.assetFlowCategory != null) {
+			this.assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
+		}
     }
 
 	public double getEnergyUsed_kWh() {
 		return energyUsed_kWh;
 	}
 
-    //public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     public void curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	//double currentElectricityProduction_kW = lastFlowsArray[4];
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
@@ -124,7 +121,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	loadLoad_kWh += curtailmentPower_kW * timestep_h;
     	//double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
     	J_FlowsMap flowsMap = new J_FlowsMap();
-    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
+    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);    	
+    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	
     	this.energyUse_kW = -curtailmentPower_kW;
     	//flowsMap.put(OL_EnergyCarriers.ENERGY_USE, -curtailmentPower_kW);
 
@@ -136,7 +136,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	//if (ui_energyAsset!= null) {
     		//ui_energyAsset.f_removeFlows(flowsMap);

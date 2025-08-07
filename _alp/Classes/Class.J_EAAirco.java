@@ -13,6 +13,7 @@ public class J_EAAirco extends zero_engine.J_EA implements Serializable {
     	this.capacityElectric_kW = capacityElectric_kW;
     	this.timestep_h = timestep_h;	
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+		//this.assetFlowCategory = OL_AssetFlowCategories.AIRCO; // bestaat nog niet!
 		this.registerEnergyAsset();
     }
     

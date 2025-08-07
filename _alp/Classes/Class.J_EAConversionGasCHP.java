@@ -38,6 +38,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
     	
         this.activeProductionEnergyCarriers.addAll(energyCarriersProduced);
     	this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
+    	this.assetFlowCategory = OL_AssetFlowCategories.CHPProductionElectric_kW;
 	    registerEnergyAsset();
 	}
 
@@ -56,6 +57,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -electricityProduction_kW);
 		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW);
+		assetFlowsMap.put(this.assetFlowCategory, electricityProduction_kW);
     }
 
 	@Override

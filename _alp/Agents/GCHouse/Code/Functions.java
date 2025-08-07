@@ -4,9 +4,9 @@ v_hotwaterDemand_kW = p_DHWAsset != null ? p_DHWAsset.getLastFlows().get(OL_Ener
 
 //Check if there is hot water being produced by the pt
 double ptProduction_kW = 0; //NEEDS TO BE A LOCAL
-for (J_EA j_ea : c_ptAssets) {
+/*for (J_EA j_ea : c_ptAssets) {
 	ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
-}
+}*/
 v_hotwaterDemand_kW = max(0, v_hotwaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value
 
 if(p_heatBuffer != null){
@@ -773,7 +773,7 @@ if (j_ea instanceof J_EAEV) {
 }
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
-	c_electricHeatpumpAssets.add(j_ea);
+	//c_electricHeatpumpAssets.add(j_ea);
 }
 /*ALCODEEND*/}
 
@@ -875,8 +875,8 @@ double f_manageCookingTracker()
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
 	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
-	v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
-	v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
+	//v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
+	//v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
 	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	if (p_BuildingThermalAsset != null) {
 		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW();
@@ -934,7 +934,7 @@ if (j_ea instanceof J_EAEV) {
 }
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
-	c_electricHeatpumpAssets.remove(j_ea);
+	//c_electricHeatpumpAssets.remove(j_ea);
 }
 /*ALCODEEND*/}
 

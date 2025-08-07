@@ -39,9 +39,13 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 		    this.V2GCapable = V2GCapable;
 	    	this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);		
 			this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+			if(V2GCapable) {
+				this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
+			} else {
+				this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+			}
 			this.registerEnergyAsset();
 	    }
-	    
 	    
 	    public void f_updateAllFlows( double t_h, boolean doV1G, boolean doV2G) {
 	    	// Powerfraction is calculated below, argument is the current time (energyModel.t_h)
@@ -87,6 +91,9 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 	    	energyUsed_kWh += energyUse_kW * timestep_h;
 	    	
 			flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);	
+			// Split charging and discharing power 'at the source'!
+			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
+			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 	   	}
 		
 		private void manageSocket1() {

@@ -22,8 +22,9 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.timestep_h = timestep_h;	    
 	    this.outputTemperature_degC = outputTemperature_degC;
-
+	    
 	    this.energyAssetType = OL_EnergyAssetType.HEAT_DELIVERY_SET;
+	    this.assetFlowCategory = OL_AssetFlowCategories.districtHeatDelivery_kW;
 
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 	    this.energyCarrierConsumed = OL_EnergyCarriers.HEAT;

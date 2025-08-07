@@ -124,6 +124,10 @@ public class ZeroTimeSeries implements Serializable {
 	    	return this.signalResolution_h;
 	    }
 
+	    public double getDuration() {
+	    	return duration_h;
+	    }
+	    
 	    public ZeroTimeSeries add(ZeroTimeSeries zts) {
 	        if ((this.duration_h == zts.duration_h) && (this.signalResolution_h == zts.signalResolution_h)) {
 	            for (int i = 0; i < this.timeSeries.length; i++) {
@@ -153,6 +157,27 @@ public class ZeroTimeSeries implements Serializable {
 			}
 			
 			return ds;
+	    }
+	    
+	    public DataSet getDataSet(double startTime_h, double accStartTime_h, double accEndTime_h) {
+	    	
+	    	double dataSetDuration_h = accEndTime_h - accStartTime_h;
+	    	if (dataSetDuration_h > duration_h) {    		
+	    		throw new RuntimeException("Too long dataSet interval requested from ZeroAccumulator.getDataSet().");    	
+	    	}
+	    	int startIdx = roundToInt(accStartTime_h / signalResolution_h);
+	    	int endIdx = roundToInt(accEndTime_h / signalResolution_h);
+	    	startIdx = max(0,startIdx);
+	    	//endIdx = max(endIdx, roundToInt(dataSetDuration_h/signalResolution_h));
+	    	endIdx = min(endIdx, roundToInt(duration_h / signalResolution_h));
+	    	//startIdx = min(startIdx, endIdx - roundToInt(dataSetDuration_h/signalResolution_h));
+	 
+			DataSet ds = new DataSet(endIdx-startIdx);
+			for (int i = startIdx; i < endIdx; i++) {
+				ds.add(startTime_h + i * this.signalResolution_h, roundToDecimal(this.timeSeries[i],3) );
+			}
+			return ds;
+    	
 	    }
 	    
 	    public int getLength() {

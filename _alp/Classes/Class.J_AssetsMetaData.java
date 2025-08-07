@@ -11,18 +11,8 @@ public class J_AssetsMetaData {
 	
 	public Agent parentAgent;
 
-	public boolean hasElectricHeating = false;
-	public boolean hasElectricTransport = false;
-	public boolean hasPV = false;
-	public boolean hasWindturbine = false;
-	public boolean hasPT = false;
-	public boolean hasBattery = false;
-	public boolean hasHeatGridConnection = false;
-	public boolean hasElectrolyser = false;
-	public boolean hasCHP = false;
-	public boolean hasV2G = false;
-	public boolean hasElectricCooking = false;
-	
+	public EnumSet<OL_AssetFlowCategories> activeAssetFlows = EnumSet.noneOf(OL_AssetFlowCategories.class);
+		
 	public Double totalInstalledPVPower_kW = 0.0;
 	public Double totalInstalledWindPower_kW = 0.0;
 	public Double totalInstalledBatteryStorageCapacity_MWh = 0.0;
@@ -43,109 +33,25 @@ public class J_AssetsMetaData {
     }
     
     public void updateActiveAssetData(ArrayList<GridConnection> gcList) {
-    	this.hasElectricHeating = false;
-	    this.hasElectricTransport = false;
-	    this.hasPV = false;
-	    this.hasWindturbine = false;
-	    this.hasBattery = false;
-	    this.hasHeatGridConnection = false;  // read as: has heatgrid connection, not has heat gridconnection
-	    this.hasElectrolyser = false;
-	    this.hasCHP = false;
-	    this.hasV2G = false;
-	    this.hasElectricCooking = false;
-	
-	    //Electric heating
-	    for(GridConnection GC : gcList){
-	    	if(GC.c_electricHeatpumpAssets.size()>0 && GC.v_isActive){
-	    		this.hasElectricHeating = true;
-	    		break;
-	    	}
-	    }
-	    //Electric vehicles
-	    for(GridConnection GC : gcList){
-	    	if(GC.c_EvAssets.size()>0 && GC.v_isActive){
-	    		this.hasElectricTransport = true;
-	    		break;
-	    	}
-	    }
-	    //PV
-	    for(GridConnection GC : gcList){
-	    	if (GC.v_liveAssetsMetaData.totalInstalledPVPower_kW > 0 && GC.v_isActive) {
-	    		this.hasPV = true;
-	    		break;	    		
-	    	}
-	    }
-	    //Wind
-	    for(GridConnection GC : gcList){
-	    	if (GC.v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 && GC.v_isActive) {
-	    		this.hasWindturbine = true;
-	    		break;
-	    	}
-	    }
-	    //PT
-	    for(GridConnection GC : gcList){
-	    	if (GC.c_ptAssets.size()>0 && GC.v_isActive) {
-	    		this.hasPT = true;
-	    		break;	    		
-	    	}
-	    }
-	    //Battery
-	    for(GridConnection GC : gcList){
-	    	if (GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0 && GC.v_isActive) {
-				this.hasBattery = true;
-				break;
-	    	}
-	    }
-	    //Heat grid
-	    for(GridConnection GC : gcList){
-	    	if(GC.p_parentNodeHeat != null && GC.v_isActive){
-	    		this.hasHeatGridConnection = true;
-	    		break;
-	    	}
-	    }
-	    //Electrolyser
-	    for(GridConnection GC : gcList){
-	    	if(GC.c_electrolyserAssets.size()>0 && GC.v_isActive){
-	    		this.hasElectrolyser = true;
-	    		break;
-	    	}
-	    }
-	    //CHP
-	    for(GridConnection GC : gcList){
-	    	if(GC.c_chpAssets.size()>0 && GC.v_isActive){
-	    		this.hasCHP = true;
-	    		break;
-	    	}
-	    }
-	    //V2g
-	    for(GridConnection GC : gcList){
-	    	if(GC.p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G && GC.c_EvAssets.size()>0 && GC.v_isActive){
-	    		this.hasV2G = true;
-	    		break;
-	    	}
-	    }
-	    //Electric cooking
-	    for(GridConnection GC : gcList){
-	    	if(GC.c_electricHobAssets.size()>0 && GC.v_isActive){
-	    		this.hasElectricCooking = true;
-	    		break;
-	    	}
-	    }
+    	activeAssetFlows.clear();
+    	for(GridConnection GC : gcList){
+    		if (GC.v_isActive) {
+	    		for (J_EA ea : GC.c_energyAssets) {
+	    			if (ea.assetFlowCategory!=null) {
+	    				activeAssetFlows.add(ea.assetFlowCategory);
+	    			}
+	    		}
+    		}
+    	}    	
+    	if (activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW); }
+    	if (activeAssetFlows.contains(OL_AssetFlowCategories.V2GPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW); }
+    	
 	}
 
     public J_AssetsMetaData getClone() {
     	J_AssetsMetaData clone = new J_AssetsMetaData(this.parentAgent);
-    	clone.hasElectricHeating = this.hasElectricHeating;
-    	clone.hasElectricTransport = this.hasElectricTransport;
-    	clone.hasPV = this.hasPV;
-    	clone.hasWindturbine = this.hasWindturbine;
-    	clone.hasPT = this.hasPT;
-    	clone.hasBattery = this.hasBattery;
-    	clone.hasHeatGridConnection = this.hasHeatGridConnection;
-    	clone.hasElectrolyser = this.hasElectrolyser;
-    	clone.hasCHP = this.hasCHP;
-    	clone.hasV2G = this.hasV2G;
-    	clone.hasElectricCooking = this.hasElectricCooking;
+    	clone.activeAssetFlows = this.activeAssetFlows.clone();
+  
     	clone.totalInstalledPVPower_kW = this.totalInstalledPVPower_kW.doubleValue();
     	clone.totalInstalledWindPower_kW = this.totalInstalledWindPower_kW.doubleValue();
     	clone.totalInstalledBatteryStorageCapacity_MWh = this.totalInstalledBatteryStorageCapacity_MWh.doubleValue();
@@ -159,17 +65,8 @@ public class J_AssetsMetaData {
 	public String toString() {
 		return "totalInstalledPVPower_kW: " + totalInstalledPVPower_kW + 
 				", totalInstalledWindPower_kW: " + totalInstalledWindPower_kW + 
-	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh + 
-	            ", hasPV: " + hasPV +
-	            ", hasElectricHeating: " + hasElectricHeating + 
-	            ", hasElectricTransport: " + hasElectricTransport + 
-	            ", hasWindturbine: " + hasWindturbine +
-	            ", hasPT: " + hasPT +
-		        ", hasBattery: " + hasBattery +
-		        ", hasHeatGridConnection: " + hasHeatGridConnection +
-		        ", hasElectrolyser: " + hasElectrolyser +
-		        ", hasCHP: " + hasCHP +
-		        ", hasV2G: " + hasV2G +
-		        ", hasElectricCooking: " + hasElectricCooking;
+	            ", totalInstalledBatteryStorageCapacity_MWh: " + totalInstalledBatteryStorageCapacity_MWh +
+	            activeAssetFlows.toString();
+
 	}
 }

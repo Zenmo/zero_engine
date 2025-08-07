@@ -1252,6 +1252,62 @@
 					<Name><![CDATA[HEAT_STORAGE]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1753968826411</Id>
+				<Name><![CDATA[OL_AssetFlowCategories]]></Name>
+				<Option>
+					<Id>1753968826412</Id>
+					<Name><![CDATA[fixedConsumptionElectric_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826413</Id>
+					<Name><![CDATA[heatPumpElectricityConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826414</Id>
+					<Name><![CDATA[evChargingPower_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1754291180994</Id>
+					<Name><![CDATA[V2GPower_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826415</Id>
+					<Name><![CDATA[batteriesChargingPower_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1754291194949</Id>
+					<Name><![CDATA[batteriesDischargingPower_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826416</Id>
+					<Name><![CDATA[electrolyserElectricityConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826417</Id>
+					<Name><![CDATA[electricHobConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826418</Id>
+					<Name><![CDATA[districtHeatDelivery_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826419</Id>
+					<Name><![CDATA[pvProductionElectric_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826420</Id>
+					<Name><![CDATA[windProductionElectric_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826421</Id>
+					<Name><![CDATA[ptProductionHeat_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1753968826422</Id>
+					<Name><![CDATA[CHPProductionElectric_kW]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
@@ -1505,6 +1561,7 @@
 			<JavaClass>
 				<Id>1671107396262</Id>
 				<Name><![CDATA[J_EAConversionElektrolyser]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1611,7 +1668,8 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1729510354900</Id>
-				<Name><![CDATA[J_AccumulatorMap]]></Name>
+				<Name><![CDATA[J_AssetFlowsAccumulatorMap]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1755,6 +1813,8 @@
 			<JavaClass>
 				<Id>1753106536266</Id>
 				<Name><![CDATA[J_AssetFlows]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753199813037</Id>
@@ -1795,6 +1855,16 @@
 				<Id>1753342010985</Id>
 				<Name><![CDATA[ActorMixin]]></Name>
 				<Folder>1753342021373</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1753968339982</Id>
+				<Name><![CDATA[J_ValueMap]]></Name>
+				<Folder>1752679379816</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1754038055004</Id>
+				<Name><![CDATA[J_AccumulatorMap]]></Name>
+				<Folder>1752679379816</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1754405220949</Id>

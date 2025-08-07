@@ -1,67 +1,59 @@
 /**
- * J_AccumulatorMap
+ * J_AssetFlowsAccumulatorMap
  */	
 //import java.util.EnumMap;
 import java.util.EnumSet;
-
 //import zeroPackage.ZeroAccumulator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
-public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
+public class J_AssetFlowsAccumulatorMap implements Serializable {
 	
-	private ZeroAccumulator[] accumulatorArray;
-    private final EnumSet<E> enumSet;
-    private final Class<E> enumClass;
-	//private ZeroAccumulator[] accumulatorArray = new ZeroAccumulator[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
-	//private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
-	
+	private ZeroAccumulator[] accumulatorArray = new ZeroAccumulator[OL_AssetFlowCategories.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	private EnumSet<OL_AssetFlowCategories> assetFlowsList = EnumSet.noneOf(OL_AssetFlowCategories.class);
 
-    public J_AccumulatorMap(Class<E> enumClass) {
-        this.enumClass = enumClass;
-        this.enumSet = EnumSet.noneOf(enumClass);
-        this.accumulatorArray = new ZeroAccumulator[enumClass.getEnumConstants().length];
+    /**
+     * Default constructor
+     */
+    public J_AssetFlowsAccumulatorMap() {
+    	//super(OL_EnergyCarriers.class);
     }
-    
-    public void createEmptyAccumulators(EnumSet<E> selectedFlows, boolean hasTimeSeries, double signalResolution_h, double duration_h) {
-    	for (E key : selectedFlows) {
+
+    public void createEmptyAccumulators(EnumSet<OL_AssetFlowCategories> selectedFlows, boolean hasTimeSeries, double signalResolution_h, double duration_h) {
+    	for (OL_AssetFlowCategories key : selectedFlows) {
     		this.put(key, new ZeroAccumulator(hasTimeSeries, signalResolution_h, duration_h));
     	}
     }
     
-    public J_AccumulatorMap getClone() {
-    	J_AccumulatorMap am = new J_AccumulatorMap(enumClass);
-    	for (var EC : this.enumSet) {
+    public J_AssetFlowsAccumulatorMap getClone() {
+    	J_AssetFlowsAccumulatorMap am = new J_AssetFlowsAccumulatorMap();
+    	for (var EC : this.assetFlowsList) {
     		am.put(EC, accumulatorArray[EC.ordinal()].getClone());
     	}
     	return am;
     }
    
-    public ZeroAccumulator get(E key) {
+    public ZeroAccumulator get(OL_AssetFlowCategories key) {
 		return accumulatorArray[key.ordinal()];
 	}
     	
 
-	public void put(E key, ZeroAccumulator acc) {
+	public void put(OL_AssetFlowCategories key, ZeroAccumulator acc) {
 		accumulatorArray[key.ordinal()] = acc;
-		enumSet.add(key);		
-	}
-	
-	public Set<E> keySet() {
-		return enumSet;
+		assetFlowsList.add(key);		
 	}
     /*
 	public double totalSum() {
 		double totalSum = 0.0;
-		for (var EC : energyCarrierList) {
+		for (var EC : assetFlowsList) {
 			totalSum += accumulatorArray[EC.ordinal()].getSum();
 		}
 		return totalSum;
 	}
 	*/
-	public double totalIntegral_kWh() {
+	/*public double totalIntegral_kWh() {
 		double totalIntegral_kWh = 0.0;
-		for (var EC : enumSet) {
+		for (var EC : assetFlowsList) {
 			totalIntegral_kWh += accumulatorArray[EC.ordinal()].getIntegral_kWh();
 		}
 		return totalIntegral_kWh;
@@ -73,7 +65,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 	
 	public double totalIntegralPos_kWh() {
 		double totalIntegralPos_kWh = 0.0;
-		for (var EC : enumSet) {
+		for (var EC : assetFlowsList) {
 			totalIntegralPos_kWh += accumulatorArray[EC.ordinal()].getIntegralPos_kWh();
 		}
 		return totalIntegralPos_kWh;
@@ -85,7 +77,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 	
 	public double totalIntegralNeg_kWh() {
 		double totalIntegralNeg_kWh = 0.0;
-		for (var EC : enumSet) {
+		for (var EC : assetFlowsList) {
 			totalIntegralNeg_kWh += accumulatorArray[EC.ordinal()].getIntegralNeg_kWh();
 		}
 		return totalIntegralNeg_kWh;
@@ -94,21 +86,22 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 	public double totalIntegralNeg_MWh() {
 		return this.totalIntegralNeg_kWh() / 1000;
 	}
+	*/
 	
 	public void clear() {
 		accumulatorArray = new ZeroAccumulator[OL_EnergyCarriers.values().length];
-		enumSet.clear();
+		assetFlowsList.clear();
 	}
 	
 	public void reset() {
-		for (var EC : enumSet) {
+		for (var EC : assetFlowsList) {
 			accumulatorArray[EC.ordinal()].reset();
 		}
 	}
 	
-	public J_AccumulatorMap<E> add( J_AccumulatorMap<E> accumulatorMap ) {
-		for (var EC : accumulatorMap.enumSet) {
-			if (!this.enumSet.contains(EC)) {
+	public J_AssetFlowsAccumulatorMap add( J_AssetFlowsAccumulatorMap accumulatorMap ) {
+		for (var EC : accumulatorMap.assetFlowsList) {
+			if (!this.assetFlowsList.contains(EC)) {
 				// make a new one?
 				throw new RuntimeException("Tried to add an AccumulatorMap with a new EnergyCarrier.");
 			}
@@ -117,9 +110,9 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		return this;
 	}
 	
-	public J_AccumulatorMap<E> subtract( J_AccumulatorMap<E> accumulatorMap ) {
-		for (var EC : accumulatorMap.enumSet) {
-			if (!this.enumSet.contains(EC)) {
+	public J_AssetFlowsAccumulatorMap subtract( J_AssetFlowsAccumulatorMap accumulatorMap ) {
+		for (var EC : accumulatorMap.assetFlowsList) {
+			if (!this.assetFlowsList.contains(EC)) {
 				// make a new one?
 				throw new RuntimeException("Tried to subtract an AccumulatorMap with a new EnergyCarrier.");
 			}
@@ -128,13 +121,15 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		return this;
 	}
 	
+	/*
 	public J_DataSetMap getDataSetMap( double startTime_h ) {
-		J_DataSetMap dsm = new J_DataSetMap(OL_EnergyCarriers.class);
-		for (var EC : this.enumSet) {
+		J_DataSetMap dsm = new J_DataSetMap();
+		for (var EC : this.assetFlowsList) {
 			dsm.put(EC, this.get(EC).getDataSet(startTime_h));
 		}
 		return dsm;
 	}
+	*/
 	
     public String toString() {
         if (this.accumulatorArray.length == 0) {
@@ -142,7 +137,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
         }
         StringBuilder sb = new StringBuilder();
         sb.append('{');
-        for (E key : this.enumSet) {
+        for (OL_AssetFlowCategories key : this.assetFlowsList) {
         	ZeroAccumulator acc = this.get(key);
         	//double value = this.get(key);
         	if (acc.getIntegral_kWh() == 0.0) {
