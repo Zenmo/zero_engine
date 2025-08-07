@@ -585,7 +585,7 @@ public class J_RapidRunData {
     	return minIndex*timeStep_h;
     }
     
-    public ZeroTimeSeries getBatteriesSOCAcc_fr() {
+    public ZeroTimeSeries getBatteriesSOCts_fr() {
     	double[] array = this.ts_dailyAverageBatteriesStoredEnergy_MWh.getTimeSeries();
     	double factor_fr = 1/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
     	ZeroTimeSeries ts = new ZeroTimeSeries(ts_dailyAverageBatteriesStoredEnergy_MWh.getSignalResolution_h(), ts_dailyAverageBatteriesStoredEnergy_MWh.getDuration());
