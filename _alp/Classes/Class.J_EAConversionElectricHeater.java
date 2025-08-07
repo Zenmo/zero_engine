@@ -1,7 +1,7 @@
 /**
  * J_EAConversionElectricHeater
  */
-public class J_EAConversionElectricHeater extends J_EAConversion implements Serializable {
+public class J_EAConversionElectricHeater extends J_EAConversion implements Serializable, I_HeatingAsset {
 
 	protected double outputTemperature_degC;
     /**

@@ -1,7 +1,7 @@
 /**
 * J_EAConversionGasBurner
 */
-public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion implements Serializable {
+public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion implements Serializable, I_HeatingAsset {
  
 	protected double outputTemperature_degC;
     /**

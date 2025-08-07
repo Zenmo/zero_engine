@@ -112,7 +112,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			traceln("Trip not started because EV not available!");
 			return false; // Trip not started because EV not available!
 		}
-	}
+	}	
  
 	@Override
 	public boolean endTrip(double tripDist_km) {

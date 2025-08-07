@@ -1881,6 +1881,11 @@
 				<Name><![CDATA[J_HeatingManagementSimple]]></Name>
 				<Folder>1753194088788</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1754578019724</Id>
+				<Name><![CDATA[I_HeatingAsset]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
