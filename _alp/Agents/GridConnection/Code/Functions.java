@@ -464,9 +464,11 @@ for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
 
 if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.contains(j_ea.assetFlowCategory)) { // add live dataset
 	OL_AssetFlowCategories AC = j_ea.assetFlowCategory;
-	v_liveAssetsMetaData.activeAssetFlows.add(AC);
-	if (energyModel.b_isInitialized && v_isActive) {		
+	if (energyModel.b_isInitialized && v_isActive) {	
 		f_addAssetFlow(AC);	
+	}
+	else{
+		v_liveAssetsMetaData.activeAssetFlows.add(AC);
 	}
 }
 
@@ -1370,6 +1372,8 @@ v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
 {/*ALCODESTART::1754380684467*/
 if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
+	v_liveAssetsMetaData.activeAssetFlows.add(AC);
+	
 	DataSet dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
