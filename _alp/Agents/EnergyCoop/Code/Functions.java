@@ -1562,7 +1562,7 @@ for(GridConnection GC : c_memberGridConnections){
 
 //Adjust StoreTotalAssetFlows accordingly to the member data
 v_rapidRunData.setStoreTotalAssetFlows(storeTotalAssetFlows);
-traceln("v_rapidRunData.setStoreTotalAssetFlows: " + v_rapidRunData.getStoreTotalAssetFlows());
+
 //For now assumed to stay the same even after slider change: can't see rapid run graphs anyway after slider change
 v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
