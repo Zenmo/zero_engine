@@ -121,6 +121,7 @@ public class J_ChargingSession implements Serializable {
     	V1GRemainingTimesteps = timeStepsV1G;
     }
     
+    
     public double getShiftedLoadV1GCurrentTimestep() {
     	return shiftedLoadV1GThisTimestep;
     }

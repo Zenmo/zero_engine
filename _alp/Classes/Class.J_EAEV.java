@@ -14,9 +14,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	protected double capacityElectric_kW;
 	private double storageCapacity_kWh;
  
-	private boolean V2GCapable = true;
+	private boolean V2GCapable = true; // For now default true: Add to constructor, where constructor calls: setV2GCapable(boolean isV2GCapable) to adjust min rato of capacity accordingly
 	private boolean V2GActive = false;
-	private double minimumRatioOfChargeCapacity_r = 0; // If Negative, it also allowes discharging (V2G)
+	private double minimumRatioOfChargeCapacity_r = -1; // If Negative, it also allowes discharging (V2G)
 	
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
@@ -83,7 +83,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	deltaEnergy_kWh = max(deltaEnergy_kWh, -ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent discharging faster than allowed
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * (storageCapacity_kWh * vehicleScaling) ); // Prevent overcharge
     	 */
-		
 		//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
 		double electricityProduction_kW = max(-chargePower_kW, 0);
 		double electricityConsumption_kW = max(chargePower_kW, 0);

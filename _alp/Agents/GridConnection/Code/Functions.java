@@ -654,7 +654,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		double V2G_WTR_offset_eurpkWh = 0.05;
 		double chargeSetpoint_kW = 0;
 
-		if ( energyModel.t_h*60 >= chargeDeadline_min - 30 & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+		if ( energyModel.t_h*60 >= chargeDeadline_min - 15 && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
 			//traceln("Urgency charging! May exceed connection capacity!");
 			chargeSetpoint_kW = maxChargingPower_kW;				
 		} else if ( vehicle.getCurrentStateOfCharge_fr() < 0.15 ) {
@@ -1388,8 +1388,6 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 		dsAsset.add( t, 0);
 	}
 	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
-	
-	traceln("Adding AC flow: " + AC);
 	
 	if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
 		v_liveAssetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW);
