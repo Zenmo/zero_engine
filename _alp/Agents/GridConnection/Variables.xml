@@ -608,29 +608,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1722584654288</Id>
-		<Name><![CDATA[v_isActive1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>370</X>
-		<Y>380</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[true]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1725968910310</Id>
 		<Name><![CDATA[v_nfatoWeekendFeedinCapacity_kW]]></Name>
 		<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
@@ -1033,29 +1010,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1753110629668</Id>
-		<Name><![CDATA[v_assetFlows]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>570</X>
-		<Y>840</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[J_AssetFlows]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_AssetFlows()]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1753970741239</Id>
 		<Name><![CDATA[fm_currentAssetFlows_kW]]></Name>
 		<X>840</X>
@@ -1278,6 +1232,7 @@
 			<DefaultValue Class="CodeValue">
 				<Code><![CDATA[OL_ChargingAttitude.SIMPLE]]></Code>
 			</DefaultValue>
+			<OnChangeCode>f_activateV2GChargingMode()</OnChangeCode>
 			<ParameterEditor>
 				<Id>1668693393496</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
@@ -1291,7 +1246,7 @@
 		<Id>1668695364192</Id>
 		<Name><![CDATA[p_batteryAsset]]></Name>
 		<X>600</X>
-		<Y>450</Y>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1344,7 +1299,7 @@
 		<Id>1676449763319</Id>
 		<Name><![CDATA[p_heatBuffer]]></Name>
 		<X>600</X>
-		<Y>430</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1369,7 +1324,7 @@
 		<Id>1684919785784</Id>
 		<Name><![CDATA[p_gasBuffer]]></Name>
 		<X>600</X>
-		<Y>490</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1394,7 +1349,7 @@
 		<Id>1692878211840</Id>
 		<Name><![CDATA[p_cookingTracker]]></Name>
 		<X>620</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1444,7 +1399,7 @@
 		<Id>1692973005119</Id>
 		<Name><![CDATA[p_DHWAsset]]></Name>
 		<X>621</X>
-		<Y>288</Y>
+		<Y>308</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1775,8 +1730,8 @@
 	<Variable Class="Parameter">
 		<Id>1753099355801</Id>
 		<Name><![CDATA[p_heatingManagement]]></Name>
-		<X>580</X>
-		<Y>100</Y>
+		<X>600</X>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1801,7 +1756,7 @@
 		<Id>1752752664510</Id>
 		<Name><![CDATA[p_batteryAlgorithm]]></Name>
 		<X>620</X>
-		<Y>470</Y>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1854,7 +1809,7 @@
 		<Id>1659962626903</Id>
 		<Name><![CDATA[c_energyAssets]]></Name>
 		<X>580</X>
-		<Y>170</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1872,7 +1827,7 @@
 		<Id>1659962626907</Id>
 		<Name><![CDATA[c_storageAssets]]></Name>
 		<X>600</X>
-		<Y>310</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1890,7 +1845,7 @@
 		<Id>1659962626909</Id>
 		<Name><![CDATA[c_consumptionAssets]]></Name>
 		<X>600</X>
-		<Y>210</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1908,7 +1863,7 @@
 		<Id>1659962626911</Id>
 		<Name><![CDATA[c_productionAssets]]></Name>
 		<X>600</X>
-		<Y>230</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1926,7 +1881,7 @@
 		<Id>1659962626913</Id>
 		<Name><![CDATA[c_conversionAssets]]></Name>
 		<X>600</X>
-		<Y>250</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1944,7 +1899,7 @@
 		<Id>1667746389220</Id>
 		<Name><![CDATA[c_vehicleAssets]]></Name>
 		<X>600</X>
-		<Y>330</Y>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1961,8 +1916,8 @@
 	<Variable Class="CollectionVariable">
 		<Id>1668359033654</Id>
 		<Name><![CDATA[c_vehiclesAvailableForCharging]]></Name>
-		<X>620</X>
-		<Y>370</Y>
+		<X>640</X>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1980,7 +1935,7 @@
 		<Id>1669115948280</Id>
 		<Name><![CDATA[c_dieselVehicles]]></Name>
 		<X>620</X>
-		<Y>390</Y>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1998,7 +1953,7 @@
 		<Id>1692864624612</Id>
 		<Name><![CDATA[c_tripTrackers]]></Name>
 		<X>620</X>
-		<Y>350</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2016,7 +1971,7 @@
 		<Id>1700044359363</Id>
 		<Name><![CDATA[c_profileAssets]]></Name>
 		<X>600</X>
-		<Y>188</Y>
+		<Y>208</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2052,7 +2007,7 @@
 		<Id>1711012701187</Id>
 		<Name><![CDATA[c_hydrogenVehicles]]></Name>
 		<X>620</X>
-		<Y>410</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2278,7 +2233,7 @@
 		<Id>1750258408126</Id>
 		<Name><![CDATA[c_chargers]]></Name>
 		<X>600</X>
-		<Y>511</Y>
+		<Y>551</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2316,7 +2271,7 @@
 		<Name><![CDATA[c_heatingAssets]]></Name>
 		<Description><![CDATA[A collection of assets that can deliver heat. This collection does not include the heat buffer or thermal building.]]></Description>
 		<X>580</X>
-		<Y>120</Y>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -2327,6 +2282,24 @@
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>J_EAConversion</ElementClass>
+			<ValueElementClass>String</ValueElementClass>
+		</Properties>
+	</Variable>
+	<Variable Class="CollectionVariable">
+		<Id>1754581015887</Id>
+		<Name><![CDATA[c_electricVehicles]]></Name>
+		<X>620</X>
+		<Y>390</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+			<CollectionClass>ArrayList</CollectionClass>
+			<ElementClass>J_EAEV</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
