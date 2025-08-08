@@ -349,7 +349,7 @@
 		<Id>1739970817879</Id>
 		<Name><![CDATA[f_collectGridConnectionRapidRunData]]></Name>
 		<X>990</X>
-		<Y>210</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -520,22 +520,6 @@
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1740502128178</Id>
-		<Name><![CDATA[f_collectAssetSpecificEnergyFlows_rapidRun]]></Name>
-		<X>1010</X>
-		<Y>230</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1740502128180</Id>
 		<Name><![CDATA[f_collectGridConnectionLiveData]]></Name>
 		<X>990</X>
@@ -572,23 +556,6 @@
 		<Name><![CDATA[f_connectCoopBattery]]></Name>
 		<X>990</X>
 		<Y>300</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1744211126429</Id>
-		<Name><![CDATA[f_recalculateSOC_rapidrun]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1010</X>
-		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -704,6 +671,22 @@
 			<Name><![CDATA[AC]]></Name>
 			<Type><![CDATA[OL_AssetFlowCategories]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1754666678297</Id>
+		<Name><![CDATA[f_createAndInitializeRapidRunDataClass]]></Name>
+		<X>990</X>
+		<Y>210</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
