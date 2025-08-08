@@ -182,7 +182,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	heatDeliverySet = null;
     	hydrogenBurner = null;
     	
-    	for (J_EAConversion heatingAsset : gc.c_heatingAssets) {
+    	for (J_EA heatingAsset : gc.c_heatingAssets) {
     		if (heatingAsset instanceof J_EAConversionGasBurner) {
     			if (gasBurner != null) {
     	    		throw new RuntimeException(this.getClass() + " does not support two gasburners");

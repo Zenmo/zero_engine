@@ -473,6 +473,13 @@ if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.conta
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
+if (j_ea instanceof I_HeatingAsset) {
+	c_heatingAssets.add((J_EAConversion)j_ea);
+	if (p_heatingManagement != null) {
+		p_heatingManagement.notInitialized();
+	}
+}
+
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
 	if (vehicle instanceof J_EADieselVehicle) {
@@ -512,10 +519,6 @@ if (j_ea instanceof J_EAVehicle) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		p_DHWAsset = (J_EAConsumption)j_ea;	
 	}
-	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-	}
-	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.add((J_EAProduction)j_ea);
 
@@ -544,29 +547,15 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
-	// Non Heating Assets
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-		}
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
 			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, (J_EAConversion)j_ea );			
 		} else {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
-	} else if (j_ea instanceof J_EAConversionElectrolyser) {
-		//c_electrolyserAssets.add(j_ea);
-	} else {
-		// Heating Assets
-		c_heatingAssets.add((J_EAConversion)j_ea);
-		if (p_heatingManagement != null) {
-			p_heatingManagement.notInitialized();
-		}
-		// Special Heating Assets
-		if (j_ea instanceof J_EAConversionHeatPump) {
-			energyModel.c_ambientDependentAssets.add(j_ea);
-		} else if (j_ea instanceof J_EAConversionGasCHP) {
-		}
+	} else if (j_ea instanceof J_EAConversionHeatPump) {
+		energyModel.c_ambientDependentAssets.add(j_ea);
 	}
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);

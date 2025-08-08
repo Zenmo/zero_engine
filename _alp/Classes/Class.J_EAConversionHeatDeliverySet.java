@@ -1,7 +1,7 @@
 /**
  * J_EAConversionHeatDeliverySet
  */
-public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion implements Serializable {
+public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion implements Serializable, I_HeatingAsset {
 
 	protected double outputTemperature_degC;
     /**

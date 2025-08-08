@@ -1,7 +1,7 @@
 /**
  * J_EAConversionGasCHP
  */
-public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements Serializable {
+public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements Serializable, I_HeatingAsset {
 
 	protected double outputTemperature_degC;
 	protected double outputHeatCapacity_kW;

@@ -1,7 +1,7 @@
 /**
  * J_EAConversionHeatPump
  */
-public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implements Serializable {
+public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implements Serializable, I_HeatingAsset {
 	private double COP_r;
 	private double belowZeroHeatpumpEtaReductionFactor;
 	protected double outputTemperature_degC;
