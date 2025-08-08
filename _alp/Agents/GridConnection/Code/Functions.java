@@ -1396,8 +1396,8 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 	}
 	
 	//Add asset flow also to aggregators
-	c_parentCoops.forEach(x -> x.f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW));
-	energyModel.f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
+	c_parentCoops.forEach(x -> x.f_addAssetFlow(AC));
+	energyModel.f_addAssetFlow(AC);
 }			
 /*ALCODEEND*/}
 
