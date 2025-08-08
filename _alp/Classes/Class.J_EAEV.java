@@ -14,6 +14,10 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	protected double capacityElectric_kW;
 	private double storageCapacity_kWh;
  
+	private boolean V2GCapable = true; // For now default true: Add to constructor, where constructor calls: setV2GCapable(boolean isV2GCapable) to adjust min rato of capacity accordingly
+	private boolean V2GActive = false;
+	private double minimumRatioOfChargeCapacity_r = -1; // If Negative, it also allowes discharging (V2G)
+	
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
 	public OL_EVChargingNeed chargingNeed;
@@ -51,17 +55,24 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    }
 	    this.activeProductionEnergyCarriers.add(this.storageMedium);   	
 		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
-		this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+		
+		if(V2GCapable && this.V2GActive) {
+			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
+		} else {
+			this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+		}
+		
 		registerEnergyAsset();
     }
  
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
 		//traceln( "ratio: " + ratioOfChargeCapacity_r);
-
-    	double chargeSetpoint_kW = min(1,max(-1,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
+		
+		
+    	double chargeSetpoint_kW = min(1,max(this.minimumRatioOfChargeCapacity_r ,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
     	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / timestep_h), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / timestep_h); // Limit charge power to stay within SoC 0-100
-    			
+    	
     	/*double deltaEnergy_kWh;   // to check the request with the energy currently in storage
     	
     	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ) ;
@@ -72,7 +83,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
     	deltaEnergy_kWh = max(deltaEnergy_kWh, -ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent discharging faster than allowed
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * (storageCapacity_kWh * vehicleScaling) ); // Prevent overcharge
     	 */
-		
 		//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
 		double electricityProduction_kW = max(-chargePower_kW, 0);
 		double electricityConsumption_kW = max(chargePower_kW, 0);
@@ -82,10 +92,15 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);
 		// Split charging and discharing power 'at the source'!
-		if (chargePower_kW >= 0) { // charging
+		if (chargePower_kW > 0) { // charging
 			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
-		} else {
-			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+		} else if(chargePower_kW < 0){
+			if(this.V2GCapable && this.V2GActive) {
+				assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+			}
+			else {
+				throw new RuntimeException("Trying to discharge an EV, that does not have the capability or where v2g is not activated!");
+			}
 		}
 	}
  
@@ -196,6 +211,31 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public double getEnergyChargedOutsideModelArea_kWh() {
 		return energyChargedOutsideModelArea_kWh;
 	}
+	
+	public void setV2GCapable(boolean isV2GCapable) {
+		this.V2GCapable = isV2GCapable;
+		if(isV2GCapable) {
+			minimumRatioOfChargeCapacity_r = -1;
+		}
+		else {
+			minimumRatioOfChargeCapacity_r = 0;
+		}
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
+	}
+	
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		if(this.V2GCapable && activateV2G) {
+			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
+		}
+		else {
+			this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+		}
+	}
+	
 	@Override
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!

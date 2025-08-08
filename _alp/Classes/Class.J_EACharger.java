@@ -8,6 +8,7 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 		public List<J_ChargingSession> chargerProfile;
 		public boolean V1GCapable;
 		public boolean V2GCapable;
+		private boolean V2GActive = false;
 		
 		private int currentChargingSessionIndexSocket1;
 		private J_ChargingSession currentChargingSessionSocket1;
@@ -39,7 +40,7 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 		    this.V2GCapable = V2GCapable;
 	    	this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);		
 			this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
-			if(V2GCapable) {
+			if(V2GCapable && this.V2GActive) {
 				this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
 			} else {
 				this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
@@ -49,7 +50,7 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 	    
 	    public void f_updateAllFlows( double t_h, boolean doV1G, boolean doV2G) {
 	    	// Powerfraction is calculated below, argument is the current time (energyModel.t_h)
-	    	
+    	
 	    	// Check if the charger is capable of smart charging
 	    	doV1G = doV1G && this.V1GCapable;
 	    	doV2G = doV2G && this.V2GCapable;
@@ -92,8 +93,23 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 	    	
 			flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);	
 			// Split charging and discharing power 'at the source'!
+
 			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
-			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+			if(V2GActive) {
+				assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+			}
+			
+			if (charge_kW > 0) { // charging
+				assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
+			} else if(charge_kW < 0){
+				if(this.V2GCapable && this.V2GActive) {
+					assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
+				}
+				else {
+					throw new RuntimeException("Trying to discharge into a charger, that does not have the capability or where v2g is not activated!");
+				}
+			}
+			
 	   	}
 		
 		private void manageSocket1() {
@@ -191,6 +207,16 @@ public class J_EACharger extends zero_engine.J_EA implements Serializable {
 			
 			totalShiftedLoadV1G_kWh = totalShiftedLoadV1GStored_kWh;
 			totalShiftedLoadV2G_kWh = totalShiftedLoadV2GStored_kWh;
+		}
+		
+		public  void setV2GActive(boolean activateV2G) {
+			this.V2GActive = activateV2G;
+			if(this.V2GCapable && activateV2G) {
+				this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
+			}
+			else {
+				this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+			}
 		}
 		
 		@Override
