@@ -231,15 +231,32 @@ public class ZeroAccumulator {
     	return duration_h;
     }
     public ZeroAccumulator add(ZeroAccumulator acc) {
-        if ((this.hasTimeSeries && acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
-                && (this.signalResolution_h == acc.signalResolution_h)) {
-            for (int i = 0; i < timeSeries.length; i++) {
-                this.timeSeries[i] += acc.timeSeries[i];
-            }
-            this.maxPower_kW = Arrays.stream(this.timeSeries).max().getAsDouble();
-            this.minPower_kW = Arrays.stream(this.timeSeries).min().getAsDouble();
-            
-        } else if ((!this.hasTimeSeries && !acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
+        if (this.hasTimeSeries && acc.hasTimeSeries && this.duration_h == acc.duration_h){
+        	if (this.signalResolution_h == acc.signalResolution_h) {
+	            for (int i = 0; i < timeSeries.length; i++) {
+	                this.timeSeries[i] += acc.timeSeries[i];
+	            }
+	            this.maxPower_kW = Arrays.stream(this.timeSeries).max().getAsDouble();
+	            this.minPower_kW = Arrays.stream(this.timeSeries).min().getAsDouble();
+        	}
+        	else if(this.signalResolution_h > acc.signalResolution_h && this.signalResolution_h % acc.signalResolution_h == 0) { //Average the smaller time step acc into the bigger one
+	            for (int i = 0; i < timeSeries.length; i++) {
+		            double averageAddedValue_kW = 0;
+		            int resolutionRatio = (int) (this.signalResolution_h / acc.signalResolution_h);
+		            for (int j = 0; j < resolutionRatio; j++) {
+		                int accIndex = i * resolutionRatio + j;
+		                averageAddedValue_kW += acc.timeSeries[accIndex] / resolutionRatio;
+		            }
+	                this.timeSeries[i] += averageAddedValue_kW;
+	            }
+	            this.maxPower_kW = Arrays.stream(this.timeSeries).max().getAsDouble();
+	            this.minPower_kW = Arrays.stream(this.timeSeries).min().getAsDouble();           
+        	}
+        	else {
+        		throw new RuntimeException("Cannot add accumulator: resolutions must be equal or an integer multiple of each other where the added accumulator resolution (timestep_h) cannot be larger than the target.");
+        	}
+        } 
+        else if ((!this.hasTimeSeries && !acc.hasTimeSeries) && (this.duration_h == acc.duration_h)
                 && (this.signalResolution_h == acc.signalResolution_h)) {
             this.totalEnergy_kWh += acc.totalEnergy_kWh;
             // These values below we can not determine since we have no timeSeries (but you can still call getSumPos()...)

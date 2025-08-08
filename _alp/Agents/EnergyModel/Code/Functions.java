@@ -287,6 +287,10 @@ for (EnergyCoop EC : pop_energyCoops) {
 		}
 		EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
 		EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
+		if(EC.v_rapidRunData.getStoreTotalAssetFlows() == false){
+			EC.v_rapidRunData.setStoreTotalAssetFlows(true);
+			EC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, EC.v_activeEnergyCarriers, EC.v_activeConsumptionEnergyCarriers, EC.v_activeProductionEnergyCarriers);
+		}
 	} else {
 		EC.v_rapidRunData = new J_RapidRunData(EC);
 		EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();

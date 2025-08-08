@@ -6,7 +6,7 @@ import zeroPackage.ZeroMath;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
 public class J_RapidRunData {
-	public boolean storesTotalAssetFlows = true;
+	private boolean storeTotalAssetFlows = true;
 	public Agent parentAgent;
 	private double timeStep_h;
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
@@ -98,10 +98,18 @@ public class J_RapidRunData {
     public J_RapidRunData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
     	if (parentAgent instanceof GridConnection) {
-    		if (!((GridConnection)parentAgent).v_hasQuarterHourlyValues ) {
-    			storesTotalAssetFlows = false;
+    		if (!((GridConnection)parentAgent).p_owner.p_detailedCompany ) {
+    			storeTotalAssetFlows = false;
     		}
     	}
+    }
+    
+    public void setStoreTotalAssetFlows(boolean storeTotalAssetFlows) {
+    	this.storeTotalAssetFlows = storeTotalAssetFlows;
+    }
+    
+    public boolean getStoreTotalAssetFlows() {
+    	return this.storeTotalAssetFlows;
     }
     
     public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
@@ -122,7 +130,7 @@ public class J_RapidRunData {
 	    acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	
 	    //========== ASSET FLOWS ==========//
-	    if (storesTotalAssetFlows) {
+	    if (storeTotalAssetFlows) {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
 	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
 		    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
@@ -137,8 +145,6 @@ public class J_RapidRunData {
 	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(simDuration_h, simDuration_h);	    		
 	    	}
 	    }	  
-
-	    //ts_dailyAverageBatteriesSOC_fr = new ZeroTimeSeries(24.0, simDuration_h);
 	    
 	    //========== SUMMER WEEK ACCUMULATORS ==========//
 	    am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 168.0);
@@ -217,14 +223,13 @@ public class J_RapidRunData {
     	acc_totalEnergyCurtailed_kW.reset();
     	acc_totalPrimaryEnergyProductionHeatpumps_kW.reset();
 
-    	if (storesTotalAssetFlows) {
+    	if (storeTotalAssetFlows) {
   	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
   	    } else {
   	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);	
   	    }
 
         ts_dailyAverageBatteriesStoredEnergy_MWh.reset();
-        //ts_dailyAverageBatteriesSOC_fr.reset();
         
     	//Summerweek
     	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 24*7);
