@@ -98,14 +98,15 @@ public class J_RapidRunData {
     public J_RapidRunData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
     	if (parentAgent instanceof GridConnection) {
-    		if (!((GridConnection)parentAgent).p_owner.p_detailedCompany ) {
+    		if (!((GridConnection)parentAgent).p_owner.p_detailedCompany && !((GridConnection)parentAgent).v_hasQuarterHourlyValues) {
     			storeTotalAssetFlows = false;
     		}
     	}
     }
     
-    public void setStoreTotalAssetFlows(boolean storeTotalAssetFlows) {
+    public boolean setStoreTotalAssetFlows(boolean storeTotalAssetFlows) {
     	this.storeTotalAssetFlows = storeTotalAssetFlows;
+    	return this.storeTotalAssetFlows == storeTotalAssetFlows; // Check if it has succeeded (Always for now!)
     }
     
     public boolean getStoreTotalAssetFlows() {
