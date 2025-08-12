@@ -11,7 +11,7 @@ if (p_owner != null){
 
 f_manageHeating();
 
-if( p_householdEV != null){
+if( c_electricVehicles.size() > 0){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
@@ -218,7 +218,7 @@ double f_manageCharging_overwrite()
 double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge_fr();
+//v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge_fr();
 
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
@@ -341,60 +341,8 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 
 double f_connectTo_J_EA_House(J_EA j_ea)
 {/*ALCODESTART::1693300820997*/
-/*
-if (j_ea instanceof J_EAConversion) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.GAS_BURNER || j_ea instanceof J_EAConversionHeatPump || j_ea instanceof J_EAConversionHeatDeliverySet || j_ea instanceof J_EAConversionElectricHeater ) {
-		switch (p_heatingType) {
-        	case HEATPUMP_AIR:
-        		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-        		break;
-        	case HEATPUMP_GASPEAK:
-				p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionHeatPump? (J_EAConversion)j_ea : p_primaryHeatingAsset;
-	            p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-            	break;
-            case HEATPUMP_BOILERPEAK:    // ambigue wat we met boiler bedoelen; eboiler of grootschalige DH_boiler = gasburner!
-                p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionHeatPump? (J_EAConversion)j_ea : p_primaryHeatingAsset;
-                p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-                p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionElectricHeater? (J_EAConversion)j_ea : p_secondaryHeatingAsset;                                          
-            	break;
-            case GASBURNER:
-                p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_primaryHeatingAsset;
-                p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasCHP? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-            	break;
-            case DISTRICTHEAT:
-                if( j_ea instanceof J_EAConversionHeatDeliverySet ){
-					p_primaryHeatingAsset = (J_EAConversion)j_ea;
-					//traceln("Assigning heat delivery set as primary heating asset for house!");
-				}
-				else {
-					p_secondaryHeatingAsset = (J_EAConversion)j_ea;
-					// set water/water heatpump source energy-asset
-					
-					//if( j_ea instanceof J_EAConversionHeatPump && ((J_EAConversionHeatPump)j_ea).getAmbientTempType().equals("WATER") && p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet ) {
-						//((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset = p_primaryHeatingAsset;
-						//j_ea.updateAmbientTemperature( ((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset.getCurrentTemperature() );
-					//}
-					
-				}	
-            	break;
-            case LT_DISTRICTHEAT:
-            	p_primaryHeatingAsset = (J_EAConversion)j_ea;
-            	break;
-            default: throw new IllegalStateException("Invalid HeatingType: " + p_heatingType);
-      	}
-    }
-}
-*/
-
-if (j_ea instanceof J_EAEV) {
-	if (p_householdEV != null){
-	    	throw new RuntimeException(String.format("Exception: trying to assign 2 EVs to a household!! --> one of them will not charge! "));
-	}
-	p_householdEV = (J_EAEV)j_ea;
-}
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
-	//c_electricHeatpumpAssets.add(j_ea);
 }
 /*ALCODEEND*/}
 
@@ -406,21 +354,6 @@ traceln("Placeholder function f_setAnnualEnergyDemand called! Nothing will happe
 double f_setEnergyLabel()
 {/*ALCODESTART::1696924006982*/
 traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");
-/*ALCODEEND*/}
-
-double f_removeCurrentHeatingSystem()
-{/*ALCODESTART::1726129903799*/
-p_heatingType = OL_GridConnectionHeatingType.NONE;
-p_primaryHeatingAsset.removeEnergyAsset();
-if ( p_secondaryHeatingAsset != null){
-	p_secondaryHeatingAsset.removeEnergyAsset();
-}
-if ( p_tertiaryHeatingAsset != null){
-	p_tertiaryHeatingAsset.removeEnergyAsset();
-}
-if ( p_heatBuffer != null){
-	p_heatBuffer.removeEnergyAsset();
-}
 /*ALCODEEND*/}
 
 double f_manageCookingTracker()
@@ -482,12 +415,8 @@ if( p_airco != null ) {
 
 double f_removeTheJ_EA_house(J_EA j_ea)
 {/*ALCODESTART::1749722407831*/
-if (j_ea instanceof J_EAEV) {
-	p_householdEV = null;
-}
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
-	//c_electricHeatpumpAssets.remove(j_ea);
 }
 /*ALCODEEND*/}
 

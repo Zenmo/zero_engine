@@ -22,8 +22,8 @@
 		<Id>1669203453155</Id>
 		<Name><![CDATA[f_createThermalStorageModel]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>940</X>
-		<Y>-90</Y>
+		<X>1290</X>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -39,8 +39,8 @@
 		<Id>1674402121915</Id>
 		<Name><![CDATA[f_chargeOnPrice_overwrite]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1230</X>
-		<Y>680</Y>
+		<X>1290</X>
+		<Y>1270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -80,8 +80,9 @@
 		<Id>1675033218897</Id>
 		<Name><![CDATA[f_simpleCharging_overwrite]]></Name>
 		<Description><![CDATA[Charging when arriving home, not taking grid limits into account]]></Description>
-		<X>940</X>
-		<Y>330</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1320</X>
+		<Y>1370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -97,8 +98,8 @@
 		<Id>1675034695162</Id>
 		<Name><![CDATA[f_determineChargingDemandOfEV]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1230</X>
-		<Y>700</Y>
+		<X>1290</X>
+		<Y>1290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -114,8 +115,8 @@
 		<Id>1677664183773</Id>
 		<Name><![CDATA[f_chargeOnPriceSimpler]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1240</X>
-		<Y>730</Y>
+		<X>1300</X>
+		<Y>1320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -135,8 +136,8 @@
 		<Id>1678708804201</Id>
 		<Name><![CDATA[f_batteryManagementLoad]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1240</X>
-		<Y>750</Y>
+		<X>1300</X>
+		<Y>1340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -171,8 +172,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1696923950404</Id>
 		<Name><![CDATA[f_setAnnualEnergyDemand]]></Name>
-		<X>1090</X>
-		<Y>40</Y>
+		<X>1010</X>
+		<Y>-80</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -187,25 +188,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1696924006982</Id>
 		<Name><![CDATA[f_setEnergyLabel]]></Name>
-		<X>1090</X>
-		<Y>60</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1726129903799</Id>
-		<Name><![CDATA[f_removeCurrentHeatingSystem]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1090</X>
-		<Y>20</Y>
+		<X>1010</X>
+		<Y>-60</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

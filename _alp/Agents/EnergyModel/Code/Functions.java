@@ -1125,3 +1125,8 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 }
 /*ALCODEEND*/}
 
+List<GridConnection> f_getGridConnectionsCollectionPointer()
+{/*ALCODESTART::1754908171225*/
+return this.c_gridConnections;
+/*ALCODEEND*/}
+

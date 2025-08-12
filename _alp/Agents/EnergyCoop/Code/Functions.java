@@ -1571,3 +1571,8 @@ v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p
 
 /*ALCODEEND*/}
 
+List<GridConnection> f_getMemberGridConnectionsCollectionPointer()
+{/*ALCODESTART::1754908113703*/
+return this.c_memberGridConnections; // This should NOT be a copy, it should be a pointer!!
+/*ALCODEEND*/}
+
