@@ -128,32 +128,8 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
     }
-	
-    // This function could be removed, now that we have the more generic: curtailEnergyCarrierProduction
-    public void curtailElectricityProduction(double curtailmentSetpoint_kW) {  // This variable is called curtailmentSetpoint, but maybe its better to call it curtailment amount? it represents the amount of production we need to curtail, not the amount we want to produce.
-    	double currentProduction_kW = -this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
-    	//traceln("currentProduction_kW: " + currentProduction_kW);
-    	//traceln("curtailmentSetpoint_kW: " + curtailmentSetpoint_kW);
-    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentSetpoint_kW));
-    	energyUsed_kWh += curtailmentPower_kW * timestep_h;
-    	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
-    	this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
-    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
-    	
-    	this.energyUse_kW = -curtailmentPower_kW;
-    	this.lastFlowsMap.addFlow(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);
-    	this.lastEnergyUse_kW += curtailmentPower_kW;
-    	
-    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
-    	}
-    	clear();
-    	
-    }
     
-    public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // This variable is called curtailmentSetpoint, but maybe its better to call it curtailment amount? it represents the amount of production we need to curtail, not the amount we want to produce.
+    public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	
     	if(this.energyCarrier != curtailedEnergyCarrier) {
     		//new RuntimeException("Trying to curtail the wrong a production asset with the wrong energyCarrier");
@@ -161,19 +137,20 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	}
     	
     	double currentProduction_kW = -this.lastFlowsMap.get(curtailedEnergyCarrier);
-    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW));
-    	energyUsed_kWh += curtailmentPower_kW * timestep_h;
+    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW)); // Can only curtail what was produced in the first place.
+    	energyUsed_kWh += curtailmentPower_kW * timestep_h; // energyUsed_kWh is negative for production assets. Curtailment makes it 'less negative', so a positive number is added to energyUsed_kWh.
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
-    	this.flowsMap.put(curtailedEnergyCarrier, -curtailmentPower_kW);
+    	J_FlowsMap curtailmentFlow = new J_FlowsMap();
+    	curtailmentFlow.put(curtailedEnergyCarrier, -curtailmentPower_kW); // To remove production, a negative flow must be removed. Thus this flowmap with a negative flow will be sent to GC.f_removeFlows()
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
-    	this.energyUse_kW = -curtailmentPower_kW;
-    	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW);
-    	this.lastEnergyUse_kW += curtailmentPower_kW;
+    	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW); // The assetFlows for production assets contain positive values for production. This assetFlows_kW will be handle bij GC.f_removeFlows(), so it should contain a positive number to remove production.
+    	double curtailedEnergyUse_kW = -curtailmentPower_kW; // production is a negative flow, so to remove production, a negative value must be sent to GC.f_removeFlows().
+    	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW); // production is a negative flow, so to remove production, a positive value must be added to lastFlows.
+    	this.lastEnergyUse_kW += curtailmentPower_kW; // production is a negative flow, so to remove production, a positive value must be added to lastEnergyUse_kW.
     	
     	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(this.flowsMap, this.energyUse_kW, assetFlows_kW, this);
+    		((GridConnection)parentAgent).f_removeFlows(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW, this);
     	}
     	clear();
     	
@@ -218,4 +195,3 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 }
-
