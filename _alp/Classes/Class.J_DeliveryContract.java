@@ -35,7 +35,7 @@ public class J_DeliveryContract extends zero_engine.J_Contract implements Serial
 	    this.energyCarrier = energyCarrier;
 	    this.deliveryPrice_eurpkWh = deliveryPrice_eurpkWh;
 	    this.feedinPrice_eurpkWh = feedinPrice_eurpkWh;
-	    this.contractType = OL_ContractType.DELIVERY;
+	    //this.contractType = OL_ContractType.DELIVERY;
 	    this.annualFee_eur = annualFee_eur;
 	}
     
