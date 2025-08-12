@@ -139,7 +139,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW);
     	
     	this.energyUse_kW = -curtailmentPower_kW;
     	this.lastFlowsMap.addFlow(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);
@@ -166,7 +166,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
     	this.flowsMap.put(curtailedEnergyCarrier, -curtailmentPower_kW);
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW);
     	this.energyUse_kW = -curtailmentPower_kW;
     	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW);
     	this.lastEnergyUse_kW += curtailmentPower_kW;
