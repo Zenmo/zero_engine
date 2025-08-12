@@ -7,7 +7,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	public OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
-	public OL_ProfileAssetType profileType;
+	//public OL_ProfileAssetType profileType;
 	private double profileTimestep_h;
     private double profileStarTime_h = 0;
 	//protected double outputTemperature_degC;
@@ -24,12 +24,13 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_ProfileAssetType profileType, double profileTimestep_h) {
+    public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h) {
 	    this.parentAgent= parentAgent;
 	    this.energyCarrier = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
-	    this.profileType = profileType;
+	    //this.profileType = profileType;
 	    this.profileTimestep_h = profileTimestep_h;
+	    this.assetFlowCategory = assetCategory;
 
 	    if (parentAgent instanceof GridConnection) {
 	    	this.timestep_h = ((GridConnection)parentAgent).energyModel.p_timeStep_h;
@@ -37,6 +38,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    	this.timestep_h = profileTimestep_h;
 	    }
 	    
+	    /*
 	    if (profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD) {
 	    	this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW;
 	    } else if (profileType == OL_ProfileAssetType.CHARGING) {
@@ -48,7 +50,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    } else if (profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION) {
 	    	this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
 	    } 
-	    
+	    */
 	    //this.activeProductionEnergyCarriers.add(this.energyCarrier);
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 	    

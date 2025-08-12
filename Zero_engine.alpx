@@ -1066,6 +1066,7 @@
 			<OptionList>
 				<Id>1718560423698</Id>
 				<Name><![CDATA[OL_ProfileAssetType]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1718560423699</Id>
 					<Name><![CDATA[ELECTRICITYBASELOAD]]></Name>
