@@ -1130,3 +1130,8 @@ List<GridConnection> f_getGridConnectionsCollectionPointer()
 return this.c_gridConnections;
 /*ALCODEEND*/}
 
+List<GridConnection> f_getPausedGridConnectionsCollectionPointer()
+{/*ALCODESTART::1755014169405*/
+return this.c_pausedGridConnections;
+/*ALCODEEND*/}
+
