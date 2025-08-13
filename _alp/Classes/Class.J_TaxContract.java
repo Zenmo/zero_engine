@@ -23,7 +23,7 @@ public class J_TaxContract extends zero_engine.J_Contract implements Serializabl
 	    this.deliveryTax_eurpkWh = deliveryTax_eurpkWh;
 	    this.feedinTax_eurpkWh = feedinTax_eurpkWh;
 	    this.proportionalTax_pct = proportionalTax_pct;
-	    this.contractType = OL_ContractType.TAX;
+	    //this.contractType = OL_ContractType.TAX;
 	    this.annualFee_eur = annualFee_eur;
 	}
 }

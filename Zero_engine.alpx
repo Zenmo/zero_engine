@@ -254,14 +254,6 @@
 					<Name><![CDATA[ELECTRIC_HOB]]></Name>
 				</Option>
 				<Option>
-					<Id>1676965109301</Id>
-					<Name><![CDATA[CURTAILER]]></Name>
-				</Option>
-				<Option>
-					<Id>1678469475524</Id>
-					<Name><![CDATA[CURTAILER_HEAT]]></Name>
-				</Option>
-				<Option>
 					<Id>1676383232204</Id>
 					<Name><![CDATA[RESIDUALHEATHT]]></Name>
 				</Option>
@@ -361,6 +353,7 @@
 			<OptionList>
 				<Id>1659525715752</Id>
 				<Name><![CDATA[OL_EAConversionTypes]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1659535854305</Id>
 					<Name><![CDATA[HEATPUMP]]></Name>
@@ -401,63 +394,6 @@
 				<Option>
 					<Id>1659950311558</Id>
 					<Name><![CDATA[WINDMILL]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1659525736586</Id>
-				<Name><![CDATA[OL_EAConsumptionTypes]]></Name>
-				<Option>
-					<Id>1659535824593</Id>
-					<Name><![CDATA[ELECTRICITY]]></Name>
-				</Option>
-				<Option>
-					<Id>1659535830792</Id>
-					<Name><![CDATA[HEAT]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1659525748543</Id>
-				<Name><![CDATA[OL_EAStorageTypes]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Option>
-					<Id>1659535943908</Id>
-					<Name><![CDATA[ELECTRIC_BATTERY]]></Name>
-				</Option>
-				<Option>
-					<Id>1659535950717</Id>
-					<Name><![CDATA[ELECTRIC_VEHICLE]]></Name>
-				</Option>
-				<Option>
-					<Id>1659535949187</Id>
-					<Name><![CDATA[HEATMODEL_BUILDING]]></Name>
-				</Option>
-				<Option>
-					<Id>1674311988696</Id>
-					<Name><![CDATA[HEATBUFFER]]></Name>
-				</Option>
-				<Option>
-					<Id>1684917094693</Id>
-					<Name><![CDATA[GAS]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1659535485693</Id>
-				<Name><![CDATA[OL_EACategories]]></Name>
-				<Option>
-					<Id>1659535486263</Id>
-					<Name><![CDATA[CONSUMPTION]]></Name>
-				</Option>
-				<Option>
-					<Id>1659535492572</Id>
-					<Name><![CDATA[CONVERSION]]></Name>
-				</Option>
-				<Option>
-					<Id>1659535495564</Id>
-					<Name><![CDATA[PRODUCTION]]></Name>
-				</Option>
-				<Option>
-					<Id>1659535498309</Id>
-					<Name><![CDATA[STORAGE]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -518,174 +454,9 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1659950471000</Id>
-				<Name><![CDATA[OL_EAPresetProductionAssets]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Option>
-					<Id>1659950531538</Id>
-					<Name><![CDATA[House_solarpanels_S]]></Name>
-				</Option>
-				<Option>
-					<Id>1659950534060</Id>
-					<Name><![CDATA[House_solarpanels_M]]></Name>
-				</Option>
-				<Option>
-					<Id>1659950555546</Id>
-					<Name><![CDATA[House_solarpanels_L]]></Name>
-				</Option>
-				<Option>
-					<Id>1659950562453</Id>
-					<Name><![CDATA[Windmill_3MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1659950566729</Id>
-					<Name><![CDATA[Windmill_5MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1659950570261</Id>
-					<Name><![CDATA[Windmill_7MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1659970013275</Id>
-					<Name><![CDATA[Solarpanels_0MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995960684</Id>
-					<Name><![CDATA[Solarpanels_1MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995977424</Id>
-					<Name><![CDATA[Solarpanels_2MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995970571</Id>
-					<Name><![CDATA[Solarpanels_3MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995986536</Id>
-					<Name><![CDATA[Solarpanels_4MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996880047</Id>
-					<Name><![CDATA[Solarpanels_5MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995988427</Id>
-					<Name><![CDATA[Solarpanels_10MW]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995990541</Id>
-					<Name><![CDATA[Building_solarpanels_0kWp]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996008098</Id>
-					<Name><![CDATA[Building_solarpanels_1kWp]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996006832</Id>
-					<Name><![CDATA[Building_solarpanels_2kWp]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996013583</Id>
-					<Name><![CDATA[Building_solarpanels_3kWp]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996015832</Id>
-					<Name><![CDATA[Building_solarpanels_4kWp]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996018938</Id>
-					<Name><![CDATA[Building_solarpanels_5kWp]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996020759</Id>
-					<Name><![CDATA[Building_solarpanels_10kWp]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1660055228680</Id>
-				<Name><![CDATA[OL_EAPresetStorageAssets]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Option>
-					<Id>1660055281773</Id>
-					<Name><![CDATA[House_battery]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281774</Id>
-					<Name><![CDATA[House_heatmodel_A]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281775</Id>
-					<Name><![CDATA[House_heatmodel_B]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281776</Id>
-					<Name><![CDATA[House_heatmodel_C]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281777</Id>
-					<Name><![CDATA[House_heatmodel_D]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281778</Id>
-					<Name><![CDATA[House_heatmodel_E]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281779</Id>
-					<Name><![CDATA[House_heatmodel_F]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281780</Id>
-					<Name><![CDATA[House_heatmodel_G]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055281781</Id>
-					<Name><![CDATA[EV]]></Name>
-				</Option>
-				<Option>
-					<Id>1660055439251</Id>
-					<Name><![CDATA[District_Heating_heat_buffer_HT_S]]></Name>
-				</Option>
-				<Option>
-					<Id>1664536366729</Id>
-					<Name><![CDATA[District_Heating_network_HT_S]]></Name>
-				</Option>
-				<Option>
-					<Id>1664541052353</Id>
-					<Name><![CDATA[District_Heating_network_MT_S]]></Name>
-				</Option>
-				<Option>
-					<Id>1666959280721</Id>
-					<Name><![CDATA[Grid_battery_1MWh]]></Name>
-				</Option>
-				<Option>
-					<Id>1667757454119</Id>
-					<Name><![CDATA[EHGV]]></Name>
-				</Option>
-				<Option>
-					<Id>1667464089952</Id>
-					<Name><![CDATA[Grid_battery_10MWh]]></Name>
-				</Option>
-				<Option>
-					<Id>1667995942136</Id>
-					<Name><![CDATA[Grid_battery_0MWh]]></Name>
-				</Option>
-				<Option>
-					<Id>1667996898857</Id>
-					<Name><![CDATA[Grid_battery_5MWh]]></Name>
-				</Option>
-				<Option>
-					<Id>1668594477547</Id>
-					<Name><![CDATA[EHGV_x50]]></Name>
-				</Option>
-				<Option>
-					<Id>1676893732560</Id>
-					<Name><![CDATA[Store_heatmodel_A]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1660226249511</Id>
 				<Name><![CDATA[OL_ActorType]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1660226249512</Id>
 					<Name><![CDATA[CONNECTIONOWNER]]></Name>
@@ -1066,6 +837,7 @@
 			<OptionList>
 				<Id>1718560423698</Id>
 				<Name><![CDATA[OL_ProfileAssetType]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1718560423699</Id>
 					<Name><![CDATA[ELECTRICITYBASELOAD]]></Name>

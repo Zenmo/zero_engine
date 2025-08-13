@@ -1018,9 +1018,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_FlowsMap()]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1040,9 +1037,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_FlowsMap()]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1062,9 +1056,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_FlowsMap]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_FlowsMap()]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1572,9 +1563,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_ValueMap]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_ValueMap(OL_AssetFlowCategories.class)]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

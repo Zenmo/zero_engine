@@ -1468,6 +1468,11 @@ v_liveData = new J_LiveData(this);
 //v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+
+fm_currentProductionFlows_kW = new J_FlowsMap();
+fm_currentConsumptionFlows_kW = new J_FlowsMap();
+fm_currentBalanceFlows_kW = new J_FlowsMap();
+fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 /*ALCODEEND*/}
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)

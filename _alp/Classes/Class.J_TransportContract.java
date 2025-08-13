@@ -25,7 +25,7 @@ public class J_TransportContract extends zero_engine.J_Contract implements Seria
 	    this.transportContractType = transportContractType;
 	    this.bandwidthTreshold_kW = bandwidthTreshold_kW;
 	    this.bandwidthTariff_eurpkWh = bandwidthTariff_eurpkWh;
-	    this.contractType = OL_ContractType.TRANSPORT;
+	    //this.contractType = OL_ContractType.TRANSPORT;
 	    this.annualFee_eur = annualFee_eur;
 	}
     

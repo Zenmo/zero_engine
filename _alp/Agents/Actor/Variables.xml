@@ -36,6 +36,7 @@
 
 @since: Sprint 6
 @author: Gillis]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>60</X>
 		<Y>90</Y>
 		<Label>
