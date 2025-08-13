@@ -17,7 +17,7 @@ public class J_Contract implements Serializable {
 
 	public String contractScope; // Kan energySupplier of Coop zijn  (dus kan niet specifieker zijn dan 'String' hier, tenzij we Interfaces gaan gebruiken. ('Implements energy supplier')
 	public OL_EnergyCarriers energyCarrier;
-	public OL_ContractType contractType;
+	//public OL_ContractType contractType;
 	public double EnergyTransactionVolume_kWh=0;
 	public double FinancialTransactionVolume_eur=0;
 	public String contractHolder;

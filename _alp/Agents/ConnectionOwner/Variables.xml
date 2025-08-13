@@ -1426,8 +1426,8 @@
 	<Variable Class="Parameter">
 		<Id>1702915036278</Id>
 		<Name><![CDATA[p_connectionOwnerType]]></Name>
-		<X>180</X>
-		<Y>90</Y>
+		<X>60</X>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

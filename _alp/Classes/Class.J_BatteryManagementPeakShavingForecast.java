@@ -70,7 +70,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		List<J_EAProduction> productionAssets = new ArrayList<J_EAProduction>();
 		
 		for (GridConnection GC : c_targetGridConnections){
-			profileAssets.addAll(findAll(GC.c_profileAssets, profile -> profile.profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD));
+			profileAssets.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW));
 			consumptionAssets.addAll(findAll(GC.c_consumptionAssets, cons -> cons.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND));
 			productionAssets.addAll(findAll(GC.c_productionAssets, prod -> prod.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC || prod.energyAssetType == OL_EnergyAssetType.WINDMILL));
 		}

@@ -22,7 +22,7 @@ public class J_ConnectionContract extends zero_engine.J_Contract implements Seri
 	    this.nfATOstart_h = nfATOstart_h;
 	    this.nfATOend_h = nfATOend_h;
 	    this.nfATOpower_kW = nfATOpower_kW;
-	    this.contractType = OL_ContractType.CONNECTION;
+	    //this.contractType = OL_ContractType.CONNECTION;
 	    this.annualFee_eur = annualFee_eur;
 	}
 }
