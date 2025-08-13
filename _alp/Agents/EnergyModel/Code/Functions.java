@@ -323,7 +323,6 @@ if (v_rapidRunData != null) {
 }
 
 f_resetAnnualValues();
-traceln("Active asset flows in this model: %s", v_rapidRunData.assetsMetaData.activeAssetFlows);
 
 
 v_isRapidRun = true;
