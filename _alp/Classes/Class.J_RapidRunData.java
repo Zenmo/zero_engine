@@ -135,16 +135,16 @@ public class J_RapidRunData {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
 	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
 		    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
-	    	} else {
-	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(simDuration_h, simDuration_h);
-	    	}
+	    	} /*else {
+	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24, simDuration_h);
+	    	}*/
 	    } else {
 	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);
 	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
-	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24.0, simDuration_h);
-	    	} else {
-	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(simDuration_h, simDuration_h);	    		
-	    	}
+	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24, simDuration_h);
+	    	} /*else {
+	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24, simDuration_h);	    		
+	    	}*/
 	    }	  
 	    
 	    //========== SUMMER WEEK ACCUMULATORS ==========//
@@ -226,11 +226,17 @@ public class J_RapidRunData {
 
     	if (storeTotalAssetFlows) {
   	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
+  	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
+		    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
+	    	} 
   	    } else {
   	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);	
+  	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
+		    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24, simDuration_h);
+	    	} 
   	    }
 
-        ts_dailyAverageBatteriesStoredEnergy_MWh.reset();
+        //ts_dailyAverageBatteriesStoredEnergy_MWh.reset();
         
     	//Summerweek
     	am_summerWeekBalanceAccumulators_kW.createEmptyAccumulators(this.activeEnergyCarriers, true, timeStep_h, 24*7);
@@ -307,7 +313,9 @@ public class J_RapidRunData {
     	clone.acc_dailyAverageEnergyProduction_kW=this.acc_dailyAverageEnergyProduction_kW.getClone();
     	
     	clone.am_assetFlowsAccumulators_kW = this.am_assetFlowsAccumulators_kW.getClone();
-  	    clone.ts_dailyAverageBatteriesStoredEnergy_MWh=this.ts_dailyAverageBatteriesStoredEnergy_MWh.getClone();
+    	if(this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
+    		clone.ts_dailyAverageBatteriesStoredEnergy_MWh=this.ts_dailyAverageBatteriesStoredEnergy_MWh.getClone();
+    	}
         //clone.ts_dailyAverageBatteriesSOC_fr=this.ts_dailyAverageBatteriesSOC_fr.getClone();
         
         ////Summer week
@@ -498,14 +506,10 @@ public class J_RapidRunData {
     	acc_totalEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     	acc_totalPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
     	
-   		ts_dailyAverageBatteriesStoredEnergy_MWh.addStep(currentStoredEnergyBatteries_MWh);
-    	
-   		/*if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
-    		ts_dailyAverageBatteriesSOC_fr.addStep(currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+    	if(this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
+    		ts_dailyAverageBatteriesStoredEnergy_MWh.addStep(currentStoredEnergyBatteries_MWh);
     	}
-    	else{
-    		ts_dailyAverageBatteriesSOC_fr.addStep(0);	
-    	}*/
+
     }
     
     public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {
@@ -594,6 +598,7 @@ public class J_RapidRunData {
     public ZeroTimeSeries getBatteriesSOCts_fr() {
     	double[] array = this.ts_dailyAverageBatteriesStoredEnergy_MWh.getTimeSeries();
     	double factor_fr = 1/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+    	//traceln("ts_dailyAverageBatteriesStoredEnergy_MWh.getSignalResolution_h(): %s", ts_dailyAverageBatteriesStoredEnergy_MWh.getSignalResolution_h());
     	ZeroTimeSeries ts = new ZeroTimeSeries(ts_dailyAverageBatteriesStoredEnergy_MWh.getSignalResolution_h(), ts_dailyAverageBatteriesStoredEnergy_MWh.getDuration());
     	for (int i=0; i<array.length; i++) {
     		ts.addStep(array[i]*factor_fr);

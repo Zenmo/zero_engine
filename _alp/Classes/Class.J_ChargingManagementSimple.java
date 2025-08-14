@@ -47,11 +47,12 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     public void manageCharging(double t_h) {
     	//double currentElectricityPriceConsumption_eurpkWh = gc.p_owner.f_getElectricityPrice(gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
     	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;
-
     	electricityPriceLowPassed_eurpkWh += (currentElectricityPriceConsumption_eurpkWh-electricityPriceLowPassed_eurpkWh) * priceFilterDiffGain_r ;
+    	/*// Little experiment, use current GC-load (so without EV charging!) as an equivalent price signal, and apply the same price-based smart charging and V2G algorithm.
     	GCdemandLowPassed_kW += (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GCdemandLowPassed_kW) * priceFilterDiffGain_r;
     	electricityPriceLowPassed_eurpkWh = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
     	currentElectricityPriceConsumption_eurpkWh = gc.v_previousPowerElectricity_kW;
+    	*/
     	//traceln("Current price: %s eurpkWh, filtered price: %s eurpkWh", currentElectricityPriceConsumption_eurpkWh, electricityPriceLowPassed_eurpkWh);
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (gc.p_chargingAttitudeVehicles != OL_ChargingAttitude.SIMPLE) {
