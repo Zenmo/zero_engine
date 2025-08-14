@@ -219,7 +219,7 @@ for( J_EA v : c_conversionAssets ){
 }
 
 // Determine EV charging
-f_manageCharging();
+f_manageEVCharging();
 
 // Operate battery
 f_manageBattery();

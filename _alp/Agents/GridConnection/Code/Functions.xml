@@ -100,7 +100,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1671095995172</Id>
-		<Name><![CDATA[f_manageCharging]]></Name>
+		<Name><![CDATA[f_manageEVCharging]]></Name>
 		<X>920</X>
 		<Y>310</Y>
 		<Label>
