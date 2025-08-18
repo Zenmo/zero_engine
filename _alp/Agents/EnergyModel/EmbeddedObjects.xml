@@ -1073,9 +1073,6 @@
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_householdEV]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 			</Parameter>
 			<Parameter>

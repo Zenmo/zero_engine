@@ -3,15 +3,11 @@
  */
 public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 
-	//private OL_EnergyCarriers energyCarrierProduced = OL_EnergyCarriers.METHANE;
 	public OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
-	//public OL_ProfileAssetType profileType;
 	private double profileTimestep_h;
     private double profileStarTime_h = 0;
-	//protected double outputTemperature_degC;
-	public double loadLoad_kWh = 0;
+	public double lostLoad_kWh = 0;
 	private double profileScaling_fr = 1;
 	private boolean enableProfileLooping = true;
 	
@@ -38,19 +34,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    	this.timestep_h = profileTimestep_h;
 	    }
 	    
-	    /*
-	    if (profileType == OL_ProfileAssetType.ELECTRICITYBASELOAD) {
-	    	this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW;
-	    } else if (profileType == OL_ProfileAssetType.CHARGING) {
-	    	this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
-	    } else if (profileType == OL_ProfileAssetType.WINDTURBINE) {
-	    	this.assetFlowCategory = OL_AssetFlowCategories.windProductionElectric_kW;
-	    } else if (profileType == OL_ProfileAssetType.SOLARPANELS) {
-	    	this.assetFlowCategory = OL_AssetFlowCategories.pvProductionElectric_kW;	    	
-	    } else if (profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION) {
-	    	this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
-	    } 
-	    */
 	    //this.activeProductionEnergyCarriers.add(this.energyCarrier);
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 	    
@@ -103,17 +86,16 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
+	
     public void curtailElectricityConsumption(double curtailmentSetpoint_kW) {
-    	//double currentElectricityProduction_kW = lastFlowsArray[4];
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
-    	loadLoad_kWh += curtailmentPower_kW * timestep_h;
-    	//double[] arr = {0, 0, 0, 0, -curtailmentPower_kW, 0, 0, 0, 0, -curtailmentPower_kW};
+    	lostLoad_kWh += curtailmentPower_kW * timestep_h;
     	J_FlowsMap flowsMap = new J_FlowsMap();
-    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);    	
+    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);    	
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
+    	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW);
     	
     	this.energyUse_kW = -curtailmentPower_kW;
     	//flowsMap.put(OL_EnergyCarriers.ENERGY_USE, -curtailmentPower_kW);
@@ -133,6 +115,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	//}
     	//return new Pair(flowsMap, this.energyUse_kW);
     }
+    
 
     public void scaleEnergyProfile(double scaling_fr) {
     	if (scaling_fr == 0) {

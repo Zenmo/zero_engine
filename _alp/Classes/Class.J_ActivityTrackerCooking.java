@@ -71,7 +71,8 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	//traceln("Endtimes: %s", endtimes_min);
     }
     
-    public void manageActivities(double time_min) {
+    public void manageActivities(double t_h) {
+    	double time_min = t_h * 60;
     	//traceln("Cooking tracker current time: " + time_min);
     	//traceln("Event index: " + v_eventIndex);
     	//traceln("startTimes: " + starttimes_min);

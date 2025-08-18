@@ -262,53 +262,6 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 
 /*ALCODEEND*/}
 
-double f_chargeOnPriceSimpler(double availablePowerOnGc_kW)
-{/*ALCODESTART::1677664183773*/
-double chargingRatio = 0;
-if( p_householdEV.getAvailability() && p_householdEV.chargingNeed != OL_EVChargingNeed.NONE ){	
-	OL_priceLevels priceLevel = f_getPriceLevel(v_currentAveraged7kWElectricityPrice_eurpkWh);
-	if ( p_householdEV.chargingNeed == OL_EVChargingNeed.LOW) { 
-		if( priceLevel == OL_priceLevels.LOW ) {
-			chargingRatio = 1.0;
-		}
-	}
-	else if ( p_householdEV.chargingNeed == OL_EVChargingNeed.MEDIUM){
-		if ( priceLevel == OL_priceLevels.LOW) { 
-			chargingRatio = 1.0;
-		}
-		else if(  priceLevel == OL_priceLevels.MEDIUM ) {
-			chargingRatio = p_householdEV.capacityElectric_kW / 4;
-		}
-	}
-	// SCENARIO HIGH CHARGING NEED -> charge full power, otherwise the EV will not get full
-	else {
-		chargingRatio = 1.0; // Hier kan er boven de gridconnectie geladen worden. Zeker als je 11 kW laders hebt met een warmtepomp erbij
-	}
-}
-if( p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){ //unless the charging need is high, limit the charging speed to grid connection.
-	chargingRatio = min(1, min( availablePowerOnGc_kW / p_householdEV.getElectricCapacity_kW(), chargingRatio));
-}
-v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlows( chargingRatio );
-
-/*ALCODEEND*/}
-
-double f_batteryManagementLoad()
-{/*ALCODESTART::1678708804201*/
-double powerfraction_fr = 0;
-if ( v_currentPowerElectricity_kW < 0 && p_batteryAsset.getCurrentStateOfCharge() < 1 && v_currentPriceLevel !=  OL_priceLevels.HIGH ){
-	powerfraction_fr = 1;
-}
-else if( v_currentPowerElectricity_kW > v_currentLoadLowPassed_kW && p_batteryAsset.getCurrentStateOfCharge() > 0){
-	powerfraction_fr = -1;
-}
-else if ( v_batterySOC_fr < 0.6 && v_currentPowerElectricity_kW < 1 && v_currentPriceLevel !=  OL_priceLevels.HIGH){
-	powerfraction_fr = min( 1, p_batteryAsset.capacityElectric_kW / 2.5);
-}
-p_batteryAsset.v_powerFraction_fr = powerfraction_fr;
-p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
-
-/*ALCODEEND*/}
-
 double f_connectTo_J_EA_House(J_EA j_ea)
 {/*ALCODESTART::1693300820997*/
 if (j_ea instanceof J_EAAirco) {
@@ -340,7 +293,7 @@ double f_manageCookingTracker()
 {/*ALCODESTART::1726334759211*/
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
+	p_cookingTracker.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h); // also calls f_updateAllFlows in HOB asset	
 	
 	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	if (p_BuildingThermalAsset != null) {

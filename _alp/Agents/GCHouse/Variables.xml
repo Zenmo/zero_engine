@@ -44,26 +44,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1675025488988</Id>
-		<Name><![CDATA[v_currentPriceLevel]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1230</X>
-		<Y>660</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[OL_priceLevels]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1677597726836</Id>
 		<Name><![CDATA[v_copHeatpump]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -217,32 +197,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1675032836511</Id>
-		<Name><![CDATA[p_householdEV]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>600</X>
-		<Y>590</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_EAEV]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1675032836509</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1678703448389</Id>
 		<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -380,8 +334,8 @@
 	<Variable Class="Parameter">
 		<Id>1749653249111</Id>
 		<Name><![CDATA[p_airco]]></Name>
-		<X>1240</X>
-		<Y>830</Y>
+		<X>600</X>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
