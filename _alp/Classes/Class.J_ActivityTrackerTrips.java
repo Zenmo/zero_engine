@@ -43,17 +43,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	//traceln("rowIndex %s found on line: %s", rowIndex, currentLineNb);
     	int nbActivities = tripsCsv.readInt();
     	
-    			
-    	for (int i = 0; i < nbActivities; i++){
+       	for (int i = 0; i < nbActivities; i++){
     		starttimes_min.add(tripsCsv.readDouble());
     		endtimes_min.add(tripsCsv.readDouble());
     		distances_km.add(tripsCsv.readDouble());
     	}
-	    
-	    //traceln("Starttimes: %s", starttimes_min);
-	    //traceln("Endtimes: %s", endtimes_min);
-	    //traceln("Distances: %s", distances_km);
-    	
+
 	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
     	if (endtimes_min.get(nbActivities-1) < 10080) {
 		    for (int weeks = 1; weeks < 53; weeks++) {
@@ -113,18 +108,14 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		double time_min = t_h * 60;
     	if (Vehicle.getAvailability()) { // at start of timestep! check for multiple 'events' in timestep!
     		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h * 60) ) { // is a trip starting this timestep?
-
         	if ( time_min >= starttimes_min.get(v_eventIndex) ) { // is a trip starting this timestep?
     			//currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
     			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
-
     			Vehicle.startTrip();
-    			//main.v_activeTrips.incrementAndGet();
         		//if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the trip also ending this timestep?
             	if (time_min >= endtimes_min.get(v_eventIndex) ) { // is the trip also ending this timestep?
         			Vehicle.endTrip(v_tripDist_km);
         			v_eventIndex++;
-        			//main.v_activeTrips.decrementAndGet();
         			prepareNextActivity(time_min);
         		}
     		}
@@ -145,11 +136,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     			prepareNextActivity(time_min);
         		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
             	if (time_min >= starttimes_min.get(v_eventIndex) ) { // is the next trip also starting this timestep?
-        			//currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
         			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
-        			//traceln("Hello! :P");
         			Vehicle.startTrip();
-        			//main.v_activeTrips.incrementAndGet();
         		}
     		}
 
@@ -180,9 +168,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		if (Vehicle instanceof J_EAEV ev) {
 			
 			v_energyNeedForNextTrip_kWh = ev.energyConsumption_kWhpkm * v_tripDist_km;
-			/*if ((v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
+			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
 				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh(),2));
-			}*/
+			}
 			v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
 			// Check if more charging is needed for next trip!
 			double nextTripDist_km = 0;

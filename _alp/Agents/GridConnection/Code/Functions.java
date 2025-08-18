@@ -1256,9 +1256,11 @@ if ( c_chargers.size() > 0 ) {
 	boolean smartCharging;
 	boolean V2Gcharging;
 	switch (p_chargingAttitudeVehicles) {			
-		case V1G:
-		case MAX_POWER:
-		case MAX_SPREAD:
+		case SIMPLE:
+			smartCharging = false;
+			V2Gcharging = false;
+			break;
+		case PRICE:
 			smartCharging = true;
 			V2Gcharging = false;
 			break;

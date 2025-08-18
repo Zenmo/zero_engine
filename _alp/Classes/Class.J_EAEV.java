@@ -67,27 +67,14 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
  
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
-		//traceln( "ratio: " + ratioOfChargeCapacity_r);
-		
-		
     	double chargeSetpoint_kW = min(1,max(this.minimumRatioOfChargeCapacity_r ,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
     	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / timestep_h), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / timestep_h); // Limit charge power to stay within SoC 0-100
     	
-    	/*double deltaEnergy_kWh;   // to check the request with the energy currently in storage
-    	
-    	deltaEnergy_kWh = ( ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ) ;
-    	deltaEnergy_kWh = max( deltaEnergy_kWh, -(stateOfCharge_fr * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
-    	
-    	//deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * (storageCapacity_kWh * vehicleScaling)) ); // Prevent negative charge
-    	deltaEnergy_kWh = min(deltaEnergy_kWh, ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent charging faster than allowed
-    	deltaEnergy_kWh = max(deltaEnergy_kWh, -ratioOfChargeCapacity_r * (capacityElectric_kW * vehicleScaling) * timestep_h ); // prevent discharging faster than allowed
-    	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * (storageCapacity_kWh * vehicleScaling) ); // Prevent overcharge
-    	 */
-		//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
+    	//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
 		double electricityProduction_kW = max(-chargePower_kW, 0);
 		double electricityConsumption_kW = max(chargePower_kW, 0);
-		updateStateOfCharge( -chargePower_kW );
-		//traceln("new state of charge: " + stateOfCharge_fr * storageCapacity_kWh);
+		updateStateOfCharge( chargePower_kW );
+
 		updateChargingHistory( electricityProduction_kW, electricityConsumption_kW );
 
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);
@@ -106,7 +93,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
  
 	public void updateStateOfCharge( double power_kW ) {
 		if(vehicleScaling > 0){
-			stateOfCharge_fr -= ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
+			stateOfCharge_fr += ( power_kW * timestep_h ) / (storageCapacity_kWh * vehicleScaling);
 		}
 		else {
 			stateOfCharge_fr = 0;
@@ -117,9 +104,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public boolean startTrip() {
 		if (available) {
 			this.available = false;
-			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_fr);
-			//((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.remove(this);
-			
 			//Update (charging) flows to zero, becausde vehicle is away.
 			this.f_updateAllFlows(0.0);
 			return true;
@@ -137,7 +121,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			return false;
 		}else if (this.vehicleScaling == 0) {
 			this.available = true;
-			//((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
 			return true;
 		} else {
 			mileage_km += tripDist_km;
@@ -158,12 +141,19 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 				//stateOfCharge_fr = 0;
 			}
 			this.available = true;
-			//((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
-			//maxSpreadChargingRatio = (1-stateOfCharge_fr) * storageCapacity_kWh / (timeToNextTrip_min/60);
 			return true;
 		}
 	}
  
+	public double getChargeDeadline_h() {
+		double chargeNeedForNextTrip_kWh = max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentStateOfCharge_kWh());
+		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+		double nextTripStartTime_h = this.tripTracker.v_nextEventStartTime_min / 60;
+		double chargeDeadline_h = nextTripStartTime_h - chargeNeedForNextTrip_kWh / this.capacityElectric_kW - chargeTimeMargin_h;
+		//double chargeDeadline_h = floor((this.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / this.getCapacityElectric_kW() / timestep_h) * timestep_h;
+		return chargeDeadline_h;
+	}
+	
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
 		discharged_kWh += electricityProduced_kW * timestep_h;
 		charged_kWh += electricityConsumed_kW * timestep_h;

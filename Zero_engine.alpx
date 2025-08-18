@@ -682,24 +682,20 @@
 					<Name><![CDATA[SIMPLE]]></Name>
 				</Option>
 				<Option>
-					<Id>1668368194052</Id>
-					<Name><![CDATA[MAX_SPREAD]]></Name>
-				</Option>
-				<Option>
-					<Id>1668371973959</Id>
-					<Name><![CDATA[MAX_POWER]]></Name>
-				</Option>
-				<Option>
 					<Id>1671011596610</Id>
-					<Name><![CDATA[CHEAP]]></Name>
+					<Name><![CDATA[PRICE]]></Name>
 				</Option>
 				<Option>
-					<Id>1750246095668</Id>
-					<Name><![CDATA[V1G]]></Name>
+					<Id>1755522163223</Id>
+					<Name><![CDATA[BALANCE]]></Name>
 				</Option>
 				<Option>
 					<Id>1695825443639</Id>
 					<Name><![CDATA[V2G]]></Name>
+				</Option>
+				<Option>
+					<Id>1668371973959</Id>
+					<Name><![CDATA[MAX_POWER]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1653,6 +1649,21 @@
 				<Id>1755171209007</Id>
 				<Name><![CDATA[J_EAChargePoint]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755518393955</Id>
+				<Name><![CDATA[J_ChargingManagementMaxAvailablePower]]></Name>
+				<Folder>1755154772688</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755521265097</Id>
+				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
+				<Folder>1755154772688</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755521425611</Id>
+				<Name><![CDATA[J_ChargingManagementLocalBalancing]]></Name>
+				<Folder>1755154772688</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
