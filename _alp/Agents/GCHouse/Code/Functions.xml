@@ -63,25 +63,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1675014184707</Id>
 		<Name><![CDATA[f_manageCharging_overwrite]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>920</X>
 		<Y>310</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1675033218897</Id>
-		<Name><![CDATA[f_simpleCharging_overwrite]]></Name>
-		<Description><![CDATA[Charging when arriving home, not taking grid limits into account]]></Description>
-		<X>940</X>
-		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

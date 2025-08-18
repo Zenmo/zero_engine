@@ -763,30 +763,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1674403295460</Id>
-				<Name><![CDATA[OL_EVChargingNeed]]></Name>
-				<Option>
-					<Id>1674403295461</Id>
-					<Name><![CDATA[HIGH]]></Name>
-				</Option>
-				<Option>
-					<Id>1674403295462</Id>
-					<Name><![CDATA[MEDIUM]]></Name>
-				</Option>
-				<Option>
-					<Id>1674403295463</Id>
-					<Name><![CDATA[LOW]]></Name>
-				</Option>
-				<Option>
-					<Id>1674403309820</Id>
-					<Name><![CDATA[NONE]]></Name>
-				</Option>
-				<Option>
-					<Id>1674416304469</Id>
-					<Name><![CDATA[EV_NOT_AVAILABLE]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1675025163072</Id>
 				<Name><![CDATA[OL_ConnectionOwnerType]]></Name>
 				<Option>

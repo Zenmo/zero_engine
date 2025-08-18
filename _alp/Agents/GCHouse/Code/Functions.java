@@ -242,25 +242,6 @@ switch (p_chargingAttitudeVehicles) {
 
 /*ALCODEEND*/}
 
-double f_simpleCharging_overwrite()
-{/*ALCODESTART::1675033218897*/
-
-double powerFraction_fr = 0;
-if( p_householdEV.getCurrentStateOfCharge_fr() < 1 ) {
-	powerFraction_fr = 1;
-	/*if ( p_hasSmartFlexAssets ){
-		ConnectionOwner owner = ((ConnectionOwner)l_ownerActor.getConnectedAgent());
-		if (! owner.v_currentCongestionType.equals("Overconsumption") && owner.p_capacityTariffApplicable ){
-			chargingRatio = min (1, owner.p_capacityLevel_kW / p_householdEV.getElectricCapacity_kW()); // dont charge faster than the congestion level (although with household demand power drawn will be slightly higher)
-		}
-	}//*/
-}
-
-p_householdEV.f_updateAllFlows(powerFraction_fr);
-//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_householdEV.electricityConsumption_kW - p_householdEV.electricityProduction_kW;
-
-/*ALCODEEND*/}
-
 double f_determineChargingDemandOfEV()
 {/*ALCODESTART::1675034695162*/
 //J_EAEV EVinstance = (J_EAEV)p_householdEV;

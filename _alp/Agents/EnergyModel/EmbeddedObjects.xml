@@ -1085,31 +1085,10 @@
 				<Name><![CDATA[p_batteryAlgorithm]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_householdEV]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_minChargingPower_kW]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_hasElectricHob]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_smartHeatingEnabled]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_pricelevelLowDifFromAvg_eurpkWh]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_pricelevelHighDifFromAvg_eurpkWh]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_bouwjaar]]></Name>

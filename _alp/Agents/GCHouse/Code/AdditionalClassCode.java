@@ -31,7 +31,9 @@ public void f_chargeOnPrice(double a, double b){
 	f_chargeOnPrice_overwrite(a,b);
 }*/
 
+/*
 @Override
 public void f_simpleCharging(){
 	f_simpleCharging_overwrite();
 }
+*/

@@ -118,6 +118,7 @@
 		<Id>1671095995175</Id>
 		<Name><![CDATA[f_simpleCharging]]></Name>
 		<Description><![CDATA[Charging when arriving home, not taking grid limits into account]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>940</X>
 		<Y>330</Y>
 		<Label>

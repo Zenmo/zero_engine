@@ -20,7 +20,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
-	public OL_EVChargingNeed chargingNeed;
+	//public OL_EVChargingNeed chargingNeed;
 	private double energyChargedOutsideModelArea_kWh = 0;
 	private double energyChargedOutsideModelAreaStored_kWh;
 	public double charged_kWh = 0;
