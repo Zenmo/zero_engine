@@ -32,7 +32,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	}
     
     @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
+    public void f_updateAllFlows() {
     	
     	flowsMap.put(OL_EnergyCarriers.DIESEL, this.energyUse_kW);
 

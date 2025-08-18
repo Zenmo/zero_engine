@@ -118,7 +118,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		if (available) {
 			this.available = false;
 			//traceln("storage capacity start of trip: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_fr);
-			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.remove(this);
+			//((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.remove(this);
 			
 			//Update (charging) flows to zero, becausde vehicle is away.
 			this.f_updateAllFlows(0.0);
@@ -137,7 +137,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			return false;
 		}else if (this.vehicleScaling == 0) {
 			this.available = true;
-			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
+			//((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
 			return true;
 		} else {
 			mileage_km += tripDist_km;
@@ -151,14 +151,14 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			if (stateOfCharge_fr < 0) {
 				//traceln( ownerAsset.date());
 				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
-				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + stateOfCharge_fr );
+				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%");
 						
 				//energyChargedOutsideModelArea_kWh += -stateOfCharge_fr * storageCapacity_kWh;
 				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
 				//stateOfCharge_fr = 0;
 			}
 			this.available = true;
-			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
+			//((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
 			//maxSpreadChargingRatio = (1-stateOfCharge_fr) * storageCapacity_kWh / (timeToNextTrip_min/60);
 			return true;
 		}

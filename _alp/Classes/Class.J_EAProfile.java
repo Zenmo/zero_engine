@@ -64,31 +64,19 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     @Override
     //public Pair<J_FlowsMap, Double> f_updateAllFlows(double time_h) {
     public void f_updateAllFlows(double time_h) {
-    	//clear();    	
-    	//double[] arr=operate(time_h);
-    	//Pair<J_FlowsMap, Double> flowsPair = operate(time_h);
+
     	operate(time_h-this.profileStarTime_h);
-    	//J_FlowsMap flowsMap = flowsPair.getFirst();
+
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
     	}
-    	//if (ui_energyAsset!= null) {
-    		//ui_energyAsset.f_addFlows(flowsMap);
-    	//}
-    	//this.lastFlowsArray = arr;
     	this.lastFlowsMap.cloneMap(flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
-    	/*traceln("flowsMap: %s", flowsMap);
-    	flowsMap.clear();
-    	traceln("flowsMap after reset: %s", flowsMap);
-    	traceln("lastflowsMap after flowsmap reset: %s", lastFlowsMap);*/
-    	
-    	//return flowsMap;
     }
     
     @Override
-    //public Pair<J_FlowsMap, Double> operate(double time_h) {
+
     public void operate(double time_h) {
     	if (enableProfileLooping && time_h >= a_energyProfile_kWh.length * profileTimestep_h) {
     		time_h = time_h % a_energyProfile_kWh.length * profileTimestep_h;

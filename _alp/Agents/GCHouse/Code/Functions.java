@@ -1,5 +1,10 @@
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1664963959146*/
+f_manageCookingTracker();
+f_manageAirco();
+super.f_operateFlexAssets();
+
+/*
 double availablePowerAtPrice_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
 if (p_owner != null){
 	v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
@@ -19,25 +24,9 @@ if( p_householdEV != null){
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 }
 
-/* // What's this doing here?? Seems like duplicate code.
-if( p_batteryAsset != null){
-	switch (p_batteryOperationMode){
-		case HOUSEHOLD_LOAD:
-			f_batteryManagementBalance(v_batterySOC_fr);
-		break;
-		case PRICE:
-			f_batteryManagementPrice(v_batterySOC_fr);
-		break;
-		default:
-		break;
-	}
-	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-}
-*/ 
 f_manageChargers();
 
-f_manageBattery();
+f_manageBattery();*/
 /*ALCODEEND*/}
 
 double f_createThermalStorageModel()
@@ -322,61 +311,19 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
 
 double f_connectTo_J_EA_House(J_EA j_ea)
 {/*ALCODESTART::1693300820997*/
-/*
-if (j_ea instanceof J_EAConversion) {
-	if (j_ea.energyAssetType == OL_EnergyAssetType.GAS_BURNER || j_ea instanceof J_EAConversionHeatPump || j_ea instanceof J_EAConversionHeatDeliverySet || j_ea instanceof J_EAConversionElectricHeater ) {
-		switch (p_heatingType) {
-        	case HEATPUMP_AIR:
-        		p_primaryHeatingAsset = (J_EAConversion)j_ea;
-        		break;
-        	case HEATPUMP_GASPEAK:
-				p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionHeatPump? (J_EAConversion)j_ea : p_primaryHeatingAsset;
-	            p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-            	break;
-            case HEATPUMP_BOILERPEAK:    // ambigue wat we met boiler bedoelen; eboiler of grootschalige DH_boiler = gasburner!
-                p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionHeatPump? (J_EAConversion)j_ea : p_primaryHeatingAsset;
-                p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-                p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionElectricHeater? (J_EAConversion)j_ea : p_secondaryHeatingAsset;                                          
-            	break;
-            case GASBURNER:
-                p_primaryHeatingAsset = p_primaryHeatingAsset == null && j_ea instanceof J_EAConversionGasBurner? (J_EAConversion)j_ea : p_primaryHeatingAsset;
-                p_secondaryHeatingAsset = p_secondaryHeatingAsset == null && j_ea instanceof J_EAConversionGasCHP? (J_EAConversion)j_ea : p_secondaryHeatingAsset;
-            	break;
-            case DISTRICTHEAT:
-                if( j_ea instanceof J_EAConversionHeatDeliverySet ){
-					p_primaryHeatingAsset = (J_EAConversion)j_ea;
-					//traceln("Assigning heat delivery set as primary heating asset for house!");
-				}
-				else {
-					p_secondaryHeatingAsset = (J_EAConversion)j_ea;
-					// set water/water heatpump source energy-asset
-					
-					//if( j_ea instanceof J_EAConversionHeatPump && ((J_EAConversionHeatPump)j_ea).getAmbientTempType().equals("WATER") && p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet ) {
-						//((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset = p_primaryHeatingAsset;
-						//j_ea.updateAmbientTemperature( ((J_EAConversionHeatPump)j_ea).p_linkedSourceEnergyAsset.getCurrentTemperature() );
-					//}
-					
-				}	
-            	break;
-            case LT_DISTRICTHEAT:
-            	p_primaryHeatingAsset = (J_EAConversion)j_ea;
-            	break;
-            default: throw new IllegalStateException("Invalid HeatingType: " + p_heatingType);
-      	}
-    }
-}
-*/
-
-if (j_ea instanceof J_EAEV) {
-	if (p_householdEV != null){
-	    	throw new RuntimeException(String.format("Exception: trying to assign 2 EVs to a household!! --> one of them will not charge! "));
-	}
-	p_householdEV = (J_EAEV)j_ea;
-}
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
 	//c_electricHeatpumpAssets.add(j_ea);
 }
+/*if (j_ea instanceof J_EAEV) {
+	if (p_householdEV != null){
+	    	throw new RuntimeException(String.format("Exception: trying to assign 2 EVs to a household!! --> one of them will not charge! "));
+	}
+	p_householdEV = (J_EAEV)j_ea;
+}*/
+
+
+
 /*ALCODEEND*/}
 
 double f_setAnnualEnergyDemand()
@@ -389,31 +336,15 @@ double f_setEnergyLabel()
 traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");
 /*ALCODEEND*/}
 
-double f_removeCurrentHeatingSystem()
-{/*ALCODESTART::1726129903799*/
-p_heatingType = OL_GridConnectionHeatingType.NONE;
-p_primaryHeatingAsset.removeEnergyAsset();
-if ( p_secondaryHeatingAsset != null){
-	p_secondaryHeatingAsset.removeEnergyAsset();
-}
-if ( p_tertiaryHeatingAsset != null){
-	p_tertiaryHeatingAsset.removeEnergyAsset();
-}
-if ( p_heatBuffer != null){
-	p_heatBuffer.removeEnergyAsset();
-}
-/*ALCODEEND*/}
-
 double f_manageCookingTracker()
 {/*ALCODESTART::1726334759211*/
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
 	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
-	//v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
-	//v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
-	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
+	
+	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	if (p_BuildingThermalAsset != null) {
-		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr += residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW(); // Does this work out correctly with new heatingManagement structure??
 	}
 }
 /*ALCODEEND*/}
@@ -463,12 +394,14 @@ if( p_airco != null ) {
 
 double f_removeTheJ_EA_house(J_EA j_ea)
 {/*ALCODESTART::1749722407831*/
-if (j_ea instanceof J_EAEV) {
-	p_householdEV = null;
-}
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
 	//c_electricHeatpumpAssets.remove(j_ea);
 }
+/*
+if (j_ea instanceof J_EAEV) {
+	p_householdEV = null;
+}
+*/
 /*ALCODEEND*/}
 

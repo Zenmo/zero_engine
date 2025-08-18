@@ -21,7 +21,7 @@ double f_operateFlexAssets_overwrite()
 //Manage charging
 f_manageEVCharging();
 
-f_manageChargers();
+f_manageChargePoints();
 
 /*ALCODEEND*/}
 

@@ -149,12 +149,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -998,12 +992,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1187,12 +1175,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1346,12 +1328,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1498,12 +1474,6 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
@@ -1712,12 +1682,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1862,12 +1826,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2011,12 +1969,6 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
@@ -2504,12 +2456,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2696,12 +2642,6 @@
 			</GenericParameterSubstituteReference>
 		</GenericParameterSubstitute>
 		<Parameters>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionCategory]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_gridConnectionType]]></Name>
-			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectricID]]></Name>
 			</Parameter>

@@ -130,6 +130,13 @@ v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
 double f_operateFlexAssets()
 {/*ALCODESTART::1664961435385*/
 //Must be overwritten in child agent
+f_manageHeating();
+
+f_manageEVCharging();
+
+f_manageChargePoints();
+
+f_manageBattery();
 /*ALCODEEND*/}
 
 double f_calculateEnergyBalance()
@@ -182,10 +189,10 @@ f_connectionMetering();
 
 double f_operateFixedAssets()
 {/*ALCODESTART::1668528300576*/
-c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
-c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
-c_consumptionAssets.forEach(c -> c.f_updateAllFlows(0));
-c_productionAssets.forEach(p -> p.f_updateAllFlows(0));
+c_dieselVehicles.forEach(v -> v.f_updateAllFlows());
+c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
+c_consumptionAssets.forEach(c -> c.f_updateAllFlows());
+c_productionAssets.forEach(p -> p.f_updateAllFlows());
 c_profileAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
 /*ALCODEEND*/}
 
@@ -197,8 +204,8 @@ fm_currentBalanceFlows_kW.clear();
 
 v_previousPowerElectricity_kW = 0;
 v_previousPowerHeat_kW = 0;
-v_electricityPriceLowPassed_eurpkWh = 0;
-v_currentElectricityPriceConsumption_eurpkWh  = 0;
+//v_electricityPriceLowPassed_eurpkWh = 0;
+//v_currentElectricityPriceConsumption_eurpkWh  = 0;
 
 v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 
@@ -495,7 +502,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		c_hydrogenVehicles.add(hydrogenVehicle);		
 	} else if (vehicle instanceof J_EAEV ev) {
 		c_electricVehicles.add(ev);
-		c_vehiclesAvailableForCharging.add(ev);
+		//c_vehiclesAvailableForCharging.add(ev);
 		energyModel.c_EVs.add(ev);	
 	}
 	c_vehicleAssets.add(vehicle);		
@@ -520,7 +527,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		vehicle.tripTracker = tripTracker;	
 	}
 	c_tripTrackers.add( tripTracker );
-	v_vehicleIndex ++;
+	//v_vehicleIndex ++;
 } else if (j_ea instanceof J_EAConsumption consumptionAsset) {
 	c_consumptionAssets.add(consumptionAsset);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
@@ -826,7 +833,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
 		c_hydrogenVehicles.remove((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
-		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
+		//c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
 		//c_EvAssets.remove(j_ea);
 	}
@@ -835,7 +842,7 @@ if (j_ea instanceof J_EAVehicle) {
 	J_ActivityTrackerTrips tripTracker = vehicle.tripTracker;
 	c_tripTrackers.remove( tripTracker );
 	vehicle.tripTracker = null;
-	v_vehicleIndex --;
+	//v_vehicleIndex --;
 } else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
@@ -1243,9 +1250,8 @@ v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.a
 
 /*ALCODEEND*/}
 
-double f_manageChargers()
+double f_manageChargePoints()
 {/*ALCODESTART::1750258434630*/
-
 if ( c_chargers.size() > 0 ) {
 	boolean smartCharging;
 	boolean V2Gcharging;

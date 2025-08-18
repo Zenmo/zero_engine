@@ -10,12 +10,6 @@
 	</ExtendsReference>
 	<Parameters>
 		<Parameter>
-			<Name><![CDATA[p_gridConnectionCategory]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_gridConnectionType]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_parentNodeElectricID]]></Name>
 		</Parameter>
 		<Parameter>

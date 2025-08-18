@@ -15,11 +15,12 @@ public void f_operateFixedConsumptionAssets(){
 	f_operateFixedConsumptionAssets_overwrite();
 }*/
 
+/*
 @Override
 public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
 }
-
+*/
 /*
 @Override 
 public void f_manageEVCharging(){
