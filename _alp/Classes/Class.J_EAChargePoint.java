@@ -136,12 +136,12 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 					double WTPCharging_eurpkWh = electricityPriceLowPassed_eurpkWh - WTPoffset_eurpkW * remainingFlexTime_h;  //+ urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / ev.getCapacityElectric_kW() ); // Scale WTP based on flexibility expressed in terms of power-fraction
 					//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); 
 					double priceGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-					chargePower_kW = max(0, maxChargePower * min(1,(WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r));
+					chargePower_kW = max(0, maxChargePower * min(1,(WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
 					if ( doV2G && remainingFlexTime_h > 1 && chargePower_kW == 0 ) { // Surpluss SOC and high energy price
 						//traceln("Conditions for V2G met in chargePoint");
 		    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.
-						double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction
-						chargePower_kW = min(0, -maxChargePower * min(1,(currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r));
+						double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Can become zero!!
+						chargePower_kW = min(0, -maxChargePower * min(1,(currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
 						//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
 					} 
 				}

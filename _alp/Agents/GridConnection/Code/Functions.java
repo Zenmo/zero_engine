@@ -442,8 +442,8 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 double f_setOperatingSwitches()
 {/*ALCODESTART::1677512714652*/
-if( this instanceof GCDistrictHeating ) { // Temporarily disabled while transfering to class-based energy assets!
-	((GCDistrictHeating)this).f_setConfigurationBooleans();
+if( this instanceof GCDistrictHeating gc) { // Temporarily disabled while transfering to class-based energy assets!
+	gc.f_setConfigurationBooleans();
 }
 /*ALCODEEND*/}
 
