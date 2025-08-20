@@ -419,9 +419,6 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);;
 		
 	}
-	if( this instanceof GCHouse){
-	((GCHouse)this).v_vehicleSOC_fr = vehicle.getCurrentStateOfCharge_fr();
-}
 }
 
 
@@ -676,9 +673,6 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);;
 		
-	}
-	if( this instanceof GCHouse){
-		((GCHouse)this).v_vehicleSOC_fr = vehicle.getCurrentStateOfCharge_fr();
 	}
 }
 
@@ -1100,7 +1094,6 @@ if (caller instanceof J_EAStorageElectric) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW += energyUse_kW;
 }
-
 for(var AC : assetFlowsMap_kW.keySet()) {
 	fm_currentAssetFlows_kW.addFlow(AC, -assetFlowsMap_kW.get(AC));
 }

@@ -3,8 +3,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1674397034293</Id>
 		<Name><![CDATA[v_vehicleSOC_fr]]></Name>
-		<X>1260</X>
-		<Y>610</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1290</X>
+		<Y>1220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -83,8 +84,8 @@
 		<Id>1675025488988</Id>
 		<Name><![CDATA[v_currentPriceLevel]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1230</X>
-		<Y>660</Y>
+		<X>1290</X>
+		<Y>1250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -277,6 +278,7 @@
 	<Variable Class="Parameter">
 		<Id>1675032836511</Id>
 		<Name><![CDATA[p_householdEV]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>600</X>
 		<Y>510</Y>
 		<Label>
@@ -360,8 +362,8 @@
 		<Id>1702369144256</Id>
 		<Name><![CDATA[p_hasElectricHob]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>570</X>
-		<Y>580</Y>
+		<X>1290</X>
+		<Y>1110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -468,7 +470,7 @@
 		<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
 		<Description><![CDATA[[degrees]]]></Description>
 		<X>570</X>
-		<Y>560</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
