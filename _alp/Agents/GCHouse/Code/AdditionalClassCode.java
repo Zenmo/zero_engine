@@ -10,12 +10,6 @@ public void f_removeTheJ_EA(J_EA j_ea){
 	f_removeTheJ_EA_house(j_ea);
 }
 
-/*@Override
-public void f_operateFixedConsumptionAssets(){
-	f_operateFixedConsumptionAssets_overwrite();
-}*/
-
-/*
 @Override
 public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
@@ -27,14 +21,4 @@ public void f_manageEVCharging(){
 	f_manageCharging_overwrite();
 }*/
 
-/*@Override 
-public void f_chargeOnPrice(double a, double b){
-	f_chargeOnPrice_overwrite(a,b);
-}*/
 
-/*
-@Override
-public void f_simpleCharging(){
-	f_simpleCharging_overwrite();
-}
-*/

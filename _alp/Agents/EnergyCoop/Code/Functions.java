@@ -185,19 +185,18 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 
 
 for(GridConnection gc : c_memberGridConnections) { // Can't do this in parallel due to different threads writing to the same values!
-	
-	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
-	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
-	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-	fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
-	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
-	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
-	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
-	v_batteryStoredEnergy_kWh += gc.v_batteryStoredEnergy_kWh;
-	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
-	v_currentOwnElectricityProduction_kW += gc.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	 	
-
+	if(gc.v_isActive){
+		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
+		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
+		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
+		fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
+		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
+		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
+		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
+		v_batteryStoredEnergy_kWh += gc.v_batteryStoredEnergy_kWh;
+		v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
+		v_currentOwnElectricityProduction_kW += gc.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);	
+	}
 }
 
 // gather electricity flows
@@ -222,15 +221,17 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 }
 
 for (GridConnection GC : c_customerGridConnections) { // Take 'behind the meter' production and consumption!
-	for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
-		double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
-		fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
-		fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
-		fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
-		
-		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-			v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
-			v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
+	if(GC.v_isActive){
+		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+			double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
+			fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
+			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
+			fm_currentBalanceFlows_kW.addFlow( energyCarrier, nettConsumption_kW);
+			
+			if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+				v_currentCustomerFeedIn_kW += max(0,-nettConsumption_kW);
+				v_currentCustomerDelivery_kW += max(0,nettConsumption_kW);
+			}
 		}
 	}				
 }
@@ -1412,7 +1413,6 @@ if(coopBattery != null){
 	//Connect to coop
 	coopBattery.c_parentCoops.add(this);
 	c_memberGridConnections.add(coopBattery);
-	//v_liveAssetsMetaData.hasBattery = true;
 }
 /*ALCODEEND*/}
 
@@ -1574,5 +1574,10 @@ v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 //Initialize the rapid run data
 v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun);
 
+/*ALCODEEND*/}
+
+List<GridConnection> f_getMemberGridConnectionsCollectionPointer()
+{/*ALCODESTART::1754908113703*/
+return this.c_memberGridConnections; // This should NOT be a copy, it should be a pointer!!
 /*ALCODEEND*/}
 

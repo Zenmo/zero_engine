@@ -22,8 +22,8 @@
 		<Id>1669203453155</Id>
 		<Name><![CDATA[f_createThermalStorageModel]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>940</X>
-		<Y>-90</Y>
+		<X>1290</X>
+		<Y>1190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -117,8 +117,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1696923950404</Id>
 		<Name><![CDATA[f_setAnnualEnergyDemand]]></Name>
-		<X>1090</X>
-		<Y>40</Y>
+		<X>1010</X>
+		<Y>-80</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

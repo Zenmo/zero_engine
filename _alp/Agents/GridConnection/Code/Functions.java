@@ -1110,7 +1110,6 @@ if (caller instanceof J_EAStorageElectric) {
 if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW += energyUse_kW;
 }
-
 for(var AC : assetFlowsMap_kW.keySet()) {
 	fm_currentAssetFlows_kW.addFlow(AC, -assetFlowsMap_kW.get(AC));
 }

@@ -323,7 +323,6 @@ if (v_rapidRunData != null) {
 }
 
 f_resetAnnualValues();
-traceln("Active asset flows in this model: %s", v_rapidRunData.assetsMetaData.activeAssetFlows);
 
 
 v_isRapidRun = true;
@@ -1123,5 +1122,15 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
 	}	
 }
+/*ALCODEEND*/}
+
+List<GridConnection> f_getGridConnectionsCollectionPointer()
+{/*ALCODESTART::1754908171225*/
+return this.c_gridConnections;
+/*ALCODEEND*/}
+
+List<GridConnection> f_getPausedGridConnectionsCollectionPointer()
+{/*ALCODESTART::1755014169405*/
+return this.c_pausedGridConnections;
 /*ALCODEEND*/}
 

@@ -16,7 +16,7 @@ if (p_owner != null){
 
 f_manageHeating();
 
-if( p_householdEV != null){
+if( c_electricVehicles.size() > 0){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
@@ -207,7 +207,7 @@ double f_manageCharging_overwrite()
 double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 //double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge_fr();
+//v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge_fr();
 
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
@@ -266,7 +266,6 @@ double f_connectTo_J_EA_House(J_EA j_ea)
 {/*ALCODESTART::1693300820997*/
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
-	//c_electricHeatpumpAssets.add(j_ea);
 }
 /*if (j_ea instanceof J_EAEV) {
 	if (p_householdEV != null){
@@ -349,7 +348,6 @@ double f_removeTheJ_EA_house(J_EA j_ea)
 {/*ALCODESTART::1749722407831*/
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
-	//c_electricHeatpumpAssets.remove(j_ea);
 }
 /*
 if (j_ea instanceof J_EAEV) {
