@@ -222,7 +222,7 @@ if(c_electricVehicles.size() > 0){
 		traceln("Tried to charge EV without algorithm in GC!: %s, resorting to " + p_gridConnectionID);
 		
 	}
-	p_chargingStrategy.manageCharging(energyModel.t_h);
+	p_chargingStrategy.manageCharging();
 }
 /*
 	double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 

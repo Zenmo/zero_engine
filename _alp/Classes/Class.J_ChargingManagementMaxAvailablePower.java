@@ -34,7 +34,8 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     	return OL_ChargingAttitude.MAX_POWER;
     }
     
-    public void manageCharging(double t_h) {
+    public void manageCharging() {
+    	double t_h = gc.energyModel.t_h;
     	double remainingChargingPower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(ELECTRICITY);
     	if (gc.p_batteryAsset!=null) {
     		remainingChargingPower_kW += gc.p_batteryAsset.getCapacityAvailable_kW();

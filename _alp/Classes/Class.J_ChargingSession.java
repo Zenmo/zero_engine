@@ -10,6 +10,7 @@ public class J_ChargingSession implements Serializable {
 	double batterySize_kWh;
 	double stateOfCharge_kWh;
 	double vehicleMaxChargingPower_kW;
+	int socketNb;
 	
 	boolean V1GCapable = true;
 	boolean V2GCapable = true;
@@ -32,13 +33,14 @@ public class J_ChargingSession implements Serializable {
     /**
      * Default constructor
      */
-    public J_ChargingSession(int startTime_quaterhours, int endTime_quaterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socket, double timeStep_h) {
+    public J_ChargingSession(double startTime_quarterhours, double endTime_quarterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socketNb, double timeStep_h) {
     
-    	this.startTime_h = 0.25 * startTime_quaterhours;
-    	this.endTime_h = 0.25 * endTime_quaterhours;
+    	this.startTime_h = 0.25 * startTime_quarterhours;
+    	this.endTime_h = 0.25 * endTime_quarterhours;
     	this.timeStep_h = timeStep_h;
     	this.chargingDemand_kWh = chargingDemand_kWh;
     	this.batterySize_kWh = batterySize_kWh;
+    	this.socketNb = socketNb-1;
     	//stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh; // bold assumption... basically means every vehicle ends full. The reality is somewhere between: vehicle starts empty and vehicle ends full. 
     	this.vehicleMaxChargingPower_kW = chargingPower_kW; 
     	
@@ -55,6 +57,11 @@ public class J_ChargingSession implements Serializable {
     public double getRemainingChargeDemand_kWh() {
     	return chargingDemand_kWh - chargedDuringSession_kWh + dischargedDuringSession_kWh;
     }
+    
+    public J_ChargingSession getClone() {
+    	return new J_ChargingSession((this.startTime_h*4), (this.endTime_h*4), this.chargingDemand_kWh, this.batterySize_kWh, this.vehicleMaxChargingPower_kW, this.socketNb, this.timeStep_h);
+    }
+    
     /*
     public double operate(boolean doV1G, boolean doV2G) {
     	this.V1GCapable = doV1G;
@@ -139,13 +146,9 @@ public class J_ChargingSession implements Serializable {
     public double getShiftedLoadV2GCurrentTimestep() {
     	return shiftedLoadV2GThisTimestep;
     }
-
+	*/
     
-    public J_ChargingSession getClone() {
-    	return new J_ChargingSession(this.startTime, this.endTime, this.chargingDemand_kWh, this.batterySize_kWh, this.chargingPower_kW, this.socket, this.timeStep_hr);
-    }*/
-    
-    
+   
 	@Override
 	public String toString() {
 		return "StartTime_h: " + startTime_h + ", endTime_h: " + endTime_h + ", Pmax: " + vehicleMaxChargingPower_kW + "kW, demand: " + chargingDemand_kWh + "kWh";

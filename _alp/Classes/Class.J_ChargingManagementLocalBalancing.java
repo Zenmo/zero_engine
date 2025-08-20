@@ -43,11 +43,11 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging(double t_h) {    	
-
+    public void manageCharging() {    	
+    	double t_h = gc.energyModel.t_h;
     	// Use current GC-load (so without EV charging!) as an 'equivalent price' signal, and use EV battery flexibility to make local load flatter.
-    	double currentDemandBeforeEV_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-    	GCdemandLowPassed_kW += (currentDemandBeforeEV_kW - GCdemandLowPassed_kW) * filterDiffGain_r;
+    	double currentBalanceBeforeEV_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+    	GCdemandLowPassed_kW += (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * filterDiffGain_r;
     	
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {
@@ -61,12 +61,12 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     				chargeSetpoint_kW = ev.getCapacityElectric_kW();	
     			} else {
     				double flexGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-    				chargeSetpoint_kW = max(0, ev.getCapacityElectric_kW() * (GCdemandLowPassed_kW / currentDemandBeforeEV_kW - remainingFlexTime_h * flexGain_r ));			
+    				chargeSetpoint_kW = max(0, ev.getCapacityElectric_kW() * (GCdemandLowPassed_kW / currentBalanceBeforeEV_kW - remainingFlexTime_h * flexGain_r ));			
     				//if ( chargeNeedForNextTrip_kWh < -ev.getCapacityElectric_kW()*gc.energyModel.p_timeStep_h && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
         			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
     	    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.
     					double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + GCdemandLowPassed_kW; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction
-    					chargeSetpoint_kW = min(0, -ev.getCapacityElectric_kW() * (currentDemandBeforeEV_kW / GCdemandLowPassed_kW - 1) * remainingFlexTime_h * flexGain_r);
+    					chargeSetpoint_kW = min(0, -ev.getCapacityElectric_kW() * (currentBalanceBeforeEV_kW / GCdemandLowPassed_kW - 1) * remainingFlexTime_h * flexGain_r);
     					//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
     				}    
     			}

@@ -10,7 +10,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		public boolean V2GCapable;
 		private boolean V2GActive = false;
 		private int nbSockets;
-		private int nextSessionIdx = 0;
+		private int[] nextSessionIdxs;// = 0;
 		
 		private J_ChargingSession[] currentChargingSessions;
 		
@@ -22,7 +22,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		private double dischargedStored_kWh;
 		private double chargedStored_kWh;
 		private J_ChargingSession[] currentChargingSessionsStored;
-		private int nextSessionIdxStored;
+		private int[] nextSessionIdxsStored;
 		
 		public boolean gridAwareMode = true;
 		
@@ -45,6 +45,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			}
 			this.nbSockets = nbSockets;
 			this.currentChargingSessions = new J_ChargingSession[nbSockets];
+			this.nextSessionIdxs = new int[nbSockets];
 			this.registerEnergyAsset();
 	    }
 	    
@@ -114,16 +115,16 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			}			
 	   	}
 	    
-		private double operateChargerSocket(int socketNo, double t_h, double currentElectricityPriceConsumption_eurpkWh, boolean doV1G, boolean doV2G) {
-			double maxChargePower = capacityElectric_kW;//min(currentChargingSessions[socketNo].vehicleMaxChargingPower_kW, capacityElectric_kW);
-			double remainingChargeDemand_kWh = currentChargingSessions[socketNo].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
+		private double operateChargerSocket(int socketNb, double t_h, double currentElectricityPriceConsumption_eurpkWh, boolean doV1G, boolean doV2G) {
+			double maxChargePower = capacityElectric_kW;//min(currentChargingSessions[socketNb].vehicleMaxChargingPower_kW, capacityElectric_kW);
+			double remainingChargeDemand_kWh = currentChargingSessions[socketNb].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
 			double chargePower_kW = 0;
 			if (!doV1G) {
 				chargePower_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h); // just max power charging to start with
 				//traceln("ChargePoint simple charging active");
 			} else {
 				//traceln("Smart charging active at chargePoint");
-				double nextTripStartTime_h = currentChargingSessions[socketNo].endTime_h;
+				double nextTripStartTime_h = currentChargingSessions[socketNb].endTime_h;
 				double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
 				double chargeDeadline_h =  nextTripStartTime_h - remainingChargeDemand_kWh / maxChargePower - chargeTimeMargin_h;
 				double remainingFlexTime_h = chargeDeadline_h - t_h; // measure of flexiblity left in current charging session.
@@ -143,37 +144,43 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 						double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Can become zero!!
 						chargePower_kW = min(0, -maxChargePower * min(1,(currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
 						//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
-					} 
+					}
 				}
 
 			}
-			currentChargingSessions[socketNo].charge(chargePower_kW);
+			currentChargingSessions[socketNb].charge(chargePower_kW);
 			return chargePower_kW;
 		}
 				
-		private void manageSocket(int socketNo, double t_h) {
-			if ( this.currentChargingSessions[socketNo] == null ) { // socket currently free
+		private void manageSocket(int socketNb, double t_h) {
+			if (this.currentChargingSessions[socketNb] != null && t_h > this.currentChargingSessions[socketNb].endTime_h) { // end session
+				if (this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh()); }
+				this.currentChargingSessions[socketNb] = null;
+			}
+			
+			if ( this.currentChargingSessions[socketNb] == null ) { // socket currently free
 				 // check if we are not already past the last charging session.
-				if (this.nextSessionIdx >= this.chargeSessionList.size()) { // no more sessions available
+		
+				// Find next charging session on this socket
+				while (this.nextSessionIdxs[socketNb]  < this.chargeSessionList.size() && this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).socketNb != socketNb) {				
+					this.nextSessionIdxs[socketNb]++;
+				}
+				
+				if (this.nextSessionIdxs[socketNb] >= this.chargeSessionList.size()) { // no more sessions available
 					//traceln("Reached end of charging session list!");
 					return;					
-				}
-				// Get next charging session
-				this.currentChargingSessions[socketNo] = this.chargeSessionList.get(this.nextSessionIdx);
-				if (t_h > this.currentChargingSessions[socketNo].startTime_h) { 
-					traceln("Chargesession %s started too late!", this.nextSessionIdx);	
-					if (t_h >= this.currentChargingSessions[socketNo].endTime_h) { 
-						traceln("!!Chargesession started after its endTime_h!! WTF?");
+				} else {					
+					this.currentChargingSessions[socketNb] = this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).getClone();
+					
+					if (t_h > this.currentChargingSessions[socketNb].startTime_h) { 
+						traceln("Chargesession %s started %s hours too late!", this.nextSessionIdxs[socketNb], t_h - this.currentChargingSessions[socketNb].startTime_h);	
+						if (t_h >= this.currentChargingSessions[socketNb].endTime_h) { 
+							traceln("!!Chargesession started after its endTime_h!! WTF?");
+						}
 					}
+					this.nextSessionIdxs[socketNb]++;
 				}
-				this.nextSessionIdx++;
-
-			} else { // socket in use, update status
-				if (t_h >= this.currentChargingSessions[socketNo].endTime_h) { // end session
-					if (this.currentChargingSessions[socketNo].getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.currentChargingSessions[socketNo].getRemainingChargeDemand_kWh()); }
-					this.currentChargingSessions[socketNo] = null;
-				}
-			}
+			} 
 		}
 		
 		@Override
@@ -188,8 +195,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			currentChargingSessionsStored = currentChargingSessions.clone();
 			Arrays.fill(currentChargingSessions, null);
 			
-			nextSessionIdxStored = nextSessionIdx;
-			nextSessionIdx = 0;
+			nextSessionIdxsStored = nextSessionIdxs;
+			nextSessionIdxs = new int[nextSessionIdxsStored.length];
 
 	    	clear();
 		}
@@ -201,7 +208,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			charged_kWh = chargedStored_kWh;
 			
 			currentChargingSessions = currentChargingSessionsStored;
-			nextSessionIdx = nextSessionIdxStored;
+			nextSessionIdxs = nextSessionIdxsStored;
 		}
 		
 		public  void setV2GActive(boolean activateV2G) {

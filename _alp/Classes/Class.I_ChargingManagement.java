@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     
 public interface I_ChargingManagement
 {
-	void manageCharging(double t_h);
+	void manageCharging();
 	
 	void initialize();
 	
