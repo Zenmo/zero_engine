@@ -29,7 +29,6 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     public J_ChargingManagementLocalBalancing( GridConnection gc ) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
-    	traceln("Untested functionality in J_ChargingManagementLocalBalancing!!");
     }
     
     public void initialize() {
