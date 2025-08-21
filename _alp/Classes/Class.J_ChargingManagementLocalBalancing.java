@@ -51,22 +51,18 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {
-    	    	traceln("Untested functionality in J_ChargingManagementLocalBalancing!!");
     			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!
     			double remainingFlexTime_h = ev.getChargeDeadline_h() - t_h; // measure of flexiblity left in current charging session.
-    			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
+    			double avgPowerDemandTillTrip_kW = ev.energyNeedForNextTrip_kWh / (ev.tripTracker.v_idleTimeToNextTrip_min / 60);
     			double chargeSetpoint_kW = 0;    			
     			if ( t_h >= (ev.getChargeDeadline_h()) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
     				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));
     				chargeSetpoint_kW = ev.getCapacityElectric_kW();	
     			} else {
-    				double flexGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-    				chargeSetpoint_kW = max(0, ev.getCapacityElectric_kW() * (GCdemandLowPassed_kW / currentBalanceBeforeEV_kW - remainingFlexTime_h * flexGain_r ));			
-    				//if ( chargeNeedForNextTrip_kWh < -ev.getCapacityElectric_kW()*gc.energyModel.p_timeStep_h && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
-        			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
-    	    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.
-    					double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + GCdemandLowPassed_kW; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction
-    					chargeSetpoint_kW = min(0, -ev.getCapacityElectric_kW() * (currentBalanceBeforeEV_kW / GCdemandLowPassed_kW - 1) * remainingFlexTime_h * flexGain_r);
+    				double flexGain_r = 0.5; // how strongly so 'follow' currentBalanceBeforeEV_kW
+    				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
+        			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
+    					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
     					//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
     				}    
     			}
@@ -78,7 +74,8 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Active charging type: " + this.activeChargingType;
+
 	}
 
 	/**

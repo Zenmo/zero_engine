@@ -690,12 +690,12 @@
 					<Name><![CDATA[BALANCE]]></Name>
 				</Option>
 				<Option>
-					<Id>1695825443639</Id>
-					<Name><![CDATA[V2G]]></Name>
-				</Option>
-				<Option>
 					<Id>1668371973959</Id>
 					<Name><![CDATA[MAX_POWER]]></Name>
+				</Option>
+				<Option>
+					<Id>1755703015841</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>

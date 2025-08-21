@@ -4,6 +4,7 @@
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import java.util.EnumSet;
 
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,
@@ -19,6 +20,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     private double electricityPriceLowPassed_eurpkWh = 0.1;
     private double priceFilterTimeScale_h = 5*24;
     private double priceFilterDiffGain_r;
+    private EnumSet<OL_ChargingAttitude> supportedChargingTypes = EnumSet.noneOf(OL_ChargingAttitude.class);
     //private double GCdemandLowPassed_kW = 0.5;
     //private double GCdemandFilterTimeScale_h = 5*24;
     /**
@@ -31,6 +33,9 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     public J_ChargingManagementSimple( GridConnection gc ) {
     	this.gc = gc;
     	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.supportedChargingTypes.add(OL_ChargingAttitude.SIMPLE);
+    	this.supportedChargingTypes.add(OL_ChargingAttitude.PRICE);
+    	this.activeChargingType = OL_ChargingAttitude.SIMPLE;
     }
     
     public void initialize() {
@@ -39,6 +44,14 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
+    }
+    
+    public void setCurrentChargingType(OL_ChargingAttitude chargeTypeRequest) {
+    	if (supportedChargingTypes.contains(chargeTypeRequest)) {
+    		this.activeChargingType = chargeTypeRequest;
+    	} else {
+    		throw new RuntimeException("Unsupported charging type for J_ChargingManagementSimple");
+    	}
     }
     /**
      * One of the simplest charging algorithms.
@@ -57,7 +70,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     	//traceln("Current price: %s eurpkWh, filtered price: %s eurpkWh", currentElectricityPriceConsumption_eurpkWh, electricityPriceLowPassed_eurpkWh);
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {
-	    		if (gc.p_chargingAttitudeVehicles != OL_ChargingAttitude.SIMPLE) {
+	    		if (this.activeChargingType != OL_ChargingAttitude.SIMPLE) {
 	    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!
 	    			double remainingFlexTime_h = ev.getChargeDeadline_h() - t_h; // measure of flexiblity left in current charging session.
 	    			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
@@ -86,9 +99,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     	}
     }
 
-	@Override
+    @Override
 	public String toString() {
-		return super.toString();
+		return "Active charging type: " + this.activeChargingType;
+
 	}
 
 	/**

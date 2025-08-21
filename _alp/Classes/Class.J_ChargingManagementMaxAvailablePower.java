@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 public class J_ChargingManagementMaxAvailablePower implements I_ChargingManagement {
 	private GridConnection gc;
+    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.MAX_POWER;
     /**
      * Default constructor
      */
@@ -31,7 +32,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {
-    	return OL_ChargingAttitude.MAX_POWER;
+    	return activeChargingType;
     }
     
     public void manageCharging() {
@@ -62,7 +63,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
 					chargingSetpoint_kW = remainingChargingPower_kW;
 				}
 				
-				double chargingPower_kW = min(chargingSetpoint_kW, ev.getCapacityElectric_kW());
+				double chargingPower_kW = min(max(0,chargingSetpoint_kW), ev.getCapacityElectric_kW());
 				ev.f_updateAllFlows( chargingPower_kW / ev.getCapacityElectric_kW() );
 				remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW); // Assumes the asset complies with the command!   			
     		}
@@ -71,7 +72,8 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Active charging type: " + this.activeChargingType;
+
 	}
 
 	/**

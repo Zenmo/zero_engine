@@ -49,7 +49,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			this.registerEnergyAsset();
 	    }
 	    
-	    public void f_updateAllFlows( double t_h, boolean smartCharging, boolean V2G) {
+	    public void f_updateAllFlows( double t_h) {
 
 	    	double currentElectricityPriceConsumption_eurpkWh = ((GridConnection)parentAgent).energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;	    	
 	    	this.electricityPriceLowPassed_eurpkWh += (currentElectricityPriceConsumption_eurpkWh-electricityPriceLowPassed_eurpkWh) / (priceFilterTimeScale_h/timestep_h);
@@ -62,8 +62,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 	    	}*/
 	    
 	    	// Check if the charger is capable of smart charging
-	    	boolean doV1G = smartCharging && this.V1GCapable;
-	    	boolean doV2G = V2G && this.V2GCapable;
+	    	boolean doV1G = this.V1GCapable;
+	    	boolean doV2G = this.V2GActive && this.V2GCapable;
 	    	
 	    	// Update the J_ChargingSessions of the sockets
 			for (int i = 0; i<this.nbSockets; i++) {				
@@ -153,7 +153,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		}
 				
 		private void manageSocket(int socketNb, double t_h) {
-			if (this.currentChargingSessions[socketNb] != null && t_h > this.currentChargingSessions[socketNb].endTime_h) { // end session
+			if (this.currentChargingSessions[socketNb] != null && t_h >= this.currentChargingSessions[socketNb].endTime_h) { // end session
 				if (this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh()); }
 				this.currentChargingSessions[socketNb] = null;
 			}
@@ -181,6 +181,11 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 					this.nextSessionIdxs[socketNb]++;
 				}
 			} 
+		}
+		
+		public void setChargingCapabilities(boolean smartCapable, boolean V2Gcapable) {
+			this.V1GCapable = smartCapable;
+			this.V2GCapable = V2Gcapable;
 		}
 		
 		@Override

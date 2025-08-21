@@ -4,7 +4,7 @@
 		<Id>1674329507571</Id>
 		<Name><![CDATA[rectangle3]]></Name>
 		<X>0</X>
-		<Y>550</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>10</Y>
@@ -22,7 +22,7 @@
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
 		<Width>540</Width>
-		<Height>430</Height>
+		<Height>380</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-983041</FillColor>
 		<FillMaterial>null</FillMaterial>
@@ -402,7 +402,7 @@
 		<Id>1668439095469</Id>
 		<Name><![CDATA[pl_powerFlows]]></Name>
 		<X>560</X>
-		<Y>580</Y>
+		<Y>600</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -482,7 +482,7 @@
 			<Id>1668439095466</Id>
 			<Expression>my_dataset3</Expression>
 			<Color>-13447886</Color>
-			<Expression2>fm_currentAssetFlows_kW.get(evChargingPower_kW)</Expression2>
+			<Expression2>fm_currentAssetFlows_kW.get(evChargingPower_kW)-fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.V2GPower_kW)</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>2.0</LineWidth>
@@ -561,7 +561,7 @@
 		<Id>1674329550133</Id>
 		<Name><![CDATA[text8]]></Name>
 		<X>180</X>
-		<Y>560</Y>
+		<Y>610</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

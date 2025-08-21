@@ -81,11 +81,11 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     	}
     }
 
-	@Override
-	public String toString() {
-		return super.toString();
-	}
+    @Override
+ 	public String toString() {
+ 		return "Active charging type: " + this.activeChargingType;
 
+ 	}
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed

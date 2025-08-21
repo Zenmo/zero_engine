@@ -94,7 +94,7 @@
 			<Name><![CDATA[v_isActive]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_chargingStrategy]]></Name>
+			<Name><![CDATA[p_chargingManagement]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
