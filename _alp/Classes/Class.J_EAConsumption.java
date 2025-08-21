@@ -71,7 +71,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		}
    	}
 	
-    public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    /*public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	if (this.energyCarrier != OL_EnergyCarriers.ELECTRICITY) {
     		throw new RuntimeException("Unable to curtail the Consumption asset with energycarrier: " + this.energyCarrier);
     	}
@@ -96,7 +96,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     	return new Pair(flowsMap, this.energyUse_kW);
-    }
+    }*/
 
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;

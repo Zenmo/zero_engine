@@ -3,17 +3,21 @@
  */	
 public class J_ChargingSession implements Serializable {
 
-	int startTime;
-	int endTime;
+	double startTime_h;
+	double endTime_h;
+	double timeStep_h;
 	double chargingDemand_kWh;
 	double batterySize_kWh;
 	double stateOfCharge_kWh;
-	double chargingPower_kW;
-	int socket;
-	double timeStep_hr;
+	double vehicleMaxChargingPower_kW;
+	int socketNb;
 	
-	boolean V1GCapable;
-	boolean V2GCapable;
+	boolean V1GCapable = true;
+	boolean V2GCapable = true;
+	double chargedDuringSession_kWh = 0;
+	double dischargedDuringSession_kWh = 0;
+	
+	/*
 	int availableStepsForV2G;
 	int availableStepsForV1G;
 	int timeStepsToDisconnect;
@@ -24,29 +28,45 @@ public class J_ChargingSession implements Serializable {
 	
 	double shiftedLoadV1GThisTimestep;
 	double shiftedLoadV2GThisTimestep;
-
+	*/
 	
     /**
      * Default constructor
      */
-    public J_ChargingSession(int startTime_quaterhours, int endTime_quaterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socket, double timeStep_hr) {
+    public J_ChargingSession(double startTime_quarterhours, double endTime_quarterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socketNb, double timeStep_h) {
     
-    	this.startTime = startTime_quaterhours;
-    	this.endTime = endTime_quaterhours;
+    	this.startTime_h = 0.25 * startTime_quarterhours;
+    	this.endTime_h = 0.25 * endTime_quarterhours;
+    	this.timeStep_h = timeStep_h;
     	this.chargingDemand_kWh = chargingDemand_kWh;
     	this.batterySize_kWh = batterySize_kWh;
-    	stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh;
-    	this.chargingPower_kW = chargingPower_kW; 
-    	this.socket = socket;
-    	timeStepsToDisconnect = endTime - startTime;
-    	openTimeSlots = timeStepsToDisconnect - ((int)Math.ceil(4 * chargingDemand_kWh / chargingPower_kW)) ; 
-    	this.timeStep_hr = timeStep_hr;
+    	this.socketNb = socketNb-1;
+    	//stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh; // bold assumption... basically means every vehicle ends full. The reality is somewhere between: vehicle starts empty and vehicle ends full. 
+    	stateOfCharge_kWh = 0.5*(batterySize_kWh - chargingDemand_kWh); // Assumption: battery is not completely empty at start, and not completely full when leaving
+    	this.vehicleMaxChargingPower_kW = chargingPower_kW; 
     	
-    	if(this.startTime > this.endTime){
+    	if(this.startTime_h > this.endTime_h){
     		new RuntimeException("StartTime is later then the endtime for J_ChargingSession");
     	}
     }
     
+    public double charge(double chargeSetpoint_kW) {    	
+    	double actualChargePower_kW = max(min(chargeSetpoint_kW, (batterySize_kWh - stateOfCharge_kWh) / timeStep_h), -stateOfCharge_kWh  / timeStep_h); // Limit charge power to stay within SoC 0-100    
+    	stateOfCharge_kWh += actualChargePower_kW * timeStep_h;
+    	chargedDuringSession_kWh+=max(0, actualChargePower_kW*this.timeStep_h);
+    	dischargedDuringSession_kWh+=max(0, -actualChargePower_kW*this.timeStep_h);     	
+    	return actualChargePower_kW;
+    }
+    
+    public double getRemainingChargeDemand_kWh() {
+    	return chargingDemand_kWh - chargedDuringSession_kWh + dischargedDuringSession_kWh;
+    }
+    
+    public J_ChargingSession getClone() {
+    	return new J_ChargingSession((this.startTime_h*4), (this.endTime_h*4), this.chargingDemand_kWh, this.batterySize_kWh, this.vehicleMaxChargingPower_kW, this.socketNb, this.timeStep_h);
+    }
+    
+    /*
     public double operate(boolean doV1G, boolean doV2G) {
     	this.V1GCapable = doV1G;
     	this.V2GCapable = doV2G;
@@ -58,6 +78,7 @@ public class J_ChargingSession implements Serializable {
     	stateOfCharge_kWh += power * timeStep_hr;
     	return currentPower;
     }
+    
     
     public double determineChargingPower(){
     	double power;
@@ -129,16 +150,12 @@ public class J_ChargingSession implements Serializable {
     public double getShiftedLoadV2GCurrentTimestep() {
     	return shiftedLoadV2GThisTimestep;
     }
-
+	*/
     
-    public J_ChargingSession getClone() {
-    	return new J_ChargingSession(this.startTime, this.endTime, this.chargingDemand_kWh, this.batterySize_kWh, this.chargingPower_kW, this.socket, this.timeStep_hr);
-    }
-    
-    
+   
 	@Override
 	public String toString() {
-		return "Power: " + currentPower + "kW, start: " + startTime + ", end: " + endTime + ", Pmax: " + chargingPower_kW +"kW, demand: " + chargingDemand_kWh + "kWh";
+		return "StartTime_h: " + startTime_h + ", endTime_h: " + endTime_h + ", Pmax: " + vehicleMaxChargingPower_kW + "kW, demand: " + chargingDemand_kWh + "kWh";
 	}
 
 	/**

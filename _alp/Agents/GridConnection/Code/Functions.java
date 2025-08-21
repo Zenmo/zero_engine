@@ -130,6 +130,13 @@ v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
 double f_operateFlexAssets()
 {/*ALCODESTART::1664961435385*/
 //Must be overwritten in child agent
+f_manageHeating();
+
+f_manageEVCharging();
+
+f_manageChargePoints();
+
+f_manageBattery();
 /*ALCODEEND*/}
 
 double f_calculateEnergyBalance()
@@ -166,7 +173,7 @@ if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
 }
 
-c_tripTrackers.forEach(t -> t.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60));
+c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h));
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -182,10 +189,10 @@ f_connectionMetering();
 
 double f_operateFixedAssets()
 {/*ALCODESTART::1668528300576*/
-c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
-c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows(0));
-c_consumptionAssets.forEach(c -> c.f_updateAllFlows(0));
-c_productionAssets.forEach(p -> p.f_updateAllFlows(0));
+c_dieselVehicles.forEach(v -> v.f_updateAllFlows());
+c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
+c_consumptionAssets.forEach(c -> c.f_updateAllFlows());
+c_productionAssets.forEach(p -> p.f_updateAllFlows());
 c_profileAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
 /*ALCODEEND*/}
 
@@ -197,8 +204,8 @@ fm_currentBalanceFlows_kW.clear();
 
 v_previousPowerElectricity_kW = 0;
 v_previousPowerHeat_kW = 0;
-v_electricityPriceLowPassed_eurpkWh = 0;
-v_currentElectricityPriceConsumption_eurpkWh  = 0;
+//v_electricityPriceLowPassed_eurpkWh = 0;
+//v_currentElectricityPriceConsumption_eurpkWh  = 0;
 
 v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 
@@ -207,35 +214,18 @@ f_resetSpecificGCStates();
 
 /*ALCODEEND*/}
 
-double f_manageCharging()
+double f_manageEVCharging()
 {/*ALCODESTART::1671095995172*/
 if(c_electricVehicles.size() > 0){
-	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-	//double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	
-	switch (p_chargingAttitudeVehicles) {
-		case SIMPLE:
-			f_simpleCharging();
-		break;
-		case MAX_SPREAD:
-			f_maxSpreadCharging();
-		break;
-		case MAX_POWER:
-			f_maxPowerCharging( max(0, availableChargingCapacity));
-		break;
-		case CHEAP:
-			v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
-			v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-			f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
-		break;
-		case V2G:
-			v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice(v_liveConnectionMetaData.contractedDeliveryCapacity_kW); 
-			v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-			f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));	
-		break;
+	if (p_chargingManagement == null) {
+		//throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
+		traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
+		
+	} else {
+		p_chargingManagement.manageCharging();
 	}
 }
+
 /*ALCODEEND*/}
 
 double f_simpleCharging()
@@ -419,6 +409,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);;
 		
 	}
+	
 }
 
 
@@ -426,8 +417,8 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 double f_setOperatingSwitches()
 {/*ALCODESTART::1677512714652*/
-if( this instanceof GCDistrictHeating ) { // Temporarily disabled while transfering to class-based energy assets!
-	((GCDistrictHeating)this).f_setConfigurationBooleans();
+if( this instanceof GCDistrictHeating gc) { // Temporarily disabled while transfering to class-based energy assets!
+	gc.f_setConfigurationBooleans();
 }
 /*ALCODEEND*/}
 
@@ -486,7 +477,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		c_hydrogenVehicles.add(hydrogenVehicle);		
 	} else if (vehicle instanceof J_EAEV ev) {
 		c_electricVehicles.add(ev);
-		c_vehiclesAvailableForCharging.add(ev);
+		//c_vehiclesAvailableForCharging.add(ev);
 		energyModel.c_EVs.add(ev);	
 	}
 	c_vehicleAssets.add(vehicle);		
@@ -511,7 +502,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		vehicle.tripTracker = tripTracker;	
 	}
 	c_tripTrackers.add( tripTracker );
-	v_vehicleIndex ++;
+	//v_vehicleIndex ++;
 } else if (j_ea instanceof J_EAConsumption consumptionAsset) {
 	c_consumptionAssets.add(consumptionAsset);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
@@ -587,7 +578,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EADieselTractor tractor) {
 	c_profileAssets.add(tractor);
-} else if (j_ea instanceof J_EACharger charger) {
+} else if (j_ea instanceof J_EAChargePoint charger) {
 	c_chargers.add(charger);
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
@@ -671,7 +662,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 		vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
 
-		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);;
+		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 		
 	}
 }
@@ -817,7 +808,7 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
 		c_hydrogenVehicles.remove((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
-		c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
+		//c_vehiclesAvailableForCharging.remove((J_EAEV)vehicle);
 		energyModel.c_EVs.remove((J_EAEV)vehicle);
 		//c_EvAssets.remove(j_ea);
 	}
@@ -826,7 +817,7 @@ if (j_ea instanceof J_EAVehicle) {
 	J_ActivityTrackerTrips tripTracker = vehicle.tripTracker;
 	c_tripTrackers.remove( tripTracker );
 	vehicle.tripTracker = null;
-	v_vehicleIndex --;
+	//v_vehicleIndex --;
 } else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
@@ -927,7 +918,7 @@ if (j_ea instanceof J_EAVehicle) {
 	/*if( ((J_EAProfile)j_ea).profileType == OL_ProfileAssetType.HEATPUMP_ELECTRICITY_CONSUMPTION){
 		//c_electricHeatpumpAssets.add(j_ea);
 	}*/
-} else if (j_ea instanceof J_EACharger) {
+} else if (j_ea instanceof J_EAChargePoint) {
 	c_chargers.remove(j_ea);
 	//c_EvAssets.remove(j_ea);	
 } else {
@@ -1233,24 +1224,10 @@ v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.a
 
 /*ALCODEEND*/}
 
-double f_manageChargers()
+double f_manageChargePoints()
 {/*ALCODESTART::1750258434630*/
-if ( c_chargers.size() > 0 ) {
-	switch (p_chargingAttitudeVehicles) {			
-		case V1G:
-		case MAX_POWER:
-		case MAX_SPREAD:
-			c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h, true, false) );
-			break;
-		case V2G:
-			c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h, true, true) );
-			break;
-		case SIMPLE:
-		default:
-			c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h, false, false) );
-			break;
-	}
-}
+c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h) );
+
 /*ALCODEEND*/}
 
 double f_manageHeating()
@@ -1403,19 +1380,70 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 }			
 /*ALCODEEND*/}
 
-double f_activateV2GChargingMode()
+double f_activateV2GChargingMode(boolean enable)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
-	//Check needed to make sure v2g is displayed correctly in the graphs
-	if(p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G){
-		c_electricVehicles.forEach(ev -> ev.setV2GActive(true));
-		c_chargers.forEach(charger -> charger.setV2GActive(true));
-		f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
-	}
+	
+	//if(p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G){
+		c_electricVehicles.forEach(ev -> ev.setV2GActive(enable));
+		c_chargers.forEach(charger -> charger.setV2GActive(enable));
+		//Check needed to make sure v2g is displayed correctly in the graphs
+		if (enable){
+			f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
+		} 
+	/*}
 	else{
 		c_electricVehicles.forEach(ev -> ev.setV2GActive(false));
 		c_chargers.forEach(charger -> charger.setV2GActive(false));
+	}*/
+}
+/*ALCODEEND*/}
+
+double f_addChargingManagementToGC(OL_ChargingAttitude chargingType,boolean isGhost)
+{/*ALCODESTART::1755702594182*/
+if (chargingType == null) {
+	if (c_electricVehicles.size()>0){
+		throw new RuntimeException("Charging strategy needed when electric vehicles are present!");
 	}
 }
+
+/*if (isGhost) {
+	engineGC.p_chargingManagement = new J_ChargingManagementSimple(engineGC);
+	return;
+}*/
+if (chargingType == OL_ChargingAttitude.CUSTOM) {
+	throw new RuntimeException("f_addChargingManagementToGC called with heating type CUSTOM");
+}
+
+/*Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
+Class<? extends I_HeatingManagement> managementClass = energyModel.c_defaultHeatingStrategies.get(triple);
+*/
+Class<? extends I_ChargingManagement> managementClass;
+switch (chargingType) {			
+	case SIMPLE:
+		managementClass = J_ChargingManagementSimple.class;
+		break;
+	case PRICE:
+		managementClass = J_ChargingManagementPrice.class;
+		break;
+	case BALANCE:
+		managementClass = J_ChargingManagementLocalBalancing.class;
+		break;
+	case MAX_POWER:
+		managementClass = J_ChargingManagementMaxAvailablePower.class;
+		break;
+	default:
+		throw new RuntimeException("No matching charging strategy available for chargingType: " + chargingType);
+}
+
+I_ChargingManagement chargingManagement = null;
+try {
+	chargingManagement = managementClass.getDeclaredConstructor(GridConnection.class).newInstance(this);
+}
+catch (Exception e) {
+	e.printStackTrace();
+}
+
+p_chargingManagement = chargingManagement;
 /*ALCODEEND*/}
 

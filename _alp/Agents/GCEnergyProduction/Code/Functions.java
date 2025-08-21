@@ -6,7 +6,7 @@ double f_operateFlexAssets_overwrite()
 	}
 }*/
 
-f_manageCharging();
+f_manageEVCharging();
 
 f_manageBattery();
 

@@ -4,10 +4,10 @@ double f_operateFlexAssets_overwrite()
 
 f_manageHeating();
 
-f_manageCharging();
+f_manageEVCharging();
 
-v_lowPassFactorLoad_fr = 0.003; // Vastgezet voor de NBHs 
-v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); //you want to do determine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
+//v_lowPassFactorLoad_fr = 0.003; // Vastgezet voor de NBHs 
+//v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_currentLoadLowPassed_kW ); //you want to do determine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
 
 f_manageBattery();
 /*ALCODEEND*/}

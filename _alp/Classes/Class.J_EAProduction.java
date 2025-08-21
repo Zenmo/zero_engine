@@ -108,7 +108,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	@Override
-	public void f_updateAllFlows(double powerFraction_fr) {
+	public void f_updateAllFlows() {
 		double ratioOfCapacity = profilePointer.getCurrentValue();
 		
 		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?

@@ -43,17 +43,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	//traceln("rowIndex %s found on line: %s", rowIndex, currentLineNb);
     	int nbActivities = tripsCsv.readInt();
     	
-    			
-    	for (int i = 0; i < nbActivities; i++){
+       	for (int i = 0; i < nbActivities; i++){
     		starttimes_min.add(tripsCsv.readDouble());
     		endtimes_min.add(tripsCsv.readDouble());
     		distances_km.add(tripsCsv.readDouble());
     	}
-	    
-	    //traceln("Starttimes: %s", starttimes_min);
-	    //traceln("Endtimes: %s", endtimes_min);
-	    //traceln("Distances: %s", distances_km);
-    	
+
 	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
     	if (endtimes_min.get(nbActivities-1) < 10080) {
 		    for (int weeks = 1; weeks < 53; weeks++) {
@@ -109,20 +104,18 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	   //traceln("Desired annual distance was: %s km", desiredAnnualDistance_km);
    }
     
-   public void manageActivities(double time_min) {
+   public void manageActivities(double t_h) {
+		double time_min = t_h * 60;
     	if (Vehicle.getAvailability()) { // at start of timestep! check for multiple 'events' in timestep!
     		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h * 60) ) { // is a trip starting this timestep?
-        	if (time_min >= starttimes_min.get(v_eventIndex) ) { // is a trip starting this timestep?
+        	if ( time_min >= starttimes_min.get(v_eventIndex) ) { // is a trip starting this timestep?
     			//currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
     			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
-
     			Vehicle.startTrip();
-    			//main.v_activeTrips.incrementAndGet();
         		//if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the trip also ending this timestep?
             	if (time_min >= endtimes_min.get(v_eventIndex) ) { // is the trip also ending this timestep?
         			Vehicle.endTrip(v_tripDist_km);
         			v_eventIndex++;
-        			//main.v_activeTrips.decrementAndGet();
         			prepareNextActivity(time_min);
         		}
     		}
@@ -140,15 +133,11 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
         	if (time_min >= endtimes_min.get(v_eventIndex) ) { // is a trip ending this timestep?
     			Vehicle.endTrip(v_tripDist_km);
     			v_eventIndex++;
-    			//main.v_activeTrips.decrementAndGet();
     			prepareNextActivity(time_min);
         		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
             	if (time_min >= starttimes_min.get(v_eventIndex) ) { // is the next trip also starting this timestep?
-        			//currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
         			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
-        			//traceln("Hello! :P");
         			Vehicle.startTrip();
-        			//main.v_activeTrips.incrementAndGet();
         		}
     		}
 
@@ -176,10 +165,13 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
 		v_tripDist_km = distanceScaling_fr * distances_km.get( v_eventIndex ); // Update upcoming trip distance
 
-		if (Vehicle instanceof J_EAEV) {
-			J_EAEV EV = (J_EAEV)Vehicle;
-			v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
-
+		if (Vehicle instanceof J_EAEV ev) {
+			
+			v_energyNeedForNextTrip_kWh = ev.energyConsumption_kWhpkm * v_tripDist_km;
+			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
+				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh(),2));
+			}
+			v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
 			// Check if more charging is needed for next trip!
 			double nextTripDist_km = 0;
 			double nextTripStartTime_min = 0;
@@ -191,12 +183,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				nextTripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex+1 );
 				nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
 			}
-			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.getCapacityElectric_kW());
-			//if (additionalChargingNeededForNextTrip_kWh>0) {
-			//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
-			//}
+			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*ev.getCapacityElectric_kW());
+			/*if (additionalChargingNeededForNextTrip_kWh>0) {
+				traceln("*******Additional charging required to prepare for trip after next trip!*********");
+			}*/
 			v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
-			EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
+			ev.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
 			/*if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {
 				traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
 				traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");

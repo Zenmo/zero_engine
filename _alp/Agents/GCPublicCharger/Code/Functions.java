@@ -19,9 +19,9 @@ for ( J_EAProfile e : c_profileAssets){
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1726749088568*/
 //Manage charging
-f_manageCharging();
+f_manageEVCharging();
 
-f_manageChargers();
+f_manageChargePoints();
 
 /*ALCODEEND*/}
 

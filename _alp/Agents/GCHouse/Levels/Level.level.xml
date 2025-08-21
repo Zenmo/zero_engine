@@ -78,8 +78,8 @@
 	<Line>
 		<Id>1726301544269</Id>
 		<Name><![CDATA[line3]]></Name>
-		<X>1460</X>
-		<Y>50</Y>
+		<X>2050</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -106,8 +106,8 @@
 	<Text>
 		<Id>1726301549553</Id>
 		<Name><![CDATA[txt_heatingFunctionality]]></Name>
-		<X>1560</X>
-		<Y>30</Y>
+		<X>2150</X>
+		<Y>440</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

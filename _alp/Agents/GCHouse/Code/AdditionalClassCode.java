@@ -15,9 +15,10 @@ public void f_operateFlexAssets(){
 	f_operateFlexAssets_overwrite();
 }
 
+/*
 @Override 
-public void f_manageCharging(){
+public void f_manageEVCharging(){
 	f_manageCharging_overwrite();
-}
+}*/
 
 

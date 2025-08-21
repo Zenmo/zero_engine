@@ -681,7 +681,7 @@ return this.c_gridNodesNotTopLevel;
 double f_setInitialValues()
 {/*ALCODESTART::1722853692644*/
 // Starting prices
-c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions
+//c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions
 
 
 /*ALCODEEND*/}

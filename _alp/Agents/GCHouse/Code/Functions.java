@@ -1,5 +1,10 @@
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1664963959146*/
+f_manageCookingTracker();
+f_manageAirco();
+super.f_operateFlexAssets();
+
+/*
 double availablePowerAtPrice_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
 if (p_owner != null){
 	v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
@@ -15,29 +20,13 @@ if( c_electricVehicles.size() > 0){
 	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
 	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 	//f_maxPowerCharging( max(0, availableChargingCapacity));
-	f_manageCharging();
+	f_manageEVCharging();
 	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
 }
 
-/* // What's this doing here?? Seems like duplicate code.
-if( p_batteryAsset != null){
-	switch (p_batteryOperationMode){
-		case HOUSEHOLD_LOAD:
-			f_batteryManagementBalance(v_batterySOC_fr);
-		break;
-		case PRICE:
-			f_batteryManagementPrice(v_batterySOC_fr);
-		break;
-		default:
-		break;
-	}
-	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-}
-*/ 
 f_manageChargers();
 
-f_manageBattery();
+f_manageBattery();*/
 /*ALCODEEND*/}
 
 double f_createThermalStorageModel()
@@ -242,25 +231,6 @@ switch (p_chargingAttitudeVehicles) {
 
 /*ALCODEEND*/}
 
-double f_simpleCharging_overwrite()
-{/*ALCODESTART::1675033218897*/
-
-double powerFraction_fr = 0;
-if( p_householdEV.getCurrentStateOfCharge_fr() < 1 ) {
-	powerFraction_fr = 1;
-	/*if ( p_hasSmartFlexAssets ){
-		ConnectionOwner owner = ((ConnectionOwner)l_ownerActor.getConnectedAgent());
-		if (! owner.v_currentCongestionType.equals("Overconsumption") && owner.p_capacityTariffApplicable ){
-			chargingRatio = min (1, owner.p_capacityLevel_kW / p_householdEV.getElectricCapacity_kW()); // dont charge faster than the congestion level (although with household demand power drawn will be slightly higher)
-		}
-	}//*/
-}
-
-p_householdEV.f_updateAllFlows(powerFraction_fr);
-//v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];//p_householdEV.electricityConsumption_kW - p_householdEV.electricityProduction_kW;
-
-/*ALCODEEND*/}
-
 double f_determineChargingDemandOfEV()
 {/*ALCODESTART::1675034695162*/
 //J_EAEV EVinstance = (J_EAEV)p_householdEV;
@@ -292,58 +262,20 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 
 /*ALCODEEND*/}
 
-double f_chargeOnPriceSimpler(double availablePowerOnGc_kW)
-{/*ALCODESTART::1677664183773*/
-double chargingRatio = 0;
-if( p_householdEV.getAvailability() && p_householdEV.chargingNeed != OL_EVChargingNeed.NONE ){	
-	OL_priceLevels priceLevel = f_getPriceLevel(v_currentAveraged7kWElectricityPrice_eurpkWh);
-	if ( p_householdEV.chargingNeed == OL_EVChargingNeed.LOW) { 
-		if( priceLevel == OL_priceLevels.LOW ) {
-			chargingRatio = 1.0;
-		}
-	}
-	else if ( p_householdEV.chargingNeed == OL_EVChargingNeed.MEDIUM){
-		if ( priceLevel == OL_priceLevels.LOW) { 
-			chargingRatio = 1.0;
-		}
-		else if(  priceLevel == OL_priceLevels.MEDIUM ) {
-			chargingRatio = p_householdEV.capacityElectric_kW / 4;
-		}
-	}
-	// SCENARIO HIGH CHARGING NEED -> charge full power, otherwise the EV will not get full
-	else {
-		chargingRatio = 1.0; // Hier kan er boven de gridconnectie geladen worden. Zeker als je 11 kW laders hebt met een warmtepomp erbij
-	}
-}
-if( p_householdEV.chargingNeed != OL_EVChargingNeed.HIGH){ //unless the charging need is high, limit the charging speed to grid connection.
-	chargingRatio = min(1, min( availablePowerOnGc_kW / p_householdEV.getElectricCapacity_kW(), chargingRatio));
-}
-v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlows( chargingRatio );
-
-/*ALCODEEND*/}
-
-double f_batteryManagementLoad()
-{/*ALCODESTART::1678708804201*/
-double powerfraction_fr = 0;
-if ( v_currentPowerElectricity_kW < 0 && p_batteryAsset.getCurrentStateOfCharge() < 1 && v_currentPriceLevel !=  OL_priceLevels.HIGH ){
-	powerfraction_fr = 1;
-}
-else if( v_currentPowerElectricity_kW > v_currentLoadLowPassed_kW && p_batteryAsset.getCurrentStateOfCharge() > 0){
-	powerfraction_fr = -1;
-}
-else if ( v_batterySOC_fr < 0.6 && v_currentPowerElectricity_kW < 1 && v_currentPriceLevel !=  OL_priceLevels.HIGH){
-	powerfraction_fr = min( 1, p_batteryAsset.capacityElectric_kW / 2.5);
-}
-p_batteryAsset.v_powerFraction_fr = powerfraction_fr;
-p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
-
-/*ALCODEEND*/}
-
 double f_connectTo_J_EA_House(J_EA j_ea)
 {/*ALCODESTART::1693300820997*/
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
 }
+/*if (j_ea instanceof J_EAEV) {
+	if (p_householdEV != null){
+	    	throw new RuntimeException(String.format("Exception: trying to assign 2 EVs to a household!! --> one of them will not charge! "));
+	}
+	p_householdEV = (J_EAEV)j_ea;
+}*/
+
+
+
 /*ALCODEEND*/}
 
 double f_setAnnualEnergyDemand()
@@ -360,12 +292,11 @@ double f_manageCookingTracker()
 {/*ALCODESTART::1726334759211*/
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities((energyModel.t_h-energyModel.p_runStartTime_h)*60); // also calls f_updateAllFlows in HOB asset	
-	//v_electricHobConsumption_kW += p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY); // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
-	//v_electricHobConsumption_kWh += v_electricHobConsumption_kW * energyModel.p_timeStep_h;
-	v_residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
+	p_cookingTracker.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h); // also calls f_updateAllFlows in HOB asset	
+	
+	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	if (p_BuildingThermalAsset != null) {
-		p_BuildingThermalAsset.v_powerFraction_fr += v_residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW();
+		p_BuildingThermalAsset.v_powerFraction_fr += residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW(); // Does this work out correctly with new heatingManagement structure??
 	}
 }
 /*ALCODEEND*/}
@@ -418,5 +349,10 @@ double f_removeTheJ_EA_house(J_EA j_ea)
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
 }
+/*
+if (j_ea instanceof J_EAEV) {
+	p_householdEV = null;
+}
+*/
 /*ALCODEEND*/}
 

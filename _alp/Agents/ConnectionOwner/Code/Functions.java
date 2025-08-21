@@ -271,7 +271,7 @@ double heatVAT_pct = 0.0;
 	double nfATOcapacity_kW = 0.0;
 	double taxDelivery_eurpkWh = 0.13;
 	double taxFeedin_eurpkWh = 0.0;
-	double proportionalTax_pct = 0.21;
+	double proportionalTax_pct = 21;
 
 	/*if (p_actorID.equals("logistics0owner")){
 		v_contractDelivery = new J_DeliveryContract("coop1", OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarriers.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
@@ -563,7 +563,7 @@ if( currentPowerDrawn_kW >= 0 ){
 	}*/
 
 	price_eurpkWh += v_contractTax.deliveryTax_eurpkWh + v_contractTax.proportionalTax_pct;// * (v_contractTax.deliveryTax_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh)
-	price_eurpkWh = price_eurpkWh * (1+v_contractTax.proportionalTax_pct);
+	price_eurpkWh = price_eurpkWh * (1+0.01*v_contractTax.proportionalTax_pct);
 }
 else {
 	//Delivery
@@ -591,7 +591,7 @@ else {
 		price += v_priceBandsTax.floorEntry( currentPowerDrawn_kW ).getValue();
 	}*/
 	price_eurpkWh += v_contractTax.feedinTax_eurpkWh + v_contractTax.proportionalTax_pct;// * (v_contractTax.deliveryTax_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh)
-	price_eurpkWh = price_eurpkWh * (1+v_contractTax.proportionalTax_pct);
+	price_eurpkWh = price_eurpkWh * (1+0.01*v_contractTax.proportionalTax_pct);
 }
 //traceln(price_eurpkWh);
 return price_eurpkWh;

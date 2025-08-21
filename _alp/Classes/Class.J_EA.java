@@ -124,24 +124,21 @@ abstract public class J_EA implements Cloneable {
    
     public void f_updateAllFlows(double powerFraction_fr) {
 
-     	double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
-     	operate(powerFractionBounded_fr);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
-    	}
-    	/*
-    	if (ui_energyAsset!= null) {
-    		//ui_energyAsset.f_addFlows(arr);
-    		ui_energyAsset.f_addFlows(flowsMap);
-    	}
-    	*/
-    	this.lastFlowsMap.cloneMap(this.flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
+     	//double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
+     	this.v_powerFraction_fr = min(1,max(-1, powerFraction_fr));
+     	this.f_updateAllFlows();
+     	
     }
     
     public void f_updateAllFlows() {
-    	this.f_updateAllFlows(this.v_powerFraction_fr);
+     	operate(this.v_powerFraction_fr);
+    	if (parentAgent instanceof GridConnection) {    		
+    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
+    	}
+    
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
     }
     
     public void f_setPowerFraction_fr(double powerFraction_fr) {

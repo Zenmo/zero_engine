@@ -682,24 +682,20 @@
 					<Name><![CDATA[SIMPLE]]></Name>
 				</Option>
 				<Option>
-					<Id>1668368194052</Id>
-					<Name><![CDATA[MAX_SPREAD]]></Name>
+					<Id>1671011596610</Id>
+					<Name><![CDATA[PRICE]]></Name>
+				</Option>
+				<Option>
+					<Id>1755522163223</Id>
+					<Name><![CDATA[BALANCE]]></Name>
 				</Option>
 				<Option>
 					<Id>1668371973959</Id>
 					<Name><![CDATA[MAX_POWER]]></Name>
 				</Option>
 				<Option>
-					<Id>1671011596610</Id>
-					<Name><![CDATA[CHEAP]]></Name>
-				</Option>
-				<Option>
-					<Id>1750246095668</Id>
-					<Name><![CDATA[V1G]]></Name>
-				</Option>
-				<Option>
-					<Id>1695825443639</Id>
-					<Name><![CDATA[V2G]]></Name>
+					<Id>1755703015841</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -760,30 +756,6 @@
 				<Option>
 					<Id>1717140116168</Id>
 					<Name><![CDATA[ALWAYS_IDLE]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1674403295460</Id>
-				<Name><![CDATA[OL_EVChargingNeed]]></Name>
-				<Option>
-					<Id>1674403295461</Id>
-					<Name><![CDATA[HIGH]]></Name>
-				</Option>
-				<Option>
-					<Id>1674403295462</Id>
-					<Name><![CDATA[MEDIUM]]></Name>
-				</Option>
-				<Option>
-					<Id>1674403295463</Id>
-					<Name><![CDATA[LOW]]></Name>
-				</Option>
-				<Option>
-					<Id>1674403309820</Id>
-					<Name><![CDATA[NONE]]></Name>
-				</Option>
-				<Option>
-					<Id>1674416304469</Id>
-					<Name><![CDATA[EV_NOT_AVAILABLE]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1130,6 +1102,10 @@
 				<Id>1754486787558</Id>
 				<Name><![CDATA[Unused]]></Name>
 				<ParentId>1753194088788</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1755154772688</Id>
+				<Name><![CDATA[ChargingManagement]]></Name>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1510,6 +1486,7 @@
 			<JavaClass>
 				<Id>1749651263461</Id>
 				<Name><![CDATA[J_EACharger]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1519,8 +1496,8 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1752677992581</Id>
-				<Name><![CDATA[J_BatteryManagementSelfConsumption]]></Name>
-				<Folder>1752677826356</Folder>
+				<Name><![CDATA[J_ChargingManagementSimple]]></Name>
+				<Folder>1755154772688</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678003039</Id>
@@ -1657,6 +1634,36 @@
 				<Id>1754578019724</Id>
 				<Name><![CDATA[I_HeatingAsset]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755154798365</Id>
+				<Name><![CDATA[I_ChargingManagement]]></Name>
+				<Folder>1755154772688</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755155286577</Id>
+				<Name><![CDATA[J_BatteryManagementSelfConsumption]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755171209007</Id>
+				<Name><![CDATA[J_EAChargePoint]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755518393955</Id>
+				<Name><![CDATA[J_ChargingManagementMaxAvailablePower]]></Name>
+				<Folder>1755154772688</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755521265097</Id>
+				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
+				<Folder>1755154772688</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1755521425611</Id>
+				<Name><![CDATA[J_ChargingManagementLocalBalancing]]></Name>
+				<Folder>1755154772688</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

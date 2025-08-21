@@ -10,12 +10,6 @@
 	</ExtendsReference>
 	<Parameters>
 		<Parameter>
-			<Name><![CDATA[p_gridConnectionCategory]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_gridConnectionType]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_parentNodeElectricID]]></Name>
 		</Parameter>
 		<Parameter>
@@ -98,6 +92,9 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[v_isActive]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_chargingManagement]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
