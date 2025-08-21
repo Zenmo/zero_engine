@@ -1047,6 +1047,11 @@ v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+
+fm_currentProductionFlows_kW = new J_FlowsMap();
+fm_currentConsumptionFlows_kW = new J_FlowsMap();
+fm_currentBalanceFlows_kW = new J_FlowsMap();
+fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 /*ALCODEEND*/}
 
 Pair<J_DataSetMap, J_DataSetMap> f_getPeakWeekDataSets()

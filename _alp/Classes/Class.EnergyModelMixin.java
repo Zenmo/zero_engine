@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	"EnergyConversionSites",
 	"PublicChargers",
 	"Neighborhoods",
+	"c_defaultHeatingStrategies",
 	"va_engine",
 	"_origin_VA"})
 	

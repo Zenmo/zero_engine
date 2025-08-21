@@ -10,14 +10,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
-/*@JsonSubTypes({
-    @JsonSubTypes.Type(value = J_BatteryManagementOff.class, name = "J_BatteryManagementOff"),
-    @JsonSubTypes.Type(value = J_BatteryManagementPeakShaving.class, name = "J_BatteryManagementPeakShaving"),
-    @JsonSubTypes.Type(value = J_BatteryManagementPeakShavingForecast.class, name = "J_BatteryManagementPeakShavingForecast"),
-    @JsonSubTypes.Type(value = J_BatteryManagementPrice.class, name = "J_BatteryManagementPrice"),
-    @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumption.class, name = "J_BatteryManagementSelfConsumption"),
-    @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumptionGridNode.class, name = "J_BatteryManagementSelfConsumptionGridNode"),
-})*/
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = J_ChargingManagementLocalBalancing.class, name = "J_ChargingManagementLocalBalancing"),
+    @JsonSubTypes.Type(value = J_ChargingManagementMaxAvailablePower.class, name = "J_ChargingManagementMaxAvailablePower"),
+    @JsonSubTypes.Type(value = J_ChargingManagementPrice.class, name = "J_ChargingManagementPrice"),
+    @JsonSubTypes.Type(value = J_ChargingManagementSimple.class, name = "J_ChargingManagementSimple"),
+})
     
 public interface I_ChargingManagement
 {

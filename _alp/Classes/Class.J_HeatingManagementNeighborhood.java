@@ -1,6 +1,18 @@
 /**
  * J_HeatingManagementNeighborhood
  */	
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // 
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
 public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
 
     private boolean isInitialized = false;
