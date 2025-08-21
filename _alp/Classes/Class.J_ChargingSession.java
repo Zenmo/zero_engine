@@ -42,6 +42,7 @@ public class J_ChargingSession implements Serializable {
     	this.batterySize_kWh = batterySize_kWh;
     	this.socketNb = socketNb-1;
     	//stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh; // bold assumption... basically means every vehicle ends full. The reality is somewhere between: vehicle starts empty and vehicle ends full. 
+    	stateOfCharge_kWh = 0.5*(batterySize_kWh - chargingDemand_kWh); // Assumption: battery is not completely empty at start, and not completely full when leaving
     	this.vehicleMaxChargingPower_kW = chargingPower_kW; 
     	
     	if(this.startTime_h > this.endTime_h){
@@ -49,9 +50,12 @@ public class J_ChargingSession implements Serializable {
     	}
     }
     
-    public void charge(double chargeAmount_kW) {
-    	chargedDuringSession_kWh+=max(0, chargeAmount_kW*this.timeStep_h);
-    	dischargedDuringSession_kWh+=max(0, -chargeAmount_kW*this.timeStep_h);     	
+    public double charge(double chargeSetpoint_kW) {    	
+    	double actualChargePower_kW = max(min(chargeSetpoint_kW, (batterySize_kWh - stateOfCharge_kWh) / timeStep_h), -stateOfCharge_kWh  / timeStep_h); // Limit charge power to stay within SoC 0-100    
+    	stateOfCharge_kWh += actualChargePower_kW * timeStep_h;
+    	chargedDuringSession_kWh+=max(0, actualChargePower_kW*this.timeStep_h);
+    	dischargedDuringSession_kWh+=max(0, -actualChargePower_kW*this.timeStep_h);     	
+    	return actualChargePower_kW;
     }
     
     public double getRemainingChargeDemand_kWh() {

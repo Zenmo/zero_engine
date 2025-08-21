@@ -118,9 +118,9 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		private double operateChargerSocket(int socketNb, double t_h, double currentElectricityPriceConsumption_eurpkWh, boolean doV1G, boolean doV2G) {
 			double maxChargePower = capacityElectric_kW;//min(currentChargingSessions[socketNb].vehicleMaxChargingPower_kW, capacityElectric_kW);
 			double remainingChargeDemand_kWh = currentChargingSessions[socketNb].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
-			double chargePower_kW = 0;
+			double chargeSetpoint_kW = 0;
 			if (!doV1G) {
-				chargePower_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h); // just max power charging to start with
+				chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h); // just max power charging to start with
 				//traceln("ChargePoint simple charging active");
 			} else {
 				//traceln("Smart charging active at chargePoint");
@@ -131,25 +131,24 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 
 				if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
 					//traceln("Urgency charging on charge point GC: %s! May exceed connection capacity!", this.parentAgent);
-					chargePower_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);
+					chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);
 				} else {
 					double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
 					double WTPCharging_eurpkWh = electricityPriceLowPassed_eurpkWh - WTPoffset_eurpkW * remainingFlexTime_h;  //+ urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / ev.getCapacityElectric_kW() ); // Scale WTP based on flexibility expressed in terms of power-fraction
 					//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); 
 					double priceGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-					chargePower_kW = max(0, maxChargePower * min(1,(WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
-					if ( doV2G && remainingFlexTime_h > 1 && chargePower_kW == 0 ) { // Surpluss SOC and high energy price
+					chargeSetpoint_kW = max(0, maxChargePower * min(1,(WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
+					if ( doV2G && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
 						//traceln("Conditions for V2G met in chargePoint");
 		    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.
 						double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Can become zero!!
-						chargePower_kW = min(0, -maxChargePower * min(1,(currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
+						chargeSetpoint_kW = min(0, -maxChargePower * min(1,(currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r)); // min(1,...) is needed to prevent devide by zero leading to infinity/NaN results.
 						//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
 					}
 				}
 
 			}
-			currentChargingSessions[socketNb].charge(chargePower_kW);
-			return chargePower_kW;
+			return currentChargingSessions[socketNb].charge(chargeSetpoint_kW);
 		}
 				
 		private void manageSocket(int socketNb, double t_h) {
