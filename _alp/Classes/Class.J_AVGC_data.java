@@ -72,6 +72,10 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgMinHeatBufferTemperature_degC;
 	public double p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
 	public double p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
+	public double p_avgAnnualTravelDistancePrivateCar_km;
+	public double p_avgAnnualTravelDistanceCompanyCar_km;
+	public double p_avgAnnualTravelDistanceVan_km;
+	public double p_avgAnnualTravelDistanceTruck_km;
 	/**
      * Default constructor
      */
