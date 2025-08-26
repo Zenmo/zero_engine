@@ -688,8 +688,8 @@
 		<Id>1754393382442</Id>
 		<Name><![CDATA[f_addHeatManagementToGC]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
-		<X>1130</X>
-		<Y>470</Y>
+		<X>890</X>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -797,8 +797,8 @@
 		<Id>1755702594182</Id>
 		<Name><![CDATA[f_addChargingManagementToGC]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
-		<X>1130</X>
-		<Y>490</Y>
+		<X>890</X>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

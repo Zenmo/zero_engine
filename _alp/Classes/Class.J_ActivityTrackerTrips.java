@@ -81,6 +81,11 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	   this.distanceScaling_fr = distanceScaling_fr;
    }
    
+   
+   public double getAnnualDistance_km() {
+	   double currentAnnualDistance_km = distances_km.stream().mapToDouble(a -> a).sum();
+	   return currentAnnualDistance_km;
+   }
    public void setAnnualDistance_km(double desiredAnnualDistance_km) { // Scale trips to come to a certain total annual distance traveled. This can lead to unfeasibly long trips for EVs!!
 	   /* double currentAnnualDistance_km = 0;
 	   int tripNo=0;
@@ -90,7 +95,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		   tripNo++;
 	   }
 	   */
-	   double currentAnnualDistance_km = distances_km.stream().mapToDouble(a -> a).sum();
+	   double currentAnnualDistance_km = getAnnualDistance_km();
 	   double scalingFactor_f = desiredAnnualDistance_km / currentAnnualDistance_km;
 	   
 	   //distances_km = (ArrayList<Double>)distances_km.stream().map(a -> scalingFactor_f*a).toList();
