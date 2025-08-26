@@ -1581,3 +1581,14 @@ List<GridConnection> f_getMemberGridConnectionsCollectionPointer()
 return this.c_memberGridConnections; // This should NOT be a copy, it should be a pointer!!
 /*ALCODEEND*/}
 
+double f_aggregatorBatteryManagementEnergyCoop()
+{/*ALCODESTART::1756207893357*/
+p_aggregatorBatteryManagement.manageExternalSetpoints();
+/*ALCODEEND*/}
+
+double f_aggregatorManagement_EnergyCoop()
+{/*ALCODESTART::1756207893363*/
+//Run battery setpoint management
+f_aggregatorBatteryManagementEnergyCoop();
+/*ALCODEEND*/}
+

@@ -2,7 +2,7 @@
 <Presentation>
 	<Rectangle>
 		<Id>1674329507571</Id>
-		<Name><![CDATA[rectangle3]]></Name>
+		<Name><![CDATA[rect_energyBalance]]></Name>
 		<X>0</X>
 		<Y>600</Y>
 		<Label>
@@ -21,7 +21,7 @@
 		<LineColor/>
 		<LineMaterial>null</LineMaterial>
 		<LineStyle>SOLID</LineStyle>
-		<Width>540</Width>
+		<Width>700</Width>
 		<Height>380</Height>
 		<Rotation>0.0</Rotation>
 		<FillColor>-983041</FillColor>
@@ -296,7 +296,7 @@
 		<Id>1667915419987</Id>
 		<Name><![CDATA[text6]]></Name>
 		<X>840</X>
-		<Y>290</Y>
+		<Y>300</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -321,7 +321,7 @@
 		<Id>1667915419990</Id>
 		<Name><![CDATA[line6]]></Name>
 		<X>860</X>
-		<Y>170</Y>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -345,64 +345,11 @@
 		<Dy>190</Dy>
 		<Dz>0</Dz>
 	</Line>
-	<Line>
-		<Id>1667918827406</Id>
-		<Name><![CDATA[line7]]></Name>
-		<X>-220</X>
-		<Y>380</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<BeginArrowSize>1</BeginArrowSize>
-		<BeginArrowStyle>0</BeginArrowStyle>
-		<EndArrowSize>1</EndArrowSize>
-		<EndArrowStyle>0</EndArrowStyle>
-		<Dx>140</Dx>
-		<Dy>0</Dy>
-		<Dz>0</Dz>
-	</Line>
-	<Text>
-		<Id>1667918827418</Id>
-		<Name><![CDATA[text7]]></Name>
-		<X>-180</X>
-		<Y>360</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>false</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Not visible]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>11</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
 	<TimePlot>
 		<Id>1668439095469</Id>
 		<Name><![CDATA[pl_powerFlows]]></Name>
-		<X>560</X>
-		<Y>600</Y>
+		<X>730</X>
+		<Y>640</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -535,8 +482,8 @@
 	<Text>
 		<Id>1670512816306</Id>
 		<Name><![CDATA[text10]]></Name>
-		<X>680</X>
-		<Y>580</Y>
+		<X>850</X>
+		<Y>630</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -559,8 +506,8 @@
 	</Text>
 	<Text>
 		<Id>1674329550133</Id>
-		<Name><![CDATA[text8]]></Name>
-		<X>180</X>
+		<Name><![CDATA[txt_energyBalance]]></Name>
+		<X>350</X>
 		<Y>610</Y>
 		<Label>
 			<X>0</X>
@@ -580,7 +527,7 @@
 			<Size>20</Size>
 			<Style>0</Style>
 		</Font>
-		<Alignment>LEFT</Alignment>
+		<Alignment>CENTER</Alignment>
 	</Text>
 	<Control Type="Button">
 		<EmbeddedIcon>false</EmbeddedIcon>

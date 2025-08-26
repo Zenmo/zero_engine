@@ -716,6 +716,9 @@
 			<Parameter>
 				<Name><![CDATA[p_actorSubgroup]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_aggregatorBatteryManagement]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

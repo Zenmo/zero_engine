@@ -176,6 +176,9 @@ else {
 	}
 }
 
+//Call aggregator functions
+f_runAggregators();
+
 for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
 	
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
@@ -1137,5 +1140,15 @@ return this.c_gridConnections;
 List<GridConnection> f_getPausedGridConnectionsCollectionPointer()
 {/*ALCODESTART::1755014169405*/
 return this.c_pausedGridConnections;
+/*ALCODEEND*/}
+
+double f_runAggregators()
+{/*ALCODESTART::1756207695591*/
+//Function used to perform central management functions (like setpoint battery steering, within a timestep)
+
+//Run energy coop aggrator
+for (EnergyCoop EC : pop_energyCoops) {
+	EC.f_aggregatorManagement_EnergyCoop();
+}
 /*ALCODEEND*/}
 

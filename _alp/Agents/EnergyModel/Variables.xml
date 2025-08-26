@@ -81,7 +81,7 @@
 		<Id>1663238634515</Id>
 		<Name><![CDATA[v_timeStepsElapsed]]></Name>
 		<X>1070</X>
-		<Y>400</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -236,7 +236,7 @@
 		<Id>1683718894234</Id>
 		<Name><![CDATA[v_timeSeriesRuntime_ms]]></Name>
 		<X>1051</X>
-		<Y>620</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -255,7 +255,7 @@
 		<Id>1683718916458</Id>
 		<Name><![CDATA[v_gridNodesRuntime_ms]]></Name>
 		<X>1051</X>
-		<Y>660</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -274,7 +274,7 @@
 		<Id>1683718921466</Id>
 		<Name><![CDATA[v_gridConnectionsRuntime_ms]]></Name>
 		<X>1051</X>
-		<Y>640</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -293,7 +293,7 @@
 		<Id>1683718924632</Id>
 		<Name><![CDATA[v_incentivesRuntime_ms]]></Name>
 		<X>1051</X>
-		<Y>700</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -312,7 +312,7 @@
 		<Id>1683718924634</Id>
 		<Name><![CDATA[v_financialsRuntime_ms]]></Name>
 		<X>1051</X>
-		<Y>680</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -463,7 +463,7 @@
 		<Id>1699277193134</Id>
 		<Name><![CDATA[t_h]]></Name>
 		<X>1070</X>
-		<Y>360</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -810,7 +810,7 @@
 		<Id>1715074195578</Id>
 		<Name><![CDATA[v_kpiCalcsRuntime_ms]]></Name>
 		<X>1051</X>
-		<Y>720</Y>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1155,7 +1155,7 @@
 		<Id>1731422680250</Id>
 		<Name><![CDATA[b_isDaytime]]></Name>
 		<X>1070</X>
-		<Y>430</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1177,7 +1177,7 @@
 		<Id>1731422698257</Id>
 		<Name><![CDATA[b_isWeekday]]></Name>
 		<X>1070</X>
-		<Y>450</Y>
+		<Y>470</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1199,7 +1199,7 @@
 		<Id>1731422704613</Id>
 		<Name><![CDATA[b_isSummerWeek]]></Name>
 		<X>1070</X>
-		<Y>472</Y>
+		<Y>492</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1221,7 +1221,7 @@
 		<Id>1731422714256</Id>
 		<Name><![CDATA[b_isWinterWeek]]></Name>
 		<X>1070</X>
-		<Y>492</Y>
+		<Y>512</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1243,7 +1243,7 @@
 		<Id>1731422900385</Id>
 		<Name><![CDATA[b_isLastTimeStepOfDay]]></Name>
 		<X>1070</X>
-		<Y>512</Y>
+		<Y>532</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1265,7 +1265,7 @@
 		<Id>1731423522698</Id>
 		<Name><![CDATA[t_hourOfDay]]></Name>
 		<X>1070</X>
-		<Y>380</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
