@@ -1987,7 +1987,7 @@
 	<Variable Class="Parameter">
 		<Id>1756207893367</Id>
 		<Name><![CDATA[p_aggregatorBatteryManagement]]></Name>
-		<X>670</X>
+		<X>690</X>
 		<Y>710</Y>
 		<Label>
 			<X>10</X>

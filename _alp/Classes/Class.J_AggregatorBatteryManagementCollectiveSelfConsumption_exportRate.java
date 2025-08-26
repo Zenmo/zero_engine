@@ -34,7 +34,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 
 		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
 		double collectiveChargeSetpoint_kW = 0;
-		for(GridConnection GC : memberedGCWithSetpointBatteries) {
+		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
 			if (GC instanceof GCUtility) {
 				collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 			}

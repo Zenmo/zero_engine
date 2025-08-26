@@ -34,14 +34,13 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH
 		
 		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
 		double collectiveChargeSetpoint_kW = 0;
-		double sumOfBatteryCapacities_kWh = 0;
-		for(GridConnection GC : memberedGCWithSetpointBatteries) {
-			if (GC instanceof GCUtility) {
+		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
 				collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-				sumOfBatteryCapacities_kWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
-			}
 		}
-
+		
+		//Get total active usable battery capacity
+		double sumOfBatteryCapacities_kWh = sum(memberedGCWithSetpointBatteries, GC -> GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000);
+		
 		//Only add the gc that have the same direction as net coop charge flow to the gc that will use their battery
 		double totalCurrentFeedin_kW = 0;
 		double totalCurrentDelivery_kW = 0;

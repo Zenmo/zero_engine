@@ -691,7 +691,7 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>List&lt;GridConnection&gt;</ReturnType>
+		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1754908113703</Id>
 		<Name><![CDATA[f_getMemberGridConnectionsCollectionPointer]]></Name>
 		<X>1440</X>
@@ -709,8 +709,8 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1756207893357</Id>
-		<Name><![CDATA[f_aggregatorBatteryManagementEnergyCoop]]></Name>
-		<X>660</X>
+		<Name><![CDATA[f_aggregatorBatteryManagement_EnergyCoop]]></Name>
+		<X>670</X>
 		<Y>690</Y>
 		<Label>
 			<X>10</X>

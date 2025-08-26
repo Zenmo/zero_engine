@@ -32,13 +32,14 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize 
     	//Get all members that have a battery that is put on the external setpoint mode
     	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
 
-		double sumOfBatteryCapacities_kWh = energyCoop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000;
 		double collectiveChargeSetpoint_kW = 0;
-		for(GridConnection GC : memberedGCWithSetpointBatteries) {
-			if (GC instanceof GCUtility) {
-				collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-			}
+		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
+			collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 		}
+		
+		//Get total active usable battery capacity
+		double sumOfBatteryCapacities_kWh = sum(memberedGCWithSetpointBatteries, GC -> GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000);
+		
 		// Generate setpoints and 'push' to memberGridConnections for next timestep
 		for(int i = 0; i<memberedGCWithSetpointBatteries.size(); i++) {
 			GridConnection GC = memberedGCWithSetpointBatteries.get(i);
