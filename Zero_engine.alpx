@@ -1107,6 +1107,11 @@
 				<Id>1755154772688</Id>
 				<Name><![CDATA[ChargingManagement]]></Name>
 			</Folder>
+			<Folder>
+				<Id>1756210851750</Id>
+				<Name><![CDATA[AggregatorAlgorithms]]></Name>
+				<ParentId>1752677826356</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -1664,6 +1669,40 @@
 				<Id>1755521425611</Id>
 				<Name><![CDATA[J_ChargingManagementLocalBalancing]]></Name>
 				<Folder>1755154772688</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756208281968</Id>
+				<Name><![CDATA[J_BatteryManagementExternalSetpoint]]></Name>
+				<Folder>1752677826356</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756210474555</Id>
+				<Name><![CDATA[I_InterfaceAggragotrBatteryManagement]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756210846035</Id>
+				<Name><![CDATA[I_AggregatorBatteryManagement]]></Name>
+				<Folder>1756210851750</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756211095187</Id>
+				<Name><![CDATA[J_AggregatorBatteryManagementOff]]></Name>
+				<Folder>1756210851750</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756212442478</Id>
+				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize]]></Name>
+				<Folder>1756210851750</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756213000574</Id>
+				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate]]></Name>
+				<Folder>1756210851750</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1756213864971</Id>
+				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH]]></Name>
+				<Folder>1756210851750</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
