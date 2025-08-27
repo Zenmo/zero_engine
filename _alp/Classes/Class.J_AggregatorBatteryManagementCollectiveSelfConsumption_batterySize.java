@@ -30,15 +30,20 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize 
     
     public void manageExternalSetpoints() {
     	//Get all members that have a battery that is put on the external setpoint mode
-    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
+    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
 
 		double collectiveChargeSetpoint_kW = 0;
+		double sumOfBatteryCapacities_kWh = 0;
 		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
-			collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+			double currentBatteryPowerElectric = 0;
+			if(memberedGCWithSetpointBatteries.contains(GC)) {
+				currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);			
+				
+				//Get total active usable battery capacity
+				sumOfBatteryCapacities_kWh += (GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000);
+			}
+			collectiveChargeSetpoint_kW -= (GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric);
 		}
-		
-		//Get total active usable battery capacity
-		double sumOfBatteryCapacities_kWh = sum(memberedGCWithSetpointBatteries, GC -> GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000);
 		
 		// Generate setpoints and 'push' to memberGridConnections for next timestep
 		for(int i = 0; i<memberedGCWithSetpointBatteries.size(); i++) {

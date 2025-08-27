@@ -41,6 +41,7 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
     }
     
     public void manageBattery() {
+    	
         //Manage the battery with the set charge setpoint
     	gc.p_batteryAsset.f_updateAllFlows(this.currentChargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW());
 

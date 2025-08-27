@@ -30,26 +30,26 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH
     
     public void manageExternalSetpoints() {
     	//Get all members that have a battery that is put on the external setpoint mode
-    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
+    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
 		
-		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
+		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance) and the total delivery and feedin
 		double collectiveChargeSetpoint_kW = 0;
-		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
-				collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-		}
-		
-		//Get total active usable battery capacity
-		double sumOfBatteryCapacities_kWh = sum(memberedGCWithSetpointBatteries, GC -> GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000);
-		
-		//Only add the gc that have the same direction as net coop charge flow to the gc that will use their battery
 		double totalCurrentFeedin_kW = 0;
 		double totalCurrentDelivery_kW = 0;
-		for (GridConnection GC : memberedGCWithSetpointBatteries) {
-			double currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+		double sumOfBatteryCapacities_kWh = 0;
+		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
+			double currentBatteryPowerElectric = 0;
+			if(memberedGCWithSetpointBatteries.contains(GC)) {
+				currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+				
+				//Get total active usable battery capacity
+				sumOfBatteryCapacities_kWh += (GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh*1000);
+			}
+			collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric;
 			totalCurrentFeedin_kW+=max(0,-(GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric));
 			totalCurrentDelivery_kW+=max(0,(GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric));
 		}
-
+	
 		// For all qualifying GCs, make balanceflow zero if possible. Also, distinguish between collective feedin and collective delivery
 		double remainingSumOfChargeSetpoints_kW = collectiveChargeSetpoint_kW;
 
@@ -58,7 +58,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH
 			double GC_Setpoint_kW=0;
 			if (collectiveChargeSetpoint_kW > 0) {
 				GC_Setpoint_kW = collectiveChargeSetpoint_kW * max(0,-GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))/totalCurrentFeedin_kW; // Divide summed charge-power proportional to feedin power on each GC.
-			} else if (collectiveChargeSetpoint_kW < 0){ 
+			} else if (collectiveChargeSetpoint_kW < 0){
 				GC_Setpoint_kW = collectiveChargeSetpoint_kW * max(0,GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))/totalCurrentDelivery_kW; // Divide summed charge-power proportional to delivery power on each GC.
 			}
 			remainingSumOfChargeSetpoints_kW -= ((J_BatteryManagementExternalSetpoint)GC.p_batteryAlgorithm).setChargeSetpoint_kW(GC_Setpoint_kW);

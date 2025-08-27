@@ -30,14 +30,17 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
     
     public void manageExternalSetpoints() {
     	//Get all members that have a battery that is put on the external setpoint mode
-    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC instanceof GCUtility && GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
+    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
 
 		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
 		double collectiveChargeSetpoint_kW = 0;
 		for(GridConnection GC : energyCoop.f_getMemberGridConnectionsCollectionPointer()) {
-			if (GC instanceof GCUtility) {
-				collectiveChargeSetpoint_kW -= GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+			double currentBatteryPowerElectric = 0;
+			if(memberedGCWithSetpointBatteries.contains(GC)) {
+				currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);			
 			}
+			
+			collectiveChargeSetpoint_kW -= (GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric);
 		}
 
 		//Initialize iterable gc list
@@ -45,7 +48,10 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 
 		//Only add the gc that have the same direction as net coop charge flow to the gc that will use their battery
 		for(GridConnection GC : memberedGCWithSetpointBatteries){
-			double gc_balanceFlow = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+			
+			double currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+			
+			double gc_balanceFlow = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric;
 			if((collectiveChargeSetpoint_kW < 0 && -gc_balanceFlow < 0) || (collectiveChargeSetpoint_kW > 0 && -gc_balanceFlow > 0)){
 				memberedGCWithSetpointBatteries_withFreeCapacity.add(GC);
 			}
@@ -66,7 +72,8 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 			
 			//Calculate the new combined balance flow, to use for distributing the remaining chargeSetpoint
 			for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
-				totalBalanceFlowRemainingGC_kW += GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+				double currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+				totalBalanceFlowRemainingGC_kW += (GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric);
 			}
 			if (Math.abs(totalBalanceFlowRemainingGC_kW) < 0.0001) {
 		   		traceln("Warning: totalBalanceFlowRemainingGC is zero, cant distribute any further, nr GC left: " + memberedGCWithSetpointBatteries_withFreeCapacity.size());
