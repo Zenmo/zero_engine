@@ -110,7 +110,7 @@ public class J_LiveData {
 		//Batteries    
     	this.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, currentStoredEnergyBatteries_MWh);
     	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
-    		this.data_batterySOC_fr.add(currentTime_h, currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh);	
+    		this.data_batterySOC_fr.add(currentTime_h, roundToDecimal(currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh, 3) );	
     	}
     	else{
     		this.data_batterySOC_fr.add(currentTime_h, 0);	
@@ -120,7 +120,24 @@ public class J_LiveData {
     }
     
 	public String toString() {
-		return super.toString();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Active Energy Carriers: ");
+        sb.append(this.activeEnergyCarriers);
+        sb.append(System.lineSeparator());
+        sb.append("Consumption Carriers: ");
+        sb.append(this.activeConsumptionEnergyCarriers);
+        sb.append(System.lineSeparator());
+        sb.append("Production Carriers: ");
+        sb.append(this.activeProductionEnergyCarriers);
+        sb.append(System.lineSeparator());
+        sb.append("Asset Flow Caterogies: ");
+        sb.append(this.assetsMetaData.activeAssetFlows);
+        sb.append(System.lineSeparator());
+        sb.append("Number of datapoints: ");
+        sb.append(this.data_totalDemand_kW.size());
+        
+        return sb.toString();
 	}
 
 }

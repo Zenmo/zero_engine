@@ -981,9 +981,20 @@ public class J_RapidRunData {
     	return this.acc_weekendPrimaryEnergyProductionHeatpumps_kW.getIntegral_MWh();
     } 
 	
-
-//toString()
     public String toString() {
-		return super.toString();
-	}
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Active Energy Carriers: ");
+        sb.append(this.activeEnergyCarriers);
+        sb.append(System.lineSeparator());
+        sb.append("Consumption Carriers: ");
+        sb.append(this.activeConsumptionEnergyCarriers);
+        sb.append(System.lineSeparator());
+        sb.append("Production Carriers: ");
+        sb.append(this.activeProductionEnergyCarriers);
+        sb.append(System.lineSeparator());
+        sb.append("Asset Flow Caterogies: ");
+        sb.append(this.assetsMetaData.activeAssetFlows);
+        
+        return sb.toString();	}
 }

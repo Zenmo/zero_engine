@@ -222,7 +222,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 
 for (GridConnection GC : c_customerGridConnections) { // Take 'behind the meter' production and consumption!
 	if(GC.v_isActive){
-		for (OL_EnergyCarriers energyCarrier : v_activeEnergyCarriers) {
+		for (OL_EnergyCarriers energyCarrier : v_liveData.activeEnergyCarriers) {
 			double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
 			fm_currentProductionFlows_kW.addFlow( energyCarrier, max(0, -nettConsumption_kW));
 			fm_currentConsumptionFlows_kW.addFlow( energyCarrier, max(0, nettConsumption_kW));
@@ -562,27 +562,28 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 
 double f_initialize()
 {/*ALCODESTART::1669042410671*/
-
 v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.assetsMetaData.activeAssetFlows.clear();
 
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
 	v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
 	v_liveConnectionMetaData.contractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
-	v_activeEnergyCarriers.addAll(GC.v_activeEnergyCarriers);
-	v_activeProductionEnergyCarriers.addAll(GC.v_activeProductionEnergyCarriers);
-	v_activeConsumptionEnergyCarriers.addAll(GC.v_activeConsumptionEnergyCarriers);
+	v_liveData.activeEnergyCarriers.addAll(GC.v_liveData.activeEnergyCarriers);
+	v_liveData.activeProductionEnergyCarriers.addAll(GC.v_liveData.activeProductionEnergyCarriers);
+	v_liveData.activeConsumptionEnergyCarriers.addAll(GC.v_liveData.activeConsumptionEnergyCarriers);
 	v_liveData.assetsMetaData.activeAssetFlows.addAll(GC.v_liveData.assetsMetaData.activeAssetFlows);
 
 	if(!GC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
 		v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
-	
 	}
 
 	if(!GC.v_liveConnectionMetaData.contractedFeedinCapacityKnown){
 		v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-	
 	} 
 }
 
@@ -592,15 +593,9 @@ acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, energyModel.p_timeStep_
 acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
 
 //========== LIVE WEEK DATASETS ==========//
-v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeConsumptionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeProductionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / energyModel.p_timeStep_h));
-
-// Initializing Live Data Class
-v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
-v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
-
+v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
+v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, roundToInt(168/energyModel.p_timeStep_h));
 
 /*ALCODEEND*/}
 
@@ -760,7 +755,7 @@ acc_totalOwnElectricityProduction_kW.reset();
 acc_totalCustomerDelivery_kW.reset();
 acc_totalCustomerFeedIn_kW.reset();
 
-v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
 
 /*ALCODEEND*/}
 
@@ -1336,10 +1331,10 @@ for (int i=0; i < liveWeekSize; i++){
 	double batteryStoredEnergyLiveWeek_MWh = 0;
 	
 	for (GridConnection gc : gcList){
-		for (OL_EnergyCarriers EC_consumption : gc.v_activeConsumptionEnergyCarriers) {
+		for (OL_EnergyCarriers EC_consumption : gc.v_liveData.activeConsumptionEnergyCarriers) {
 			fm_demand_kW.addFlow( EC_consumption, gc.v_liveData.dsm_liveDemand_kW.get(EC_consumption).getY(i));			
 		}
-		for (OL_EnergyCarriers EC_production : gc.v_activeProductionEnergyCarriers) {
+		for (OL_EnergyCarriers EC_production : gc.v_liveData.activeProductionEnergyCarriers) {
 			fm_supply_kW.addFlow( EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(i));
 		}
 		for (OL_AssetFlowCategories AC : gc.v_liveAssetsMetaData.activeAssetFlows) {
@@ -1354,10 +1349,10 @@ for (int i=0; i < liveWeekSize; i++){
 		batteryStoredEnergyLiveWeek_MWh += 	gc.v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(i);
 	}
 	
-	for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers) {
+	for (OL_EnergyCarriers EC_consumption : v_liveData.activeConsumptionEnergyCarriers) {
 		v_liveData.dsm_liveDemand_kW.get(EC_consumption).add(timeAxisValue, roundToDecimal(fm_demand_kW.get(EC_consumption), 3));
 	}
-	for (OL_EnergyCarriers EC_production : v_activeProductionEnergyCarriers) {
+	for (OL_EnergyCarriers EC_production : v_liveData.activeProductionEnergyCarriers) {
 		v_liveData.dsm_liveSupply_kW.get(EC_production).add(timeAxisValue, roundToDecimal(fm_supply_kW.get(EC_production), 3));
 	}
 	
@@ -1477,9 +1472,9 @@ fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1754380102233*/
-if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
-	v_activeEnergyCarriers.add(EC);
-	v_activeConsumptionEnergyCarriers.add(EC);
+if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
+	v_liveData.activeEnergyCarriers.add(EC);
+	v_liveData.activeConsumptionEnergyCarriers.add(EC);
 	
 	DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 	
@@ -1494,9 +1489,9 @@ if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
 
 EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1754380102235*/
-if (!v_activeProductionEnergyCarriers.contains(EC)) {
-	v_activeEnergyCarriers.add(EC);
-	v_activeProductionEnergyCarriers.add(EC);
+if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
+	v_liveData.activeEnergyCarriers.add(EC);
+	v_liveData.activeProductionEnergyCarriers.add(EC);
 	
 	DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
@@ -1547,9 +1542,9 @@ double f_createAndInitializeRapidRunDataClass()
 v_rapidRunData = new J_RapidRunData(this);
 v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
    
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_activeEnergyCarriers);
-EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
-EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_activeProductionEnergyCarriers);
+EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeEnergyCarriers);
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeConsumptionEnergyCarriers);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeProductionEnergyCarriers);
 	
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
@@ -1579,5 +1574,17 @@ v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p
 List<GridConnection> f_getMemberGridConnectionsCollectionPointer()
 {/*ALCODESTART::1754908113703*/
 return this.c_memberGridConnections; // This should NOT be a copy, it should be a pointer!!
+/*ALCODEEND*/}
+
+double f_addMembers(List<GridConnection> gcList)
+{/*ALCODESTART::1756290844166*/
+c_memberGridConnections.addAll(gcList);
+f_initialize();
+/*ALCODEEND*/}
+
+double f_removeMembers(List<GridConnection> gcList)
+{/*ALCODESTART::1756301338833*/
+c_memberGridConnections.addAll(gcList);
+f_initialize();
 /*ALCODEEND*/}
 

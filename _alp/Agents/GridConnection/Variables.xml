@@ -441,63 +441,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1731576190939</Id>
-		<Name><![CDATA[v_activeEnergyCarriers]]></Name>
-		<X>320</X>
-		<Y>660</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1733478609497</Id>
-		<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
-		<X>330</X>
-		<Y>700</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1733478609500</Id>
-		<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
-		<X>330</X>
-		<Y>680</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1737539227165</Id>
 		<Name><![CDATA[v_batteryStoredEnergy_kWh]]></Name>
 		<X>25</X>
