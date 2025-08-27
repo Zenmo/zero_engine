@@ -176,8 +176,7 @@ else {
 	}
 }
 
-//Call aggregator functions
-f_runAggregators();
+//OLD LOCATION OF AGGREGATOR CALL, NECESSARY IF MANAGEMENT IS WITHOUT TIME STEP DELAY
 
 for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to different threads writing to the same values!
 	
@@ -204,6 +203,9 @@ for (OL_EnergyCarriers EC : v_activeEnergyCarriers) {
 	v_currentEnergyImport_kW += max( 0, netFlow_kW );
 	v_currentEnergyExport_kW += max( 0, -netFlow_kW );
 }
+
+//Call aggregator functions (ONLY WORK WITH TIME STEP DELAY FOR NOW) (LOCATION OF THIS CALL IS NOT DETERMINED YET, FOR NOW HERE)
+f_runAggregators();
 
 /*ALCODEEND*/}
 
@@ -1144,7 +1146,7 @@ return this.c_pausedGridConnections;
 
 double f_runAggregators()
 {/*ALCODESTART::1756207695591*/
-//Function used to perform central management functions (like setpoint battery steering, within a timestep)
+//Function used to perform central management functions (like setpoint battery steering)
 
 //Run energy coop aggrator
 for (EnergyCoop EC : pop_energyCoops) {
