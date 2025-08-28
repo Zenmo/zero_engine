@@ -571,23 +571,24 @@ v_liveData.assetsMetaData.activeAssetFlows.clear();
 
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
-	v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-	v_liveConnectionMetaData.contractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
-	v_liveData.activeEnergyCarriers.addAll(GC.v_liveData.activeEnergyCarriers);
-	v_liveData.activeProductionEnergyCarriers.addAll(GC.v_liveData.activeProductionEnergyCarriers);
-	v_liveData.activeConsumptionEnergyCarriers.addAll(GC.v_liveData.activeConsumptionEnergyCarriers);
-	v_liveData.assetsMetaData.activeAssetFlows.addAll(GC.v_liveData.assetsMetaData.activeAssetFlows);
-
-	if(!GC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
-		v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+	if(GC.v_isActive){
+		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+		v_liveConnectionMetaData.contractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+		v_liveData.activeEnergyCarriers.addAll(GC.v_liveData.activeEnergyCarriers);
+		v_liveData.activeProductionEnergyCarriers.addAll(GC.v_liveData.activeProductionEnergyCarriers);
+		v_liveData.activeConsumptionEnergyCarriers.addAll(GC.v_liveData.activeConsumptionEnergyCarriers);
+		v_liveData.assetsMetaData.activeAssetFlows.addAll(GC.v_liveData.assetsMetaData.activeAssetFlows);
+	
+		if(!GC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
+			v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		}
+	
+		if(!GC.v_liveConnectionMetaData.contractedFeedinCapacityKnown){
+			v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		} 
 	}
-
-	if(!GC.v_liveConnectionMetaData.contractedFeedinCapacityKnown){
-		v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
-	} 
 }
 
-//v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
 acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
 acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
 acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
@@ -1066,52 +1067,53 @@ double f_collectGridConnectionRapidRunData()
 // Make collective profiles, electricity per timestep, other energy carriers per day!
 
 for (GridConnection gc : c_memberGridConnections) {
-
-	// Totals
-	v_rapidRunData.am_totalBalanceAccumulators_kW.add(gc.v_rapidRunData.am_totalBalanceAccumulators_kW);
-	v_rapidRunData.am_dailyAverageConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_dailyAverageConsumptionAccumulators_kW);
-	v_rapidRunData.am_dailyAverageProductionAccumulators_kW.add(gc.v_rapidRunData.am_dailyAverageProductionAccumulators_kW);
-	v_rapidRunData.acc_dailyAverageEnergyProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageEnergyProduction_kW);
-	v_rapidRunData.acc_dailyAverageFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_dailyAverageFinalEnergyConsumption_kW);
-	v_rapidRunData.acc_totalEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_totalEnergyCurtailed_kW);
-	v_rapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW);
-	v_rapidRunData.am_assetFlowsAccumulators_kW.add(gc.v_rapidRunData.am_assetFlowsAccumulators_kW);
-	
-	// Daytime
-	v_rapidRunData.acc_daytimeElectricityConsumption_kW.add(gc.v_rapidRunData.acc_daytimeElectricityConsumption_kW);
-	v_rapidRunData.acc_daytimeElectricityProduction_kW.add(gc.v_rapidRunData.acc_daytimeElectricityProduction_kW);
-	v_rapidRunData.acc_daytimeEnergyProduction_kW.add(gc.v_rapidRunData.acc_daytimeEnergyProduction_kW);
-	v_rapidRunData.acc_daytimeFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_daytimeFinalEnergyConsumption_kW);
-	v_rapidRunData.am_daytimeImports_kW.add(gc.v_rapidRunData.am_daytimeImports_kW);
-	v_rapidRunData.am_daytimeExports_kW.add(gc.v_rapidRunData.am_daytimeExports_kW);	
-	
-	// Weekend
-	v_rapidRunData.acc_weekendElectricityConsumption_kW.add(gc.v_rapidRunData.acc_weekendElectricityConsumption_kW);
-	v_rapidRunData.acc_weekendElectricityProduction_kW.add(gc.v_rapidRunData.acc_weekendElectricityProduction_kW);
-	v_rapidRunData.acc_weekendEnergyProduction_kW.add(gc.v_rapidRunData.acc_weekendEnergyProduction_kW);
-	v_rapidRunData.acc_weekendFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_weekendFinalEnergyConsumption_kW);
-	v_rapidRunData.am_weekendImports_kW.add(gc.v_rapidRunData.am_weekendImports_kW);
-	v_rapidRunData.am_weekendExports_kW.add(gc.v_rapidRunData.am_weekendExports_kW);	
-	
-	// Summerweek
-	v_rapidRunData.am_summerWeekBalanceAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekBalanceAccumulators_kW);
-	v_rapidRunData.am_summerWeekConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekConsumptionAccumulators_kW);
-	v_rapidRunData.am_summerWeekProductionAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekProductionAccumulators_kW);
-	v_rapidRunData.acc_summerWeekEnergyProduction_kW.add(gc.v_rapidRunData.acc_summerWeekEnergyProduction_kW);
-	v_rapidRunData.acc_summerWeekFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekFinalEnergyConsumption_kW);
-	v_rapidRunData.acc_summerWeekEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_summerWeekEnergyCurtailed_kW);
-	v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW);
-	v_rapidRunData.am_assetFlowsSummerWeek_kW.add(gc.v_rapidRunData.am_assetFlowsSummerWeek_kW);
-	
-	// Winterweek
-	v_rapidRunData.am_winterWeekBalanceAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekBalanceAccumulators_kW);
-	v_rapidRunData.am_winterWeekConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekConsumptionAccumulators_kW);
-	v_rapidRunData.am_winterWeekProductionAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekProductionAccumulators_kW);
-	v_rapidRunData.acc_winterWeekEnergyProduction_kW.add(gc.v_rapidRunData.acc_winterWeekEnergyProduction_kW);
-	v_rapidRunData.acc_winterWeekFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekFinalEnergyConsumption_kW);
-	v_rapidRunData.acc_winterWeekEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_winterWeekEnergyCurtailed_kW);
-	v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW);
-	v_rapidRunData.am_assetFlowsWinterWeek_kW.add(gc.v_rapidRunData.am_assetFlowsWinterWeek_kW);
+	if(gc.v_isActive){
+		// Totals
+		v_rapidRunData.am_totalBalanceAccumulators_kW.add(gc.v_rapidRunData.am_totalBalanceAccumulators_kW);
+		v_rapidRunData.am_dailyAverageConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_dailyAverageConsumptionAccumulators_kW);
+		v_rapidRunData.am_dailyAverageProductionAccumulators_kW.add(gc.v_rapidRunData.am_dailyAverageProductionAccumulators_kW);
+		v_rapidRunData.acc_dailyAverageEnergyProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageEnergyProduction_kW);
+		v_rapidRunData.acc_dailyAverageFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_dailyAverageFinalEnergyConsumption_kW);
+		v_rapidRunData.acc_totalEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_totalEnergyCurtailed_kW);
+		v_rapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW);
+		v_rapidRunData.am_assetFlowsAccumulators_kW.add(gc.v_rapidRunData.am_assetFlowsAccumulators_kW);
+		
+		// Daytime
+		v_rapidRunData.acc_daytimeElectricityConsumption_kW.add(gc.v_rapidRunData.acc_daytimeElectricityConsumption_kW);
+		v_rapidRunData.acc_daytimeElectricityProduction_kW.add(gc.v_rapidRunData.acc_daytimeElectricityProduction_kW);
+		v_rapidRunData.acc_daytimeEnergyProduction_kW.add(gc.v_rapidRunData.acc_daytimeEnergyProduction_kW);
+		v_rapidRunData.acc_daytimeFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_daytimeFinalEnergyConsumption_kW);
+		v_rapidRunData.am_daytimeImports_kW.add(gc.v_rapidRunData.am_daytimeImports_kW);
+		v_rapidRunData.am_daytimeExports_kW.add(gc.v_rapidRunData.am_daytimeExports_kW);	
+		
+		// Weekend
+		v_rapidRunData.acc_weekendElectricityConsumption_kW.add(gc.v_rapidRunData.acc_weekendElectricityConsumption_kW);
+		v_rapidRunData.acc_weekendElectricityProduction_kW.add(gc.v_rapidRunData.acc_weekendElectricityProduction_kW);
+		v_rapidRunData.acc_weekendEnergyProduction_kW.add(gc.v_rapidRunData.acc_weekendEnergyProduction_kW);
+		v_rapidRunData.acc_weekendFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_weekendFinalEnergyConsumption_kW);
+		v_rapidRunData.am_weekendImports_kW.add(gc.v_rapidRunData.am_weekendImports_kW);
+		v_rapidRunData.am_weekendExports_kW.add(gc.v_rapidRunData.am_weekendExports_kW);	
+		
+		// Summerweek
+		v_rapidRunData.am_summerWeekBalanceAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekBalanceAccumulators_kW);
+		v_rapidRunData.am_summerWeekConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekConsumptionAccumulators_kW);
+		v_rapidRunData.am_summerWeekProductionAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekProductionAccumulators_kW);
+		v_rapidRunData.acc_summerWeekEnergyProduction_kW.add(gc.v_rapidRunData.acc_summerWeekEnergyProduction_kW);
+		v_rapidRunData.acc_summerWeekFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekFinalEnergyConsumption_kW);
+		v_rapidRunData.acc_summerWeekEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_summerWeekEnergyCurtailed_kW);
+		v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW);
+		v_rapidRunData.am_assetFlowsSummerWeek_kW.add(gc.v_rapidRunData.am_assetFlowsSummerWeek_kW);
+		
+		// Winterweek
+		v_rapidRunData.am_winterWeekBalanceAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekBalanceAccumulators_kW);
+		v_rapidRunData.am_winterWeekConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekConsumptionAccumulators_kW);
+		v_rapidRunData.am_winterWeekProductionAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekProductionAccumulators_kW);
+		v_rapidRunData.acc_winterWeekEnergyProduction_kW.add(gc.v_rapidRunData.acc_winterWeekEnergyProduction_kW);
+		v_rapidRunData.acc_winterWeekFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekFinalEnergyConsumption_kW);
+		v_rapidRunData.acc_winterWeekEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_winterWeekEnergyCurtailed_kW);
+		v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_rapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW);
+		v_rapidRunData.am_assetFlowsWinterWeek_kW.add(gc.v_rapidRunData.am_assetFlowsWinterWeek_kW);
+	}
 }
 
 // This is only true because we have no customers and only members of the Coop for this implementation
@@ -1124,7 +1126,7 @@ f_getTotalInstalledCapacityOfAssets_rapidRun();
 
 /*ALCODEEND*/}
 
-double f_initializeCustomCoop(ArrayList<GridConnection> gcList)
+double f_initializeCustomCoop(List<GridConnection> gcList)
 {/*ALCODESTART::1739974426481*/
 c_memberGridConnections.addAll(gcList);
 
@@ -1136,7 +1138,7 @@ f_collectGridConnectionLiveData();
 
 boolean allGCHaveRapidRun = true;
 for(GridConnection GC : c_memberGridConnections){
-	if(GC.v_rapidRunData == null){
+	if(GC.v_rapidRunData == null && GC.v_isActive){
 		allGCHaveRapidRun = false;
 		break;
 	}
@@ -1152,8 +1154,6 @@ if(allGCHaveRapidRun){
 	//Calculate KPIs
 	f_calculateKPIs();
 }
-
-f_connectCoopBattery();
 /*ALCODEEND*/}
 
 double f_getGroupContractDeliveryCapacity_kW()
@@ -1238,9 +1238,11 @@ v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
 
 //Add all battery storage capacities of gc
 for(GridConnection GC : c_memberGridConnections){
-	v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW;
-	v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW;
-	v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	if(GC.v_isActive){
+		v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+		v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW += GC.v_rapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+		v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_rapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
 }
 
 //Do this also for the 'child' coops
@@ -1306,7 +1308,7 @@ else{
 
 double f_collectGridConnectionLiveData()
 {/*ALCODESTART::1740502128180*/
-ArrayList<GridConnection> gcList = f_getAllChildMemberGridConnections();
+List<GridConnection> gcList = findAll(f_getAllChildMemberGridConnections(), gc -> gc.v_isActive);
 
 int liveWeekSize = gcList.get(0).v_liveData.data_gridCapacityDemand_kW.size();
 
@@ -1397,20 +1399,6 @@ v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
 							energyModel);
 /*ALCODEEND*/}
 
-double f_connectCoopBattery()
-{/*ALCODESTART::1742569887460*/
-GCGridBattery coopBattery = findFirst(energyModel.GridBatteries, bat -> bat.p_batteryAlgorithm instanceof J_BatteryManagementPeakShaving && ((J_BatteryManagementPeakShaving)bat.p_batteryAlgorithm).getTargetType() == OL_ResultScope.ENERGYCOOP && ((J_BatteryManagementPeakShaving)bat.p_batteryAlgorithm).getTarget() == null);
-
-if(coopBattery != null){
-	//Reset previous state
-	coopBattery.v_previousPowerElectricity_kW = 0;
-	
-	//Connect to coop
-	coopBattery.c_parentCoops.add(this);
-	c_memberGridConnections.add(coopBattery);
-}
-/*ALCODEEND*/}
-
 double f_getTotalInstalledCapacityOfAssets_live()
 {/*ALCODESTART::1744211359139*/
 //Collect live asset totals
@@ -1420,9 +1408,11 @@ v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
 
 //Add all battery storage capacities of gc
 for(GridConnection GC : c_memberGridConnections){
-	v_liveAssetsMetaData.totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
-	v_liveAssetsMetaData.totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	if(GC.v_isActive){
+		v_liveAssetsMetaData.totalInstalledWindPower_kW += GC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		v_liveAssetsMetaData.totalInstalledPVPower_kW += GC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
 }
 
 //Do this also for the 'child' coops
@@ -1549,14 +1539,16 @@ EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.cop
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
 for(GridConnection GC : c_memberGridConnections){
-	activeEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeEnergyCarriers);
-	activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeConsumptionEnergyCarriers);
-	activeProductionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeProductionEnergyCarriers);
-	
-	v_rapidRunData.assetsMetaData.activeAssetFlows.addAll(GC.v_rapidRunData.assetsMetaData.activeAssetFlows);
-	
-	if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
-		storeTotalAssetFlows = false;
+	if(GC.v_isActive){
+		activeEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeEnergyCarriers);
+		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeConsumptionEnergyCarriers);
+		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeProductionEnergyCarriers);
+		
+		v_rapidRunData.assetsMetaData.activeAssetFlows.addAll(GC.v_rapidRunData.assetsMetaData.activeAssetFlows);
+		
+		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
+			storeTotalAssetFlows = false;
+		}
 	}
 }
 
@@ -1576,16 +1568,13 @@ ArrayList<GridConnection> f_getMemberGridConnectionsCollectionPointer()
 return this.c_memberGridConnections; // This should NOT be a copy, it should be a pointer!!
 /*ALCODEEND*/}
 
-double f_addMembers(List<GridConnection> gcList)
+double f_addMemberGCs(List<GridConnection> gcList)
 {/*ALCODESTART::1756290844166*/
-c_memberGridConnections.addAll(gcList);
-f_initialize();
-/*ALCODEEND*/}
+f_initializeCustomCoop(gcList);
 
-double f_removeMembers(List<GridConnection> gcList)
-{/*ALCODESTART::1756301338833*/
-c_memberGridConnections.removeAll(gcList);
-f_initialize();
+// Adding this coop to the list of coops in the GC
+gcList.forEach(gc -> gc.c_parentCoops.add(this));
+
 /*ALCODEEND*/}
 
 double f_aggregatorBatteryManagement_EnergyCoop()
@@ -1593,6 +1582,18 @@ double f_aggregatorBatteryManagement_EnergyCoop()
 if(p_aggregatorBatteryManagement != null){
 	p_aggregatorBatteryManagement.manageExternalSetpoints();
 }
+/*ALCODEEND*/}
+
+double f_removeMemberGCs(List<GridConnection> gcList)
+{/*ALCODESTART::1756301338833*/
+c_memberGridConnections.removeAll(gcList);
+List<GridConnection> newMemberGridConnectionsList = new ArrayList<GridConnection>(c_memberGridConnections);
+c_memberGridConnections.clear();
+
+// Remove this coop from the list of coops in the GC
+gcList.forEach(gc -> gc.c_parentCoops.remove(this));
+
+f_initializeCustomCoop(newMemberGridConnectionsList);
 /*ALCODEEND*/}
 
 double f_aggregatorManagement_EnergyCoop()
