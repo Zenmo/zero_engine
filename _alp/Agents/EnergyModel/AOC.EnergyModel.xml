@@ -53,11 +53,10 @@ import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAConsumption;
 ]]></Import>
 	<Implements>I_EnergyData</Implements>
-	<StartupCode><![CDATA[v_activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-v_activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-v_activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-
-v_liveData = new J_LiveData(this);
+	<StartupCode><![CDATA[v_liveData = new J_LiveData(this);
+v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;

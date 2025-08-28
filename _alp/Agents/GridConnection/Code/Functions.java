@@ -207,7 +207,7 @@ v_previousPowerHeat_kW = 0;
 //v_electricityPriceLowPassed_eurpkWh = 0;
 //v_currentElectricityPriceConsumption_eurpkWh  = 0;
 
-v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_activeEnergyCarriers, v_activeConsumptionEnergyCarriers, v_activeProductionEnergyCarriers); //f_initializeAccumulators();
+v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
 
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
@@ -425,9 +425,9 @@ if( this instanceof GCDistrictHeating gc) { // Temporarily disabled while transf
 double f_connectToJ_EA_default(J_EA j_ea)
 {/*ALCODESTART::1692799608559*/
 for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
-	if (!v_activeConsumptionEnergyCarriers.contains(EC)) {
-		v_activeConsumptionEnergyCarriers.add(EC);
-		v_activeEnergyCarriers.add(EC);
+	if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
+		v_liveData.activeConsumptionEnergyCarriers.add(EC);
+		v_liveData.activeEnergyCarriers.add(EC);
 		if (energyModel.b_isInitialized && v_isActive) {
 			f_addConsumptionEnergyCarrier(EC);	
 			//Add EC to energyModel
@@ -438,9 +438,9 @@ for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
 }
 
 for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
-	if (!v_activeProductionEnergyCarriers.contains(EC)) {
-		v_activeProductionEnergyCarriers.add(EC);
-		v_activeEnergyCarriers.add(EC);
+	if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
+		v_liveData.activeProductionEnergyCarriers.add(EC);
+		v_liveData.activeEnergyCarriers.add(EC);
 		if (energyModel.b_isInitialized && v_isActive) {		
 			f_addProductionEnergyCarrier(EC);
 			//Add EC to energyModel
@@ -741,21 +741,11 @@ f_setOperatingSwitches();
 
 // Initializing Live Data Class
 v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
-v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
-v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
+//v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
+//v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
+//v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
 
 f_initializeDataSets();
-
-for (OL_EnergyCarriers EC : v_activeEnergyCarriers){
-	energyModel.v_activeEnergyCarriers.add(EC);
-}
-for (OL_EnergyCarriers EC_production : v_activeProductionEnergyCarriers){
-	energyModel.v_activeProductionEnergyCarriers.add(EC_production);
-}
-for (OL_EnergyCarriers EC_consumption : v_activeConsumptionEnergyCarriers){
-	energyModel.v_activeConsumptionEnergyCarriers.add(EC_consumption);
-}
 
 /*ALCODEEND*/}
 
@@ -1199,8 +1189,8 @@ return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTr
 
 double f_initializeDataSets()
 {/*ALCODESTART::1730728785333*/
-v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
-v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
+v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / energyModel.p_timeStep_h));
 
 /*ALCODEEND*/}
@@ -1296,8 +1286,8 @@ engineGC.p_heatingManagement = heatingManagement;
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1754380684463*/
-v_activeEnergyCarriers.add(EC);
-v_activeConsumptionEnergyCarriers.add(EC);
+v_liveData.activeEnergyCarriers.add(EC);
+v_liveData.activeConsumptionEnergyCarriers.add(EC);
 
 DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 
@@ -1312,8 +1302,8 @@ v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 
 EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
 {/*ALCODESTART::1754380684465*/
-v_activeEnergyCarriers.add(EC);
-v_activeProductionEnergyCarriers.add(EC);
+v_liveData.activeEnergyCarriers.add(EC);
+v_liveData.activeProductionEnergyCarriers.add(EC);
 
 DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
 double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();

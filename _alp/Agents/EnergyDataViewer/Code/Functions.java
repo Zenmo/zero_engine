@@ -422,20 +422,21 @@ v_dataElectricityStorageProductionYear_kW = data.getRapidRunData().acc_dailyAver
 v_dataElectricityV2GProductionYear_kW = data.getRapidRunData().acc_dailyAverageV2GProduction_kW.getDataSet(startTime_h);
 v_dataElectricityCHPProductionYear_kW = data.getRapidRunData().acc_dailyAverageCHPElectricityProduction_kW.getDataSet(startTime_h);
 */
-DataSet totalBatteryStorage = data.getRapidRunData().ts_dailyAverageBatteriesStoredEnergy_MWh.getDataSet(startTime_h);
-v_dataBatterySOCYear_fr.reset();
-for (int i = 0; i < totalBatteryStorage.size(); i++) {
-    // Get the x and y values from the source dataset
-    double x = totalBatteryStorage.getX(i);
-    double y = totalBatteryStorage.getY(i);
-    
-    // Modify the y value (e.g., divide it by 2)
-    double SOC = v_batteryStorageCapacityInstalled_MWh > 0 ? y / v_batteryStorageCapacityInstalled_MWh : 0;
-    
-    // Add the new x and y values to the target dataset
-    v_dataBatterySOCYear_fr.add(x, SOC);
+if (data.getRapidRunData().ts_dailyAverageBatteriesStoredEnergy_MWh != null) {
+	DataSet totalBatteryStorage = data.getRapidRunData().ts_dailyAverageBatteriesStoredEnergy_MWh.getDataSet(startTime_h);
+	v_dataBatterySOCYear_fr.reset();
+	for (int i = 0; i < totalBatteryStorage.size(); i++) {
+	    // Get the x and y values from the source dataset
+	    double x = totalBatteryStorage.getX(i);
+	    double y = totalBatteryStorage.getY(i);
+	    
+	    // Modify the y value (e.g., divide it by 2)
+	    double SOC = v_batteryStorageCapacityInstalled_MWh > 0 ? y / v_batteryStorageCapacityInstalled_MWh : 0;
+	    
+	    // Add the new x and y values to the target dataset
+	    v_dataBatterySOCYear_fr.add(x, SOC);
+	}
 }
-
 /*ALCODEEND*/}
 
 double f_addTimeStepLiveDataSetsGC(I_EnergyData data)

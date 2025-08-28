@@ -96,7 +96,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 	}
 	
 	public void clear() {
-		accumulatorArray = new ZeroAccumulator[OL_EnergyCarriers.values().length];
+		accumulatorArray = new ZeroAccumulator[this.enumClass.getEnumConstants().length];
 		enumSet.clear();
 	}
 	
@@ -110,7 +110,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		for (var EC : accumulatorMap.enumSet) {
 			if (!this.enumSet.contains(EC)) {
 				// make a new one?
-				throw new RuntimeException("Tried to add an AccumulatorMap with a new EnergyCarrier.");
+				throw new RuntimeException("Tried to add two AccumulatorMaps without matching keys.");
 			}
 			this.get(EC).add(accumulatorMap.get(EC));
 		}
@@ -121,7 +121,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		for (var EC : accumulatorMap.enumSet) {
 			if (!this.enumSet.contains(EC)) {
 				// make a new one?
-				throw new RuntimeException("Tried to subtract an AccumulatorMap with a new EnergyCarrier.");
+				throw new RuntimeException("Tried to subtract two AccumulatorMaps without matching keys.");
 			}
 			this.get(EC).subtract(accumulatorMap.get(EC));
 		}
@@ -129,7 +129,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 	}
 	
 	public J_DataSetMap getDataSetMap( double startTime_h ) {
-		J_DataSetMap dsm = new J_DataSetMap(OL_EnergyCarriers.class);
+		J_DataSetMap dsm = new J_DataSetMap(this.enumClass);
 		for (var EC : this.enumSet) {
 			dsm.put(EC, this.get(EC).getDataSet(startTime_h));
 		}

@@ -29,7 +29,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 	}
     
     @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
+    public void f_updateAllFlows() {
     	
     	flowsMap.put(OL_EnergyCarriers.HYDROGEN, this.energyUse_kW);
     	    	

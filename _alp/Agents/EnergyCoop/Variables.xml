@@ -1214,66 +1214,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1732886770078</Id>
-		<Name><![CDATA[v_activeEnergyCarriers]]></Name>
-		<X>75</X>
-		<Y>860</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1740059065414</Id>
-		<Name><![CDATA[v_activeConsumptionEnergyCarriers]]></Name>
-		<X>89.6</X>
-		<Y>897.4</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[EnumSet.of(OL_EnergyCarriers.ELECTRICITY);]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1740059065416</Id>
-		<Name><![CDATA[v_activeProductionEnergyCarriers]]></Name>
-		<X>89.6</X>
-		<Y>877.4</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[EnumSet<OL_EnergyCarriers>]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1740152681807</Id>
 		<Name><![CDATA[v_cumulativeIndividualSelfconsumptionElectricity_fr]]></Name>
 		<X>1430</X>
