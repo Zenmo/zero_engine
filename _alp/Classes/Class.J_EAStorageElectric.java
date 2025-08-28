@@ -118,6 +118,14 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		return availableCapacity_kW;
 	}
 	
+	public double getMaxChargePower_kW() { // Always a positive number!
+		return min(capacityElectric_kW, (1-stateOfCharge_fr) * storageCapacity_kWh / timestep_h / etaCharge_r);
+	}
+	
+	public double getMaxDischargePower_kW() { // Always a positive number!
+		return min(capacityElectric_kW, stateOfCharge_fr * storageCapacity_kWh / timestep_h * etaDischarge_r);
+	}
+	
 	public double getCapacityElectric_kW() {
 		return this.capacityElectric_kW;
 	}

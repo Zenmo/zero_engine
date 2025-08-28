@@ -22,7 +22,7 @@
 		<Id>1660212665961</Id>
 		<Name><![CDATA[f_connectionMetering]]></Name>
 		<X>910</X>
-		<Y>390</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -38,7 +38,7 @@
 		<Id>1664961435385</Id>
 		<Name><![CDATA[f_operateFlexAssets]]></Name>
 		<X>910</X>
-		<Y>220</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -54,7 +54,7 @@
 		<Id>1668528273163</Id>
 		<Name><![CDATA[f_calculateEnergyBalance]]></Name>
 		<X>890</X>
-		<Y>180</Y>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -70,7 +70,7 @@
 		<Id>1668528300576</Id>
 		<Name><![CDATA[f_operateFixedAssets]]></Name>
 		<X>910</X>
-		<Y>200</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -102,7 +102,7 @@
 		<Id>1671095995172</Id>
 		<Name><![CDATA[f_manageEVCharging]]></Name>
 		<X>920</X>
-		<Y>310</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -297,7 +297,7 @@
 		<Id>1702373771433</Id>
 		<Name><![CDATA[f_addFlows]]></Name>
 		<X>930</X>
-		<Y>240</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -416,7 +416,7 @@
 		<Id>1720442672576</Id>
 		<Name><![CDATA[f_curtailment]]></Name>
 		<X>910</X>
-		<Y>360</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -433,7 +433,7 @@
 		<Name><![CDATA[f_nfatoUpdateConnectionCapacity]]></Name>
 		<Description><![CDATA[Updates the Connection Capacity of the GC depending on the time of day / day of week.]]></Description>
 		<X>890</X>
-		<Y>470</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -450,7 +450,7 @@
 		<Name><![CDATA[f_nfatoSetConnectionCapacity]]></Name>
 		<Description><![CDATA[When changing the NFATO settings this function sets the GC capacity to the correct value. When reset is true the capacity is restored back to its original value.]]></Description>
 		<X>890</X>
-		<Y>490</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -470,7 +470,7 @@
 		<Id>1722512642645</Id>
 		<Name><![CDATA[f_removeFlows]]></Name>
 		<X>1060</X>
-		<Y>240</Y>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -502,7 +502,7 @@
 		<Id>1722518225504</Id>
 		<Name><![CDATA[f_fillLiveDataSets]]></Name>
 		<X>930</X>
-		<Y>430</Y>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -518,7 +518,7 @@
 		<Id>1722518905501</Id>
 		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
 		<X>930</X>
-		<Y>410</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -535,7 +535,7 @@
 		<Name><![CDATA[f_setActive]]></Name>
 		<Description><![CDATA[Function to pause a gridconnection so it is not operated or counted towards totals in the energy model.]]></Description>
 		<X>270</X>
-		<Y>350</Y>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -592,7 +592,7 @@
 		<Id>1750258434630</Id>
 		<Name><![CDATA[f_manageChargePoints]]></Name>
 		<X>920</X>
-		<Y>330</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -608,7 +608,7 @@
 		<Id>1753099764237</Id>
 		<Name><![CDATA[f_manageHeating]]></Name>
 		<X>920</X>
-		<Y>290</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -624,7 +624,7 @@
 		<Id>1752570332887</Id>
 		<Name><![CDATA[f_manageBattery]]></Name>
 		<X>920</X>
-		<Y>270</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -655,8 +655,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753969724598</Id>
 		<Name><![CDATA[f_removeAllHeatingAssets]]></Name>
-		<X>450</X>
-		<Y>-130</Y>
+		<X>620</X>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -671,8 +671,8 @@
 		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
 		<Id>1754051705071</Id>
 		<Name><![CDATA[f_getCurrentHeatingType]]></Name>
-		<X>450</X>
-		<Y>-110</Y>
+		<X>640</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -689,7 +689,7 @@
 		<Name><![CDATA[f_addHeatManagementToGC]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>890</X>
-		<Y>530</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -716,7 +716,7 @@
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1754380684463</Id>
 		<Name><![CDATA[f_addConsumptionEnergyCarrier]]></Name>
-		<X>1285</X>
+		<X>1325</X>
 		<Y>67</Y>
 		<Label>
 			<X>10</X>
@@ -736,7 +736,7 @@
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1754380684465</Id>
 		<Name><![CDATA[f_addProductionEnergyCarrier]]></Name>
-		<X>1285</X>
+		<X>1325</X>
 		<Y>87</Y>
 		<Label>
 			<X>10</X>
@@ -756,7 +756,7 @@
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1754380684467</Id>
 		<Name><![CDATA[f_addAssetFlow]]></Name>
-		<X>1285</X>
+		<X>1325</X>
 		<Y>107</Y>
 		<Label>
 			<X>10</X>
@@ -798,7 +798,7 @@
 		<Name><![CDATA[f_addChargingManagementToGC]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>890</X>
-		<Y>550</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

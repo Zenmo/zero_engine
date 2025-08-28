@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     @JsonSubTypes.Type(value = J_BatteryManagementPrice.class, name = "J_BatteryManagementPrice"),
     @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumption.class, name = "J_BatteryManagementSelfConsumption"),
     @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumptionGridNode.class, name = "J_BatteryManagementSelfConsumptionGridNode"),
+    @JsonSubTypes.Type(value = J_BatteryManagementExternalSetpoint.class, name = "J_BatteryManagementExternalSetpoint"),
 })
     
     // Add other known subtypes here if needed

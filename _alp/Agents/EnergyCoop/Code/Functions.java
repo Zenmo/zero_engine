@@ -1571,7 +1571,7 @@ v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p
 
 /*ALCODEEND*/}
 
-List<GridConnection> f_getMemberGridConnectionsCollectionPointer()
+ArrayList<GridConnection> f_getMemberGridConnectionsCollectionPointer()
 {/*ALCODESTART::1754908113703*/
 return this.c_memberGridConnections; // This should NOT be a copy, it should be a pointer!!
 /*ALCODEEND*/}
@@ -1584,7 +1584,20 @@ f_initialize();
 
 double f_removeMembers(List<GridConnection> gcList)
 {/*ALCODESTART::1756301338833*/
-c_memberGridConnections.addAll(gcList);
+c_memberGridConnections.removeAll(gcList);
 f_initialize();
+/*ALCODEEND*/}
+
+double f_aggregatorBatteryManagement_EnergyCoop()
+{/*ALCODESTART::1756207893357*/
+if(p_aggregatorBatteryManagement != null){
+	p_aggregatorBatteryManagement.manageExternalSetpoints();
+}
+/*ALCODEEND*/}
+
+double f_aggregatorManagement_EnergyCoop()
+{/*ALCODESTART::1756207893363*/
+//Run battery setpoint management
+f_aggregatorBatteryManagement_EnergyCoop();
 /*ALCODEEND*/}
 

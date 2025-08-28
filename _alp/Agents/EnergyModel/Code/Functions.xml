@@ -6,7 +6,7 @@
 		<Id>1664894248130</Id>
 		<Name><![CDATA[f_updatePricesForNextTimestep]]></Name>
 		<X>1090</X>
-		<Y>290</Y>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -46,7 +46,7 @@
 		<Id>1665051878402</Id>
 		<Name><![CDATA[f_calculateGridnodeFlows]]></Name>
 		<X>1090</X>
-		<Y>250</Y>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -66,7 +66,7 @@
 		<Id>1665051962956</Id>
 		<Name><![CDATA[f_calculateActorFlows]]></Name>
 		<X>1090</X>
-		<Y>270</Y>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -444,7 +444,7 @@
 		<Id>1731329529733</Id>
 		<Name><![CDATA[f_updateLiveData]]></Name>
 		<X>1091</X>
-		<Y>313</Y>
+		<Y>333</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -673,6 +673,22 @@
 		<Name><![CDATA[f_getPausedGridConnectionsCollectionPointer]]></Name>
 		<X>1580</X>
 		<Y>940</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1756207695591</Id>
+		<Name><![CDATA[f_runAggregators]]></Name>
+		<X>1110</X>
+		<Y>250</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
