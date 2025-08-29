@@ -1120,6 +1120,8 @@ if (!setActive) {
 		coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW -= v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+		coop.v_liveConnectionMetaData.contractedDeliveryCapacity_kW -= v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+		coop.v_liveConnectionMetaData.contractedFeedinCapacity_kW -= v_liveConnectionMetaData.contractedFeedinCapacity_kW;
 	}
 	
 	// Reset Connection Capacity to default
@@ -1169,6 +1171,14 @@ else {
 		coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+		coop.v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+		coop.v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+		if(!v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
+			coop.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		}
+		if(!v_liveConnectionMetaData.contractedFeedinCapacityKnown){
+			coop.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		} 
 	}
 		
 	//Initialize/reset dataset maps to 0
