@@ -183,7 +183,7 @@ for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-	fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
+	fm_currentAssetFlows_kW.addValues(gc.fm_currentAssetFlows_kW);
 	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
 	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;

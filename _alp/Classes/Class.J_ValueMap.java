@@ -8,13 +8,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreType;
 public class J_ValueMap <E extends Enum<E>> implements Serializable {
 	
 	//
-    private final EnumSet<E> enumSet;
+    protected final EnumSet<E> enumSet;
     //private final Class<E> enumClass;
-	private double[] valuesArray;// = new double[OL_AssetFlowCategories.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	protected double[] valuesArray;// = new double[OL_AssetFlowCategories.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
 	  
     /**
      * Default constructor
      */
+    public J_ValueMap() {
+    	throw new RuntimeException("Can't use constructor without enum input for J_ValueMap");
+    }
+	
     public J_ValueMap(Class<E> enumClass) {
         //this.enumClass = enumClass;
         this.enumSet = EnumSet.noneOf(enumClass);
@@ -40,7 +44,7 @@ public class J_ValueMap <E extends Enum<E>> implements Serializable {
 	}
       
     //public J_AssetFlowsMap addToExistingFlows( J_AssetFlowsMap f) {
-    public final J_ValueMap addFlows( J_ValueMap f) {
+    public final J_ValueMap addValues( J_ValueMap f) {
     	int len = valuesArray.length;
 		for(int i=0; i<len; i++) {
 			//this.valuesArray[i]=this.valuesArray[i]+f.valuesArray[i];
@@ -50,7 +54,7 @@ public class J_ValueMap <E extends Enum<E>> implements Serializable {
     	return this;
     }
     
-    public final J_ValueMap addFlow( E key, double value) {
+    public final J_ValueMap addValue( E key, double value) {
     	enumSet.add(key);
     	this.valuesArray[key.ordinal()]+=value;
     	//double currentValue = this.get(key);

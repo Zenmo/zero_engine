@@ -119,7 +119,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
 			flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
 	    }
-    	this.assetFlowsMap.addFlow	(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, electricityConsumption_kW);
+    	this.assetFlowsMap.addValue	(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, electricityConsumption_kW);
 		this.energyUsed_kWh += energyUse_kW * timestep_h;
 	}
 

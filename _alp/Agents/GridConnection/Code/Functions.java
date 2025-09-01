@@ -777,7 +777,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW -= energyUse_kW;
 }
 
-fm_currentAssetFlows_kW.addFlows(assetFlowsMap);
+fm_currentAssetFlows_kW.addValues(assetFlowsMap);
 /*ALCODEEND*/}
 
 double f_removeTheJ_EA(J_EA j_ea)
@@ -1057,7 +1057,7 @@ if ( caller instanceof J_EAConversionHeatPump ) {
 	v_currentPrimaryEnergyProductionHeatpumps_kW += energyUse_kW;
 }
 for(var AC : assetFlowsMap_kW.keySet()) {
-	fm_currentAssetFlows_kW.addFlow(AC, -assetFlowsMap_kW.get(AC));
+	fm_currentAssetFlows_kW.addValue(AC, -assetFlowsMap_kW.get(AC));
 }
 /*ALCODEEND*/}
 

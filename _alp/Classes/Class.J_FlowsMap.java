@@ -5,34 +5,60 @@ import zeroPackage.ZeroMath;
 import java.util.EnumSet;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
-public class J_FlowsMap implements Serializable {
+public class J_FlowsMap extends J_ValueMap<OL_EnergyCarriers> implements Serializable {
 	
-	private double[] valuesArray = new double[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
-	private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
+	//private double[] valuesArray = new double[OL_EnergyCarriers.values().length]; // Use array with size of all possible energyCarriers; more than strictly needed but memory footprint is negligable anyway.;
+	//private EnumSet<OL_EnergyCarriers> energyCarrierList = EnumSet.noneOf(OL_EnergyCarriers.class);
+	//protected enumSet = EnumSet.noneOf(OL_EnergyCarriers.class);
     /**
      * Default constructor
      */
-    public J_FlowsMap() {
-    	
-    }
+   
+	public J_FlowsMap() {
+		super(OL_EnergyCarriers.class);
+    	//enumSet = EnumSet.noneOf(OL_EnergyCarriers.class);
+    	//this.valuesArray = new double[OL_EnergyCarriers.values().length];
 
-    public final double get(OL_EnergyCarriers key) {
+    }
+	
+    public final J_FlowsMap addFlows( J_FlowsMap f) {
+    	super.addValues(f);
+    	/*int len = valuesArray.length;
+		for(int i=0; i<len; i++) {
+			//this.valuesArray[i]=this.valuesArray[i]+f.valuesArray[i];
+			this.valuesArray[i]+=f.valuesArray[i];
+		}
+		this.energyCarrierList.addAll(f.energyCarrierList); */
+    	return this; 
+    }
+    
+    public final J_FlowsMap addFlow( OL_EnergyCarriers key, double value) {
+    	super.addValue(key, value);
+    	/*energyCarrierList.add(key);
+    	this.valuesArray[key.ordinal()]+=value;*/
+    	//double currentValue = this.get(key);
+    	//this.put(key, currentValue + value);
+    	return this;
+    }
+    
+
+    /*public final double get(OL_EnergyCarriers key) {
 		return valuesArray[key.ordinal()];
 	}
     	
-
+    
 	public final void put(OL_EnergyCarriers key, double value) {
 		valuesArray[key.ordinal()] = value;
 		energyCarrierList.add(key);
 	}
-	
+	    
 	public final void clear() {
 		energyCarrierList.clear();
 		Arrays.fill(valuesArray, 0.0);
-		/*for(int i=0; i<valuesArray.length; i++) {
-			valuesArray[i]=0.0;
-		}*/
-	}
+		//for(int i=0; i<valuesArray.length; i++) {
+		//	valuesArray[i]=0.0;
+		//
+	} 
     
     //public J_FlowsMap addFlows( J_FlowsMap f) {
     public final J_FlowsMap addFlowsSlow( J_FlowsMap f) {
@@ -83,15 +109,15 @@ public class J_FlowsMap implements Serializable {
     
     public final EnumSet<OL_EnergyCarriers> keySet(){
     	return energyCarrierList;
-    }
-        
+    }    
+	
     public String toString() {
-        if (this.energyCarrierList.size() == 0) {
+        if (this.enumSet.size() == 0) {
             return "{}";        	
         }
         StringBuilder sb = new StringBuilder();
         sb.append('{');
-        for (OL_EnergyCarriers key : this.energyCarrierList) {
+        for (E key : this.enumSet) {
         	double value = this.get(key);
             sb.append(key);
             sb.append(" = ");
@@ -102,6 +128,7 @@ public class J_FlowsMap implements Serializable {
         sb.append('}');
         return sb.toString();
     }
+	*/
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>

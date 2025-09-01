@@ -189,7 +189,7 @@ for(GridConnection gc : c_memberGridConnections) { // Can't do this in parallel 
 		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
-		fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
+		fm_currentAssetFlows_kW.addValues(gc.fm_currentAssetFlows_kW);
 		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
 		v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
@@ -207,7 +207,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		fm_currentBalanceFlows_kW.addFlows(EC.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(EC.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(EC.fm_currentConsumptionFlows_kW);
-		fm_currentAssetFlows_kW.addFlows(EC.fm_currentAssetFlows_kW);
+		fm_currentAssetFlows_kW.addValues(EC.fm_currentAssetFlows_kW);
 		v_currentPrimaryEnergyProduction_kW += EC.v_currentPrimaryEnergyProduction_kW;
 		v_currentFinalEnergyConsumption_kW += EC.v_currentFinalEnergyConsumption_kW;
 		v_currentEnergyCurtailed_kW += EC.v_currentEnergyCurtailed_kW;
@@ -243,7 +243,7 @@ for(Agent a :  c_coopCustomers ) { // Don't look at 'behind the meter' productio
 		fm_currentBalanceFlows_kW.addFlows(EC.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(EC.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(EC.fm_currentConsumptionFlows_kW);
-		fm_currentAssetFlows_kW.addFlows(EC.fm_currentAssetFlows_kW);
+		fm_currentAssetFlows_kW.addValues(EC.fm_currentAssetFlows_kW);
 		v_currentCustomerFeedIn_kW += EC.v_currentCustomerFeedIn_kW;
 		v_currentCustomerDelivery_kW += EC.v_currentCustomerDelivery_kW;
 	}
@@ -1340,7 +1340,7 @@ for (int i=0; i < liveWeekSize; i++){
 			fm_supply_kW.addFlow( EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(i));
 		}
 		for (OL_AssetFlowCategories AC : gc.v_liveAssetsMetaData.activeAssetFlows) {
-			fm_currentAssetFlows_kW.addFlow(AC, gc.v_liveData.dsm_liveAssetFlows_kW.get(AC).getY(i));
+			fm_currentAssetFlows_kW.addValue(AC, gc.v_liveData.dsm_liveAssetFlows_kW.get(AC).getY(i));
 		}
 		
 		electricityDemandCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacityDemand_kW.getY(i);
