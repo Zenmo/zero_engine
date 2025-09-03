@@ -42,9 +42,8 @@ b_isWinterWeek = (t_h % 8760) >= p_startOfWinterWeek_h && (t_h % 8760) < p_start
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
-
-v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
 c_profiles.forEach(p -> p.updateValue(t_h));
+v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
 v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
 v_currentSolarPowerNormalized_r = pp_PVProduction35DegSouth_fr.getCurrentValue();
 //v_currentCookingDemand_fr = tf_cooking_demand(t_h);
