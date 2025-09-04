@@ -306,7 +306,7 @@ double f_manageAirco()
 if( p_airco != null ) {
 	if (p_airco.remainingONtimesteps == 0){
 		double switchOnProbability = 0;
-		switch (roundToInt(energyModel.v_currentAmbientTemperature_degC)) {
+		switch (roundToInt(energyModel.pp_ambientTemperature_degC.getCurrentValue())) {
 			case 23:
 				switchOnProbability = 0.0025;
 				break;
