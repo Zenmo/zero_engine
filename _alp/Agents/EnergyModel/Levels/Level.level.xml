@@ -397,8 +397,8 @@
 	<Line>
 		<Id>1668602513058</Id>
 		<Name><![CDATA[line_variables]]></Name>
-		<X>1544</X>
-		<Y>29</Y>
+		<X>-620</X>
+		<Y>506</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -418,15 +418,15 @@
 		<BeginArrowStyle>0</BeginArrowStyle>
 		<EndArrowSize>1</EndArrowSize>
 		<EndArrowStyle>0</EndArrowStyle>
-		<Dx>256</Dx>
-		<Dy>1</Dy>
+		<Dx>180</Dx>
+		<Dy>0</Dy>
 		<Dz>0</Dz>
 	</Line>
 	<Text>
 		<Id>1668602513060</Id>
 		<Name><![CDATA[txt_variables]]></Name>
-		<X>1625</X>
-		<Y>10</Y>
+		<X>-559</X>
+		<Y>487</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -439,7 +439,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Variables]]></Text>
+		<Text><![CDATA[DLR factors]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>11</Size>
@@ -450,8 +450,8 @@
 	<Text>
 		<Id>1671703651141</Id>
 		<Name><![CDATA[text10]]></Name>
-		<X>1647</X>
-		<Y>222</Y>
+		<X>-533</X>
+		<Y>622</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -464,7 +464,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Forecasts]]></Text>
+		<Text><![CDATA[Derived Forecasts]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>11</Size>
@@ -606,8 +606,8 @@
 	<Line>
 		<Id>1716890105093</Id>
 		<Name><![CDATA[line10]]></Name>
-		<X>1560</X>
-		<Y>710</Y>
+		<X>1620</X>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -634,8 +634,8 @@
 	<Text>
 		<Id>1716890105095</Id>
 		<Name><![CDATA[text12]]></Name>
-		<X>1650</X>
-		<Y>690</Y>
+		<X>1710</X>
+		<Y>330</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -659,8 +659,8 @@
 	<Line>
 		<Id>1729238050157</Id>
 		<Name><![CDATA[line_selectedEnergyCarriers]]></Name>
-		<X>1560</X>
-		<Y>240</Y>
+		<X>-620</X>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -687,8 +687,8 @@
 	<Line>
 		<Id>1739958834681</Id>
 		<Name><![CDATA[line11]]></Name>
-		<X>1560</X>
-		<Y>520</Y>
+		<X>1620</X>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -715,8 +715,8 @@
 	<Text>
 		<Id>1739958834683</Id>
 		<Name><![CDATA[text14]]></Name>
-		<X>1650</X>
-		<Y>500</Y>
+		<X>1710</X>
+		<Y>140</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -789,59 +789,6 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1753349835816</Id>
-		<Name><![CDATA[txt_deprecatedAgents]]></Name>
-		<X>420</X>
-		<Y>490</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Deprecated Agents]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>11</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Line>
-		<Id>1753349859610</Id>
-		<Name><![CDATA[line_deprecatedAgents]]></Name>
-		<X>380</X>
-		<Y>510</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<BeginArrowSize>1</BeginArrowSize>
-		<BeginArrowStyle>0</BeginArrowStyle>
-		<EndArrowSize>1</EndArrowSize>
-		<EndArrowStyle>0</EndArrowStyle>
-		<Dx>190</Dx>
-		<Dy>0</Dy>
-		<Dz>0</Dz>
-	</Line>
-	<Text>
 		<Id>1753352444348</Id>
 		<Name><![CDATA[txt_simulationEngine]]></Name>
 		<X>1150</X>
@@ -897,8 +844,8 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 	<Text>
 		<Id>1753353340150</Id>
 		<Name><![CDATA[txt_updateFunctions]]></Name>
-		<X>1650</X>
-		<Y>400</Y>
+		<X>1710</X>
+		<Y>40</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -922,8 +869,8 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 	<Line>
 		<Id>1753353355569</Id>
 		<Name><![CDATA[line_updateFunctions]]></Name>
-		<X>1560</X>
-		<Y>420</Y>
+		<X>1620</X>
+		<Y>60</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

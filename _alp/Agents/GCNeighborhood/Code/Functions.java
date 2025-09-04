@@ -539,8 +539,8 @@ if (p_batteryAsset.getStorageCapacity_kWh() != 0){
 	//SOC_setp_fr = 0.6 + 0.25 * Math.cos(2*Math.PI*(energyModel.t_h-18)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 	
 	//TODO forecast keer installed cap per buurt genormaliseerd.
-	double windEnergyExpectedNormalized_fr = energyModel.v_WindYieldForecast_fr * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
-	double solarEnergyExpectedNormalized_fr = energyModel.v_SolarYieldForecast_fr * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double windEnergyExpectedNormalized_fr = energyModel.pf_windProduction_fr.getForecast() * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledWindPower_kW / p_batteryAsset.getStorageCapacity_kWh();
+	double solarEnergyExpectedNormalized_fr = energyModel.pf_PVProduction35DegSouth_fr.getForecast() * energyModel.p_forecastTime_h * v_liveAssetsMetaData.totalInstalledPVPower_kW / p_batteryAsset.getStorageCapacity_kWh();
 	//double heatpumpExpectedEnergyDrawNormalized_fr = ...
 	double SOC_setp_fr =  SOC_setp_fr_offset + 0.1 * Math.cos(2*Math.PI*(energyModel.t_h-7)/24) - 0.1 * windEnergyExpectedNormalized_fr - 0.1 * solarEnergyExpectedNormalized_fr;
 	//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");

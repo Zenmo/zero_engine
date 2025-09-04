@@ -103,10 +103,10 @@ if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
 			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 			double SOC_setp_fr = 0.5;			
 			if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 10000) {
-				SOC_setp_fr = 0.95 - 0.95 * energyModel.v_WindYieldForecast_fr - 0.9*energyModel.v_SolarYieldForecast_fr;
+				SOC_setp_fr = 0.95 - 0.95 * energyModel.pf_windProduction_fr.getForecast() - 0.9*energyModel.pf_PVProduction35DegSouth_fr.getForecast();
 				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
 			} else {
-				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.pf_windProduction_fr.getForecast()); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 			}
 			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
 			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
@@ -322,7 +322,7 @@ double f_electrolyserRegimeControl_Price(double excessElectricPower_kW,J_EAConve
 {/*ALCODESTART::1708448673879*/
 ConnectionOwner ownerActor = p_owner;
 //double currentElectricityPriceCharge_eurpkWh = ownerActor.f_getElectricityPrice(-excessElectricPower_kW); // query price at 1kW
-double currentElectricityPriceEPEX_eurpkWh = energyModel.v_epexForecast_eurpkWh;
+double currentElectricityPriceEPEX_eurpkWh = energyModel.pf_dayAheadElectricityPricing_eurpMWh.getForecast();
 
 switch (ElectrolyserAsset.getState()){
 

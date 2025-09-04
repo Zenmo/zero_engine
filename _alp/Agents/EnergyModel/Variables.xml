@@ -21,63 +21,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1659356201846</Id>
-		<Name><![CDATA[v_currentWindPowerNormalized_r]]></Name>
-		<X>1580</X>
-		<Y>75</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1659356216131</Id>
-		<Name><![CDATA[v_currentSolarPowerNormalized_r]]></Name>
-		<X>1580</X>
-		<Y>95</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1659364131698</Id>
-		<Name><![CDATA[v_currentAmbientTemperature_degC]]></Name>
-		<X>1580</X>
-		<Y>55</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1663238634515</Id>
 		<Name><![CDATA[v_timeStepsElapsed]]></Name>
 		<X>1070</X>
@@ -142,63 +85,6 @@
 		<Name><![CDATA[v_totalBatteryEnergyUsed_MWh]]></Name>
 		<X>1000</X>
 		<Y>1130</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1671636172718</Id>
-		<Name><![CDATA[v_WindYieldForecast_fr]]></Name>
-		<X>1580</X>
-		<Y>260</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1671636200983</Id>
-		<Name><![CDATA[v_SolarYieldForecast_fr]]></Name>
-		<X>1580</X>
-		<Y>280</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1671638019875</Id>
-		<Name><![CDATA[v_epexForecast_eurpkWh]]></Name>
-		<X>1580</X>
-		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -831,8 +717,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1718883144081</Id>
 		<Name><![CDATA[v_electricityYieldForecast_fr]]></Name>
-		<X>1580</X>
-		<Y>300</Y>
+		<X>-600</X>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -850,8 +736,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1721228298986</Id>
 		<Name><![CDATA[v_currentDLRfactor_fr]]></Name>
-		<X>1580</X>
-		<Y>125</Y>
+		<X>-584</X>
+		<Y>526</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -872,8 +758,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1721228965491</Id>
 		<Name><![CDATA[v_minDLRfactor_fr]]></Name>
-		<X>1580</X>
-		<Y>150</Y>
+		<X>-584</X>
+		<Y>551</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -894,8 +780,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1721228970137</Id>
 		<Name><![CDATA[v_maxDLRfactor_fr]]></Name>
-		<X>1580</X>
-		<Y>170</Y>
+		<X>-584</X>
+		<Y>571</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1661,8 +1547,8 @@
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-		<X>1580</X>
-		<Y>340</Y>
+		<X>-850</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -42,15 +42,14 @@ b_isWinterWeek = (t_h % 8760) >= p_startOfWinterWeek_h && (t_h % 8760) < p_start
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
-
-v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
 c_profiles.forEach(p -> p.updateValue(t_h));
-v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
-v_currentSolarPowerNormalized_r = pp_PVProduction35DegSouth_fr.getCurrentValue();
+//v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
+//v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
+//v_currentSolarPowerNormalized_r = pp_PVProduction35DegSouth_fr.getCurrentValue();
 //v_currentCookingDemand_fr = tf_cooking_demand(t_h);
 
 if (b_enableDLR) {
-	v_currentDLRfactor_fr = 1 + max(-0.1,v_currentWindPowerNormalized_r * 0.025*(30-v_currentAmbientTemperature_degC) + 0.5 - v_currentSolarPowerNormalized_r);
+	v_currentDLRfactor_fr = 1 + max(-0.1,pp_windProduction_fr.getCurrentValue() * 0.025*(30-pp_ambientTemperature_degC.getCurrentValue()) + 0.5 - pp_PVProduction35DegSouth_fr.getCurrentValue());
 	//v_currentDLRfactor_fr = 1 + uniform(-0.1, 1.0);
 	v_minDLRfactor_fr = min (v_minDLRfactor_fr, v_currentDLRfactor_fr);
 	v_maxDLRfactor_fr = max (v_maxDLRfactor_fr, v_currentDLRfactor_fr);
@@ -68,14 +67,14 @@ f_updateAmbientDependentAssets();
 
 // Update forecasts,  the relevant profile pointers are already updated above
 c_forecasts.forEach(f -> f.updateForecast(t_h));
-v_SolarYieldForecast_fr = pf_PVProduction35DegSouth_fr.getForecast();
-v_WindYieldForecast_fr = pf_windProduction_fr.getForecast();
+//v_SolarYieldForecast_fr = pf_PVProduction35DegSouth_fr.getForecast();
+//v_WindYieldForecast_fr = pf_windProduction_fr.getForecast();
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
 if ( v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) {
-	v_electricityYieldForecast_fr = (v_SolarYieldForecast_fr * v_liveAssetsMetaData.totalInstalledPVPower_kW + v_WindYieldForecast_fr * v_liveAssetsMetaData.totalInstalledWindPower_kW) / (v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW);
+	v_electricityYieldForecast_fr = (pf_PVProduction35DegSouth_fr.getForecast() * v_liveAssetsMetaData.totalInstalledPVPower_kW + pf_windProduction_fr.getForecast() * v_liveAssetsMetaData.totalInstalledWindPower_kW) / (v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW);
 }
 // And price forecast! 
-v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
+//v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
 
 for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_updateForecasts();
@@ -883,7 +882,7 @@ for( J_EA e : c_ambientDependentAssets ) {
 				//Do nothing, use preset ambient temp
 				break;
 			case AMBIENT_AIR:
-				((J_EAStorageHeat)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );
+				((J_EAStorageHeat)e).updateAmbientTemperature( pp_ambientTemperature_degC.getCurrentValue() );
 				break;
 			case BUILDING:
 				new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAStorageHeat!");
@@ -912,7 +911,7 @@ for( J_EA e : c_ambientDependentAssets ) {
 				//Do nothing, use preset ambient temp
 				break;
 			case AMBIENT_AIR:
-				((J_EAConversionHeatPump)e).updateAmbientTemperature( v_currentAmbientTemperature_degC );
+				((J_EAConversionHeatPump)e).updateAmbientTemperature( pp_ambientTemperature_degC.getCurrentValue() );
 				break;
 			case BUILDING:
 				new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAConversionHeatPump!");
@@ -936,7 +935,7 @@ for( J_EA e : c_ambientDependentAssets ) {
 	}
 	if( e instanceof J_EABuilding ) {
 		//traceln("v_currentSolarPowerNormalized_r: %s", v_currentSolarPowerNormalized_r);
-		((J_EABuilding)e).updateSolarRadiation(v_currentSolarPowerNormalized_r*1000);
+		((J_EABuilding)e).updateSolarRadiation(pp_PVProduction35DegSouth_fr.getCurrentValue()*1000);
 	}
 }
 /*ALCODEEND*/}
