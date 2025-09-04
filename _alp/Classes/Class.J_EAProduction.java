@@ -26,6 +26,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    	this.assetFlowCategory = OL_AssetFlowCategories.windProductionElectric_kW;
 	    } else if (type == OL_EnergyAssetType.PHOTOTHERMAL) {
 	    	this.assetFlowCategory = OL_AssetFlowCategories.ptProductionHeat_kW;
+	    } else if (type == OL_EnergyAssetType.GAS_BURNER) {
+	    	this.assetFlowCategory = OL_AssetFlowCategories.CHPProductionElectric_kW;
+	    } else {
+	    	throw new RuntimeException("No valid OL_EnergyAssetType, cannot assign AssetFlowCategory!");
 	    }
 	    this.energyAssetName = name;
 	    this.energyCarrier = energyCarrier;
