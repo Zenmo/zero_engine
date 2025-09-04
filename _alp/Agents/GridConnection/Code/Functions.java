@@ -1233,10 +1233,18 @@ if (p_batteryAsset != null) {
 double f_startAfterDeserialisation()
 {/*ALCODESTART::1753348699140*/
 v_liveData = new J_LiveData(this);
+v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+for (J_EA j_ea : c_energyAssets) {
+	v_liveData.activeProductionEnergyCarriers.addAll(j_ea.activeProductionEnergyCarriers);
+	v_liveData.activeConsumptionEnergyCarriers.addAll(j_ea.activeConsumptionEnergyCarriers);
+}
 //v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 //v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();

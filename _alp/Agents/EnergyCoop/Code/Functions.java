@@ -1449,6 +1449,13 @@ for (int i=0; i < liveWeekSize; i++){
 double f_startAfterDeserialisation()
 {/*ALCODESTART::1753348770752*/
 v_liveData = new J_LiveData(this);
+v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+for (GridConnection gc : c_memberGridConnections) {
+	v_liveData.activeProductionEnergyCarriers.addAll(gc.v_liveData.activeProductionEnergyCarriers);
+	v_liveData.activeConsumptionEnergyCarriers.addAll(gc.v_liveData.activeConsumptionEnergyCarriers);
+}
 //v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 //v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
