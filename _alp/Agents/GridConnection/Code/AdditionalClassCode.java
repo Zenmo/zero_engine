@@ -1,3 +1,5 @@
+public final String p_uid = UUID.randomUUID().toString();
+
 public OL_ResultScope getScope(){return OL_ResultScope.GRIDCONNECTION;}
 public J_RapidRunData getRapidRunData(){return v_rapidRunData;}
 public J_LiveData getLiveData(){return v_liveData;}
@@ -17,3 +19,4 @@ public static void forceSetOwner(Agent agent, AgentArrayList pop) throws Excepti
     c.setAccessible(true);
     c.toString();*/
 }
+

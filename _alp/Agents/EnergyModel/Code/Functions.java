@@ -1048,28 +1048,75 @@ if ( Math.abs(energyBalanceCheck_MWh) > 1e-6 ) {
 
 double f_startAfterDeserialisation()
 {/*ALCODESTART::1753963201170*/
+// Reconstruct the LiveData class
 v_liveData = new J_LiveData(this);
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 
-//v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT, OL_EnergyCarriers.METHANE, OL_EnergyCarriers.DIESEL);
-//v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT);
-//v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT, OL_EnergyCarriers.METHANE, OL_EnergyCarriers.DIESEL);
-for (J_EA j_ea : c_energyAssets) {
-	v_liveData.activeProductionEnergyCarriers.addAll(j_ea.activeProductionEnergyCarriers);
-	v_liveData.activeConsumptionEnergyCarriers.addAll(j_ea.activeConsumptionEnergyCarriers);
-}
-
-v_liveConnectionMetaData = new J_ConnectionMetaData(this);
-v_liveAssetsMetaData = new J_AssetsMetaData(this);
+//v_liveConnectionMetaData = new J_ConnectionMetaData(this);
+//v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+
+v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h + 24 * 7, p_timeStep_h);
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
 fm_currentBalanceFlows_kW = new J_FlowsMap();
 fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+
+// Reconstruct the LiveData class in the EnergyCoops
+for (EnergyCoop ec : pop_energyCoops) {
+	ec.v_liveData = new J_LiveData(ec);
+	ec.v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	ec.v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	ec.v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	
+	ec.v_liveData.connectionMetaData = ec.v_liveConnectionMetaData;
+	ec.v_liveData.assetsMetaData = ec.v_liveAssetsMetaData;
+
+	ec.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h + 24 * 7, p_timeStep_h);
+
+	ec.fm_currentProductionFlows_kW = new J_FlowsMap();
+	ec.fm_currentConsumptionFlows_kW = new J_FlowsMap();
+	ec.fm_currentBalanceFlows_kW = new J_FlowsMap();
+	ec.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+}
+
+// Reconstruct the LiveData class in the GridConnections and add EnergyCarriers
+List<GridConnection> allGridConnections = new ArrayList<>(c_gridConnections);
+allGridConnections.addAll(c_pausedGridConnections);
+for (GridConnection gc : allGridConnections) {
+	gc.v_liveData = new J_LiveData(gc);
+	gc.v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	gc.v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	gc.v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+	
+	gc.v_liveData.connectionMetaData = gc.v_liveConnectionMetaData;
+	gc.v_liveData.assetsMetaData = gc.v_liveAssetsMetaData;
+	
+	gc.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h + 24 * 7, p_timeStep_h);
+	
+	gc.fm_currentProductionFlows_kW = new J_FlowsMap();
+	gc.fm_currentConsumptionFlows_kW = new J_FlowsMap();
+	gc.fm_currentBalanceFlows_kW = new J_FlowsMap();
+	gc.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+	
+	for (J_EA j_ea : gc.c_energyAssets) {
+		gc.f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
+	}
+}
+
+//v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT, OL_EnergyCarriers.METHANE, OL_EnergyCarriers.DIESEL);
+//v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT);
+//v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT, OL_EnergyCarriers.METHANE, OL_EnergyCarriers.DIESEL);
+//for (J_EA j_ea : c_energyAssets) {
+	//v_liveData.activeProductionEnergyCarriers.addAll(j_ea.activeProductionEnergyCarriers);
+	//v_liveData.activeConsumptionEnergyCarriers.addAll(j_ea.activeConsumptionEnergyCarriers);
+//}
+
+
 /*ALCODEEND*/}
 
 Pair<J_DataSetMap, J_DataSetMap> f_getPeakWeekDataSets()
