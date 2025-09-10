@@ -584,7 +584,7 @@ p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek
 
 Date startDate = date();
 
-startDate.setYear(p_year-1900);
+p_year = startDate.getYear() + 1900;
 
 int monthIdx = 0;
 while ( t_h > hourOfYearPerMonth[monthIdx] ) {

@@ -1720,7 +1720,7 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[2023]]></Code>
+				<Code><![CDATA[0]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1712844009287</Id>
