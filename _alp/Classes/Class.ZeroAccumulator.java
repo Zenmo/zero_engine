@@ -323,6 +323,32 @@ public class ZeroAccumulator {
     	}
     }
 	
+    public DataSet getDataSet(double startTime_h, double dataSetSignalResolution_h) {
+    	if (this.hasTimeSeries) {
+    		if (dataSetSignalResolution_h % this.signalResolution_h == 0) {
+    			int accumulatorEntries = roundToInt(dataSetSignalResolution_h / this.signalResolution_h); // number of entries in accumulator per dataset entry
+    			if (duration_h % dataSetSignalResolution_h == 0) {
+    				int dataSetSize = roundToInt(duration_h / dataSetSignalResolution_h);
+            		DataSet ds = new DataSet(dataSetSize);
+        			for (int i = 0; i < dataSetSize; i++) {
+        				double value = 0;
+        				for (int j = 0; j < accumulatorEntries; j++) {
+        					value += this.timeSeries[accumulatorEntries * i + j];
+        				}
+        				value /= accumulatorEntries;
+        				ds.add(startTime_h + i * dataSetSignalResolution_h, roundToDecimal(value,3) );
+        			}
+        			return ds;
+    			} else {
+    				throw new RuntimeException("Impossible to create DataSet from accumulator: signal resolution does not divide into timeseries");
+    			}
+    		} else {
+    			throw new RuntimeException("Impossible to create DataSet from accumulator with signal resolution that is not a multiple of the accumulator's signal resolution.");
+    		}
+    	} else {
+    		throw new RuntimeException("Impossible to create DataSet from accumulator without timeSeries.");    		
+    	}
+    }
     public DataSet getDataSet(double startTime_h, double accStartTime_h, double accEndTime_h) {
     	
     	double dataSetDuration_h = accEndTime_h - accStartTime_h;
