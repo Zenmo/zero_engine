@@ -56,11 +56,6 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 
 double f_operateFlexAssets_overwrite()
 {/*ALCODESTART::1666956527771*/
-if(energyModel.t_h == 0){ // Load at gridnode is not known yet (due to time step delay)
-	p_batteryAsset.v_powerFraction_fr = 0;
-	return;
-}
-
 f_manageBattery();
 
 /*ALCODEEND*/}
