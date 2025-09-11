@@ -219,26 +219,6 @@
 			<LineArrowPosition>END</LineArrowPosition>
 		</AgentLink>
 	</AgentLinks>
-	<ContainerLinks>
-		<ContainerLink>
-			<Id>1665480565440</Id>
-			<Name><![CDATA[energyModel]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>40</X>
-			<Y>-50</Y>
-			<Label>
-				<X>10</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<ActiveObjectClass>
-				<PackageName>zero_engine</PackageName>
-				<ClassName>EnergyModel</ClassName>
-			</ActiveObjectClass>
-		</ContainerLink>
-	</ContainerLinks>
 	<Presentation>
 		<Level>
 			<Id>1665480522863</Id>

@@ -434,7 +434,7 @@ double f_updateForecasts()
 {/*ALCODESTART::1719302290904*/
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
 if ( v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW > 0 ) {
-	v_electricityYieldForecast_fr = (energyModel.v_SolarYieldForecast_fr * v_totalInstalledPVPower_kW + energyModel.v_WindYieldForecast_fr * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
+	v_electricityYieldForecast_fr = (energyModel.pf_PVProduction35DegSouth_fr.getForecast() * v_totalInstalledPVPower_kW + energyModel.pf_windProduction_fr.getForecast() * v_totalInstalledWindPower_kW) / (v_totalInstalledPVPower_kW + v_totalInstalledWindPower_kW);
 }
 
 /*ALCODEEND*/}

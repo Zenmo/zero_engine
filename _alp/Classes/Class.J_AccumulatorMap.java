@@ -136,6 +136,14 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		return dsm;
 	}
 	
+	public J_DataSetMap getDataSetMap( double startTime_h, double dataSetSignalResolution_h ) {
+		J_DataSetMap dsm = new J_DataSetMap(this.enumClass);
+		for (var EC : this.enumSet) {
+			dsm.put(EC, this.get(EC).getDataSet(startTime_h, dataSetSignalResolution_h));
+		}
+		return dsm;
+	}
+	
     public String toString() {
         if (this.accumulatorArray.length == 0) {
             return "{}";        	

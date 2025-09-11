@@ -220,7 +220,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 	}
 }
 
-for (GridConnection GC : c_customerGridConnections) { // Take 'behind the meter' production and consumption!
+for (GridConnection GC : c_customerGridConnections) { // Don't look at 'behind the meter' production/consumption, but use 'nett flow' as measure of consumption/production
 	if(GC.v_isActive){
 		for (OL_EnergyCarriers energyCarrier : v_liveData.activeEnergyCarriers) {
 			double nettConsumption_kW = GC.fm_currentBalanceFlows_kW.get(energyCarrier);
