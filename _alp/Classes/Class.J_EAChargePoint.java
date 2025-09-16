@@ -8,6 +8,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		public List<J_ChargingSession> chargeSessionList;
 		public boolean V1GCapable;
 		public boolean V2GCapable;
+		private boolean V1GActive = false;
 		private boolean V2GActive = false;
 		private int nbSockets;
 		private int[] nextSessionIdxs;// = 0;
@@ -23,8 +24,6 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		private double chargedStored_kWh;
 		private J_ChargingSession[] currentChargingSessionsStored;
 		private int[] nextSessionIdxsStored;
-		
-		public boolean gridAwareMode = true;
 		
 	    /**
 	     * Default constructor
@@ -62,7 +61,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 	    	}*/
 	    
 	    	// Check if the charger is capable of smart charging
-	    	boolean doV1G = this.V1GCapable;
+	    	boolean doV1G = this.V1GActive && this.V1GCapable;
 	    	boolean doV2G = this.V2GActive && this.V2GCapable;
 	    	
 	    	// Update the J_ChargingSessions of the sockets
@@ -105,7 +104,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			if (charge_kW > 0) { // charging
 				assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
 			} else if(charge_kW < 0){
-				if(this.V2GCapable && this.V2GActive) {
+				if(this.V2GCapable) { // && this.V2GActive) {
 					assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 				}
 				else {
@@ -131,7 +130,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 
 				if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
 					//traceln("Urgency charging on charge point GC: %s! May exceed connection capacity!", this.parentAgent);
-					chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);
+					chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);				
 				} else {
 					double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
 					double WTPCharging_eurpkWh = electricityPriceLowPassed_eurpkWh - WTPoffset_eurpkW * remainingFlexTime_h;  //+ urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / ev.getCapacityElectric_kW() ); // Scale WTP based on flexibility expressed in terms of power-fraction
@@ -215,8 +214,9 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			nextSessionIdxs = nextSessionIdxsStored;
 		}
 		
-		public  void setV2GActive(boolean activateV2G) {
+		public  void setActiveChargingMode(boolean activateV1G, boolean activateV2G) {
 			this.V2GActive = activateV2G;
+			this.V1GActive = activateV1G;
 			if(this.V2GCapable && activateV2G) {
 				this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
 			}

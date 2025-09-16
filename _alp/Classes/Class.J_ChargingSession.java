@@ -12,8 +12,8 @@ public class J_ChargingSession implements Serializable {
 	double vehicleMaxChargingPower_kW;
 	int socketNb;
 	
-	boolean V1GCapable = true;
-	boolean V2GCapable = true;
+	//boolean V1GCapable = true;
+	//boolean V2GCapable = true;
 	double chargedDuringSession_kWh = 0;
 	double dischargedDuringSession_kWh = 0;
 	

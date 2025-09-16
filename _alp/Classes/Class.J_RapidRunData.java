@@ -98,8 +98,12 @@ public class J_RapidRunData {
     public J_RapidRunData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
     	if (parentAgent instanceof GridConnection) {
-    		if (!((GridConnection)parentAgent).p_owner.p_detailedCompany && !((GridConnection)parentAgent).v_hasQuarterHourlyValues) {
+    		if (((GridConnection)parentAgent).p_owner == null) {
     			storeTotalAssetFlows = false;
+    		} else {
+	    		if (!((GridConnection)parentAgent).p_owner.p_detailedCompany && !((GridConnection)parentAgent).v_hasQuarterHourlyValues) {
+	    			storeTotalAssetFlows = false;
+	    		}
     		}
     	}
     }

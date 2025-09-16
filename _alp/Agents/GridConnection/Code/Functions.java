@@ -1361,15 +1361,16 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 }			
 /*ALCODEEND*/}
 
-double f_activateV2GChargingMode(boolean enable)
+double f_activateV2GChargingMode(boolean V2Genable,boolean smartChargingEnable)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
 	
 	//if(p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G){
-		c_electricVehicles.forEach(ev -> ev.setV2GActive(enable));
-		c_chargers.forEach(charger -> charger.setV2GActive(enable));
+		c_electricVehicles.forEach(ev -> ev.setV2GActive(V2Genable));
+		c_chargers.forEach(charger -> charger.setActiveChargingMode(smartChargingEnable,V2Genable));
+		//c_chargers.forEach(charger -> charger.setChargingCapabilities(smartChargingEnable, charger.V2GCapable));
 		//Check needed to make sure v2g is displayed correctly in the graphs
-		if (enable){
+		if (V2Genable){
 			f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
 		} 
 	/*}

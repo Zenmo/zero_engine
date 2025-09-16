@@ -58,7 +58,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));
     				chargeSetpoint_kW = ev.getCapacityElectric_kW();	
     			} else {
-    				double flexGain_r = 0.5; // how strongly so 'follow' currentBalanceBeforeEV_kW
+    				double flexGain_r = 0.5; // how strongly to 'follow' currentBalanceBeforeEV_kW
     				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
         			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
     					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
