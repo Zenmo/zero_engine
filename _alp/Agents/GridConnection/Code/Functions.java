@@ -1361,27 +1361,18 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 }			
 /*ALCODEEND*/}
 
-double f_activateV2GChargingMode(boolean V2Genable,boolean smartChargingEnable)
+double f_activateV2GChargingMode(boolean enableV2G,boolean enableSmartCharging)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
-	
-	//if(p_chargingAttitudeVehicles == OL_ChargingAttitude.V2G){
-		c_electricVehicles.forEach(ev -> ev.setV2GActive(V2Genable));
-		c_chargers.forEach(charger -> charger.setActiveChargingMode(smartChargingEnable,V2Genable));
-		//c_chargers.forEach(charger -> charger.setChargingCapabilities(smartChargingEnable, charger.V2GCapable));
-		//Check needed to make sure v2g is displayed correctly in the graphs
-		if (V2Genable){
+		c_electricVehicles.forEach(ev -> ev.setV2GActive(enableV2G));
+		c_chargers.forEach(charger -> charger.setActiveChargingMode(enableSmartCharging,enableV2G));
+		if (enableV2G){
 			f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
-		} 
-	/*}
-	else{
-		c_electricVehicles.forEach(ev -> ev.setV2GActive(false));
-		c_chargers.forEach(charger -> charger.setV2GActive(false));
-	}*/
+		}
 }
 /*ALCODEEND*/}
 
-double f_addChargingManagementToGC(OL_ChargingAttitude chargingType,boolean isGhost)
+double f_addChargingManagementToGC(OL_ChargingAttitude chargingType)
 {/*ALCODESTART::1755702594182*/
 if (chargingType == null) {
 	if (c_electricVehicles.size()>0){
@@ -1389,10 +1380,6 @@ if (chargingType == null) {
 	}
 }
 
-/*if (isGhost) {
-	engineGC.p_chargingManagement = new J_ChargingManagementSimple(engineGC);
-	return;
-}*/
 if (chargingType == OL_ChargingAttitude.CUSTOM) {
 	throw new RuntimeException("f_addChargingManagementToGC called with heating type CUSTOM");
 }

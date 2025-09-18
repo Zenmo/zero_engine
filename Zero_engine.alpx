@@ -690,6 +690,10 @@
 					<Name><![CDATA[BALANCE]]></Name>
 				</Option>
 				<Option>
+					<Id>1758191806152</Id>
+					<Name><![CDATA[BALANCE_GRID]]></Name>
+				</Option>
+				<Option>
 					<Id>1668371973959</Id>
 					<Name><![CDATA[MAX_POWER]]></Name>
 				</Option>
@@ -1704,6 +1708,11 @@
 				<Id>1756213864971</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH]]></Name>
 				<Folder>1756210851750</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1758192949084</Id>
+				<Name><![CDATA[J_ChargingManagementGridBalancing]]></Name>
+				<Folder>1755154772688</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

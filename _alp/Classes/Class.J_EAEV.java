@@ -148,10 +148,14 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public double getChargeDeadline_h() {
 		double chargeNeedForNextTrip_kWh = max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentStateOfCharge_kWh());
 		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
-		double nextTripStartTime_h = this.tripTracker.v_nextEventStartTime_min / 60;
+		double nextTripStartTime_h = getNextTripStartTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - chargeNeedForNextTrip_kWh / this.capacityElectric_kW - chargeTimeMargin_h;
 		//double chargeDeadline_h = floor((this.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / this.getCapacityElectric_kW() / timestep_h) * timestep_h;
 		return chargeDeadline_h;
+	}
+	
+	public double getNextTripStartTime_h() {
+		return this.tripTracker.v_nextEventStartTime_min / 60;
 	}
 	
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {

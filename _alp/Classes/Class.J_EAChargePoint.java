@@ -15,6 +15,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		
 		private J_ChargingSession[] currentChargingSessions;
 		
+		private int currentNumberOfChargingSockets = 0; // Used for certain charging algorithms
+		
 		// For filtered price
 		private double electricityPriceLowPassed_eurpkWh = 0.1;
 	    private double priceFilterTimeScale_h = 5*24;
@@ -71,13 +73,14 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 	    	
 			// Calculate the power output of the sockets
 			double power_kW = 0.0;
+			currentNumberOfChargingSockets = 0;
 			
 			for (int i = 0; i<this.nbSockets; i++) {				
 				if (currentChargingSessions[i] != null && t_h >= currentChargingSessions[i].startTime_h) {
 					power_kW += this.operateChargerSocket(i, t_h, currentElectricityPriceConsumption_eurpkWh, doV1G, doV2G);
-					
 					discharged_kWh += min(0,-power_kW) * timestep_h;
 					charged_kWh += max(0,power_kW) * timestep_h;
+					currentNumberOfChargingSockets++;
 				}
 			}
 			
@@ -223,6 +226,10 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			else {
 				this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
 			}
+		}
+		
+		public int getCurrentNumberOfChargingSockets() {
+			return this.currentNumberOfChargingSockets;
 		}
 		
 		@Override

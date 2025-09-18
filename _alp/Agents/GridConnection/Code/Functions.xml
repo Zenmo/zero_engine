@@ -786,11 +786,11 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[V2Genable]]></Name>
+			<Name><![CDATA[enableV2G]]></Name>
 			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[smartChargingEnable]]></Name>
+			<Name><![CDATA[enableSmartCharging]]></Name>
 			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -813,10 +813,6 @@
 		<Parameter>
 			<Name><![CDATA[chargingType]]></Name>
 			<Type><![CDATA[OL_ChargingAttitude]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[isGhost]]></Name>
-			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
