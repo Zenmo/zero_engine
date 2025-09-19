@@ -133,8 +133,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 						chargeSetpoint_kW = determineChargeSetpoint_price_kW(socketNb, t_h, currentElectricityPriceConsumption_eurpkWh, doV2G);
 						break;
 					case BALANCE_LOCAL:
-						chargeSetpoint_kW = determineChargeSetpoint_balanceLocal_kW(socketNb, t_h, doV2G);
-						break;
+						throw new RuntimeException("BALANCE LOCAL CHARGING STRATEGY HAS NOT BEEN CREATED YET FOR CHARGEPOINTS");				
+						//chargeSetpoint_kW = determineChargeSetpoint_balanceLocal_kW(socketNb, t_h, doV2G);
 					case BALANCE_GRID:
 						chargeSetpoint_kW = determineChargeSetpoint_balanceGrid_kW(socketNb, t_h, doV2G);
 						break;
@@ -189,12 +189,48 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		
 		private double determineChargeSetpoint_balanceLocal_kW(int socketNb, double t_h, boolean doV2G) {
 			// DOES NOT MAKE SENSE TO USE THIS FOR GCPUBLIC CHARGER, ONLY FOR GC THAT HAVE THEIR OWN CONSUMPTION -> WHICH SHOULD BE SUPPORTED EVENTUALLY
-			return determineChargeSetpoint_simple_kW(socketNb); // FOR NOW USE SIMPLE
+			if( parentAgent instanceof GCPublicCharger) {
+				throw new RuntimeException("This strategy only works for GCs that have their own consumption, do not use this for GCPublicChargers");
+			}
+			
+			//CREATE STRATEGY HERE
+			double chargeSetpoint_kW = 0;
+
+			return chargeSetpoint_kW; // FOR NOW USE SIMPLE
 		}	
 		
 		private double determineChargeSetpoint_balanceGrid_kW(int socketNb, double t_h, boolean doV2G) {
+			double chargeSetpoint_kW = 0;
+			double maxChargePower = capacityElectric_kW;
+			double remainingChargeDemand_kWh = currentChargingSessions[socketNb].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
+
+			GridNode parentNode = ((GridConnection)parentAgent).p_parentNodeElectric;
+			double currentBalanceOnGridNodeWithoutEV_kW = parentNode.v_currentLoad_kW - parentNode.v_currentChargingPower_kW;
+			double currentNumberOfChargingSockets = parentNode.v_currentNumberOfChargingChargePoints;
+	    	double parentNodeCapacity_kW = parentNode.p_capacity_kW * 0.9; // try to cap to 90% of capacity
+	    	double availableChargePower_kW = parentNodeCapacity_kW - currentBalanceOnGridNodeWithoutEV_kW;
+	    	double availableDischargePower_kW = parentNodeCapacity_kW + currentBalanceOnGridNodeWithoutEV_kW;
+	    	double availableChargePowerPerCharger_kW = availableChargePower_kW/currentNumberOfChargingSockets;
+	    	
+			double nextTripStartTime_h = currentChargingSessions[socketNb].endTime_h;
+			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+			double chargeDeadline_h =  nextTripStartTime_h - remainingChargeDemand_kWh / maxChargePower - chargeTimeMargin_h;
+			double remainingFlexTime_h = chargeDeadline_h - t_h; // measure of flexiblity left in current charging session.
+
+			if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
+				chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);				
+			} 
+			else {
+				chargeSetpoint_kW = min(availableChargePowerPerCharger_kW, remainingChargeDemand_kWh/timestep_h); // Maybe adding some safety margin
+				
+				if(doV2G && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0) {
+					//MAKE V2G HERE!!! maybe if node is overloaded try to v2g if possible??
+				}
+			}
 			
-			return determineChargeSetpoint_simple_kW(socketNb); // FOR NOW USE SIMPLE
+
+			
+			return chargeSetpoint_kW; // FOR NOW USE SIMPLE
 		}
 		
 
