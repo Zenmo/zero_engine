@@ -208,6 +208,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	
 	public void setV2GCapable(boolean isV2GCapable) {
 		this.V2GCapable = isV2GCapable;
+		
+		setV2GActive(getV2GActive());
+		
 		if(isV2GCapable) {
 			minimumRatioOfChargeCapacity_r = -1;
 		}
@@ -216,11 +219,15 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		}
 	}
 	
+	public boolean getV2GCapable() {
+		return this.V2GCapable;
+	}
+	
 	public boolean getV2GActive() {
 		return this.V2GActive;
 	}
 	
-	public void setV2GActive(boolean activateV2G) {
+	protected void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAEV during initialization itself. (No such thing as friend class in java, so only can put on protected).
 		this.V2GActive = activateV2G;
 		if(this.V2GCapable && activateV2G) {
 			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;

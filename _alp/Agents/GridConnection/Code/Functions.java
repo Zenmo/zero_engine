@@ -477,8 +477,8 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		c_hydrogenVehicles.add(hydrogenVehicle);		
 	} else if (vehicle instanceof J_EAEV ev) {
 		c_electricVehicles.add(ev);
-		//c_vehiclesAvailableForCharging.add(ev);
 		energyModel.c_EVs.add(ev);	
+		ev.setV2GActive(p_chargingManagement.getV2GActive());
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
@@ -1361,11 +1361,11 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 }			
 /*ALCODEEND*/}
 
-double f_activateV2GChargingMode(boolean enableV2G,boolean enableSmartCharging)
+double f_activateV2GChargingMode(boolean enableV2G)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
-		c_electricVehicles.forEach(ev -> ev.setV2GActive(enableV2G));
-		c_chargers.forEach(charger -> charger.setActiveChargingMode(enableSmartCharging,enableV2G));
+		p_chargingManagement.setV2GActive(enableV2G);
+		c_chargers.forEach(charger -> charger.setV2GActive(enableV2G));
 		if (enableV2G){
 			f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
 		}
@@ -1381,7 +1381,7 @@ if (chargingType == null) {
 }
 
 if (chargingType == OL_ChargingAttitude.CUSTOM) {
-	throw new RuntimeException("f_addChargingManagementToGC called with heating type CUSTOM");
+	throw new RuntimeException("f_addChargingManagementToGC called with charging type CUSTOM");
 }
 
 /*Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
@@ -1395,7 +1395,10 @@ switch (chargingType) {
 	case PRICE:
 		managementClass = J_ChargingManagementPrice.class;
 		break;
-	case BALANCE:
+	case BALANCE_LOCAL:
+		managementClass = J_ChargingManagementLocalBalancing.class;
+		break;
+	case BALANCE_GRID:
 		managementClass = J_ChargingManagementLocalBalancing.class;
 		break;
 	case MAX_POWER:
@@ -1414,5 +1417,19 @@ catch (Exception e) {
 }
 
 p_chargingManagement = chargingManagement;
+
+//TEMPORARY UNTIL CHARGEPOINT MANAGEMENT AND EV CHARGING MANAGEMENT ARE COMBINED
+if (c_chargers.size()>0){
+	if (chargingType == null) {
+			throw new RuntimeException("Charging strategy needed when chargers are present!");
+	}
+	else{
+		c_chargers.forEach(charger -> charger.setChargingAttitude(chargingType));
+	}
+}
+
+
+
+
 /*ALCODEEND*/}
 

@@ -25,6 +25,9 @@ public interface I_ChargingManagement
 	void initialize();
 	
 	OL_ChargingAttitude getCurrentChargingType();
+	
+	void setV2GActive(boolean activateV2G);
+	boolean getV2GActive();
 }
 
 

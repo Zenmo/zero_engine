@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
-    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE;
+    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
     private double GCdemandLowPassed_kW = 0.5;
@@ -22,6 +22,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     private double startTimeOfReducedChargingInterval_hr = 17; // Hour of the day
     private double endTimeOfReducedChargingInterval_hr = 21; // Hour of the day
     
+    private boolean V2GActive = false;
 
     /**
      * Default constructor
@@ -102,6 +103,15 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     	return this.endTimeOfReducedChargingInterval_hr;
     }
     
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(false)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
+	}
+	
 	@Override
 	public String toString() {
 		return "Active charging type: " + this.activeChargingType;
