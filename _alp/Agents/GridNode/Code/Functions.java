@@ -569,5 +569,11 @@ for(GridConnection GC : c_connectedGridConnections){
 		}
 	}
 }
+
+// Low pass filter
+double filterTimeScale_h = 5*24;
+double filterDiffGain_r = 1/(filterTimeScale_h/energyModel.p_timeStep_h);
+v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_currentChargingPower_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
+
 /*ALCODEEND*/}
 
