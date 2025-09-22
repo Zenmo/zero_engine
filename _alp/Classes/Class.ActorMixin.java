@@ -12,10 +12,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
+	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
+/*
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ConnectionOwner.class, name = "ConnectionOwner"),
     @JsonSubTypes.Type(value = EnergyCoop.class, name = "EnergyCoop"),
@@ -32,6 +33,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
     
     // Add other known subtypes here if needed
 })
+*/
+
 public abstract class ActorMixin implements Serializable {
 		
     	/*@JsonIgnore

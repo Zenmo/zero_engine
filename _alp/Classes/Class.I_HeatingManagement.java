@@ -2,8 +2,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
+/*
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
@@ -21,7 +24,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     @JsonSubTypes.Type(value = J_HeatingManagementProfileWithPTBufferSimple.class, name = "J_HeatingManagementProfileWithPTBufferSimple"),
     @JsonSubTypes.Type(value = J_HeatingManagementSimple.class, name = "J_HeatingManagementSimple"),
 })
-
+*/
 public interface I_HeatingManagement {
 	void manageHeating();
 	// Initiliaze throws an exception when the configuration of assets is not a valid combination

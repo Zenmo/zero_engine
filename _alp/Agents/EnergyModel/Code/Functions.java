@@ -1058,7 +1058,7 @@ v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTR
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
 
-v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h + 24 * 7, p_timeStep_h);
+v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1075,7 +1075,7 @@ for (EnergyCoop ec : pop_energyCoops) {
 	ec.v_liveData.connectionMetaData = ec.v_liveConnectionMetaData;
 	ec.v_liveData.assetsMetaData = ec.v_liveAssetsMetaData;
 
-	ec.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h + 24 * 7, p_timeStep_h);
+	ec.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
 
 	ec.fm_currentProductionFlows_kW = new J_FlowsMap();
 	ec.fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1095,7 +1095,7 @@ for (GridConnection gc : allGridConnections) {
 	gc.v_liveData.connectionMetaData = gc.v_liveConnectionMetaData;
 	gc.v_liveData.assetsMetaData = gc.v_liveAssetsMetaData;
 	
-	gc.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h + 24 * 7, p_timeStep_h);
+	gc.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
 	
 	gc.fm_currentProductionFlows_kW = new J_FlowsMap();
 	gc.fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1211,5 +1211,15 @@ double f_runAggregators()
 for (EnergyCoop EC : pop_energyCoops) {
 	EC.f_aggregatorManagement_EnergyCoop();
 }
+/*ALCODEEND*/}
+
+Date f_getDate()
+{/*ALCODESTART::1758012535712*/
+Date startDate = getExperiment().getEngine().getStartDate();
+long startDateUnixTime_ms = startDate.getTime();
+long runtime_ms = (long) (v_timeStepsElapsed * p_timeStep_h * 60 * 60 * 1000);
+Date date = new Date();
+date.setTime(startDateUnixTime_ms + runtime_ms);
+return date;
 /*ALCODEEND*/}
 

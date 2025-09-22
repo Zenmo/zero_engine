@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
+	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
+/*
 @JsonSubTypes({
     @JsonSubTypes.Type(value = J_BatteryManagementOff.class, name = "J_BatteryManagementOff"),
     @JsonSubTypes.Type(value = J_BatteryManagementPeakShaving.class, name = "J_BatteryManagementPeakShaving"),
@@ -18,7 +19,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     @JsonSubTypes.Type(value = J_BatteryManagementSelfConsumptionGridNode.class, name = "J_BatteryManagementSelfConsumptionGridNode"),
     @JsonSubTypes.Type(value = J_BatteryManagementExternalSetpoint.class, name = "J_BatteryManagementExternalSetpoint"),
 })
-    
+*/
+
     // Add other known subtypes here if needed
 
 public interface I_BatteryManagement

@@ -11,10 +11,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
+	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
+/*
 @JsonSubTypes({ // Needed because parentAgent in J_EA is of type Agent, and paused gridConnections are first serialized via their energy assets, leading to type ambigueity
     @JsonSubTypes.Type(value = Actor.class, name = "Actor"),
     @JsonSubTypes.Type(value = GridConnection.class, name = "GridConnection"),
@@ -31,6 +32,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
     
     // Add other known subtypes here if needed
 })
+*/
+
 @JsonAutoDetect(
     fieldVisibility = Visibility.PUBLIC_ONLY,    // ✅ only public fields are serialized
     getterVisibility = Visibility.NONE,

@@ -698,4 +698,20 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Date</ReturnType>
+		<Id>1758012535712</Id>
+		<Name><![CDATA[f_getDate]]></Name>
+		<X>720</X>
+		<Y>430</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
 </Functions>

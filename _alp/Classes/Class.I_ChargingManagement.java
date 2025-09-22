@@ -6,17 +6,19 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
 @JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
+	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
+/*
 @JsonSubTypes({
     @JsonSubTypes.Type(value = J_ChargingManagementLocalBalancing.class, name = "J_ChargingManagementLocalBalancing"),
     @JsonSubTypes.Type(value = J_ChargingManagementMaxAvailablePower.class, name = "J_ChargingManagementMaxAvailablePower"),
     @JsonSubTypes.Type(value = J_ChargingManagementPrice.class, name = "J_ChargingManagementPrice"),
     @JsonSubTypes.Type(value = J_ChargingManagementSimple.class, name = "J_ChargingManagementSimple"),
 })
-    
+*/
+
 public interface I_ChargingManagement
 {
 	void manageCharging();

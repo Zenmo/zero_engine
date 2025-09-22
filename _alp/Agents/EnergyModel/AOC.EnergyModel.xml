@@ -51,7 +51,8 @@ import com.anylogic.engine.markup.GISPoint;
 import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAStorageElectric;
 //import zero_engine.J_EAConsumption;
-]]></Import>
+
+import com.anylogic.cloud.util.DateUtils;]]></Import>
 	<Implements>I_EnergyData</Implements>
 	<StartupCode><![CDATA[v_liveData = new J_LiveData(this);
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);

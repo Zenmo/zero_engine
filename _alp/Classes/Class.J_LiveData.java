@@ -36,7 +36,7 @@ public class J_LiveData {
     public void resetLiveDatasets(double startTime, double endTime, double timeStep_h) {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
     		DataSet dsDemand = new DataSet( (int)(168 / timeStep_h) );
-    		for (double t = startTime; t <= endTime; t += timeStep_h) {
+    		for (double t = startTime; t < endTime; t += timeStep_h) {
     			dsDemand.add( t, 0);
     		}
     		dsm_liveDemand_kW.put( EC, dsDemand);
@@ -44,7 +44,7 @@ public class J_LiveData {
     	
     	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
     		DataSet dsSupply = new DataSet( (int)(168 / timeStep_h) );
-    		for (double t = startTime; t <= endTime; t += timeStep_h) {
+    		for (double t = startTime; t < endTime; t += timeStep_h) {
     			dsSupply.add( t, 0);
     		}
     		dsm_liveSupply_kW.put( EC, dsSupply);
@@ -57,7 +57,7 @@ public class J_LiveData {
 			}
     	}
     	
-		for (double t = startTime; t <= endTime; t += timeStep_h) {
+		for (double t = startTime; t < endTime; t += timeStep_h) {
 			
 			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
 				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
