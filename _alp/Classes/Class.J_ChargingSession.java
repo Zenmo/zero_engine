@@ -7,6 +7,7 @@ public class J_ChargingSession implements Serializable {
 	double endTime_h;
 	double timeStep_h;
 	double chargingDemand_kWh;
+	double avgPowerDemand_kW;
 	double batterySize_kWh;
 	double stateOfCharge_kWh;
 	double vehicleMaxChargingPower_kW;
@@ -39,6 +40,7 @@ public class J_ChargingSession implements Serializable {
     	this.endTime_h = 0.25 * endTime_quarterhours;
     	this.timeStep_h = timeStep_h;
     	this.chargingDemand_kWh = chargingDemand_kWh;
+    	this.avgPowerDemand_kW = this.chargingDemand_kWh / (this.endTime_h - this.startTime_h);
     	this.batterySize_kWh = batterySize_kWh;
     	this.socketNb = socketNb-1;
     	//stateOfCharge_kWh = batterySize_kWh - chargingDemand_kWh; // bold assumption... basically means every vehicle ends full. The reality is somewhere between: vehicle starts empty and vehicle ends full. 

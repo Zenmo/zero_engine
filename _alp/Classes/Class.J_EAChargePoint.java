@@ -208,29 +208,28 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			double currentBalanceOnGridNodeWithoutEV_kW = parentNode.v_currentLoad_kW - parentNode.v_currentChargingPower_kW;
 	    	double gridNodeLowPassedLoad_kW = parentNode.v_lowPassedLoadFilter_kW;
 	    	
-	    	
 			double nextTripStartTime_h = currentChargingSessions[socketNb].endTime_h;
 			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
 			double chargeDeadline_h =  nextTripStartTime_h - remainingChargeDemand_kWh / maxChargePower - chargeTimeMargin_h;
 			double remainingFlexTime_h = chargeDeadline_h - t_h; // measure of flexiblity left in current charging session.
 			double remainingTimeToCharge = nextTripStartTime_h - t_h - chargeTimeMargin_h;
 			
-			double avgPowerDemandTillTrip_kW = 0;
+			/*double avgPowerDemandTillTrip_kW = 0;
 			if(remainingTimeToCharge != 0) {
 				avgPowerDemandTillTrip_kW = remainingChargeDemand_kWh / (nextTripStartTime_h - t_h - chargeTimeMargin_h);
 			}
 			else if(remainingChargeDemand_kWh > 0) {
 				avgPowerDemandTillTrip_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);	
-			}
+			}*/
 			
 			if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
 				chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);	
 			} else {
-				double flexGain_r_manual = 0.5;
-				double flexGain_r = 1/max(1, parentNode.v_currentNumberOfChargingChargePoints) * flexGain_r_manual; // how strongly to 'follow' currentBalanceBeforeEV_kW -> influenced by the amount of charging chargers at this momment
-				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
+				double flexGain_r_manual = 0.8;
+				double flexGain_r = 1/max(1, (double)parentNode.v_currentNumberOfChargingChargePoints) * flexGain_r_manual; // how strongly to 'follow' currentBalanceBeforeEV_kW -> influenced by the amount of charging chargers at this momment
+				chargeSetpoint_kW = max(0, currentChargingSessions[socketNb].avgPowerDemand_kW + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));			    				
     			if ( doV2G && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
-					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceOnGridNodeWithoutEV_kW - gridNodeLowPassedLoad_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
+					chargeSetpoint_kW = min(0, currentChargingSessions[socketNb].avgPowerDemand_kW + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));
 				}    
 			}
 			return chargeSetpoint_kW;
