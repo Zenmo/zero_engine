@@ -470,15 +470,12 @@ acc_totalDLRfactor_f.reset();
 
 double f_runTimestep()
 {/*ALCODESTART::1701162826549*/
-t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;// + v_hourOfYearStart);// % 8760;
-
-// Reduce startdate after one year, loop all dat
-if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % 8760 == 0.0) {
-	Date startDate = getExperiment().getEngine().getStartDate();
-	startDate.setYear(startDate.getYear()-1);
-	getExperiment().getEngine().setStartDate(startDate);
-	traceln("Reduced anylogic date by one year, looping all data");
+if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % (p_runEndTime_h - p_runStartTime_h) == 0.0) {
+	f_loopSimulation();
 }
+
+//Update t_h
+t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
 
 // Update tijdreeksen in leesbare variabelen
 f_updateTimeseries(t_h);
@@ -1221,5 +1218,25 @@ long runtime_ms = (long) (v_timeStepsElapsed * p_timeStep_h * 60 * 60 * 1000);
 Date date = new Date();
 date.setTime(startDateUnixTime_ms + runtime_ms);
 return date;
+/*ALCODEEND*/}
+
+double f_loopSimulation()
+{/*ALCODESTART::1758619562148*/
+v_timeStepsElapsed = 0;
+f_clearAllLiveDatasets();
+traceln("The simulation has been looped.");
+/*ALCODEEND*/}
+
+double f_clearAllLiveDatasets()
+{/*ALCODESTART::1758619851984*/
+//Energy Model
+v_liveData.clearLiveDatasets();
+
+//Energy Coops
+pop_energyCoops.forEach(EC -> EC.v_liveData.clearLiveDatasets());
+
+//GridConnections
+c_gridConnections.forEach(GC -> GC.v_liveData.clearLiveDatasets());
+c_pausedGridConnections.forEach(GC -> GC.v_liveData.clearLiveDatasets());
 /*ALCODEEND*/}
 

@@ -32,7 +32,32 @@ public class J_LiveData {
     public J_LiveData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
     }
-	
+
+    public void clearLiveDatasets() {
+    	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
+    		dsm_liveDemand_kW.get(EC).reset();
+    	}
+    	
+    	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
+    		dsm_liveSupply_kW.get(EC).reset();
+    	}
+    	
+    	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
+			dsm_liveAssetFlows_kW.get(AC).reset();
+    	}
+
+    	data_totalDemand_kW.reset();
+    	data_totalSupply_kW.reset();
+    	data_liveElectricityBalance_kW.reset();
+    	data_gridCapacityDemand_kW.reset();
+    	data_gridCapacitySupply_kW.reset();
+
+
+    	data_batteryStoredEnergyLiveWeek_MWh.reset();
+    	data_batterySOC_fr.reset();
+    	
+    }
+    
     public void resetLiveDatasets(double startTime, double endTime, double timeStep_h) {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
     		DataSet dsDemand = new DataSet( (int)(168 / timeStep_h) );

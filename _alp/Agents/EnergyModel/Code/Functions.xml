@@ -242,7 +242,7 @@
 		<Id>1716890117265</Id>
 		<Name><![CDATA[f_getActiveGridConnections]]></Name>
 		<X>1640</X>
-		<Y>370</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -274,7 +274,7 @@
 		<Id>1716897568717</Id>
 		<Name><![CDATA[f_getConnectionOwners]]></Name>
 		<X>1640</X>
-		<Y>410</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -290,7 +290,7 @@
 		<Id>1716899946694</Id>
 		<Name><![CDATA[f_getTopLevelGridCapacity_kW]]></Name>
 		<X>1640</X>
-		<Y>430</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -306,7 +306,7 @@
 		<Id>1717058801652</Id>
 		<Name><![CDATA[f_getEnergyAssets]]></Name>
 		<X>1640</X>
-		<Y>450</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -322,7 +322,7 @@
 		<Id>1718289616227</Id>
 		<Name><![CDATA[f_getGridNodesTopLevel]]></Name>
 		<X>1640</X>
-		<Y>500</Y>
+		<Y>620</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -338,7 +338,7 @@
 		<Id>1718289761647</Id>
 		<Name><![CDATA[f_getGridNodesNotTopLevel]]></Name>
 		<X>1640</X>
-		<Y>520</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -408,7 +408,7 @@
 		<Id>1727167397666</Id>
 		<Name><![CDATA[f_getPausedGridConnections]]></Name>
 		<X>1640</X>
-		<Y>390</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -476,7 +476,7 @@
 		<Id>1739958854535</Id>
 		<Name><![CDATA[f_addEnergyCoop]]></Name>
 		<X>1640</X>
-		<Y>180</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -496,7 +496,7 @@
 		<Id>1739972940581</Id>
 		<Name><![CDATA[f_removeEnergyCoop]]></Name>
 		<X>1640</X>
-		<Y>200</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -516,7 +516,7 @@
 		<Id>1740056275008</Id>
 		<Name><![CDATA[f_addConsumptionEnergyCarrier]]></Name>
 		<X>1640</X>
-		<Y>240</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -536,7 +536,7 @@
 		<Id>1741710906926</Id>
 		<Name><![CDATA[f_updateActiveAssetsMetaData]]></Name>
 		<X>1640</X>
-		<Y>80</Y>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -552,7 +552,7 @@
 		<Id>1746021439807</Id>
 		<Name><![CDATA[f_addProductionEnergyCarrier]]></Name>
 		<X>1640</X>
-		<Y>260</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -636,7 +636,7 @@
 		<Id>1754379679149</Id>
 		<Name><![CDATA[f_addAssetFlow]]></Name>
 		<X>1640</X>
-		<Y>280</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -656,7 +656,7 @@
 		<Id>1754908171225</Id>
 		<Name><![CDATA[f_getGridConnectionsCollectionPointer]]></Name>
 		<X>1640</X>
-		<Y>560</Y>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -672,7 +672,7 @@
 		<Id>1755014169405</Id>
 		<Name><![CDATA[f_getPausedGridConnectionsCollectionPointer]]></Name>
 		<X>1640</X>
-		<Y>580</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -703,8 +703,40 @@
 		<ReturnType>Date</ReturnType>
 		<Id>1758012535712</Id>
 		<Name><![CDATA[f_getDate]]></Name>
-		<X>720</X>
-		<Y>430</Y>
+		<X>1640</X>
+		<Y>470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1758619562148</Id>
+		<Name><![CDATA[f_loopSimulation]]></Name>
+		<X>1640</X>
+		<Y>70</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1758619851984</Id>
+		<Name><![CDATA[f_clearAllLiveDatasets]]></Name>
+		<X>1660</X>
+		<Y>90</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
