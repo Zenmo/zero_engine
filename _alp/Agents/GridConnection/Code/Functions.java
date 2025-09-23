@@ -1180,6 +1180,9 @@ else {
 			coop.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
 		} 
 	}
+	
+	//Fast forward time dependent energy assets (if present)
+	c_chargers.forEach(charger -> charger.fastForwardCharingSessions(energyModel.t_h));
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();

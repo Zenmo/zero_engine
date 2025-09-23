@@ -243,10 +243,11 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 				this.currentChargingSessions[socketNb] = null;
 			}
 			
+
 			if ( this.currentChargingSessions[socketNb] == null ) { // socket currently free
 				 // check if we are not already past the last charging session.
-		
 				// Find next charging session on this socket
+				
 				while (this.nextSessionIdxs[socketNb]  < this.chargeSessionList.size() && this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).socketNb != socketNb) {				
 					this.nextSessionIdxs[socketNb]++;
 				}
@@ -267,6 +268,28 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 				}
 			} 
 		}
+		
+		
+		public void fastForwardCharingSessions(double t_h) {
+			for (int socketNb = 0; socketNb<this.nbSockets; socketNb++) {
+				
+				//Clear current charging session
+				this.currentChargingSessions[socketNb] = null;
+				
+				//Find next charging session that starts after the current time
+				while (this.nextSessionIdxs[socketNb]  < this.chargeSessionList.size() && (this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).socketNb != socketNb || this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).startTime_h <= t_h)) {				
+					this.nextSessionIdxs[socketNb]++;
+				}
+				
+				if (this.nextSessionIdxs[socketNb] >= this.chargeSessionList.size()) { // no more sessions available
+					break;					
+				} else { // Clone upcomming charger session and increase next session index					
+					this.currentChargingSessions[socketNb] = this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).getClone();
+					this.nextSessionIdxs[socketNb]++;
+				}
+			}
+		}
+		
 		
 		public void setV1GCapability(boolean V1GCapable) {
 			this.V1GCapable = V1GCapable;
