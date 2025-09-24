@@ -21,6 +21,9 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     private double priceFilterTimeScale_h = 5*24;
     private double priceFilterDiffGain_r;
     private EnumSet<OL_ChargingAttitude> supportedChargingTypes = EnumSet.noneOf(OL_ChargingAttitude.class);
+    
+    private boolean V2GActive = false;
+    
     //private double GCdemandLowPassed_kW = 0.5;
     //private double GCdemandFilterTimeScale_h = 5*24;
     /**
@@ -84,7 +87,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 	    				double priceGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
 	    				chargeSetpoint_kW = max(0, ev.getCapacityElectric_kW() * (WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r);			
 	    				//if ( chargeNeedForNextTrip_kWh < -ev.getCapacityElectric_kW()*gc.energyModel.p_timeStep_h && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
-	        			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
+	        			if ( this.V2GActive && ev.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
 	    	    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.
 	    					double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction
 	    					chargeSetpoint_kW = min(0, -ev.getCapacityElectric_kW() * (currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r);
@@ -98,7 +101,16 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     		}
     	}
     }
-
+    
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(false)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
+	}
+	
     @Override
 	public String toString() {
 		return "Active charging type: " + this.activeChargingType;

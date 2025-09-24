@@ -14,11 +14,12 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementLocalBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
-    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE;
+    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_LOCAL;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
     private double GCdemandLowPassed_kW = 0.5;
-
+    
+    private boolean V2GActive = false;
     /**
      * Default constructor
      */
@@ -58,7 +59,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));
     				chargeSetpoint_kW = ev.getCapacityElectric_kW();	
     			} else {
-    				double flexGain_r = 0.5; // how strongly so 'follow' currentBalanceBeforeEV_kW
+    				double flexGain_r = 0.5; // how strongly to 'follow' currentBalanceBeforeEV_kW
     				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
         			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
     					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
@@ -70,7 +71,15 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	}
     }
 
-
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
+	}
+	
 	@Override
 	public String toString() {
 		return "Active charging type: " + this.activeChargingType;

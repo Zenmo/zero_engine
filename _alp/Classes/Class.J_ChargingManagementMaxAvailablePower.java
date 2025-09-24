@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementMaxAvailablePower implements I_ChargingManagement {
 	private GridConnection gc;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.MAX_POWER;
+    
+    private boolean V2GActive = false;
     /**
      * Default constructor
      */
@@ -70,6 +72,15 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     	}
     }
     
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(false)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
+	}
+	
 	@Override
 	public String toString() {
 		return "Active charging type: " + this.activeChargingType;

@@ -148,10 +148,14 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public double getChargeDeadline_h() {
 		double chargeNeedForNextTrip_kWh = max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentStateOfCharge_kWh());
 		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
-		double nextTripStartTime_h = this.tripTracker.v_nextEventStartTime_min / 60;
+		double nextTripStartTime_h = getNextTripStartTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - chargeNeedForNextTrip_kWh / this.capacityElectric_kW - chargeTimeMargin_h;
 		//double chargeDeadline_h = floor((this.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / this.getCapacityElectric_kW() / timestep_h) * timestep_h;
 		return chargeDeadline_h;
+	}
+	
+	public double getNextTripStartTime_h() {
+		return this.tripTracker.v_nextEventStartTime_min / 60;
 	}
 	
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
@@ -204,6 +208,9 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	
 	public void setV2GCapable(boolean isV2GCapable) {
 		this.V2GCapable = isV2GCapable;
+		
+		setV2GActive(getV2GActive());
+		
 		if(isV2GCapable) {
 			minimumRatioOfChargeCapacity_r = -1;
 		}
@@ -212,11 +219,15 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		}
 	}
 	
+	public boolean getV2GCapable() {
+		return this.V2GCapable;
+	}
+	
 	public boolean getV2GActive() {
 		return this.V2GActive;
 	}
 	
-	public void setV2GActive(boolean activateV2G) {
+	protected void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAEV during initialization itself. (No such thing as friend class in java, so only can put on protected).
 		this.V2GActive = activateV2G;
 		if(this.V2GCapable && activateV2G) {
 			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
