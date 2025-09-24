@@ -117,11 +117,12 @@ public class J_RapidRunData {
     	return this.storeTotalAssetFlows;
     }
     
-    public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
+    public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers, EnumSet<OL_AssetFlowCategories> activeAssetFlows) {
     	this.timeStep_h = timeStep_h;
     	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
     	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
+
 	    //========== TOTAL ACCUMULATORS ==========//
 		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 24.0, simDuration_h );
 	    am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
@@ -135,15 +136,16 @@ public class J_RapidRunData {
 	    acc_totalPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
 	
 	    //========== ASSET FLOWS ==========//
+    	
 	    if (storeTotalAssetFlows) {
-	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, timeStep_h, simDuration_h);
+	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( activeAssetFlows, true, timeStep_h, simDuration_h);
 	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
 		    	ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(timeStep_h, simDuration_h);
 	    	} /*else {
 	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24, simDuration_h);
 	    	}*/
 	    } else {
-	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, true, 24.0, simDuration_h);
+	    	am_assetFlowsAccumulators_kW.createEmptyAccumulators( activeAssetFlows, true, 24.0, simDuration_h);
 	    	if (this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) {
 	    		ts_dailyAverageBatteriesStoredEnergy_MWh = new ZeroTimeSeries(24, simDuration_h);
 	    	} /*else {

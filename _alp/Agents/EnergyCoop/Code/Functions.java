@@ -1535,7 +1535,7 @@ v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
 EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeEnergyCarriers);
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeConsumptionEnergyCarriers);
 EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeProductionEnergyCarriers);
-	
+EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.copyOf(v_liveAssetsMetaData.activeAssetFlows);
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
 for(GridConnection GC : c_memberGridConnections){
@@ -1559,7 +1559,7 @@ v_rapidRunData.setStoreTotalAssetFlows(storeTotalAssetFlows);
 v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
-v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun);
+v_rapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
 
 /*ALCODEEND*/}
 

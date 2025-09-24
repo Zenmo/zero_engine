@@ -24,6 +24,7 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
     }
     
     public void createEmptyAccumulators(EnumSet<E> selectedFlows, boolean hasTimeSeries, double signalResolution_h, double duration_h) {
+    	this.clear();
     	for (E key : selectedFlows) {
     		this.put(key, new ZeroAccumulator(hasTimeSeries, signalResolution_h, duration_h));
     	}

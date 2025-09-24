@@ -1,5 +1,5 @@
 /**
- * J_ChargingManagementGridBalancing
+ * J_ChargingManagementOffPeak
  */	
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
-public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
+public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 
     private GridConnection gc;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
@@ -27,11 +27,11 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementGridBalancing() {
+    public J_ChargingManagementOffPeak() {
     	
     }
     
-    public J_ChargingManagementGridBalancing( GridConnection gc ) {
+    public J_ChargingManagementOffPeak( GridConnection gc ) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
     }

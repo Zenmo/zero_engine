@@ -1711,7 +1711,7 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1758192949084</Id>
-				<Name><![CDATA[J_ChargingManagementGridBalancing]]></Name>
+				<Name><![CDATA[J_ChargingManagementOffPeak]]></Name>
 				<Folder>1755154772688</Folder>
 			</JavaClass>
 		</JavaClasses>
