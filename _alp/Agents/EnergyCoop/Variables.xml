@@ -2015,7 +2015,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="private" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>Object</ValueElementClass>

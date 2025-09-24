@@ -424,41 +424,7 @@ if( this instanceof GCDistrictHeating gc) { // Temporarily disabled while transf
 
 double f_connectToJ_EA_default(J_EA j_ea)
 {/*ALCODESTART::1692799608559*/
-for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
-	if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
-		v_liveData.activeConsumptionEnergyCarriers.add(EC);
-		v_liveData.activeEnergyCarriers.add(EC);
-		if (energyModel.b_isInitialized && v_isActive) {
-			f_addConsumptionEnergyCarrier(EC);	
-			//Add EC to energyModel
-			energyModel.f_addConsumptionEnergyCarrier(EC);
-			c_parentCoops.forEach(x -> x.f_addConsumptionEnergyCarrier(EC));
-		}
-	}
-}
-
-for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
-	if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
-		v_liveData.activeProductionEnergyCarriers.add(EC);
-		v_liveData.activeEnergyCarriers.add(EC);
-		if (energyModel.b_isInitialized && v_isActive) {		
-			f_addProductionEnergyCarrier(EC);
-			//Add EC to energyModel
-			energyModel.f_addProductionEnergyCarrier(EC);
-			c_parentCoops.forEach(x -> x.f_addProductionEnergyCarrier(EC));			
-		}
-	}
-}
-
-if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.contains(j_ea.assetFlowCategory)) { // add live dataset
-	OL_AssetFlowCategories AC = j_ea.assetFlowCategory;
-	if (energyModel.b_isInitialized && v_isActive) {	
-		f_addAssetFlow(AC);	
-	}
-	else{
-		v_liveAssetsMetaData.activeAssetFlows.add(AC);
-	}
-}
+f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
 
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
@@ -1236,10 +1202,20 @@ if (p_batteryAsset != null) {
 double f_startAfterDeserialisation()
 {/*ALCODESTART::1753348699140*/
 v_liveData = new J_LiveData(this);
+v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+
 //v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 //v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+
+v_liveData.resetLiveDatasets(energyModel.p_runStartTime_h, energyModel.p_runStartTime_h + 24 * 7, energyModel.p_timeStep_h);
+
+for (J_EA j_ea : c_energyAssets) {
+	f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
+}
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1434,5 +1410,44 @@ if (c_chargers.size()>0){
 
 
 
+/*ALCODEEND*/}
+
+double f_addEnergyCarriersAndAssetCategoriesFromEA(J_EA j_ea)
+{/*ALCODESTART::1756977865503*/
+for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
+	if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
+		v_liveData.activeConsumptionEnergyCarriers.add(EC);
+		v_liveData.activeEnergyCarriers.add(EC);
+		if (energyModel.b_isInitialized && v_isActive) {
+			f_addConsumptionEnergyCarrier(EC);	
+			//Add EC to energyModel
+			energyModel.f_addConsumptionEnergyCarrier(EC);
+			c_parentCoops.forEach(x -> x.f_addConsumptionEnergyCarrier(EC));
+		}
+	}
+}
+
+for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
+	if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
+		v_liveData.activeProductionEnergyCarriers.add(EC);
+		v_liveData.activeEnergyCarriers.add(EC);
+		if (energyModel.b_isInitialized && v_isActive) {		
+			f_addProductionEnergyCarrier(EC);
+			//Add EC to energyModel
+			energyModel.f_addProductionEnergyCarrier(EC);
+			c_parentCoops.forEach(x -> x.f_addProductionEnergyCarrier(EC));			
+		}
+	}
+}
+
+if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.contains(j_ea.assetFlowCategory)) { // add live dataset
+	OL_AssetFlowCategories AC = j_ea.assetFlowCategory;
+	if (energyModel.b_isInitialized && v_isActive) {	
+		f_addAssetFlow(AC);	
+	}
+	else{
+		v_liveAssetsMetaData.activeAssetFlows.add(AC);
+	}
+}
 /*ALCODEEND*/}
 

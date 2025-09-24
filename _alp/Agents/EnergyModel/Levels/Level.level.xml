@@ -607,7 +607,7 @@
 		<Id>1716890105093</Id>
 		<Name><![CDATA[line10]]></Name>
 		<X>1620</X>
-		<Y>350</Y>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -635,7 +635,7 @@
 		<Id>1716890105095</Id>
 		<Name><![CDATA[text12]]></Name>
 		<X>1710</X>
-		<Y>330</Y>
+		<Y>430</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -688,7 +688,7 @@
 		<Id>1739958834681</Id>
 		<Name><![CDATA[line11]]></Name>
 		<X>1620</X>
-		<Y>160</Y>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -716,7 +716,7 @@
 		<Id>1739958834683</Id>
 		<Name><![CDATA[text14]]></Name>
 		<X>1710</X>
-		<Y>140</Y>
+		<Y>240</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -845,7 +845,7 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<Id>1753353340150</Id>
 		<Name><![CDATA[txt_updateFunctions]]></Name>
 		<X>1710</X>
-		<Y>40</Y>
+		<Y>140</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -870,7 +870,7 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<Id>1753353355569</Id>
 		<Name><![CDATA[line_updateFunctions]]></Name>
 		<X>1620</X>
-		<Y>60</Y>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1313,4 +1313,57 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<Text>
+		<Id>1758620074679</Id>
+		<Name><![CDATA[txt_loopSimulationFunctionality]]></Name>
+		<X>1720</X>
+		<Y>30</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[Loop simulation functionality]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>11</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>CENTER</Alignment>
+	</Text>
+	<Line>
+		<Id>1758620074681</Id>
+		<Name><![CDATA[line_updateFunctions1]]></Name>
+		<X>1630</X>
+		<Y>50</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<ZHeight>10</ZHeight>
+		<LineWidth>1</LineWidth>
+		<LineColor>-16777216</LineColor>
+		<LineMaterial>null</LineMaterial>
+		<LineStyle>SOLID</LineStyle>
+		<BeginArrowSize>1</BeginArrowSize>
+		<BeginArrowStyle>0</BeginArrowStyle>
+		<EndArrowSize>1</EndArrowSize>
+		<EndArrowStyle>0</EndArrowStyle>
+		<Dx>190</Dx>
+		<Dy>0</Dy>
+		<Dz>0</Dz>
+	</Line>
 </Presentation>

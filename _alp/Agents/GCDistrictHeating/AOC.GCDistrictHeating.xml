@@ -93,6 +93,9 @@
 		<Parameter>
 			<Name><![CDATA[p_chargingManagement]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_uid]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

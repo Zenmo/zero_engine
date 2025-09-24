@@ -639,6 +639,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753348699140</Id>
 		<Name><![CDATA[f_startAfterDeserialisation]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1030</X>
 		<Y>50</Y>
 		<Label>
@@ -809,6 +810,26 @@
 		<Parameter>
 			<Name><![CDATA[chargingType]]></Name>
 			<Type><![CDATA[OL_ChargingAttitude]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1756977865503</Id>
+		<Name><![CDATA[f_addEnergyCarriersAndAssetCategoriesFromEA]]></Name>
+		<X>1310</X>
+		<Y>40</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EA]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

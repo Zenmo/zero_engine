@@ -1449,15 +1449,29 @@ for (int i=0; i < liveWeekSize; i++){
 double f_startAfterDeserialisation()
 {/*ALCODESTART::1753348770752*/
 v_liveData = new J_LiveData(this);
-//v_liveConnectionMetaData = new J_ConnectionMetaData(this);
-//v_liveAssetsMetaData = new J_AssetsMetaData(this);
+v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
+
+v_liveData.resetLiveDatasets(energyModel.p_runStartTime_h, energyModel.p_runStartTime_h + 24 * 7, energyModel.p_timeStep_h);
+
+for (GridConnection gc : c_memberGridConnections) {
+	for (OL_EnergyCarriers EC : gc.v_liveData.activeProductionEnergyCarriers) {
+		f_addProductionEnergyCarrier(EC);
+	}
+	for (OL_EnergyCarriers EC : gc.v_liveData.activeConsumptionEnergyCarriers) {
+		f_addConsumptionEnergyCarrier(EC);
+	}
+}
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
 fm_currentBalanceFlows_kW = new J_FlowsMap();
 fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+
 /*ALCODEEND*/}
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)

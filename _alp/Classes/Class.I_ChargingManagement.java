@@ -17,8 +17,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
     @JsonSubTypes.Type(value = J_ChargingManagementMaxAvailablePower.class, name = "J_ChargingManagementMaxAvailablePower"),
     @JsonSubTypes.Type(value = J_ChargingManagementPrice.class, name = "J_ChargingManagementPrice"),
     @JsonSubTypes.Type(value = J_ChargingManagementSimple.class, name = "J_ChargingManagementSimple"),
-})*/
-    
+})
+*/
+
 public interface I_ChargingManagement
 {
 	void manageCharging();

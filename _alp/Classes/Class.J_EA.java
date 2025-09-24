@@ -20,7 +20,12 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
-
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.CLASS,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "type"
+	)
+/*
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
@@ -39,11 +44,12 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     @JsonSubTypes.Type(value = J_EAConversionHeatPump.class, name = "J_EAConversionHeatPump"),
     @JsonSubTypes.Type(value = J_EAEV.class, name = "J_EAEV"),
     @JsonSubTypes.Type(value = J_EADieselVehicle.class, name = "J_EADieselVehicle"),
+    @JsonSubTypes.Type(value = J_EAHydrogenVehicle.class, name = "J_EAHydrogenVehicle"),
     @JsonSubTypes.Type(value = J_EAConversionHeatDeliverySet.class, name = "J_EAConversionHeatDeliverySet"),
-    
     
     // Add other known subtypes here if needed
 })
+*/
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
 	
