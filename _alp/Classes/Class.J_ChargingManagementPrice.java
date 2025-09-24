@@ -19,7 +19,7 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     private double priceFilterTimeScale_h = 5*24;
     private double priceFilterDiffGain_r;
 
-
+    private boolean V2GActive = false;
     /**
      * Default constructor
      */
@@ -81,6 +81,15 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     	}
     }
 
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(false)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
+	}
+	
     @Override
  	public String toString() {
  		return "Active charging type: " + this.activeChargingType;

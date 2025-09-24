@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 /*
 @JsonSubTypes({
     @JsonSubTypes.Type(value = J_ChargingManagementLocalBalancing.class, name = "J_ChargingManagementLocalBalancing"),
+    @JsonSubTypes.Type(value = J_ChargingManagementOffPeak.class, name = "J_ChargingManagementOffPeak"),
     @JsonSubTypes.Type(value = J_ChargingManagementMaxAvailablePower.class, name = "J_ChargingManagementMaxAvailablePower"),
     @JsonSubTypes.Type(value = J_ChargingManagementPrice.class, name = "J_ChargingManagementPrice"),
     @JsonSubTypes.Type(value = J_ChargingManagementSimple.class, name = "J_ChargingManagementSimple"),
@@ -26,6 +27,9 @@ public interface I_ChargingManagement
 	void initialize();
 	
 	OL_ChargingAttitude getCurrentChargingType();
+	
+	void setV2GActive(boolean activateV2G);
+	boolean getV2GActive();
 }
 
 

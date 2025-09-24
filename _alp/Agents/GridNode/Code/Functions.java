@@ -291,6 +291,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT) & b_transportBufferValid ) { // 
 //traceln("GridNode " + p_gridNodeID + " update at time " + time(HOUR));
 f_nodeMetering();
 
+f_getCurrentChargingInformation();
 /*ALCODEEND*/}
 
 double f_addGridBatteryLoad()
@@ -553,5 +554,27 @@ double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
 DataSet ds = acc_annualElectricityBalance_kW.getDataSet(energyModel.p_runStartTime_h, accStartTime_h, accStartTime_h+24*7);
    
 return ds;
+/*ALCODEEND*/}
+
+double f_getCurrentChargingInformation()
+{/*ALCODESTART::1758209089894*/
+v_currentChargingPower_kW = 0;
+v_currentNumberOfChargingChargePoints = 0;
+
+for(GridConnection GC : c_connectedGridConnections){
+	if(GC instanceof GCPublicCharger){
+		for(J_EAChargePoint charger : GC.c_chargers){
+			v_currentChargingPower_kW += charger.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+			v_currentNumberOfChargingChargePoints += charger.getCurrentNumberOfChargingSockets();
+		}
+	}
+}
+
+// Low pass filter
+double filterTimeScale_h = 5*24;
+double filterDiffGain_r = 1/(filterTimeScale_h/energyModel.p_timeStep_h);
+v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_currentChargingPower_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
+//v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
+
 /*ALCODEEND*/}
 

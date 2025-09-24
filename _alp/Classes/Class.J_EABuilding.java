@@ -8,6 +8,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
 	
+	//Slider scaling factor
+	private double lossScalingFactor_fr = 1;
+	
 	// Optional Interior/Exterior Heat buffers
 	private double interiorDelayTime_h;
 	private double[] interiorReleaseSchedule_kWh;
@@ -17,7 +20,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	private double[] exteriorReleaseSchedule_kWh;
 	private double[] exteriorReleaseScheduleStored_kWh;
 	private int exteriorReleaseScheduleIndex;	
-
+	
     /**
      * Default constructor
      */
@@ -51,7 +54,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	@Override
 	public void calculateLoss() {
-		double heatLoss_kW = this.lossFactor_WpK * ( this.temperature_degC - this.ambientTemperature_degC ) / 1000;
+		double heatLoss_kW = (this.lossFactor_WpK * ( this.temperature_degC - this.ambientTemperature_degC ) / 1000) * lossScalingFactor_fr;
 		//traceln("ambientTemperature_degC in J_EABuilding: %s", this.ambientTemperature_degC);
 		//traceln("heatLoss_kW: %s", heatLoss_kW);
 		double deltaEnergy_kWh = -heatLoss_kW * this.timestep_h;
@@ -198,10 +201,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.lossFactor_WpK = lossFactor_WpK;
 	}
 	
-	/*@Override
-	public double getHeatCapacity_JpK() {
-		return heatCapacity_JpK;
-	}*/
+	public void setLossScalingFactor_fr( double lossScalingFactor_fr) {
+		this.lossScalingFactor_fr = lossScalingFactor_fr;
+	}
+
 	
 	@Override
     public void storeStatesAndReset() {
