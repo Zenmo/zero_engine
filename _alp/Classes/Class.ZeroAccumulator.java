@@ -376,10 +376,19 @@ public class ZeroAccumulator {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
-        sb.append("ZeroAccumulator, totalEnergy_kWh: ");
+        
+        sb.append("Total Energy [kWh]: ");
         sb.append(this.totalEnergy_kWh);
-
+        sb.append(System.lineSeparator());
+        sb.append("Duration [h]: ");
+        sb.append(this.duration_h);
+        sb.append(System.lineSeparator());
+        sb.append("Signal Resolution [h]:");
+        sb.append(this.signalResolution_h);
+        sb.append(System.lineSeparator());
+        sb.append("Has Timeseries: ");
+        sb.append(this.hasTimeSeries);
+        
         return sb.toString();
     }
 

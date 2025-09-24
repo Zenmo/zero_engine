@@ -416,6 +416,8 @@ for (GridNode GN : c_connectedGridNodes) {
 	v_totalInstalledPVPower_kW += GN.v_totalInstalledPVPower_kW;
 }
 
+acc_annualElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
+
 /*
 if ( p_energyType == OL_EnergyCarriers.HEAT ) {
 	double capacityHeat_kW = 1000000;

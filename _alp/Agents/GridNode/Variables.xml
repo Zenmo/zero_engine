@@ -711,9 +711,6 @@ geupdate vanuit
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
