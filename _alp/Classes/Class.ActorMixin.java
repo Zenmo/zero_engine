@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
     // Add other known subtypes here if needed
 })
 */
+//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
 public abstract class ActorMixin implements Serializable {
 		

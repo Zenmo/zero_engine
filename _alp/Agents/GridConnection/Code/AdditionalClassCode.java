@@ -5,7 +5,6 @@ public J_RapidRunData getRapidRunData(){return v_rapidRunData;}
 public J_LiveData getLiveData(){return v_liveData;}
 public J_RapidRunData getPreviousRapidRunData(){return v_previousRunData;}
 
-
 public static void forceSetOwner(Agent agent, AgentArrayList pop) throws Exception {
 	Agent owner = pop.getOwner();
     Field f = Agent.class.getDeclaredField("d");

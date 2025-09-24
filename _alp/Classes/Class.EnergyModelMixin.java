@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
     isGetterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
-)*/
+)
 @JsonIgnoreProperties({"p_cookingPatternCsv","p_householdTripsCsv","p_truckTripsCsv","connections",
 	"pop_gridNodes","pop_gridConnections","Houses","pop_connectionOwners","pop_energySuppliers","pop_energyCoops","pop_gridOperators","pop_GIS_Objects","pop_GIS_Parcels","pop_GIS_Buildings",
 	"DistrictHeatingSystems",
@@ -25,9 +25,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	"EnergyConversionSites",
 	"PublicChargers",
 	"Neighborhoods",
-	"c_defaultHeatingStrategies",
-	"va_engine",
-	"_origin_VA"})
+	"c_defaultHeatingStrategies"
+//	"_origin_VA"
+})*/
 	
 //JsonIgnoreProperties({"color","VA_engine","_origin_VA","energyDataViewer"})
 

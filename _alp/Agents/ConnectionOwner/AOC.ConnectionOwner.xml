@@ -6,7 +6,7 @@
 	<Import><![CDATA[//import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties({"va_ConnectionOwner","_origin_VA"})
+//@JsonIgnoreProperties({"va_ConnectionOwner","_origin_VA"})
 ]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>

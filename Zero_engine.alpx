@@ -1588,6 +1588,7 @@
 			<JavaClass>
 				<Id>1753277071874</Id>
 				<Name><![CDATA[PopulationMixin]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1598,21 +1599,25 @@
 			<JavaClass>
 				<Id>1753279653467</Id>
 				<Name><![CDATA[DataSetMixin]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753279891115</Id>
 				<Name><![CDATA[EnergyModelMixin]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753280103414</Id>
 				<Name><![CDATA[TableFunctionMixin]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753342010985</Id>
 				<Name><![CDATA[ActorMixin]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1753342021373</Folder>
 			</JavaClass>
 			<JavaClass>
