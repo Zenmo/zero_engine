@@ -6,25 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-//import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 
 @JsonAutoDetect(
-	    fieldVisibility = Visibility.NONE,    // ✅ only public fields are serialized
+	    fieldVisibility = Visibility.NONE,    // 
 	    getterVisibility = Visibility.NONE,
 	    isGetterVisibility = Visibility.NONE,
 	    setterVisibility = Visibility.NONE,
 	    creatorVisibility = Visibility.NONE
 	)
-//@JsonIgnoreProperties({"connections"})
 
-
-//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
-
-//@JsonIgnoreType
+@JsonIgnoreType
 public abstract class IgnoreClassMixin implements Serializable {
 		
     	/*@JsonIgnore

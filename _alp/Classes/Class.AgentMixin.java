@@ -44,29 +44,32 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 //@JsonIgnoreProperties({"connections"})
 @JsonIgnoreProperties({ 
 	"gisRegion","p_uniqueColor","p_defaultFillColor","p_defaultLineColor",
-	"data_liveLoad_kW","data_liveCapacitySupply_kW", "data_liveCapacityDemand_kW",
+	"_pl_powerFlows_autoUpdateEvent_xjal",
+	"_SOC_plot_autoUpdateEvent_xjal",	
+	"c_defaultHeatingStrategies",
+	"connections"
+	//"p_cookingPatternCsv","p_householdTripsCsv","p_truckTripsCsv",
+
+	/*"data_liveLoad_kW","data_liveCapacitySupply_kW", "data_liveCapacityDemand_kW",
 	"data_totalLoad_kW",
 	"data_summerWeekLoad_kW",
-	"data_winterWeekLoad_kW",
-	"va_gridNode",
+	"data_winterWeekLoad_kW",*/
+	/*"va_gridNode",
 	"va_coop",
 	"va_gridConnection",
 	"va_ConnectionOwner",
 	"va_engine",
-	"_pl_powerFlows_autoUpdateEvent_xjal",
-	"_SOC_plot_autoUpdateEvent_xjal",
-	"_origin_VA",
+	"_origin_VA",*/
 	
-	"p_cookingPatternCsv","p_householdTripsCsv","p_truckTripsCsv","connections",
-	"pop_gridNodes","pop_gridConnections","Houses","pop_connectionOwners","pop_energySuppliers","pop_energyCoops","pop_gridOperators","pop_GIS_Objects","pop_GIS_Parcels","pop_GIS_Buildings",
+	/*"pop_gridNodes","pop_gridConnections","Houses","pop_connectionOwners","pop_energySuppliers","pop_energyCoops","pop_gridOperators","pop_GIS_Objects","pop_GIS_Parcels","pop_GIS_Buildings",
 	"DistrictHeatingSystems",
 	"GridBatteries",
 	"EnergyProductionSites",
 	"UtilityConnections",
 	"EnergyConversionSites",
 	"PublicChargers",
-	"Neighborhoods",
-	"c_defaultHeatingStrategies"
+	"Neighborhoods",*/
+
 })
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
