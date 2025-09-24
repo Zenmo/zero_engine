@@ -681,6 +681,11 @@ double f_setInitialValues()
 
 double f_initializePause()
 {/*ALCODESTART::1722590514591*/
+for (GridConnection GC : UtilityConnections) {
+	if (!GC.v_isActive) {
+		GC.f_setActive(false);
+	}
+}
 for (GridConnection GC : EnergyProductionSites) {
 	if (!GC.v_isActive) {
 		GC.f_setActive(false);
