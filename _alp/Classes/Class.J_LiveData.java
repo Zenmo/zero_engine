@@ -2,8 +2,8 @@ import java.util.EnumSet;
 /**
  * J_LiveData
  */	
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-@JsonIgnoreType
+//import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
 public class J_LiveData {
 	
 	public Agent parentAgent;
@@ -29,6 +29,11 @@ public class J_LiveData {
     /**
      * Default constructor
      */
+	
+	public J_LiveData() { // needed for deserialisation
+	
+	}
+	
     public J_LiveData(Agent parentAgent) {
     	this.parentAgent = parentAgent;
     }

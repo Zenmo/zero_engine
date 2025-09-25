@@ -4,6 +4,8 @@
 	<Name><![CDATA[GIS_Building]]></Name>
 	<Description><![CDATA[Object for GISRegions of buildings. Contains information about the building. The addresses are available through the contained GridConnections.]]></Description>
 	<Folder>1752681631114</Folder>
+	<Import><![CDATA[//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+//@JsonIgnoreProperties({"level"})]]></Import>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
 		<ClassName>GIS_Object</ClassName>

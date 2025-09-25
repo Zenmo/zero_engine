@@ -363,7 +363,8 @@ v_weekendExcessImport_MWh = 0;
 v_weekendExcessExport_MWh = 0;
 
 // Reset Accumulators
-acc_annualElectricityBalance_kW.reset();
+acc_annualElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
+//acc_annualElectricityBalance_kW.reset();
 /*ALCODEEND*/}
 
 double f_calculateKPIs()
@@ -415,8 +416,6 @@ for (GridNode GN : c_connectedGridNodes) {
 	v_totalInstalledWindPower_kW += GN.v_totalInstalledWindPower_kW;
 	v_totalInstalledPVPower_kW += GN.v_totalInstalledPVPower_kW;
 }
-
-acc_annualElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
 
 /*
 if ( p_energyType == OL_EnergyCarriers.HEAT ) {

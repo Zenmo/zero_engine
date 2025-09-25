@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 */
 
 @JsonAutoDetect(
-    fieldVisibility = Visibility.PUBLIC_ONLY,    // ✅ only public fields are serialized
+    fieldVisibility = Visibility.ANY,//PUBLIC_ONLY,    // ✅ only public fields are serialized
     getterVisibility = Visibility.NONE,
     isGetterVisibility = Visibility.NONE,
     setterVisibility = Visibility.NONE,
@@ -45,9 +45,27 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 @JsonIgnoreProperties({ 
 	"gisRegion","p_uniqueColor","p_defaultFillColor","p_defaultLineColor",
 	"_pl_powerFlows_autoUpdateEvent_xjal",
-	"_SOC_plot_autoUpdateEvent_xjal",	
+	"_SOC_plot_autoUpdateEvent_xjal",
 	"c_defaultHeatingStrategies",
-	"connections"
+	"connections",
+
+	// When also writing private values, these additional fields end up in the json:
+	"ik",
+	"line",
+	"text",
+	"level",
+	"presentation",
+	"_getLevels_xjal"
+	/*"icon",
+	"font",
+	"name",
+	"color"*/
+	
+	/*"c_gridNodeExecutionList",
+	"c_gridNodeExecutionListReverse",
+	"c_gridNodesTopLevel",
+	"c_gridNodesNotTopLevel",*/
+	
 	//"p_cookingPatternCsv","p_householdTripsCsv","p_truckTripsCsv",
 
 	/*"data_liveLoad_kW","data_liveCapacitySupply_kW", "data_liveCapacityDemand_kW",
