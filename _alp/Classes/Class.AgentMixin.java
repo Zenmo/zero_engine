@@ -15,24 +15,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
-/*
-@JsonSubTypes({ // Needed because parentAgent in J_EA is of type Agent, and paused gridConnections are first serialized via their energy assets, leading to type ambigueity
-    @JsonSubTypes.Type(value = Actor.class, name = "Actor"),
-    @JsonSubTypes.Type(value = GridConnection.class, name = "GridConnection"),
-    @JsonSubTypes.Type(value = GridNode.class, name = "GridNode"),
-    @JsonSubTypes.Type(value = GIS_Object.class, name = "GIS_Object"),
-    @JsonSubTypes.Type(value = EnergyModel.class, name = "EnergyModel"),
-    @JsonSubTypes.Type(value = NationalEnergyMarket.class, name = "NationalEnergyMarket"),
-    
-    //@JsonSubTypes.Type(value = EnergyCoopL4L.class, name = "EnergyCoopL4L"),
-   // @JsonSubTypes.Type(value = J_EAConversionGasBurner.class, name = "J_EAConversionGasBurner"),
-   // @JsonSubTypes.Type(value = J_EAConversionHeatPump.class, name = "J_EAConversionHeatPump"),
-   // @JsonSubTypes.Type(value = J_EAEV.class, name = "J_EAEV"),
-   // @JsonSubTypes.Type(value = J_EADieselVehicle.class, name = "J_EADieselVehicle"),
-    
-    // Add other known subtypes here if needed
-})
-*/
 
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,//PUBLIC_ONLY,    // ✅ only public fields are serialized
@@ -43,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 )
 //@JsonIgnoreProperties({"connections"})
 @JsonIgnoreProperties({ 
-	"gisRegion","p_uniqueColor","p_defaultFillColor","p_defaultLineColor",
 	"_pl_powerFlows_autoUpdateEvent_xjal",
 	"_SOC_plot_autoUpdateEvent_xjal",
 	"c_defaultHeatingStrategies",
@@ -51,16 +32,17 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 	// When also writing private values, these additional fields end up in the json:
 	"ik",
-	"line",
-	"text",
-	"level",
+	//"line",
+	//"text",
+	//"level",
 	"presentation",
 	"_getLevels_xjal"
 	/*"icon",
 	"font",
 	"name",
 	"color"*/
-	
+
+	//"gisRegion","p_uniqueColor","p_defaultFillColor","p_defaultLineColor",	
 	/*"c_gridNodeExecutionList",
 	"c_gridNodeExecutionListReverse",
 	"c_gridNodesTopLevel",

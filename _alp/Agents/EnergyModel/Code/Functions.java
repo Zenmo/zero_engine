@@ -408,6 +408,9 @@ double duration = System.currentTimeMillis() - startTime1;
 traceln("*** headless run duration: "+ duration/1000 + " s ***");
 
 traceln("Live-sim t_h after rapidRun: %s", t_h);
+if (b_isDeserialised) {
+	traceln("Anylogic Model time(HOUR): %s", time(HOUR));
+}
 c_profiles.forEach(p -> p.updateValue(t_h)); 
 c_forecasts.forEach(p -> p.initializeForecast(t_h)); 
 
