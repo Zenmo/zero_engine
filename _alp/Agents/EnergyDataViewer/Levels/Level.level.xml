@@ -54,7 +54,7 @@
 		<Id>1741792546451</Id>
 		<Name><![CDATA[txt_liveWeek]]></Name>
 		<X>151</X>
-		<Y>40</Y>
+		<Y>60</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -79,7 +79,7 @@
 		<Id>1741792546453</Id>
 		<Name><![CDATA[txt_year]]></Name>
 		<X>151</X>
-		<Y>650</Y>
+		<Y>460</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -103,8 +103,8 @@
 	<Text>
 		<Id>1741792546455</Id>
 		<Name><![CDATA[txt_summerWeek]]></Name>
-		<X>146</X>
-		<Y>1200</Y>
+		<X>150</X>
+		<Y>780</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -129,8 +129,8 @@
 	<Text>
 		<Id>1741792546457</Id>
 		<Name><![CDATA[txt_winterWeek]]></Name>
-		<X>146</X>
-		<Y>1850</Y>
+		<X>150</X>
+		<Y>1010</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -279,331 +279,6 @@
 		<Alignment>LEFT</Alignment>
 	</Text>
 	<Text>
-		<Id>1741792546469</Id>
-		<Name><![CDATA[txt_liveWeekProduction]]></Name>
-		<X>161</X>
-		<Y>315</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Production]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546471</Id>
-		<Name><![CDATA[txt_liveWeekProductionElectricity]]></Name>
-		<X>181</X>
-		<Y>335</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Electricity]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>2</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546473</Id>
-		<Name><![CDATA[txt_liveWeekProductionOther]]></Name>
-		<X>186</X>
-		<Y>465</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Other]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>2</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546475</Id>
-		<Name><![CDATA[txt_liveWeekConsumption]]></Name>
-		<X>156</X>
-		<Y>60</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Consumption]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546477</Id>
-		<Name><![CDATA[txt_liveWeekProductionElectricity1]]></Name>
-		<X>176</X>
-		<Y>80</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Electricity]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>2</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546479</Id>
-		<Name><![CDATA[txt_liveWeekProductionOther1]]></Name>
-		<X>186</X>
-		<Y>240</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Other]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>2</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546481</Id>
-		<Name><![CDATA[txt_yearProduction]]></Name>
-		<X>166</X>
-		<Y>935</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Production]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546485</Id>
-		<Name><![CDATA[txt_yearConsumption]]></Name>
-		<X>166</X>
-		<Y>670</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Consumption]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546493</Id>
-		<Name><![CDATA[txt_liveWeekNet]]></Name>
-		<X>166</X>
-		<Y>535</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Net Load Electricity]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546507</Id>
-		<Name><![CDATA[txt_summerWeekNet]]></Name>
-		<X>176</X>
-		<Y>1720</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Net Load Electricity]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546509</Id>
-		<Name><![CDATA[txt_winterWeekConsumption]]></Name>
-		<X>166</X>
-		<Y>1870</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Consumption]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546515</Id>
-		<Name><![CDATA[txt_winterWeekProduction]]></Name>
-		<X>166</X>
-		<Y>2130</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Production]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
-		<Id>1741792546521</Id>
-		<Name><![CDATA[txt_summerWeekNet1]]></Name>
-		<X>176</X>
-		<Y>2370</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Net Load Electricity]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>16</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Text>
 		<Id>1741792546523</Id>
 		<Name><![CDATA[txt_DayNightTotals]]></Name>
 		<X>626</X>
@@ -655,9 +330,9 @@
 	</Text>
 	<Text>
 		<Id>1741792546527</Id>
-		<Name><![CDATA[t_activeAssetBooleans]]></Name>
-		<X>1716</X>
-		<Y>510</Y>
+		<Name><![CDATA[t_liveData]]></Name>
+		<X>1280</X>
+		<Y>620</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -670,7 +345,7 @@
 		<Z>0</Z>
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
-		<Text><![CDATA[Active Asset booleans]]></Text>
+		<Text><![CDATA[Live Data]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>20</Size>
@@ -713,4 +388,29 @@
 			<LabelText>Back to Agent</LabelText>
 		</ExtendedProperties>
 	</Control>
+	<Text>
+		<Id>1758803480802</Id>
+		<Name><![CDATA[t_rapidRunData]]></Name>
+		<X>1580</X>
+		<Y>620</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>true</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D</DrawMode>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Z>0</Z>
+		<Rotation>0.0</Rotation>
+		<Color>-16777216</Color>
+		<Text><![CDATA[RapidRun Data]]></Text>
+		<Font>
+			<Name><![CDATA[SansSerif]]></Name>
+			<Size>20</Size>
+			<Style>0</Style>
+		</Font>
+		<Alignment>LEFT</Alignment>
+	</Text>
 </Presentation>
