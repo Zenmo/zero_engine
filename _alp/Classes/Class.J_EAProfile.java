@@ -73,7 +73,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     		throw new RuntimeException(String.format("Time out of lower bound for evaluating J_EAProfile power! Time is: %s", time_h));
     	}
 
-    	double currentPower_kW = a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h;
+    	double currentPower_kW = this.profileScaling_fr * this.a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h;
     	this.energyUse_kW = currentPower_kW;
 		this.energyUsed_kWh += timestep_h * energyUse_kW; 
 		this.flowsMap.put(this.energyCarrier, currentPower_kW);		
@@ -98,50 +98,22 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW);
     	
     	this.energyUse_kW = -curtailmentPower_kW;
-    	//flowsMap.put(OL_EnergyCarriers.ENERGY_USE, -curtailmentPower_kW);
 
-    	//lastFlowsArray[4] -= curtailmentPower_kW;
     	this.lastFlowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY) - curtailmentPower_kW);
-    	//lastFlowsArray[9] -= curtailmentPower_kW;
     	this.lastEnergyUse_kW -= curtailmentPower_kW;
-    	//lastFlowsMap.put(OL_EnergyCarriers.ENERGY_USE, lastFlowsMap.get(OL_EnergyCarriers.ENERGY_USE) - curtailmentPower_kW);
 
-    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
-    	//if (ui_energyAsset!= null) {
-    		//ui_energyAsset.f_removeFlows(flowsMap);
-    	//}
-    	//return new Pair(flowsMap, this.energyUse_kW);
     }
     
-
-    public void scaleEnergyProfile(double scaling_fr) {
-    	if (scaling_fr == 0) {
-    		traceln("Failed to scale J_EAProfile with factor of 0 to prevent loss of information.");
-    		return;
-    	}
-    	this.profileScaling_fr *= scaling_fr;
-    	for (int i = 0; i < a_energyProfile_kWh.length; i++) {
-    		a_energyProfile_kWh[i] = a_energyProfile_kWh[i] * scaling_fr;
-    	}
-    	return;
-    }
-    
-    public void resetEnergyProfile() {
-    	if (this.profileScaling_fr == 1) {
-    		return;
-    	}
-    	for (int i = 0; i < a_energyProfile_kWh.length; i++) {
-    		a_energyProfile_kWh[i] = a_energyProfile_kWh[i] / this.profileScaling_fr;
-    	}
-    	this.profileScaling_fr = 1;
-    	return;
-    }
 	
     public double getProfileScaling_fr() {
     	return profileScaling_fr;
+    }
+    
+    public void setProfileScaling_fr( double scaling_fr ) {
+    	this.profileScaling_fr = scaling_fr;
     }
     
     public OL_EnergyCarriers getEnergyCarrier() {

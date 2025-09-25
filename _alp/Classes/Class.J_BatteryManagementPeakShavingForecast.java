@@ -87,7 +87,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		
 		for(J_EAProfile elecConsumptionProfile : elecConsumptionProfiles) {
 			if(elecConsumptionProfile != null){
-				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/p_timestep_h);//, elecConsumptionProfile.getProfileScaling_fr());
+				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), elecConsumptionProfile.getProfileScaling_fr()/p_timestep_h);
 				for (int i = 0; i < tempNettoBalance_kW.length; i++) {
 					nettoBalanceTotal_kW[i] += tempNettoBalance_kW[i];
 				}
@@ -95,7 +95,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		}
 		for(J_EAProfile elecHeatPumpProfile : elecHeatPumpProfiles) {
 			if(elecHeatPumpProfile != null){
-				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecHeatPumpProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/p_timestep_h);//, elecHeatPumpProfile.getProfileScaling_fr());
+				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecHeatPumpProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), elecHeatPumpProfile.getProfileScaling_fr()/p_timestep_h);
 				for (int i = 0; i < tempNettoBalance_kW.length; i++) {
 					nettoBalanceTotal_kW[i] += tempNettoBalance_kW[i];
 				}
@@ -103,7 +103,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		}
 		for(J_EAProfile elecEVProfile : elecEVProfiles) {
 			if(elecEVProfile != null){
-				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecEVProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/p_timestep_h);//, elecEVProfile.getProfileScaling_fr());
+				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecEVProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), elecEVProfile.getProfileScaling_fr()/p_timestep_h);
 				for (int i = 0; i < tempNettoBalance_kW.length; i++) {
 					nettoBalanceTotal_kW[i] += tempNettoBalance_kW[i];
 				}
@@ -111,7 +111,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		}
 		for(J_EAProfile surveyHeatDemandProfile : surveyHeatDemandProfiles) {
 			if(surveyHeatDemandProfile != null){
-				double[] heatPower_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(surveyHeatDemandProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), 1/p_timestep_h);//, surveyHeatDemandProfile.getProfileScaling_fr());
+				double[] heatPower_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(surveyHeatDemandProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), surveyHeatDemandProfile.getProfileScaling_fr()/p_timestep_h);
 				//traceln(heatPower_kW);
 				double eta_r = parentGC.energyModel.avgc_data.p_avgEfficiencyHeatpump;
 				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
