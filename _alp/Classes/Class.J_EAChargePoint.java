@@ -310,6 +310,10 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			this.chargingAttitude = chargingAttitude;
 		}
 		
+		public OL_ChargingAttitude getChargingAttitude() {
+			return this.chargingAttitude;
+		}
+		
 		public void setV2GActive(boolean activateV2G) {
 			this.V2GActive = activateV2G;
 			if(this.V2GCapable && activateV2G) {
