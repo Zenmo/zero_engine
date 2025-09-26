@@ -103,8 +103,9 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     }
     
 	public void setV2GActive(boolean activateV2G) {
+		// throw an exception if the management does not support V2G?
 		this.V2GActive = activateV2G;
-		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(false)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
 	}
 	
 	public boolean getV2GActive() {
