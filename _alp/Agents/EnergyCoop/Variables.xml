@@ -1979,7 +1979,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>Actor</ElementClass>
 			<ValueElementClass>Object</ValueElementClass>
@@ -1997,7 +1997,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>Actor</ElementClass>
 			<ValueElementClass>Object</ValueElementClass>
@@ -2015,7 +2015,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="private" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>Object</ValueElementClass>
@@ -2033,7 +2033,7 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+		<Properties SaveInSnapshot="true" AccessType="private" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
 			<ElementClass>GridConnection</ElementClass>
 			<ValueElementClass>Object</ValueElementClass>
