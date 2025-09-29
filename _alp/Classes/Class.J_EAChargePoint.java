@@ -296,6 +296,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		}
 		public void setV2GCapability(boolean V2GCapable) {
 			this.V2GCapable = V2GCapable;
+			this.updateAssetFlowCategory();
 		}
 		public boolean getV1GCapable() {
 			return this.V1GCapable;
@@ -310,9 +311,21 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			this.chargingAttitude = chargingAttitude;
 		}
 		
+		public OL_ChargingAttitude getChargingAttitude() {
+			return this.chargingAttitude;
+		}
+		
 		public void setV2GActive(boolean activateV2G) {
 			this.V2GActive = activateV2G;
-			if(this.V2GCapable && activateV2G) {
+			this.updateAssetFlowCategory();
+		}
+		
+		public boolean getV2GActive() {
+			return this.V2GActive;
+		}
+		
+		private void updateAssetFlowCategory() {
+			if(this.V2GCapable && this.V2GActive) {
 				this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
 			}
 			else {
@@ -320,9 +333,6 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			}
 		}
 		
-		public boolean getV2GActive() {
-			return this.V2GActive;
-		}
 		public int getCurrentNumberOfChargingSockets() {
 			return this.currentNumberOfChargingSockets;
 		}

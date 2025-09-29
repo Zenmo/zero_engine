@@ -53,32 +53,34 @@ for (GridConnection GC : energyModel.f_getGridConnections()){
 
 double f_fillEnergyDataViewer(I_EnergyData data)
 {/*ALCODESTART::1741792546533*/
-v_engineAgent = data.getRapidRunData().parentAgent;
-//Number of connected gcs
-//v_numberOfGridconnections = 1;
+v_engineAgent = data;
 
-//Set active energyCarriers
-v_activeConsumptionEnergyCarriers = data.getLiveData().activeConsumptionEnergyCarriers;
-v_activeProductionEnergyCarriers = data.getLiveData().activeProductionEnergyCarriers;
-
-//Update active asset booleans
-//f_updateLiveActiveAssetBooleans(data);
-v_activeAssetFlows = data.getLiveData().assetsMetaData.activeAssetFlows;
-
-//Update variables
-f_updateVariables(data);
+//Set live and rapidrun EnumSets for EnergyCarriers and AssetFlowCategories
+v_liveConsumptionEnergyCarriers = data.getLiveData().activeConsumptionEnergyCarriers;
+v_liveProductionEnergyCarriers = data.getLiveData().activeProductionEnergyCarriers;
+v_liveAssetFlowCategories = data.getLiveData().assetsMetaData.activeAssetFlows;
 
 //Update variables
 f_updateLiveDatasets(data);
 
-//Update variables
-f_updateWeeklyDatasets(data);
+if (data.getRapidRunData() != null) {
+	v_rapidRunConsumptionEnergyCarriers = data.getRapidRunData().activeConsumptionEnergyCarriers;
+	v_rapidRunProductionEnergyCarriers = data.getRapidRunData().activeProductionEnergyCarriers;
+	v_rapidRunAssetFlowCategories = data.getRapidRunData().assetsMetaData.activeAssetFlows;
 
-//Update variables
-f_updateYearlyDatasets(data);
+	//Update variables
+	f_updateVariables(data);
+	
+	//Update variables
+	f_updateWeeklyDatasets(data);
+	
+	//Update variables
+	f_updateYearlyDatasets(data);
+	
+	//Get duurkromme
+	f_updateLoadDurationCurve(data);
+}
 
-//Get duurkromme
-f_updateLoadDurationCurve(data);
 /*ALCODEEND*/}
 
 double f_updateVariables(I_EnergyData data)
@@ -112,10 +114,10 @@ v_individualPeakFeedin_kW = data.getRapidRunData().getPeakFeedin_kW();
 fm_totalImports_MWh.clear();
 fm_totalExports_MWh.clear();
 
-for (OL_EnergyCarriers energyCarrier : v_activeConsumptionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeConsumptionEnergyCarriers) {
 	fm_totalImports_MWh.put( energyCarrier, data.getRapidRunData().getTotalImport_MWh(energyCarrier) );
 }
-for (OL_EnergyCarriers energyCarrier : v_activeProductionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeProductionEnergyCarriers) {
 	fm_totalExports_MWh.put( energyCarrier, data.getRapidRunData().getTotalExport_MWh(energyCarrier) );
 }
 
@@ -142,11 +144,11 @@ fm_winterWeekImports_MWh.clear();
 fm_summerWeekExports_MWh.clear();
 fm_winterWeekExports_MWh.clear();
 
-for (OL_EnergyCarriers energyCarrier : v_activeConsumptionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeConsumptionEnergyCarriers) {
 	fm_summerWeekImports_MWh.put( energyCarrier, data.getRapidRunData().getSummerWeekImport_MWh(energyCarrier) );
 	fm_winterWeekImports_MWh.put( energyCarrier, data.getRapidRunData().getWinterWeekImport_MWh(energyCarrier) );
 }
-for (OL_EnergyCarriers energyCarrier : v_activeProductionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeProductionEnergyCarriers) {
 	fm_summerWeekExports_MWh.put( energyCarrier, data.getRapidRunData().getSummerWeekExport_MWh(energyCarrier) );
 	fm_winterWeekExports_MWh.put( energyCarrier, data.getRapidRunData().getWinterWeekExport_MWh(energyCarrier) );
 }
@@ -183,11 +185,11 @@ fm_nighttimeImports_MWh.clear();
 fm_daytimeExports_MWh.clear();
 fm_nighttimeExports_MWh.clear();
 
-for (OL_EnergyCarriers energyCarrier : v_activeConsumptionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeConsumptionEnergyCarriers) {
 	fm_daytimeImports_MWh.put( energyCarrier, data.getRapidRunData().getDaytimeImport_MWh(energyCarrier) );
 	fm_nighttimeImports_MWh.put( energyCarrier, data.getRapidRunData().getNighttimeImport_MWh(energyCarrier) );
 }
-for (OL_EnergyCarriers energyCarrier : v_activeProductionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeProductionEnergyCarriers) {
 	fm_daytimeExports_MWh.put( energyCarrier, data.getRapidRunData().getDaytimeExport_MWh(energyCarrier) );
 	fm_nighttimeExports_MWh.put( energyCarrier, data.getRapidRunData().getNighttimeExport_MWh(energyCarrier) );
 }
@@ -224,11 +226,11 @@ fm_weekendImports_MWh.clear();
 fm_weekdayExports_MWh.clear();
 fm_weekendExports_MWh.clear();
 
-for (OL_EnergyCarriers energyCarrier : v_activeConsumptionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeConsumptionEnergyCarriers) {
 	fm_weekdayImports_MWh.put( energyCarrier, data.getRapidRunData().getWeekdayImport_MWh(energyCarrier) );
 	fm_weekendImports_MWh.put( energyCarrier, data.getRapidRunData().getWeekendImport_MWh(energyCarrier) );
 }
-for (OL_EnergyCarriers energyCarrier : v_activeProductionEnergyCarriers) {
+for (OL_EnergyCarriers energyCarrier : data.getRapidRunData().activeProductionEnergyCarriers) {
 	fm_weekdayExports_MWh.put( energyCarrier, data.getRapidRunData().getWeekdayExport_MWh(energyCarrier) );
 	fm_weekendExports_MWh.put( energyCarrier, data.getRapidRunData().getWeekendExport_MWh(energyCarrier) );
 }

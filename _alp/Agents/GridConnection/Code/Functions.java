@@ -1347,11 +1347,11 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 double f_activateV2GChargingMode(boolean enableV2G)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
-		p_chargingManagement.setV2GActive(enableV2G);
-		c_chargers.forEach(charger -> charger.setV2GActive(enableV2G));
-		if (enableV2G){
-			f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
-		}
+	p_chargingManagement.setV2GActive(enableV2G);
+	c_chargers.forEach(charger -> charger.setV2GActive(enableV2G));
+	if (enableV2G){
+		f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
+	}
 }
 /*ALCODEEND*/}
 
