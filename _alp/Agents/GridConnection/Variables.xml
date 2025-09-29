@@ -160,9 +160,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

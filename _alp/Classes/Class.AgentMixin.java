@@ -32,11 +32,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 	// When also writing private values, these additional fields end up in the json:
 	"ik",
+	"presentation",
+	"_getLevels_xjal"
+})
 	//"line",
 	//"text",
 	//"level",
-	"presentation",
-	"_getLevels_xjal"
+
 	/*"icon",
 	"font",
 	"name",
@@ -70,7 +72,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 	"PublicChargers",
 	"Neighborhoods",*/
 
-})
+
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public abstract class AgentMixin implements Serializable {
