@@ -517,6 +517,7 @@ public class J_RapidRunData {
     	}
 
     }
+   
     
     public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {
     	return new J_LoadDurationCurves(this.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);    		
@@ -542,64 +543,65 @@ public class J_RapidRunData {
         	}
     	}
     	return totalOverloadDurationFeedin_hr;
-    }   
-   
+    }  
+    
+    
     public double getPeakDelivery_kW() {
-    	double peakDelivery_kW = 0.0;
-    	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-    		peakDelivery_kW = max(peakDelivery_kW, electricityBalance_kW);
-    	}
-    	return peakDelivery_kW;
+    	return max(0, getHighestNetBalance_kW(OL_EnergyCarriers.ELECTRICITY));
     }
-    
+  
     public double getPeakFeedin_kW() {
-    	double peakFeedin_kW = -am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()[0];
-    	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-    		peakFeedin_kW = max(peakFeedin_kW, -electricityBalance_kW);
-    	}
-    	return peakFeedin_kW;
+    	return max(0, -getLowestNetBalance_kW(OL_EnergyCarriers.ELECTRICITY));	
     }
     
-    public Double getPeakDeliveryTime_h() {
-    	double[] elecBalance_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+    
+    public double getHighestNetBalance_kW(OL_EnergyCarriers EC) {
+    	return max(this.am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW());
+    }
+    
+    public double getLowestNetBalance_kW(OL_EnergyCarriers EC) {
+    	return min(this.am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW());
+    }   
+    
+    public Double getHighestNetBalanceTime_h(OL_EnergyCarriers EC) {
+    	double[] ECBalance_kW = am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW();
 
     	Integer maxIndex = 0; // index with peak import
-    	for (int i = 1; i < elecBalance_kW.length; i++) {
-    	    if (elecBalance_kW[i] > elecBalance_kW[maxIndex]) {
+    	for (int i = 1; i < ECBalance_kW.length; i++) {
+    	    if (ECBalance_kW[i] > ECBalance_kW[maxIndex]) {
     	        maxIndex = i;
     	    }
     	}
-    	
     	return maxIndex*timeStep_h;
     }
     
-    public double getPeakDeliveryWeekStart_h() {
-    	double peakTime_h = getPeakDeliveryTime_h();
-    	return getWeekStart_h(peakTime_h);
-    }
- 
-    public double getPeakFeedinWeekStart_h() {
-    	double peakTime_h = getPeakFeedinTime_h();
-    	return getWeekStart_h(peakTime_h);
-    }
-    
-    public double getWeekStart_h(double peakTime_h) {
-    	double duration_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDuration();
-    	return min(duration_h-7*24,max(0,peakTime_h - 3.5*24)); // return start of week hour, capped between 0 and simDuration_h - 7*24
-    }
-    
-    public Double getPeakFeedinTime_h() {
-    	double[] elecBalance_kW = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW();
+    public Double getLowestNetBalanceTime_h(OL_EnergyCarriers EC) {
+    	double[] ECBalance_kW = am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW();
 
     	Integer minIndex = 0; // index with peak export
-    	for (int i = 1; i < elecBalance_kW.length; i++) {
-    	    if (elecBalance_kW[i] < elecBalance_kW[minIndex]) {
+    	for (int i = 1; i < ECBalance_kW.length; i++) {
+    	    if (ECBalance_kW[i] < ECBalance_kW[minIndex]) {
     	        minIndex = i;
     	    }
     	}
-    	
     	return minIndex*timeStep_h;
     }
+    
+    public double getHighestNetBalanceWeekStart_h(OL_EnergyCarriers EC) {
+    	double peakTime_h = getHighestNetBalanceTime_h(EC);
+    	return getPeakWeekStart_h(peakTime_h);
+    }
+ 
+    public double getLowestNetBalanceWeekStart_h(OL_EnergyCarriers EC) {
+    	double peakTime_h = getLowestNetBalanceTime_h(EC);
+    	return getPeakWeekStart_h(peakTime_h);
+    }
+    
+    public double getPeakWeekStart_h(double peakTime_h) {
+    	double duration_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDuration(); // Take random balance accumulator for sim duration
+    	return min(duration_h-7*24,max(0,peakTime_h - 3.5*24)); // return start of week hour, capped between 0 and simDuration_h - 7*24
+    }
+
     
     public ZeroTimeSeries getBatteriesSOCts_fr() {
     	double[] array = this.ts_dailyAverageBatteriesStoredEnergy_MWh.getTimeSeries();
