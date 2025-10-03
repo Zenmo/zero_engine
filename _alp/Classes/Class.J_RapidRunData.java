@@ -547,23 +547,23 @@ public class J_RapidRunData {
     
     
     public double getPeakDelivery_kW() {
-    	return max(0, getHighestNetBalance_kW(OL_EnergyCarriers.ELECTRICITY));
+    	return max(0, getHighestBalance_kW(OL_EnergyCarriers.ELECTRICITY));
     }
   
     public double getPeakFeedin_kW() {
-    	return max(0, -getLowestNetBalance_kW(OL_EnergyCarriers.ELECTRICITY));	
+    	return max(0, -getLowestBalance_kW(OL_EnergyCarriers.ELECTRICITY));	
     }
     
     
-    public double getHighestNetBalance_kW(OL_EnergyCarriers EC) {
+    public double getHighestBalance_kW(OL_EnergyCarriers EC) {
     	return max(this.am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW());
     }
     
-    public double getLowestNetBalance_kW(OL_EnergyCarriers EC) {
+    public double getLowestBalance_kW(OL_EnergyCarriers EC) {
     	return min(this.am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW());
     }   
     
-    public Double getHighestNetBalanceTime_h(OL_EnergyCarriers EC) {
+    public Double getHighestBalanceTime_h(OL_EnergyCarriers EC) {
     	double[] ECBalance_kW = am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW();
 
     	Integer maxIndex = 0; // index with peak import
@@ -575,7 +575,7 @@ public class J_RapidRunData {
     	return maxIndex*timeStep_h;
     }
     
-    public Double getLowestNetBalanceTime_h(OL_EnergyCarriers EC) {
+    public Double getLowestBalanceTime_h(OL_EnergyCarriers EC) {
     	double[] ECBalance_kW = am_totalBalanceAccumulators_kW.get(EC).getTimeSeries_kW();
 
     	Integer minIndex = 0; // index with peak export
@@ -587,13 +587,13 @@ public class J_RapidRunData {
     	return minIndex*timeStep_h;
     }
     
-    public double getHighestNetBalanceWeekStart_h(OL_EnergyCarriers EC) {
-    	double peakTime_h = getHighestNetBalanceTime_h(EC);
+    public double getHighestBalanceWeekStart_h(OL_EnergyCarriers EC) {
+    	double peakTime_h = getHighestBalanceTime_h(EC);
     	return getPeakWeekStart_h(peakTime_h);
     }
  
-    public double getLowestNetBalanceWeekStart_h(OL_EnergyCarriers EC) {
-    	double peakTime_h = getLowestNetBalanceTime_h(EC);
+    public double getLowestBalanceWeekStart_h(OL_EnergyCarriers EC) {
+    	double peakTime_h = getLowestBalanceTime_h(EC);
     	return getPeakWeekStart_h(peakTime_h);
     }
     
