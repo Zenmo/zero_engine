@@ -348,7 +348,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1739970817879</Id>
 		<Name><![CDATA[f_collectGridConnectionRapidRunData]]></Name>
-		<X>990</X>
+		<X>1010</X>
 		<Y>230</Y>
 		<Label>
 			<X>10</X>
@@ -393,6 +393,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[rapidRunData]]></Name>
+			<Type><![CDATA[J_RapidRunData]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -409,6 +413,10 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[rapidRunData]]></Name>
+			<Type><![CDATA[J_RapidRunData]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -417,7 +425,7 @@
 		<Id>1740475013848</Id>
 		<Name><![CDATA[f_getCumulativeIndividualGCValues]]></Name>
 		<X>1430</X>
-		<Y>730</Y>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -432,7 +440,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1740480839774</Id>
 		<Name><![CDATA[f_getTotalInstalledCapacityOfAssets_rapidRun]]></Name>
-		<X>1010</X>
+		<X>1030</X>
 		<Y>250</Y>
 		<Label>
 			<X>10</X>
@@ -716,7 +724,7 @@
 		<Id>1756207893357</Id>
 		<Name><![CDATA[f_aggregatorBatteryManagement_EnergyCoop]]></Name>
 		<X>670</X>
-		<Y>690</Y>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -752,7 +760,71 @@
 		<Id>1756207893363</Id>
 		<Name><![CDATA[f_aggregatorManagement_EnergyCoop]]></Name>
 		<X>650</X>
-		<Y>670</Y>
+		<Y>690</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1759144507495</Id>
+		<Name><![CDATA[f_collectGridConnectionOriginalRapidRunData]]></Name>
+		<X>1010</X>
+		<Y>300</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1759144507497</Id>
+		<Name><![CDATA[f_getTotalInstalledCapacityOfAssets_originalRapidRun]]></Name>
+		<X>1030</X>
+		<Y>320</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1759144507499</Id>
+		<Name><![CDATA[f_createAndInitializeOriginalRapidRunDataClass]]></Name>
+		<X>990</X>
+		<Y>280</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1759155380190</Id>
+		<Name><![CDATA[f_getOriginalCumulativeIndividualGCValues]]></Name>
+		<X>1430</X>
+		<Y>925</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
