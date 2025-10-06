@@ -1137,12 +1137,19 @@ f_initialize();
 f_collectGridConnectionLiveData();
 
 boolean allGCHaveRapidRun = true;
+boolean allGCHaveOriginalRapidRun = true;
 for(GridConnection GC : c_memberGridConnections){
 	if(GC.v_rapidRunData == null && GC.v_isActive){
 		allGCHaveRapidRun = false;
+	}
+	if(GC.v_originalRapidRunData == null && GC.v_isActive){
+		allGCHaveOriginalRapidRun = false;
+	}
+	if(!allGCHaveRapidRun && !allGCHaveOriginalRapidRun){
 		break;
 	}
 }
+
 if(allGCHaveRapidRun){
 	
 	//Create rapid run data class used to store combined values of the members
@@ -1154,11 +1161,23 @@ if(allGCHaveRapidRun){
 	//Calculate KPIs
 	f_calculateKPIs();
 }
+
+if(allGCHaveOriginalRapidRun){
+	
+	//Create rapid run data class used to store combined values of the members
+	f_createAndInitializeOriginalRapidRunDataClass();
+	
+	//Collect current totals
+	f_collectGridConnectionOriginalRapidRunData();
+	
+	//Calculate orignial KPIs
+	f_getOriginalCumulativeIndividualGCValues();
+}
 /*ALCODEEND*/}
 
-double f_getGroupContractDeliveryCapacity_kW()
+double f_getGroupContractDeliveryCapacity_kW(J_RapidRunData rapidRunData)
 {/*ALCODESTART::1740059187265*/
-DataSet data_netbelastingDuurkromme_kW = v_rapidRunData.getLoadDurationCurves(energyModel).ds_loadDurationCurveTotal_kW;
+DataSet data_netbelastingDuurkromme_kW = rapidRunData.getLoadDurationCurves(energyModel).ds_loadDurationCurveTotal_kW;
 int arraySize = data_netbelastingDuurkromme_kW.size();
 if (arraySize < 8760/energyModel.p_timeStep_h){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
@@ -1168,9 +1187,9 @@ if (arraySize < 8760/energyModel.p_timeStep_h){
 }
 /*ALCODEEND*/}
 
-double f_getGroupContractFeedinCapacity_kW()
+double f_getGroupContractFeedinCapacity_kW(J_RapidRunData rapidRunData)
 {/*ALCODESTART::1740059261369*/
-DataSet data_netbelastingDuurkromme_kW = v_rapidRunData.getLoadDurationCurves(energyModel).ds_loadDurationCurveTotal_kW;
+DataSet data_netbelastingDuurkromme_kW = rapidRunData.getLoadDurationCurves(energyModel).ds_loadDurationCurveTotal_kW;
 int arraySize = data_netbelastingDuurkromme_kW.size();
 if (arraySize < 8760/energyModel.p_timeStep_h){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
@@ -1195,6 +1214,10 @@ v_cumulativeIndividualSelfSufficiencyEnergy_fr = 0;
 v_cumulativeIndividualPeakDelivery_kW = 0;
 v_cumulativeIndividualPeakFeedin_kW = 0;
 
+v_cumulativeIndividualPeakDeliveryOriginal_kW = 0;
+v_cumulativeIndividualPeakFeedinOriginal_kW = 0;
+
+
 //Loop over membered grid connections
 for(GridConnection GC : c_memberGridConnections){
 	if(GC.v_isActive){
@@ -1205,6 +1228,11 @@ for(GridConnection GC : c_memberGridConnections){
 		//Add all peaks for member grid connections
 		v_cumulativeIndividualPeakDelivery_kW += GC.v_rapidRunData.getPeakDelivery_kW();
 		v_cumulativeIndividualPeakFeedin_kW += GC.v_rapidRunData.getPeakFeedin_kW();
+		
+		if(v_originalRapidRunData != null && GC.v_originalRapidRunData != null){
+			v_cumulativeIndividualPeakDeliveryOriginal_kW += GC.v_originalRapidRunData.getPeakDelivery_kW();
+			v_cumulativeIndividualPeakFeedinOriginal_kW += GC.v_originalRapidRunData.getPeakFeedin_kW();
+		}
 	}	
 }
 
@@ -1215,9 +1243,14 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 	if (a instanceof EnergyCoop) {
 		EnergyCoop EC = (EnergyCoop)a;
 		EC.f_getCumulativeIndividualGCValues();
-		v_cumulativeIndividualSelfconsumptionElectricity_MWh = EC.v_cumulativeIndividualSelfconsumptionElectricity_MWh;
-		v_cumulativeIndividualPeakDelivery_kW  = EC.v_cumulativeIndividualPeakDelivery_kW;
-		v_cumulativeIndividualPeakFeedin_kW  = EC.v_cumulativeIndividualPeakFeedin_kW;
+		v_cumulativeIndividualSelfconsumptionElectricity_MWh += EC.v_cumulativeIndividualSelfconsumptionElectricity_MWh;
+		v_cumulativeIndividualPeakDelivery_kW  += EC.v_cumulativeIndividualPeakDelivery_kW;
+		v_cumulativeIndividualPeakFeedin_kW  += EC.v_cumulativeIndividualPeakFeedin_kW;
+		
+		if(v_originalRapidRunData != null && EC.v_originalRapidRunData != null){
+			v_cumulativeIndividualPeakDeliveryOriginal_kW += EC.v_cumulativeIndividualPeakDeliveryOriginal_kW;
+			v_cumulativeIndividualPeakFeedinOriginal_kW += EC.v_cumulativeIndividualPeakFeedinOriginal_kW;
+		}
 	}
 }
 
@@ -1614,5 +1647,156 @@ double f_aggregatorManagement_EnergyCoop()
 {/*ALCODESTART::1756207893363*/
 //Run battery setpoint management
 f_aggregatorBatteryManagement_EnergyCoop();
+/*ALCODEEND*/}
+
+double f_collectGridConnectionOriginalRapidRunData()
+{/*ALCODESTART::1759144507495*/
+// Make collective profiles, electricity per timestep, other energy carriers per day!
+
+for (GridConnection gc : c_memberGridConnections) {
+	if(gc.v_isActive){
+		// Totals
+		v_originalRapidRunData.am_totalBalanceAccumulators_kW.add(gc.v_originalRapidRunData.am_totalBalanceAccumulators_kW);
+		v_originalRapidRunData.am_dailyAverageConsumptionAccumulators_kW.add(gc.v_originalRapidRunData.am_dailyAverageConsumptionAccumulators_kW);
+		v_originalRapidRunData.am_dailyAverageProductionAccumulators_kW.add(gc.v_originalRapidRunData.am_dailyAverageProductionAccumulators_kW);
+		v_originalRapidRunData.acc_dailyAverageEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_dailyAverageEnergyProduction_kW);
+		v_originalRapidRunData.acc_dailyAverageFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_dailyAverageFinalEnergyConsumption_kW);
+		v_originalRapidRunData.acc_totalEnergyCurtailed_kW.add(gc.v_originalRapidRunData.acc_totalEnergyCurtailed_kW);
+		v_originalRapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW.add(gc.v_originalRapidRunData.acc_totalPrimaryEnergyProductionHeatpumps_kW);
+		v_originalRapidRunData.am_assetFlowsAccumulators_kW.add(gc.v_originalRapidRunData.am_assetFlowsAccumulators_kW);
+		
+		// Daytime
+		v_originalRapidRunData.acc_daytimeElectricityConsumption_kW.add(gc.v_originalRapidRunData.acc_daytimeElectricityConsumption_kW);
+		v_originalRapidRunData.acc_daytimeElectricityProduction_kW.add(gc.v_originalRapidRunData.acc_daytimeElectricityProduction_kW);
+		v_originalRapidRunData.acc_daytimeEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_daytimeEnergyProduction_kW);
+		v_originalRapidRunData.acc_daytimeFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_daytimeFinalEnergyConsumption_kW);
+		v_originalRapidRunData.am_daytimeImports_kW.add(gc.v_originalRapidRunData.am_daytimeImports_kW);
+		v_originalRapidRunData.am_daytimeExports_kW.add(gc.v_originalRapidRunData.am_daytimeExports_kW);	
+		
+		// Weekend
+		v_originalRapidRunData.acc_weekendElectricityConsumption_kW.add(gc.v_originalRapidRunData.acc_weekendElectricityConsumption_kW);
+		v_originalRapidRunData.acc_weekendElectricityProduction_kW.add(gc.v_originalRapidRunData.acc_weekendElectricityProduction_kW);
+		v_originalRapidRunData.acc_weekendEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_weekendEnergyProduction_kW);
+		v_originalRapidRunData.acc_weekendFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_weekendFinalEnergyConsumption_kW);
+		v_originalRapidRunData.am_weekendImports_kW.add(gc.v_originalRapidRunData.am_weekendImports_kW);
+		v_originalRapidRunData.am_weekendExports_kW.add(gc.v_originalRapidRunData.am_weekendExports_kW);	
+		
+		// Summerweek
+		v_originalRapidRunData.am_summerWeekBalanceAccumulators_kW.add(gc.v_originalRapidRunData.am_summerWeekBalanceAccumulators_kW);
+		v_originalRapidRunData.am_summerWeekConsumptionAccumulators_kW.add(gc.v_originalRapidRunData.am_summerWeekConsumptionAccumulators_kW);
+		v_originalRapidRunData.am_summerWeekProductionAccumulators_kW.add(gc.v_originalRapidRunData.am_summerWeekProductionAccumulators_kW);
+		v_originalRapidRunData.acc_summerWeekEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_summerWeekEnergyProduction_kW);
+		v_originalRapidRunData.acc_summerWeekFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_summerWeekFinalEnergyConsumption_kW);
+		v_originalRapidRunData.acc_summerWeekEnergyCurtailed_kW.add(gc.v_originalRapidRunData.acc_summerWeekEnergyCurtailed_kW);
+		v_originalRapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_originalRapidRunData.acc_summerWeekPrimaryEnergyProductionHeatpumps_kW);
+		v_originalRapidRunData.am_assetFlowsSummerWeek_kW.add(gc.v_originalRapidRunData.am_assetFlowsSummerWeek_kW);
+		
+		// Winterweek
+		v_originalRapidRunData.am_winterWeekBalanceAccumulators_kW.add(gc.v_originalRapidRunData.am_winterWeekBalanceAccumulators_kW);
+		v_originalRapidRunData.am_winterWeekConsumptionAccumulators_kW.add(gc.v_originalRapidRunData.am_winterWeekConsumptionAccumulators_kW);
+		v_originalRapidRunData.am_winterWeekProductionAccumulators_kW.add(gc.v_originalRapidRunData.am_winterWeekProductionAccumulators_kW);
+		v_originalRapidRunData.acc_winterWeekEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_winterWeekEnergyProduction_kW);
+		v_originalRapidRunData.acc_winterWeekFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_winterWeekFinalEnergyConsumption_kW);
+		v_originalRapidRunData.acc_winterWeekEnergyCurtailed_kW.add(gc.v_originalRapidRunData.acc_winterWeekEnergyCurtailed_kW);
+		v_originalRapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.add(gc.v_originalRapidRunData.acc_winterWeekPrimaryEnergyProductionHeatpumps_kW);
+		v_originalRapidRunData.am_assetFlowsWinterWeek_kW.add(gc.v_originalRapidRunData.am_assetFlowsWinterWeek_kW);
+	}
+}
+
+//Calculate cumulative asset capacities
+f_getTotalInstalledCapacityOfAssets_originalRapidRun();
+
+/*ALCODEEND*/}
+
+double f_getTotalInstalledCapacityOfAssets_originalRapidRun()
+{/*ALCODESTART::1759144507497*/
+//Collect rapid run asset totals
+v_originalRapidRunData.assetsMetaData.totalInstalledWindPower_kW = 0.0;
+v_originalRapidRunData.assetsMetaData.totalInstalledPVPower_kW = 0.0;
+v_originalRapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh = 0.0;
+
+//Add all battery storage capacities of gc
+for(GridConnection GC : c_memberGridConnections){
+	if(GC.v_isActive){
+		v_originalRapidRunData.assetsMetaData.totalInstalledWindPower_kW += GC.v_originalRapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+		v_originalRapidRunData.assetsMetaData.totalInstalledPVPower_kW += GC.v_originalRapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+		v_originalRapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += GC.v_originalRapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
+}
+
+//Do this also for the 'child' coops
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		EC.f_getTotalInstalledCapacityOfAssets_rapidRun();
+		v_originalRapidRunData.assetsMetaData.totalInstalledWindPower_kW += EC.v_originalRapidRunData.assetsMetaData.totalInstalledWindPower_kW;
+		v_originalRapidRunData.assetsMetaData.totalInstalledPVPower_kW += EC.v_originalRapidRunData.assetsMetaData.totalInstalledPVPower_kW;
+		v_originalRapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh += EC.v_originalRapidRunData.assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
+	}
+}
+/*ALCODEEND*/}
+
+double f_createAndInitializeOriginalRapidRunDataClass()
+{/*ALCODESTART::1759144507499*/
+//Create rapid run data class used to collect rapid run data of other gc
+v_originalRapidRunData = new J_RapidRunData(this);
+v_originalRapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
+   
+EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeEnergyCarriers);
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeConsumptionEnergyCarriers);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeProductionEnergyCarriers);
+EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.copyOf(v_liveAssetsMetaData.activeAssetFlows);
+//Need to do this, for if the sliders have changed, otherwise potential errors/missing data  ????
+boolean storeTotalAssetFlows = true;
+for(GridConnection GC : c_memberGridConnections){
+	if(GC.v_isActive){
+		activeEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeEnergyCarriers);
+		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeConsumptionEnergyCarriers);
+		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeProductionEnergyCarriers);
+		
+		v_originalRapidRunData.assetsMetaData.activeAssetFlows.addAll(GC.v_originalRapidRunData.assetsMetaData.activeAssetFlows);
+		
+		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
+			storeTotalAssetFlows = false;
+		}
+	}
+}
+
+//Adjust StoreTotalAssetFlows accordingly to the member data
+v_originalRapidRunData.setStoreTotalAssetFlows(storeTotalAssetFlows);
+
+//For now assumed to stay the same even after slider change: can't see rapid run graphs anyway after slider change
+v_originalRapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
+
+//Initialize the rapid run data
+v_originalRapidRunData.initializeAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
+
+/*ALCODEEND*/}
+
+double f_getOriginalCumulativeIndividualGCValues()
+{/*ALCODESTART::1759155380190*/
+v_cumulativeIndividualPeakDeliveryOriginal_kW = 0;
+v_cumulativeIndividualPeakFeedinOriginal_kW = 0;
+
+//Loop over membered grid connections
+for(GridConnection GC : c_memberGridConnections){
+	if(GC.v_isActive){
+		//Add all peaks for member grid connections
+		v_cumulativeIndividualPeakDeliveryOriginal_kW += GC.v_originalRapidRunData.getPeakDelivery_kW();
+		v_cumulativeIndividualPeakFeedinOriginal_kW += GC.v_originalRapidRunData.getPeakFeedin_kW();
+	}	
+}
+
+for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consumption!
+	if (a instanceof EnergyCoop) {
+		EnergyCoop EC = (EnergyCoop)a;
+		EC.f_getOriginalCumulativeIndividualGCValues();
+
+		if(v_originalRapidRunData != null && EC.v_originalRapidRunData != null){
+			v_cumulativeIndividualPeakDeliveryOriginal_kW += EC.v_cumulativeIndividualPeakDeliveryOriginal_kW;
+			v_cumulativeIndividualPeakFeedinOriginal_kW += EC.v_cumulativeIndividualPeakFeedinOriginal_kW;
+		}
+	}
+}
 /*ALCODEEND*/}
 

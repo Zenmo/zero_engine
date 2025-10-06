@@ -204,7 +204,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	public void setLossScalingFactor_fr( double lossScalingFactor_fr) {
 		this.lossScalingFactor_fr = lossScalingFactor_fr;
 	}
-
+	
+	public double getLossScalingFactor_fr() {
+		return this.lossScalingFactor_fr;
+	}
 	
 	@Override
     public void storeStatesAndReset() {
