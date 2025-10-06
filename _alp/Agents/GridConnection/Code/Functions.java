@@ -201,6 +201,7 @@ double f_resetStates()
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
+//fm_currentAssetFlows_kW.clear(); // Why not this one??
 
 v_previousPowerElectricity_kW = 0;
 v_previousPowerHeat_kW = 0;

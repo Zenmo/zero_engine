@@ -6,25 +6,10 @@
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752681631114</Folder>
 	<Import><![CDATA[import java.lang.reflect.Field;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.CLASS,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "type"  // 👈 this will be the field name in your JSON
-	)
-/*
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = GIS_Building.class, name = "GIS_Building"),
-    @JsonSubTypes.Type(value = GIS_Parcel.class, name = "GIS_Parcel"),
-   
-    // Add other known subtypes here if needed
-})
-*/
 
-@JsonIgnoreProperties({"va_building", "va_parcel", "_origin_VA","gisRegion",
-	"p_defaultFillColor", "p_defaultLineColor", "p_defaultLineStyle"})]]></Import>
+
+//@JsonIgnoreProperties({"va_building", "va_parcel", "_origin_VA","gisRegion",
+//	"p_defaultFillColor", "p_defaultLineColor", "p_defaultLineStyle"})]]></Import>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1667726338855</Id>

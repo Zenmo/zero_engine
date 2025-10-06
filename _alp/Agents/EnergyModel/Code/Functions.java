@@ -401,8 +401,6 @@ for (GridConnection GC : c_gridConnections) {
 	}	
 }
 
-f_setInitialValues();
-
 v_isRapidRun = false;
 
 double duration = System.currentTimeMillis() - startTime1;
@@ -410,6 +408,9 @@ double duration = System.currentTimeMillis() - startTime1;
 traceln("*** headless run duration: "+ duration/1000 + " s ***");
 
 traceln("Live-sim t_h after rapidRun: %s", t_h);
+if (b_isDeserialised) {
+	traceln("Anylogic Model time(HOUR): %s", time(HOUR));
+}
 c_profiles.forEach(p -> p.updateValue(t_h)); 
 c_forecasts.forEach(p -> p.initializeForecast(t_h)); 
 
@@ -495,11 +496,17 @@ double f_buildGridNodeTree()
 double topLevelElectricGridCapacity_kW = 0;
 boolean topLevelGridCapacitiesKnown = true;
 
-// First make all links between GridNodes
+	// First make all links between GridNodes
 for( GridNode GN : pop_gridNodes ) {
 	GN.f_connectToParentNode();
 }
 
+// First clear lists (needed after deserialisation)
+c_gridNodeExecutionList.clear();
+c_gridNodeExecutionListReverse.clear();
+c_gridNodesTopLevel.clear();
+c_gridNodesNotTopLevel.clear();
+	
 // Then build execution order list
 for( GridNode GN : pop_gridNodes ) {
 	GridNode parentNode = findFirst(pop_gridNodes, p->p.p_gridNodeID.equals(GN.p_parentNodeID)); // Works as long as p_gridNodeID is not null. p_parentNodeID can be null no problemo.
@@ -523,6 +530,7 @@ for( GridNode GN : pop_gridNodes ) {
 }
 c_gridNodeExecutionListReverse = c_gridNodeExecutionList;
 Collections.reverse(c_gridNodeExecutionList);
+
 
 //Set cumulative toplevel grid values as energyModel values
 v_liveConnectionMetaData.physicalCapacity_kW = topLevelElectricGridCapacity_kW;
@@ -563,15 +571,15 @@ if (b_isInitialized) {
 //v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 t_h = p_runStartTime_h;
 
+Date startDate = date();
+p_year = startDate.getYear() + 1900;
+
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
 v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
 p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
 
 
-Date startDate = date();
-
-p_year = startDate.getYear() + 1900;
 
 int monthIdx = 0;
 while ( t_h > hourOfYearPerMonth[monthIdx] ) {
@@ -586,6 +594,8 @@ traceln("Day of month start: %s", dayOfMonth);
 traceln("Month of year start: %s", monthIdx);
 startDate.setMonth(monthIdx);
 startDate.setDate(dayOfMonth);
+startDate.setHours(0);
+startDate.setMinutes(0);
 traceln("Startdate: %s", startDate);
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
@@ -639,10 +649,6 @@ if (pop_connectionOwners.size() > 500 && b_parallelizeGridConnections) {
 	b_parallelizeConnectionOwners = true;
 }
 
-// set initial values
-f_setInitialValues();
-
-
 b_isInitialized = true;
 /*ALCODEEND*/}
 
@@ -669,14 +675,6 @@ return this.c_gridNodesTopLevel;
 ArrayList<GridNode> f_getGridNodesNotTopLevel()
 {/*ALCODESTART::1718289761647*/
 return this.c_gridNodesNotTopLevel;
-/*ALCODEEND*/}
-
-double f_setInitialValues()
-{/*ALCODESTART::1722853692644*/
-// Starting prices
-//c_gridConnections.forEach(GC -> GC.v_electricityPriceLowPassed_eurpkWh = c_gridNodesTopLevel.get(0).v_currentParentNodalPrice_eurpkWh); // Initialize filtered prices for gridConnections, hoping to prevent or reduce initial settling excursions
-
-
 /*ALCODEEND*/}
 
 double f_initializePause()
@@ -1040,7 +1038,7 @@ if ( Math.abs(energyBalanceCheck_MWh) > 1e-6 ) {
 double f_startAfterDeserialisation()
 {/*ALCODESTART::1753963201170*/
 // Reconstruct the LiveData class
-v_liveData = new J_LiveData(this);
+/*v_liveData = new J_LiveData(this);
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
@@ -1048,7 +1046,7 @@ v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTR
 //v_liveConnectionMetaData = new J_ConnectionMetaData(this);
 //v_liveAssetsMetaData = new J_AssetsMetaData(this);
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
-v_liveData.assetsMetaData = v_liveAssetsMetaData;
+v_liveData.assetsMetaData = v_liveAssetsMetaData;*/
 
 v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
 
@@ -1059,14 +1057,14 @@ fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 
 // Reconstruct the LiveData class in the EnergyCoops
 for (EnergyCoop ec : pop_energyCoops) {
-	ec.v_liveData = new J_LiveData(ec);
+	/*ec.v_liveData = new J_LiveData(ec);
 	ec.v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	ec.v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	ec.v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	
 	ec.v_liveData.connectionMetaData = ec.v_liveConnectionMetaData;
 	ec.v_liveData.assetsMetaData = ec.v_liveAssetsMetaData;
-
+	*/
 	ec.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
 
 	ec.fm_currentProductionFlows_kW = new J_FlowsMap();
@@ -1079,14 +1077,14 @@ for (EnergyCoop ec : pop_energyCoops) {
 List<GridConnection> allGridConnections = new ArrayList<>(c_gridConnections);
 allGridConnections.addAll(c_pausedGridConnections);
 for (GridConnection gc : allGridConnections) {
-	gc.v_liveData = new J_LiveData(gc);
+	/*gc.v_liveData = new J_LiveData(gc);
 	gc.v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	gc.v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	gc.v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 	
 	gc.v_liveData.connectionMetaData = gc.v_liveConnectionMetaData;
 	gc.v_liveData.assetsMetaData = gc.v_liveAssetsMetaData;
-	
+	*/
 	gc.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
 	
 	gc.fm_currentProductionFlows_kW = new J_FlowsMap();
@@ -1094,20 +1092,47 @@ for (GridConnection gc : allGridConnections) {
 	gc.fm_currentBalanceFlows_kW = new J_FlowsMap();
 	gc.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 	
-	for (J_EA j_ea : gc.c_energyAssets) {
+	/*for (J_EA j_ea : gc.c_energyAssets) {
 		gc.f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
-	}
+	}*/
 }
 
-//v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT, OL_EnergyCarriers.METHANE, OL_EnergyCarriers.DIESEL);
-//v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT);
-//v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY, OL_EnergyCarriers.HEAT, OL_EnergyCarriers.METHANE, OL_EnergyCarriers.DIESEL);
-//for (J_EA j_ea : c_energyAssets) {
-	//v_liveData.activeProductionEnergyCarriers.addAll(j_ea.activeProductionEnergyCarriers);
-	//v_liveData.activeConsumptionEnergyCarriers.addAll(j_ea.activeConsumptionEnergyCarriers);
-//}
+// Initialize time and date
+//v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+t_h = p_runStartTime_h;
 
+Date startDate = date();
+p_year = startDate.getYear() + 1900;
 
+LocalDate localDate = LocalDate.of(p_year, 1, 1);
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
+p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
+
+int monthIdx = 0;
+while ( t_h > hourOfYearPerMonth[monthIdx] ) {
+	monthIdx++;
+	if (monthIdx==hourOfYearPerMonth.length){
+		break;
+	}	
+}
+
+int dayOfMonth = 1+(int)((t_h - hourOfYearPerMonth[monthIdx])/24.0);
+traceln("Day of month start: %s", dayOfMonth);
+traceln("Month of year start: %s", monthIdx);
+startDate.setMonth(monthIdx);
+startDate.setDate(dayOfMonth);
+startDate.setHours(0);
+startDate.setMinutes(0);
+traceln("Startdate: %s", startDate);
+//startDate.set
+getExperiment().getEngine().setStartDate(startDate); 
+
+f_initializeForecasts();
+
+f_initializeLiveDataSets();
+
+b_isDeserialised = true;
 /*ALCODEEND*/}
 
 Pair<J_DataSetMap, J_DataSetMap> f_getPeakWeekDataSets()
@@ -1233,5 +1258,78 @@ pop_energyCoops.forEach(EC -> EC.v_liveData.clearLiveDatasets());
 //GridConnections
 c_gridConnections.forEach(GC -> GC.v_liveData.clearLiveDatasets());
 c_pausedGridConnections.forEach(GC -> GC.v_liveData.clearLiveDatasets());
+/*ALCODEEND*/}
+
+double f_initializeEngineAfterLoad()
+{/*ALCODESTART::1758792939882*/
+// Initialize time and date
+//v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
+t_h = p_runStartTime_h;
+
+Date startDate = date();
+p_year = startDate.getYear() + 1900;
+
+LocalDate localDate = LocalDate.of(p_year, 1, 1);
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
+p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
+
+int monthIdx = 0;
+while ( t_h > hourOfYearPerMonth[monthIdx] ) {
+	monthIdx++;
+	if (monthIdx==hourOfYearPerMonth.length){
+		break;
+	}	
+}
+
+int dayOfMonth = 1+(int)((t_h - hourOfYearPerMonth[monthIdx])/24.0);
+traceln("Day of month start: %s", dayOfMonth);
+traceln("Month of year start: %s", monthIdx);
+startDate.setMonth(monthIdx);
+startDate.setDate(dayOfMonth);
+startDate.setHours(0);
+startDate.setMinutes(0);
+traceln("Startdate: %s", startDate);
+//startDate.set
+getExperiment().getEngine().setStartDate(startDate); 
+
+
+
+// Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
+
+/*f_buildGridNodeTree();
+c_gridConnections.forEach(GC -> GC.f_initialize());
+
+// Only relevant for deserialisation:
+c_pausedGridConnections.forEach(GC -> GC.f_initialize());
+
+pop_connectionOwners.forEach(CO -> CO.f_initialize());
+pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
+
+
+
+// Initializing Live Data Class
+v_liveAssetsMetaData.updateActiveAssetData(c_gridConnections);
+for (GridConnection GC : c_gridConnections) {
+	v_liveData.activeEnergyCarriers.addAll(GC.v_liveData.activeEnergyCarriers);
+	v_liveData.activeConsumptionEnergyCarriers.addAll(GC.v_liveData.activeConsumptionEnergyCarriers);
+	v_liveData.activeProductionEnergyCarriers.addAll(GC.v_liveData.activeProductionEnergyCarriers);
+}
+
+// Loop over populations to check v_ispaused
+f_initializePause();
+
+for (GridNode GN : c_gridNodeExecutionList) {
+	GN.f_initializeGridnode();
+}
+
+v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = false;
+v_liveData.connectionMetaData.contractedFeedinCapacityKnown = false;
+v_liveData.connectionMetaData.physicalCapacityKnown = false;
+*/
+f_initializeForecasts();
+
+f_initializeLiveDataSets();
+
 /*ALCODEEND*/}
 
