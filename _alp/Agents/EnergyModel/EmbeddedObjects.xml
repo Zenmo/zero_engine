@@ -67,7 +67,7 @@
 				<Name><![CDATA[p_realCapacityAvailable]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_nodeStatus]]></Name>
+				<Name><![CDATA[p_serviceAreaGisRegion]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uniqueColor]]></Name>
