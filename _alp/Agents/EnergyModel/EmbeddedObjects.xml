@@ -997,9 +997,6 @@
 				<Name><![CDATA[p_bouwjaar]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_hasAdditionalInsulation]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_eigenOprit]]></Name>
 			</Parameter>
 			<Parameter>

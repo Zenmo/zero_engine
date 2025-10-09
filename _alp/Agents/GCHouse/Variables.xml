@@ -251,38 +251,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1717417303620</Id>
-		<Name><![CDATA[p_hasAdditionalInsulation]]></Name>
-		<X>50</X>
-		<Y>530</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[boolean]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1717417303618</Id>
-				<EditorContolType>CHECK_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1722350833847</Id>
 		<Name><![CDATA[p_eigenOprit]]></Name>
 		<X>50</X>
-		<Y>550</Y>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
