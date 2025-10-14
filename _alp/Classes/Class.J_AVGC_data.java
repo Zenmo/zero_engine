@@ -26,32 +26,46 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgUtilityPVPower_kWp;
 	public double p_ratioElectricTrucks;
 	public OL_GridConnectionHeatingType p_avgCompanyHeatingMethod;
-	public double p_avgEVEnergyConsumptionCar_kWhpkm;
-	public double p_avgEVEnergyConsumptionVan_kWhpkm;
-	public double p_avgEVEnergyConsumptionTruck_kWhpkm;
+
 	public double p_hydrogenEnergyDensity_kWh_Nm3;
-	public double p_avgDieselConsumptionCar_kmpl;
-	public double p_avgGasolineConsumptionCar_kmpl;
 	public double p_hydrogenSpecificEnergy_kWh_kg;
 	public double p_hydrogenDensity_kg_Nm3;
 	public double p_oxygenDensity_kg_Nm3;
-	public double p_avgCOPHeatpump;
-	public double p_avgEfficiencyHeatpump;
-	public double p_avgDieselConsumptionCar_kWhpkm;
 	public double p_oxygenProduction_kgO2pkgH2;
+	
+	public double p_avgEVEnergyConsumptionCar_kWhpkm;
+	public double p_avgEVEnergyConsumptionVan_kWhpkm;
+	public double p_avgEVEnergyConsumptionTruck_kWhpkm;	
+	public double p_avgDieselConsumptionCar_kmpl;
+	public double p_avgGasolineConsumptionCar_kmpl;	
+	public double p_avgDieselConsumptionCar_kWhpkm;
 	public double p_avgGasolineConsumptionCar_kWhpkm;
 	public double p_avgDieselConsumptionVan_kmpl;
 	public double p_avgDieselConsumptionVan_kWhpkm;
 	public double p_avgDieselConsumptionTruck_kmpl;
 	public double p_avgDieselConsumptionTruck_kWhpkm;
-	public double p_avgOutputTemperatureHeatpump_degC;
 	public double p_avgHydrogenConsumptionCar_kWhpkm;
-	public double p_avgEfficiencyGasBurner;
 	public double p_avgHydrogenConsumptionVan_kWhpkm;
 	public double p_avgHydrogenConsumptionTruck_kWhpkm;
+	
+	public double p_avgCOPHeatpump;
+	public double p_avgEfficiencyHeatpump_fr;
+	public double p_avgOutputTemperatureHeatpump_degC;
+	public double p_minHeatpumpElectricCapacity_kW;
+
+	public double p_avgEfficiencyGasBurner_fr;
 	public double p_avgOutputTemperatureGasBurner_degC;
-	public double p_avgEfficiencyHydrogenBurner;
+	public double p_minGasBurnerOutputCapacity_kW;
+	
+	public double p_avgEfficiencyHydrogenBurner_fr;
 	public double p_avgOutputTemperatureHydrogenBurner_degC;
+	public double p_minHydrogenBurnerOutputCapacity_kW;
+
+	public double p_avgEfficiencyDistrictHeatingDeliverySet_fr;
+	public double p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+	public double p_minDistrictHeatingDeliverySetOutputCapacity_kW;
+
+	
 	public double p_avgPVPower_kWpm2;
 	public double p_avgAnnualProductionPV_kWhpWp;
 	public double p_avgRatioRoofPotentialPV;
@@ -61,8 +75,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;
 	public double p_avgOutputTemperatureCHP_degC;
-	public double p_avgEfficiencyDistrictHeatingDeliverySet_fr;
-	public double p_avgOutputTemperatureDistrictHeatingDeliverySet_degC;
+
 	public double p_v1gProbability;
 	public double p_v2gProbability;
 	public int p_avgEVsPerPublicCharger;
