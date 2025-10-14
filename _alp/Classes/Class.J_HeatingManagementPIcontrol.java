@@ -1,6 +1,8 @@
+
 /**
- * J_HeatingManagementSimple
+ * J_HeatingManagementPIcontrol
  */	
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
@@ -12,9 +14,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     creatorVisibility = Visibility.NONE
 )
 
-public class J_HeatingManagementSimple implements I_HeatingManagement {
-
-    private boolean isInitialized = false;
+public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
+	private boolean isInitialized = false;
     private GridConnection gc;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.GAS_BURNER, 
@@ -33,32 +34,61 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     public double dayTimeSetPoint_degC = 19;
     public double nightTimeSetPoint_degC = 19;
     public double heatingKickinTreshhold_degC = 0;// -> If not 0, need to create better management / system definition, else on/off/on/off behaviour.
-    
-	/**
+	    
+    // PI control gains
+    private double P_gain_kWpDegC = 1;
+    private double I_gain_kWphDegC = 0.1;
+    private double I_state_hDegC = 0;
+    private double timeStep_h;
+    /**
      * Default constructor
      */
-    public J_HeatingManagementSimple() {
-    	
-    }
-    
-    public J_HeatingManagementSimple( GridConnection gc,OL_GridConnectionHeatingType heatingType ) {
-    	this.gc = gc;
-    	this.currentHeatingType = heatingType;
+    public J_HeatingManagementPIcontrol() {
     }
 
-    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
+    public J_HeatingManagementPIcontrol( GridConnection gc,OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.building = gc.p_BuildingThermalAsset;
-    	this.startOfDay_h = startOfDay_h;
-        this.startOfNight_h = startOfNight_h;
-        this.dayTimeSetPoint_degC = dayTimeSetPoint_degC;
-        this.nightTimeSetPoint_degC = nightTimeSetPoint_degC;
-        this.heatingKickinTreshhold_degC = heatingKickinTreshhold_degC;	
+    	this.timeStep_h = gc.energyModel.p_timeStep_h;
     }
     
+    public void manageHeating() {
+    	if ( !isInitialized ) {
+    		this.initializeAssets();
+    	}
+    	
+    	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
+    	
+    	//Adjust the hot water and overall heat demand with the buffer and pt
+    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
+    	
+    	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+
+    	double buildingTemp_degC = building.getCurrentTemperature();
+    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+    	double buildingHeatingDemand_kW = 0;
+    	
+    	double currentSetpoint_degC = dayTimeSetPoint_degC;
+    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
+    		currentSetpoint_degC = nightTimeSetPoint_degC;
+    	}
+    	
+    	double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
+    	//I_state_kW += deltaT_degC * I_gain_kWphDeg * timeStep_h);
+    	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
+    	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
+    	
+    	//traceln("PI control for heating: deltaT: %s, proportional feedback: %s kW, integral feedback: %s kW", deltaT_degC, deltaT_degC * P_gain_kWpDeg, I_state_kW);
+    	
+    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
+		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
+		
+		double heatIntoBuilding_kW = max(0, assetPower_kW - otherHeatDemand_kW);    			
+		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+
+    }    
     
-    public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
+  public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
     	
     	//Calculate the pt production
     	double ptProduction_kW = 0;
@@ -103,54 +133,6 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	return remainingHotWater_kW;
     }
     
-    
-    public void manageHeating() {
-    	if ( !isInitialized ) {
-    		this.initializeAssets();
-    	}
-    	
-    	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
-    	
-    	//Adjust the hot water and overall heat demand with the buffer and pt
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!
-    	
-    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-    	
-    	double heatingAssetPower_kW = 0;
-
-    	if(this.building != null) {
-        	double buildingHeatingDemand_kW = 0;
-	    	double buildingTemp_degC = building.getCurrentTemperature();
-	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
-	    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-	    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-	    			// Nighttime and building temperature too low
-	    			buildingHeatingDemand_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-	    		}
-	    		else {
-	    			// Nighttime and building temperature acceptable
-	    		}
-	    	}
-	    	else {
-	    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-	    			// Daytime and building temperature too low
-	    			buildingHeatingDemand_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-	    		}
-	    		else {
-	    			// Daytime and building temperature acceptable
-	    		}
-	    	}
-			
-	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
-			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-			building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
-    	} else {    	    	
-    		heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-    	}
-		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
-    }
-    
-    
     public void initializeAssets() {
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
@@ -168,11 +150,8 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	}
     	if(gc.p_BuildingThermalAsset != null) {
         	this.building = gc.p_BuildingThermalAsset;
-    	}
-    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
-    	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-    	if (heatProfile == null && heatConsumption == null && this.building == null) {
-    		throw new RuntimeException(this.getClass() + " requires a heat demand asset.");
+    	} else {
+    		throw new RuntimeException(this.getClass() + " can only be used for temperature control of a building thermal asset.");
     	}
     	if (gc.c_heatingAssets.size() == 0) {
     		throw new RuntimeException(this.getClass() + " requires at least one heating asset.");
@@ -200,7 +179,6 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	this.isInitialized = true;
     }
     
-    
     public void notInitialized() {
     	this.isInitialized = false;
     }
@@ -218,9 +196,4 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 		return super.toString();
 	}
 
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
 }
