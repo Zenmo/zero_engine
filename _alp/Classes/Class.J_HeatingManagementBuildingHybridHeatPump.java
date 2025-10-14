@@ -94,7 +94,10 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	if (gc.p_heatBuffer != null) {
     		throw new RuntimeException(this.getClass() + " does not support heat buffers.");
     	}
-    	if (gc.p_BuildingThermalAsset == null) {
+    	if (gc.p_BuildingThermalAsset != null) {
+        	this.building = gc.p_BuildingThermalAsset;
+    	}
+    	else {
     		throw new RuntimeException(this.getClass() + " requires a building asset.");
     	}
     	if (gc.c_heatingAssets.size() != 2) {

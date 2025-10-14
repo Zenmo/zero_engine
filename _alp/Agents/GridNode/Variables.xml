@@ -1597,7 +1597,7 @@ geupdate vanuit
 		<Id>1705586150313</Id>
 		<Name><![CDATA[p_description]]></Name>
 		<X>50</X>
-		<Y>360</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1649,11 +1649,9 @@ geupdate vanuit
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1709911209033</Id>
-		<Name><![CDATA[p_nodeStatus]]></Name>
-		<Description><![CDATA[Shows if the node is active or not active]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[p_serviceAreaGisRegion]]></Name>
 		<X>50</X>
-		<Y>380</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1662,12 +1660,12 @@ geupdate vanuit
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[boolean]]></Type>
+			<Type><![CDATA[GISRegion]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
 				<Id>1709911209031</Id>
-				<EditorContolType>CHECK_BOX</EditorContolType>
+				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
