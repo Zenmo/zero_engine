@@ -112,19 +112,20 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	//Adjust the hot water and overall heat demand with the buffer and pt
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
+    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!
     	
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	
-    	double buildingPower_kW = 0;
+    	double heatingAssetPower_kW = 0;
+
     	if(this.building != null) {
+        	double buildingHeatingDemand_kW = 0;
 	    	double buildingTemp_degC = building.getCurrentTemperature();
 	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
-	    	double buildingPowerSetpoint_kW = 0;
 	    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
 	    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
 	    			// Nighttime and building temperature too low
-	       			buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingHeatingDemand_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
 	    		}
 	    		else {
 	    			// Nighttime and building temperature acceptable
@@ -133,18 +134,20 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 	    	else {
 	    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
 	    			// Daytime and building temperature too low
-	       			buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingHeatingDemand_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
 	    		}
 	    		else {
 	    			// Daytime and building temperature acceptable
 	    		}
 	    	}
-			buildingPower_kW = min(heatingAsset.getOutputCapacity_kW() - heatDemand_kW, buildingPowerSetpoint_kW);
-			building.f_updateAllFlows( buildingPower_kW / building.getCapacityHeat_kW() );
+			
+	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
+			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
+			building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+    	} else {    	    	
+    		heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
     	}
-    	
-    	double assetPower_kW = buildingPower_kW + heatDemand_kW;
-		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
+		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
     }
     
     
@@ -177,8 +180,6 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	if (gc.c_heatingAssets.size() > 1) {
     		throw new RuntimeException(this.getClass() + " does not support more than one heating asset.");
     	}
-    	// TODO: Add a check if the power of the asset is sufficient?
-    	// TODO: Add a check if the heatingAsset is of the correct type, e.g. not a hydrogen burner or not a CHP.
     	this.heatingAsset = gc.c_heatingAssets.get(0);
     	if (heatingAsset instanceof J_EAConversionGasBurner) {
     		this.currentHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
