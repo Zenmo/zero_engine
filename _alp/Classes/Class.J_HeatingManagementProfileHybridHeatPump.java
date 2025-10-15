@@ -83,8 +83,10 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	if (gc.p_BuildingThermalAsset != null) {
     		throw new RuntimeException(this.getClass() + " does not support a building asset.");
     	}
-    	J_EAConsumption heatProfile = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
-    	if (heatProfile == null) {
+    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
+    	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.energyCarrier == OL_EnergyCarriers.HEAT);
+    	
+    	if (heatProfile == null && heatConsumption == null) {
     		throw new RuntimeException(this.getClass() + " requires a HEAT_DEMAND profile.");
     	}
     	if (gc.c_heatingAssets.size() != 2) {
