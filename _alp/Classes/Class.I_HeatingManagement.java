@@ -35,5 +35,9 @@ public interface I_HeatingManagement {
 	List<OL_GridConnectionHeatingType> getValidHeatingTypes();
 	// Every implementation must choose one type that the current instance is managing
 	OL_GridConnectionHeatingType getCurrentHeatingType();
+	
+	//Heating preferences
+	J_HeatingPreferences getHeatingPreferences();
+	void setHeatingPreferences(J_HeatingPreferences heatingPreferences);
 } 
 

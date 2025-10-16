@@ -23,16 +23,8 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 
 	private J_EABuilding building;	
     private J_EAConversion heatingAsset;
-    
-    private double startOfDay_h = 8;
-    private double startOfNight_h = 23;
-    private double dayTimeSetPoint_degC = 20;
-    private double nightTimeSetPoint_degC = 17;
-    public double heatingKickinTreshhold_degC = 0;// -> If not 0, need to create better management / system definition, else on/off/on/off behaviour.
-	
-    private double maxComfortTemperature_degC = dayTimeSetPoint_degC + 3;
-    private double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
-    
+	private J_HeatingPreferences heatingPreferences;
+
     // PI control gains
     private double P_gain_kWpDegC = 1;
     private double I_gain_kWphDegC = 0.1;
@@ -52,7 +44,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     public J_HeatingManagementHeatpumpOffPeak() {
     }
 
-    public J_HeatingManagementHeatpumpOffPeak( GridConnection gc,OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementHeatpumpOffPeak( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.timeStep_h = gc.energyModel.p_timeStep_h;
@@ -78,9 +70,9 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
     	
-    	double currentSetpoint_degC = dayTimeSetPoint_degC;
-    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-    		currentSetpoint_degC = nightTimeSetPoint_degC;
+    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
+    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
 
     	//Determine if time is in reduced Heating interval
@@ -176,7 +168,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		double buildingHeatCapacity_kWhpK = this.building.getHeatCapacity_JpK()/(3.6e6);
 		
 		// Start calculation from the known comfort temperature that the building should minimally be at the end of the reduced heating interval
-		double indoorTemperature_degC = this.minComfortTemperature_degC;
+		double indoorTemperature_degC = this.heatingPreferences.getMinComfortTemperature_degC();
 		
 		//Loop over temperature in reverse order and find the required building temperature at start of each timestep, so at the end of interval the minComfortTemperature is reached
 		for (int i = intervalLength_timeSteps - 1; i >= 0; i--) {
@@ -190,9 +182,9 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		
 		//The found indoor temperature is now equal to the required indoor temperature at the start of the no/reduced heating interval.
 		
-		if(indoorTemperature_degC > maxComfortTemperature_degC) { // Check if max comfort temperature is not breached if so, limit temperature to the max comfort temperature
+		if(indoorTemperature_degC > this.heatingPreferences.getMaxComfortTemperature_degC()) { // Check if max comfort temperature is not breached if so, limit temperature to the max comfort temperature
 			traceln("Warning, the building is not isolated properly for the heatpump off peak heat strategy to comply to the comfort settings without turning on the heating asset at all");
-			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = maxComfortTemperature_degC;	
+			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = this.heatingPreferences.getMaxComfortTemperature_degC();	
 		}
 		else {
 			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = indoorTemperature_degC;
@@ -200,9 +192,9 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		
 		//Calculate needed preheat duration ??
     	//Get temperature setpoint during interval start
-		double temperatureSetPointDuringIntervalStart = dayTimeSetPoint_degC;
-    	if (startTimeOfReducedHeatingInterval_hr < startOfDay_h || startTimeOfReducedHeatingInterval_hr >= startOfNight_h) {
-    		temperatureSetPointDuringIntervalStart = nightTimeSetPoint_degC;
+		double temperatureSetPointDuringIntervalStart = heatingPreferences.getDayTimeSetPoint_degC();
+    	if (startTimeOfReducedHeatingInterval_hr < heatingPreferences.getStartOfDayTime_h() || startTimeOfReducedHeatingInterval_hr >= heatingPreferences.getStartOfNightTime_h()) {
+    		temperatureSetPointDuringIntervalStart = heatingPreferences.getNightTimeSetPoint_degC();
     	}
     	
     	double setpointAndPreHeatDeltaT_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC - temperatureSetPointDuringIntervalStart;
@@ -278,7 +270,9 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		} else {
 			throw new RuntimeException(this.getClass() + " Unsupported heating asset!");    		
 		}
-			
+    	if(this.heatingPreferences == null) {
+    		heatingPreferences = new J_HeatingPreferences();
+    	}	
 		this.isInitialized = true;
 	}
 	
@@ -294,6 +288,13 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		return this.currentHeatingType;
 	}
     
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
+    }
 
 	@Override
 	public String toString() {
