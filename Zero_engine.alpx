@@ -1724,6 +1724,11 @@
 				<Name><![CDATA[J_HeatingManagementPIcontrol]]></Name>
 				<Folder>1753194088788</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1760603137612</Id>
+				<Name><![CDATA[J_HeatingManagementHeatpumpOffPeak]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

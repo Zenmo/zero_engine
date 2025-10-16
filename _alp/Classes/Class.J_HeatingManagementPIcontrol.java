@@ -31,8 +31,8 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     
     public double startOfDay_h = 8;
     public double startOfNight_h = 23;
-    public double dayTimeSetPoint_degC = 19;
-    public double nightTimeSetPoint_degC = 19;
+    public double dayTimeSetPoint_degC = 20;
+    public double nightTimeSetPoint_degC = 17;
     public double heatingKickinTreshhold_degC = 0;// -> If not 0, need to create better management / system definition, else on/off/on/off behaviour.
 	    
     // PI control gains
@@ -74,12 +74,11 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	}
     	
     	double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
-    	//I_state_kW += deltaT_degC * I_gain_kWphDeg * timeStep_h);
+
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
     	
-    	//traceln("PI control for heating: deltaT: %s, proportional feedback: %s kW, integral feedback: %s kW", deltaT_degC, deltaT_degC * P_gain_kWpDeg, I_state_kW);
-    	
+
     	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
 		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
 		
