@@ -32,8 +32,8 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     private double timeStep_h;
     
     //Off peak management
-    private double preHeatDuration_hr = 1; // Amount of hours that the heatpump will heat some more to be able to bridge the reduced heating interval comfortably
-    private double requiredTemperatureAtStartOfReducedHeatingInterval_degC = 2; // Temperature setpoint increase in degrees Celsius that the heatpump will have in the preheatduration time
+    private double preHeatDuration_hr = 2; // Amount of hours that the heatpump has to reach the requiredTemperatureAtStartOfReducedHeatingInterval_degC
+    private double requiredTemperatureAtStartOfReducedHeatingInterval_degC = 20; // Temperature setpoint in degrees Celsius that the heatpump will have in the preheatduration time
     private double startTimeOfReducedHeatingInterval_hr = 16; // Hour of the day
     private double endTimeOfReducedHeatingInterval_hr = 21; // Hour of the day -> CAN NOT BE THE SAME AS THE START TIME
     private double reducedHeatingIntervalLength_hr = (endTimeOfReducedHeatingInterval_hr - startTimeOfReducedHeatingInterval_hr + 24) % 24;     
@@ -54,11 +54,13 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     public void manageHeating() {
     	if ( !isInitialized ) {
     		this.initializeAssets();
+    		calculatePreHeatParameters();
     	}
     	double t_h = gc.energyModel.t_h;
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	
-    	if(endTimeOfReducedHeatingInterval_hr == 0) {
+    	//Calculate preheat paramters for the next reduced heating interval
+    	if(timeOfDay_h == endTimeOfReducedHeatingInterval_hr) {
     		calculatePreHeatParameters();
     	}
     	
@@ -69,25 +71,28 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	//Get the remaining heat demand (hot water, and potential other profiles)
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
-    	
+    	//Determine if time is in reduced Heating interval
+		boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
+		boolean timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) < preHeatDuration_hr;
+
+		
+    	//Get the current temperature setpoint dependend on day/night time and noheat/preheat interval settings
     	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
-    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+    	if(timeIsInPreheatInterval) {
+    		currentSetpoint_degC = requiredTemperatureAtStartOfReducedHeatingInterval_degC;
+    	}
+    	else if(timeIsInReducedHeatingInterval) {
+    		currentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC(); // -> prevents fast response during interval if min comfort is breached
+    		if(startTimeOfReducedHeatingInterval_hr == timeOfDay_h) {
+    			I_state_hDegC = 0; //Reset I state at the start of no heating interval to reset the controller, so no heating power at all.
+    		}
+    	}
+    	else if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
 
-    	//Determine if time is in reduced Heating interval
-		boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
-		boolean timeIsInPreheatInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr + 24) % 24) < preHeatDuration_hr;
-		
-		//Determine the deltaT_degc
-    	double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
-    	
-    	if (timeIsInReducedHeatingInterval) {
-    		deltaT_degC = 0;
-    	}
-    	else if(timeOfDay_h >= (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr)){
-    		deltaT_degC = requiredTemperatureAtStartOfReducedHeatingInterval_degC - building.getCurrentTemperature();
-    	}
+		//Calculate the deltaT_degc
+		double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
     	
     	//PI control
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
@@ -102,8 +107,73 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
     }    
     
+    private void calculatePreHeatParameters() {
+		double energyModel_time_h = gc.energyModel.t_h;
+		double p_timestep_h = gc.energyModel.p_timeStep_h;
+		J_ProfilePointer ambientTemperatureProfilePointer = gc.energyModel.pp_ambientTemperature_degC;
+		
+		int intervalLength_timeSteps = roundToInt(this.reducedHeatingIntervalLength_hr / p_timestep_h) + 1; // + 1 to account for time step delay in losses
+		
+		double[] ambientTemperatureDuringInterval_degC = new double[intervalLength_timeSteps];
+		
+		double nextIntervalStart_t_h = energyModel_time_h - ((energyModel_time_h - startTimeOfReducedHeatingInterval_hr + 24) % 24);
+		if (nextIntervalStart_t_h < energyModel_time_h) {
+			nextIntervalStart_t_h += 24.0; // move to next day if already passed
+		}
+
+		// Get the ambient temperature profile for the interval
+		for (int i = 0; i < intervalLength_timeSteps; i++) {
+			double time = nextIntervalStart_t_h + i * p_timestep_h;
+		    ambientTemperatureDuringInterval_degC[i] = ambientTemperatureProfilePointer.getValue(time);
+		}
+			
+		// Get the building thermal properties and convert into the same units
+		double lossFactorPerTimeStep_kWhpK = this.building.getLossFactor_WpK()/1000.0 * p_timestep_h;
+		double buildingHeatCapacity_kWhpK = this.building.getHeatCapacity_JpK()/(3.6e6);
+		
+		// Start calculation from the known comfort temperature that the building should minimally be at the end of the reduced heating interval
+		//-> what if ends in nighttime, should this be influenced? Complexer to make, as during the time the interval is within daytime it should also not breach the min comfort.
+		//-> For now, just taken the min comfort temperature.
+		double indoorTemperature_degC = this.heatingPreferences.getMinComfortTemperature_degC(); 
+		
+		//Loop over temperature in reverse order and find the required building temperature at start of each timestep, so at the end of interval the minComfortTemperature is reached
+		for (int i = intervalLength_timeSteps - 1; i >= 0; i--) {
+			
+			//Calculate how much the temperature will drop in this timestep (What about sun? -> neglect for now)
+			double deltaT_degC = (indoorTemperature_degC - ambientTemperatureDuringInterval_degC[i])*lossFactorPerTimeStep_kWhpK / buildingHeatCapacity_kWhpK;
+			//Note: Loop is in reverse direction, so we add the deltaT instead of subtract, as we want to find the required indoor temperature at start of interval
+			indoorTemperature_degC += deltaT_degC;
+		}
+		
+		//The found indoor temperature is now equal to the required indoor temperature at the start of the no/reduced heating interval.
+		
+		if(indoorTemperature_degC > this.heatingPreferences.getMaxComfortTemperature_degC()) { // Check if max comfort temperature is not breached if so, limit temperature to the max comfort temperature
+			traceln("Warning, the building is not isolated properly for the heatpump off peak heat strategy to comply to the comfort settings without turning on the heating asset at all");
+			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = this.heatingPreferences.getMaxComfortTemperature_degC();	
+		}
+		else {
+			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = indoorTemperature_degC;
+		}
+		
+		//Calculate needed preheat duration ??
+    	//Get temperature setpoint during interval start
+		double temperatureSetPointDuringIntervalStart = heatingPreferences.getDayTimeSetPoint_degC();
+    	if (startTimeOfReducedHeatingInterval_hr < heatingPreferences.getStartOfDayTime_h() || startTimeOfReducedHeatingInterval_hr >= heatingPreferences.getStartOfNightTime_h()) {
+    		temperatureSetPointDuringIntervalStart = heatingPreferences.getNightTimeSetPoint_degC();
+    	}
+    	
+    	double setpointAndPreHeatDeltaT_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC - temperatureSetPointDuringIntervalStart;
+    	if(setpointAndPreHeatDeltaT_degC <= 0 ) {
+    		this.preHeatDuration_hr = 0;
+    	}
+    	else {
+    		double totalAdditionalEnergyNeededToReachPreheatTemperature_kWh = setpointAndPreHeatDeltaT_degC * buildingHeatCapacity_kWhpK;
+    		this.preHeatDuration_hr = 2; // Optional, can approximate this if needed, but then also have to account of fluctuations due to hot water demand, we can add a tolerance of 0.5 hr or something.
+    		//For now, preheat duration of 2 hours is assumed.
+    	}
+	}
     
-    public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
+    private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
     	
     	//Calculate the pt production
     	double ptProduction_kW = 0;
@@ -148,67 +218,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	return remainingHotWater_kW;
     }
     
-	public void calculatePreHeatParameters() {
-		double energyModel_time_h = gc.energyModel.t_h;
-		double p_timestep_h = gc.energyModel.p_timeStep_h;
-		J_ProfilePointer ambientTemperatureProfilePointer = gc.energyModel.pp_ambientTemperature_degC;
-		
-		int intervalLength_timeSteps = roundToInt(this.reducedHeatingIntervalLength_hr / p_timestep_h);
-		
-		double[] ambientTemperatureDuringInterval_degC = new double[intervalLength_timeSteps];
-		
-		// Get the ambient temperature profile for the interval
-		for (int i = 0; i < intervalLength_timeSteps; i++) {
-		    double time = (startTimeOfReducedHeatingInterval_hr + i * p_timestep_h) % 24;
-		    ambientTemperatureDuringInterval_degC[i] = ambientTemperatureProfilePointer.getValue(time);
-		}
-			
-		// Get the building thermal properties and convert into the same units
-		double lossFactorPerTimeStep_kWhpK = this.building.getLossFactor_WpK()/1000.0 * p_timestep_h;
-		double buildingHeatCapacity_kWhpK = this.building.getHeatCapacity_JpK()/(3.6e6);
-		
-		// Start calculation from the known comfort temperature that the building should minimally be at the end of the reduced heating interval
-		double indoorTemperature_degC = this.heatingPreferences.getMinComfortTemperature_degC();
-		
-		//Loop over temperature in reverse order and find the required building temperature at start of each timestep, so at the end of interval the minComfortTemperature is reached
-		for (int i = intervalLength_timeSteps - 1; i >= 0; i--) {
-			
-			//Calculate how much the temperature will drop in this timestep (What about sun? -> neglect for now)
-			double deltaT_degC = (indoorTemperature_degC - ambientTemperatureDuringInterval_degC[i])*lossFactorPerTimeStep_kWhpK / buildingHeatCapacity_kWhpK;
-			
-			//Note: Loop is in reverse direction, so we add the deltaT instead of subtract, as we want to find the required indoor temperature at start of interval
-			indoorTemperature_degC += deltaT_degC;
-		}
-		
-		//The found indoor temperature is now equal to the required indoor temperature at the start of the no/reduced heating interval.
-		
-		if(indoorTemperature_degC > this.heatingPreferences.getMaxComfortTemperature_degC()) { // Check if max comfort temperature is not breached if so, limit temperature to the max comfort temperature
-			traceln("Warning, the building is not isolated properly for the heatpump off peak heat strategy to comply to the comfort settings without turning on the heating asset at all");
-			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = this.heatingPreferences.getMaxComfortTemperature_degC();	
-		}
-		else {
-			this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = indoorTemperature_degC;
-		}
-		
-		//Calculate needed preheat duration ??
-    	//Get temperature setpoint during interval start
-		double temperatureSetPointDuringIntervalStart = heatingPreferences.getDayTimeSetPoint_degC();
-    	if (startTimeOfReducedHeatingInterval_hr < heatingPreferences.getStartOfDayTime_h() || startTimeOfReducedHeatingInterval_hr >= heatingPreferences.getStartOfNightTime_h()) {
-    		temperatureSetPointDuringIntervalStart = heatingPreferences.getNightTimeSetPoint_degC();
-    	}
-    	
-    	double setpointAndPreHeatDeltaT_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC - temperatureSetPointDuringIntervalStart;
-    	
-    	if(setpointAndPreHeatDeltaT_degC <= 0 ) {
-    		this.preHeatDuration_hr = 0;
-    	}
-    	else {
-    		double totalAdditionalEnergyNeededToReachPreheatTemperature_kWh = setpointAndPreHeatDeltaT_degC * buildingHeatCapacity_kWhpK;
-    		this.preHeatDuration_hr = 1; // Optional, can calculate this exactly if needed, but then to account of fluctuations due to hot water demand, we can add a tolerance of 0.5 hr or something.
-    		//For now, preheat duration of 1 hour is simply assumed.
-    	}
-		
-	}
+	
   
   
 	public void setStartTimeOfReducedHeatingInterval_hr(double startTimeOfReducedHeatingInterval_hr) {
