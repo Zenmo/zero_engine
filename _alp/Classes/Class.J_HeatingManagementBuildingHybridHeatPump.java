@@ -24,11 +24,9 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
 	private J_EABuilding building;	
 	private J_EAConversionHeatPump heatPumpAsset;
 	private J_EAConversionGasBurner gasBurnerAsset;
+	private J_HeatingPreferences heatingPreferences;
 	
-    private double startOfDay_h = 8;
-    private double startOfNight_h = 23;
-    private double dayTimeSetPoint_degC = 19;
-    private double nightTimeSetPoint_degC = 19;
+
     private double heatingKickinTreshhold_degC = 1;
     
 	/**
@@ -38,19 +36,14 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	
     }
     
-    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     }
 
-    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
+    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType, double heatingKickinTreshhold_degC ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.building = gc.p_BuildingThermalAsset;
-    	this.startOfDay_h = startOfDay_h;
-        this.startOfNight_h = startOfNight_h;
-        this.dayTimeSetPoint_degC = dayTimeSetPoint_degC;
-        this.nightTimeSetPoint_degC = nightTimeSetPoint_degC;
         this.heatingKickinTreshhold_degC = heatingKickinTreshhold_degC;	
     }
     
@@ -63,15 +56,15 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	double assetOutputPower_kW = heatPumpAsset.getCOP() > 3.0 ? heatPumpAsset.getOutputCapacity_kW() : gasBurnerAsset.getOutputCapacity_kW();
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
-    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {       			
-    			double buildingPowerSetpoint_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC() - heatingKickinTreshhold_degC) {       			
+    			double buildingPowerSetpoint_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
     			buildingPower_kW = min(assetOutputPower_kW - heatDemand_kW, buildingPowerSetpoint_kW);
     		}
     	}
     	else {
-    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
-    			double buildingPowerSetpoint_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC() - heatingKickinTreshhold_degC) {
+    			double buildingPowerSetpoint_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
     			buildingPower_kW = min(assetOutputPower_kW - heatDemand_kW, buildingPowerSetpoint_kW);
     		}
     	}
@@ -122,6 +115,9 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	else {
     		throw new RuntimeException(this.getClass() + " requires a Heat Pump");
     	}
+    	if(this.heatingPreferences == null) {
+    		heatingPreferences = new J_HeatingPreferences();
+    	}
     	this.isInitialized = true;
     }
     
@@ -135,6 +131,14 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     
     public OL_GridConnectionHeatingType getCurrentHeatingType() {
     	return this.currentHeatingType;
+    }
+    
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
     }
     
 	@Override

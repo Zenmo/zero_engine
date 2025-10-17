@@ -76,6 +76,10 @@ public class J_HeatingManagementProfileSimple implements I_HeatingManagement {
     	return this.currentHeatingType;
     }
     
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
+    }
+    
 	@Override
 	public String toString() {
 		return super.toString();

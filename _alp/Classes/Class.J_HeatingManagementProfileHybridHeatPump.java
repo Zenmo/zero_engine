@@ -23,7 +23,7 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	private OL_GridConnectionHeatingType currentHeatingType;
 	private J_EAConversionHeatPump heatPumpAsset;
 	private J_EAConversionGasBurner gasBurnerAsset;
-    
+	private J_HeatingPreferences heatingPreferences;
 	/**
      * Default constructor
      */
@@ -31,7 +31,7 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 		
 	}
 	
-    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     }
@@ -124,6 +124,14 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     
     public OL_GridConnectionHeatingType getCurrentHeatingType() {
     	return this.currentHeatingType;
+    }
+    
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
     }
     
 	@Override

@@ -1274,7 +1274,10 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
+J_HeatingPreferences existingHeatingPreferences = engineGC.p_heatingManagement != null ? engineGC.p_heatingManagement.getHeatingPreferences() : null; //Store the existing heating preferences
+
 engineGC.p_heatingManagement = heatingManagement;
+engineGC.p_heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
 /*ALCODEEND*/}
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)

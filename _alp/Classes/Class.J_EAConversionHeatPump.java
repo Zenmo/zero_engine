@@ -34,7 +34,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.updateAmbientTemperature( this.baseTemperature_degC );
 
 	    //this.COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
-	    traceln("Carnot-based Heatpump COP with parameter eta_r is no longer used! Replaced by empirical COP-curve.");
+	   // traceln("Carnot-based Heatpump COP with parameter eta_r is no longer used! Replaced by empirical COP-curve.");
 	    this.COP_r = calculateCOP(this.outputTemperature_degC, this.baseTemperature_degC);
 	    
 	    this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
