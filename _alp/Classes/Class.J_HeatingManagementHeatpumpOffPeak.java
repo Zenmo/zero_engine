@@ -26,8 +26,8 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 	private J_HeatingPreferences heatingPreferences;
 
     // PI control gains
-    private double P_gain_kWpDegC = 1;
-    private double I_gain_kWphDegC = 0.1;
+    private double P_gain_kWpDegC = 1*3;
+    private double I_gain_kWphDegC = 0.1*3;
     private double I_state_hDegC = 0;
     private double timeStep_h;
     
@@ -75,11 +75,13 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
 		boolean timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) < preHeatDuration_hr;
 
+		double startTimePreheatTime_hr = startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr;
 		
     	//Get the current temperature setpoint dependend on day/night time and noheat/preheat interval settings
     	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
-    	if(timeIsInPreheatInterval) {
-    		currentSetpoint_degC = requiredTemperatureAtStartOfReducedHeatingInterval_degC;
+    	if(timeIsInPreheatInterval) { // During preheat interval, raise the setpoint temperature step by step, to prevent overreaction by the controller
+    		currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC() + (requiredTemperatureAtStartOfReducedHeatingInterval_degC - heatingPreferences.getDayTimeSetPoint_degC()) * (timeOfDay_h + timeStep_h - startTimePreheatTime_hr)/preHeatDuration_hr;
+    		
     	}
     	else if(timeIsInReducedHeatingInterval) {
     		currentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC(); // -> prevents fast response during interval if min comfort is breached
