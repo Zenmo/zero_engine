@@ -648,7 +648,7 @@ public class J_RapidRunData {
 	    			maxSoC_kWh = max(maxSoC_kWh, SoC_kWh[i+1]);
 	    		}
 	    		requiredBatteryCapacity_kWh = maxSoC_kWh - minSoC_kWh;
-	    		traceln("Battery size to allow growth: %s kWh", requiredBatteryCapacity_kWh);
+	    		//traceln("Battery size to allow growth: %s kWh", requiredBatteryCapacity_kWh);
     		}
     	} else {
     		traceln("Gridconnection contracted delivery capacity unknown!");
