@@ -209,7 +209,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return "HeatingManagement Simple with heating type: " + getCurrentHeatingType().toString();
 	}
 
 	/**
