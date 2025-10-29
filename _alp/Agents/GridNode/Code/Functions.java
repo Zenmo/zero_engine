@@ -561,12 +561,17 @@ double f_getCurrentChargingInformation()
 {/*ALCODESTART::1758209089894*/
 v_currentChargingPower_kW = 0;
 v_currentNumberOfChargingChargePoints = 0;
+v_currentNumberOfChargingChargePointsWithGridBalanceForThisNode = 0;
 
-for(GridConnection GC : c_connectedGridConnections){
+for(GridConnection GC : f_getAllLowerLVLConnectedGridConnections()){
 	if(GC instanceof GCPublicCharger){
 		for(J_EAChargePoint charger : GC.c_chargers){
 			v_currentChargingPower_kW += charger.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 			v_currentNumberOfChargingChargePoints += charger.getCurrentNumberOfChargingSockets();
+			
+			if(charger.getChargingAttitude() == OL_ChargingAttitude.BALANCE_GRID && charger.getBalanceTargetGridNode() == this){
+				v_currentNumberOfChargingChargePointsWithGridBalanceForThisNode += charger.getCurrentNumberOfChargingSockets();
+			}
 		}
 	}
 }

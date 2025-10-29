@@ -1240,8 +1240,7 @@ geupdate vanuit
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1758209126431</Id>
-		<Name><![CDATA[v_nextNumberOfChargingChargePoints]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[v_currentNumberOfChargingChargePointsWithGridBalanceForThisNode]]></Name>
 		<X>810</X>
 		<Y>670</Y>
 		<Label>

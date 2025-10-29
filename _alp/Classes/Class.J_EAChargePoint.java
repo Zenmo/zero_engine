@@ -29,11 +29,14 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		//Charging attitude
 		private OL_ChargingAttitude chargingAttitude = OL_ChargingAttitude.SIMPLE;
 		
+		//For specific charging strategies
+		private GridNode balanceTargetGridNode;
 	    /**
 	     * Default constructor
 	     */
 	    public J_EAChargePoint(Agent parentAgent, double electricCapacity_kW, double timestep_h, List<J_ChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable, int nbSockets) {
 	    	this.parentAgent = parentAgent;
+	    	this.balanceTargetGridNode = ((GridConnection)parentAgent).p_parentNodeElectric;
 	    	this.capacityElectric_kW = electricCapacity_kW;
 	    	this.timestep_h = timestep_h;
 	    	this.chargeSessionList = chargeSessionList;
@@ -204,9 +207,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			double maxChargePower = capacityElectric_kW;
 			double remainingChargeDemand_kWh = currentChargingSessions[socketNb].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
 
-			GridNode parentNode = ((GridConnection)parentAgent).p_parentNodeElectric;
-			double currentBalanceOnGridNodeWithoutEV_kW = parentNode.v_currentLoad_kW - parentNode.v_currentChargingPower_kW;
-	    	double gridNodeLowPassedLoad_kW = parentNode.v_lowPassedLoadFilter_kW;
+			double currentBalanceOnGridNodeWithoutEV_kW = this.balanceTargetGridNode.v_currentLoad_kW - this.balanceTargetGridNode.v_currentChargingPower_kW;
+	    	double gridNodeLowPassedLoad_kW = this.balanceTargetGridNode.v_lowPassedLoadFilter_kW;
 	    	
 			double nextTripStartTime_h = currentChargingSessions[socketNb].endTime_h;
 			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
@@ -226,7 +228,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 				chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);	
 			} else {
 				double flexGain_r_manual = 0.8;
-				double flexGain_r = 1/max(1, (double)parentNode.v_currentNumberOfChargingChargePoints) * flexGain_r_manual; // how strongly to 'follow' currentBalanceBeforeEV_kW -> influenced by the amount of charging chargers at this momment
+				double flexGain_r = 1/max(1, (double)this.balanceTargetGridNode.v_currentNumberOfChargingChargePoints) * flexGain_r_manual; // how strongly to 'follow' currentBalanceBeforeEV_kW -> influenced by the amount of charging chargers at this momment
 				chargeSetpoint_kW = max(0, currentChargingSessions[socketNb].avgPowerDemand_kW + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));			    				
     			if ( doV2G && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
 					chargeSetpoint_kW = min(0, currentChargingSessions[socketNb].avgPowerDemand_kW + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));
@@ -304,7 +306,6 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		}
 		public boolean getV2GCapable() {
 			return this.V2GCapable;
-
 		}
 		
 		public void setChargingAttitude(OL_ChargingAttitude chargingAttitude) {
@@ -323,6 +324,14 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		public boolean getV2GActive() {
 			return this.V2GActive;
 		}
+		
+		public void setBalanceTargetGridNode(GridNode gn) {
+			this.balanceTargetGridNode = gn;
+		}
+		
+		public GridNode getBalanceTargetGridNode() {
+			return this.balanceTargetGridNode;
+		}		
 		
 		private void updateAssetFlowCategory() {
 			if(this.V2GCapable && this.V2GActive) {
