@@ -31,10 +31,15 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
 	private J_HeatingPreferences heatingPreferences;
 	    
     // PI control gains
-    private double P_gain_kWpDegC = 1;
-    private double I_gain_kWphDegC = 0.1;
+    private double P_gain_kWpDegC = 1*1;
+    private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
     private double timeStep_h;
+    
+    //Temperature setpoint low pass filter
+    private double filteredCurrentSetpoint_degC;
+    private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
+    
     /**
      * Default constructor
      */
@@ -68,7 +73,11 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
     	
-    	double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
+    	//Smooth the setpoint signal
+    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
+    	
+    	
+    	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
 
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
@@ -172,6 +181,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	if(this.heatingPreferences == null) {
     		heatingPreferences = new J_HeatingPreferences();
     	}
+		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     	this.isInitialized = true;
     }
     

@@ -26,10 +26,14 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 	private J_HeatingPreferences heatingPreferences;
 
     // PI control gains
-    private double P_gain_kWpDegC = 1*3;
-    private double I_gain_kWphDegC = 0.1*3;
+    private double P_gain_kWpDegC = 1*1;
+    private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
     private double timeStep_h;
+    
+    //Temperature setpoint low pass filter
+    private double filteredCurrentSetpoint_degC;
+    private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
     
     //Off peak management
     private double preHeatDuration_hr = 2; // Amount of hours that the heatpump has to reach the requiredTemperatureAtStartOfReducedHeatingInterval_degC
@@ -80,21 +84,25 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	//Get the current temperature setpoint dependend on day/night time and noheat/preheat interval settings
     	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
     	if(timeIsInPreheatInterval) { // During preheat interval, raise the setpoint temperature step by step, to prevent overreaction by the controller
-    		currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC() + (requiredTemperatureAtStartOfReducedHeatingInterval_degC - heatingPreferences.getDayTimeSetPoint_degC()) * (timeOfDay_h + timeStep_h - startTimePreheatTime_hr)/preHeatDuration_hr;
-    		
+    		currentSetpoint_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC;
     	}
     	else if(timeIsInReducedHeatingInterval) {
     		currentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC(); // -> prevents fast response during interval if min comfort is breached
     		if(startTimeOfReducedHeatingInterval_hr == timeOfDay_h) {
     			I_state_hDegC = 0; //Reset I state at the start of no heating interval to reset the controller, so no heating power at all.
+    			this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     		}
     	}
     	else if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
-
+    	
+    	
+    	//Smooth the setpoint signal
+    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
+    	
 		//Calculate the deltaT_degc
-		double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
+		double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
     	
     	//PI control
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
@@ -284,7 +292,8 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		}
     	if(this.heatingPreferences == null) {
     		heatingPreferences = new J_HeatingPreferences();
-    	}	
+    	}
+		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
 		this.isInitialized = true;
 	}
 	
@@ -312,5 +321,4 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 	public String toString() {
 		return super.toString();
 	}
-
 }
