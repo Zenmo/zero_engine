@@ -1,36 +1,29 @@
 /**
- * J_EABuilding
- */
-//import com.fasterxml.jackson.annotation.JsonTypeName;
-//@JsonTypeName("J_EABuilding")
-public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Serializable {
+ * J_EABuildingThermalNetwork
+ */	
+public class J_EABuildingThermalNetwork extends zero_engine.J_EAStorageHeat implements Serializable {
 
-	private double solarAbsorptionFactor_m2;
+    /**
+     * Default constructor
+     */
+    public J_EABuildingThermalNetwork() {
+    }
+
+    private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
 	
 	//Slider scaling factor
 	private double lossScalingFactor_fr = 1;
 	
 	// Optional Interior/Exterior Heat buffers
-	private double interiorDelayTime_h;
-	private double[] interiorReleaseSchedule_kWh;
-	private double[] interiorReleaseScheduleStored_kWh;
-	private int interiorReleaseScheduleIndex;
-	private double exteriorDelayTime_h;
-	private double[] exteriorReleaseSchedule_kWh;
-	private double[] exteriorReleaseScheduleStored_kWh;
-	private int exteriorReleaseScheduleIndex;	
-	
-    /**
-     * Default constructor
-     */
-    public J_EABuilding() {
-    }
+	private double heatingSystemConductance_WpK; // Heat transfer between building and heating system
+	private double heatingSystemHeatCapacity_JpK; // Thermal capacity of the heating system (floor heating, radiators, etc.)
+	//private double exteriorDelayTime_h;
 
     /**
      * Constructor initializing the fields
      */
-    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
+    public J_EABuildingThermalNetwork(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double buildingThermalTimescale_h, double solarAbsorptionFactor_m2, double heatingSystemTimescale_h ) {
 		this.parentAgent = parentAgent;
 		//this.heatStorageType = OL_EAStorageTypes.HEATMODEL_BUILDING;
 		this.capacityHeat_kW = capacityHeat_kW;
@@ -38,7 +31,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.timestep_h = timestep_h;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
-		this.heatCapacity_JpK = heatCapacity_JpK;
 		this.ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
@@ -47,8 +39,11 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    	throw new RuntimeException(String.format("Exception: J_EABuilding with negative lossfactor! %s", lossFactor_WpK));	    	
 	    }
 	    
-	    // Calculate cooldown time of building, imagine a step of 1 degree in the outside temp
-	    double cooldownTime_h = heatCapacity_JpK / lossFactor_WpK / 3600;
+	    // Calculate heatcapacity based on lossfactor and buildingThermalTimescale_h
+	    this.heatCapacity_JpK = buildingThermalTimescale_h * 3600 * lossFactor_WpK ;
+	    this.heatingSystemHeatCapacity_JpK = this.heatCapacity_JpK/4; // Hardcoded factor 4, but this value will be different based on heating system type!! Floor heating is much slower (higher heatcapacity) than radiators. At the same time, radiators have a lower conductance than floor heating.
+	    
+	    this.heatingSystemConductance_WpK = this.heatCapacity_JpK*this.heatingSystemHeatCapacity_JpK / (this.heatCapacity_JpK + this.heatingSystemHeatCapacity_JpK) / (heatingSystemTimescale_h * 3600)
 	    //double heatingSystemDeliveryTime_h = 
 	    
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
@@ -222,14 +217,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.energyAbsorbed_kWh = 0.0;
 		this.temperatureStored_degC = this.temperature_degC;
 		this.temperature_degC = this.initialTemperature_degC;
-		if (this.interiorReleaseSchedule_kWh != null) {
-			this.interiorReleaseScheduleStored_kWh = this.interiorReleaseSchedule_kWh;
-			Arrays.fill(this.interiorReleaseSchedule_kWh, 0.0);
-		}
-		if (this.exteriorReleaseSchedule_kWh != null) {
-			this.exteriorReleaseScheduleStored_kWh = this.exteriorReleaseSchedule_kWh;
-			Arrays.fill(this.exteriorReleaseSchedule_kWh, 0.0);
-		}
+	
 		clear();
     }
     
@@ -239,42 +227,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.energyUsed_kWh = this.energyUsedStored_kWh;
 		this.energyAbsorbed_kWh = this.energyAbsorbedStored_kWh;
 		this.temperature_degC = this.temperatureStored_degC;
-		this.interiorReleaseSchedule_kWh = this.interiorReleaseScheduleStored_kWh;
-		this.exteriorReleaseSchedule_kWh = this.exteriorReleaseScheduleStored_kWh;		
-    }
+	}
 
-	/*@Override
-	public double getMinTemperature_degC() {
-		return minTemperature_degC;
-	}*/
-
-	/*@Override
-	public double getMaxTemperature_degC() {
-		return maxTemperature_degC;
-	}*/
-
-	/*public double getStorageCapacity() {
-		return storageCapacity_kWh;
-	}*/
-
-	/*public double getHeatCapacity_JpK() {
-		return heatCapacity_JpK;
-	}*/
-
-	/*
-	@Override
-	public double getHeatCapacity_kW() {
-    	return capacityHeat_kW;
-    }
-	*/
-
-	/*@Override //Storage assets limiteren de opname van warmte niet met 1. Dat is nodig voor de buffer. Die kan wel maximaal zijn capaciteit leverern, maar kan meer opnemen. @Gillis is dat logisch of willen we andere oplossing?
-    public double[] operateBounded(double ratioOfCapacity) {
-    	double limitedRatioOfCapacity = max(-1, ratioOfCapacity);
-    	double[] arr = operate(limitedRatioOfCapacity);
-    	return arr;
-    }*/
-	
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
 		this.ambientTemperature_degC = currentAmbientTemperature_degC;
@@ -285,78 +239,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		//traceln("Updating solarRadiation of building to %s Wpm2!", solarRadiation_Wpm2);
 	}
 	
-	
-	// Methods for Optional Heat Buffer
-	// Interior heat buffer may represent the radiator or floor heating. Typical delay is 0.5 or 3 hours respectively.	
-	public void addInteriorHeatBuffer(double delayTime_h) {
-		this.interiorDelayTime_h = delayTime_h;
-		this.interiorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timestep_h) ];
-		this.interiorReleaseScheduleIndex = 0;
-	}
-
-	// Exterior heat buffer may represent the walls and roof of the building. Typical delay is 8 hours.
-	public void addExteriorHeatBuffer(double delayTime_h) {
-		this.exteriorDelayTime_h = delayTime_h;
-		this.exteriorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timestep_h) ];
-		this.exteriorReleaseScheduleIndex = 0;
-	}
-	
-    private double getInteriorHeatRelease(double heatAbsorbed_kWh) {
-    	// Distribute the added energy evenly over the release schedule
-    	//traceln("Interior schedule before: " + Arrays.toString(this.interiorReleaseSchedule_kWh));
-    	for (int x = 0; x < this.interiorReleaseSchedule_kWh.length; x++) {
-    		this.interiorReleaseSchedule_kWh[x] += heatAbsorbed_kWh / this.interiorReleaseSchedule_kWh.length;
-    	}
-    	// Store the current value
-    	double heatReleased_kWh = this.interiorReleaseSchedule_kWh[this.interiorReleaseScheduleIndex];
-    	// Reset the current value
-        this.interiorReleaseSchedule_kWh[this.interiorReleaseScheduleIndex] = 0;
-    	// Shift over the index
-    	this.interiorReleaseScheduleIndex++;
-    	this.interiorReleaseScheduleIndex = this.interiorReleaseScheduleIndex % this.interiorReleaseSchedule_kWh.length;
-    	//traceln("Interior schedule after: " + Arrays.toString(this.interiorReleaseSchedule_kWh));    	
- 
-    	return heatReleased_kWh;
-    }
-    
-    private double getExteriorHeatRelease(double heatAbsorbed_kWh) {
-    	// Distribute the added energy evenly over the release schedule
-    	for (int x = 0; x < this.exteriorReleaseSchedule_kWh.length; x++) {
-    		this.exteriorReleaseSchedule_kWh[x] += heatAbsorbed_kWh / this.exteriorReleaseSchedule_kWh.length;
-    	}
-    	// Store the current value
-    	double heatReleased_kWh = this.exteriorReleaseSchedule_kWh[this.exteriorReleaseScheduleIndex];
-    	// Reset the current value
-        this.exteriorReleaseSchedule_kWh[this.exteriorReleaseScheduleIndex] = 0;
-    	// Shift over the index
-    	this.exteriorReleaseScheduleIndex++;
-    	this.exteriorReleaseScheduleIndex = this.exteriorReleaseScheduleIndex % this.exteriorReleaseSchedule_kWh.length;
-    	
-    	return heatReleased_kWh;
-    }
-    
-    @Override
-	public double getRemainingHeatStorageHeat_kWh() {
-    	double remainingHeatStorageHeat_kWh = super.getRemainingHeatStorageHeat_kWh(); 
-    	remainingHeatStorageHeat_kWh += getRemainingHeatBufferHeat_kWh();
-    	return remainingHeatStorageHeat_kWh;
-    }
-    
-    public double getRemainingHeatBufferHeat_kWh() {
-    	double remainingHeatBufferHeat_kWh = 0;
-		if( this.interiorDelayTime_h != 0.0) {
-	    	for (int x = 0; x < this.interiorReleaseSchedule_kWh.length; x++) {
-	    		remainingHeatBufferHeat_kWh += this.interiorReleaseSchedule_kWh[x];
-	    	}
-		}
-		if( this.exteriorDelayTime_h != 0.0) {
-	    	for (int x = 0; x < this.exteriorReleaseSchedule_kWh.length; x++) {
-	    		remainingHeatBufferHeat_kWh += this.exteriorReleaseSchedule_kWh[x];    		
-	    	}
-		}
-    	return remainingHeatBufferHeat_kWh;
-    }
-    
     public boolean hasHeatBuffer() {
     	if (this.exteriorDelayTime_h != 0 || this.interiorDelayTime_h != 0) {
     		return true;
