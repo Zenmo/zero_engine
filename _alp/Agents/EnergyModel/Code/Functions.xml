@@ -241,8 +241,8 @@
 		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1716890117265</Id>
 		<Name><![CDATA[f_getActiveGridConnections]]></Name>
-		<X>1640</X>
-		<Y>500</Y>
+		<X>1660</X>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -274,7 +274,7 @@
 		<Id>1716897568717</Id>
 		<Name><![CDATA[f_getConnectionOwners]]></Name>
 		<X>1640</X>
-		<Y>540</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -290,7 +290,7 @@
 		<Id>1716899946694</Id>
 		<Name><![CDATA[f_getTopLevelGridCapacity_kW]]></Name>
 		<X>1640</X>
-		<Y>560</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -306,7 +306,7 @@
 		<Id>1717058801652</Id>
 		<Name><![CDATA[f_getEnergyAssets]]></Name>
 		<X>1640</X>
-		<Y>580</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -322,7 +322,7 @@
 		<Id>1718289616227</Id>
 		<Name><![CDATA[f_getGridNodesTopLevel]]></Name>
 		<X>1640</X>
-		<Y>620</Y>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -338,7 +338,7 @@
 		<Id>1718289761647</Id>
 		<Name><![CDATA[f_getGridNodesNotTopLevel]]></Name>
 		<X>1640</X>
-		<Y>640</Y>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -390,8 +390,8 @@
 		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1727167397666</Id>
 		<Name><![CDATA[f_getPausedGridConnections]]></Name>
-		<X>1640</X>
-		<Y>520</Y>
+		<X>1660</X>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -639,7 +639,7 @@
 		<Id>1754908171225</Id>
 		<Name><![CDATA[f_getGridConnectionsCollectionPointer]]></Name>
 		<X>1640</X>
-		<Y>680</Y>
+		<Y>700</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -655,7 +655,7 @@
 		<Id>1755014169405</Id>
 		<Name><![CDATA[f_getPausedGridConnectionsCollectionPointer]]></Name>
 		<X>1640</X>
-		<Y>700</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -737,6 +737,22 @@
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>870</X>
 		<Y>-30</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
+		<Id>1761140687507</Id>
+		<Name><![CDATA[f_getAllGridConnections]]></Name>
+		<X>1640</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

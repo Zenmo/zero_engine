@@ -28,25 +28,25 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
 
 	private J_EABuilding building;	
     private J_EAConversion heatingAsset;
-    
-    public double startOfDay_h = 8;
-    public double startOfNight_h = 23;
-    public double dayTimeSetPoint_degC = 19;
-    public double nightTimeSetPoint_degC = 19;
-    public double heatingKickinTreshhold_degC = 0;// -> If not 0, need to create better management / system definition, else on/off/on/off behaviour.
+	private J_HeatingPreferences heatingPreferences;
 	    
     // PI control gains
-    private double P_gain_kWpDegC = 1;
-    private double I_gain_kWphDegC = 0.1;
+    private double P_gain_kWpDegC = 1*1;
+    private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
     private double timeStep_h;
+    
+    //Temperature setpoint low pass filter
+    private double filteredCurrentSetpoint_degC;
+    private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
+    
     /**
      * Default constructor
      */
     public J_HeatingManagementPIcontrol() {
     }
 
-    public J_HeatingManagementPIcontrol( GridConnection gc,OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementPIcontrol( GridConnection gc,OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.timeStep_h = gc.energyModel.p_timeStep_h;
@@ -68,18 +68,21 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	double buildingHeatingDemand_kW = 0;
     	
-    	double currentSetpoint_degC = dayTimeSetPoint_degC;
-    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-    		currentSetpoint_degC = nightTimeSetPoint_degC;
+    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
+    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
     	
-    	double deltaT_degC = currentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
-    	//I_state_kW += deltaT_degC * I_gain_kWphDeg * timeStep_h);
+    	//Smooth the setpoint signal
+    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
+    	
+    	
+    	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
+
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
     	
-    	//traceln("PI control for heating: deltaT: %s, proportional feedback: %s kW, integral feedback: %s kW", deltaT_degC, deltaT_degC * P_gain_kWpDeg, I_state_kW);
-    	
+
     	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
 		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
 		
@@ -175,7 +178,10 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	} else {
     		throw new RuntimeException(this.getClass() + " Unsupported heating asset!");    		
     	}
-
+    	if(this.heatingPreferences == null) {
+    		heatingPreferences = new J_HeatingPreferences();
+    	}
+		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     	this.isInitialized = true;
     }
     
@@ -189,6 +195,14 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     
     public OL_GridConnectionHeatingType getCurrentHeatingType() {
     	return this.currentHeatingType;
+    }
+    
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
     }
     
 	@Override

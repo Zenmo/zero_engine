@@ -27,13 +27,8 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 
 	private J_EABuilding building;	
     private J_EAConversion heatingAsset;
-    
-    public double startOfDay_h = 8;
-    public double startOfNight_h = 23;
-    public double dayTimeSetPoint_degC = 19;
-    public double nightTimeSetPoint_degC = 19;
-    public double heatingKickinTreshhold_degC = 0;// -> If not 0, need to create better management / system definition, else on/off/on/off behaviour.
-    
+    private J_HeatingPreferences heatingPreferences;
+
 	/**
      * Default constructor
      */
@@ -41,22 +36,10 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	
     }
     
-    public J_HeatingManagementSimple( GridConnection gc,OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     }
-
-    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType, double startOfDay_h, double startOfNight_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double heatingKickinTreshhold_degC ) {
-    	this.gc = gc;
-    	this.currentHeatingType = heatingType;
-    	this.building = gc.p_BuildingThermalAsset;
-    	this.startOfDay_h = startOfDay_h;
-        this.startOfNight_h = startOfNight_h;
-        this.dayTimeSetPoint_degC = dayTimeSetPoint_degC;
-        this.nightTimeSetPoint_degC = nightTimeSetPoint_degC;
-        this.heatingKickinTreshhold_degC = heatingKickinTreshhold_degC;	
-    }
-    
     
     public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
     	
@@ -122,19 +105,19 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
         	double buildingHeatingDemand_kW = 0;
 	    	double buildingTemp_degC = building.getCurrentTemperature();
 	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
-	    	if (timeOfDay_h < startOfDay_h || timeOfDay_h >= startOfNight_h) {
-	    		if (buildingTemp_degC < nightTimeSetPoint_degC - heatingKickinTreshhold_degC) {
+	    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+	    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) {
 	    			// Nighttime and building temperature too low
-	    			buildingHeatingDemand_kW = (nightTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
 	    		}
 	    		else {
 	    			// Nighttime and building temperature acceptable
 	    		}
 	    	}
 	    	else {
-	    		if (buildingTemp_degC < dayTimeSetPoint_degC - heatingKickinTreshhold_degC) {
+	    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
 	    			// Daytime and building temperature too low
-	    			buildingHeatingDemand_kW = (dayTimeSetPoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
 	    		}
 	    		else {
 	    			// Daytime and building temperature acceptable
@@ -168,6 +151,9 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	}
     	if(gc.p_BuildingThermalAsset != null) {
         	this.building = gc.p_BuildingThermalAsset;
+        	if(this.heatingPreferences == null) {
+        		heatingPreferences = new J_HeatingPreferences();
+        	}
     	}
     	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
     	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
@@ -213,9 +199,17 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	return this.currentHeatingType;
     }
     
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
+    }
+    
 	@Override
 	public String toString() {
-		return super.toString();
+		return "HeatingManagement Simple with heating type: " + getCurrentHeatingType().toString();
 	}
 
 	/**

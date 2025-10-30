@@ -22,6 +22,7 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
 	private J_EAConversion heatingAsset;
+	private J_HeatingPreferences heatingPreferences = null; //Not needed for the GCDistrictHeating.
 	
 	private double previousHeatFeedin_kW = 0;
 
@@ -86,6 +87,14 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     
     public OL_GridConnectionHeatingType getCurrentHeatingType() {
     	return this.currentHeatingType;
+    }
+    
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
     }
     
 	@Override

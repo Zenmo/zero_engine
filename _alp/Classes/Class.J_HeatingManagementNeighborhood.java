@@ -27,7 +27,9 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     private J_EAConversionHeatDeliverySet heatDeliverySet;
     private J_EAConversionHydrogenBurner hydrogenBurner;
     private J_EAConversionHeatPump lowTempHeatGridHeatPump;
-        
+  
+	private J_HeatingPreferences heatingPreferences = null; // Not needed for neighbourhoods
+	
     private HashMap<String, J_EAConsumption> heatDemandProfiles = new HashMap<String, J_EAConsumption>();
 
     private double thresholdCOP_hybridHeatpump = 3.5;
@@ -303,6 +305,14 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     
     public void addHeatDemandProfile(String name, J_EAConsumption profile) {
     	heatDemandProfiles.put(name, profile);
+    }
+    
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
     }
     
 	@Override

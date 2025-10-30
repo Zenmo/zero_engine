@@ -1532,11 +1532,13 @@
 			<JavaClass>
 				<Id>1753088398654</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingSimple]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1754486787558</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753090559114</Id>
 				<Name><![CDATA[J_HeatingManagementProfileSimple]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1754486787558</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1633,11 +1635,13 @@
 			<JavaClass>
 				<Id>1754405220949</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingWithPTBufferSimple]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1754486787558</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1754412462104</Id>
 				<Name><![CDATA[J_HeatingManagementProfileWithPTBufferSimple]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1754486787558</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1728,6 +1732,16 @@
 				<Id>1761056278052</Id>
 				<Name><![CDATA[J_EABuildingThermalNetwork]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1760603137612</Id>
+				<Name><![CDATA[J_HeatingManagementHeatpumpOffPeak]]></Name>
+				<Folder>1753194088788</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1760616857566</Id>
+				<Name><![CDATA[J_HeatingPreferences]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

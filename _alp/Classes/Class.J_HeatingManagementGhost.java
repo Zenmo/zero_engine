@@ -23,6 +23,7 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
 		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
+	private J_HeatingPreferences heatingPreferences = null; //Null for ghost management, as it can not be changend anyway
 	
     /**
      * Default constructor
@@ -59,6 +60,14 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
     
     public OL_GridConnectionHeatingType getCurrentHeatingType() {
     	return this.currentHeatingType;
+    }
+    
+    public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
+    	this.heatingPreferences = heatingPreferences;
+    }
+    
+    public J_HeatingPreferences getHeatingPreferences() {
+    	return this.heatingPreferences;
     }
     
 	@Override

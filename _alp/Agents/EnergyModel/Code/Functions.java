@@ -832,7 +832,7 @@ double f_updateActiveAssetsMetaData()
 {/*ALCODESTART::1741710906926*/
 
 //Update main area
-v_liveAssetsMetaData.updateActiveAssetData(f_getActiveGridConnections());
+v_liveAssetsMetaData.updateActiveAssetData(f_getAllGridConnections());
 
 //Update coop
 if(pop_energyCoops.size()>0){
@@ -840,7 +840,7 @@ if(pop_energyCoops.size()>0){
 }	
 
 //Update grid connection active asset data
-for(GridConnection GC : f_getActiveGridConnections()){
+for(GridConnection GC : f_getAllGridConnections()){
 	GC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
 }
 
@@ -1330,6 +1330,16 @@ v_liveData.connectionMetaData.physicalCapacityKnown = false;
 f_initializeForecasts();
 
 f_initializeLiveDataSets();
+
+/*ALCODEEND*/}
+
+ArrayList<GridConnection> f_getAllGridConnections()
+{/*ALCODESTART::1761140687507*/
+ArrayList<GridConnection> copyOfGridConnectionList = new ArrayList<>(c_gridConnections);
+copyOfGridConnectionList.addAll(c_pausedGridConnections);
+copyOfGridConnectionList.removeAll(Arrays.asList(pop_gridConnections)); // Remove all default gridconnections (no flex control, only used for gridnode profile)
+
+return copyOfGridConnectionList;
 
 /*ALCODEEND*/}
 
