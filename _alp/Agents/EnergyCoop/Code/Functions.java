@@ -568,6 +568,8 @@ v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.assetsMetaData.activeAssetFlows.clear();
+v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
+v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
 
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
