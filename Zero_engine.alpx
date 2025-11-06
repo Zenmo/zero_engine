@@ -1056,6 +1056,26 @@
 					<Name><![CDATA[CHPProductionElectric_kW]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1762354709855</Id>
+				<Name><![CDATA[OL_VehicleType]]></Name>
+				<Option>
+					<Id>1762354709856</Id>
+					<Name><![CDATA[CAR]]></Name>
+				</Option>
+				<Option>
+					<Id>1762354709857</Id>
+					<Name><![CDATA[VAN]]></Name>
+				</Option>
+				<Option>
+					<Id>1762354709858</Id>
+					<Name><![CDATA[TRUCK]]></Name>
+				</Option>
+				<Option>
+					<Id>1762354709859</Id>
+					<Name><![CDATA[TRACTOR]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
