@@ -1394,7 +1394,7 @@ for (int i=0; i < liveWeekSize; i++){
 	}
 	
 	for (OL_AssetFlowCategories AC : fm_currentAssetFlows_kW.keySet()) {
-		v_liveData.dsm_liveAssetFlows_kW.get(AC).add(timeAxisValue, fm_currentAssetFlows_kW.get(AC));
+		v_liveData.dsm_liveAssetFlows_kW.get(AC).add(timeAxisValue, roundToDecimal(fm_currentAssetFlows_kW.get(AC), 3));
 	}
 	
 	v_liveData.data_gridCapacityDemand_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
