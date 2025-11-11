@@ -43,7 +43,6 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     	this.supportedChargingTypes.add(OL_ChargingAttitude.SIMPLE);
     	this.supportedChargingTypes.add(OL_ChargingAttitude.PRICE);
     	this.activeChargingType = OL_ChargingAttitude.SIMPLE;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -124,11 +123,9 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 	public void storeStatesAndReset() {
 		this.storedElectricityPriceLowPassed_eurpkWh = electricityPriceLowPassed_eurpkWh;
 		this.electricityPriceLowPassed_eurpkWh = 0;
-		traceln("STORE STATES AND RESET");
 	}
 	public void restoreStates() {
 		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;
-		traceln("RESET STATES");
 	}
 	
 	

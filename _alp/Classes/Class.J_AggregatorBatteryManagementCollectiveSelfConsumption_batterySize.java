@@ -26,12 +26,11 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize 
 	
     public J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize( EnergyCoop energyCoop) {
     	this.energyCoop = energyCoop;
-    	this.energyCoop.energyModel.f_registerAssetManagement(this);
     }
     
     public void manageExternalSetpoints() {
     	//Get all members that have a battery that is put on the external setpoint mode
-    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
+    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.f_getBatteryManagement() != null && GC.f_getBatteryManagement() instanceof J_BatteryManagementExternalSetpoint);
 
 		double collectiveChargeSetpoint_kW = 0;
 		double sumOfBatteryCapacities_kWh = 0;
@@ -50,7 +49,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize 
 		for(int i = 0; i<memberedGCWithSetpointBatteries.size(); i++) {
 			GridConnection GC = memberedGCWithSetpointBatteries.get(i);
 			if (GC.p_batteryAsset != null) {		
-				((J_BatteryManagementExternalSetpoint)GC.p_batteryAlgorithm).setChargeSetpoint_kW(collectiveChargeSetpoint_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
+				((J_BatteryManagementExternalSetpoint)GC.f_getBatteryManagement()).setChargeSetpoint_kW(collectiveChargeSetpoint_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh)); // Divide summed charge-power proportional to battery size on each GC.
 			}
 		}
     }

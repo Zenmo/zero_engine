@@ -35,7 +35,6 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     		target = null;
     		this.targetType = null;    		
     	}
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public J_BatteryManagementPeakShaving( GridConnection gc, double SOC_setpoint_fr, double feedbackGain_fr ) {

@@ -71,7 +71,6 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     public J_HeatingManagementNeighborhood( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public void manageHeating() {

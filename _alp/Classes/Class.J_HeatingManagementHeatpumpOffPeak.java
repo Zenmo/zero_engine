@@ -58,7 +58,6 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.timeStep_h = gc.energyModel.p_timeStep_h;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     

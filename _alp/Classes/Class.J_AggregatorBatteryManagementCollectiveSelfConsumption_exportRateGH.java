@@ -26,12 +26,11 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH
 	
     public J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH( EnergyCoop energyCoop) {
     	this.energyCoop = energyCoop;
-    	this.energyCoop.energyModel.f_registerAssetManagement(this);
     }
     
     public void manageExternalSetpoints() {
     	//Get all members that have a battery that is put on the external setpoint mode
-    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
+    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.f_getBatteryManagement() != null && GC.f_getBatteryManagement() instanceof J_BatteryManagementExternalSetpoint);
 		
 		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance) and the total delivery and feedin
 		double collectiveChargeSetpoint_kW = 0;
@@ -62,7 +61,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH
 			} else if (collectiveChargeSetpoint_kW < 0){
 				GC_Setpoint_kW = collectiveChargeSetpoint_kW * max(0,GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY))/totalCurrentDelivery_kW; // Divide summed charge-power proportional to delivery power on each GC.
 			}
-			remainingSumOfChargeSetpoints_kW -= ((J_BatteryManagementExternalSetpoint)GC.p_batteryAlgorithm).setChargeSetpoint_kW(GC_Setpoint_kW);
+			remainingSumOfChargeSetpoints_kW -= ((J_BatteryManagementExternalSetpoint)GC.f_getBatteryManagement()).setChargeSetpoint_kW(GC_Setpoint_kW);
 		}
 		
 		// If some of the batteries are full, try distribute remaining charge setpoint over all batteries, proportional to batterysize
@@ -71,8 +70,8 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH
 			double chargeSetpointToBeDevided_kW = remainingSumOfChargeSetpoints_kW;
 			for (GridConnection GC : memberedGCWithSetpointBatteries) {
 				double GC_addedSetpoint_kW = chargeSetpointToBeDevided_kW * (  GC.p_batteryAsset.getStorageCapacity_kWh() / sumOfBatteryCapacities_kWh); // Divide summed charge-power proportional to battery size on each GC.
-				double GC_currentSetpoint_kW = ((J_BatteryManagementExternalSetpoint)GC.p_batteryAlgorithm).getChargeSetpoint_kW();
-				remainingSumOfChargeSetpoints_kW -= (((J_BatteryManagementExternalSetpoint)GC.p_batteryAlgorithm).setChargeSetpoint_kW(GC_addedSetpoint_kW+GC_currentSetpoint_kW)-GC_currentSetpoint_kW);
+				double GC_currentSetpoint_kW = ((J_BatteryManagementExternalSetpoint)GC.f_getBatteryManagement()).getChargeSetpoint_kW();
+				remainingSumOfChargeSetpoints_kW -= (((J_BatteryManagementExternalSetpoint)GC.f_getBatteryManagement()).setChargeSetpoint_kW(GC_addedSetpoint_kW+GC_currentSetpoint_kW)-GC_currentSetpoint_kW);
 			}
 		}
     }

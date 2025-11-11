@@ -34,7 +34,6 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageHeating() {

@@ -26,7 +26,6 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 	
     public J_BatteryManagementExternalSetpoint( GridConnection gc) {
     	this.gc = gc;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public double setChargeSetpoint_kW(double chargeSetpoint_kW) {

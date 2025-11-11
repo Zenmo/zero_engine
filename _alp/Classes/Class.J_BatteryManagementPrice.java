@@ -37,7 +37,6 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     
     public J_BatteryManagementPrice( GridConnection gc ) {
     	this.gc = gc;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public J_BatteryManagementPrice( GridConnection gc, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
@@ -47,7 +46,6 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     	this.WTPfeedbackGain_eurpSOC = WTPfeedbackGain_eurpSOC;
     	this.priceGain_kWhpeur = priceGain_kWhpeur;
         this.lowPassFactor_fr = gc.energyModel.p_timeStep_h / priceTimescale_h;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     /**

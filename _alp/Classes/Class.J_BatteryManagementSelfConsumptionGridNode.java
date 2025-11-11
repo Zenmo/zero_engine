@@ -26,7 +26,6 @@ public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryMana
     
     public J_BatteryManagementSelfConsumptionGridNode( GridConnection gc ) {
     	this.gc = gc;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     /**

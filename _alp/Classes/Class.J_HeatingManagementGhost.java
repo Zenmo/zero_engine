@@ -34,7 +34,6 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
     public J_HeatingManagementGhost( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageHeating() {

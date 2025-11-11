@@ -27,7 +27,6 @@ public class J_AggregatorBatteryManagementOff implements I_AggregatorBatteryMana
 	
     public J_AggregatorBatteryManagementOff( EnergyCoop energyCoop) {
     	this.energyCoop = energyCoop;
-    	this.energyCoop.energyModel.f_registerAssetManagement(this);
     }
     
     public void manageExternalSetpoints() {

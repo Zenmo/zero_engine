@@ -25,7 +25,6 @@ public class J_BatteryManagementOff implements I_BatteryManagement {
 	
     public J_BatteryManagementOff( GridConnection gc) {
     	this.gc = gc;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageBattery() {

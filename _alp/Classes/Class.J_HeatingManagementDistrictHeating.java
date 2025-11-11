@@ -43,7 +43,6 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	}
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageHeating() {

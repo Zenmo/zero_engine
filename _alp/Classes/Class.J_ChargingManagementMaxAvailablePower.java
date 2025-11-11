@@ -26,7 +26,6 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     
     public J_ChargingManagementMaxAvailablePower( GridConnection gc ) {
     	this.gc = gc;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {

@@ -39,7 +39,6 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
-    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
