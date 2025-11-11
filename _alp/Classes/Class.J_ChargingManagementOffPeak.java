@@ -17,13 +17,17 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
-    private double GCdemandLowPassed_kW = 0.5;
+    private double initialValueGCdemandLowPassed_kW = 0.5;
+    private double GCdemandLowPassed_kW = this.initialValueGCdemandLowPassed_kW;
     
     private double startTimeOfReducedChargingInterval_hr = 17; // Hour of the day
     private double endTimeOfReducedChargingInterval_hr = 21; // Hour of the day
     
     private boolean V2GActive = false;
-
+    
+    
+    //Stored
+    private double storedGCdemandLowPassed_kW;
     /**
      * Default constructor
      */
@@ -34,11 +38,9 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     public J_ChargingManagementOffPeak( GridConnection gc ) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
-    
-    public void initialize() {
-    	
-    }
+   
     
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
@@ -110,6 +112,23 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 	
 	public boolean getV2GActive() {
 		return this.V2GActive;
+	}
+	
+	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedGCdemandLowPassed_kW = this.GCdemandLowPassed_kW;
+		this.GCdemandLowPassed_kW = this.initialValueGCdemandLowPassed_kW;
+	}
+	public void restoreStates() {
+		this.GCdemandLowPassed_kW = this.storedGCdemandLowPassed_kW;
 	}
 	
 	@Override

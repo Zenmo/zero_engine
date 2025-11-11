@@ -1084,7 +1084,8 @@
 			</Folder>
 			<Folder>
 				<Id>1752677826356</Id>
-				<Name><![CDATA[BatteryAlgorithms]]></Name>
+				<Name><![CDATA[BatteryManagement]]></Name>
+				<ParentId>1762529676143</ParentId>
 			</Folder>
 			<Folder>
 				<Id>1752677829820</Id>
@@ -1117,6 +1118,7 @@
 			<Folder>
 				<Id>1753194088788</Id>
 				<Name><![CDATA[HeatingManagement]]></Name>
+				<ParentId>1762529676143</ParentId>
 			</Folder>
 			<Folder>
 				<Id>1753342021373</Id>
@@ -1130,11 +1132,16 @@
 			<Folder>
 				<Id>1755154772688</Id>
 				<Name><![CDATA[ChargingManagement]]></Name>
+				<ParentId>1762529676143</ParentId>
 			</Folder>
 			<Folder>
 				<Id>1756210851750</Id>
 				<Name><![CDATA[AggregatorAlgorithms]]></Name>
 				<ParentId>1752677826356</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1762529676143</Id>
+				<Name><![CDATA[AssetManagementClasses]]></Name>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1710,10 +1717,6 @@
 				<Folder>1752677826356</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1756210474555</Id>
-				<Name><![CDATA[I_InterfaceAggragotrBatteryManagement]]></Name>
-			</JavaClass>
-			<JavaClass>
 				<Id>1756210846035</Id>
 				<Name><![CDATA[I_AggregatorBatteryManagement]]></Name>
 				<Folder>1756210851750</Folder>
@@ -1757,6 +1760,11 @@
 				<Id>1760616857566</Id>
 				<Name><![CDATA[J_HeatingPreferences]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1762529771307</Id>
+				<Name><![CDATA[I_AssetManagement]]></Name>
+				<Folder>1762529676143</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

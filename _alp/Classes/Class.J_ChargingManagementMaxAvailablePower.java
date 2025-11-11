@@ -26,11 +26,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     
     public J_ChargingManagementMaxAvailablePower( GridConnection gc ) {
     	this.gc = gc;
-    	
-    }
-
-    public void initialize() {
-    	
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -80,6 +76,23 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
 	public boolean getV2GActive() {
 		return this.V2GActive;
 	}
+	
+	
+	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+	//Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store and reset
+	}
+	public void restoreStates() {
+		//Nothing to restore
+	}
+	
 	
 	@Override
 	public String toString() {

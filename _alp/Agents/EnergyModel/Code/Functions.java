@@ -242,6 +242,10 @@ double startTime1 = System.currentTimeMillis();
 for (J_EA EA : c_energyAssets) {
 	EA.storeStatesAndReset();		
 }
+for (I_AssetManagement AM : c_assetManagement) {
+	AM.storeStatesAndReset();		
+}
+
 
 for (GridConnection GC : c_gridConnections) {
 	
@@ -381,12 +385,18 @@ traceln("---FINISHED YEAR MODEL RUN----");
 v_timeStepsElapsed = v_timeStepsElapsed_live;
 t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
 
+
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
+for (I_AssetManagement AM : c_assetManagement) {
+	AM.restoreStates();		
+}
+
 /*for (GridNode GN : pop_gridNodes) {
 	//Has no reset states
 }*/
+
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->{
@@ -1341,5 +1351,35 @@ copyOfGridConnectionList.removeAll(Arrays.asList(pop_gridConnections)); // Remov
 
 return copyOfGridConnectionList;
 
+/*ALCODEEND*/}
+
+double f_registerAssetManagement(I_AssetManagement newAssetManagement)
+{/*ALCODESTART::1762791721564*/
+I_AssetManagement replacedAssetManagement = null;
+
+if(newAssetManagement instanceof I_HeatingManagement){
+	replacedAssetManagement = findFirst(c_assetManagement, AM -> AM.getParentAgent() == newAssetManagement.getParentAgent() && AM instanceof I_HeatingManagement);
+}
+else if(newAssetManagement instanceof I_BatteryManagement){
+	replacedAssetManagement = findFirst(c_assetManagement, AM -> AM.getParentAgent() == newAssetManagement.getParentAgent() && AM instanceof I_BatteryManagement);
+}
+else if(newAssetManagement instanceof I_ChargingManagement){
+	replacedAssetManagement = findFirst(c_assetManagement, AM -> AM.getParentAgent() == newAssetManagement.getParentAgent() && AM instanceof I_ChargingManagement);
+}
+else if(newAssetManagement instanceof I_AggregatorBatteryManagement){
+	replacedAssetManagement = findFirst(c_assetManagement, AM -> AM.getParentAgent() == newAssetManagement.getParentAgent() && AM instanceof I_AggregatorBatteryManagement);
+}
+
+if(replacedAssetManagement != null){
+	f_removeAssetManagement(replacedAssetManagement);
+}
+
+//Add new assetmanagement
+c_assetManagement.add(newAssetManagement);
+/*ALCODEEND*/}
+
+double f_removeAssetManagement(I_AssetManagement assetManagement)
+{/*ALCODESTART::1762791721568*/
+c_assetManagement.remove(assetManagement);
 /*ALCODEEND*/}
 

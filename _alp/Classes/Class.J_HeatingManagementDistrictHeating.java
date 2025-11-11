@@ -25,7 +25,11 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
 	private J_HeatingPreferences heatingPreferences = null; //Not needed for the GCDistrictHeating.
 	
 	private double previousHeatFeedin_kW = 0;
-
+	
+	
+	//Stored
+	private double storedPreviousHeatFeedin_kW;
+	
 	/**
      * Default constructor
      */
@@ -39,6 +43,7 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	}
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageHeating() {
@@ -97,6 +102,22 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedPreviousHeatFeedin_kW = this.previousHeatFeedin_kW;
+		this.previousHeatFeedin_kW = 0;
+	}
+	public void restoreStates() {
+		this.previousHeatFeedin_kW = this.storedPreviousHeatFeedin_kW;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

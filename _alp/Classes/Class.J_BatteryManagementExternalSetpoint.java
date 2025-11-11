@@ -16,6 +16,7 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 
 	GridConnection gc;
 	private double currentChargeSetpoint_kW = 0;
+	private double storedCurrentChargeSetpoint_kW;
     /**
      * Default constructor
      */
@@ -25,6 +26,7 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 	
     public J_BatteryManagementExternalSetpoint( GridConnection gc) {
     	this.gc = gc;
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public double setChargeSetpoint_kW(double chargeSetpoint_kW) {
@@ -49,6 +51,23 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
     	this.currentChargeSetpoint_kW = 0;
     }
     
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedCurrentChargeSetpoint_kW = currentChargeSetpoint_kW;
+		this.currentChargeSetpoint_kW = 0;
+	}
+	public void restoreStates() {
+		this.currentChargeSetpoint_kW = this.storedCurrentChargeSetpoint_kW;
+	}
+	
 	@Override
 	public String toString() {
 		return "J_BatteryManagementExternalSetpoint with currentChargeSetpoint_kW " + this.currentChargeSetpoint_kW + " kW";

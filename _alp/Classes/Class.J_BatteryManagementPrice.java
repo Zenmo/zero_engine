@@ -25,6 +25,7 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     
     // Internal State
     private double electricityPriceLowPassed_eurpkWh;
+    private double storedElectricityPriceLowPassed_eurpkWh;
     
     /**
      * Default constructor
@@ -36,6 +37,7 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     
     public J_BatteryManagementPrice( GridConnection gc ) {
     	this.gc = gc;
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public J_BatteryManagementPrice( GridConnection gc, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
@@ -45,6 +47,7 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     	this.WTPfeedbackGain_eurpSOC = WTPfeedbackGain_eurpSOC;
     	this.priceGain_kWhpeur = priceGain_kWhpeur;
         this.lowPassFactor_fr = gc.energyModel.p_timeStep_h / priceTimescale_h;
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     /**
@@ -83,7 +86,25 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	
 	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
-
+    
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedElectricityPriceLowPassed_eurpkWh = electricityPriceLowPassed_eurpkWh;
+		this.electricityPriceLowPassed_eurpkWh = 0;
+	}
+	public void restoreStates() {
+		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

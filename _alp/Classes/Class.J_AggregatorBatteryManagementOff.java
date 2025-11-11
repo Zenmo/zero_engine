@@ -27,12 +27,28 @@ public class J_AggregatorBatteryManagementOff implements I_AggregatorBatteryMana
 	
     public J_AggregatorBatteryManagementOff( EnergyCoop energyCoop) {
     	this.energyCoop = energyCoop;
+    	this.energyCoop.energyModel.f_registerAssetManagement(this);
     }
     
     public void manageExternalSetpoints() {
     	//Do nothing
     }
     
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.energyCoop;
+    }
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store/reset
+	}
+	public void restoreStates() {
+		//Nothing to store/reset
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

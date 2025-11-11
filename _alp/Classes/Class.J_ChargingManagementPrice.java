@@ -15,11 +15,16 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 
     private GridConnection gc;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.PRICE;
-    private double electricityPriceLowPassed_eurpkWh = 0.1;
+    private double initialValueElectricityPriceLowPassed_eurpkWh = 0.1;
+    private double electricityPriceLowPassed_eurpkWh = this.initialValueElectricityPriceLowPassed_eurpkWh;
     private double priceFilterTimeScale_h = 5*24;
     private double priceFilterDiffGain_r;
 
     private boolean V2GActive = false;
+    
+    //Stored
+    private double storedElectricityPriceLowPassed_eurpkWh;
+    
     /**
      * Default constructor
      */
@@ -30,12 +35,9 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     public J_ChargingManagementPrice( GridConnection gc ) {
     	this.gc = gc;
     	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
-    
-    public void initialize() {
-    	
-    }
-    
+        
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
     }
@@ -89,6 +91,25 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 	public boolean getV2GActive() {
 		return this.V2GActive;
 	}
+	
+	
+	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedElectricityPriceLowPassed_eurpkWh = this.electricityPriceLowPassed_eurpkWh;
+		this.electricityPriceLowPassed_eurpkWh = this.initialValueElectricityPriceLowPassed_eurpkWh;
+	}
+	public void restoreStates() {
+		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;
+	}
+	
 	
     @Override
  	public String toString() {

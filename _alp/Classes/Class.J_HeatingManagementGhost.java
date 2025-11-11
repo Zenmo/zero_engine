@@ -34,6 +34,7 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
     public J_HeatingManagementGhost( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageHeating() {
@@ -70,6 +71,24 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+	//Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store and reset
+	}
+	public void restoreStates() {
+		//Nothing to restore
+	}
+	
+	
 	@Override
 	public String toString() {
 		return super.toString();

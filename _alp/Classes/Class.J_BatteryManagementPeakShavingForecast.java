@@ -23,6 +23,9 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     List<GridConnection> c_targetGridConnections = new ArrayList<GridConnection>();
     double p_timestep_h;
 	
+    //Stored
+	private double[] storedBatteryChargingSchedule_kW;
+	
 	public J_BatteryManagementPeakShavingForecast() {
 		
 	}
@@ -36,6 +39,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     	} else {
     		this.setTarget(parentGC);
     	}
+    	this.parentGC.energyModel.f_registerAssetManagement(this);
     }
 	
 	
@@ -222,6 +226,21 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     }
 
 	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.parentGC;
+    }
+    
+    
+	//Store and reset states
+	public void storeStatesAndReset() {
+		this.storedBatteryChargingSchedule_kW = batteryChargingSchedule_kW;
+		this.batteryChargingSchedule_kW = new double[batteryChargingSchedule_kW.length];
+	}
+	public void restoreStates() {
+		this.batteryChargingSchedule_kW = this.storedBatteryChargingSchedule_kW;
+	}
 	
 	@Override
 	public String toString() {

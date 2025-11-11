@@ -34,6 +34,7 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
 
     public void manageHeating() {
@@ -134,6 +135,24 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	return this.heatingPreferences;
     }
     
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    
+	public void storeStatesAndReset() {
+		//Nothing to store/reset
+	}
+	public void restoreStates() {
+		//Nothing to store/reset
+	}
+	
+	
 	@Override
 	public String toString() {
 		return super.toString();

@@ -26,6 +26,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 	
     public J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate( EnergyCoop energyCoop) {
     	this.energyCoop = energyCoop;
+    	this.energyCoop.energyModel.f_registerAssetManagement(this);
     }
     
     public void manageExternalSetpoints() {
@@ -108,6 +109,22 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 		}
     }
     
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.energyCoop;
+    }
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store/reset
+	}
+	public void restoreStates() {
+		//Nothing to store/reset
+	}
+	
+	
 	@Override
 	public String toString() {
 		return super.toString();

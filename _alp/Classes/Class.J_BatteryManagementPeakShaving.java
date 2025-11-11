@@ -35,6 +35,7 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     		target = null;
     		this.targetType = null;    		
     	}
+    	this.gc.energyModel.f_registerAssetManagement(this);
     }
     
     public J_BatteryManagementPeakShaving( GridConnection gc, double SOC_setpoint_fr, double feedbackGain_fr ) {
@@ -145,6 +146,23 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     	}
     }
     
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store and reset
+	}
+	public void restoreStates() {
+		//Nothing to restore
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();
