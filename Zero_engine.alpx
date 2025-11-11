@@ -1116,16 +1116,16 @@
 			</Folder>
 			<Folder>
 				<Id>1762850551601</Id>
-				<Name><![CDATA[AssetManagement]]></Name>
+				<Name><![CDATA[AssetManagementClasses]]></Name>
 			</Folder>
 			<Folder>
 				<Id>1762850578079</Id>
-				<Name><![CDATA[heat]]></Name>
+				<Name><![CDATA[HeatingManagement]]></Name>
 				<ParentId>1762850551601</ParentId>
 			</Folder>
 			<Folder>
 				<Id>1762850586274</Id>
-				<Name><![CDATA[charge]]></Name>
+				<Name><![CDATA[ChargingManagement]]></Name>
 				<ParentId>1762850551601</ParentId>
 			</Folder>
 			<Folder>
@@ -1135,13 +1135,18 @@
 			</Folder>
 			<Folder>
 				<Id>1762850659543</Id>
-				<Name><![CDATA[bat]]></Name>
+				<Name><![CDATA[BatteryManagement]]></Name>
 				<ParentId>1762850551601</ParentId>
 			</Folder>
 			<Folder>
-				<Id>1762850671133</Id>
-				<Name><![CDATA[aggregator]]></Name>
-				<ParentId>1762850659543</ParentId>
+				<Id>1762850958928</Id>
+				<Name><![CDATA[AggregatorManagement]]></Name>
+				<ParentId>1762850551601</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1762850978631</Id>
+				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
+				<ParentId>1762850958928</ParentId>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1719,27 +1724,27 @@
 			<JavaClass>
 				<Id>1756210846035</Id>
 				<Name><![CDATA[I_AggregatorBatteryManagement]]></Name>
-				<Folder>1762850671133</Folder>
+				<Folder>1762850978631</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756211095187</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementOff]]></Name>
-				<Folder>1762850671133</Folder>
+				<Folder>1762850978631</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756212442478</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize]]></Name>
-				<Folder>1762850671133</Folder>
+				<Folder>1762850978631</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756213000574</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate]]></Name>
-				<Folder>1762850671133</Folder>
+				<Folder>1762850978631</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756213864971</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH]]></Name>
-				<Folder>1762850671133</Folder>
+				<Folder>1762850978631</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1758192949084</Id>
