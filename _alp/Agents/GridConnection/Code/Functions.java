@@ -443,6 +443,9 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	} else if (vehicle instanceof J_EAHydrogenVehicle hydrogenVehicle) {
 		c_hydrogenVehicles.add(hydrogenVehicle);		
 	} else if (vehicle instanceof J_EAEV ev) {
+		if(p_chargingManagement == null){
+			f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+		}
 		c_electricVehicles.add(ev);
 		energyModel.c_EVs.add(ev);	
 		ev.setV2GActive(p_chargingManagement.getV2GActive());
@@ -549,6 +552,9 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 } else if (j_ea instanceof J_EADieselTractor tractor) {
 	c_profileAssets.add(tractor);
 } else if (j_ea instanceof J_EAChargePoint charger) {
+	if(p_chargingManagement == null){
+		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
+	}
 	c_chargers.add(charger);
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
@@ -1195,10 +1201,10 @@ double f_manageBattery()
 {/*ALCODESTART::1752570332887*/
 if (p_batteryAsset != null) {
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
-		if (p_batteryAlgorithm == null) {
+		if (p_batteryManagement == null) {
 			throw new RuntimeException("Tried to operate battery without algorithm in GC: " + p_gridConnectionID);
 		}
-		p_batteryAlgorithm.manageBattery();
+		p_batteryManagement.manageBattery();
 	}
 }
 /*ALCODEEND*/}
@@ -1244,21 +1250,31 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_addHeatManagementToGC(GridConnection engineGC,OL_GridConnectionHeatingType heatingType,boolean isGhost)
+double f_addHeatManagement(OL_GridConnectionHeatingType heatingType,boolean isGhost)
 {/*ALCODESTART::1754393382442*/
+//Remove existing asset management from energyModel
+if(this.p_heatingManagement != null){
+	energyModel.f_removeAssetManagement(this.p_heatingManagement);
+}
+
+
 if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
 }
 if (isGhost) {
-	engineGC.p_heatingManagement = new J_HeatingManagementGhost( engineGC, heatingType );
+	this.p_heatingManagement = new J_HeatingManagementGhost( this, heatingType );
+	//Add new asset management to energyModel
+	if(this.p_heatingManagement != null){
+		energyModel.f_registerAssetManagement(this.p_heatingManagement);
+	}
 	return;
 }
 if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
 	throw new RuntimeException("f_addHeatManagementToGC called with heating type CUSTOM");
 }
 
-boolean hasThermalBuilding = engineGC.p_BuildingThermalAsset != null;
-boolean hasHeatBuffer = engineGC.p_heatBuffer != null;
+boolean hasThermalBuilding = this.p_BuildingThermalAsset != null;
+boolean hasHeatBuffer = this.p_heatBuffer != null;
 Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
 Class<? extends I_HeatingManagement> managementClass = energyModel.c_defaultHeatingStrategies.get(triple);
 
@@ -1268,16 +1284,22 @@ if (managementClass == null) {
 
 I_HeatingManagement heatingManagement = null;
 try {
-	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(engineGC, heatingType);
+	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(this, heatingType);
 }
 catch (Exception e) {
 	e.printStackTrace();
 }
 
-J_HeatingPreferences existingHeatingPreferences = engineGC.p_heatingManagement != null ? engineGC.p_heatingManagement.getHeatingPreferences() : null; //Store the existing heating preferences
+J_HeatingPreferences existingHeatingPreferences = this.p_heatingManagement != null ? this.p_heatingManagement.getHeatingPreferences() : null; //Store the existing heating preferences
 
-engineGC.p_heatingManagement = heatingManagement;
-engineGC.p_heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
+this.p_heatingManagement = heatingManagement;
+this.p_heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
+
+
+//Add new asset management to energyModel
+if(this.p_heatingManagement != null){
+	energyModel.f_registerAssetManagement(this.p_heatingManagement);
+}
 /*ALCODEEND*/}
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
@@ -1358,8 +1380,13 @@ if(energyModel.b_isInitialized){
 }
 /*ALCODEEND*/}
 
-double f_addChargingManagementToGC(OL_ChargingAttitude chargingType)
+double f_addChargingManagement(OL_ChargingAttitude chargingType)
 {/*ALCODESTART::1755702594182*/
+//Remove old asset management from energyModel
+if(this.p_chargingManagement != null){
+	energyModel.f_removeAssetManagement(this.p_chargingManagement);
+}
+
 if (chargingType == null) {
 	if (c_electricVehicles.size()>0){
 		throw new RuntimeException("Charging strategy needed when electric vehicles are present!");
@@ -1370,9 +1397,6 @@ if (chargingType == OL_ChargingAttitude.CUSTOM) {
 	throw new RuntimeException("f_addChargingManagementToGC called with charging type CUSTOM");
 }
 
-/*Triple<OL_GridConnectionHeatingType, Boolean, Boolean> triple = Triple.of( heatingType, hasThermalBuilding, hasHeatBuffer );
-Class<? extends I_HeatingManagement> managementClass = energyModel.c_defaultHeatingStrategies.get(triple);
-*/
 Class<? extends I_ChargingManagement> managementClass;
 switch (chargingType) {			
 	case SIMPLE:
@@ -1414,9 +1438,10 @@ if (c_chargers.size()>0){
 	}
 }
 
-
-
-
+//Add new asset management to energyModel
+if(this.p_chargingManagement != null){
+	energyModel.f_registerAssetManagement(this.p_chargingManagement);
+}
 /*ALCODEEND*/}
 
 double f_addEnergyCarriersAndAssetCategoriesFromEA(J_EA j_ea)
@@ -1455,6 +1480,86 @@ if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.conta
 	else{
 		v_liveAssetsMetaData.activeAssetFlows.add(AC);
 	}
+}
+/*ALCODEEND*/}
+
+double f_setChargingManagement(I_ChargingManagement chargingManagement)
+{/*ALCODESTART::1762851936576*/
+//Remove old asset management from energyModel
+if(this.p_chargingManagement != null){
+	energyModel.f_removeAssetManagement(this.p_chargingManagement);
+}
+
+p_chargingManagement = chargingManagement;
+
+//Remove old asset management from energyModel
+if(this.p_chargingManagement != null){
+	energyModel.f_registerAssetManagement(this.p_chargingManagement);
+}
+/*ALCODEEND*/}
+
+boolean f_getHeatingTypeIsGhost()
+{/*ALCODESTART::1762852865038*/
+return p_heatingManagement instanceof J_HeatingManagementGhost;
+/*ALCODEEND*/}
+
+double f_setHeatingPreferences(J_HeatingPreferences heatingPreferences)
+{/*ALCODESTART::1762853013265*/
+this.p_heatingManagement.setHeatingPreferences(heatingPreferences);
+/*ALCODEEND*/}
+
+OL_ChargingAttitude f_getCurrentChargingType()
+{/*ALCODESTART::1762853347370*/
+if (p_chargingManagement != null) {
+	return p_chargingManagement.getCurrentChargingType();
+}
+else {
+	return OL_ChargingAttitude.NONE;
+}
+/*ALCODEEND*/}
+
+boolean f_getV2GActive()
+{/*ALCODESTART::1762853561122*/
+if (p_chargingManagement != null) {
+	return p_chargingManagement.getV2GActive();
+}
+else {
+	return false;
+}
+/*ALCODEEND*/}
+
+I_BatteryManagement f_getBatteryManagement()
+{/*ALCODESTART::1762853894937*/
+return p_batteryManagement;
+/*ALCODEEND*/}
+
+double f_setHeatingManagement(I_HeatingManagement heatingManagement)
+{/*ALCODESTART::1762855655470*/
+//Remove old asset management from energyModel
+if(this.p_heatingManagement != null){
+	energyModel.f_removeAssetManagement(this.p_heatingManagement);
+}
+
+p_heatingManagement = heatingManagement;
+
+//Remove old asset management from energyModel
+if(this.p_heatingManagement != null){
+	energyModel.f_registerAssetManagement(this.p_heatingManagement);
+}
+/*ALCODEEND*/}
+
+double f_setBatteryManagement(I_BatteryManagement batteryManagement)
+{/*ALCODESTART::1762855733010*/
+//Remove old asset management from energyModel
+if(this.p_batteryManagement != null){
+	energyModel.f_removeAssetManagement(this.p_batteryManagement);
+}
+
+p_batteryManagement = batteryManagement;
+
+//Remove old asset management from energyModel
+if(this.p_batteryManagement != null){
+	energyModel.f_registerAssetManagement(this.p_batteryManagement);
 }
 /*ALCODEEND*/}
 

@@ -49,7 +49,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	    	tripTracker.Vehicle=this;	    	
 	    }
 	    // Validation checks
-	    if (capacityElectric_kW == 0 || storageCapacity_kWh == 0 || timestep_h == 0 || energyConsumption_kWhpkm == 0) {
+	    if (capacityElectric_kW <= 0 || storageCapacity_kWh <= 0 || timestep_h == 0 || energyConsumption_kWhpkm <= 0) {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, timestep_h: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, timestep_h, energyConsumption_kWhpkm));
 	    	
 	    }

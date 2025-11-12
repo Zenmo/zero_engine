@@ -42,6 +42,12 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     private double endTimeOfReducedHeatingInterval_hr = 21; // Hour of the day -> CAN NOT BE THE SAME AS THE START TIME
     private double reducedHeatingIntervalLength_hr = (endTimeOfReducedHeatingInterval_hr - startTimeOfReducedHeatingInterval_hr + 24) % 24;     
     
+    
+    //Stored
+    private double storedI_state_hDegC;
+    private double storedFilteredCurrentSetpoint_degC;
+    private double storedrequiredTemperatureAtStartOfReducedHeatingInterval_degC;
+    
     /**
      * Default constructor
      */
@@ -317,6 +323,31 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
 
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+	    this.storedI_state_hDegC = this.I_state_hDegC;
+	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
+	    this.storedrequiredTemperatureAtStartOfReducedHeatingInterval_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC;
+		this.I_state_hDegC = 0;
+		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
+		this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = 20;
+		this.isInitialized = false;
+	}
+	public void restoreStates() {
+		this.I_state_hDegC = this.storedI_state_hDegC;
+	    this.filteredCurrentSetpoint_degC = this.storedFilteredCurrentSetpoint_degC;
+	    this.requiredTemperatureAtStartOfReducedHeatingInterval_degC = storedrequiredTemperatureAtStartOfReducedHeatingInterval_degC;
+	    this.isInitialized = true;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

@@ -24,6 +24,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     
     private boolean V2GActive = false;
     
+    //Stored
+    private double storedElectricityPriceLowPassed_eurpkWh;
+    
+    
     //private double GCdemandLowPassed_kW = 0.5;
     //private double GCdemandFilterTimeScale_h = 5*24;
     /**
@@ -40,11 +44,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     	this.supportedChargingTypes.add(OL_ChargingAttitude.PRICE);
     	this.activeChargingType = OL_ChargingAttitude.SIMPLE;
     }
-    
-    public void initialize() {
-    	
-    }
-    
+      
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
     }
@@ -111,6 +111,23 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 	public boolean getV2GActive() {
 		return this.V2GActive;
 	}
+	
+	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedElectricityPriceLowPassed_eurpkWh = electricityPriceLowPassed_eurpkWh;
+		this.electricityPriceLowPassed_eurpkWh = 0;
+	}
+	public void restoreStates() {
+		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;
+	}
+	
 	
     @Override
 	public String toString() {

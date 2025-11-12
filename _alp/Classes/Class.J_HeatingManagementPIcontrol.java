@@ -40,6 +40,9 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     private double filteredCurrentSetpoint_degC;
     private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
     
+    //Stored parameters
+    private double storedI_state_hDegC;
+    private double storedFilteredCurrentSetpoint_degC;
     /**
      * Default constructor
      */
@@ -205,6 +208,26 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+	    this.storedI_state_hDegC = this.I_state_hDegC;
+	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
+		this.I_state_hDegC = 0;
+		this.filteredCurrentSetpoint_degC = 0;
+	}
+	public void restoreStates() {
+		this.I_state_hDegC = this.storedI_state_hDegC;
+	    this.filteredCurrentSetpoint_degC = this.storedFilteredCurrentSetpoint_degC;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

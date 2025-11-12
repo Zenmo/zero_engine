@@ -40,7 +40,24 @@ public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryMana
     	
     	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
-
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+	//Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store and reset
+	}
+	public void restoreStates() {
+		//Nothing to restore
+	}
+	
+	
 	@Override
 	public String toString() {
 		return super.toString();

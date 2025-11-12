@@ -242,6 +242,10 @@ double startTime1 = System.currentTimeMillis();
 for (J_EA EA : c_energyAssets) {
 	EA.storeStatesAndReset();		
 }
+for (I_AssetManagement AM : c_assetManagement) {
+	AM.storeStatesAndReset();		
+}
+
 
 for (GridConnection GC : c_gridConnections) {
 	
@@ -381,12 +385,18 @@ traceln("---FINISHED YEAR MODEL RUN----");
 v_timeStepsElapsed = v_timeStepsElapsed_live;
 t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
 
+
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
+for (I_AssetManagement AM : c_assetManagement) {
+	AM.restoreStates();		
+}
+
 /*for (GridNode GN : pop_gridNodes) {
 	//Has no reset states
 }*/
+
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->{
@@ -798,9 +808,9 @@ for(Agent CO : energyCoop.c_coopMembers){
 // Removing this coop from the list of coops in the GC
 for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 	GC.c_parentCoops.remove(energyCoop);
-	if(GC instanceof GCGridBattery && GC.p_batteryAlgorithm instanceof J_BatteryManagementPeakShaving && ((J_BatteryManagementPeakShaving)GC.p_batteryAlgorithm).getTargetType() == OL_ResultScope.ENERGYCOOP){
-		((J_BatteryManagementPeakShaving)GC.p_batteryAlgorithm).setTarget(null);
-		((J_BatteryManagementPeakShaving)GC.p_batteryAlgorithm).setTargetType( OL_ResultScope.ENERGYCOOP );
+	if(GC instanceof GCGridBattery && GC.f_getBatteryManagement() instanceof J_BatteryManagementPeakShaving && ((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).getTargetType() == OL_ResultScope.ENERGYCOOP){
+		((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).setTarget(null);
+		((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).setTargetType( OL_ResultScope.ENERGYCOOP );
 		GC.f_setActive(false);
 	}
 }
@@ -1341,5 +1351,17 @@ copyOfGridConnectionList.removeAll(Arrays.asList(pop_gridConnections)); // Remov
 
 return copyOfGridConnectionList;
 
+/*ALCODEEND*/}
+
+double f_registerAssetManagement(I_AssetManagement newAssetManagement)
+{/*ALCODESTART::1762791721564*/
+//Should only be called by GC
+c_assetManagement.add(newAssetManagement);
+/*ALCODEEND*/}
+
+double f_removeAssetManagement(I_AssetManagement assetManagement)
+{/*ALCODESTART::1762791721568*/
+//Should only be called by GC
+c_assetManagement.remove(assetManagement);
 /*ALCODEEND*/}
 
