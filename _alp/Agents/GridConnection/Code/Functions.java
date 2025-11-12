@@ -1563,3 +1563,13 @@ if(this.p_batteryManagement != null){
 }
 /*ALCODEEND*/}
 
+I_ChargingManagement f_getChargingManagement()
+{/*ALCODESTART::1762940915048*/
+return p_chargingManagement;
+/*ALCODEEND*/}
+
+I_HeatingManagement f_getHeatingManagement()
+{/*ALCODESTART::1762940962079*/
+return p_heatingManagement;
+/*ALCODEEND*/}
+
