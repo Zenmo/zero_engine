@@ -432,7 +432,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741182119260</Id>
 		<Name><![CDATA[v_rapidRunData]]></Name>
-		<X>390</X>
+		<X>320</X>
 		<Y>840</Y>
 		<Label>
 			<X>10</X>
@@ -451,7 +451,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741182119264</Id>
 		<Name><![CDATA[v_liveData]]></Name>
-		<X>390</X>
+		<X>320</X>
 		<Y>920</Y>
 		<Label>
 			<X>10</X>
@@ -470,7 +470,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741277722819</Id>
 		<Name><![CDATA[v_previousRunData]]></Name>
-		<X>400</X>
+		<X>330</X>
 		<Y>860</Y>
 		<Label>
 			<X>10</X>
@@ -492,7 +492,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741871129695</Id>
 		<Name><![CDATA[v_liveAssetsMetaData]]></Name>
-		<X>400</X>
+		<X>330</X>
 		<Y>940</Y>
 		<Label>
 			<X>10</X>
@@ -511,7 +511,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1741942930553</Id>
 		<Name><![CDATA[v_liveConnectionMetaData]]></Name>
-		<X>400</X>
+		<X>330</X>
 		<Y>960</Y>
 		<Label>
 			<X>10</X>
@@ -549,7 +549,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1758897737246</Id>
 		<Name><![CDATA[v_originalRapidRunData]]></Name>
-		<X>400</X>
+		<X>330</X>
 		<Y>880</Y>
 		<Label>
 			<X>10</X>
@@ -563,6 +563,66 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[J_RapidRunData]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1762852227489</Id>
+		<Name><![CDATA[p_batteryManagement]]></Name>
+		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
+		<X>640</X>
+		<Y>670</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="private"
+              StaticVariable="false">
+			<Type><![CDATA[I_BatteryManagement]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1762852413970</Id>
+		<Name><![CDATA[p_chargingManagement]]></Name>
+		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
+		<X>640</X>
+		<Y>440</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="private"
+              StaticVariable="false">
+			<Type><![CDATA[I_ChargingManagement]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1762852443276</Id>
+		<Name><![CDATA[p_heatingManagement]]></Name>
+		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
+		<X>620</X>
+		<Y>110</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="private"
+              StaticVariable="false">
+			<Type><![CDATA[I_HeatingManagement]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
@@ -697,7 +757,7 @@
 		<Id>1668695364192</Id>
 		<Name><![CDATA[p_batteryAsset]]></Name>
 		<X>620</X>
-		<Y>500</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -750,7 +810,7 @@
 		<Id>1676449763319</Id>
 		<Name><![CDATA[p_heatBuffer]]></Name>
 		<X>620</X>
-		<Y>480</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -775,7 +835,7 @@
 		<Id>1684919785784</Id>
 		<Name><![CDATA[p_gasBuffer]]></Name>
 		<X>620</X>
-		<Y>540</Y>
+		<Y>730</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -800,7 +860,7 @@
 		<Id>1692878211840</Id>
 		<Name><![CDATA[p_cookingTracker]]></Name>
 		<X>620</X>
-		<Y>290</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -850,7 +910,7 @@
 		<Id>1692973005119</Id>
 		<Name><![CDATA[p_DHWAsset]]></Name>
 		<X>620</X>
-		<Y>230</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1179,56 +1239,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1753099355801</Id>
-		<Name><![CDATA[p_heatingManagement]]></Name>
-		<X>620</X>
-		<Y>110</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[I_HeatingManagement]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1753099355799</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1752752664510</Id>
-		<Name><![CDATA[p_batteryAlgorithm]]></Name>
-		<X>640</X>
-		<Y>520</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[I_BatteryManagement]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1752752664508</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1753366605959</Id>
 		<Name><![CDATA[v_isActive]]></Name>
 		<X>270</X>
@@ -1250,34 +1260,6 @@
 			<ParameterEditor>
 				<Id>1753366605957</Id>
 				<EditorContolType>CHECK_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1755154851784</Id>
-		<Name><![CDATA[p_chargingManagement]]></Name>
-		<X>640</X>
-		<Y>370</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[I_ChargingManagement]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[new J_ChargingManagementSimple(this)]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1755154851782</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -1332,7 +1314,7 @@
 		<Id>1659962626907</Id>
 		<Name><![CDATA[c_storageAssets]]></Name>
 		<X>600</X>
-		<Y>460</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1350,7 +1332,7 @@
 		<Id>1659962626909</Id>
 		<Name><![CDATA[c_consumptionAssets]]></Name>
 		<X>600</X>
-		<Y>210</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1368,7 +1350,7 @@
 		<Id>1659962626911</Id>
 		<Name><![CDATA[c_productionAssets]]></Name>
 		<X>600</X>
-		<Y>250</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1386,7 +1368,7 @@
 		<Id>1659962626913</Id>
 		<Name><![CDATA[c_conversionAssets]]></Name>
 		<X>600</X>
-		<Y>270</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1404,7 +1386,7 @@
 		<Id>1667746389220</Id>
 		<Name><![CDATA[c_vehicleAssets]]></Name>
 		<X>600</X>
-		<Y>310</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1422,7 +1404,7 @@
 		<Id>1669115948280</Id>
 		<Name><![CDATA[c_dieselVehicles]]></Name>
 		<X>620</X>
-		<Y>390</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1440,7 +1422,7 @@
 		<Id>1692864624612</Id>
 		<Name><![CDATA[c_tripTrackers]]></Name>
 		<X>620</X>
-		<Y>330</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1458,7 +1440,7 @@
 		<Id>1700044359363</Id>
 		<Name><![CDATA[c_profileAssets]]></Name>
 		<X>600</X>
-		<Y>188</Y>
+		<Y>258</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1494,7 +1476,7 @@
 		<Id>1711012701187</Id>
 		<Name><![CDATA[c_hydrogenVehicles]]></Name>
 		<X>620</X>
-		<Y>410</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1530,7 +1512,7 @@
 		<Id>1750258408126</Id>
 		<Name><![CDATA[c_chargers]]></Name>
 		<X>600</X>
-		<Y>436</Y>
+		<Y>586</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1567,7 +1549,7 @@
 		<Id>1754581015887</Id>
 		<Name><![CDATA[c_electricVehicles]]></Name>
 		<X>620</X>
-		<Y>350</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

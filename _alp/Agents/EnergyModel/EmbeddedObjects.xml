@@ -221,16 +221,7 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -988,9 +979,6 @@
 				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1018,16 +1006,7 @@
 				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -1165,12 +1144,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_residualHeatLTSource]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1178,9 +1151,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -1315,19 +1285,10 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_isSliderGC]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -1462,9 +1423,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_conversionEfficiency]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1525,16 +1483,7 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -1669,16 +1618,7 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -1813,19 +1753,10 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_isSliderGC]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -2314,12 +2245,6 @@
 				<Name><![CDATA[p_isChargingCentre]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_gisregion]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2339,9 +2264,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
@@ -2480,9 +2402,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2516,16 +2435,7 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_heatingManagement]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_batteryAlgorithm]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingManagement]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>

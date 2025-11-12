@@ -23,6 +23,9 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     List<GridConnection> c_targetGridConnections = new ArrayList<GridConnection>();
     double p_timestep_h;
 	
+    //Stored
+	private double[] storedBatteryChargingSchedule_kW;
+	
 	public J_BatteryManagementPeakShavingForecast() {
 		
 	}
@@ -77,7 +80,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 			elecConsumptionProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW));
 			elecHeatPumpProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.heatPumpElectricityConsumption_kW));
 			elecEVProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.evChargingPower_kW));
-			if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && !(GC.p_heatingManagement instanceof J_HeatingManagementGhost)) {
+			if(GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && !GC.f_getHeatingTypeIsGhost()) {
 				surveyHeatDemandProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.energyCarrier == OL_EnergyCarriers.HEAT));
 				genericHeatDemandProfiles.addAll(findAll(GC.c_consumptionAssets, cons -> cons.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND));
 			}
@@ -222,6 +225,21 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     }
 
 	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.parentGC;
+    }
+    
+    
+	//Store and reset states
+	public void storeStatesAndReset() {
+		this.storedBatteryChargingSchedule_kW = batteryChargingSchedule_kW;
+		this.batteryChargingSchedule_kW = new double[batteryChargingSchedule_kW.length];
+	}
+	public void restoreStates() {
+		this.batteryChargingSchedule_kW = this.storedBatteryChargingSchedule_kW;
+	}
 	
 	@Override
 	public String toString() {

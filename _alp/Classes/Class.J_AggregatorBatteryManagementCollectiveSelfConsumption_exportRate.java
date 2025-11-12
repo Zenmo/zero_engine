@@ -30,7 +30,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
     
     public void manageExternalSetpoints() {
     	//Get all members that have a battery that is put on the external setpoint mode
-    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.p_batteryAlgorithm != null && GC.p_batteryAlgorithm instanceof J_BatteryManagementExternalSetpoint);
+    	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.f_getBatteryManagement() != null && GC.f_getBatteryManagement() instanceof J_BatteryManagementExternalSetpoint);
 
 		//Determine prefered charge setpoint of the battery, for maximum (collective) selfconsumption (equal to negative or positive balance)
 		double collectiveChargeSetpoint_kW = 0;
@@ -82,7 +82,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 			
 			//Iterate over the gc that still have space left in their charge capacity or battery storage
 			for(GridConnection GC : memberedGCWithSetpointBatteries_withFreeCapacity){
-				J_BatteryManagementExternalSetpoint gridConnectionBatteryAlgorithm = (J_BatteryManagementExternalSetpoint)GC.p_batteryAlgorithm;
+				J_BatteryManagementExternalSetpoint gridConnectionBatteryAlgorithm = (J_BatteryManagementExternalSetpoint)GC.f_getBatteryManagement();
 				double currentBatteryPowerElectric = GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesChargingPower_kW) - GC.fm_currentAssetFlows_kW.get(OL_AssetFlowCategories.batteriesDischargingPower_kW);
 				
 				gc_balanceFlowElectricity_kW = GC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - currentBatteryPowerElectric;
@@ -108,6 +108,22 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 		}
     }
     
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.energyCoop;
+    }
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store/reset
+	}
+	public void restoreStates() {
+		//Nothing to store/reset
+	}
+	
+	
 	@Override
 	public String toString() {
 		return super.toString();

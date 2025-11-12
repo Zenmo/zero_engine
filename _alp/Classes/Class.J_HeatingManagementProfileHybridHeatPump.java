@@ -134,6 +134,24 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	return this.heatingPreferences;
     }
     
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    
+	public void storeStatesAndReset() {
+		//Nothing to store/reset
+	}
+	public void restoreStates() {
+		//Nothing to store/reset
+	}
+	
+	
 	@Override
 	public String toString() {
 		return super.toString();

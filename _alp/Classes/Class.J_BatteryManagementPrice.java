@@ -25,6 +25,7 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     
     // Internal State
     private double electricityPriceLowPassed_eurpkWh;
+    private double storedElectricityPriceLowPassed_eurpkWh;
     
     /**
      * Default constructor
@@ -83,7 +84,25 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	
 	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
     }
-
+    
+    
+    
+    
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		this.storedElectricityPriceLowPassed_eurpkWh = electricityPriceLowPassed_eurpkWh;
+		this.electricityPriceLowPassed_eurpkWh = 0;
+	}
+	public void restoreStates() {
+		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();

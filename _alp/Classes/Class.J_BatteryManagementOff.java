@@ -31,11 +31,27 @@ public class J_BatteryManagementOff implements I_BatteryManagement {
     	gc.p_batteryAsset.f_updateAllFlows(0.0);
     }
     
+
+	
+	
+	
+    //Get parentagent
+    public Agent getParentAgent() {
+    	return this.gc;
+    }
+    
+    //Store and reset states
+	public void storeStatesAndReset() {
+		//Nothing to store/reset
+	}
+	public void restoreStates() {
+		//Nothing to store/reset
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString();
 	}
-
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed
