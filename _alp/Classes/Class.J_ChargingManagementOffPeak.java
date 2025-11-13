@@ -87,7 +87,12 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     		}
     	}
     }
-
+    
+    public void setReducedChargingIntervalTime_hr(double startTimeOfReducedChargingInterval_hr, double endTimeOfReducedChargingInterval_hr) {
+    	this.setStartTimeOfReducedChargingInterval_hr(startTimeOfReducedChargingInterval_hr);
+    	this.setEndTimeOfReducedChargingInterval_hr(endTimeOfReducedChargingInterval_hr);
+    }
+    
     public void setStartTimeOfReducedChargingInterval_hr(double startTimeOfReducedChargingInterval_hr) {
     	this.startTimeOfReducedChargingInterval_hr = startTimeOfReducedChargingInterval_hr;
     }

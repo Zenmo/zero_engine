@@ -628,6 +628,9 @@
 			<Parameter>
 				<Name><![CDATA[p_aggregatorBatteryManagement]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_aggregatorEnergyManagement]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

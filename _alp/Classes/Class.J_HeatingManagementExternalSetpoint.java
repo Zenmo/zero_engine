@@ -1,5 +1,5 @@
 /**
- * J_HeatingManagementSimple
+ * J_HeatingManagementExternalSetpoint
  */	
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -12,31 +12,46 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     creatorVisibility = Visibility.NONE
 )
 
-public class J_HeatingManagementSimple implements I_HeatingManagement {
+public class J_HeatingManagementExternalSetpoint implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
-		OL_GridConnectionHeatingType.GAS_BURNER, 
-		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
-		OL_GridConnectionHeatingType.HYDROGENBURNER,
-		OL_GridConnectionHeatingType.DISTRICTHEAT,
-		OL_GridConnectionHeatingType.LT_DISTRICTHEAT
+		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
 
 	private J_EABuilding building;	
-    private J_EAConversion heatingAsset;
+    private J_EAConversionHeatPump heatingAsset;
     private J_HeatingPreferences heatingPreferences;
+    
+    // PI control gains
+    private double P_gain_kWpDegC = 1*1;
+    private double I_gain_kWphDegC = 0.1*2;
+    private double I_state_hDegC = 0;
+    private double timeStep_h;
+    
+    //Temperature setpoint low pass filter
+    private double filteredCurrentSetpoint_degC;
+    private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
+    
+    //Setpoint
+    private double currentExternalTemperatureSetpoint_degC = 0;
+    
+    //Stored parameters
+    private double storedI_state_hDegC;
+    private double storedFilteredCurrentSetpoint_degC;
+    private double storedCurrentExternalTemperatureSetpoint_degC;    
 
+    
 	/**
      * Default constructor
      */
-    public J_HeatingManagementSimple() {
+    public J_HeatingManagementExternalSetpoint() {
     	
     }
     
-    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementExternalSetpoint( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     }
@@ -87,6 +102,26 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     }
     
     
+    public double setCurrentExternalTemperatureSetpoint_degC(Double externalTemperatureSetpoint_degC) {
+    	if(externalTemperatureSetpoint_degC != null) {
+    		this.currentExternalTemperatureSetpoint_degC = max(heatingPreferences.getMinComfortTemperature_degC(), min(externalTemperatureSetpoint_degC, heatingPreferences.getMaxComfortTemperature_degC()));
+    	}
+    	else {
+    		this.currentExternalTemperatureSetpoint_degC = 0;
+    	}
+    	return this.currentExternalTemperatureSetpoint_degC;
+    }
+    
+    public double getCurrentExternalTemperatureSetpoint_degC() {
+    	return this.currentExternalTemperatureSetpoint_degC;
+    }
+    
+    
+    
+    
+    
+    
+    
     public void manageHeating() {
     	if ( !isInitialized ) {
     		this.initializeAssets();
@@ -95,43 +130,45 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	//Adjust the hot water and overall heat demand with the buffer and pt
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!
+    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
     	
-    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-    	
-    	double heatingAssetPower_kW = 0;
+    	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
-    	if(this.building != null) {
-        	double buildingHeatingDemand_kW = 0;
-	    	double buildingTemp_degC = building.getCurrentTemperature();
-	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
-	    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
-	    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) {
-	    			// Nighttime and building temperature too low
-	    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-	    		}
-	    		else {
-	    			// Nighttime and building temperature acceptable
-	    		}
-	    	}
-	    	else {
-	    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
-	    			// Daytime and building temperature too low
-	    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-	    		}
-	    		else {
-	    			// Daytime and building temperature acceptable
-	    		}
-	    	}
-			
-	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
-			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-			building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
-    	} else {    	    	
-    		heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
+    	double buildingTemp_degC = building.getCurrentTemperature();
+    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+    	double buildingHeatingDemand_kW = 0;
+    	
+    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
+    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
-		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
-    }
+    	
+    	if(this.currentExternalTemperatureSetpoint_degC > 0) {
+    		currentSetpoint_degC = this.currentExternalTemperatureSetpoint_degC;
+    	}
+    		
+    	//Cap the current setpoint
+    	currentSetpoint_degC = max(heatingPreferences.getMinComfortTemperature_degC(), min(currentSetpoint_degC, heatingPreferences.getMaxComfortTemperature_degC()));
+    	
+    	//Smooth the setpoint signal
+    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
+    	
+    	
+    	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
+
+    	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
+    	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
+    	
+    	
+    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
+		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
+		
+		double heatIntoBuilding_kW = max(0, assetPower_kW - otherHeatDemand_kW);    			
+		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+		
+		//Reset external setpoint again
+		this.currentExternalTemperatureSetpoint_degC = 0;
+    }   
     
     
     public void initializeAssets() {
@@ -155,30 +192,22 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
         		heatingPreferences = new J_HeatingPreferences();
         	}
     	}
+    	else {
+    		throw new RuntimeException(this.getClass() + " requires a building thermal asset.");
+    	}
     	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
     	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-    	if (heatProfile == null && heatConsumption == null && this.building == null) {
-    		throw new RuntimeException(this.getClass() + " requires a heat demand asset.");
-    	}
+
     	if (gc.c_heatingAssets.size() == 0) {
     		throw new RuntimeException(this.getClass() + " requires at least one heating asset.");
     	}
     	if (gc.c_heatingAssets.size() > 1) {
     		throw new RuntimeException(this.getClass() + " does not support more than one heating asset.");
     	}
-    	this.heatingAsset = gc.c_heatingAssets.get(0);
-    	if (heatingAsset instanceof J_EAConversionGasBurner) {
-    		this.currentHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-    	} else if (heatingAsset instanceof J_EAConversionHeatPump) {
-    		if (gc.p_parentNodeHeatID != null) {
-    			this.currentHeatingType = OL_GridConnectionHeatingType.LT_DISTRICTHEAT;
-    		} else {
-    			this.currentHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
-    		}
-    	} else if (heatingAsset instanceof J_EAConversionHeatDeliverySet) {
-    		this.currentHeatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-    	} else if (heatingAsset instanceof J_EAConversionHydrogenBurner) {
-    		this.currentHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
+    	J_EAConversion heatingAsset = gc.c_heatingAssets.get(0);
+    	if (heatingAsset instanceof J_EAConversionHeatPump) {
+    		this.currentHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
+    		this.heatingAsset = (J_EAConversionHeatPump) heatingAsset;
     	} else {
     		throw new RuntimeException(this.getClass() + " Unsupported heating asset!");    		
     	}
@@ -215,14 +244,21 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     }
     
 	public void storeStatesAndReset() {
-		//Nothing to store/reset
+	    this.storedI_state_hDegC = this.I_state_hDegC;
+	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
+		this.storedCurrentExternalTemperatureSetpoint_degC = this.currentExternalTemperatureSetpoint_degC;
+		this.I_state_hDegC = 0;
+		this.filteredCurrentSetpoint_degC = 0;
+		this.currentExternalTemperatureSetpoint_degC = 0;
 	}
 	public void restoreStates() {
-		//Nothing to store/reset
+		this.I_state_hDegC = this.storedI_state_hDegC;
+	    this.filteredCurrentSetpoint_degC = this.storedFilteredCurrentSetpoint_degC;
+	    this.currentExternalTemperatureSetpoint_degC = this.storedCurrentExternalTemperatureSetpoint_degC;
 	}
 	
 	@Override
 	public String toString() {
-		return "HeatingManagement Simple with heating type: " + getCurrentHeatingType().toString();
+		return "HeatingManagement ExternalSetpoint with heating type: " + getCurrentHeatingType().toString();
 	}
 }

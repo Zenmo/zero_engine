@@ -705,6 +705,10 @@
 					<Id>1762853393712</Id>
 					<Name><![CDATA[NONE]]></Name>
 				</Option>
+				<Option>
+					<Id>1763047072240</Id>
+					<Name><![CDATA[EXTERNAL_SETPOINT]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1668693527446</Id>
@@ -1150,6 +1154,11 @@
 			<Folder>
 				<Id>1762850978631</Id>
 				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
+				<ParentId>1762850958928</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1762958153963</Id>
+				<Name><![CDATA[AggregatorEnergyManagement]]></Name>
 				<ParentId>1762850958928</ParentId>
 			</Folder>
 		</Folders>
@@ -1779,6 +1788,31 @@
 				<Id>1762529771307</Id>
 				<Name><![CDATA[I_AssetManagement]]></Name>
 				<Folder>1762850551601</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1762957940325</Id>
+				<Name><![CDATA[J_AggregatorEnergyManagementHPAndVehicles]]></Name>
+				<Folder>1762958153963</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1762958073964</Id>
+				<Name><![CDATA[I_AggregatorEnergyManagement]]></Name>
+				<Folder>1762958153963</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1762958552759</Id>
+				<Name><![CDATA[J_AggregatorEnergyManagementOff]]></Name>
+				<Folder>1762958153963</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763046723231</Id>
+				<Name><![CDATA[J_ChargingManagementExternalSetpoint]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763048508300</Id>
+				<Name><![CDATA[J_HeatingManagementExternalSetpoint]]></Name>
+				<Folder>1762850578079</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

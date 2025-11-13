@@ -1647,8 +1647,13 @@ f_initializeCustomCoop(newMemberGridConnectionsList);
 
 double f_aggregatorManagement_EnergyCoop()
 {/*ALCODESTART::1756207893363*/
-//Run battery setpoint management
-f_aggregatorBatteryManagement_EnergyCoop();
+if(p_aggregatorEnergyManagement != null){
+	f_aggregatorEnergyManagement_EnergyCoop();
+}
+else{
+	//Run battery setpoint management
+	f_aggregatorBatteryManagement_EnergyCoop();
+}
 /*ALCODEEND*/}
 
 double f_collectGridConnectionOriginalRapidRunData()
@@ -1799,6 +1804,13 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			v_cumulativeIndividualPeakFeedinOriginal_kW += EC.v_cumulativeIndividualPeakFeedinOriginal_kW;
 		}
 	}
+}
+/*ALCODEEND*/}
+
+double f_aggregatorEnergyManagement_EnergyCoop()
+{/*ALCODESTART::1762958781954*/
+if(p_aggregatorEnergyManagement != null){
+	p_aggregatorEnergyManagement.manageExternalSetpoints();
 }
 /*ALCODEEND*/}
 

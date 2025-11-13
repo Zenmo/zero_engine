@@ -724,7 +724,7 @@
 		<Id>1756207893357</Id>
 		<Name><![CDATA[f_aggregatorBatteryManagement_EnergyCoop]]></Name>
 		<X>670</X>
-		<Y>710</Y>
+		<Y>750</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -825,6 +825,22 @@
 		<Name><![CDATA[f_getOriginalCumulativeIndividualGCValues]]></Name>
 		<X>1430</X>
 		<Y>925</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1762958781954</Id>
+		<Name><![CDATA[f_aggregatorEnergyManagement_EnergyCoop]]></Name>
+		<X>670</X>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

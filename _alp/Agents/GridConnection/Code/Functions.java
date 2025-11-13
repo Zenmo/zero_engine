@@ -1414,6 +1414,9 @@ switch (chargingType) {
 	case MAX_POWER:
 		managementClass = J_ChargingManagementMaxAvailablePower.class;
 		break;
+	case EXTERNAL_SETPOINT:
+		managementClass = J_ChargingManagementExternalSetpoint.class;
+		break;
 	default:
 		throw new RuntimeException("No matching charging strategy available for chargingType: " + chargingType);
 }

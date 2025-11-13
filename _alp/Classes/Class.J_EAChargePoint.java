@@ -31,12 +31,23 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		
 		//For specific charging strategies
 		private GridNode balanceTargetGridNode;
+		private String balanceTargetGridNode_ID;
+		private double currentChargeSetpoint_kW = 0; //External setpoint strategy
+		private double storedCurrentChargeSetpoint_kW;
+		
 	    /**
 	     * Default constructor
 	     */
 	    public J_EAChargePoint(Agent parentAgent, double electricCapacity_kW, double timestep_h, List<J_ChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable, int nbSockets) {
 	    	this.parentAgent = parentAgent;
 	    	this.balanceTargetGridNode = ((GridConnection)parentAgent).p_parentNodeElectric;
+	    	this.balanceTargetGridNode_ID = ((GridConnection)parentAgent).p_parentNodeElectricID;
+	    	if(balanceTargetGridNode == null) {
+	    		this.balanceTargetGridNode = findFirst(((GridConnection)parentAgent).energyModel.pop_gridNodes, node -> node.p_gridNodeID.equals(this.balanceTargetGridNode_ID));
+	    		if(this.balanceTargetGridNode == null) {
+	    			throw new RuntimeException("NO TARGET GRIDNODE FOR CHARGEPOINT FOUND");
+	    		}
+	    	}
 	    	this.capacityElectric_kW = electricCapacity_kW;
 	    	this.timestep_h = timestep_h;
 	    	this.chargeSessionList = chargeSessionList;
@@ -141,6 +152,9 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 					case BALANCE_GRID:
 						chargeSetpoint_kW = determineChargeSetpoint_balanceGrid_kW(socketNb, t_h, doV2G);
 						break;
+					case EXTERNAL_SETPOINT:
+						chargeSetpoint_kW = determineChargeSetpoint_externalSetpoint_kW(socketNb, t_h, doV2G);
+						break;
 					default:
 						throw new RuntimeException("UNSUPPORTED CHARGING ATTITUDE SELECTED FOR CHARGEPOINT");
 				}	
@@ -237,8 +251,41 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			return chargeSetpoint_kW;
 		}
 		
-
 		
+		
+		private double determineChargeSetpoint_externalSetpoint_kW(int socketNb, double t_h, boolean doV2G) {
+			double chargeSetpoint_kW = 0;
+			double maxChargePower = capacityElectric_kW;
+			double remainingChargeDemand_kWh = currentChargingSessions[socketNb].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
+			double nextTripStartTime_h = currentChargingSessions[socketNb].endTime_h;
+			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+			double chargeDeadline_h =  nextTripStartTime_h - remainingChargeDemand_kWh / maxChargePower - chargeTimeMargin_h;
+			double remainingFlexTime_h = chargeDeadline_h - t_h; // measure of flexiblity left in current charging session.
+			double remainingTimeToCharge = nextTripStartTime_h - t_h - chargeTimeMargin_h;
+			
+			if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
+				chargeSetpoint_kW = min(maxChargePower, remainingChargeDemand_kWh/timestep_h);	
+			} else {
+				if(doV2G) {
+					chargeSetpoint_kW = min(this.currentChargeSetpoint_kW, remainingChargeDemand_kWh/timestep_h);		
+				}
+				else {
+					chargeSetpoint_kW = min(max(0, this.currentChargeSetpoint_kW), remainingChargeDemand_kWh/timestep_h);	
+				}
+				
+			}
+			return chargeSetpoint_kW;
+		}
+		
+		    public double setChargeSetpoint_kW(double chargeSetpoint_kW) {
+		    	this.currentChargeSetpoint_kW = chargeSetpoint_kW;
+		    	return this.currentChargeSetpoint_kW;
+		    }
+		    
+		    public double getChargeSetpoint_kW() {
+		    	return this.currentChargeSetpoint_kW;
+		    }
+
 		private void manageSocket(int socketNb, double t_h) {
 			if (this.currentChargingSessions[socketNb] != null && t_h >= this.currentChargingSessions[socketNb].endTime_h) { // end session
 				if (this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh()); }
@@ -354,6 +401,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			discharged_kWh = 0.0;
 			chargedStored_kWh = charged_kWh;
 			charged_kWh = 0.0;
+			storedCurrentChargeSetpoint_kW = currentChargeSetpoint_kW;
+			currentChargeSetpoint_kW = 0;
 			
 			currentChargingSessionsStored = currentChargingSessions.clone();
 			Arrays.fill(currentChargingSessions, null);
@@ -369,7 +418,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 	    	energyUsed_kWh = energyUsedStored_kWh;
 			discharged_kWh = dischargedStored_kWh;
 			charged_kWh = chargedStored_kWh;
-			
+			currentChargeSetpoint_kW = storedCurrentChargeSetpoint_kW;
 			currentChargingSessions = currentChargingSessionsStored;
 			nextSessionIdxs = nextSessionIdxsStored;
 		}

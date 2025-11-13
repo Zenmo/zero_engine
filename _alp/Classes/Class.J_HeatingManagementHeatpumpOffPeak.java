@@ -235,8 +235,18 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     }
     
 	
-  
-  
+    public void setReducedHeatingIntervalTime_hr(double startTimeOfReducedHeatingInterval_hr, double endTimeOfReducedHeatingInterval_hr) {
+		if(startTimeOfReducedHeatingInterval_hr == endTimeOfReducedHeatingInterval_hr) {
+			traceln("Start time of reduced heating interval can not be the same as the end time. Reduced heating interval time adjustment has been skipped.");
+		}
+		else {
+		  	this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
+		  	this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
+		  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24;
+		  	calculatePreHeatParameters();
+		}
+    }
+    
 	public void setStartTimeOfReducedHeatingInterval_hr(double startTimeOfReducedHeatingInterval_hr) {
 		if(startTimeOfReducedHeatingInterval_hr == this.endTimeOfReducedHeatingInterval_hr) {
 			traceln("Start time of reduced heating interval can not be the same as the end time. Reduced heating interval starttime adjustment has been skipped.");
@@ -244,6 +254,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		else {
 		  	this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
 		  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24;
+		  	calculatePreHeatParameters();
 		}
 	}
 	public void setEndTimeOfReducedHeatingInterval_hr(double endTimeOfReducedHeatingInterval_hr) {
@@ -253,6 +264,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		else {
 		  	this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
 		  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24; 
+		  	calculatePreHeatParameters();
 		}
 	}
 	  
