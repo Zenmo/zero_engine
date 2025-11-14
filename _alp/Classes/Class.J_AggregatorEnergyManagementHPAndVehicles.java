@@ -98,9 +98,9 @@ public class J_AggregatorEnergyManagementHPAndVehicles implements I_AggregatorEn
     	double flexSetpoint_kW = targetLoadLowPassed_kW - currentTargetLoad_kW; // -> Negative means reduced residential consumption is needed, positive means more residential consumption is possible
     	
     	
-    	double remainingRequiredFlexSetpoint_kW = 0;
+    	//double remainingRequiredFlexSetpoint_kW = 0;
+    	double remainingRequiredFlexSetpoint_kW = flexSetpoint_kW;
     	
-
     	if(memberedGCWithSetpointEVManagement.size()>0) {
         	double EVChargeSetpointPerGC_kW = (currentEVPower_kW + flexSetpoint_kW) / memberedGCWithSetpointEVManagement.size();
         	
@@ -135,14 +135,14 @@ public class J_AggregatorEnergyManagementHPAndVehicles implements I_AggregatorEn
     	
 
     	for(GridConnection GC : memberedGCWithSetpointHeatpumps) {
-    		if(remainingRequiredFlexSetpoint_kW < 0) {
-    			((J_HeatingManagementExternalSetpoint)GC.f_getHeatingManagement()).setCurrentExternalTemperatureSetpoint_degC(GC.f_getHeatingManagement().getHeatingPreferences().getMaxComfortTemperature_degC());
+    		if(abs(remainingRequiredFlexSetpoint_kW) < 0.1) {//Nothing needed from heating systems, behave as normal
+    			((J_HeatingManagementExternalSetpoint)GC.f_getHeatingManagement()).setCurrentExternalTemperatureSetpoint_degC(null);
     		}
-    		else if(remainingRequiredFlexSetpoint_kW > 0) {
+    		else if(remainingRequiredFlexSetpoint_kW < 0) { //Decrease heating
     			((J_HeatingManagementExternalSetpoint)GC.f_getHeatingManagement()).setCurrentExternalTemperatureSetpoint_degC(GC.f_getHeatingManagement().getHeatingPreferences().getMinComfortTemperature_degC());
     		}
-    		else if(remainingRequiredFlexSetpoint_kW == 0) {
-    			((J_HeatingManagementExternalSetpoint)GC.f_getHeatingManagement()).setCurrentExternalTemperatureSetpoint_degC(null);
+    		else if(remainingRequiredFlexSetpoint_kW > 0) { //Increase heating
+    			((J_HeatingManagementExternalSetpoint)GC.f_getHeatingManagement()).setCurrentExternalTemperatureSetpoint_degC(GC.f_getHeatingManagement().getHeatingPreferences().getMaxComfortTemperature_degC());
     		}
     	}
     }

@@ -1409,7 +1409,7 @@ switch (chargingType) {
 		managementClass = J_ChargingManagementLocalBalancing.class;
 		break;
 	case BALANCE_GRID:
-		managementClass = J_ChargingManagementLocalBalancing.class;
+		managementClass = J_ChargingManagementOffPeak.class;
 		break;
 	case MAX_POWER:
 		managementClass = J_ChargingManagementMaxAvailablePower.class;

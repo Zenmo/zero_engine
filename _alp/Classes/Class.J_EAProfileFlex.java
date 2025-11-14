@@ -6,7 +6,7 @@ import zeroPackage.ZeroMath;
 public class J_EAProfileFlex extends zero_engine.J_EAProfile {
 	
 	public OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-	public double[] a_energyProfile_kWh;
+	private double[] a_energyProfile_kWh;
 	private double profileTimestep_h;
     private double profileStarTime_h = 0;
 	public double lostLoad_kWh = 0;
@@ -108,8 +108,8 @@ public class J_EAProfileFlex extends zero_engine.J_EAProfile {
     	
     	//Redetermine current power based on flex need
     	if(loadShiftingEnabled) {
-    		//currentPower_kW = shiftCurrentPower_ContinuousInterval_kW(currentPower_kW);
-    		currentPower_kW = shiftCurrentPower_DiscreteInterval_kW(currentPower_kW);
+    		//currentPower_kW = this.profileScaling_fr * shiftCurrentPower_ContinuousInterval_kW(currentPower_kW);
+    		currentPower_kW = this.profileScaling_fr * shiftCurrentPower_DiscreteInterval_kW(currentPower_kW);
     	}
     	
     	this.energyUse_kW = currentPower_kW;
@@ -127,12 +127,11 @@ public class J_EAProfileFlex extends zero_engine.J_EAProfile {
     	
     	int currentFlexLoadScheduleIndex = roundToInt((((GridConnection)parentAgent).energyModel.t_h % loadShiftingMaxDuration_hr) / this.timeStep_h);
     	double flexLoad_kW = flexLoadSchedule_kW[currentFlexLoadScheduleIndex];
-
-    	
-    	
-    	
-
     	return currentPower_kW + flexLoad_kW;
+    }
+    
+    public double[] getCurrentFlexLoadSchedule_kW() {
+    	return this.flexLoadSchedule_kW;
     }
     
     private double[] getFlexLoadSchedule_kW() {
@@ -400,7 +399,11 @@ public class J_EAProfileFlex extends zero_engine.J_EAProfile {
     	
     	return currentPower_kW + flexLoad_kW;
     }
-
+    
+    @Override
+	public double[] getProfile_kWh() {
+		return this.a_energyProfile_kWh;
+	}
 	
     public void enableLoadShifting(boolean enableLoadShifting) {
     	this.loadShiftingEnabled = enableLoadShifting;

@@ -144,12 +144,10 @@ public class J_HeatingManagementExternalSetpoint implements I_HeatingManagement 
     	}
     	
     	if(this.currentExternalTemperatureSetpoint_degC > 0) {
+    		//traceln("this.currentExternalTemperatureSetpoint_degC: " + this.currentExternalTemperatureSetpoint_degC);
     		currentSetpoint_degC = this.currentExternalTemperatureSetpoint_degC;
     	}
     		
-    	//Cap the current setpoint
-    	currentSetpoint_degC = max(heatingPreferences.getMinComfortTemperature_degC(), min(currentSetpoint_degC, heatingPreferences.getMaxComfortTemperature_degC()));
-    	
     	//Smooth the setpoint signal
     	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
     	

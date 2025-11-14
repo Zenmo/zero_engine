@@ -107,6 +107,9 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	}
     }
     
+	public double[] getProfile_kWh() {
+		return this.a_energyProfile_kWh;
+	}
 	
     public double getProfileScaling_fr() {
     	return profileScaling_fr;

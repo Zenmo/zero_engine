@@ -1814,6 +1814,11 @@
 				<Name><![CDATA[J_HeatingManagementExternalSetpoint]]></Name>
 				<Folder>1762850578079</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1763120525014</Id>
+				<Name><![CDATA[J_AggregatorEnergyManagementHPAndVehiclesInterval]]></Name>
+				<Folder>1762958153963</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
