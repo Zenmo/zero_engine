@@ -117,7 +117,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 				double[] heatPower_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(surveyHeatDemandProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), surveyHeatDemandProfile.getProfileScaling_fr()/p_timestep_h);
 				//traceln(heatPower_kW);
 				double eta_r = parentGC.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
-				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 			    for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
 			    	double baseTemperature_degC = parentGC.energyModel.pp_ambientTemperature_degC.getValue(time);
 			    	double COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
@@ -129,7 +129,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 			if(genericHeatDemandProfile != null){
 										
 				double eta_r = parentGC.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
-				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureHeatpump_degC;
+				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 				
 				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
 				    double baseTemperature_degC = parentGC.energyModel.pp_ambientTemperature_degC.getValue(time);

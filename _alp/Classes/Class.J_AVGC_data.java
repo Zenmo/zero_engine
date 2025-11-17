@@ -50,7 +50,8 @@ public class J_AVGC_data implements Serializable {
 	
 	public double p_avgCOPHeatpump;
 	public double p_avgEfficiencyHeatpump_fr;
-	public double p_avgOutputTemperatureHeatpump_degC;
+	public double p_avgOutputTemperatureElectricHeatpump_degC;
+	public double p_avgOutputTemperatureHybridHeatpump_degC;
 	public double p_minHeatpumpElectricCapacity_kW;
 
 	public double p_avgEfficiencyGasBurner_fr;

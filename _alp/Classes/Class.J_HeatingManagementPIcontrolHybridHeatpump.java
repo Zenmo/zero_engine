@@ -1,8 +1,6 @@
-
 /**
- * J_HeatingManagementPIcontrol
+ * J_HeatingManagementPIcontrolHybridHeatpump
  */	
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
@@ -14,23 +12,20 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     creatorVisibility = Visibility.NONE
 )
 
-public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
+public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingManagement{
 	private boolean isInitialized = false;
-    private GridConnection gc;
+	private GridConnection gc;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
-		OL_GridConnectionHeatingType.GAS_BURNER, 
-		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
-		OL_GridConnectionHeatingType.HYDROGENBURNER,
-		OL_GridConnectionHeatingType.DISTRICTHEAT,
-		OL_GridConnectionHeatingType.LT_DISTRICTHEAT
+		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
 
 	private J_EABuilding building;	
-    private J_EAConversion heatingAsset;
+	private J_EAConversionHeatPump heatPumpAsset;
+	private J_EAConversionGasBurner gasBurnerAsset;
 	private J_HeatingPreferences heatingPreferences;
-	    
-    // PI control gains
+    
+	 // PI control gains
     private double P_gain_kWpDegC = 1*1;
     private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
@@ -43,13 +38,14 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     //Stored parameters
     private double storedI_state_hDegC;
     private double storedFilteredCurrentSetpoint_degC;
+    
     /**
      * Default constructor
      */
-    public J_HeatingManagementPIcontrol() {
+    public J_HeatingManagementPIcontrolHybridHeatpump() {
     }
 
-    public J_HeatingManagementPIcontrol( GridConnection gc,OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementPIcontrolHybridHeatpump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
     	this.timeStep_h = gc.energyModel.p_timeStep_h;
@@ -80,19 +76,35 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
     	
     	
+    	//Determine the building heat demand using the found temp setpoint and PI controller
     	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
-
+    	
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
     	
-
-    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
-		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
+    	
+    	//Set asset power based on the COP (All demand profiles (hot water, etc.) always go to the gasburner!)
+		double heatpumpAssetPower_kW = 0;
+		double gasBurnerAssetPower_kW = 0;
+		double heatIntoBuilding_kW = 0;
 		
-		double heatIntoBuilding_kW = max(0, assetPower_kW - otherHeatDemand_kW);    			
+    	if (heatPumpAsset.getCOP() > 3.0 ) {
+    		heatpumpAssetPower_kW = min(heatPumpAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW);
+    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), otherHeatDemand_kW);
+    		heatIntoBuilding_kW = heatpumpAssetPower_kW;
+    	}
+    	else {
+    		heatpumpAssetPower_kW = 0.0;
+    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW + otherHeatDemand_kW);
+    		heatIntoBuilding_kW = max(0, gasBurnerAssetPower_kW - otherHeatDemand_kW);  
+    	}
+    	
+    	//Updat flows with found asset powers
+		heatPumpAsset.f_updateAllFlows( heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW() );
+		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW() );
 		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
-
-    }    
+    }
+    
     
     private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
     	
@@ -139,6 +151,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	return remainingHotWater_kW;
     }
     
+    
     public void initializeAssets() {
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
@@ -159,27 +172,26 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	} else {
     		throw new RuntimeException(this.getClass() + " can only be used for temperature control of a building thermal asset.");
     	}
-    	if (gc.c_heatingAssets.size() == 0) {
-    		throw new RuntimeException(this.getClass() + " requires at least one heating asset.");
+    	if (gc.c_heatingAssets.size() != 2) {
+    		throw new RuntimeException(this.getClass() + " requires exactly two heating assets.");
     	}
-    	if (gc.c_heatingAssets.size() > 1) {
-    		throw new RuntimeException(this.getClass() + " does not support more than one heating asset.");
+    	if (gc.c_heatingAssets.get(0) instanceof J_EAConversionGasBurner) {
+    		this.gasBurnerAsset = (J_EAConversionGasBurner)gc.c_heatingAssets.get(0);
     	}
-    	this.heatingAsset = gc.c_heatingAssets.get(0);
-    	if (heatingAsset instanceof J_EAConversionGasBurner) {
-    		this.currentHeatingType = OL_GridConnectionHeatingType.GAS_BURNER;
-    	} else if (heatingAsset instanceof J_EAConversionHeatPump) {
-    		if (gc.p_parentNodeHeatID != null) {
-    			this.currentHeatingType = OL_GridConnectionHeatingType.LT_DISTRICTHEAT;
-    		} else {
-    			this.currentHeatingType = OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP;
-    		}
-    	} else if (heatingAsset instanceof J_EAConversionHeatDeliverySet) {
-    		this.currentHeatingType = OL_GridConnectionHeatingType.DISTRICTHEAT;
-    	} else if (heatingAsset instanceof J_EAConversionHydrogenBurner) {
-    		this.currentHeatingType = OL_GridConnectionHeatingType.HYDROGENBURNER;
-    	} else {
-    		throw new RuntimeException(this.getClass() + " Unsupported heating asset!");    		
+    	else if (gc.c_heatingAssets.get(1) instanceof J_EAConversionGasBurner) {
+    		this.gasBurnerAsset = (J_EAConversionGasBurner)gc.c_heatingAssets.get(1);    		
+    	}
+    	else {
+    		throw new RuntimeException(this.getClass() + " requires a Gas Burner");
+    	}
+    	if (gc.c_heatingAssets.get(0) instanceof J_EAConversionHeatPump) {
+    		this.heatPumpAsset = (J_EAConversionHeatPump)gc.c_heatingAssets.get(0);
+    	}
+    	else if (gc.c_heatingAssets.get(1) instanceof J_EAConversionHeatPump) {
+    		this.heatPumpAsset = (J_EAConversionHeatPump)gc.c_heatingAssets.get(1);    		
+    	}
+    	else {
+    		throw new RuntimeException(this.getClass() + " requires a Heat Pump");
     	}
     	if(this.heatingPreferences == null) {
     		heatingPreferences = new J_HeatingPreferences();
@@ -187,6 +199,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
 		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     	this.isInitialized = true;
     }
+    
     
     public void notInitialized() {
     	this.isInitialized = false;
@@ -208,13 +221,10 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
-    
-    
-    //Get parentagent
+	//Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
     }
-    
     
     //Store and reset states
 	public void storeStatesAndReset() {
@@ -232,5 +242,4 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
 	public String toString() {
 		return super.toString();
 	}
-
 }
