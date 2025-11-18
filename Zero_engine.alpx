@@ -1595,7 +1595,8 @@
 			<JavaClass>
 				<Id>1753167599716</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingHybridHeatPump]]></Name>
-				<Folder>1762850578079</Folder>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1762850602203</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753795104493</Id>
@@ -1774,6 +1775,11 @@
 				<Id>1762529771307</Id>
 				<Name><![CDATA[I_AssetManagement]]></Name>
 				<Folder>1762850551601</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763394890431</Id>
+				<Name><![CDATA[J_HeatingManagementPIcontrolHybridHeatpump]]></Name>
+				<Folder>1762850578079</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

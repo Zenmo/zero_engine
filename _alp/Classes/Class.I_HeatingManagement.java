@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
 
 
-public interface I_HeatingManagement  extends I_AssetManagement{
+public interface I_HeatingManagement extends I_AssetManagement{
 	void manageHeating();
 	// Initiliaze throws an exception when the configuration of assets is not a valid combination
 	void initializeAssets();

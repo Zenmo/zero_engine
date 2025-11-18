@@ -1,5 +1,5 @@
 /**
- * J_HeatingManagementBuildingHybridHeatPump
+ * J_HeatingManagementPIcontrolHybridHeatpump
  */	
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -12,8 +12,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     creatorVisibility = Visibility.NONE
 )
 
-public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManagement {
-
+public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingManagement{
 	private boolean isInitialized = false;
 	private GridConnection gc;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
@@ -26,16 +25,30 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
 	private J_EAConversionGasBurner gasBurnerAsset;
 	private J_HeatingPreferences heatingPreferences;
     
-	/**
+	 // PI control gains
+    private double P_gain_kWpDegC = 1*1;
+    private double I_gain_kWphDegC = 0.1*2;
+    private double I_state_hDegC = 0;
+    private double timeStep_h;
+    
+    //Temperature setpoint low pass filter
+    private double filteredCurrentSetpoint_degC;
+    private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
+    
+    //Stored parameters
+    private double storedI_state_hDegC;
+    private double storedFilteredCurrentSetpoint_degC;
+    
+    /**
      * Default constructor
      */
-    public J_HeatingManagementBuildingHybridHeatPump() {
-    	
+    public J_HeatingManagementPIcontrolHybridHeatpump() {
     }
-    
-    public J_HeatingManagementBuildingHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+
+    public J_HeatingManagementPIcontrolHybridHeatpump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
+    	this.timeStep_h = gc.energyModel.p_timeStep_h;
     }
     
     public void manageHeating() {
@@ -43,26 +56,32 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     		this.initializeAssets();
     	}
     	
-    	//Adjust the hot water and overall heat demand with the buffer and pt
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
+    	
+    	//Adjust the hot water and overall heat demand with the buffer and pt
+    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
-    	double buildingHeatingDemand_kW = 0;
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+    	double buildingHeatingDemand_kW = 0;
+    	
+    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
     	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
-    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) { 			
-    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-    		}
+    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
-    	else {
-    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
-    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-    		}
-    	}
-
+    	
+    	//Smooth the setpoint signal
+    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
+    	
+    	
+    	//Determine the building heat demand using the found temp setpoint and PI controller
+    	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
+    	
+    	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
+    	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
+    	
     	
     	//Set asset power based on the COP (All demand profiles (hot water, etc.) always go to the gasburner!)
 		double heatpumpAssetPower_kW = 0;
@@ -80,12 +99,12 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     		heatIntoBuilding_kW = max(0, gasBurnerAssetPower_kW - otherHeatDemand_kW);  
     	}
     	
-    	//Update flows with found asset powers
+    	//Updat flows with found asset powers
 		heatPumpAsset.f_updateAllFlows( heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW() );
-		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW());
+		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW() );
 		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
-		
     }
+    
     
     private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
     	
@@ -131,7 +150,8 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	}
     	return remainingHotWater_kW;
     }
-
+    
+    
     public void initializeAssets() {
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
@@ -147,16 +167,14 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
         		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");
         	}
     	}
-    	if (gc.p_BuildingThermalAsset != null) {
+    	if(gc.p_BuildingThermalAsset != null) {
         	this.building = gc.p_BuildingThermalAsset;
-    	}
-    	else {
-    		throw new RuntimeException(this.getClass() + " requires a building asset.");
+    	} else {
+    		throw new RuntimeException(this.getClass() + " can only be used for temperature control of a building thermal asset.");
     	}
     	if (gc.c_heatingAssets.size() != 2) {
     		throw new RuntimeException(this.getClass() + " requires exactly two heating assets.");
     	}
-    	// TODO: Add a check if the power of the asset is sufficient?
     	if (gc.c_heatingAssets.get(0) instanceof J_EAConversionGasBurner) {
     		this.gasBurnerAsset = (J_EAConversionGasBurner)gc.c_heatingAssets.get(0);
     	}
@@ -178,8 +196,10 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	if(this.heatingPreferences == null) {
     		heatingPreferences = new J_HeatingPreferences();
     	}
+		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     	this.isInitialized = true;
     }
+    
     
     public void notInitialized() {
     	this.isInitialized = false;
@@ -201,31 +221,25 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	return this.heatingPreferences;
     }
     
-    
-    
-    //Get parentagent
+	//Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
     }
     
-
-	//Store and reset states
+    //Store and reset states
 	public void storeStatesAndReset() {
-		//Nothing to store and reset
+	    this.storedI_state_hDegC = this.I_state_hDegC;
+	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
+		this.I_state_hDegC = 0;
+		this.filteredCurrentSetpoint_degC = 0;
 	}
 	public void restoreStates() {
-		//Nothing to restore
+		this.I_state_hDegC = this.storedI_state_hDegC;
+	    this.filteredCurrentSetpoint_degC = this.storedFilteredCurrentSetpoint_degC;
 	}
 	
 	@Override
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

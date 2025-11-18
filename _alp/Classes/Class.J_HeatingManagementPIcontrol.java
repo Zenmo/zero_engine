@@ -94,7 +94,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
 
     }    
     
-  public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
+    private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
     	
     	//Calculate the pt production
     	double ptProduction_kW = 0;
