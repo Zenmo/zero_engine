@@ -49,20 +49,17 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
-    	double buildingPower_kW = 0;
-    	double assetOutputPower_kW = heatPumpAsset.getCOP() > 3.0 ? heatPumpAsset.getOutputCapacity_kW() : gasBurnerAsset.getOutputCapacity_kW();
+    	double buildingHeatingDemand_kW = 0;
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
     		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) { 			
-    			double buildingPowerSetpoint_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-    			buildingPower_kW = min(assetOutputPower_kW - otherHeatDemand_kW, buildingPowerSetpoint_kW);
+    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
     		}
     	}
     	else {
     		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
-    			double buildingPowerSetpoint_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
-    			buildingPower_kW = min(assetOutputPower_kW - otherHeatDemand_kW, buildingPowerSetpoint_kW);
+    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
     		}
     	}
 
@@ -73,17 +70,17 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
 		double heatIntoBuilding_kW = 0;
 		
     	if (heatPumpAsset.getCOP() > 3.0 ) {
-    		heatpumpAssetPower_kW = min(heatPumpAsset.getOutputCapacity_kW(), buildingPower_kW);
-    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), otherHeatDemand_kW);
-    		heatIntoBuilding_kW = heatpumpAssetPower_kW;
+    		heatpumpAssetPower_kW = min(heatPumpAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW);
+    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), otherHeatDemand_kW + max(0, buildingHeatingDemand_kW - heatpumpAssetPower_kW));
+    		heatIntoBuilding_kW = heatpumpAssetPower_kW + max(0, gasBurnerAssetPower_kW - otherHeatDemand_kW);
     	}
     	else {
     		heatpumpAssetPower_kW = 0.0;
-    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), buildingPower_kW + otherHeatDemand_kW);
+    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW + otherHeatDemand_kW);
     		heatIntoBuilding_kW = max(0, gasBurnerAssetPower_kW - otherHeatDemand_kW);  
     	}
     	
-    	//Updat flows with found asset powers
+    	//Update flows with found asset powers
 		heatPumpAsset.f_updateAllFlows( heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW() );
 		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW());
 		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );

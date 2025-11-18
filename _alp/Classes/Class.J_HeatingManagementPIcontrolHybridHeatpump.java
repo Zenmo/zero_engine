@@ -59,7 +59,7 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	//Adjust the hot water and overall heat demand with the buffer and pt
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);
+    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
@@ -90,8 +90,8 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 		
     	if (heatPumpAsset.getCOP() > 3.0 ) {
     		heatpumpAssetPower_kW = min(heatPumpAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW);
-    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), otherHeatDemand_kW);
-    		heatIntoBuilding_kW = heatpumpAssetPower_kW;
+    		gasBurnerAssetPower_kW = min(gasBurnerAsset.getOutputCapacity_kW(), otherHeatDemand_kW + max(0, buildingHeatingDemand_kW - heatpumpAssetPower_kW));
+    		heatIntoBuilding_kW = heatpumpAssetPower_kW + max(0, gasBurnerAssetPower_kW - otherHeatDemand_kW);
     	}
     	else {
     		heatpumpAssetPower_kW = 0.0;
