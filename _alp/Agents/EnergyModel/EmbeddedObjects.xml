@@ -424,6 +424,9 @@
 			<Parameter>
 				<Name><![CDATA[b_dataSharingAgreed]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[b_dataIsAccessible]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
