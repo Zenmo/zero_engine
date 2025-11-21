@@ -33,7 +33,8 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 
     @Override
     public void f_updateAllFlows(double powerFraction_fr) {
-    	if ( powerFraction_fr < 0 ) {
+    	powerFraction_fr = roundToDecimal(powerFraction_fr, J_GlobalParameters.floatingPointPrecision);
+    	if(powerFraction_fr < 0) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
     	}
     	else if ( powerFraction_fr == 0 ) {
