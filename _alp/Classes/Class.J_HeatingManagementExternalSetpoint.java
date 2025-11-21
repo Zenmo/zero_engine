@@ -54,6 +54,7 @@ public class J_HeatingManagementExternalSetpoint implements I_HeatingManagement 
     public J_HeatingManagementExternalSetpoint( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.currentHeatingType = heatingType;
+    	this.timeStep_h = gc.energyModel.p_timeStep_h;
     }
     
     public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){

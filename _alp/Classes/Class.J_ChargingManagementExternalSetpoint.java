@@ -16,12 +16,12 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
 
     private GridConnection gc;
     private OL_ChargingAttitude activeChargingType;
-    private double currentChargeSetpoint_kW = 0;
+    private Double currentChargeSetpoint_kW = null;
 
     private boolean V2GActive = false;
     
     //Stored
-    private double storedCurrentChargeSetpoint_kW;
+    private Double storedCurrentChargeSetpoint_kW;
     
     
     /**
@@ -44,7 +44,7 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
     	if (gc.c_electricVehicles.size() > 0) {
     		this.currentChargeSetpoint_kW = chargeSetpoint_kW;
     	} else {
-    		this.currentChargeSetpoint_kW = 0.0;
+    		this.currentChargeSetpoint_kW = null;
     	}
     	return this.currentChargeSetpoint_kW;
     }
@@ -59,15 +59,19 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {
     			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!
-    			
-		    	if ( t_h >= (ev.getChargeDeadline_h()) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-					double chargeSetpoint_kW = ev.getCapacityElectric_kW();
-					this.currentChargeSetpoint_kW -= ev.getCapacityElectric_kW();
-					ev.f_updateAllFlows( 1 ); 
-				}
-		    	else {
-		    		nonUrgentChargingEVs.add(ev);
-		    	}
+    			if(this.currentChargeSetpoint_kW != null) {
+			    	if ( t_h >= (ev.getChargeDeadline_h()) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+						double chargeSetpoint_kW = min(ev.getCapacityElectric_kW(), chargeNeedForNextTrip_kWh/gc.energyModel.p_timeStep_h);
+						this.currentChargeSetpoint_kW -= ev.getCapacityElectric_kW();
+						ev.f_updateAllFlows( 1 ); 
+					}
+			    	else {
+			    		nonUrgentChargingEVs.add(ev);
+			    	}
+    			}
+    			else {
+					ev.f_updateAllFlows( 1 );     				
+    			}
     		}
 	    }
     	if(nonUrgentChargingEVs.size() > 0) {
@@ -83,7 +87,7 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
     	}
     	
     	//Reset the value again.
-    	this.currentChargeSetpoint_kW = 0;
+    	this.currentChargeSetpoint_kW = null;
     }
     
 	public void setV2GActive(boolean activateV2G) {
@@ -106,7 +110,7 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
     //Store and reset states
 	public void storeStatesAndReset() {
 		this.storedCurrentChargeSetpoint_kW = currentChargeSetpoint_kW;
-		this.currentChargeSetpoint_kW = 0;
+		this.currentChargeSetpoint_kW = null;
 	}
 	public void restoreStates() {
 		this.currentChargeSetpoint_kW = this.storedCurrentChargeSetpoint_kW;

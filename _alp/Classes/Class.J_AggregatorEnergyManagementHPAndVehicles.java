@@ -97,7 +97,6 @@ public class J_AggregatorEnergyManagementHPAndVehicles implements I_AggregatorEn
     	targetLoadLowPassed_kW += (currentTargetLoad_kW - targetLoadLowPassed_kW) * filterDiffGain_r;
     	double flexSetpoint_kW = targetLoadLowPassed_kW - currentTargetLoad_kW; // -> Negative means reduced residential consumption is needed, positive means more residential consumption is possible
     	
-    	
     	//double remainingRequiredFlexSetpoint_kW = 0;
     	double remainingRequiredFlexSetpoint_kW = flexSetpoint_kW;
     	

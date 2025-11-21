@@ -1819,6 +1819,11 @@
 				<Name><![CDATA[J_AggregatorEnergyManagementHPAndVehiclesInterval]]></Name>
 				<Folder>1762958153963</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1763729033631</Id>
+				<Name><![CDATA[J_AggregatorEnergyManagementHPAndVehiclesSetLimit]]></Name>
+				<Folder>1762958153963</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
