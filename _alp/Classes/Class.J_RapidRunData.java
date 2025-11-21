@@ -80,6 +80,8 @@ public class J_RapidRunData {
     
     public ZeroAccumulator acc_daytimePrimaryEnergyProductionHeatpumps_kW;
     
+    public J_AccumulatorMap<OL_AssetFlowCategories> am_assetFlowsDaytime_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
+    
     //Weekend/day
     public J_AccumulatorMap am_weekendExports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
     public J_AccumulatorMap am_weekendImports_kW = new J_AccumulatorMap(OL_EnergyCarriers.class);
@@ -90,6 +92,9 @@ public class J_RapidRunData {
     public ZeroAccumulator acc_weekendEnergyProduction_kW;
 
     public ZeroAccumulator acc_weekendPrimaryEnergyProductionHeatpumps_kW;
+    
+    public J_AccumulatorMap<OL_AssetFlowCategories> am_assetFlowsWeekend_kW = new J_AccumulatorMap(OL_AssetFlowCategories.class);
+
 
     
     /**
@@ -200,7 +205,9 @@ public class J_RapidRunData {
 	    acc_daytimeElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
 	
 	    acc_daytimePrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(false, timeStep_h, 0.5 * (simDuration_h));
-	    		
+	    
+		am_assetFlowsDaytime_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, false, timeStep_h, 0.5 * (simDuration_h));
+
 	    //========== WEEKEND ACCUMULATORS ==========//
 	    am_weekendImports_kW.createEmptyAccumulators( this.activeConsumptionEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
 	    am_weekendExports_kW.createEmptyAccumulators( this.activeProductionEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
@@ -212,6 +219,8 @@ public class J_RapidRunData {
 	    acc_weekendElectricityConsumption_kW = new ZeroAccumulator(false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
 	
 	    acc_weekendPrimaryEnergyProductionHeatpumps_kW = new ZeroAccumulator(false, timeStep_h,  2 / 7 * (simDuration_h) + 48);
+	    
+	    am_assetFlowsWeekend_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
     }
 
     public void resetAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
@@ -291,6 +300,8 @@ public class J_RapidRunData {
 
     	acc_daytimePrimaryEnergyProductionHeatpumps_kW.reset();
     	
+		am_assetFlowsDaytime_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, false, timeStep_h, 0.5 * (simDuration_h));
+
     	// Weekend
     	am_weekendImports_kW.createEmptyAccumulators( this.activeConsumptionEnergyCarriers, false, timeStep_h, 2 / 7  * (simDuration_h) + 48);
     	am_weekendExports_kW.createEmptyAccumulators( this.activeProductionEnergyCarriers, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
@@ -301,6 +312,9 @@ public class J_RapidRunData {
     	acc_weekendFinalEnergyConsumption_kW.reset();
     	
     	acc_weekendPrimaryEnergyProductionHeatpumps_kW.reset();
+
+    	am_assetFlowsWeekend_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
+
     }
     
     public J_RapidRunData getClone() {
@@ -360,6 +374,7 @@ public class J_RapidRunData {
         clone.acc_daytimeElectricityConsumption_kW = acc_daytimeElectricityConsumption_kW.getClone();
         clone.acc_daytimeElectricityProduction_kW = acc_daytimeElectricityProduction_kW.getClone();
         clone.acc_daytimePrimaryEnergyProductionHeatpumps_kW = acc_daytimePrimaryEnergyProductionHeatpumps_kW.getClone();
+        clone.am_assetFlowsDaytime_kW = am_assetFlowsDaytime_kW.getClone();
         //Weekend/day
         clone.acc_weekendElectricityConsumption_kW = this.acc_weekendElectricityConsumption_kW.getClone();
         clone.acc_weekendElectricityProduction_kW = this.acc_weekendElectricityProduction_kW.getClone();
@@ -368,6 +383,7 @@ public class J_RapidRunData {
         clone.am_weekendExports_kW = this.am_weekendExports_kW.getClone();
         clone.am_weekendImports_kW = this.am_weekendImports_kW.getClone();
         clone.acc_weekendPrimaryEnergyProductionHeatpumps_kW = acc_weekendPrimaryEnergyProductionHeatpumps_kW.getClone();
+        clone.am_assetFlowsWeekend_kW = am_assetFlowsWeekend_kW.getClone();
         
         clone.assetsMetaData = this.assetsMetaData.getClone();
         clone.connectionMetaData = this.connectionMetaData.getClone();
@@ -407,6 +423,9 @@ public class J_RapidRunData {
     		acc_daytimeFinalEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);	
     		acc_daytimePrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
+    	    for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
+    	    	this.am_assetFlowsDaytime_kW.get(AC).addStep( fm_currentAssetFlows_kW.get(AC) );
+    	    }
     	}
 
     	// Weekend totals. Use overal-totals minus weekend totals to get weekday totals.
@@ -426,6 +445,10 @@ public class J_RapidRunData {
     		acc_weekendEnergyProduction_kW.addStep(v_currentPrimaryEnergyProduction_kW);
     		acc_weekendFinalEnergyConsumption_kW.addStep(v_currentFinalEnergyConsumption_kW);
     		acc_weekendPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);
+    	    
+    		for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
+    	    	this.am_assetFlowsWeekend_kW.get(AC).addStep( fm_currentAssetFlows_kW.get(AC) );
+    	    }
     	}
 
     	//========== SUMMER WEEK ==========//
