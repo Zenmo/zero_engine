@@ -120,7 +120,7 @@ public class J_AggregatorEnergyManagementHPAndVehicles implements I_AggregatorEn
         	double ChargerChargeSetpointPerGC_kW = (currentEVPower_kW + flexSetpoint_kW) / memberedGCWithSetpointEVManagementCharger.size();
         	
 	    	for(GridConnection GC : memberedGCWithSetpointEVManagementCharger) {
-	    		((J_ChargingManagementExternalSetpoint)GC.f_getChargingManagement()).setChargeSetpoint_kW(ChargerChargeSetpointPerGC_kW);
+	    		GC.c_chargers.forEach(charger -> charger.setChargeSetpoint_kW(ChargerChargeSetpointPerGC_kW));
 	    	}
     	
 	    	//EV compensation not enough for freeing delivery capacity? -> Reduce heating as well

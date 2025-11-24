@@ -18,8 +18,7 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
     private double initialValueGCdemandLowPassed_kW = 0.5;
-    private double GCdemandLowPassed_kW = this.initialValueGCdemandLowPassed_kW;
-    
+
     private double startTimeOfReducedChargingInterval_hr = 17; // Hour of the day
     private double endTimeOfReducedChargingInterval_hr = 21; // Hour of the day
     
@@ -52,8 +51,7 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     	double t_h = gc.energyModel.t_h;
     	// Use current GC-load (so without EV charging!) as an 'equivalent price' signal, and use EV battery flexibility to make local load flatter.
     	double currentBalanceBeforeEV_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-    	GCdemandLowPassed_kW += (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * filterDiffGain_r;
-    	
+
 		//Determine if time is currently in reduced charging interval
 		double hourOfTheDay = t_h % 24;
 		
@@ -128,11 +126,10 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     
     //Store and reset states
 	public void storeStatesAndReset() {
-		this.storedGCdemandLowPassed_kW = this.GCdemandLowPassed_kW;
-		this.GCdemandLowPassed_kW = this.initialValueGCdemandLowPassed_kW;
+
 	}
 	public void restoreStates() {
-		this.GCdemandLowPassed_kW = this.storedGCdemandLowPassed_kW;
+
 	}
 	
 	@Override

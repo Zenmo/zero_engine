@@ -106,6 +106,10 @@ public class J_HeatingManagementExternalSetpoint implements I_HeatingManagement 
     public double setCurrentExternalTemperatureSetpoint_degC(Double externalTemperatureSetpoint_degC) {
     	if(externalTemperatureSetpoint_degC != null) {
     		this.currentExternalTemperatureSetpoint_degC = max(heatingPreferences.getMinComfortTemperature_degC(), min(externalTemperatureSetpoint_degC, heatingPreferences.getMaxComfortTemperature_degC()));
+    		if(this.currentExternalTemperatureSetpoint_degC == heatingPreferences.getMinComfortTemperature_degC()) {
+    			this.I_state_hDegC = 0; // -> Lower setpoint, go fully off
+    			this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC(); // Set filter setpoint to min value
+    		}
     	}
     	else {
     		this.currentExternalTemperatureSetpoint_degC = 0;
@@ -151,8 +155,7 @@ public class J_HeatingManagementExternalSetpoint implements I_HeatingManagement 
     		
     	//Smooth the setpoint signal
     	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
-    	
-    	
+
     	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
 
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.

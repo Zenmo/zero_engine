@@ -40,7 +40,7 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
     	return activeChargingType;
     }
 
-    public double setChargeSetpoint_kW(double chargeSetpoint_kW) {
+    public Double setChargeSetpoint_kW(double chargeSetpoint_kW) {
     	if (gc.c_electricVehicles.size() > 0) {
     		this.currentChargeSetpoint_kW = chargeSetpoint_kW;
     	} else {

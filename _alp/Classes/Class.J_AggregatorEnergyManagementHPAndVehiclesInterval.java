@@ -80,7 +80,7 @@ public class J_AggregatorEnergyManagementHPAndVehiclesInterval implements I_Aggr
 		//Get the peak load that should be shaved
 		double[] sortedProfile_kW = Arrays.copyOf(profile_kW, profile_kW.length);// ascending
 		Arrays.sort(sortedProfile_kW);
-    	double highestPctPeak_kW = sortedProfile_kW[(int)(0.8 * (sortedProfile_kW.length - 1))];
+    	double highestPctPeak_kW = 4700;//sortedProfile_kW[(int)(0.8 * (sortedProfile_kW.length - 1))];
     	//double lowestPctPeak_kW = sortedProfile_kW[(int)(0.2 * (sortedProfile_kW.length - 1))];
     	
     	//Find the longest interval above the highestPctPeak_kW start and end time
