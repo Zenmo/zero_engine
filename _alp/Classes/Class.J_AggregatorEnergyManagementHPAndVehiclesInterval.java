@@ -46,8 +46,8 @@ public class J_AggregatorEnergyManagementHPAndVehiclesInterval implements I_Aggr
 	    	List<GridConnection> memberedGCWithSetpointHeatpumps = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && GC.f_getHeatingManagement() != null && GC.f_getHeatingManagement() instanceof J_HeatingManagementHeatpumpOffPeak);
 	    	
 	    	Pair<Double, Double> reducedConsumptionIntervalTime_hr = getProfileShavingInterval_kW();
-	    	double startTimeReducedConsumptionInterval_hr = reducedConsumptionIntervalTime_hr.getFirst();
-	    	double endTimeReducedConsumptionInterval_hr = reducedConsumptionIntervalTime_hr.getSecond();
+	    	Double startTimeReducedConsumptionInterval_hr = reducedConsumptionIntervalTime_hr.getFirst();
+	    	Double endTimeReducedConsumptionInterval_hr = reducedConsumptionIntervalTime_hr.getSecond();
 	    	
 	    	
 	    	for(GridConnection EVGC : memberedGCWithSetpointEVManagement) {
@@ -55,7 +55,7 @@ public class J_AggregatorEnergyManagementHPAndVehiclesInterval implements I_Aggr
 	    	}
 	    	for(GridConnection ChargerGC : memberedGCWithSetpointEVManagementCharger) {
 	    		//Reduced charging Interval is not yet functional for chargers! 
-	    		//ChargerGC.c_chargers.forEach(charger -> charger.setReducedChargingIntervalTime_hr(startTimeReducedConsumptionInterval_hr, endTimeReducedConsumptionInterval_hr ));
+	    		ChargerGC.c_chargers.forEach(charger -> charger.setReducedChargingIntervalTime_hr(startTimeReducedConsumptionInterval_hr, endTimeReducedConsumptionInterval_hr ));
 	    	}
 	    	for(GridConnection HPGC : memberedGCWithSetpointHeatpumps) {
 	    		((J_HeatingManagementHeatpumpOffPeak)HPGC.f_getHeatingManagement()).setReducedHeatingIntervalTime_hr(startTimeReducedConsumptionInterval_hr, endTimeReducedConsumptionInterval_hr );
@@ -80,9 +80,15 @@ public class J_AggregatorEnergyManagementHPAndVehiclesInterval implements I_Aggr
 		//Get the peak load that should be shaved
 		double[] sortedProfile_kW = Arrays.copyOf(profile_kW, profile_kW.length);// ascending
 		Arrays.sort(sortedProfile_kW);
-    	double highestPctPeak_kW = 4700;//sortedProfile_kW[(int)(0.8 * (sortedProfile_kW.length - 1))];
+    	double highestPctPeak_kW = sortedProfile_kW[(int)(0.8 * (sortedProfile_kW.length - 1))];
     	//double lowestPctPeak_kW = sortedProfile_kW[(int)(0.2 * (sortedProfile_kW.length - 1))];
     	
+    	if(max(profile_kW) < highestPctPeak_kW) {
+    		return new Pair<>(null, null);
+    	}
+    	else {
+    		//traceln("day does contains moments where load is over: " + highestPctPeak_kW + "kW");
+    	}
     	//Find the longest interval above the highestPctPeak_kW start and end time
     	// Allow up to this many consecutive timesteps below threshold without breaking interval
     	int maxGap = 2;

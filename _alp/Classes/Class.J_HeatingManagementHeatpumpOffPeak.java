@@ -26,7 +26,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 	private J_HeatingPreferences heatingPreferences;
 
     // PI control gains
-    private double P_gain_kWpDegC = 1*1;
+    private double P_gain_kWpDegC = 1*1.2;
     private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
     private double timeStep_h;
@@ -36,11 +36,11 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     private double setpointFilterTimeScale_h = 2.0; // Smooth in X hours
     
     //Off peak management
-    private double preHeatDuration_hr = 2; // Amount of hours that the heatpump has to reach the requiredTemperatureAtStartOfReducedHeatingInterval_degC
+    private double preHeatDuration_hr = 4; // Amount of hours that the heatpump has to reach the requiredTemperatureAtStartOfReducedHeatingInterval_degC
     private double requiredTemperatureAtStartOfReducedHeatingInterval_degC = 20; // Temperature setpoint in degrees Celsius that the heatpump will have in the preheatduration time
-    private double startTimeOfReducedHeatingInterval_hr = 16; // Hour of the day
-    private double endTimeOfReducedHeatingInterval_hr = 21; // Hour of the day -> CAN NOT BE THE SAME AS THE START TIME
-    private double reducedHeatingIntervalLength_hr = (endTimeOfReducedHeatingInterval_hr - startTimeOfReducedHeatingInterval_hr + 24) % 24;     
+    private Double startTimeOfReducedHeatingInterval_hr = null; // 16;// Hour of the day
+    private Double endTimeOfReducedHeatingInterval_hr = null; // 21;// Hour of the day -> CAN NOT BE THE SAME AS THE START TIME
+    private Double reducedHeatingIntervalLength_hr = null; // (endTimeOfReducedHeatingInterval_hr - startTimeOfReducedHeatingInterval_hr + 24) % 24;     
     
     
     //Stored
@@ -64,13 +64,15 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     public void manageHeating() {
     	if ( !isInitialized ) {
     		this.initializeAssets();
-    		calculatePreHeatParameters();
+    		if(this.startTimeOfReducedHeatingInterval_hr != null && this.endTimeOfReducedHeatingInterval_hr != null) {
+	    		calculatePreHeatParameters();
+    		}
     	}
     	double t_h = gc.energyModel.t_h;
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	
     	//Calculate preheat paramters for the next reduced heating interval
-    	if(timeOfDay_h == endTimeOfReducedHeatingInterval_hr) {
+    	if((this.startTimeOfReducedHeatingInterval_hr != null && this.endTimeOfReducedHeatingInterval_hr != null) && timeOfDay_h == endTimeOfReducedHeatingInterval_hr) {
     		calculatePreHeatParameters();
     	}
     	
@@ -82,11 +84,15 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
     	//Determine if time is in reduced Heating interval
-		boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
-		boolean timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) < preHeatDuration_hr;
-
-		double startTimePreheatTime_hr = startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr;
-		
+    	boolean timeIsInReducedHeatingInterval = false;
+    	boolean timeIsInPreheatInterval = false;
+    	if(this.startTimeOfReducedHeatingInterval_hr != null && this.endTimeOfReducedHeatingInterval_hr != null) {
+			timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
+			timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) < preHeatDuration_hr;
+	
+			double startTimePreheatTime_hr = startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr;
+    	}
+    	
     	//Get the current temperature setpoint dependend on day/night time and noheat/preheat interval settings
     	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
     	if(timeIsInPreheatInterval) { // During preheat interval, raise the setpoint temperature step by step, to prevent overreaction by the controller
@@ -113,7 +119,13 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	//PI control
     	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
     	double buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
-    	
+    	/*if(timeIsInReducedHeatingInterval && startTimeOfReducedHeatingInterval_hr == timeOfDay_h && buildingHeatingDemand_kW > 0) {
+    		traceln("startOfReducedHeatingInterval");
+    		traceln("buildingHeatingDemand_kW: " + buildingHeatingDemand_kW);
+    		traceln("building.getCurrentTemperature(): " + building.getCurrentTemperature());
+    		traceln("heatingPreferences.getMinComfortTemperature_degC(): " + heatingPreferences.getMinComfortTemperature_degC());
+    		traceln("deltaT_degC: " + deltaT_degC);
+    	}*/
     	//Set asset power
     	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
 		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
@@ -235,43 +247,62 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     }
     
 	
-    public void setReducedHeatingIntervalTime_hr(double startTimeOfReducedHeatingInterval_hr, double endTimeOfReducedHeatingInterval_hr) {
-		if(startTimeOfReducedHeatingInterval_hr == endTimeOfReducedHeatingInterval_hr) {
-			traceln("Start time of reduced heating interval can not be the same as the end time. Reduced heating interval time adjustment has been skipped.");
+    public void setReducedHeatingIntervalTime_hr(Double startTimeOfReducedHeatingInterval_hr, Double endTimeOfReducedHeatingInterval_hr) {
+		if(startTimeOfReducedHeatingInterval_hr == null || endTimeOfReducedHeatingInterval_hr == null) {
+			this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
+			this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
+		  	this.reducedHeatingIntervalLength_hr = null; 
 		}
 		else {
-		  	this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
-		  	this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
-		  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24;
-		  	calculatePreHeatParameters();
+	    	if(startTimeOfReducedHeatingInterval_hr == endTimeOfReducedHeatingInterval_hr) {
+				traceln("Start time of reduced heating interval can not be the same as the end time. Reduced heating interval time adjustment has been skipped.");
+			}
+			else {
+			  	this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
+			  	this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
+			  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24;
+			  	calculatePreHeatParameters();
+			}
 		}
     }
     
-	public void setStartTimeOfReducedHeatingInterval_hr(double startTimeOfReducedHeatingInterval_hr) {
-		if(startTimeOfReducedHeatingInterval_hr == this.endTimeOfReducedHeatingInterval_hr) {
-			traceln("Start time of reduced heating interval can not be the same as the end time. Reduced heating interval starttime adjustment has been skipped.");
+	public void setStartTimeOfReducedHeatingInterval_hr(Double startTimeOfReducedHeatingInterval_hr) {
+		if(startTimeOfReducedHeatingInterval_hr == null) {
+			this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
+		  	this.reducedHeatingIntervalLength_hr = null; 
 		}
 		else {
-		  	this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
-		  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24;
-		  	calculatePreHeatParameters();
+			if(startTimeOfReducedHeatingInterval_hr == this.endTimeOfReducedHeatingInterval_hr) {
+				traceln("Start time of reduced heating interval can not be the same as the end time. Reduced heating interval starttime adjustment has been skipped.");
+			}
+			else {
+			  	this.startTimeOfReducedHeatingInterval_hr = startTimeOfReducedHeatingInterval_hr;
+			  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24;
+			  	calculatePreHeatParameters();
+			}
 		}
 	}
-	public void setEndTimeOfReducedHeatingInterval_hr(double endTimeOfReducedHeatingInterval_hr) {
-		if(endTimeOfReducedHeatingInterval_hr == this.startTimeOfReducedHeatingInterval_hr) {
-			traceln("End time of reduced heating interval can not be the same as the start time. Reduced heating interval endtime adjustment has been skipped.");
+	public void setEndTimeOfReducedHeatingInterval_hr(Double endTimeOfReducedHeatingInterval_hr) {
+		if(endTimeOfReducedHeatingInterval_hr == null) {
+			this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
+		  	this.reducedHeatingIntervalLength_hr = null; 
 		}
 		else {
-		  	this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
-		  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24; 
-		  	calculatePreHeatParameters();
+			if(endTimeOfReducedHeatingInterval_hr == this.startTimeOfReducedHeatingInterval_hr) {
+				traceln("End time of reduced heating interval can not be the same as the start time. Reduced heating interval endtime adjustment has been skipped.");
+			}
+			else {
+			  	this.endTimeOfReducedHeatingInterval_hr = endTimeOfReducedHeatingInterval_hr;
+			  	this.reducedHeatingIntervalLength_hr = (this.endTimeOfReducedHeatingInterval_hr - this.startTimeOfReducedHeatingInterval_hr + 24) % 24; 
+			  	calculatePreHeatParameters();
+			}
 		}
 	}
 	  
-	public double getStartTimeOfReducedHeatingInterval_hr() {
+	public Double getStartTimeOfReducedHeatingInterval_hr() {
 	  	return this.startTimeOfReducedHeatingInterval_hr;
 	}
-	public double getEndTimeOfReducedHeatingInterval_hr() {
+	public Double getEndTimeOfReducedHeatingInterval_hr() {
 	  	return this.endTimeOfReducedHeatingInterval_hr;    	
 	}
   

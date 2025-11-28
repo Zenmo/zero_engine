@@ -35,6 +35,11 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		private Double currentChargeSetpoint_kW = null; //External setpoint strategy
 		private Double storedCurrentChargeSetpoint_kW;
 		
+		private Double startTimeOfReducedChargingInterval_hr = null;
+		private Double endTimeOfReducedChargingInterval_hr = null;
+		private Double storedStartTimeOfReducedChargingInterval_hr;
+		private Double storedEndTimeOfReducedChargingInterval_hr;
+		
 	    /**
 	     * Default constructor
 	     */
@@ -147,7 +152,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 						chargeSetpoint_kW = determineChargeSetpoint_price_kW(socketNb, t_h, doV2G, currentElectricityPriceConsumption_eurpkWh);
 						break;
 					case BALANCE_LOCAL:
-						throw new RuntimeException("BALANCE LOCAL CHARGING STRATEGY HAS NOT BEEN CREATED YET FOR CHARGEPOINTS");				
+						chargeSetpoint_kW = determineChargeSetpoint_offPeak_kW(socketNb, t_h, doV2G);
+						//throw new RuntimeException("BALANCE LOCAL CHARGING STRATEGY HAS NOT BEEN CREATED YET FOR CHARGEPOINTS");				
 						//chargeSetpoint_kW = determineChargeSetpoint_balanceLocal_kW(socketNb, t_h, doV2G);
 					case BALANCE_GRID:
 						chargeSetpoint_kW = determineChargeSetpoint_balanceGrid_kW(socketNb, t_h, doV2G);
@@ -155,6 +161,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 					case EXTERNAL_SETPOINT:
 						chargeSetpoint_kW = determineChargeSetpoint_externalSetpoint_kW(socketNb, t_h, doV2G);
 						break;
+					
 					default:
 						throw new RuntimeException("UNSUPPORTED CHARGING ATTITUDE SELECTED FOR CHARGEPOINT");
 				}	
@@ -289,7 +296,51 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 		    public double getChargeSetpoint_kW() {
 		    	return this.currentChargeSetpoint_kW;
 		    }
-
+		
+		private double determineChargeSetpoint_offPeak_kW(int socketNb, double t_h, boolean doV2G) {
+			double chargeSetpoint_kW = 0;
+			double hourOfTheDay = t_h % 24;
+			boolean timeIsInReducedChargingInterval = false;
+			Double intervalEndTimeSinceModelStart_hr = null;
+			if(this.startTimeOfReducedChargingInterval_hr  != null && this.endTimeOfReducedChargingInterval_hr  != null ) {
+				double intervalLength_hr = (endTimeOfReducedChargingInterval_hr - startTimeOfReducedChargingInterval_hr + 24) % 24;
+				if(intervalLength_hr == 0) intervalLength_hr = 24; // (Start time == End time: for now defined as charge as little as possible all day.
+				intervalEndTimeSinceModelStart_hr = t_h - ((t_h - startTimeOfReducedChargingInterval_hr + 24) % 24) + intervalLength_hr;
+				timeIsInReducedChargingInterval = ((hourOfTheDay - startTimeOfReducedChargingInterval_hr + 24) % 24) < intervalLength_hr;
+			}
+			
+			double remainingChargeDemand_kWh = currentChargingSessions[socketNb].getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!			
+			double maxChargePower = capacityElectric_kW;
+			double nextTripStartTime_h = currentChargingSessions[socketNb].endTime_h;
+			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+			double chargeDeadline_h =  nextTripStartTime_h - remainingChargeDemand_kWh / maxChargePower - chargeTimeMargin_h;
+			
+			
+			
+			if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
+					chargeSetpoint_kW = determineChargeSetpoint_simple_kW(socketNb);
+			} else {
+				if(timeIsInReducedChargingInterval && remainingChargeDemand_kWh > 0) {
+    				double timeBetweenEndOfIntervalAndNextTripStartTime_hr = max(0, nextTripStartTime_h - intervalEndTimeSinceModelStart_hr - chargeTimeMargin_h);
+    				double energyThatCanBeChargedAfterIntervalEnded_kWh = timeBetweenEndOfIntervalAndNextTripStartTime_hr * maxChargePower;
+    				double energyThatNeedsToBeChargedDuringInterval_kWh = max(0, remainingChargeDemand_kWh - energyThatCanBeChargedAfterIntervalEnded_kWh);
+    		    	
+    				double avgPowerDemandTillEndOfInterval_kW = energyThatNeedsToBeChargedDuringInterval_kWh / (intervalEndTimeSinceModelStart_hr - t_h);
+    				chargeSetpoint_kW = avgPowerDemandTillEndOfInterval_kW;
+				}
+				else {
+					chargeSetpoint_kW = determineChargeSetpoint_simple_kW(socketNb);
+				}
+			}
+			
+			return chargeSetpoint_kW;
+		}	    
+			public void setReducedChargingIntervalTime_hr(double startTimeOfReducedChargingInterval_hr, double endTimeOfReducedChargingInterval_hr) {
+		    	this.startTimeOfReducedChargingInterval_hr = startTimeOfReducedChargingInterval_hr;
+		    	this.endTimeOfReducedChargingInterval_hr = endTimeOfReducedChargingInterval_hr;
+		    }
+		    
+		    
 		private void manageSocket(int socketNb, double t_h) {
 			if (this.currentChargingSessions[socketNb] != null && t_h >= this.currentChargingSessions[socketNb].endTime_h) { // end session
 				if (this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.currentChargingSessions[socketNb].getRemainingChargeDemand_kWh()); }
@@ -411,6 +462,11 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			currentChargingSessionsStored = currentChargingSessions.clone();
 			Arrays.fill(currentChargingSessions, null);
 			
+	    	this.storedStartTimeOfReducedChargingInterval_hr = this.startTimeOfReducedChargingInterval_hr;
+	    	this.storedEndTimeOfReducedChargingInterval_hr = this.endTimeOfReducedChargingInterval_hr;
+	    	this.startTimeOfReducedChargingInterval_hr = null;
+	    	this.endTimeOfReducedChargingInterval_hr = null;
+	    	
 			nextSessionIdxsStored = nextSessionIdxs;
 			nextSessionIdxs = new int[nextSessionIdxsStored.length];
 
@@ -425,6 +481,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			currentChargeSetpoint_kW = storedCurrentChargeSetpoint_kW;
 			currentChargingSessions = currentChargingSessionsStored;
 			nextSessionIdxs = nextSessionIdxsStored;
+	    	this.startTimeOfReducedChargingInterval_hr = this.storedStartTimeOfReducedChargingInterval_hr;
+	    	this.endTimeOfReducedChargingInterval_hr = this.storedEndTimeOfReducedChargingInterval_hr;
 		}
 		
 
