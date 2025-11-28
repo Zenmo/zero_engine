@@ -18,6 +18,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     private GridConnection gc;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
     private boolean V2GActive = false;
+    private J_EAChargePoint chargePoint;
 
     /**
      * Default constructor
@@ -28,6 +29,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     
     public J_ChargingManagementSimple( GridConnection gc ) {
     	this.gc = gc;
+    	this.chargePoint = gc.p_chargePoint;
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -39,6 +41,12 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      * 
      */
     public void manageCharging() {
+    	if (this.chargePoint == null) {
+    		if (gc.p_chargePoint == null) {
+    			throw new RuntimeException("Impossible to charge without chargepoint.");
+    		}
+    		this.chargePoint = gc.p_chargePoint;
+    	}
     	double t_h = gc.energyModel.t_h;
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {			

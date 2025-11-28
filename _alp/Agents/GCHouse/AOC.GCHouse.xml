@@ -87,6 +87,9 @@
 		<Parameter>
 			<Name><![CDATA[p_uid]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_chargePoint]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

@@ -1704,7 +1704,8 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1755171209007</Id>
-				<Name><![CDATA[J_EAChargePoint]]></Name>
+				<Name><![CDATA[J_EAChargePoint_OLD]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1791,6 +1792,16 @@
 				<Id>1763570262548</Id>
 				<Name><![CDATA[J_GlobalParameters]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1764337491572</Id>
+				<Name><![CDATA[I_ChargingRequest]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1764337836818</Id>
+				<Name><![CDATA[J_EAChargePoint]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
