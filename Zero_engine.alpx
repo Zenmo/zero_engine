@@ -1528,6 +1528,7 @@
 			<JavaClass>
 				<Id>1749649002419</Id>
 				<Name><![CDATA[J_ChargingSession]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1749651263461</Id>
@@ -1780,6 +1781,16 @@
 				<Id>1763394890431</Id>
 				<Name><![CDATA[J_HeatingManagementPIcontrolHybridHeatpump]]></Name>
 				<Folder>1762850578079</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763557451043</Id>
+				<Name><![CDATA[J_HeatingFunctionLibrary]]></Name>
+				<Folder>1762850578079</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763570262548</Id>
+				<Name><![CDATA[J_GlobalParameters]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
