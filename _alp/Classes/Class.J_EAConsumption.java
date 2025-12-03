@@ -38,6 +38,9 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		if (this.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
 			this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW; //
 		}
+		else if (this.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+			this.assetFlowCategory = OL_AssetFlowCategories.hotWaterConsumption_kW;
+		}
 		else if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 			this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //
 		}
