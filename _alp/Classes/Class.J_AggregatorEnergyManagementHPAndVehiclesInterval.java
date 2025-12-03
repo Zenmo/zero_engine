@@ -42,7 +42,7 @@ public class J_AggregatorEnergyManagementHPAndVehiclesInterval implements I_Aggr
 	public void manageExternalSetpoints() {
 		if(energyCoop.energyModel.t_h % 24 == 0) { //Timestep delay
 	    	List<GridConnection> memberedGCWithSetpointEVManagement = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.c_electricVehicles.size() > 0 && GC.f_getChargingManagement() != null && GC.f_getChargingManagement() instanceof J_ChargingManagementOffPeak);
-	    	List<GridConnection> memberedGCWithSetpointEVManagementCharger = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.c_chargers.size() > 0 && GC.f_getChargingManagement() != null && GC.f_getChargingManagement() instanceof J_ChargingManagementOffPeak);
+	    	List<GridConnection> memberedGCWithSetpointEVManagementCharger = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.c_chargers.size() > 0 && GC.c_chargers.get(0).getChargingAttitude() == OL_ChargingAttitude.BALANCE_LOCAL);//Hacky, fix later
 	    	List<GridConnection> memberedGCWithSetpointHeatpumps = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP && GC.f_getHeatingManagement() != null && GC.f_getHeatingManagement() instanceof J_HeatingManagementHeatpumpOffPeak);
 	    	
 	    	Pair<Double, Double> reducedConsumptionIntervalTime_hr = getProfileShavingInterval_kW();

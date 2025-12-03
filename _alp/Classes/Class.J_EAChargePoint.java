@@ -315,8 +315,7 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
 			double chargeDeadline_h =  nextTripStartTime_h - remainingChargeDemand_kWh / maxChargePower - chargeTimeMargin_h;
 			
-			
-			
+
 			if ( t_h >= chargeDeadline_h && remainingChargeDemand_kWh > 0) { // Must-charge time at max charging power
 					chargeSetpoint_kW = determineChargeSetpoint_simple_kW(socketNb);
 			} else {
@@ -332,10 +331,9 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 					chargeSetpoint_kW = determineChargeSetpoint_simple_kW(socketNb);
 				}
 			}
-			
 			return chargeSetpoint_kW;
 		}	    
-			public void setReducedChargingIntervalTime_hr(double startTimeOfReducedChargingInterval_hr, double endTimeOfReducedChargingInterval_hr) {
+			public void setReducedChargingIntervalTime_hr(Double startTimeOfReducedChargingInterval_hr, Double endTimeOfReducedChargingInterval_hr) {
 		    	this.startTimeOfReducedChargingInterval_hr = startTimeOfReducedChargingInterval_hr;
 		    	this.endTimeOfReducedChargingInterval_hr = endTimeOfReducedChargingInterval_hr;
 		    }
