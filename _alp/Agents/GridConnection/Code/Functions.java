@@ -149,6 +149,9 @@ fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
 fm_currentAssetFlows_kW.clear();
 
+fm_heatFromEnergyCarrier_kW.clear();
+fm_consumptionForHeating_kW.clear();
+
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentFinalEnergyConsumption_kW = 0;
 
@@ -201,6 +204,8 @@ double f_resetStates()
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
+fm_heatFromEnergyCarrier_kW.clear();
+fm_consumptionForHeating_kW.clear();
 //fm_currentAssetFlows_kW.clear(); // Why not this one??
 
 v_previousPowerElectricity_kW = 0;
@@ -1060,6 +1065,8 @@ double f_rapidRunDataLogging()
 v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
+	fm_heatFromEnergyCarrier_kW,
+	fm_consumptionForHeating_kW,
 	fm_currentAssetFlows_kW,
 	v_currentPrimaryEnergyProduction_kW, 
 	v_currentFinalEnergyConsumption_kW, 
@@ -1108,7 +1115,9 @@ if (!setActive) {
 	fm_currentConsumptionFlows_kW.clear();
 	fm_currentBalanceFlows_kW.clear();
 	fm_currentAssetFlows_kW.clear();
-	
+	fm_heatFromEnergyCarrier_kW.clear();
+	fm_consumptionForHeating_kW.clear();
+
 	v_previousPowerElectricity_kW = 0;
 	v_previousPowerHeat_kW = 0;
 

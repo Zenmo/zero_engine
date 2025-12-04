@@ -189,6 +189,8 @@ for(GridConnection gc : c_memberGridConnections) { // Can't do this in parallel 
 		fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
+		fm_heatFromEnergyCarrier_kW.addFlows(gc.fm_heatFromEnergyCarrier_kW);
+		fm_consumptionForHeating_kW.addFlows(gc.fm_consumptionForHeating_kW);
 		fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
 		v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 		v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
@@ -207,6 +209,8 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		fm_currentBalanceFlows_kW.addFlows(EC.fm_currentBalanceFlows_kW);
 		fm_currentProductionFlows_kW.addFlows(EC.fm_currentProductionFlows_kW);
 		fm_currentConsumptionFlows_kW.addFlows(EC.fm_currentConsumptionFlows_kW);
+		fm_heatFromEnergyCarrier_kW.addFlows(EC.fm_heatFromEnergyCarrier_kW);
+		fm_consumptionForHeating_kW.addFlows(EC.fm_consumptionForHeating_kW);
 		fm_currentAssetFlows_kW.addFlows(EC.fm_currentAssetFlows_kW);
 		v_currentPrimaryEnergyProduction_kW += EC.v_currentPrimaryEnergyProduction_kW;
 		v_currentFinalEnergyConsumption_kW += EC.v_currentFinalEnergyConsumption_kW;
@@ -1072,6 +1076,8 @@ for (GridConnection gc : c_memberGridConnections) {
 	if(gc.v_isActive){
 		// Totals
 		v_rapidRunData.am_totalBalanceAccumulators_kW.add(gc.v_rapidRunData.am_totalBalanceAccumulators_kW);
+		v_rapidRunData.am_totalHeatFromEnergyCarrier_kW.add(gc.v_rapidRunData.am_totalHeatFromEnergyCarrier_kW);
+		v_rapidRunData.am_totalConsumptionForHeating_kW.add(gc.v_rapidRunData.am_totalConsumptionForHeating_kW);
 		v_rapidRunData.am_dailyAverageConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_dailyAverageConsumptionAccumulators_kW);
 		v_rapidRunData.am_dailyAverageProductionAccumulators_kW.add(gc.v_rapidRunData.am_dailyAverageProductionAccumulators_kW);
 		v_rapidRunData.acc_dailyAverageEnergyProduction_kW.add(gc.v_rapidRunData.acc_dailyAverageEnergyProduction_kW);
@@ -1087,7 +1093,9 @@ for (GridConnection gc : c_memberGridConnections) {
 		v_rapidRunData.acc_daytimeFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_daytimeFinalEnergyConsumption_kW);
 		v_rapidRunData.am_daytimeImports_kW.add(gc.v_rapidRunData.am_daytimeImports_kW);
 		v_rapidRunData.am_daytimeExports_kW.add(gc.v_rapidRunData.am_daytimeExports_kW);	
-		
+		v_rapidRunData.am_daytimeHeatFromEnergyCarrier_kW.add(gc.v_rapidRunData.am_daytimeHeatFromEnergyCarrier_kW);
+		v_rapidRunData.am_daytimeConsumptionForHeating_kW.add(gc.v_rapidRunData.am_daytimeConsumptionForHeating_kW);
+
 		// Weekend
 		v_rapidRunData.acc_weekendElectricityConsumption_kW.add(gc.v_rapidRunData.acc_weekendElectricityConsumption_kW);
 		v_rapidRunData.acc_weekendElectricityProduction_kW.add(gc.v_rapidRunData.acc_weekendElectricityProduction_kW);
@@ -1095,11 +1103,15 @@ for (GridConnection gc : c_memberGridConnections) {
 		v_rapidRunData.acc_weekendFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_weekendFinalEnergyConsumption_kW);
 		v_rapidRunData.am_weekendImports_kW.add(gc.v_rapidRunData.am_weekendImports_kW);
 		v_rapidRunData.am_weekendExports_kW.add(gc.v_rapidRunData.am_weekendExports_kW);	
-		
+		v_rapidRunData.am_weekendHeatFromEnergyCarrier_kW.add(gc.v_rapidRunData.am_weekendHeatFromEnergyCarrier_kW);
+		v_rapidRunData.am_weekendConsumptionForHeating_kW.add(gc.v_rapidRunData.am_weekendConsumptionForHeating_kW);
+
 		// Summerweek
 		v_rapidRunData.am_summerWeekBalanceAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekBalanceAccumulators_kW);
 		v_rapidRunData.am_summerWeekConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekConsumptionAccumulators_kW);
 		v_rapidRunData.am_summerWeekProductionAccumulators_kW.add(gc.v_rapidRunData.am_summerWeekProductionAccumulators_kW);
+		v_rapidRunData.am_summerWeekHeatFromEnergyCarrier_kW.add(gc.v_rapidRunData.am_summerWeekHeatFromEnergyCarrier_kW);
+		v_rapidRunData.am_summerWeekConsumptionForHeating_kW.add(gc.v_rapidRunData.am_summerWeekConsumptionForHeating_kW);
 		v_rapidRunData.acc_summerWeekEnergyProduction_kW.add(gc.v_rapidRunData.acc_summerWeekEnergyProduction_kW);
 		v_rapidRunData.acc_summerWeekFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_summerWeekFinalEnergyConsumption_kW);
 		v_rapidRunData.acc_summerWeekEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_summerWeekEnergyCurtailed_kW);
@@ -1110,6 +1122,8 @@ for (GridConnection gc : c_memberGridConnections) {
 		v_rapidRunData.am_winterWeekBalanceAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekBalanceAccumulators_kW);
 		v_rapidRunData.am_winterWeekConsumptionAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekConsumptionAccumulators_kW);
 		v_rapidRunData.am_winterWeekProductionAccumulators_kW.add(gc.v_rapidRunData.am_winterWeekProductionAccumulators_kW);
+		v_rapidRunData.am_winterWeekHeatFromEnergyCarrier_kW.add(gc.v_rapidRunData.am_winterWeekHeatFromEnergyCarrier_kW);
+		v_rapidRunData.am_winterWeekConsumptionForHeating_kW.add(gc.v_rapidRunData.am_winterWeekConsumptionForHeating_kW);
 		v_rapidRunData.acc_winterWeekEnergyProduction_kW.add(gc.v_rapidRunData.acc_winterWeekEnergyProduction_kW);
 		v_rapidRunData.acc_winterWeekFinalEnergyConsumption_kW.add(gc.v_rapidRunData.acc_winterWeekFinalEnergyConsumption_kW);
 		v_rapidRunData.acc_winterWeekEnergyCurtailed_kW.add(gc.v_rapidRunData.acc_winterWeekEnergyCurtailed_kW);
@@ -1425,6 +1439,8 @@ acc_totalCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW );
 v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, 
 							fm_currentConsumptionFlows_kW, 
 							fm_currentProductionFlows_kW, 
+							fm_heatFromEnergyCarrier_kW,
+							fm_consumptionForHeating_kW,
 							fm_currentAssetFlows_kW,
 							v_currentPrimaryEnergyProduction_kW, 
 							v_currentFinalEnergyConsumption_kW, 
@@ -1659,6 +1675,8 @@ for (GridConnection gc : c_memberGridConnections) {
 	if(gc.v_isActive){
 		// Totals
 		v_originalRapidRunData.am_totalBalanceAccumulators_kW.add(gc.v_originalRapidRunData.am_totalBalanceAccumulators_kW);
+		v_originalRapidRunData.am_totalHeatFromEnergyCarrier_kW.add(gc.v_originalRapidRunData.am_totalHeatFromEnergyCarrier_kW);
+		v_originalRapidRunData.am_totalConsumptionForHeating_kW.add(gc.v_originalRapidRunData.am_totalConsumptionForHeating_kW);
 		v_originalRapidRunData.am_dailyAverageConsumptionAccumulators_kW.add(gc.v_originalRapidRunData.am_dailyAverageConsumptionAccumulators_kW);
 		v_originalRapidRunData.am_dailyAverageProductionAccumulators_kW.add(gc.v_originalRapidRunData.am_dailyAverageProductionAccumulators_kW);
 		v_originalRapidRunData.acc_dailyAverageEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_dailyAverageEnergyProduction_kW);
@@ -1674,7 +1692,9 @@ for (GridConnection gc : c_memberGridConnections) {
 		v_originalRapidRunData.acc_daytimeFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_daytimeFinalEnergyConsumption_kW);
 		v_originalRapidRunData.am_daytimeImports_kW.add(gc.v_originalRapidRunData.am_daytimeImports_kW);
 		v_originalRapidRunData.am_daytimeExports_kW.add(gc.v_originalRapidRunData.am_daytimeExports_kW);	
-		
+		v_originalRapidRunData.am_daytimeHeatFromEnergyCarrier_kW.add(gc.v_originalRapidRunData.am_daytimeHeatFromEnergyCarrier_kW);
+		v_originalRapidRunData.am_daytimeConsumptionForHeating_kW.add(gc.v_originalRapidRunData.am_daytimeConsumptionForHeating_kW);
+
 		// Weekend
 		v_originalRapidRunData.acc_weekendElectricityConsumption_kW.add(gc.v_originalRapidRunData.acc_weekendElectricityConsumption_kW);
 		v_originalRapidRunData.acc_weekendElectricityProduction_kW.add(gc.v_originalRapidRunData.acc_weekendElectricityProduction_kW);
@@ -1682,11 +1702,15 @@ for (GridConnection gc : c_memberGridConnections) {
 		v_originalRapidRunData.acc_weekendFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_weekendFinalEnergyConsumption_kW);
 		v_originalRapidRunData.am_weekendImports_kW.add(gc.v_originalRapidRunData.am_weekendImports_kW);
 		v_originalRapidRunData.am_weekendExports_kW.add(gc.v_originalRapidRunData.am_weekendExports_kW);	
-		
+		v_originalRapidRunData.am_weekendHeatFromEnergyCarrier_kW.add(gc.v_originalRapidRunData.am_weekendHeatFromEnergyCarrier_kW);
+		v_originalRapidRunData.am_weekendConsumptionForHeating_kW.add(gc.v_originalRapidRunData.am_weekendConsumptionForHeating_kW);
+
 		// Summerweek
 		v_originalRapidRunData.am_summerWeekBalanceAccumulators_kW.add(gc.v_originalRapidRunData.am_summerWeekBalanceAccumulators_kW);
 		v_originalRapidRunData.am_summerWeekConsumptionAccumulators_kW.add(gc.v_originalRapidRunData.am_summerWeekConsumptionAccumulators_kW);
 		v_originalRapidRunData.am_summerWeekProductionAccumulators_kW.add(gc.v_originalRapidRunData.am_summerWeekProductionAccumulators_kW);
+		v_originalRapidRunData.am_summerWeekHeatFromEnergyCarrier_kW.add(gc.v_originalRapidRunData.am_summerWeekHeatFromEnergyCarrier_kW);
+		v_originalRapidRunData.am_summerWeekConsumptionForHeating_kW.add(gc.v_originalRapidRunData.am_summerWeekConsumptionForHeating_kW);
 		v_originalRapidRunData.acc_summerWeekEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_summerWeekEnergyProduction_kW);
 		v_originalRapidRunData.acc_summerWeekFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_summerWeekFinalEnergyConsumption_kW);
 		v_originalRapidRunData.acc_summerWeekEnergyCurtailed_kW.add(gc.v_originalRapidRunData.acc_summerWeekEnergyCurtailed_kW);
@@ -1697,6 +1721,8 @@ for (GridConnection gc : c_memberGridConnections) {
 		v_originalRapidRunData.am_winterWeekBalanceAccumulators_kW.add(gc.v_originalRapidRunData.am_winterWeekBalanceAccumulators_kW);
 		v_originalRapidRunData.am_winterWeekConsumptionAccumulators_kW.add(gc.v_originalRapidRunData.am_winterWeekConsumptionAccumulators_kW);
 		v_originalRapidRunData.am_winterWeekProductionAccumulators_kW.add(gc.v_originalRapidRunData.am_winterWeekProductionAccumulators_kW);
+		v_originalRapidRunData.am_winterWeekHeatFromEnergyCarrier_kW.add(gc.v_originalRapidRunData.am_winterWeekHeatFromEnergyCarrier_kW);
+		v_originalRapidRunData.am_winterWeekConsumptionForHeating_kW.add(gc.v_originalRapidRunData.am_winterWeekConsumptionForHeating_kW);
 		v_originalRapidRunData.acc_winterWeekEnergyProduction_kW.add(gc.v_originalRapidRunData.acc_winterWeekEnergyProduction_kW);
 		v_originalRapidRunData.acc_winterWeekFinalEnergyConsumption_kW.add(gc.v_originalRapidRunData.acc_winterWeekFinalEnergyConsumption_kW);
 		v_originalRapidRunData.acc_winterWeekEnergyCurtailed_kW.add(gc.v_originalRapidRunData.acc_winterWeekEnergyCurtailed_kW);

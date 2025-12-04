@@ -158,6 +158,8 @@ double f_calculateGridConnectionFlows(double t_h)
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
+fm_heatFromEnergyCarrier_kW.clear();
+fm_consumptionForHeating_kW.clear();
 fm_currentAssetFlows_kW.clear();
 
 v_currentFinalEnergyConsumption_kW = 0;
@@ -182,6 +184,8 @@ for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to
 	fm_currentBalanceFlows_kW.addFlows(gc.fm_currentBalanceFlows_kW);
 	fm_currentProductionFlows_kW.addFlows(gc.fm_currentProductionFlows_kW);
 	fm_currentConsumptionFlows_kW.addFlows(gc.fm_currentConsumptionFlows_kW);
+	fm_heatFromEnergyCarrier_kW.addFlows(gc.fm_heatFromEnergyCarrier_kW);
+	fm_consumptionForHeating_kW.addFlows(gc.fm_consumptionForHeating_kW);
 	fm_currentAssetFlows_kW.addFlows(gc.fm_currentAssetFlows_kW);
 	v_currentFinalEnergyConsumption_kW += gc.v_currentFinalEnergyConsumption_kW;
 	v_currentPrimaryEnergyProduction_kW += gc.v_currentPrimaryEnergyProduction_kW;
@@ -356,12 +360,14 @@ for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
 	v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW, 
 								fm_currentConsumptionFlows_kW, 
 								fm_currentProductionFlows_kW, 
+								fm_heatFromEnergyCarrier_kW,
+								fm_consumptionForHeating_kW,
 								fm_currentAssetFlows_kW,
 								v_currentPrimaryEnergyProduction_kW, 
 								v_currentFinalEnergyConsumption_kW, 
 								v_currentPrimaryEnergyProductionHeatpumps_kW, 
 								v_currentEnergyCurtailed_kW,
-								v_batteryStoredEnergy_kWh/1000, 
+								v_batteryStoredEnergy_kWh/1000,
 								this);
 	v_timeStepsElapsed++;
 }	

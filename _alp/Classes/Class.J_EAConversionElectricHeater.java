@@ -27,6 +27,13 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 		registerEnergyAsset();
 	}
 	
+    @Override
+    public void operate(double ratioOfCapacity) {
+    	((GridConnection)this.parentAgent).fm_heatFromEnergyCarrier_kW.addFlow(this.energyCarrierConsumed, ratioOfCapacity * this.outputCapacity_kW);
+    	((GridConnection)this.parentAgent).fm_consumptionForHeating_kW.addFlow(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
+    	super.operate(ratioOfCapacity);
+    }
+    
 	@Override
 	public double getCurrentTemperature() {
 		return outputTemperature_degC;

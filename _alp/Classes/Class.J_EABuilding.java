@@ -49,6 +49,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
+		this.assetFlowCategory = OL_AssetFlowCategories.buildingHeating_kW;
 		registerEnergyAsset();
     }
 
@@ -154,7 +155,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		/*if (Double.isNaN(this.energyUse_kW)) {
     		throw new RuntimeException("Building thermal model energyUse_kW is NaN!");
     	}*/
-		
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, inputPower_kW);
+		}
 	}
 
 

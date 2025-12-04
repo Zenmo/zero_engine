@@ -1059,6 +1059,18 @@
 					<Id>1753968826422</Id>
 					<Name><![CDATA[CHPProductionElectric_kW]]></Name>
 				</Option>
+				<Option>
+					<Id>1764776053512</Id>
+					<Name><![CDATA[hotWaterConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1764838296618</Id>
+					<Name><![CDATA[spaceHeating_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1764838299076</Id>
+					<Name><![CDATA[buildingHeating_kW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1762354709855</Id>
