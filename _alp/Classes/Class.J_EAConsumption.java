@@ -35,15 +35,24 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			profilePointer = profile;
 		}		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
-		if (this.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-			this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW; //
+		
+		if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+			if (this.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
+				this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW; //
+			}
+			else {
+				this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //
+			}
 		}
-		else if (this.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-			this.assetFlowCategory = OL_AssetFlowCategories.hotWaterConsumption_kW;
+		else if (this.energyCarrier == OL_EnergyCarriers.HEAT) {
+			if (this.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+				this.assetFlowCategory = OL_AssetFlowCategories.hotWaterConsumption_kW;
+			}
+			else {
+				this.assetFlowCategory = OL_AssetFlowCategories.spaceHeating_kW;
+			}
 		}
-		else if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-			this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //
-		}
+
 		registerEnergyAsset();
     }
 
