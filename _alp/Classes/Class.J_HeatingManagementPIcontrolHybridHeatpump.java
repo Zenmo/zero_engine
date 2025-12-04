@@ -24,6 +24,9 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 	private J_EAConversionHeatPump heatPumpAsset;
 	private J_EAConversionGasBurner gasBurnerAsset;
 	private J_HeatingPreferences heatingPreferences;
+	private J_EAStorageHeat hotWaterBuffer;
+	private List<J_EAProduction> ptAssets;
+    private boolean hasPT = false;
     
 	 // PI control gains
     private double P_gain_kWpDegC = 1*1;
@@ -58,8 +61,10 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
-    	//Adjust the hot water and overall heat demand with the buffer and pt
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+    	if(hasPT) {
+	    	//Adjust the hot water and overall heat demand with the buffer and pt
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+	    }
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
@@ -106,66 +111,23 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     }
     
     
-    private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){
-    	
-    	//Calculate the pt production
-    	double ptProduction_kW = 0;
-    	List<J_EAProduction> ptAssets = findAll(gc.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);
-    	for (J_EA j_ea : ptAssets) {
-    		ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);
-    	}
-    	
-    	//Calculate the remaining hot water energy need after pt production, also calculate the remaining unused pt production
-    	double remainingHotWater_kW = max(0, hotWaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value
-    	double remainingPTProduction_kW = max(0, ptProduction_kW - hotWaterDemand_kW);
-    	
-    	if(gc.p_heatBuffer != null){
-    		double chargeSetpoint_kW = 0;
-    		if(remainingHotWater_kW > 0) {
-    			chargeSetpoint_kW = -remainingHotWater_kW;
-    		}
-    		else if(remainingPTProduction_kW > 0) {
-    			chargeSetpoint_kW = remainingPTProduction_kW;
-    		}
-    		gc.p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / gc.p_heatBuffer.getCapacityHeat_kW();
-    		gc.p_heatBuffer.f_updateAllFlows(gc.p_heatBuffer.v_powerFraction_fr);
-    		
-			double heatBufferCharge_kW = gc.p_heatBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
-			
-    		if(remainingHotWater_kW > 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge
-    			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);
-    		}
-    		else {//Curtail the remaining pt that is not used for hot water
-    			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);
-    	    	if (remainingPTProduction_kW > 0) {//Heat (for now always curtail over produced heat!)
-    	    		for (J_EAProduction j_ea : ptAssets) {
-    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);
-    	    			
-    	    			if (remainingPTProduction_kW <= 0) {
-    	    				break;
-    	    			}
-    	    		}
-    	    	}
-    		}
-    	}
-    	return remainingHotWater_kW;
-    }
-    
-    
     public void initializeAssets() {
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
     	}
-    	J_EAProduction ptAsset = findFirst(gc.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);
-    	if (ptAsset != null) {
+    	List<J_EAProduction> ptAssets = findAll(gc.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);
+    	if (ptAssets.size() > 0) {
         	if(gc.p_DHWAsset == null) {
         		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with PT.");
         	}
+        	this.hasPT = true;
+        	this.ptAssets = ptAssets;
     	}
     	if (gc.p_heatBuffer != null) {
-        	if(gc.p_DHWAsset == null && ptAsset == null) {
-        		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");
+        	if(gc.p_DHWAsset == null || ptAssets.size() == 0) {
+        		throw new RuntimeException(this.getClass() + " requires a hot water demand and pt to make sense to use this heating management.");
         	}
+    		this.hotWaterBuffer = gc.p_heatBuffer;
     	}
     	if(gc.p_BuildingThermalAsset != null) {
         	this.building = gc.p_BuildingThermalAsset;
