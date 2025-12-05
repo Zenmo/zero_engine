@@ -1803,6 +1803,11 @@
 				<Name><![CDATA[J_EAChargePoint]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1764858648960</Id>
+				<Name><![CDATA[J_TimeData]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

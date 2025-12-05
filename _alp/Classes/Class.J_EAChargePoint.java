@@ -107,9 +107,9 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     public void operate(double chargePower_kW) {
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, chargePower_kW);
 		// Split charging and discharing power 'at the source'!
-		assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, this.totalChargePower_kW);
+		assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, this.currentChargePower_kW);
 		if (this.V2GCapable && this.V2GActive) {
-			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, this.totalDischargePower_kW);
+			assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, this.currentDischargePower_kW);
 		}		
     }
     
@@ -143,6 +143,25 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     	this.currentActiveChargingRequests.add(chargingRequest);
     }
     
+    
+    
+    //V1G and V2G capabilities setters/getters
+    public void setV1GCapability(boolean V1GCapable) {
+		this.V1GCapable = V1GCapable;
+	}
+	public void setV2GCapability(boolean V2GCapable) {
+		this.V2GCapable = V2GCapable;
+		this.updateAssetFlowCategory();
+	}
+	public boolean getV1GCapable() {
+		return this.V1GCapable;
+
+	}
+	public boolean getV2GCapable() {
+		return this.V2GCapable;
+
+	}
+	
     @Override
     public void storeStatesAndReset() {
     	// TODO: Finish this !!
