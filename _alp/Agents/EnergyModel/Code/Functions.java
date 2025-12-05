@@ -469,7 +469,7 @@ if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % (p_runEndTime_h - p_run
 }
 
 //Update time variables
-J_TimeData.updateTimeVariables(v_timeStepsElapsed);
+J_TimeVariables.updateTimeVariables(v_timeStepsElapsed);
 
 // Update tijdreeksen in leesbare variabelen
 f_updateTimeseries(t_h);

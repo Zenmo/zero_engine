@@ -119,7 +119,7 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     	List<I_ChargingRequest> finishedChargingRequests = new ArrayList<>();
     	for (I_ChargingRequest chargingRequest : this.currentActiveChargingRequests) {
     		// here we will use the soon to be global parameter current time
-    		if ( t_h >= chargingRequest.getLeaveTime_h() ) {
+    		if ( J_TimeVariables.getT_h() >= chargingRequest.getLeaveTime_h() ) {
     			finishedChargingRequests.add(chargingRequest);
     		}
     	}    	
@@ -160,6 +160,14 @@ public class J_EAChargePoint extends J_EA implements Serializable {
 	public boolean getV2GCapable() {
 		return this.V2GCapable;
 
+	}
+	public void setV2GActive(boolean activateV2G) {
+		this.V2GActive = activateV2G;
+		this.updateAssetFlowCategory();
+	}
+	
+	public boolean getV2GActive() {
+		return this.V2GActive;
 	}
 	
     @Override
