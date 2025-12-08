@@ -64,26 +64,26 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {
-    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!
+    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
     			double chargeSetpoint_kW = 0;    			
     			if ( t_h >= (ev.getChargeDeadline_h()) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
     				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));
-    				chargeSetpoint_kW = ev.getCapacityElectric_kW();	
+    				chargeSetpoint_kW = ev.getChargingCapacity_kW();	
     			} else {
     				if(timeIsInReducedChargingInterval && chargeNeedForNextTrip_kWh > 0) {
 	    				double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
 	    				double timeBetweenEndOfIntervalAndNextTripStartTime_hr = max(0, ev.getNextTripStartTime_h() - intervalEndTimeSinceModelStart_hr - chargeTimeMargin_h);
-	    				double energyThatCanBeChargedAfterIntervalEnded_kWh = timeBetweenEndOfIntervalAndNextTripStartTime_hr * ev.getCapacityElectric_kW();
+	    				double energyThatCanBeChargedAfterIntervalEnded_kWh = timeBetweenEndOfIntervalAndNextTripStartTime_hr * ev.getChargingCapacity_kW();
 	    				double energyThatNeedsToBeChargedDuringInterval_kWh = max(0, chargeNeedForNextTrip_kWh - energyThatCanBeChargedAfterIntervalEnded_kWh);
 	    		    	
 	    				double avgPowerDemandTillEndOfInterval_kW = energyThatNeedsToBeChargedDuringInterval_kWh / (intervalEndTimeSinceModelStart_hr - t_h);
 	    				chargeSetpoint_kW = avgPowerDemandTillEndOfInterval_kW;
     				}
     				else { // Dom laden (??????) // Of max spread laden?
-    					chargeSetpoint_kW = ev.getCapacityElectric_kW();
+    					chargeSetpoint_kW = ev.getChargingCapacity_kW();
     				}
     			}
-    			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getCapacityElectric_kW() );    		
+    			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getChargingCapacity_kW() );    		
     		}
     	}
     }

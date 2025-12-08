@@ -51,13 +51,13 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	
     	for (J_EAEV ev : gc.c_electricVehicles) {
     		if (ev.available) {
-    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!
+    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
     			double remainingFlexTime_h = ev.getChargeDeadline_h() - t_h; // measure of flexiblity left in current charging session.
     			double avgPowerDemandTillTrip_kW = ev.energyNeedForNextTrip_kWh / (ev.tripTracker.v_idleTimeToNextTrip_min / 60);
     			double chargeSetpoint_kW = 0;    			
     			if ( t_h >= (ev.getChargeDeadline_h()) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
     				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));
-    				chargeSetpoint_kW = ev.getCapacityElectric_kW();	
+    				chargeSetpoint_kW = ev.getChargingCapacity_kW();	
     			} else {
     				double flexGain_r = 0.5; // how strongly to 'follow' currentBalanceBeforeEV_kW
     				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
@@ -66,7 +66,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     					//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
     				}    
     			}
-    			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getCapacityElectric_kW() );    		
+    			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getChargingCapacity_kW() );    		
     		}
     	}
     }

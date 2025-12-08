@@ -8,7 +8,7 @@ public interface I_ChargingRequest {
 	
 	public double getCurrentSOC_kWh();
 	
-	public double getMaxSOC_kWh();
+	public double getStorageCapacity_kWh();
 	
 	// Last moment before full power charging is required
 	public double getChargeDeadline_h();
@@ -18,7 +18,7 @@ public interface I_ChargingRequest {
 	public boolean getV2GCapable();
 	
 	// The total energy needed before the leave time
-	public double getEnergyNeededForNextTrip_kWh();
+	public double getEnergyNeedForNextTrip_kWh();
 	
 	// The remaining energy needed before the leave time
 	public double getRemainingChargeDemand_kWh();

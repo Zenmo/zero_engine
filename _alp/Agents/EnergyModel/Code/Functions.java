@@ -35,6 +35,13 @@ for (GridNode GN : c_gridNodeExecutionListReverse) {
 
 double f_updateTimeseries(double t_h)
 {/*ALCODESTART::1664952601107*/
+b_isDaytime = t_h % 24 > 6 && t_h % 24 < 18;
+b_isWeekday = (t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5);
+b_isSummerWeek = (t_h % 8760) >= p_startOfSummerWeek_h && (t_h % 8760) < p_startOfSummerWeek_h + 24*7;
+b_isWinterWeek = (t_h % 8760) >= p_startOfWinterWeek_h && (t_h % 8760) < p_startOfWinterWeek_h + 24*7;
+b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
+t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
+
 c_profiles.forEach(p -> p.updateValue(t_h));
 //v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
 //v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
@@ -467,6 +474,9 @@ double f_runTimestep()
 if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % (p_runEndTime_h - p_runStartTime_h) == 0.0) {
 	f_loopSimulation();
 }
+
+//Update t_h
+t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
 
 //Update time variables
 J_TimeVariables.updateTimeVariables(v_timeStepsElapsed);

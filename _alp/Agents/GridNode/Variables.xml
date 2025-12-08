@@ -1218,7 +1218,7 @@ geupdate vanuit
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1758209124347</Id>
-		<Name><![CDATA[v_currentNumberOfChargingChargePoints]]></Name>
+		<Name><![CDATA[v_currentNumberOfChargeRequests]]></Name>
 		<X>810</X>
 		<Y>650</Y>
 		<Label>

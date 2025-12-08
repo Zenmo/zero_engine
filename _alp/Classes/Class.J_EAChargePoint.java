@@ -2,7 +2,11 @@
  * J_EAChargePoint
  */	
 public class J_EAChargePoint extends J_EA implements Serializable {
-
+	
+	private GridConnection parentGC;
+	private J_TimeParameters timeParameters; 
+	private J_TimeVariables timeVariables; 
+	
 	private boolean hasSocketRestrictions;
 	private int nbSockets;
 	private double totalCapacity_kW;
@@ -10,7 +14,7 @@ public class J_EAChargePoint extends J_EA implements Serializable {
 	private boolean V1GCapable;
 	private boolean V2GCapable;
 	private boolean V2GActive;
-	private List<J_ChargingSession> chargeSessionList;
+	private List<J_EAChargingSession> chargeSessionList;
 	private int chargeSessionIndex = 0;
 	
 	private List<I_ChargingRequest> currentActiveChargingRequests = new ArrayList<>();
@@ -24,9 +28,12 @@ public class J_EAChargePoint extends J_EA implements Serializable {
      * Default constructor
      * No restrictions on sockets
      */
-    public J_EAChargePoint( Agent parentAgent, OL_EnergyAssetType energyAssetType, List<J_ChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable ) {
+    public J_EAChargePoint( GridConnection parentGC, OL_EnergyAssetType energyAssetType, List<J_EAChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable ) {
     	// moet de lijst met sessies in de constructor? of willen we deze in de gc opslaan? of iets anders?
-    	this.parentAgent = parentAgent;
+    	this.parentGC = parentGC;
+    	this.timeParameters = parentGC.energyModel.p_timeParameters;
+    	this.timeVariables = parentGC.energyModel.p_timeVariables;  
+    	
     	this.energyAssetType = energyAssetType;
     	this.chargeSessionList = chargeSessionList;
     	this.V1GCapable = V1GCapable;
@@ -43,8 +50,8 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     /**
      * With restrictions on sockets
      */
-    public J_EAChargePoint( Agent parentAgent, OL_EnergyAssetType energyAssetType, List<J_ChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable, List<Double> socketCapacities_kW) {
-    	this.parentAgent = parentAgent;
+    public J_EAChargePoint( GridConnection parentGC, OL_EnergyAssetType energyAssetType, List<J_EAChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable, List<Double> socketCapacities_kW) {
+    	this.parentGC = parentGC;
     	this.energyAssetType = energyAssetType;
     	this.chargeSessionList = chargeSessionList;    	
     	this.V1GCapable = V1GCapable;
@@ -119,7 +126,7 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     	List<I_ChargingRequest> finishedChargingRequests = new ArrayList<>();
     	for (I_ChargingRequest chargingRequest : this.currentActiveChargingRequests) {
     		// here we will use the soon to be global parameter current time
-    		if ( J_TimeVariables.getT_h() >= chargingRequest.getLeaveTime_h() ) {
+    		if ( timeVariables.getT_h() >= chargingRequest.getLeaveTime_h() ) {
     			finishedChargingRequests.add(chargingRequest);
     		}
     	}    	
@@ -132,7 +139,7 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     		}    		
     	}
     	// ChargingSessions
-    	while ( t_h <= chargeSessionList.get(chargeSessionIndex).startTime_h ) {
+    	while ( timeVariables.getT_h() <= chargeSessionList.get(chargeSessionIndex).startTime_h ) {
         	this.addChargingRequest(chargeSessionList.get(chargeSessionIndex));
         	chargeSessionIndex++;
     	}
@@ -151,7 +158,10 @@ public class J_EAChargePoint extends J_EA implements Serializable {
 	}
 	public void setV2GCapability(boolean V2GCapable) {
 		this.V2GCapable = V2GCapable;
-		this.updateAssetFlowCategory();
+    	if (V2GCapable) {
+        	this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+    	}
+		setV2GActive(getV2GActive());
 	}
 	public boolean getV1GCapable() {
 		return this.V1GCapable;
@@ -161,13 +171,43 @@ public class J_EAChargePoint extends J_EA implements Serializable {
 		return this.V2GCapable;
 
 	}
-	public void setV2GActive(boolean activateV2G) {
+	protected void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAChargePoint during initialization itself. (No such thing as friend class in java, so only can put on protected).
 		this.V2GActive = activateV2G;
-		this.updateAssetFlowCategory();
+		if(this.V2GCapable && activateV2G) {
+			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
+		}
+		else {
+			this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
+		}
 	}
 	
 	public boolean getV2GActive() {
 		return this.V2GActive;
+	}
+	
+	//Fast forward charging sessions when GC is unpaused to prevent massive peaks for GCs that are trying to catch up
+	public void fastForwardCharingSessions(double t_h) {
+		for (int socketNb = 0; socketNb<this.nbSockets; socketNb++) {
+			
+			//Clear current charging session
+			this.currentChargingSessions[socketNb] = null;
+			
+			//Find next charging session that starts after the current time
+			while (this.nextSessionIdxs[socketNb]  < this.chargeSessionList.size() && (this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).socketNb != socketNb || this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).startTime_h <= t_h)) {				
+				this.nextSessionIdxs[socketNb]++;
+			}
+			
+			if (this.nextSessionIdxs[socketNb] >= this.chargeSessionList.size()) { // no more sessions available
+				break;					
+			} else { // Clone upcomming charger session and increase next session index					
+				this.currentChargingSessions[socketNb] = this.chargeSessionList.get(this.nextSessionIdxs[socketNb]).getClone();
+				this.nextSessionIdxs[socketNb]++;
+			}
+		}
+	}
+	
+	public int getCurrentNumberOfChargeRequests() {
+		return this.currentActiveChargingRequests.size();
 	}
 	
     @Override

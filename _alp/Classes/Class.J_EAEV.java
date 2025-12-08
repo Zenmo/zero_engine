@@ -4,7 +4,7 @@
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 //@JsonTypeName("J_EAEV")
-public class J_EAEV extends J_EAVehicle implements Serializable {
+public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
  
  
 	public OL_EnergyCarriers storageMedium = OL_EnergyCarriers.ELECTRICITY;
@@ -64,7 +64,14 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		
 		registerEnergyAsset();
     }
- 
+    
+    public double charge_kW(double requestedChargeSetpoint_kW) {
+    	double ratioOfChargeCapacity_r = requestedChargeSetpoint_kW/this.capacityElectric_kW;
+    	double chargeSetpoint_kW = min(1,max(this.minimumRatioOfChargeCapacity_r ,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
+    	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / timestep_h), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / timestep_h); // Limit charge power to stay within SoC 0-100
+    	operate(ratioOfChargeCapacity_r);
+    	return chargePower_kW;
+    }
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
     	double chargeSetpoint_kW = min(1,max(this.minimumRatioOfChargeCapacity_r ,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
@@ -146,7 +153,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	}
  
 	public double getChargeDeadline_h() {
-		double chargeNeedForNextTrip_kWh = max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentStateOfCharge_kWh());
+		double chargeNeedForNextTrip_kWh = getRemainingChargeDemand_kWh();
 		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
 		double nextTripStartTime_h = getNextTripStartTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - chargeNeedForNextTrip_kWh / this.capacityElectric_kW - chargeTimeMargin_h;
@@ -154,9 +161,16 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return chargeDeadline_h;
 	}
 	
+	public double getRemainingChargeDemand_kWh() {
+		return max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentSOC_kWh());
+	}
+	
 	public double getNextTripStartTime_h() {
 		return this.tripTracker.v_nextEventStartTime_min / 60;
 	}
+		public double getLeaveTime_h() {
+			return getNextTripStartTime_h();
+		}
 	
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
 		discharged_kWh += electricityProduced_kW * timestep_h;
@@ -175,11 +189,11 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return this.storageCapacity_kWh * this.vehicleScaling;
 	}
 
-	public double getCurrentStateOfCharge_kWh() {
+	public double getCurrentSOC_kWh() {
 		return this.stateOfCharge_fr * this.getStorageCapacity_kWh();
 	}
 		
-	public double getCapacityElectric_kW() {
+	public double getChargingCapacity_kW() {
 		return this.capacityElectric_kW * this.vehicleScaling;
 	}
 	public double getTotalChargeAmount_kWh() {
@@ -206,6 +220,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return energyChargedOutsideModelArea_kWh;
 	}
 	
+	//V2G capabilities
 	public void setV2GCapable(boolean isV2GCapable) {
 		this.V2GCapable = isV2GCapable;
 		
@@ -275,10 +290,5 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 			"charged_kWh = " + roundToDecimal( charged_kWh, 2 ) + " " +
 			"mileage = " + roundToDecimal( mileage_km, 2 ) + " ";
 	}
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }
  

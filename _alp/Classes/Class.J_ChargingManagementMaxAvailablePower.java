@@ -48,20 +48,20 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     	for ( J_EAEV ev :  copiedVehicleList){
     		//J_EAEV ev = copiedVehicleList.get(i);
     		if (ev.vehicleScaling != 0) {
-				double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getCurrentStateOfCharge_kWh());
+				double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getCurrentSOC_kWh());
 				//traceln("chargeNeedForNextTrip_kWh: " + chargeNeedForNextTrip_kWh);
 				
 				double chargingSetpoint_kW;
 				if ( t_h >= ev.getChargeDeadline_h() && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
 					//traceln("Urgency charging! May exceed connection capacity!");
-					chargingSetpoint_kW = ev.getCapacityElectric_kW();	
+					chargingSetpoint_kW = ev.getChargingCapacity_kW();	
 				}
 				else {
 					chargingSetpoint_kW = remainingChargingPower_kW;
 				}
 				
-				double chargingPower_kW = min(max(0,chargingSetpoint_kW), ev.getCapacityElectric_kW());
-				ev.f_updateAllFlows( chargingPower_kW / ev.getCapacityElectric_kW() );
+				double chargingPower_kW = min(max(0,chargingSetpoint_kW), ev.getChargingCapacity_kW());
+				ev.f_updateAllFlows( chargingPower_kW / ev.getChargingCapacity_kW() );
 				remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW); // Assumes the asset complies with the command!   			
     		}
     	}

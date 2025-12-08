@@ -1428,16 +1428,6 @@ catch (Exception e) {
 
 p_chargingManagement = chargingManagement;
 
-//TEMPORARY UNTIL CHARGEPOINT MANAGEMENT AND EV CHARGING MANAGEMENT ARE COMBINED
-if (c_chargers.size()>0){
-	if (chargingType == null) {
-			throw new RuntimeException("Charging strategy needed when chargers are present!");
-	}
-	else{
-		c_chargers.forEach(charger -> charger.setChargingAttitude(chargingType));
-	}
-}
-
 //Add new asset management to energyModel
 if(this.p_chargingManagement != null){
 	energyModel.f_registerAssetManagement(this.p_chargingManagement);

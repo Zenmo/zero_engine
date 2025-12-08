@@ -173,8 +173,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		if (Vehicle instanceof J_EAEV ev) {
 			
 			v_energyNeedForNextTrip_kWh = ev.energyConsumption_kWhpkm * v_tripDist_km;
-			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
-				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentStateOfCharge_kWh(),2));
+			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
+				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh(),2));
 			}
 			v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
 			// Check if more charging is needed for next trip!
@@ -188,7 +188,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				nextTripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex+1 );
 				nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
 			}
-			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*ev.getCapacityElectric_kW());
+			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*ev.getChargingCapacity_kW());
 			/*if (additionalChargingNeededForNextTrip_kWh>0) {
 				traceln("*******Additional charging required to prepare for trip after next trip!*********");
 			}*/
