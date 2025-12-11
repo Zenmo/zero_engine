@@ -556,11 +556,11 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EADieselTractor tractor) {
 	c_profileAssets.add(tractor);
-} else if (j_ea instanceof J_EAChargePoint charger) {
+} else if (j_ea instanceof J_EAChargingSession chargingSession) {
 	if(p_chargingManagement == null){
 		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
-	c_chargers.add(charger);
+	c_chargingSessions.add(chargingSession);
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
 		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);

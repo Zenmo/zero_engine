@@ -16,8 +16,7 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
  
 	private boolean V2GCapable = true; // For now default true: Add to constructor, where constructor calls: setV2GCapable(boolean isV2GCapable) to adjust min rato of capacity accordingly
 	private boolean V2GActive = false;
-	private double minimumRatioOfChargeCapacity_r = -1; // If Negative, it also allowes discharging (V2G)
-	
+
 	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
 	//public OL_EVChargingNeed chargingNeed;
@@ -65,16 +64,10 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		registerEnergyAsset();
     }
     
-    public double charge_kW(double requestedChargeSetpoint_kW) {
-    	double ratioOfChargeCapacity_r = requestedChargeSetpoint_kW/this.capacityElectric_kW;
-    	double chargeSetpoint_kW = min(1,max(this.minimumRatioOfChargeCapacity_r ,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
-    	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / timestep_h), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / timestep_h); // Limit charge power to stay within SoC 0-100
-    	operate(ratioOfChargeCapacity_r);
-    	return chargePower_kW;
-    }
+    
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
-    	double chargeSetpoint_kW = min(1,max(this.minimumRatioOfChargeCapacity_r ,ratioOfChargeCapacity_r)) * (capacityElectric_kW * vehicleScaling); // capped between -1 and 1. (does this already happen in f_updateAllFlows()?
+		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.capacityElectric_kW * vehicleScaling; // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
     	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / timestep_h), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / timestep_h); // Limit charge power to stay within SoC 0-100
     	
     	//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
@@ -106,7 +99,12 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 			stateOfCharge_fr = 0;
 		}
 	}
- 
+	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
+		discharged_kWh += electricityProduced_kW * timestep_h;
+		charged_kWh += electricityConsumed_kW * timestep_h;
+	}
+	
+	
 	@Override
 	public boolean startTrip() {
 		if (available) {
@@ -131,27 +129,26 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 			return true;
 		} else {
 			mileage_km += tripDist_km;
-			//traceln( "J_EAEV comes back, trip distance: " + tripDist_km + ", energy consumption: " + tripDist_km * energyConsumption_kWhpkm);
-			//traceln("EV of type: " + this.energyAssetType + "state of charge: " + stateOfCharge_fr);
 			stateOfCharge_fr -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / (storageCapacity_kWh * vehicleScaling);
-			//traceln("storage capacity: " + storageCapacity_kWh + ", state of charge: " + stateOfCharge_fr);
+
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / timestep_h;
-			//traceln("EV energy use at end of trip: %s kWh", tripDist_km * vehicleScaling * energyConsumption_kWhpkm );
 			if (stateOfCharge_fr < 0) {
-				//traceln( ownerAsset.date());
-				//traceln( "Trip distance: " + tripDist_km + ", vehicle scaling: " + vehicleScaling + ", energy cons_kWhpkm: " + energyConsumption_kWhpkm );
 				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%");
-						
-				//energyChargedOutsideModelArea_kWh += -stateOfCharge_fr * storageCapacity_kWh;
-				//traceln("energyChargedOutsideModelArea_kWh: " + energyChargedOutsideModelArea_kWh);
-				//stateOfCharge_fr = 0;
 			}
 			this.available = true;
 			return true;
 		}
 	}
- 
+	
+	////Charging request (interface) getters for the charging management
+	public double getLeaveTime_h() {
+		return getNextTripStartTime_h();
+	}	
+		public double getNextTripStartTime_h() {
+			return this.tripTracker.v_nextEventStartTime_min / 60;
+		}
+	
 	public double getChargeDeadline_h() {
 		double chargeNeedForNextTrip_kWh = getRemainingChargeDemand_kWh();
 		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
@@ -165,22 +162,6 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		return max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentSOC_kWh());
 	}
 	
-	public double getNextTripStartTime_h() {
-		return this.tripTracker.v_nextEventStartTime_min / 60;
-	}
-		public double getLeaveTime_h() {
-			return getNextTripStartTime_h();
-		}
-	
-	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
-		discharged_kWh += electricityProduced_kW * timestep_h;
-		charged_kWh += electricityConsumed_kW * timestep_h;
-	}
- 
-	public double getEnergyUsed_kWh() {
-		return this.energyUsed_kWh;
-	}
- 
 	public double getCurrentStateOfCharge_fr() {
     	return this.stateOfCharge_fr;
 	}
@@ -196,6 +177,29 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 	public double getChargingCapacity_kW() {
 		return this.capacityElectric_kW * this.vehicleScaling;
 	}
+
+	
+	public double getEnergyNeedForNextTrip_kWh() {
+		return this.energyNeedForNextTrip_kWh * this.vehicleScaling;
+	}
+	////
+	
+	
+	
+	
+	public boolean getAvailability() {
+		return this.available;
+	}
+
+	public double getChargingTimeToFull_MIN() {
+		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh * vehicleScaling) - (storageCapacity_kWh * vehicleScaling) * stateOfCharge_fr) / (capacityElectric_kW * vehicleScaling) ) ;
+		return chargingTime_min;
+	}
+ 
+	public double getEnergyUsed_kWh() {
+		return this.energyUsed_kWh;
+	}
+	
 	public double getTotalChargeAmount_kWh() {
 		return this.charged_kWh;
 	}
@@ -203,19 +207,6 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		return this.discharged_kWh;
 	}
 	
-	public double getEnergyNeedForNextTrip_kWh() {
-		return this.energyNeedForNextTrip_kWh * this.vehicleScaling;
-	}
- 
-	public boolean getAvailability() {
-		return this.available;
-	}
- 
-	public double getChargingTimeToFull_MIN() {
-		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh * vehicleScaling) - (storageCapacity_kWh * vehicleScaling) * stateOfCharge_fr) / (capacityElectric_kW * vehicleScaling) ) ;
-		return chargingTime_min;
-	}
- 
 	public double getEnergyChargedOutsideModelArea_kWh() {
 		return energyChargedOutsideModelArea_kWh;
 	}
@@ -223,15 +214,7 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 	//V2G capabilities
 	public void setV2GCapable(boolean isV2GCapable) {
 		this.V2GCapable = isV2GCapable;
-		
 		setV2GActive(getV2GActive());
-		
-		if(isV2GCapable) {
-			minimumRatioOfChargeCapacity_r = -1;
-		}
-		else {
-			minimumRatioOfChargeCapacity_r = 0;
-		}
 	}
 	
 	public boolean getV2GCapable() {
@@ -254,8 +237,6 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 	
 	@Override
     public void storeStatesAndReset() {
-    	// Each energy asset that has some states should overwrite this function!
-		
     	energyUsedStored_kWh = energyUsed_kWh;
     	energyUsed_kWh = 0.0;
     	stateOfChargeStored_r = stateOfCharge_fr;
@@ -267,13 +248,11 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
     	mileage_km = 0;
     	charged_kWh = 0;
     	discharged_kWh = 0;
-    	//traceln("J_EAEV battery content at start of simulation: %s kWh", this.getCurrentStateOfCharge_kWh() );
     	clear();    	
     }
     
 	@Override
     public void restoreStates() {
-    	// Each energy asset that has some states should overwrite this function!
     	energyUsed_kWh = energyUsedStored_kWh;    	
     	stateOfCharge_fr = stateOfChargeStored_r;
     	available = availableStored;

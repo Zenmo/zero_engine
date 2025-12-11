@@ -77,7 +77,7 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     	for (int i = 0; i < this.currentActiveChargingRequests.size(); i++) {
     		if (charges_kW.get(i) < 0 && (!this.V2GCapable || !this.V2GActive)) {
     			// kan dit niet? of moet het gewoon gezet worden op 0?
-    			throw new RuntimeException("kann niee");
+    			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable or V2GActive");
     		}
     		double x = this.currentActiveChargingRequests.get(i).charge_kW( charges_kW.get(i));
 
@@ -90,7 +90,7 @@ public class J_EAChargePoint extends J_EA implements Serializable {
     	if (this.hasSocketRestrictions) {
 	    	if (this.currentChargePower_kW > this.totalCapacity_kW || this.currentDischargePower_kW > this.totalCapacity_kW) {
     			// kan dit niet? of moet het gewoon gecapt worden?
-	    		throw new RuntimeException("klopt niet");
+	    		throw new RuntimeException("Trying to charge trough a ChargePoint with a higher power than is possible.");
 	    	}
     	}
     	
@@ -206,8 +206,13 @@ public class J_EAChargePoint extends J_EA implements Serializable {
 		}
 	}
 	
+	
 	public int getCurrentNumberOfChargeRequests() {
 		return this.currentActiveChargingRequests.size();
+	}
+	
+	public List<I_ChargingRequest> getCurrentActiveChargingRequests(){
+		return this.currentActiveChargingRequests;
 	}
 	
     @Override
