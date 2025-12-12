@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 
     private GridConnection gc;
-    private J_ChargePoint chargePoint;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
@@ -33,16 +32,9 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementOffPeak( GridConnection gc, J_ChargePoint chargePoint ) {
+    public J_ChargingManagementOffPeak( GridConnection gc) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
-    	
-    	if(chargePoint == null) {
-    		this.chargePoint = new J_ChargePoint(true, true);
-    	}
-    	else {
-    		this.chargePoint = chargePoint;
-    	}
     }
    
     
@@ -53,9 +45,9 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging() {    	
+    public void manageCharging(J_ChargePoint chargePoint) {    	
     	double t_h = gc.energyModel.t_h;
-    	this.chargePoint.updateActiveChargingRequests(gc, t_h);
+    	chargePoint.updateActiveChargingRequests(gc, t_h);
     	
    
     	// Use current GC-load (so without EV charging!) as an 'equivalent price' signal, and use EV battery flexibility to make local load flatter.
@@ -70,27 +62,27 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 		double intervalEndTimeSinceModelStart_hr = t_h - ((t_h - startTimeOfReducedChargingInterval_hr + 24) % 24) + intervalLength_hr;
 		boolean timeIsInReducedChargingInterval = ((hourOfTheDay - startTimeOfReducedChargingInterval_hr + 24) % 24) < intervalLength_hr;
 
-       	for (I_ChargingRequest chargingRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
+       	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
 			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
 			double chargeSetpoint_kW = 0;    			
-			if ( t_h >= this.chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-				chargeSetpoint_kW = this.chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
+			if ( t_h >= chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
 			} else {
 				if(timeIsInReducedChargingInterval && chargeNeedForNextTrip_kWh > 0) {
     				double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
     				double timeBetweenEndOfIntervalAndNextTripStartTime_hr = max(0, chargingRequest.getLeaveTime_h() - intervalEndTimeSinceModelStart_hr - chargeTimeMargin_h);
-    				double energyThatCanBeChargedAfterIntervalEnded_kWh = timeBetweenEndOfIntervalAndNextTripStartTime_hr * this.chargePoint.getMaxChargingCapacity_kW(chargingRequest);
+    				double energyThatCanBeChargedAfterIntervalEnded_kWh = timeBetweenEndOfIntervalAndNextTripStartTime_hr * chargePoint.getMaxChargingCapacity_kW(chargingRequest);
     				double energyThatNeedsToBeChargedDuringInterval_kWh = max(0, chargeNeedForNextTrip_kWh - energyThatCanBeChargedAfterIntervalEnded_kWh);
     		    	
     				double avgPowerDemandTillEndOfInterval_kW = energyThatNeedsToBeChargedDuringInterval_kWh / (intervalEndTimeSinceModelStart_hr - t_h);
     				chargeSetpoint_kW = avgPowerDemandTillEndOfInterval_kW;
 				}
 				else { // Dom laden
-					chargeSetpoint_kW = this.chargePoint.getMaxChargingCapacity_kW(chargingRequest);
+					chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);
 				}
 			}
 	    	//Send the chargepower setpoints to the chargepoint
-	       	this.chargePoint.charge(chargingRequest, chargeSetpoint_kW); 
+	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW); 
     	}
     	
 
@@ -127,11 +119,6 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
-    }
-    
-    //Get ChargePoint
-    public J_ChargePoint getChargePoint() {
-    	return this.chargePoint;
     }
     
     //Store and reset states

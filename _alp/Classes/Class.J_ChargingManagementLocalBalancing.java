@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementLocalBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
-    private J_ChargePoint chargePoint;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_LOCAL;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
@@ -29,16 +28,9 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     /**
      * Default constructor
      */
-    public J_ChargingManagementLocalBalancing( GridConnection gc, J_ChargePoint chargePoint ) {
+    public J_ChargingManagementLocalBalancing( GridConnection gc) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
-    	
-    	if(chargePoint == null) {
-    		this.chargePoint = new J_ChargePoint(true, true);
-    	}
-    	else {
-    		this.chargePoint = chargePoint;
-    	}
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -48,30 +40,30 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging() {    	
+    public void manageCharging(J_ChargePoint chargePoint) {    	
     	double t_h = gc.energyModel.t_h;
-    	this.chargePoint.updateActiveChargingRequests(gc, t_h);
+    	chargePoint.updateActiveChargingRequests(gc, t_h);
     	
     	// Use current GC-load (so without EV charging!) as an 'equivalent price' signal, and use EV battery flexibility to make local load flatter.
     	double currentBalanceBeforeEV_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
     	GCdemandLowPassed_kW += (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * filterDiffGain_r;
     	
-       	for (I_ChargingRequest chargingRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
+       	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
 			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
-			double remainingFlexTime_h = this.chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
+			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
 			double avgPowerDemandTillTrip_kW = chargingRequest.getEnergyNeedForNextTrip_kWh() / (chargingRequest.getLeaveTime_h() - t_h);
 			double chargeSetpoint_kW = 0;    			
-			if ( t_h >= this.chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-				chargeSetpoint_kW = this.chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
+			if ( t_h >= chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
 			} else {
 				double flexGain_r = 0.5; // how strongly to 'follow' currentBalanceBeforeEV_kW
 				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
-    			if ( this.V2GActive && this.chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
+    			if ( this.V2GActive && chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
 					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
 				}    
 			}
 	    	//Send the chargepower setpoint to the chargepoint			
-			this.chargePoint.charge(chargingRequest, chargeSetpoint_kW);  		
+			chargePoint.charge(chargingRequest, chargeSetpoint_kW);  		
     	}
     }
 
@@ -90,11 +82,6 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
-    }
-    
-    //Get ChargePoint
-    public J_ChargePoint getChargePoint() {
-    	return this.chargePoint;
     }
 	
     //Store and reset states

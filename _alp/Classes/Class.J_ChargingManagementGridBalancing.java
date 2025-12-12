@@ -19,20 +19,13 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     private double timeStep_h;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
     private boolean V2GActive = false;
-    private J_ChargePoint chargePoint;
 
     /**
      * Default constructor
      */
-    public J_ChargingManagementGridBalancing( GridConnection gc, J_ChargePoint chargePoint ) {
+    public J_ChargingManagementGridBalancing( GridConnection gc) {
     	this.gc = gc;
     	this.timeStep_h = gc.energyModel.p_timeParameters.getTimeStep_h();
-    	if(chargePoint == null) {
-    		this.chargePoint = new J_ChargePoint(true, true);
-    	}
-    	else {
-    		this.chargePoint = chargePoint;
-    	}
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -43,13 +36,13 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging() {
+    public void manageCharging(J_ChargePoint chargePoint) {
     	double t_h = gc.energyModel.t_h;
-    	this.chargePoint.updateActiveChargingRequests(gc, t_h);
+    	chargePoint.updateActiveChargingRequests(gc, t_h);
     	
-    	for (I_ChargingRequest chargeRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
+    	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
 	    	double chargeSetpoint_kW = 0;
-			double maxChargePower = this.chargePoint.getMaxChargingCapacity_kW(chargeRequest);
+			double maxChargePower = chargePoint.getMaxChargingCapacity_kW(chargeRequest);
 			double remainingChargeDemand_kWh = chargeRequest.getRemainingChargeDemand_kWh(); // Can be negative if recharging is not needed for next trip!
 	
 			GridNode parentNode = gc.p_parentNodeElectric;
@@ -68,13 +61,13 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 				double flexGain_r_manual = 0.8;
 				double flexGain_r = 1/max(1, (double)parentNode.f_getCurrentNumberOfChargeRequestsBalancingThisGN()) * flexGain_r_manual; // how strongly to 'follow' currentBalanceBeforeEV_kW -> influenced by the amount of charging chargers at this momment
 				chargeSetpoint_kW = max(0, chargeRequest.getRemainingAverageChargingDemand_kW(t_h) + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));			    				
-				if ( this.V2GActive && this.chargePoint.getV2GCapable() && chargeRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
+				if ( this.V2GActive && chargePoint.getV2GCapable() && chargeRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
 					chargeSetpoint_kW = min(0, chargeRequest.getRemainingAverageChargingDemand_kW(t_h) + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));
 				}    
 			}
 			
 	    	//Send the chargepower setpoint to the chargepoint
-	       	this.chargePoint.charge(chargeRequest, chargeSetpoint_kW);
+	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW);
     	}
  
     }
@@ -93,11 +86,6 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
-    }
-    
-    //Get ChargePoint
-    public J_ChargePoint getChargePoint() {
-    	return this.chargePoint;
     }
     
     //Store and reset states

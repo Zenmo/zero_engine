@@ -13,14 +13,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 public interface I_ChargingManagement extends I_AssetManagement
 {
-	void manageCharging();
+	void manageCharging(J_ChargePoint chargePoint);
 	
 	public OL_ChargingAttitude getCurrentChargingType();
 	
 	public void setV2GActive(boolean activateV2G);
 	public boolean getV2GActive();
-	
-	public J_ChargePoint getChargePoint();
 }
 
 

@@ -19,20 +19,12 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     private GridConnection gc;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
     private boolean V2GActive = false;
-    private J_ChargePoint chargePoint;
 
     /**
      * Default constructor
      */
-    public J_ChargingManagementSimple( GridConnection gc, J_ChargePoint chargePoint ) {
+    public J_ChargingManagementSimple( GridConnection gc) {
     	this.gc = gc;
-
-    	if(chargePoint == null) {
-    		this.chargePoint = new J_ChargePoint(true, true);
-    	}
-    	else {
-    		this.chargePoint = chargePoint;
-    	}
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -43,13 +35,13 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging() {
+    public void manageCharging(J_ChargePoint chargePoint) {
     	double t_h = gc.energyModel.t_h;
-    	this.chargePoint.updateActiveChargingRequests(gc, t_h);
+    	chargePoint.updateActiveChargingRequests(gc, t_h);
     	
     	
-    	for (I_ChargingRequest chargeRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
-    		this.chargePoint.charge(chargeRequest, this.chargePoint.getMaxChargingCapacity_kW(chargeRequest));
+    	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
+    		chargePoint.charge(chargeRequest, chargePoint.getMaxChargingCapacity_kW(chargeRequest));
     	}
     }
     
@@ -67,11 +59,6 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
-    }
-    
-    //Get ChargePoint
-    public J_ChargePoint getChargePoint() {
-    	return this.chargePoint;
     }
     
     //Store and reset states

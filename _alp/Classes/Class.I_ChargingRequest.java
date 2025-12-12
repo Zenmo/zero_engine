@@ -30,6 +30,4 @@ public interface I_ChargingRequest {
 	
 	// Sends the power into the EV/ChargingSession to update the SOC, ChargeDeadline etc...
     public void f_updateAllFlows(double powerFraction_fr);
-	//public double charge_kW( double charge_kW );
-
 }

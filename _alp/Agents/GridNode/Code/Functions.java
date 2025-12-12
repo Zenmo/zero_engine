@@ -570,7 +570,7 @@ for(GridConnection GC : c_connectedGridConnections){
 		for(J_EAChargingSession cs : GC.c_chargingSessions){
 			v_currentChargingPowerBalancingThisGN_kW += cs.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 		}
-		v_currentNumberOfChargeRequestsBalancingThisGN += GC.f_getChargingManagement().getChargePoint().getCurrentNumberOfChargeRequests();
+		v_currentNumberOfChargeRequestsBalancingThisGN += GC.f_getChargePoint().getCurrentNumberOfChargeRequests();
 	}
 }
 
