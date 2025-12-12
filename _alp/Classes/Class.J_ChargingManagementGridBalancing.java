@@ -45,7 +45,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
      */
     public void manageCharging() {
     	double t_h = gc.energyModel.t_h;
-    	List<Double> chargePowerSetPointList_kW = new ArrayList<>();
+    	this.chargePoint.updateActiveChargingRequests(gc, t_h);
     	
     	for (I_ChargingRequest chargeRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
 	    	double chargeSetpoint_kW = 0;

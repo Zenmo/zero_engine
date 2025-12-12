@@ -45,6 +45,8 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      */
     public void manageCharging() {
     	double t_h = gc.energyModel.t_h;
+    	this.chargePoint.updateActiveChargingRequests(gc, t_h);
+    	
     	
     	for (I_ChargingRequest chargeRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
     		this.chargePoint.charge(chargeRequest, this.chargePoint.getMaxChargingCapacity_kW(chargeRequest));
