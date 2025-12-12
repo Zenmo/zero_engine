@@ -158,10 +158,7 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		return chargeDeadline_h;
 	}
 	
-	public double getRemainingChargeDemand_kWh() {
-		return max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentSOC_kWh());
-	}
-	
+
 	public double getCurrentStateOfCharge_fr() {
     	return this.stateOfCharge_fr;
 	}
@@ -178,10 +175,18 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		return this.capacityElectric_kW * this.vehicleScaling;
 	}
 
-	
 	public double getEnergyNeedForNextTrip_kWh() {
 		return this.energyNeedForNextTrip_kWh * this.vehicleScaling;
 	}
+	
+	public double getRemainingChargeDemand_kWh() {
+		return max(0, this.getEnergyNeedForNextTrip_kWh() - this.getCurrentSOC_kWh());
+	}
+	
+	public double getRemainingAverageChargingDemand_kW(double t_h) {
+		return getLeaveTime_h() > t_h ? getRemainingChargeDemand_kWh() / (getLeaveTime_h() - t_h) : 0;
+	}
+	
 	////
 	
 	

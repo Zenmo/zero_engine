@@ -698,12 +698,16 @@
 					<Name><![CDATA[MAX_POWER]]></Name>
 				</Option>
 				<Option>
-					<Id>1755703015841</Id>
-					<Name><![CDATA[CUSTOM]]></Name>
+					<Id>1765536978989</Id>
+					<Name><![CDATA[OFF_PEAK_INTERVAL]]></Name>
 				</Option>
 				<Option>
 					<Id>1762853393712</Id>
 					<Name><![CDATA[NONE]]></Name>
+				</Option>
+				<Option>
+					<Id>1755703015841</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1548,12 +1552,6 @@
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1749651263461</Id>
-				<Name><![CDATA[J_EACharger]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1752677257516</Id>
 				<Name><![CDATA[I_BatteryManagement]]></Name>
 				<Folder>1762850659543</Folder>
@@ -1816,12 +1814,6 @@
 				<Folder>1762850586274</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1764337836818</Id>
-				<Name><![CDATA[J_EAChargePoint]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1764936717326</Id>
 				<Name><![CDATA[J_TimeVariables]]></Name>
 				<Folder>1752680962144</Folder>
@@ -1834,12 +1826,16 @@
 			<JavaClass>
 				<Id>1765192207409</Id>
 				<Name><![CDATA[J_EAChargingSession]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1765383541339</Id>
 				<Name><![CDATA[J_ChargePoint]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1765537283263</Id>
+				<Name><![CDATA[J_ChargingManagementGridBalancing]]></Name>
 				<Folder>1762850586274</Folder>
 			</JavaClass>
 		</JavaClasses>

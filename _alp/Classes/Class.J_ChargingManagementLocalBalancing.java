@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementLocalBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_ChargePoint chargePoint;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_LOCAL;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
@@ -24,16 +25,20 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     
     //Stored
     private double storedGCdemandLowPassed_kW;
+    
     /**
      * Default constructor
      */
-    public J_ChargingManagementLocalBalancing() {
-    	
-    }
-    
-    public J_ChargingManagementLocalBalancing( GridConnection gc ) {
+    public J_ChargingManagementLocalBalancing( GridConnection gc, J_ChargePoint chargePoint ) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	
+    	if(chargePoint == null) {
+    		this.chargePoint = new J_ChargePoint(true, true);
+    	}
+    	else {
+    		this.chargePoint = chargePoint;
+    	}
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -49,31 +54,29 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	double currentBalanceBeforeEV_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
     	GCdemandLowPassed_kW += (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * filterDiffGain_r;
     	
-    	for (J_EAEV ev : gc.c_electricVehicles) {
-    		if (ev.available) {
-    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
-    			double remainingFlexTime_h = ev.getChargeDeadline_h() - t_h; // measure of flexiblity left in current charging session.
-    			double avgPowerDemandTillTrip_kW = ev.energyNeedForNextTrip_kWh / (ev.tripTracker.v_idleTimeToNextTrip_min / 60);
-    			double chargeSetpoint_kW = 0;    			
-    			if ( t_h >= (ev.getChargeDeadline_h()) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-    				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));
-    				chargeSetpoint_kW = ev.getChargingCapacity_kW();	
-    			} else {
-    				double flexGain_r = 0.5; // how strongly to 'follow' currentBalanceBeforeEV_kW
-    				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
-        			if ( ev.getV2GActive() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
-    					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
-    					//if (chargeSetpoint_kW < 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}
-    				}    
-    			}
-    			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getChargingCapacity_kW() );    		
-    		}
+       	for (I_ChargingRequest chargingRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
+			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+			double remainingFlexTime_h = this.chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
+			double avgPowerDemandTillTrip_kW = chargingRequest.getEnergyNeedForNextTrip_kWh() / (chargingRequest.getLeaveTime_h() - t_h);
+			double chargeSetpoint_kW = 0;    			
+			if ( t_h >= this.chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+				chargeSetpoint_kW = this.chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
+			} else {
+				double flexGain_r = 0.5; // how strongly to 'follow' currentBalanceBeforeEV_kW
+				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
+    			if ( this.V2GActive && this.chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
+					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
+				}    
+			}
+	    	//Send the chargepower setpoint to the chargepoint			
+			this.chargePoint.charge(chargingRequest, chargeSetpoint_kW);  		
     	}
     }
 
 	public void setV2GActive(boolean activateV2G) {
 		this.V2GActive = activateV2G;
-		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+		this.gc.c_chargingSessions.forEach(cs -> cs.setV2GActive(activateV2G)); // NEEDED TO HAVE CS ASSET IN CORRECT assetFlowCatagory
 	}
 	
 	public boolean getV2GActive() {
@@ -87,7 +90,10 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	return this.gc;
     }
     
-    
+    //Get ChargePoint
+    public J_ChargePoint getChargePoint() {
+    	return this.chargePoint;
+    }
 	
     //Store and reset states
 	public void storeStatesAndReset() {
@@ -103,11 +109,4 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 		return "Active charging type: " + this.activeChargingType;
 
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

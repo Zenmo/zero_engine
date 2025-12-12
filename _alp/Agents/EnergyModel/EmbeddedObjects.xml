@@ -226,9 +226,6 @@
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1017,9 +1014,6 @@
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1164,9 +1158,6 @@
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1304,9 +1295,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1503,9 +1491,6 @@
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1640,9 +1625,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1781,9 +1763,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2292,9 +2271,6 @@
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
-			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -2466,9 +2442,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_uid]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargePoint]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

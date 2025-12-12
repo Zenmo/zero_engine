@@ -15,10 +15,12 @@ public interface I_ChargingManagement extends I_AssetManagement
 {
 	void manageCharging();
 	
-	OL_ChargingAttitude getCurrentChargingType();
+	public OL_ChargingAttitude getCurrentChargingType();
 	
-	void setV2GActive(boolean activateV2G);
-	boolean getV2GActive();
+	public void setV2GActive(boolean activateV2G);
+	public boolean getV2GActive();
+	
+	public J_ChargePoint getChargePoint();
 }
 
 

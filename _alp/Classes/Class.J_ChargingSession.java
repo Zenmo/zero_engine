@@ -87,6 +87,10 @@ public class J_ChargingSession {
     	return chargingDemand_kWh - chargedDuringSession_kWh + dischargedDuringSession_kWh;
     }
     
+	public double getRemainingAverageChargingDemand_kW(double t_h) {
+		return getLeaveTime_h() > t_h ? getRemainingChargeDemand_kWh() / (getLeaveTime_h() - t_h) : 0;
+	}
+    
     public J_ChargingSession getClone() {
     	return new J_ChargingSession((this.startTime_h*4), (this.endTime_h*4), this.chargingDemand_kWh, this.batterySize_kWh, this.vehicleMaxChargingPower_kW, this.socketNb, this.V2GCapable, this.timeStep_h);
     }

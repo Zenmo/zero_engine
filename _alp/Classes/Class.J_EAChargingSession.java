@@ -47,14 +47,18 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
     /**
      * Default constructor
      */
-	public J_EAChargingSession(List<J_ChargingSession> chargingSessionList, int socketNb, J_TimeParameters timeParameters) {
-			this.socketNb = socketNb;
-	    	this.chargingSessionList = chargingSessionList;
-	    	this.timeStep_h = timeParameters.getTimeStep_h();
-	    	
-		    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);   	
-			this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
-			this.setV2GActive(this.V2GActive);
+	public J_EAChargingSession(GridConnection parentGC, List<J_ChargingSession> chargingSessionList, int socketNb) {
+		this.parentAgent = parentGC;	
+		
+		this.socketNb = socketNb;
+    	this.chargingSessionList = chargingSessionList;
+    	this.timeStep_h = parentGC.energyModel.p_timeParameters.getTimeStep_h();
+    	
+	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);   	
+		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
+		this.setV2GActive(this.V2GActive);
+		
+		registerEnergyAsset();
 	}
 	
 	@Override
@@ -153,6 +157,10 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
     	return this.currentChargingSession.getRemainingChargeDemand_kWh() * this.vehicleScaling;
     }
     
+	public double getRemainingAverageChargingDemand_kW(double t_h) {
+		return getLeaveTime_h() > t_h ? getRemainingChargeDemand_kWh() / (getLeaveTime_h() - t_h) : 0;
+	}
+	
 	public double getVehicleScaling_fr() {
 		return this.vehicleScaling;
 	}

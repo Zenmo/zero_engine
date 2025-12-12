@@ -13,23 +13,26 @@ import java.util.EnumSet;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
+
 public class J_ChargingManagementSimple implements I_ChargingManagement {
 
     private GridConnection gc;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
     private boolean V2GActive = false;
-    private J_EAChargePoint chargePoint;
+    private J_ChargePoint chargePoint;
 
     /**
      * Default constructor
      */
-    public J_ChargingManagementSimple() {
-    	
-    }
-    
-    public J_ChargingManagementSimple( GridConnection gc ) {
+    public J_ChargingManagementSimple( GridConnection gc, J_ChargePoint chargePoint ) {
     	this.gc = gc;
-    	this.chargePoint = gc.p_chargePoint;
+
+    	if(chargePoint == null) {
+    		this.chargePoint = new J_ChargePoint(true, true);
+    	}
+    	else {
+    		this.chargePoint = chargePoint;
+    	}
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -41,18 +44,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      * 
      */
     public void manageCharging() {
-    	if (this.chargePoint == null) {
-    		if (gc.p_chargePoint == null) {
-    			throw new RuntimeException("Impossible to charge without chargepoint.");
-    		}
-    		this.chargePoint = gc.p_chargePoint;
-    	}
     	double t_h = gc.energyModel.t_h;
-    	for (J_EAEV ev : gc.c_electricVehicles) {
-    		if (ev.available) {			
-	    		// just charge 'dumb', full power until full
-	    		ev.f_updateAllFlows(1.0);
-    		}
+    	
+    	for (I_ChargingRequest chargeRequest : this.chargePoint.getCurrentActiveChargingRequests()) {
+    		this.chargePoint.charge(chargeRequest, this.chargePoint.getMaxChargingCapacity_kW(chargeRequest));
     	}
     }
     
@@ -72,6 +67,11 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     	return this.gc;
     }
     
+    //Get ChargePoint
+    public J_ChargePoint getChargePoint() {
+    	return this.chargePoint;
+    }
+    
     //Store and reset states
 	public void storeStatesAndReset() {
 		//Noting to reset and store
@@ -86,11 +86,4 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 		return "Active charging type: " + this.activeChargingType;
 
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

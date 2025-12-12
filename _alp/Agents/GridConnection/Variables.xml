@@ -1330,31 +1330,6 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
-	<Variable Class="Parameter">
-		<Id>1764341158977</Id>
-		<Name><![CDATA[p_chargePoint]]></Name>
-		<X>600</X>
-		<Y>840</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_EAChargePoint]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1764341158975</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1659962626903</Id>
 		<Name><![CDATA[c_energyAssets]]></Name>

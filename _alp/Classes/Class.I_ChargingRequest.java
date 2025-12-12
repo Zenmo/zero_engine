@@ -23,6 +23,9 @@ public interface I_ChargingRequest {
 	// The remaining energy needed before the leave time
 	public double getRemainingChargeDemand_kWh();
 	
+	// The remaining average charging needed before the leave time
+	public double getRemainingAverageChargingDemand_kW(double t_h);
+	
 	public double getVehicleScaling_fr();
 	
 	// Sends the power into the EV/ChargingSession to update the SOC, ChargeDeadline etc...

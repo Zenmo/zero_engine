@@ -134,8 +134,6 @@ f_manageHeating();
 
 f_manageEVCharging();
 
-f_manageChargePoints();
-
 f_manageBattery();
 /*ALCODEEND*/}
 
@@ -222,11 +220,10 @@ f_resetSpecificGCStates();
 
 double f_manageEVCharging()
 {/*ALCODESTART::1671095995172*/
-if(c_electricVehicles.size() > 0){
+if(c_electricVehicles.size() + c_chargingSessions.size() > 0 ){
 	if (p_chargingManagement == null) {
-		//throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
-		traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
-		
+		throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
+		//traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
 	} else {
 		p_chargingManagement.manageCharging();
 	}
@@ -871,8 +868,8 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	c_profileAssets.remove((J_EAProfile)j_ea);
-} else if (j_ea instanceof J_EAChargePoint) {
-	c_chargers.remove(j_ea);
+} else if (j_ea instanceof J_EAChargingSession) {
+	c_chargingSessions.remove(j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -1167,7 +1164,7 @@ else {
 	}
 	
 	//Fast forward time dependent energy assets (if present)
-	c_chargers.forEach(charger -> charger.fastForwardCharingSessions(energyModel.t_h));
+	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(energyModel.t_h));
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
@@ -1190,12 +1187,6 @@ double f_initializeDataSets()
 v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / energyModel.p_timeStep_h));
-
-/*ALCODEEND*/}
-
-double f_manageChargePoints()
-{/*ALCODESTART::1750258434630*/
-c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h) );
 
 /*ALCODEEND*/}
 
@@ -1382,7 +1373,6 @@ double f_activateV2GChargingMode(boolean enableV2G)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
 	p_chargingManagement.setV2GActive(enableV2G);
-	c_chargers.forEach(charger -> charger.setV2GActive(enableV2G));
 	if (enableV2G){
 		f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
 	}

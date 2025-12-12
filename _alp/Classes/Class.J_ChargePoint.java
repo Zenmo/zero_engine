@@ -3,74 +3,65 @@
  */	
 public class J_ChargePoint {
 	
-	private GridConnection parentGC;
-
 	private boolean hasSocketRestrictions;
 	private int nbSockets;
-	private double totalCapacity_kW;
-	private List<Double> socketCapacities_kW;
+	private double maxChargeCapacityPerSocket_kW;
+	private List<Double> socketCapacitiesList_kW;
 	private boolean V1GCapable;
 	private boolean V2GCapable;
 	
 	private List<I_ChargingRequest> currentActiveChargingRequests = new ArrayList<>();
 	
-	//private double currentChargePower_kW;
-	//private double currentDischargePower_kW;
-	
+
 	private List<I_ChargingRequest> storedActiveChargingRequests = null;
-    /**
+
+	/**
      * Default constructor
      * No restrictions on sockets
      */
-    public J_ChargePoint( GridConnection parentGC, boolean V1GCapable, boolean V2GCapable ) {
-    	this.parentGC = parentGC;
+    public J_ChargePoint(boolean V1GCapable, boolean V2GCapable ) {
     	this.V1GCapable = V1GCapable;
     	this.V2GCapable = V2GCapable;
     	this.hasSocketRestrictions = false;
     }
-    
+
+   /**
+    * With equal restrictions on sockets
+    */
+   public J_ChargePoint(boolean V1GCapable, boolean V2GCapable, double maxChargeCapacityPerSocket_kW) {	
+   	this.V1GCapable = V1GCapable;
+   	this.V2GCapable = V2GCapable;
+   	this.addSocketRestrictions(maxChargeCapacityPerSocket_kW);
+   }
+   
     /**
-     * With restrictions on sockets
+     * With various restrictions on sockets
      */
-    public J_ChargePoint( GridConnection parentGC, OL_EnergyAssetType energyAssetType, List<J_EAChargingSession> chargeSessionList, boolean V1GCapable, boolean V2GCapable, List<Double> socketCapacities_kW) {
-    	this.parentGC = parentGC; 	
+    public J_ChargePoint(boolean V1GCapable, boolean V2GCapable, List<Double> socketCapacitiesList_kW) {	
     	this.V1GCapable = V1GCapable;
     	this.V2GCapable = V2GCapable;
-    	this.addSocketRestrictions(socketCapacities_kW, totalCapacity_kW);
+    	this.addSocketRestrictions(socketCapacitiesList_kW);
     }
     
-    public void addSocketRestrictions( List<Double> socketCapacities_kW, double totalCapacity_kW ) {
-    	this.hasSocketRestrictions = true;
-    	this.socketCapacities_kW = socketCapacities_kW;
-    	this.totalCapacity_kW = totalCapacity_kW;
+    
+    
+    //Charge chargingRequest trough socket
+    public void charge( I_ChargingRequest chargingRequest, double charge_kW ) {
+		if (charge_kW < 0 && !this.V2GCapable) {
+			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable");
+		}
+		chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getChargingCapacity_kW());
     }
     
-    public void powerSockets( List<Double> charges_kW ) {
-    	double currentChargePower_kW = 0;
-    	double currentDischargePower_kW = 0;
-    	for (int i = 0; i < this.currentActiveChargingRequests.size(); i++) {
-    		if (charges_kW.get(i) < 0 && !this.V2GCapable) {
-    			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable");
-    		}
-    		this.currentActiveChargingRequests.get(i).f_updateAllFlows( charges_kW.get(i) / this.currentActiveChargingRequests.get(i).getChargingCapacity_kW());
-
-    		// check socket capacity?
-    		currentChargePower_kW += max(0, charges_kW.get(i));
-    		currentDischargePower_kW += max(0, -charges_kW.get(i));
-    	}
-
-    	// The management class should never have all the charging sessions go over the total available capacity, so this is a safety check
-    	if (this.hasSocketRestrictions) {
-	    	if (currentChargePower_kW > this.totalCapacity_kW || currentDischargePower_kW > this.totalCapacity_kW) {
-    			// kan dit niet? of moet het gewoon gecapt worden?
-	    		throw new RuntimeException("Trying to charge trough a ChargePoint with a higher power than is possible.");
-	    	}
+    protected void performCheck() { //This call will check if all chargingrequest have been charged in a timestep. 
+    	boolean check = true;
+    	if(!check) {
+    		throw new RuntimeException("Not all active charging requests where charged.");
     	}
     }
-    
     
     // This function is called every timestep before the management function
-    public void updateActiveChargingRequests(double t_h) {
+    public void updateActiveChargingRequests(GridConnection parentGC, double t_h) {
     	
     	// Remove all charging requests that are finished
     	List<I_ChargingRequest> finishedChargingRequests = new ArrayList<>();
@@ -102,7 +93,63 @@ public class J_ChargePoint {
     	this.currentActiveChargingRequests.add(chargingRequest);
     }
     
+    public double getMaxChargingCapacity_kW(I_ChargingRequest chargingRequest) {
+    	if(hasSocketRestrictions) {
+    		return min(chargingRequest.getChargingCapacity_kW(), this.getSocketChargingCapacity_kW(chargingRequest));    		
+    	}
+    	else {
+    		return chargingRequest.getChargingCapacity_kW();
+    	}
+    }
     
+	public double getChargeDeadline_h(I_ChargingRequest chargingRequest) {
+    	if(hasSocketRestrictions) {
+			double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
+			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+			double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
+			double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getSocketChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
+			return chargeDeadline_h;    		
+    	}
+    	else {
+    		return chargingRequest.getChargeDeadline_h();
+    	}
+	}
+	
+	
+    public void addSocketRestrictions( double maxChargeCapacityPerSocket_kW) {
+    	if(maxChargeCapacityPerSocket_kW <= 0) {
+    		throw new RuntimeException("Trying to add socket restrictions to a J_ChargePoint with maxChargeCapacityPerSocket_kW = " + maxChargeCapacityPerSocket_kW);
+    	}
+    	this.hasSocketRestrictions = true;
+    	this.maxChargeCapacityPerSocket_kW = maxChargeCapacityPerSocket_kW;
+    }
+    public void addSocketRestrictions( List<Double> socketCapacitiesList_kW) {
+    	for(Double socketCapacity_kW : socketCapacitiesList_kW) {
+    		if(socketCapacity_kW <= 0) {
+        		throw new RuntimeException("Trying to add a socket restrictionsList to a J_ChargePoint that contains a socketCapacity_kW of " + socketCapacity_kW);
+        	}
+    	}
+    	this.hasSocketRestrictions = true;
+    	this.socketCapacitiesList_kW = socketCapacitiesList_kW;
+    }
+  
+    private double getSocketChargingCapacity_kW(I_ChargingRequest chargingRequest) {
+    	if(hasSocketRestrictions) {
+    		if(socketCapacitiesList_kW == null) {
+    			return maxChargeCapacityPerSocket_kW;
+    		}
+    		else {
+    			return this.socketCapacitiesList_kW.get(getSocketIndexNb(chargingRequest));
+    		}
+    	}
+    	else {
+    		return chargingRequest.getChargingCapacity_kW();
+    	}
+    }
+    
+    private int getSocketIndexNb(I_ChargingRequest chargingRequest) {
+    	return this.currentActiveChargingRequests.indexOf(chargingRequest);
+    }
     
     //V1G and V2G capabilities setters/getters
     public void setV1GCapability(boolean V1GCapable) {
