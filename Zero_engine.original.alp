@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.6.202509050523"
-                   AlpVersion="8.9.6">
+                   AnyLogicVersion="8.9.7.202512010504"
+                   AlpVersion="8.9.7">
 	<Model xmlns:al="http://anylogic.com">
 		<Id>1658477103134</Id>
 		<Name>Zero_engine</Name>
@@ -1062,6 +1062,14 @@
 				<Option>
 					<Id>1764776053512</Id>
 					<Name>hotWaterConsumption_kW</Name>
+				</Option>
+				<Option>
+					<Id>1764838296618</Id>
+					<Name>spaceHeating_kW</Name>
+				</Option>
+				<Option>
+					<Id>1764838299076</Id>
+					<Name>buildingHeating_kW</Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -3493,10 +3501,38 @@ energyModel.c_connectionOwners.add(this);</StartupCode>
 							<UnitType>NONE</UnitType>
 							<SdArray>false</SdArray>
 							<DefaultValue Class="CodeValue">
-								<Code>false</Code>
+								<Code>true</Code>
 							</DefaultValue>
 							<ParameterEditor>
 								<Id>1745927932566</Id>
+								<EditorContolType>CHECK_BOX</EditorContolType>
+								<MinSliderValue>0</MinSliderValue>
+								<MaxSliderValue>100</MaxSliderValue>
+								<DelimeterType>NO_DELIMETER</DelimeterType>
+							</ParameterEditor>
+						</Properties>
+					</Variable>
+					<Variable Class="Parameter">
+						<Id>1763647266429</Id>
+						<Name>b_dataIsAccessible</Name>
+						<X>60</X>
+						<Y>550</Y>
+						<Label>
+							<X>10</X>
+							<Y>0</Y>
+						</Label>
+						<PublicFlag>false</PublicFlag>
+						<PresentationFlag>true</PresentationFlag>
+						<ShowLabel>true</ShowLabel>
+						<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+							<Type>boolean</Type>
+							<UnitType>NONE</UnitType>
+							<SdArray>false</SdArray>
+							<DefaultValue Class="CodeValue">
+								<Code>true</Code>
+							</DefaultValue>
+							<ParameterEditor>
+								<Id>1763647266427</Id>
 								<EditorContolType>CHECK_BOX</EditorContolType>
 								<MinSliderValue>0</MinSliderValue>
 								<MaxSliderValue>100</MaxSliderValue>
@@ -19830,6 +19866,9 @@ c_assetManagement.remove(assetManagement);</Body>
 							<Parameter>
 								<Name>b_dataSharingAgreed</Name>
 							</Parameter>
+							<Parameter>
+								<Name>b_dataIsAccessible</Name>
+							</Parameter>
 						</Parameters>
 						<ReplicationFlag>true</ReplicationFlag>
 						<Replication Class="CodeValue">
@@ -33102,7 +33141,7 @@ public void f_operateFlexAssets(){&#xD;
 						<PresentationFlag>true</PresentationFlag>
 						<ShowLabel>true</ShowLabel>
 						<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-							<Type>double</Type>
+							<Type>int</Type>
 							<UnitType>NONE</UnitType>
 							<SdArray>false</SdArray>
 							<ParameterEditor>
@@ -33667,7 +33706,7 @@ else{&#xD;
 								<Z>0</Z>
 								<Rotation>0.0</Rotation>
 								<Color>-16777216</Color>
-								<Text>Charging Centre Functions</Text>
+								<Text>Charging Station Parameters</Text>
 								<Font>
 									<Name>SansSerif</Name>
 									<Size>14</Size>
@@ -48273,7 +48312,8 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {&#
 &#xD;
     @Override&#xD;
     public void f_updateAllFlows(double powerFraction_fr) {&#xD;
-    	if ( powerFraction_fr &lt; 0 ) {&#xD;
+    	powerFraction_fr = roundToDecimal(powerFraction_fr, J_GlobalParameters.floatingPointPrecision);&#xD;
+    	if(powerFraction_fr &lt; 0) {&#xD;
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		&#xD;
     	}&#xD;
     	else if ( powerFraction_fr == 0 ) {&#xD;
@@ -48390,15 +48430,24 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {&
 			profilePointer = profile;&#xD;
 		}		&#xD;
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);&#xD;
-		if (this.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {&#xD;
-			this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW; //&#xD;
+		&#xD;
+		if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {&#xD;
+			if (this.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {&#xD;
+				this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW; //&#xD;
+			}&#xD;
+			else {&#xD;
+				this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //&#xD;
+			}&#xD;
 		}&#xD;
-		else if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {&#xD;
-			this.assetFlowCategory = OL_AssetFlowCategories.fixedConsumptionElectric_kW; //&#xD;
+		else if (this.energyCarrier == OL_EnergyCarriers.HEAT) {&#xD;
+			if (this.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {&#xD;
+				this.assetFlowCategory = OL_AssetFlowCategories.hotWaterConsumption_kW;&#xD;
+			}&#xD;
+			else {&#xD;
+				this.assetFlowCategory = OL_AssetFlowCategories.spaceHeating_kW;&#xD;
+			}&#xD;
 		}&#xD;
-		else if (this.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {&#xD;
-			this.assetFlowCategory = OL_AssetFlowCategories.hotWaterConsumption_kW;&#xD;
-		}&#xD;
+&#xD;
 		registerEnergyAsset();&#xD;
     }&#xD;
 &#xD;
@@ -49577,6 +49626,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    &#xD;
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		&#xD;
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);&#xD;
+		this.assetFlowCategory = OL_AssetFlowCategories.buildingHeating_kW;&#xD;
 		registerEnergyAsset();&#xD;
     }&#xD;
 &#xD;
@@ -49682,7 +49732,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		/*if (Double.isNaN(this.energyUse_kW)) {&#xD;
     		throw new RuntimeException("Building thermal model energyUse_kW is NaN!");&#xD;
     	}*/&#xD;
-		&#xD;
+		if (this.assetFlowCategory != null) {&#xD;
+			assetFlowsMap.put(this.assetFlowCategory, inputPower_kW);&#xD;
+		}&#xD;
 	}&#xD;
 &#xD;
 &#xD;
@@ -56101,6 +56153,7 @@ public class J_EAAirco extends zero_engine.J_EA implements Serializable {&#xD;
 			<JavaClass>
 				<Id>1749649002419</Id>
 				<Name>J_ChargingSession</Name>
+				<Folder>1752680962144</Folder>
 				<Text>/**&#xD;
  * J_ChargingSession&#xD;
  */	&#xD;
@@ -56456,20 +56509,9 @@ import java.util.EnumSet;&#xD;
 public class J_ChargingManagementSimple implements I_ChargingManagement {&#xD;
 &#xD;
     private GridConnection gc;&#xD;
-    private OL_ChargingAttitude activeChargingType;&#xD;
-    private double electricityPriceLowPassed_eurpkWh = 0.1;&#xD;
-    private double priceFilterTimeScale_h = 5*24;&#xD;
-    private double priceFilterDiffGain_r;&#xD;
-    private EnumSet&lt;OL_ChargingAttitude&gt; supportedChargingTypes = EnumSet.noneOf(OL_ChargingAttitude.class);&#xD;
-    &#xD;
+    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;&#xD;
     private boolean V2GActive = false;&#xD;
-    &#xD;
-    //Stored&#xD;
-    private double storedElectricityPriceLowPassed_eurpkWh;&#xD;
-    &#xD;
-    &#xD;
-    //private double GCdemandLowPassed_kW = 0.5;&#xD;
-    //private double GCdemandFilterTimeScale_h = 5*24;&#xD;
+&#xD;
     /**&#xD;
      * Default constructor&#xD;
      */&#xD;
@@ -56479,79 +56521,35 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {&#xD;
     &#xD;
     public J_ChargingManagementSimple( GridConnection gc ) {&#xD;
     	this.gc = gc;&#xD;
-    	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/gc.energyModel.p_timeStep_h);&#xD;
-    	this.supportedChargingTypes.add(OL_ChargingAttitude.SIMPLE);&#xD;
-    	this.supportedChargingTypes.add(OL_ChargingAttitude.PRICE);&#xD;
-    	this.activeChargingType = OL_ChargingAttitude.SIMPLE;&#xD;
     }&#xD;
       &#xD;
     public OL_ChargingAttitude getCurrentChargingType() {&#xD;
     	return activeChargingType;&#xD;
     }&#xD;
     &#xD;
-    public void setCurrentChargingType(OL_ChargingAttitude chargeTypeRequest) {&#xD;
-    	if (supportedChargingTypes.contains(chargeTypeRequest)) {&#xD;
-    		this.activeChargingType = chargeTypeRequest;&#xD;
-    	} else {&#xD;
-    		throw new RuntimeException("Unsupported charging type for J_ChargingManagementSimple");&#xD;
-    	}&#xD;
-    }&#xD;
     /**&#xD;
      * One of the simplest charging algorithms.&#xD;
      * &#xD;
      */&#xD;
     public void manageCharging() {&#xD;
     	double t_h = gc.energyModel.t_h;&#xD;
-    	//double currentElectricityPriceConsumption_eurpkWh = gc.p_owner.f_getElectricityPrice(gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);&#xD;
-    	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;&#xD;
-    	electricityPriceLowPassed_eurpkWh += (currentElectricityPriceConsumption_eurpkWh-electricityPriceLowPassed_eurpkWh) * priceFilterDiffGain_r ;&#xD;
-    	/*// Little experiment, use current GC-load (so without EV charging!) as an equivalent price signal, and apply the same price-based smart charging and V2G algorithm.&#xD;
-    	GCdemandLowPassed_kW += (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GCdemandLowPassed_kW) * priceFilterDiffGain_r;&#xD;
-    	electricityPriceLowPassed_eurpkWh = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);&#xD;
-    	currentElectricityPriceConsumption_eurpkWh = gc.v_previousPowerElectricity_kW;&#xD;
-    	*/&#xD;
-    	//traceln("Current price: %s eurpkWh, filtered price: %s eurpkWh", currentElectricityPriceConsumption_eurpkWh, electricityPriceLowPassed_eurpkWh);&#xD;
     	for (J_EAEV ev : gc.c_electricVehicles) {&#xD;
-    		if (ev.available) {&#xD;
-	    		if (this.activeChargingType != OL_ChargingAttitude.SIMPLE) {&#xD;
-	    			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!&#xD;
-	    			double remainingFlexTime_h = ev.getChargeDeadline_h() - t_h; // measure of flexiblity left in current charging session.&#xD;
-	    			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.&#xD;
-	    			double chargeSetpoint_kW = 0;    			&#xD;
-	    			if ( t_h &gt;= (ev.getChargeDeadline_h()) &amp;&amp; chargeNeedForNextTrip_kWh &gt; 0) { // Must-charge time at max charging power&#xD;
-	    				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));&#xD;
-	    				chargeSetpoint_kW = ev.getCapacityElectric_kW();	&#xD;
-	    			} else {&#xD;
-	    				double WTPCharging_eurpkWh = electricityPriceLowPassed_eurpkWh - WTPoffset_eurpkW * remainingFlexTime_h;  //+ urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / ev.getCapacityElectric_kW() ); // Scale WTP based on flexibility expressed in terms of power-fraction&#xD;
-	    				//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); &#xD;
-	    				double priceGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.&#xD;
-	    				chargeSetpoint_kW = max(0, ev.getCapacityElectric_kW() * (WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r);			&#xD;
-	    				//if ( chargeNeedForNextTrip_kWh &lt; -ev.getCapacityElectric_kW()*gc.energyModel.p_timeStep_h &amp;&amp; chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price&#xD;
-	        			if ( this.V2GActive &amp;&amp; ev.getV2GCapable() &amp;&amp; remainingFlexTime_h &gt; 1 &amp;&amp; chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price&#xD;
-	    	    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.&#xD;
-	    					double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction&#xD;
-	    					chargeSetpoint_kW = min(0, -ev.getCapacityElectric_kW() * (currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r);&#xD;
-	    					//if (chargeSetpoint_kW &lt; 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}&#xD;
-	    				}    &#xD;
-	    			}&#xD;
-	    			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getCapacityElectric_kW() );    			&#xD;
-	    		} else { // just charge 'dumb', full power until full&#xD;
-	    			ev.f_updateAllFlows(1.0);&#xD;
-	    		}&#xD;
+    		if (ev.available) {			&#xD;
+	    		// just charge 'dumb', full power until full&#xD;
+	    		ev.f_updateAllFlows(1.0);&#xD;
     		}&#xD;
     	}&#xD;
     }&#xD;
     &#xD;
 	public void setV2GActive(boolean activateV2G) {&#xD;
-		// throw an exception if the management does not support V2G?&#xD;
-		this.V2GActive = activateV2G;&#xD;
-		this.gc.c_electricVehicles.forEach(ev -&gt; ev.setV2GActive(activateV2G)); // not really wanted but NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory&#xD;
+		if(activateV2G) {&#xD;
+			throw new RuntimeException("Trying to Activate V2G for chargingManagement Simple -&gt; Not supported");&#xD;
+		}&#xD;
 	}&#xD;
 	&#xD;
 	public boolean getV2GActive() {&#xD;
 		return this.V2GActive;&#xD;
 	}&#xD;
-	&#xD;
 	&#xD;
 	&#xD;
     //Get parentagent&#xD;
@@ -56561,11 +56559,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {&#xD;
     &#xD;
     //Store and reset states&#xD;
 	public void storeStatesAndReset() {&#xD;
-		this.storedElectricityPriceLowPassed_eurpkWh = electricityPriceLowPassed_eurpkWh;&#xD;
-		this.electricityPriceLowPassed_eurpkWh = 0;&#xD;
+		//Noting to reset and store&#xD;
 	}&#xD;
 	public void restoreStates() {&#xD;
-		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;&#xD;
+		//Nothing to restore&#xD;
 	}&#xD;
 	&#xD;
 	&#xD;
@@ -59842,6 +59839,9 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {&#xD;
 	private J_EABuilding building;	&#xD;
     private J_EAConversion heatingAsset;&#xD;
     private J_HeatingPreferences heatingPreferences;&#xD;
+	private J_EAStorageHeat hotWaterBuffer;&#xD;
+	private List&lt;J_EAProduction&gt; ptAssets;&#xD;
+    private boolean hasPT = false;&#xD;
 &#xD;
 	/**&#xD;
      * Default constructor&#xD;
@@ -59854,52 +59854,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {&#xD;
     	this.gc = gc;&#xD;
     	this.currentHeatingType = heatingType;&#xD;
     }&#xD;
-    &#xD;
-    public double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){&#xD;
-    	&#xD;
-    	//Calculate the pt production&#xD;
-    	double ptProduction_kW = 0;&#xD;
-    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	for (J_EA j_ea : ptAssets) {&#xD;
-    		ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-    	}&#xD;
-    	&#xD;
-    	//Calculate the remaining hot water energy need after pt production, also calculate the remaining unused pt production&#xD;
-    	double remainingHotWater_kW = max(0, hotWaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value&#xD;
-    	double remainingPTProduction_kW = max(0, ptProduction_kW - hotWaterDemand_kW);&#xD;
-    	&#xD;
-    	if(gc.p_heatBuffer != null){&#xD;
-    		double chargeSetpoint_kW = 0;&#xD;
-    		if(remainingHotWater_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = -remainingHotWater_kW;&#xD;
-    		}&#xD;
-    		else if(remainingPTProduction_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = remainingPTProduction_kW;&#xD;
-    		}&#xD;
-    		gc.p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / gc.p_heatBuffer.getCapacityHeat_kW();&#xD;
-    		gc.p_heatBuffer.f_updateAllFlows(gc.p_heatBuffer.v_powerFraction_fr);&#xD;
-    		&#xD;
-			double heatBufferCharge_kW = gc.p_heatBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-			&#xD;
-    		if(remainingHotWater_kW &gt; 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge&#xD;
-    			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);&#xD;
-    		}&#xD;
-    		else {//Curtail the remaining pt that is not used for hot water&#xD;
-    			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);&#xD;
-    	    	if (remainingPTProduction_kW &gt; 0) {//Heat (for now always curtail over produced heat!)&#xD;
-    	    		for (J_EAProduction j_ea : ptAssets) {&#xD;
-    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);&#xD;
-    	    			&#xD;
-    	    			if (remainingPTProduction_kW &lt;= 0) {&#xD;
-    	    				break;&#xD;
-    	    			}&#xD;
-    	    		}&#xD;
-    	    	}&#xD;
-    		}&#xD;
-    	}&#xD;
-    	return remainingHotWater_kW;&#xD;
-    }&#xD;
-    &#xD;
+      &#xD;
     &#xD;
     public void manageHeating() {&#xD;
     	if ( !isInitialized ) {&#xD;
@@ -59908,8 +59863,9 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {&#xD;
     	&#xD;
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;&#xD;
     	&#xD;
-    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!&#xD;
+    	if(hasPT) {//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
+    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!&#xD;
+    	}&#xD;
     	&#xD;
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);&#xD;
     	&#xD;
@@ -59952,16 +59908,19 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {&#xD;
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {&#xD;
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);&#xD;
     	}&#xD;
-    	J_EAProduction ptAsset = findFirst(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	if (ptAsset != null) {&#xD;
+    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
+    	if (ptAssets.size() &gt; 0) {&#xD;
         	if(gc.p_DHWAsset == null) {&#xD;
         		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with PT.");&#xD;
         	}&#xD;
+        	this.ptAssets = ptAssets;&#xD;
+        	this.hasPT = true;&#xD;
     	}&#xD;
     	if (gc.p_heatBuffer != null) {&#xD;
-        	if(gc.p_DHWAsset == null &amp;&amp; ptAsset == null) {&#xD;
-        		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");&#xD;
+        	if(gc.p_DHWAsset == null || ptAssets.size() == 0) {&#xD;
+        		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with heatbuffer.");&#xD;
         	}&#xD;
+    		this.hotWaterBuffer = gc.p_heatBuffer;&#xD;
     	}&#xD;
     	if(gc.p_BuildingThermalAsset != null) {&#xD;
         	this.building = gc.p_BuildingThermalAsset;&#xD;
@@ -60719,20 +60678,13 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {&#xD;
     	//double currentElectricityPriceConsumption_eurpkWh = gc.p_owner.f_getElectricityPrice(gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);&#xD;
     	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;&#xD;
     	electricityPriceLowPassed_eurpkWh += (currentElectricityPriceConsumption_eurpkWh-electricityPriceLowPassed_eurpkWh) * priceFilterDiffGain_r ;&#xD;
-    	/*// Little experiment, use current GC-load (so without EV charging!) as an equivalent price signal, and apply the same price-based smart charging and V2G algorithm.&#xD;
-    	GCdemandLowPassed_kW += (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - GCdemandLowPassed_kW) * priceFilterDiffGain_r;&#xD;
-    	electricityPriceLowPassed_eurpkWh = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);&#xD;
-    	currentElectricityPriceConsumption_eurpkWh = gc.v_previousPowerElectricity_kW;&#xD;
-    	*/&#xD;
-    	//traceln("Current price: %s eurpkWh, filtered price: %s eurpkWh", currentElectricityPriceConsumption_eurpkWh, electricityPriceLowPassed_eurpkWh);&#xD;
-    	for (J_EAEV ev : gc.c_electricVehicles) {&#xD;
+       	for (J_EAEV ev : gc.c_electricVehicles) {&#xD;
     		if (ev.available) {&#xD;
     			double chargeNeedForNextTrip_kWh = ev.energyNeedForNextTrip_kWh - ev.getCurrentStateOfCharge_kWh(); // Can be negative if recharging is not needed for next trip!&#xD;
     			double remainingFlexTime_h = ev.getChargeDeadline_h() - t_h; // measure of flexiblity left in current charging session.&#xD;
     			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.&#xD;
     			double chargeSetpoint_kW = 0;    			&#xD;
     			if ( t_h &gt;= (ev.getChargeDeadline_h()) &amp;&amp; chargeNeedForNextTrip_kWh &gt; 0) { // Must-charge time at max charging power&#xD;
-    				//traceln("Urgency charging in GC: %s! May exceed connection capacity!", gc.p_gridConnectionID));&#xD;
     				chargeSetpoint_kW = ev.getCapacityElectric_kW();	&#xD;
     			} else {&#xD;
     				double WTPCharging_eurpkWh = electricityPriceLowPassed_eurpkWh - WTPoffset_eurpkW * remainingFlexTime_h;  //+ urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / ev.getCapacityElectric_kW() ); // Scale WTP based on flexibility expressed in terms of power-fraction&#xD;
@@ -60740,11 +60692,10 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {&#xD;
     				double priceGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.&#xD;
     				chargeSetpoint_kW = max(0, ev.getCapacityElectric_kW() * (WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r);			&#xD;
     				//if ( chargeNeedForNextTrip_kWh &lt; -ev.getCapacityElectric_kW()*gc.energyModel.p_timeStep_h &amp;&amp; chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price&#xD;
-        			if ( ev.getV2GActive() &amp;&amp; remainingFlexTime_h &gt; 1 &amp;&amp; chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price&#xD;
+        			if ( this.V2GActive &amp;&amp; ev.getV2GCapable() &amp;&amp; remainingFlexTime_h &gt; 1 &amp;&amp; chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price&#xD;
     	    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.&#xD;
     					double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction&#xD;
     					chargeSetpoint_kW = min(0, -ev.getCapacityElectric_kW() * (currentElectricityPriceConsumption_eurpkWh / WTSV2G_eurpkWh - 1) * priceGain_r);&#xD;
-    					//if (chargeSetpoint_kW &lt; 0) {traceln(" V2G Active! Power: " + chargeSetpoint_kW );}&#xD;
     				}    &#xD;
     			}&#xD;
     			ev.f_updateAllFlows( chargeSetpoint_kW / ev.getCapacityElectric_kW() );    		&#xD;
@@ -61617,7 +61568,11 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {&#xD;
 	private J_EABuilding building;	&#xD;
     private J_EAConversion heatingAsset;&#xD;
 	private J_HeatingPreferences heatingPreferences;&#xD;
-	    &#xD;
+	private J_EAStorageHeat hotWaterBuffer;&#xD;
+	private List&lt;J_EAProduction&gt; ptAssets;&#xD;
+    private boolean hasPT = false;&#xD;
+    private boolean hasHotWaterBuffer = false;&#xD;
+    &#xD;
     // PI control gains&#xD;
     private double P_gain_kWpDegC = 1*1;&#xD;
     private double I_gain_kWphDegC = 0.1*2;&#xD;
@@ -61649,11 +61604,26 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {&#xD;
     	}&#xD;
     	&#xD;
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;&#xD;
+    	double ptAssetPower_kW = ptAssets != null ? sum(ptAssets, pt -&gt; pt.getLastFlows().get(OL_EnergyCarriers.HEAT)) : 0;&#xD;
+    	double additionalHeatDemand_kW = (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) - hotWaterDemand_kW + (-ptAssetPower_kW));&#xD;
     	&#xD;
-    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);&#xD;
+    	double currentHeatDemand_kW = additionalHeatDemand_kW;&#xD;
+    	double availableAssetPowerForHotWater_kWth = heatingAsset.getOutputCapacity_kW() - additionalHeatDemand_kW;&#xD;
     	&#xD;
-    	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);&#xD;
+    	//Manage hot water if additional systems are present&#xD;
+    	if(this.hasPT) {&#xD;
+	    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -&gt; current balanceflow is updated accordingly.&#xD;
+	    	currentHeatDemand_kW += remainingHotWaterDemand_kW;&#xD;
+    	}&#xD;
+    	else if(this.hasHotWaterBuffer) {&#xD;
+    		double heatDemandFromHeatingAssetForHotWater_kW = J_HeatingFunctionLibrary.manageHotWaterHeatBuffer(this.hotWaterBuffer, hotWaterDemand_kW, availableAssetPowerForHotWater_kWth, this.timeStep_h);&#xD;
+    		currentHeatDemand_kW += heatDemandFromHeatingAssetForHotWater_kW;&#xD;
+    	}&#xD;
+    	else {&#xD;
+    		currentHeatDemand_kW += hotWaterDemand_kW;&#xD;
+    	}&#xD;
+    	&#xD;
 &#xD;
     	double buildingTemp_degC = building.getCurrentTemperature();&#xD;
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;&#xD;
@@ -61674,73 +61644,33 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {&#xD;
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);&#xD;
     	&#xD;
 &#xD;
-    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.&#xD;
+    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + currentHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.&#xD;
 		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );&#xD;
 		&#xD;
-		double heatIntoBuilding_kW = max(0, assetPower_kW - otherHeatDemand_kW);    			&#xD;
+		double heatIntoBuilding_kW = max(0, assetPower_kW - currentHeatDemand_kW);    			&#xD;
 		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );&#xD;
 &#xD;
     }    &#xD;
     &#xD;
-    private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){&#xD;
-    	&#xD;
-    	//Calculate the pt production&#xD;
-    	double ptProduction_kW = 0;&#xD;
-    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	for (J_EA j_ea : ptAssets) {&#xD;
-    		ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-    	}&#xD;
-    	&#xD;
-    	//Calculate the remaining hot water energy need after pt production, also calculate the remaining unused pt production&#xD;
-    	double remainingHotWater_kW = max(0, hotWaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value&#xD;
-    	double remainingPTProduction_kW = max(0, ptProduction_kW - hotWaterDemand_kW);&#xD;
-    	&#xD;
-    	if(gc.p_heatBuffer != null){&#xD;
-    		double chargeSetpoint_kW = 0;&#xD;
-    		if(remainingHotWater_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = -remainingHotWater_kW;&#xD;
-    		}&#xD;
-    		else if(remainingPTProduction_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = remainingPTProduction_kW;&#xD;
-    		}&#xD;
-    		gc.p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / gc.p_heatBuffer.getCapacityHeat_kW();&#xD;
-    		gc.p_heatBuffer.f_updateAllFlows(gc.p_heatBuffer.v_powerFraction_fr);&#xD;
-    		&#xD;
-			double heatBufferCharge_kW = gc.p_heatBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-			&#xD;
-    		if(remainingHotWater_kW &gt; 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge&#xD;
-    			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);&#xD;
-    		}&#xD;
-    		else {//Curtail the remaining pt that is not used for hot water&#xD;
-    			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);&#xD;
-    	    	if (remainingPTProduction_kW &gt; 0) {//Heat (for now always curtail over produced heat!)&#xD;
-    	    		for (J_EAProduction j_ea : ptAssets) {&#xD;
-    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);&#xD;
-    	    			&#xD;
-    	    			if (remainingPTProduction_kW &lt;= 0) {&#xD;
-    	    				break;&#xD;
-    	    			}&#xD;
-    	    		}&#xD;
-    	    	}&#xD;
-    		}&#xD;
-    	}&#xD;
-    	return remainingHotWater_kW;&#xD;
-    }&#xD;
     &#xD;
     public void initializeAssets() {&#xD;
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {&#xD;
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);&#xD;
     	}&#xD;
-    	J_EAProduction ptAsset = findFirst(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	if (ptAsset != null) {&#xD;
+    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
+    	if (ptAssets.size() &gt; 0) {&#xD;
         	if(gc.p_DHWAsset == null) {&#xD;
         		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with PT.");&#xD;
         	}&#xD;
+        	this.ptAssets = ptAssets;&#xD;
+        	this.hasPT = true;&#xD;
     	}&#xD;
     	if (gc.p_heatBuffer != null) {&#xD;
-        	if(gc.p_DHWAsset == null &amp;&amp; ptAsset == null) {&#xD;
-        		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");&#xD;
+        	if(gc.p_DHWAsset == null) {&#xD;
+        		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with heatbuffer.");&#xD;
         	}&#xD;
+    		this.hotWaterBuffer = gc.p_heatBuffer;&#xD;
+    		this.hasHotWaterBuffer = true;&#xD;
     	}&#xD;
     	if(gc.p_BuildingThermalAsset != null) {&#xD;
         	this.building = gc.p_BuildingThermalAsset;&#xD;
@@ -61853,7 +61783,11 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 	private J_EABuilding building;	&#xD;
     private J_EAConversion heatingAsset;&#xD;
 	private J_HeatingPreferences heatingPreferences;&#xD;
-&#xD;
+	private J_EAStorageHeat hotWaterBuffer;&#xD;
+	private List&lt;J_EAProduction&gt; ptAssets;&#xD;
+    private boolean hasPT = false;&#xD;
+    private boolean hasHotWaterBuffer = false;&#xD;
+    &#xD;
     // PI control gains&#xD;
     private double P_gain_kWpDegC = 1*1;&#xD;
     private double I_gain_kWphDegC = 0.1*2;&#xD;
@@ -61903,13 +61837,27 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     		calculatePreHeatParameters();&#xD;
     	}&#xD;
     	&#xD;
-    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;&#xD;
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW);&#xD;
+    	double ptAssetPower_kW = ptAssets != null ? sum(ptAssets, pt -&gt; pt.getLastFlows().get(OL_EnergyCarriers.HEAT)) : 0;&#xD;
+    	double additionalHeatDemand_kW = (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT) - hotWaterDemand_kW + (-ptAssetPower_kW));&#xD;
     	&#xD;
-    	//Get the remaining heat demand (hot water, and potential other profiles)&#xD;
-    	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);&#xD;
-&#xD;
+    	double currentHeatDemand_kW = additionalHeatDemand_kW;&#xD;
+    	double availableAssetPowerForHotWater_kWth = heatingAsset.getOutputCapacity_kW() - additionalHeatDemand_kW;&#xD;
+    	&#xD;
+    	//Manage hot water if additional systems are present&#xD;
+    	if(this.hasPT) {&#xD;
+	    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -&gt; current balanceflow is updated accordingly.&#xD;
+	    	currentHeatDemand_kW += remainingHotWaterDemand_kW;&#xD;
+    	}&#xD;
+    	else if(this.hasHotWaterBuffer) {&#xD;
+    		double heatDemandFromHeatingAssetForHotWater_kW = J_HeatingFunctionLibrary.manageHotWaterHeatBuffer(this.hotWaterBuffer, hotWaterDemand_kW, availableAssetPowerForHotWater_kWth, this.timeStep_h);&#xD;
+    		currentHeatDemand_kW += heatDemandFromHeatingAssetForHotWater_kW;&#xD;
+    	}&#xD;
+    	else {&#xD;
+    		currentHeatDemand_kW += hotWaterDemand_kW;&#xD;
+    	}&#xD;
+    	&#xD;
     	//Determine if time is in reduced Heating interval&#xD;
 		boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) &lt; reducedHeatingIntervalLength_hr;&#xD;
 		boolean timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) &lt; preHeatDuration_hr;&#xD;
@@ -61944,11 +61892,11 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	double buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);&#xD;
     	&#xD;
     	//Set asset power&#xD;
-    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW + otherHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.&#xD;
+    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW + currentHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.&#xD;
 		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );&#xD;
 		&#xD;
 		//Set building power (other heat demand gets bias if asset does not have enough capacity)&#xD;
-		double heatIntoBuilding_kW = max(0, assetPower_kW - otherHeatDemand_kW);    			&#xD;
+		double heatIntoBuilding_kW = max(0, assetPower_kW - currentHeatDemand_kW);    			&#xD;
 		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );&#xD;
     }    &#xD;
     &#xD;
@@ -62017,53 +61965,6 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     		//For now, preheat duration of 2 hours is assumed.&#xD;
     	}&#xD;
 	}&#xD;
-    &#xD;
-    private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){&#xD;
-    	&#xD;
-    	//Calculate the pt production&#xD;
-    	double ptProduction_kW = 0;&#xD;
-    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	for (J_EA j_ea : ptAssets) {&#xD;
-    		ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-    	}&#xD;
-    	&#xD;
-    	//Calculate the remaining hot water energy need after pt production, also calculate the remaining unused pt production&#xD;
-    	double remainingHotWater_kW = max(0, hotWaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value&#xD;
-    	double remainingPTProduction_kW = max(0, ptProduction_kW - hotWaterDemand_kW);&#xD;
-    	&#xD;
-    	if(gc.p_heatBuffer != null){&#xD;
-    		double chargeSetpoint_kW = 0;&#xD;
-    		if(remainingHotWater_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = -remainingHotWater_kW;&#xD;
-    		}&#xD;
-    		else if(remainingPTProduction_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = remainingPTProduction_kW;&#xD;
-    		}&#xD;
-    		gc.p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / gc.p_heatBuffer.getCapacityHeat_kW();&#xD;
-    		gc.p_heatBuffer.f_updateAllFlows(gc.p_heatBuffer.v_powerFraction_fr);&#xD;
-    		&#xD;
-			double heatBufferCharge_kW = gc.p_heatBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-			&#xD;
-    		if(remainingHotWater_kW &gt; 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge&#xD;
-    			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);&#xD;
-    		}&#xD;
-    		else {//Curtail the remaining pt that is not used for hot water&#xD;
-    			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);&#xD;
-    	    	if (remainingPTProduction_kW &gt; 0) {//Heat (for now always curtail over produced heat!)&#xD;
-    	    		for (J_EAProduction j_ea : ptAssets) {&#xD;
-    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);&#xD;
-    	    			&#xD;
-    	    			if (remainingPTProduction_kW &lt;= 0) {&#xD;
-    	    				break;&#xD;
-    	    			}&#xD;
-    	    		}&#xD;
-    	    	}&#xD;
-    		}&#xD;
-    	}&#xD;
-    	return remainingHotWater_kW;&#xD;
-    }&#xD;
-    &#xD;
-	&#xD;
   &#xD;
   &#xD;
 	public void setStartTimeOfReducedHeatingInterval_hr(double startTimeOfReducedHeatingInterval_hr) {&#xD;
@@ -62097,16 +61998,20 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
 		if (!validHeatingTypes.contains(this.currentHeatingType)) {&#xD;
 				throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);&#xD;
 		}&#xD;
-		J_EAProduction ptAsset = findFirst(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-		if (ptAsset != null) {&#xD;
+		List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
+		if (ptAssets.size() &gt; 0) {&#xD;
 			if(gc.p_DHWAsset == null) {&#xD;
 				throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with PT.");&#xD;
 			}&#xD;
+			this.ptAssets = ptAssets;&#xD;
+			this.hasPT = true;&#xD;
 		}&#xD;
 		if (gc.p_heatBuffer != null) {&#xD;
-			if(gc.p_DHWAsset == null &amp;&amp; ptAsset == null) {&#xD;
-				throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");&#xD;
+			if(gc.p_DHWAsset == null) {&#xD;
+				throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with a heatbuffer.");&#xD;
 			}&#xD;
+			this.hotWaterBuffer = gc.p_heatBuffer;&#xD;
+			this.hasHotWaterBuffer = true;&#xD;
 		}&#xD;
 		if(gc.p_BuildingThermalAsset != null) {&#xD;
 			this.building = gc.p_BuildingThermalAsset;&#xD;
@@ -62331,6 +62236,9 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 	private J_EAConversionHeatPump heatPumpAsset;&#xD;
 	private J_EAConversionGasBurner gasBurnerAsset;&#xD;
 	private J_HeatingPreferences heatingPreferences;&#xD;
+	private J_EAStorageHeat hotWaterBuffer;&#xD;
+	private List&lt;J_EAProduction&gt; ptAssets;&#xD;
+    private boolean hasPT = false;&#xD;
     &#xD;
 	 // PI control gains&#xD;
     private double P_gain_kWpDegC = 1*1;&#xD;
@@ -62365,8 +62273,10 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	&#xD;
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;&#xD;
     	&#xD;
-    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
-    	double remainingHotWaterDemand_kW = managePTAndHotWaterHeatBuffer(hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -&gt; current balanceflow is updated accordingly.&#xD;
+    	if(hasPT) {&#xD;
+	    	//Adjust the hot water and overall heat demand with the buffer and pt&#xD;
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -&gt; current balanceflow is updated accordingly.&#xD;
+	    }&#xD;
     	&#xD;
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);&#xD;
 &#xD;
@@ -62413,66 +62323,23 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     }&#xD;
     &#xD;
     &#xD;
-    private double  managePTAndHotWaterHeatBuffer(double hotWaterDemand_kW){&#xD;
-    	&#xD;
-    	//Calculate the pt production&#xD;
-    	double ptProduction_kW = 0;&#xD;
-    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	for (J_EA j_ea : ptAssets) {&#xD;
-    		ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-    	}&#xD;
-    	&#xD;
-    	//Calculate the remaining hot water energy need after pt production, also calculate the remaining unused pt production&#xD;
-    	double remainingHotWater_kW = max(0, hotWaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value&#xD;
-    	double remainingPTProduction_kW = max(0, ptProduction_kW - hotWaterDemand_kW);&#xD;
-    	&#xD;
-    	if(gc.p_heatBuffer != null){&#xD;
-    		double chargeSetpoint_kW = 0;&#xD;
-    		if(remainingHotWater_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = -remainingHotWater_kW;&#xD;
-    		}&#xD;
-    		else if(remainingPTProduction_kW &gt; 0) {&#xD;
-    			chargeSetpoint_kW = remainingPTProduction_kW;&#xD;
-    		}&#xD;
-    		gc.p_heatBuffer.v_powerFraction_fr = chargeSetpoint_kW / gc.p_heatBuffer.getCapacityHeat_kW();&#xD;
-    		gc.p_heatBuffer.f_updateAllFlows(gc.p_heatBuffer.v_powerFraction_fr);&#xD;
-    		&#xD;
-			double heatBufferCharge_kW = gc.p_heatBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
-			&#xD;
-    		if(remainingHotWater_kW &gt; 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge&#xD;
-    			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);&#xD;
-    		}&#xD;
-    		else {//Curtail the remaining pt that is not used for hot water&#xD;
-    			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);&#xD;
-    	    	if (remainingPTProduction_kW &gt; 0) {//Heat (for now always curtail over produced heat!)&#xD;
-    	    		for (J_EAProduction j_ea : ptAssets) {&#xD;
-    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);&#xD;
-    	    			&#xD;
-    	    			if (remainingPTProduction_kW &lt;= 0) {&#xD;
-    	    				break;&#xD;
-    	    			}&#xD;
-    	    		}&#xD;
-    	    	}&#xD;
-    		}&#xD;
-    	}&#xD;
-    	return remainingHotWater_kW;&#xD;
-    }&#xD;
-    &#xD;
-    &#xD;
     public void initializeAssets() {&#xD;
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {&#xD;
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);&#xD;
     	}&#xD;
-    	J_EAProduction ptAsset = findFirst(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
-    	if (ptAsset != null) {&#xD;
+    	List&lt;J_EAProduction&gt; ptAssets = findAll(gc.c_productionAssets, ea -&gt; ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);&#xD;
+    	if (ptAssets.size() &gt; 0) {&#xD;
         	if(gc.p_DHWAsset == null) {&#xD;
         		throw new RuntimeException(this.getClass() + " requires a hot water demand to make sense to use this heating management with PT.");&#xD;
         	}&#xD;
+        	this.hasPT = true;&#xD;
+        	this.ptAssets = ptAssets;&#xD;
     	}&#xD;
     	if (gc.p_heatBuffer != null) {&#xD;
-        	if(gc.p_DHWAsset == null &amp;&amp; ptAsset == null) {&#xD;
-        		throw new RuntimeException(this.getClass() + " requires a hot water demand and PT to make sense to use this heating management with a heatbuffer.");&#xD;
+        	if(gc.p_DHWAsset == null || ptAssets.size() == 0) {&#xD;
+        		throw new RuntimeException(this.getClass() + " requires a hot water demand and pt to make sense to use this heating management.");&#xD;
         	}&#xD;
+    		this.hotWaterBuffer = gc.p_heatBuffer;&#xD;
     	}&#xD;
     	if(gc.p_BuildingThermalAsset != null) {&#xD;
         	this.building = gc.p_BuildingThermalAsset;&#xD;
@@ -62549,6 +62416,99 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 	public String toString() {&#xD;
 		return super.toString();&#xD;
 	}&#xD;
+}</Text>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763557451043</Id>
+				<Name>J_HeatingFunctionLibrary</Name>
+				<Folder>1762850578079</Folder>
+				<Text>/**&#xD;
+ * J_HeatingFunctionLibrary&#xD;
+ */	&#xD;
+public abstract class J_HeatingFunctionLibrary {&#xD;
+&#xD;
+	public static double  managePTAndHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, List&lt;J_EAProduction&gt; ptAssets, double hotWaterDemand_kW){&#xD;
+    	//Calculate the pt production&#xD;
+    	double ptProduction_kW = 0;&#xD;
+    	for (J_EA j_ea : ptAssets) {&#xD;
+    		ptProduction_kW -= j_ea.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
+    	}&#xD;
+    	&#xD;
+    	//Calculate the remaining hot water energy need after pt production, also calculate the remaining unused pt production&#xD;
+    	double remainingHotWater_kW = max(0, hotWaterDemand_kW - ptProduction_kW); // Need to do this, because pt has already compensated the hot water demand in the gc flows, so just need to update this value&#xD;
+    	double remainingPTProduction_kW = max(0, ptProduction_kW - hotWaterDemand_kW);&#xD;
+    	&#xD;
+    	if(hotWaterBuffer != null){&#xD;
+    		double chargeSetpoint_kW = 0;&#xD;
+    		if(remainingHotWater_kW &gt; 0) {&#xD;
+    			chargeSetpoint_kW = -remainingHotWater_kW;&#xD;
+    		}&#xD;
+    		else if(remainingPTProduction_kW &gt; 0) {&#xD;
+    			chargeSetpoint_kW = remainingPTProduction_kW;&#xD;
+    		}&#xD;
+    		hotWaterBuffer.v_powerFraction_fr = chargeSetpoint_kW / hotWaterBuffer.getCapacityHeat_kW();&#xD;
+    		hotWaterBuffer.f_updateAllFlows(hotWaterBuffer.v_powerFraction_fr);&#xD;
+    		&#xD;
+			double heatBufferCharge_kW = hotWaterBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);&#xD;
+			&#xD;
+    		if(remainingHotWater_kW &gt; 0){//Only if the current pt production, wasnt enough, adjust the hotwater demand with the buffer, cause then the buffer will have tried to discharge&#xD;
+    			remainingHotWater_kW = max(0, remainingHotWater_kW + heatBufferCharge_kW);&#xD;
+    		}&#xD;
+    		else {//Curtail the remaining pt that is not used for hot water&#xD;
+    			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);&#xD;
+    		}&#xD;
+    	}&#xD;
+    	&#xD;
+    	if (remainingPTProduction_kW &gt; 0) {//Heat (for now always curtail over produced heat!)&#xD;
+    		for (J_EAProduction j_ea : ptAssets) {&#xD;
+    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);&#xD;
+    			&#xD;
+    			if (remainingPTProduction_kW &lt;= 0) {&#xD;
+    				break;&#xD;
+    			}&#xD;
+    		}&#xD;
+    	}&#xD;
+    	return remainingHotWater_kW;&#xD;
+    }&#xD;
+	&#xD;
+	public static double  manageHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, double hotWaterDemand_kW, double availableHeatingPower_kWth, double timeStep_h){&#xD;
+		if(hotWaterDemand_kW &gt; availableHeatingPower_kWth + hotWaterBuffer.getCurrentStateOfCharge_kWh() / timeStep_h) {&#xD;
+			throw new RuntimeException("Hot water demand is higher than available power.");&#xD;
+		}&#xD;
+		&#xD;
+		//Heating asset should always try to fill the heat buffer as fast as possible.&#xD;
+		double hotWaterDemandFromHeatingAsset_kW = min(availableHeatingPower_kWth, hotWaterDemand_kW + (hotWaterBuffer.getStorageCapacity_kWh() - hotWaterBuffer.getCurrentStateOfCharge_kWh()));&#xD;
+		double heatIntoBuffer_kW =  hotWaterDemandFromHeatingAsset_kW - hotWaterDemand_kW;&#xD;
+				&#xD;
+&#xD;
+		hotWaterBuffer.v_powerFraction_fr = heatIntoBuffer_kW / hotWaterBuffer.getCapacityHeat_kW();&#xD;
+		hotWaterBuffer.f_updateAllFlows(hotWaterBuffer.v_powerFraction_fr);&#xD;
+&#xD;
+		&#xD;
+    	return hotWaterDemandFromHeatingAsset_kW;&#xD;
+    }&#xD;
+}&#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ &#xD;
+ </Text>
+			</JavaClass>
+			<JavaClass>
+				<Id>1763570262548</Id>
+				<Name>J_GlobalParameters</Name>
+				<Folder>1752680962144</Folder>
+				<Text>/**&#xD;
+ * J_GlobalParameters&#xD;
+ */	&#xD;
+public abstract class J_GlobalParameters {&#xD;
+	//public final static double floatingPointErrorMargin = 1e-15;&#xD;
+	public final static int floatingPointPrecision = 15;&#xD;
 }</Text>
 			</JavaClass>
 		</JavaClasses>
@@ -62641,5 +62601,6 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 		<Uuid>2216cdd0-177c-5678-9e88-dd8b95312234</Uuid>
 		<Uuid>1737c8c6-b526-4dd8-589e-ee4e205b06f4</Uuid>
 		<Uuid>6a43bef6-8b70-4253-a828-82c3ab399655</Uuid>
+		<Uuid>0a27038a-0f3a-48bb-b235-4a44066a1402</Uuid>
 	</ConvertersApplied>
 </AnyLogicWorkspace>
