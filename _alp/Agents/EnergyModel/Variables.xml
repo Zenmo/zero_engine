@@ -2378,7 +2378,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>List&lt;J_ChargingSession&gt;</ElementClass>
+			<ElementClass>List&lt;J_ChargingSessionData&gt;</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

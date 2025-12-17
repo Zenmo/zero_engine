@@ -3,32 +3,21 @@
  */	
 public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingRequest {
 	
-	private List<J_ChargingSession> chargingSessionList;
+	private List<J_ChargingSessionData> chargingSessionDataList;
 	private int socketNb;
-
-	//Time parameter
-	double timeStep_h;
 	
 	//Current session information
-	private J_ChargingSession currentChargingSession;
+	private J_ChargingSessionData currentChargingSessionData;
+	
+	private double currentChargingSessionSOC_kWh = 0;
+	private double currentSessionChargingBalance_kWh = 0;
+	
+	//Next session
 	private int nextSessionIndex = 0;
 	
 	//Vehicle scaling
 	private double vehicleScaling = 1;
-	
-	/*
-	double startTime_h;
-	double endTime_h;
 
-	double chargingDemand_kWh;
-	double avgPowerDemand_kW;
-	double batterySize_kWh;
-	double stateOfCharge_kWh;
-	double vehicleMaxChargingPower_kW;
-	int socketNb;
-	boolean V2GCapable = true;
-	*/
-	
 	//V2GActive/capability (override) parameters
 	private boolean V2GActive = false;
 	private double V2GCapabilityProbablityOverride = 0;
@@ -37,22 +26,24 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	//Monitoring
 	private double totalCharged_kWh = 0;
 	private double totalDischarged_kWh = 0;
-	
+
 	//Stored live sim values
-	private double storedTotalCharged_kWh = 0;
-	private double storedTotalDischarged_kWh = 0;	
-	private J_ChargingSession storedCurrentChargingSession;
-	private int storedNextSessionIndex = 0;	
+	private J_ChargingSessionData storedCurrentChargingSessionData;
+	private double storedCurrentChargingSessionSOC_kWh;
+	private double storedCurrentSessionChargingBalance_kWh;
+	private double storedTotalCharged_kWh;
+	private double storedTotalDischarged_kWh;
+	private int storedNextSessionIndex;	
 	
     /**
      * Default constructor
      */
-	public J_EAChargingSession(GridConnection parentGC, List<J_ChargingSession> chargingSessionList, int socketNb) {
+	public J_EAChargingSession(GridConnection parentGC, List<J_ChargingSessionData> chargingSessionDataList, int socketNb) {
 		this.parentAgent = parentGC;	
 		
 		this.socketNb = socketNb;
-    	this.chargingSessionList = chargingSessionList;
-    	this.timeStep_h = parentGC.energyModel.p_timeParameters.getTimeStep_h();
+    	this.chargingSessionDataList = chargingSessionDataList;
+    	this.timestep_h = parentGC.energyModel.p_timeStep_h;
     	
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);   	
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
@@ -63,15 +54,20 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
-    	double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.getChargingCapacity_kW(); // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
+    	double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.getVehicleChargingCapacity_kW(); // capped between -1 and 1 does already happen in f_updateAllFlows()!
     	double chargePower_kW = max(min(chargeSetpoint_kW, (this.getStorageCapacity_kWh() - this.getCurrentSOC_kWh()) / this.timestep_h), -this.getCurrentSOC_kWh() / this.timestep_h); // Limit charge power to stay within SoC 0-100
     	
+    	//Round to floating point precision
+    	chargePower_kW = roundToDecimal(chargePower_kW, J_GlobalParameters.floatingPointPrecision);
+    	
+    	//Bookkeeping of energy flows
     	double electricityProduction_kW = max(-chargePower_kW, 0);
 		double electricityConsumption_kW = max(chargePower_kW, 0);
-		this.currentChargingSession.charge_kW( chargePower_kW );
+		this.currentChargingSessionSOC_kWh += chargePower_kW * this.timestep_h;
+		this.currentSessionChargingBalance_kWh += chargePower_kW * this.timestep_h;
 
 		updateChargingHistory( electricityProduction_kW, electricityConsumption_kW );
-		
+
 		//Update the EC flows map
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW - electricityProduction_kW);
 		
@@ -80,7 +76,7 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 			assetFlowsMap.put(OL_AssetFlowCategories.evChargingPower_kW, electricityConsumption_kW);
 		}
 		else if(chargePower_kW < 0){
-			if(this.currentChargingSession.getV2GCapable() && this.V2GActive) {
+			if(this.currentChargingSessionData.getV2GCapable() && this.V2GActive) {
 				assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 			}
 			else {
@@ -91,70 +87,81 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	
 
 	
-	public void manageCurrentChargingSession(double t_h) {
-		if (this.currentChargingSession != null && t_h >= this.currentChargingSession.getLeaveTime_h()) { // End session
-			if (this.currentChargingSession.getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.currentChargingSession.getRemainingChargeDemand_kWh()); }
-			this.currentChargingSession = null;
+	public void manageCurrentChargingSession(double t_h, I_ChargePointRegistration chargePointRegistration) {
+		
+		if (this.currentChargingSessionData != null && t_h >= this.currentChargingSessionData.getLeaveTime_h()) { // End session
+			if (this.getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.getRemainingChargeDemand_kWh()); }
+			this.energyUsed_kWh += this.currentSessionChargingBalance_kWh; //Add all netto energy charged to the vehicle as final consumption
+			this.energyUse_kW += this.currentSessionChargingBalance_kWh/this.timestep_h; //Add all netto energy charged to the vehicle as final consumption
+			f_updateAllFlows(0.0); //Call needed to transfer energyUse_kW to add flows
+			this.currentChargingSessionData = null;
+			chargePointRegistration.deregisterChargingRequest(this);
+			this.currentSessionChargingBalance_kWh = 0;
+			this.currentChargingSessionSOC_kWh = 0;
 		}
 		
-		if ( this.currentChargingSession == null ) { // socket currently free
+
+		if ( this.currentChargingSessionData == null ) { // socket currently free
 			 // check if we are not already past the last charging session.
 			// Find next charging session on this socket
 			
-			while (this.nextSessionIndex < this.chargingSessionList.size() && this.chargingSessionList.get(nextSessionIndex).getSocketNb() != this.socketNb) {				
+			
+			while (this.nextSessionIndex < this.chargingSessionDataList.size() && this.chargingSessionDataList.get(nextSessionIndex).getSocketNb() != this.socketNb) {				
 				this.nextSessionIndex++;
 			}  
 			
-			if (this.nextSessionIndex >= this.chargingSessionList.size()) { // no more sessions available
-				return;					
+			if (this.nextSessionIndex >= this.chargingSessionDataList.size()) { // no more sessions available
+				return;	
+
 			} else {					
-				loadChargingSession(this.chargingSessionList.get(nextSessionIndex));
+				loadChargingSessionData(this.chargingSessionDataList.get(nextSessionIndex));
 				
-				if (t_h > this.currentChargingSession.getStartTime_h()) { 
-					traceln("Chargesession %s started %s hours too late!", this.nextSessionIndex, t_h - this.currentChargingSession.getStartTime_h());	
-					if (t_h >= this.currentChargingSession.getLeaveTime_h()) { 
+				if (t_h > this.currentChargingSessionData.getStartTime_h()) { 
+					traceln("Chargesession %s started %s hours too late!", this.nextSessionIndex, t_h - this.currentChargingSessionData.getStartTime_h());	
+					if (t_h >= this.currentChargingSessionData.getLeaveTime_h()) { 
 						traceln("!!Chargesession started after its endTime_h!!");
 					}
 				}
 				this.nextSessionIndex++;
 			}
 		} 
+
+		if(this.currentChargingSessionData != null && this.currentChargingSessionData.getStartTime_h() == t_h) {
+			chargePointRegistration.registerChargingRequest(this);
+		}
 	}
 	
-	public void loadChargingSession(J_ChargingSession chargingSession) {
-		this.currentChargingSession = chargingSession.getClone();
+	public void loadChargingSessionData(J_ChargingSessionData chargingSessionData) {
+		this.currentChargingSessionData = chargingSessionData.getClone();
 		if(this.overrideV2GCapability) {
-			this.currentChargingSession.overrideV2GCapability(this.overrideV2GCapability, random() < this.V2GCapabilityProbablityOverride);
+			this.currentChargingSessionData.overrideV2GCapability(this.overrideV2GCapability, random() < this.V2GCapabilityProbablityOverride);
 		}
+		this.currentChargingSessionSOC_kWh = currentChargingSessionData.getInitialSOC_kWh() * this.vehicleScaling;
 	}
 	
 	//Get current ChargingRequest (interface) information
 	public double getLeaveTime_h() {
-		return this.currentChargingSession.getLeaveTime_h();
+		return this.currentChargingSessionData.getLeaveTime_h();
 	}
 
-	public double getChargingCapacity_kW() {
-		return this.currentChargingSession.getChargingCapacity_kW() * this.vehicleScaling;
+	public double getVehicleChargingCapacity_kW() {
+		return this.currentChargingSessionData.getChargingCapacity_kW() * this.vehicleScaling;
 	}
 	
 	public double getCurrentSOC_kWh() {
-		return this.currentChargingSession.getCurrentSOC_kWh() * this.vehicleScaling;
+		return this.currentChargingSessionSOC_kWh;
 	}
 	
 	public double getStorageCapacity_kWh() {
-		return this.currentChargingSession.getStorageCapacity_kWh() * this.vehicleScaling;
-	}
-
-	public double getChargeDeadline_h() {
-		return this.currentChargingSession.getChargeDeadline_h();
+		return this.currentChargingSessionData.getStorageCapacity_kWh() * this.vehicleScaling;
 	}
 
     public double getEnergyNeedForNextTrip_kWh() {
-    	return this.currentChargingSession.getEnergyNeededForNextTrip_kWh() * this.vehicleScaling;
+    	return this.currentChargingSessionData.getEnergyNeededForNextTrip_kWh() * this.vehicleScaling;
     }
     
     public double getRemainingChargeDemand_kWh() {
-    	return this.currentChargingSession.getRemainingChargeDemand_kWh() * this.vehicleScaling;
+        return (this.currentChargingSessionData.getEnergyNeededForNextTrip_kWh() * this.vehicleScaling) - this.currentSessionChargingBalance_kWh;
     }
     
 	public double getRemainingAverageChargingDemand_kW(double t_h) {
@@ -166,12 +173,12 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	}
 	
 	public boolean getV2GCapable() {
-		return this.currentChargingSession.getV2GCapable();
+		return this.currentChargingSessionData.getV2GCapable();
 	}
 	
 	//Availability (If chargingsession is currently active)
 	public boolean getAvailability(double t_h) {
-		return this.currentChargingSession != null ? this.currentChargingSession.getAvailability(t_h) : false;
+		return this.currentChargingSessionData != null ? this.currentChargingSessionData.getAvailability(t_h) : false;
 	}
 	
 	//V2G activation and capabilities
@@ -197,58 +204,85 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	
 	
 	//Fast forward charging sessions when GC is unpaused to prevent massive peaks for GCs that are trying to catch up
-	public void fastForwardCharingSessions(double t_h) {	
+	public void fastForwardCharingSessions(double t_h, I_ChargePointRegistration chargePointRegistration) {	
+		
 		//Clear current charging session
-		this.currentChargingSession = null;
+		this.currentChargingSessionData = null;
+		this.currentSessionChargingBalance_kWh = 0;
+		this.currentChargingSessionSOC_kWh = 0;
+		
+		if(chargePointRegistration.isRegistered(this)) {
+			chargePointRegistration.deregisterChargingRequest(this);
+		}
 		
 		//Find next charging session that starts after the current time
-		while (this.nextSessionIndex < this.chargingSessionList.size() && (this.chargingSessionList.get(this.nextSessionIndex).getSocketNb() != socketNb || this.chargingSessionList.get(this.nextSessionIndex).getStartTime_h() <= t_h)) {				
+		while (this.nextSessionIndex < this.chargingSessionDataList.size() && (this.chargingSessionDataList.get(this.nextSessionIndex).getSocketNb() != socketNb || this.chargingSessionDataList.get(this.nextSessionIndex).getStartTime_h() <= t_h)) {				
 			this.nextSessionIndex++;
 		}
 		
-		if (this.nextSessionIndex >= this.chargingSessionList.size()) { // no more sessions available
+		if (this.nextSessionIndex >= this.chargingSessionDataList.size()) { // no more sessions available
 			return;					
 		} else { //Load upcomming charger session and increase next session index					
-			loadChargingSession(this.chargingSessionList.get(nextSessionIndex));
+			loadChargingSessionData(this.chargingSessionDataList.get(nextSessionIndex));
 			this.nextSessionIndex++;
+		}
+		
+		if(this.currentChargingSessionData != null && this.currentChargingSessionData.getStartTime_h() == t_h) {
+			chargePointRegistration.registerChargingRequest(this);
 		}
 	}
     
 	
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
-		this.totalDischarged_kWh += electricityProduced_kW * this.timestep_h;
 		this.totalCharged_kWh += electricityConsumed_kW * this.timestep_h;
+		this.totalDischarged_kWh += electricityProduced_kW * this.timestep_h;
 	}
 	
 	
+	public double getTotalChargeAmount_kWh() {
+		return this.totalCharged_kWh;
+	}
+	public double getTotalDischargeAmount_kWh() {
+		return this.totalDischarged_kWh;
+	}
+	
     public void storeStatesAndReset() {
     	//Store
-    	energyUsedStored_kWh = energyUsed_kWh;
+    	this.energyUsedStored_kWh = this.energyUsed_kWh;
+    	this.storedCurrentChargingSessionSOC_kWh = this.currentChargingSessionSOC_kWh;
+    	this.storedCurrentSessionChargingBalance_kWh = this.currentSessionChargingBalance_kWh;
     	this.storedTotalCharged_kWh = totalCharged_kWh;
     	this.storedTotalDischarged_kWh = totalDischarged_kWh;	
-    	this.storedCurrentChargingSession = this.currentChargingSession;
+    	this.storedCurrentChargingSessionData = this.currentChargingSessionData;
     	this.storedNextSessionIndex = this.nextSessionIndex;
     	
     	//Reset
-    	energyUsed_kWh = 0.0;
+    	this.energyUsed_kWh = 0.0;
+    	this.currentChargingSessionSOC_kWh = 0;
+    	this.currentSessionChargingBalance_kWh = 0;
     	this.totalCharged_kWh = 0;
     	this.totalDischarged_kWh = 0;	
-    	this.currentChargingSession = null;
+    	this.currentChargingSessionData = null;
     	this.nextSessionIndex = 0;
     	clear();    	
     }
     
     public void restoreStates() {
-    	energyUsed_kWh = energyUsedStored_kWh;
+    	this.energyUsed_kWh = this.energyUsedStored_kWh;
+    	this.currentChargingSessionSOC_kWh = this.storedCurrentChargingSessionSOC_kWh;
+    	this.currentSessionChargingBalance_kWh = this.storedCurrentSessionChargingBalance_kWh;
     	this.totalCharged_kWh = this.storedTotalCharged_kWh;
     	this.totalDischarged_kWh = this.storedTotalDischarged_kWh;	
-    	this.currentChargingSession = this.storedCurrentChargingSession;
+    	this.currentChargingSessionData = this.storedCurrentChargingSessionData;
     	this.nextSessionIndex = this.storedNextSessionIndex;
     }
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Current session info: chargingCapacity_kW: " + getVehicleChargingCapacity_kW() + 
+				", getEnergyNeedForNextTrip_kWh: " + getEnergyNeedForNextTrip_kWh() +
+				", getCurrentSOC_kWh(): " + getCurrentSOC_kWh() + 
+				", getRemainingChargeDemand_kWh: " + getRemainingChargeDemand_kWh() +
+				", getLeaveTime_h: " + getLeaveTime_h();
 	}
-
 }

@@ -161,8 +161,8 @@ if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
 }
 
-c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h));
-c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(energyModel.t_h));
+c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h, p_chargePoint));
+c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(energyModel.t_h, p_chargePoint));
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -200,6 +200,10 @@ v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runS
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 
+//Store states and reset charge point
+if(p_chargePoint != null){
+	p_chargePoint.storeStatesAndReset();
+}
 /*ALCODEEND*/}
 
 double f_manageEVCharging()
@@ -251,16 +255,17 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		c_electricVehicles.add(ev);
 		energyModel.c_EVs.add(ev);	
 		ev.setV2GActive(p_chargingManagement.getV2GActive());
+		
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
 		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
@@ -268,13 +273,16 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 			while (rowIndex == 28 || rowIndex == 42 || rowIndex == 150) { // 445, 457, 483, 540, 563 all impossible triptrackers for vehicles with 116 kWh and 0.16 kWhpkm
 				rowIndex = uniform_discr(0, 200);
 			}
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
 		}
 		
 		vehicle.tripTracker = tripTracker;	
+	}
+	else if(vehicle instanceof J_EAEV ev){
+		tripTracker.prepareNextActivity((energyModel.t_h-energyModel.p_runStartTime_h)*60, p_chargePoint);
 	}
 	c_tripTrackers.add( tripTracker );
 	//v_vehicleIndex ++;
@@ -610,8 +618,10 @@ double f_resetStatesAfterRapidRun()
 //Reset specificGC states after rapid run
 f_resetSpecificGCStatesAfterRapidRun();
 
-
-
+//Restore states in charge point
+if(p_chargePoint != null){
+	p_chargePoint.restoreStates();
+}
 
 
 /*ALCODEEND*/}
@@ -888,7 +898,7 @@ else {
 	}
 	
 	//Fast forward time dependent energy assets (if present)
-	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(energyModel.t_h));
+	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(energyModel.t_h, p_chargePoint));
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
@@ -1123,7 +1133,7 @@ switch (chargingType) {
 		managementClass = J_ChargingManagementLocalBalancing.class;
 		break;
 	case BALANCE_GRID:
-		managementClass = J_ChargingManagementLocalBalancing.class;
+		managementClass = J_ChargingManagementGridBalancing.class;
 		break;
 	case MAX_POWER:
 		managementClass = J_ChargingManagementMaxAvailablePower.class;

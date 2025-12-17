@@ -4,14 +4,11 @@
 public interface I_ChargingRequest {
 	
 	// The maximal capacity for the vehicle
-	public double getChargingCapacity_kW();
+	public double getVehicleChargingCapacity_kW();
 	
 	public double getCurrentSOC_kWh();
 	
 	public double getStorageCapacity_kWh();
-	
-	// Last moment before full power charging is required
-	public double getChargeDeadline_h();
 	
 	public double getLeaveTime_h();
 	

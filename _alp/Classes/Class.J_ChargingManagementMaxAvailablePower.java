@@ -32,8 +32,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     
     public void manageCharging(J_ChargePoint chargePoint) {
     	double t_h = gc.energyModel.t_h;
-    	chargePoint.updateActiveChargingRequests(gc, t_h);
-    	
+
     	double remainingChargingPower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(ELECTRICITY);
     	if (gc.p_batteryAsset!=null) {
     		remainingChargingPower_kW += gc.p_batteryAsset.getCapacityAvailable_kW();
@@ -84,10 +83,10 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     
 	//Store and reset states
 	public void storeStatesAndReset() {
-		//Nothing to store and reset
+		
 	}
 	public void restoreStates() {
-		//Nothing to restore
+		
 	}
 	
 	

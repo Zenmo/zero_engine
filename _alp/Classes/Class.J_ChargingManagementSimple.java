@@ -37,9 +37,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      */
     public void manageCharging(J_ChargePoint chargePoint) {
     	double t_h = gc.energyModel.t_h;
-    	chargePoint.updateActiveChargingRequests(gc, t_h);
-    	
-    	
+
     	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
     		chargePoint.charge(chargeRequest, chargePoint.getMaxChargingCapacity_kW(chargeRequest));
     	}
@@ -63,10 +61,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     
     //Store and reset states
 	public void storeStatesAndReset() {
-		//Noting to reset and store
+		
 	}
 	public void restoreStates() {
-		//Nothing to restore
+		
 	}
 	
 	

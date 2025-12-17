@@ -22,8 +22,8 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 	//public OL_EVChargingNeed chargingNeed;
 	private double energyChargedOutsideModelArea_kWh = 0;
 	private double energyChargedOutsideModelAreaStored_kWh;
-	public double charged_kWh = 0;
-	public double discharged_kWh = 0;
+	private double charged_kWh = 0;
+	private double discharged_kWh = 0;
     /**
      * Default constructor
      */
@@ -148,16 +148,6 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		public double getNextTripStartTime_h() {
 			return this.tripTracker.v_nextEventStartTime_min / 60;
 		}
-	
-	public double getChargeDeadline_h() {
-		double chargeNeedForNextTrip_kWh = getRemainingChargeDemand_kWh();
-		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
-		double nextTripStartTime_h = getNextTripStartTime_h();
-		double chargeDeadline_h = nextTripStartTime_h - chargeNeedForNextTrip_kWh / this.capacityElectric_kW - chargeTimeMargin_h;
-		//double chargeDeadline_h = floor((this.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / this.getCapacityElectric_kW() / timestep_h) * timestep_h;
-		return chargeDeadline_h;
-	}
-	
 
 	public double getCurrentStateOfCharge_fr() {
     	return this.stateOfCharge_fr;
@@ -171,7 +161,7 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		return this.stateOfCharge_fr * this.getStorageCapacity_kWh();
 	}
 		
-	public double getChargingCapacity_kW() {
+	public double getVehicleChargingCapacity_kW() {
 		return this.capacityElectric_kW * this.vehicleScaling;
 	}
 

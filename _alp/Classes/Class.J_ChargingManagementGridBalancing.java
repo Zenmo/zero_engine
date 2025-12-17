@@ -38,8 +38,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
      */
     public void manageCharging(J_ChargePoint chargePoint) {
     	double t_h = gc.energyModel.t_h;
-    	chargePoint.updateActiveChargingRequests(gc, t_h);
-    	
+    
     	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
 	    	double chargeSetpoint_kW = 0;
 			double maxChargePower = chargePoint.getMaxChargingCapacity_kW(chargeRequest);
@@ -65,7 +64,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 					chargeSetpoint_kW = min(0, chargeRequest.getRemainingAverageChargingDemand_kW(t_h) + (gridNodeLowPassedLoad_kW - currentBalanceOnGridNodeWithoutEV_kW) * (min(1,flexGain_r)));
 				}    
 			}
-			
+
 	    	//Send the chargepower setpoint to the chargepoint
 	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW);
     	}
@@ -73,9 +72,9 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     }
     
 	public void setV2GActive(boolean activateV2G) {
-		if(activateV2G) {
-			throw new RuntimeException("Trying to Activate V2G for chargingManagement Simple -> Not supported");
-		}
+		this.V2GActive = activateV2G;
+		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
+		this.gc.c_chargingSessions.forEach(cs -> cs.setV2GActive(activateV2G)); // NEEDED TO HAVE CS ASSET IN CORRECT assetFlowCatagory
 	}
 	
 	public boolean getV2GActive() {
@@ -90,10 +89,10 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     
     //Store and reset states
 	public void storeStatesAndReset() {
-		//Noting to reset and store
+		
 	}
 	public void restoreStates() {
-		//Nothing to restore
+
 	}
 	
 	

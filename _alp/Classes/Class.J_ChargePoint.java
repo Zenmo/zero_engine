@@ -1,7 +1,7 @@
 /**
  * J_ChargePoint
  */	
-public class J_ChargePoint {
+public class J_ChargePoint implements I_ChargePointRegistration{
 	
 	private boolean hasSocketRestrictions;
 	private int nbSockets;
@@ -50,7 +50,7 @@ public class J_ChargePoint {
 		if (charge_kW < 0 && !this.V2GCapable) {
 			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable");
 		}
-		chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getChargingCapacity_kW());
+		chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getVehicleChargingCapacity_kW());
     }
     
     protected void performCheck() { //This call will check if all chargingrequest have been charged in a timestep. 
@@ -60,59 +60,45 @@ public class J_ChargePoint {
     	}
     }
     
-    // This function is called every timestep before the management function
-    public void updateActiveChargingRequests(GridConnection parentGC, double t_h) {
-    	
-    	// Remove all charging requests that are finished
-    	List<I_ChargingRequest> finishedChargingRequests = new ArrayList<>();
-    	for (I_ChargingRequest chargingRequest : this.currentActiveChargingRequests) {
- 
-    		if ( t_h >= chargingRequest.getLeaveTime_h() ) {
-    			finishedChargingRequests.add(chargingRequest);
-    		}
+    
+    //Functions used by trip/charging session managers to (de)register at the J_ChargePoint
+    public void registerChargingRequest( I_ChargingRequest chargingRequest ) {
+    	// TODO: (Longterm) Make this more complex when we need to take socket restrictions into account.
+    	if(!isRegistered(chargingRequest)) {
+    		this.currentActiveChargingRequests.add(chargingRequest);
     	}
-    	this.currentActiveChargingRequests.removeAll(finishedChargingRequests);
-    	
-    	// Find if there are new charging requests
-    	// Vehicles
-    	for (J_EAEV ev : parentGC.c_electricVehicles) {
-    		if (ev.getAvailability() && !this.currentActiveChargingRequests.contains(ev) ) {
-    			this.addChargingRequest(ev);
-    		}    		
+    	else {
+    		traceln("Trying to register a chargingrequest that is already registered!");
     	}
-    	//ChargingSessions
-    	for (J_EAChargingSession chargingSession : parentGC.c_chargingSessions) {
-    		if (chargingSession.getAvailability(t_h) && !this.currentActiveChargingRequests.contains(chargingSession) ) {
-    			this.addChargingRequest(chargingSession);
-    		}    		
+    }
+    public void deregisterChargingRequest( I_ChargingRequest chargingRequest ) {
+    	if(isRegistered(chargingRequest)) {
+    		this.currentActiveChargingRequests.remove(chargingRequest);
     	}
+    	else {
+    		traceln("Trying to Deregister a chargingrequest that is not registered!");
+    	}
+    }    
+    public boolean isRegistered( I_ChargingRequest chargingRequest ) {
+    	return this.currentActiveChargingRequests.contains(chargingRequest);
     }
     
-    public void addChargingRequest( I_ChargingRequest chargingRequest ) {
-    	// TODO: (Longterm) Make this more complex when we need to take socket restrictions into account.
-    	this.currentActiveChargingRequests.add(chargingRequest);
-    }
     
     public double getMaxChargingCapacity_kW(I_ChargingRequest chargingRequest) {
     	if(hasSocketRestrictions) {
-    		return min(chargingRequest.getChargingCapacity_kW(), this.getSocketChargingCapacity_kW(chargingRequest));    		
+    		return min(chargingRequest.getVehicleChargingCapacity_kW(), this.getSocketChargingCapacity_kW(chargingRequest));    		
     	}
     	else {
-    		return chargingRequest.getChargingCapacity_kW();
+    		return chargingRequest.getVehicleChargingCapacity_kW();
     	}
     }
     
 	public double getChargeDeadline_h(I_ChargingRequest chargingRequest) {
-    	if(hasSocketRestrictions) {
-			double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
-			double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
-			double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
-			double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getSocketChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
-			return chargeDeadline_h;    		
-    	}
-    	else {
-    		return chargingRequest.getChargeDeadline_h();
-    	}
+		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
+		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+		double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
+		double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getMaxChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
+		return chargeDeadline_h;    		
 	}
 	
 	
@@ -143,7 +129,7 @@ public class J_ChargePoint {
     		}
     	}
     	else {
-    		return chargingRequest.getChargingCapacity_kW();
+    		return chargingRequest.getVehicleChargingCapacity_kW();
     	}
     }
     
@@ -174,16 +160,21 @@ public class J_ChargePoint {
 	}
 	
     public void storeStatesAndReset() {
-    	this.storedActiveChargingRequests = currentActiveChargingRequests;
-    	currentActiveChargingRequests = new ArrayList<>();	
+    	this.storedActiveChargingRequests = new ArrayList<>(this.currentActiveChargingRequests);
+    	this.currentActiveChargingRequests.clear();
     }
     
     public void restoreStates() {
-    	currentActiveChargingRequests = storedActiveChargingRequests;
+    	this.currentActiveChargingRequests = new ArrayList<>(this.storedActiveChargingRequests);
+    	this.storedActiveChargingRequests.clear();
     }
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return "ChargePoint: hasSocketRestrictions: " + this.hasSocketRestrictions + 
+				", V1G: " + this.V1GCapable + ", V2G: " + this.V2GCapable + 
+				", ChargingCapacityPerSocket_kW: " + this.maxChargeCapacityPerSocket_kW +
+				", currentNrOfChargeRequests: " + this.currentActiveChargingRequests.size();
+				
 	}
 }
