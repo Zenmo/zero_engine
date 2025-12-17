@@ -1342,12 +1342,6 @@
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1666189454453</Id>
-				<Name><![CDATA[J_EAConversionCurtailer]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1666879973864</Id>
 				<Name><![CDATA[J_SimulationResults]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -1401,12 +1395,6 @@
 				<Id>1673445448885</Id>
 				<Name><![CDATA[J_ConnectionContract]]></Name>
 				<Folder>1752680962144</Folder>
-			</JavaClass>
-			<JavaClass>
-				<Id>1678469210821</Id>
-				<Name><![CDATA[J_EAConversionCurtailerHeat]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1692861398767</Id>

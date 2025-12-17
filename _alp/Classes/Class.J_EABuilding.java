@@ -114,7 +114,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		}
 	}
 
-
 	@Override
 	public String toString() {
 		return
@@ -124,7 +123,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			"lossFactor_WpK = " + this.lossFactor_WpK + ", "+
 			"heatCapacity_JpK = " + this.heatCapacity_JpK + ", "+
 			//"ambientTemperature_degC = "+this.ambientTemperature_degC + ", " +
-
 			//"heatConsumed_kWh = "+ this.heatConsumed_kWh + "kWh" +
 			"parentAgent = " + parentAgent; // + ", "
 	}
@@ -134,9 +132,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		double tempDelta_degC = deltaEnergy_kWh / (this.heatCapacity_JpK / 3.6E6 );
 		//traceln("heatCapacity_JpK: %s", heatCapacity_JpK);
 		this.temperature_degC += tempDelta_degC;
-		//this.stateOfCharge_fr = ( this.temperature_degC - this.minTemperature_degC) / (this.maxTemperature_degC - this.minTemperature_degC);
-		//traceln("SOC: " + stateOfCharge_fr);
-		
 	}
 
 	@Override

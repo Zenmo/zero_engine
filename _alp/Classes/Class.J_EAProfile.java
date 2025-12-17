@@ -34,7 +34,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	    	this.timestep_h = profileTimestep_h;
 	    }
 	    
-	    //this.activeProductionEnergyCarriers.add(this.energyCarrier);
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 	    
 		registerEnergyAsset();
@@ -62,7 +61,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     }
     
     @Override
-
     public void operate(double time_h) {
     	if (enableProfileLooping && time_h >= a_energyProfile_kWh.length * profileTimestep_h) {
     		time_h = time_h % a_energyProfile_kWh.length * profileTimestep_h;
@@ -89,7 +87,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
-	
     public void curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
@@ -109,7 +106,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
     }
-    
 	
     public double getProfileScaling_fr() {
     	return profileScaling_fr;

@@ -168,7 +168,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	@Override
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		double tempDelta_degC = deltaEnergy_kWh / (heatCapacity_JpK / 3.6E6 );
-		temperature_degC += tempDelta_degC;
+		this.temperature_degC += tempDelta_degC;
 		stateOfCharge_fr = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 	}
 
