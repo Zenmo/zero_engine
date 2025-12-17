@@ -192,7 +192,7 @@ f_connectionMetering();
 
 double f_operateFixedAssets()
 {/*ALCODESTART::1668528300576*/
-c_dieselVehicles.forEach(v -> v.f_updateAllFlows());
+c_petroleumFuelVehicles.forEach(v -> v.f_updateAllFlows());
 c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
 c_consumptionAssets.forEach(c -> c.f_updateAllFlows());
 c_productionAssets.forEach(p -> p.f_updateAllFlows());
@@ -443,8 +443,8 @@ if (j_ea instanceof I_HeatingAsset) {
 }
 
 if (j_ea instanceof J_EAVehicle vehicle) {
-	if (vehicle instanceof J_EADieselVehicle dieselVehicle) {
-		c_dieselVehicles.add( dieselVehicle );		
+	if (vehicle instanceof J_EAPetroleumFuelVehicle petroleumFuelVehicle) {
+		c_petroleumFuelVehicles.add( petroleumFuelVehicle );		
 	} else if (vehicle instanceof J_EAHydrogenVehicle hydrogenVehicle) {
 		c_hydrogenVehicles.add(hydrogenVehicle);		
 	} else if (vehicle instanceof J_EAEV ev) {
@@ -458,10 +458,10 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
-		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
-		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+		} else if (vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
 			tripTracker.setAnnualDistance_km(30_000);
@@ -554,7 +554,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	}
 } else if  (j_ea instanceof J_EAProfile profileAsset) {
 	c_profileAssets.add(profileAsset);
-} else if (j_ea instanceof J_EADieselTractor tractor) {
+} else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
 } else if (j_ea instanceof J_EAChargePoint charger) {
 	if(p_chargingManagement == null){
@@ -774,8 +774,8 @@ energyModel.c_energyAssets.remove(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
-	if (vehicle instanceof J_EADieselVehicle) {
-		c_dieselVehicles.remove( (J_EADieselVehicle)vehicle );		
+	if (vehicle instanceof J_EAPetroleumFuelVehicle) {
+		c_petroleumFuelVehicles.remove( (J_EAPetroleumFuelVehicle)vehicle );		
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
 		c_hydrogenVehicles.remove((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {

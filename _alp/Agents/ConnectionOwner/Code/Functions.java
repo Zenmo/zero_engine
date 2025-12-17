@@ -81,7 +81,7 @@ if (myGridoperator != null) {
 
 double f_updateFinances()
 {/*ALCODESTART::1660742520265*/
-//TODO: Diesel costs still missing!! [GH 21/11/2022] -> Won't be in anylogic model, but in postprocessing.
+//TODO: PetroleumFuel costs still missing!! [GH 21/11/2022] -> Won't be in anylogic model, but in postprocessing.
 
 // get current energy flows
 f_gatherEnergyFlows();
@@ -168,7 +168,7 @@ else if( v_energySupplierDistrictHeat instanceof EnergyCoop ) {
 	v_balanceHeat_eur -= transactionCost_eur;
 }
 
-v_balanceDiesel_eur += v_dieselVolume_kWh * .196; // TODO: UGLY HACK
+v_balancePetroleumFuel_eur += v_petroleumFuelVolume_kWh * .196; // TODO: UGLY HACK
 */
 /*ALCODEEND*/}
 
@@ -179,7 +179,7 @@ v_electricityVolume_kWh = 0;
 v_heatVolume_kWh = 0;
 v_methaneVolume_kWh = 0;
 v_hydrogenVolume_kWh = 0;
-v_dieselVolume_kWh = 0;
+v_petroleumFuelVolume_kWh = 0;
 
 
 // gather electricity flows, convert to volume-per-timestep to facilitate financial transactions
@@ -188,14 +188,14 @@ for(GridConnection n :  gridConnections.getConnections() ) {
 	v_heatVolume_kWh += (n.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - n.v_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) * energyModel.p_timeStep_h;
 	v_methaneVolume_kWh += (n.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.METHANE) - n.v_currentProductionFlows_kW.get(OL_EnergyCarriers.METHANE)) * energyModel.p_timeStep_h;
 	v_hydrogenVolume_kWh += (n.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HYDROGEN) - n.v_currentProductionFlows_kW.get(OL_EnergyCarriers.HYDROGEN)) * energyModel.p_timeStep_h;
-	v_dieselVolume_kWh += (n.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.DIESEL) - n.v_currentProductionFlows_kW.get(OL_EnergyCarriers.DIESEL)) * energyModel.p_timeStep_h;
+	v_petroleumFuelVolume_kWh += (n.v_currentConsumptionFlows_kW.get(OL_EnergyCarriers.PETROLEUM_FUEL) - n.v_currentProductionFlows_kW.get(OL_EnergyCarriers.PETROLEUM_FUEL)) * energyModel.p_timeStep_h;
 }
 
 v_totalElectricityUsed_kWh += v_electricityVolume_kWh;
 v_totalHeatUsed_kWh += v_heatVolume_kWh;
 v_totalMethaneUsed_kWh += v_methaneVolume_kWh;
 v_totalHydrogenUsed_kWh += v_hydrogenVolume_kWh;
-v_totalDieselUsed_kWh += v_dieselVolume_kWh;
+v_totalPetroleumFuelUsed_kWh += v_petroleumFuelVolume_kWh;
 /*ALCODEEND*/}
 
 double f_updateIncentives()
@@ -719,7 +719,7 @@ return v_hydrogenPrice_eurpkWh;
 double f_resetStates()
 {/*ALCODESTART::1704371830113*/
 // Reset energytotals
-//v_totalElectricityUsed_kWh = v_totalHeatUsed_kWh = v_totalMethaneUsed_kWh = v_totalHydrogenUsed_kWh = v_totalDieselUsed_kWh = 0;
+//v_totalElectricityUsed_kWh = v_totalHeatUsed_kWh = v_totalMethaneUsed_kWh = v_totalHydrogenUsed_kWh = v_totalPetroleumFuelUsed_kWh = 0;
 // Reset finances
 //v_balanceElectricity_eur = v_balanceElectricityDelivery_eur = v_balanceElectricityTransport_eur = v_balanceElectricityTax_eur = 0;
 

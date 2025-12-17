@@ -71,7 +71,7 @@
 				</Option>
 				<Option>
 					<Id>1668600528877</Id>
-					<Name><![CDATA[DIESEL]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -291,7 +291,7 @@
 				</Option>
 				<Option>
 					<Id>1685008578606</Id>
-					<Name><![CDATA[DIESEL_DEMAND]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_DEMAND]]></Name>
 				</Option>
 				<Option>
 					<Id>1685030175392</Id>
@@ -303,15 +303,15 @@
 				</Option>
 				<Option>
 					<Id>1668602156278</Id>
-					<Name><![CDATA[DIESEL_VEHICLE]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_VEHICLE]]></Name>
 				</Option>
 				<Option>
 					<Id>1700138621293</Id>
-					<Name><![CDATA[DIESEL_VAN]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_VAN]]></Name>
 				</Option>
 				<Option>
 					<Id>1699367407696</Id>
-					<Name><![CDATA[DIESEL_TRUCK]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_TRUCK]]></Name>
 				</Option>
 				<Option>
 					<Id>1660202624229</Id>
@@ -535,7 +535,7 @@
 				</Option>
 				<Option>
 					<Id>1679503416680</Id>
-					<Name><![CDATA[DIESEL_FIXED]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_FIXED]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -908,11 +908,11 @@
 				</Option>
 				<Option>
 					<Id>1729599301974</Id>
-					<Name><![CDATA[DIESEL_PRODUCTION_KW]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_PRODUCTION_KW]]></Name>
 				</Option>
 				<Option>
 					<Id>1729161184713</Id>
-					<Name><![CDATA[DIESEL_CONSUMPTION_KW]]></Name>
+					<Name><![CDATA[PETROLEUM_FUEL_CONSUMPTION_KW]]></Name>
 				</Option>
 				<Option>
 					<Id>1729161184714</Id>
@@ -1440,7 +1440,7 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1711009967838</Id>
-				<Name><![CDATA[J_EADieselVehicle]]></Name>
+				<Name><![CDATA[J_EAPetroleumFuelVehicle]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1495,7 +1495,7 @@
 			</JavaClass>
 			<JavaClass>
 				<Id>1737633433233</Id>
-				<Name><![CDATA[J_EADieselTractor]]></Name>
+				<Name><![CDATA[J_EAPetroleumFuelTractor]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>

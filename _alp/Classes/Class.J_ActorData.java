@@ -14,7 +14,7 @@ public class J_ActorData implements Serializable {
 	public String heatVolume_kWh;
 	public String methaneVolume_kWh;
 	public String hydrogenVolume_kWh;
-	public String dieselVolume_kWh;
+	public String petroleumFuelVolume_kWh;
 	//public String electricityContractType;
 	//public String heatContractType;
 	//public String methaneContractType;
@@ -49,7 +49,7 @@ public class J_ActorData implements Serializable {
 		this.heatVolume_kWh = "";
 		this.methaneVolume_kWh = "";
 		this.hydrogenVolume_kWh = "";
-		this.dieselVolume_kWh = "";
+		this.petroleumFuelVolume_kWh = "";
 		//this.electricityContractType = "";
 		//this.heatContractType = "";
 		//this.methaneContractType = "";
@@ -80,7 +80,7 @@ public class J_ActorData implements Serializable {
 			"heatVolume_kWh = " + heatVolume_kWh +" " +
 			"methaneVolume_kWh = " + methaneVolume_kWh +" " +
 			"hydrogenVolume_kWh = " + hydrogenVolume_kWh +" " +
-			"dieselVolume_kWh = " + dieselVolume_kWh + " " +
+			"petroleumFuelVolume_kWh = " + petroleumFuelVolume_kWh + " " +
 			//"electricityContractType = " + electricityContractType +" " +
 			//"heatContractType = " + heatContractType +" " +
 			//"methaneContractType = " + methaneContractType +" " +
@@ -94,7 +94,7 @@ public class J_ActorData implements Serializable {
 			"taxContractScope = " + taxContractScope + " ";
 	}
 
-	public void updateData(String actorID, String group, String gridOperator, String parentCoop, String energySupplier, String ownedGridConnection, String energySupplierDistrictHeat,double electricityVolume_kWh, double heatVolume_kWh, double methaneVolume_kWh, double hydrogenVolume_kWh, double dieselVolume_kWh, /*String electricityContractType, String heatContractType, String methaneContractType, String hydrogenContractType,*/ double balanceElectricity_eur, double balanceElectricityDelivery_eur, double balanceElectricityTransport_eur, double balanceElectricityTax_eur, String deliveryContractScope, String transportContractScope, String taxContractScope, boolean b_methaneUsedWithoutContracts, boolean b_hydrogenUsedWithoutContracts) {
+	public void updateData(String actorID, String group, String gridOperator, String parentCoop, String energySupplier, String ownedGridConnection, String energySupplierDistrictHeat,double electricityVolume_kWh, double heatVolume_kWh, double methaneVolume_kWh, double hydrogenVolume_kWh, double petroleumFuelVolume_kWh, /*String electricityContractType, String heatContractType, String methaneContractType, String hydrogenContractType,*/ double balanceElectricity_eur, double balanceElectricityDelivery_eur, double balanceElectricityTransport_eur, double balanceElectricityTax_eur, String deliveryContractScope, String transportContractScope, String taxContractScope, boolean b_methaneUsedWithoutContracts, boolean b_hydrogenUsedWithoutContracts) {
 		this.actorID = actorID;
 		this.group = group;
 		this.gridOperator = gridOperator;
@@ -106,7 +106,7 @@ public class J_ActorData implements Serializable {
 		this.heatVolume_kWh = heatVolume_kWh  + "";
 		this.methaneVolume_kWh = methaneVolume_kWh + "";
 		this.hydrogenVolume_kWh = hydrogenVolume_kWh + "";
-		this.dieselVolume_kWh = dieselVolume_kWh + "";
+		this.petroleumFuelVolume_kWh = petroleumFuelVolume_kWh + "";
 		//this.electricityContractType = electricityContractType + "";
 		//this.heatContractType = heatContractType + "";
 		//this.methaneContractType = methaneContractType + "";

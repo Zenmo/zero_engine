@@ -1,28 +1,28 @@
 /**
- * J_EAConversionDieselVehicle
+ * J_EAConversionPetroleumFuelVehicle
  */
-public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
+public class J_EAPetroleumFuelVehicle extends J_EAVehicle implements Serializable {
 
-	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.DIESEL;
+	private OL_EnergyCarriers energyCarrierConsumed = OL_EnergyCarriers.PETROLEUM_FUEL;
 
 	/**
      * Default constructor
      */
-    public J_EADieselVehicle() {
+    public J_EAPetroleumFuelVehicle() {
     }
 
     /**
      * Constructor initializing the fields
      */
-    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker ) {
+    public J_EAPetroleumFuelVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker ) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
-	    /*if (energyAssetType == OL_EnergyAssetType.DIESEL_VAN) {
-	    	traceln("DieselVan energyconsumption: %s", energyConsumption_kWhpkm);
+	    /*if (energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN) {
+	    	traceln("PetroleumFuelVan energyconsumption: %s", energyConsumption_kWhpkm);
 	    }*/
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.DIESEL_VEHICLE; // AANPASSING ATE, scheelt code in Interface
+	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE; // AANPASSING ATE, scheelt code in Interface
 	    this.tripTracker = tripTracker; 
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;
@@ -34,7 +34,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     @Override
     public void f_updateAllFlows() {
     	
-    	flowsMap.put(OL_EnergyCarriers.DIESEL, this.energyUse_kW);
+    	flowsMap.put(OL_EnergyCarriers.PETROLEUM_FUEL, this.energyUse_kW);
 
     	if (parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
@@ -42,7 +42,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	/*if (Double.isNaN(this.energyUse_kW)) {
-    		throw new RuntimeException("Diesel vehicle energyUse_kW is NaN!");
+    		throw new RuntimeException("PetroleumFuel vehicle energyUse_kW is NaN!");
     	}*/
     	//Pair<J_FlowsMap, Double> flowspair = new Pair(this.flowsMap, this.energyUse_kW);
     	clear(); 
@@ -57,7 +57,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	public boolean startTrip() {
 		if (available) {
 			this.available = false;
-			//traceln("Diesel vehicle starting trip!");
+			//traceln("PetroleumFuel vehicle starting trip!");
 			return true;
 		} else {
 			traceln("Trip not started because vehicle not available!");
@@ -86,7 +86,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 			mileage_km += marginalTripDist_km;
 	    	double energyUsedThisTimestep_kWh = marginalTripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 	    	energyUsed_kWh += energyUsedThisTimestep_kWh;
-	    	//dieselConsumption_kW = energyUsedThisTimestep_kWh / timestep_h;
+	    	//petroleumFuelConsumption_kW = energyUsedThisTimestep_kWh / timestep_h;
 	    	energyUse_kW += energyUsedThisTimestep_kWh / timestep_h;
 			return true;
 		}

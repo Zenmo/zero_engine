@@ -154,8 +154,8 @@ c_energyAssets.add(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
-	if (vehicle instanceof J_EADieselVehicle) {
-		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );		
+	if (vehicle instanceof J_EAPetroleumFuelVehicle) {
+		c_petroleumFuelVehicles.add( (J_EAPetroleumFuelVehicle)vehicle );		
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
 		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
@@ -165,10 +165,10 @@ if (j_ea instanceof J_EAVehicle) {
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
-		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
-		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+		} else if (vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, rowIndex, energyModel.t_h*60, vehicle);
 		} else {
@@ -315,8 +315,8 @@ c_energyAssets.add(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
 	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
-	if (vehicle instanceof J_EADieselVehicle) {
-		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );		
+	if (vehicle instanceof J_EAPetroleumFuelVehicle) {
+		c_petroleumFuelVehicles.add( (J_EAPetroleumFuelVehicle)vehicle );		
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
 		c_hydrogenVehicles.add((J_EAHydrogenVehicle)vehicle);		
 	} else if (vehicle instanceof J_EAEV) {
@@ -327,10 +327,10 @@ if (j_ea instanceof J_EAVehicle) {
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
-		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, energyModel.t_h*60, vehicle);
-		} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+		} else if (vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, energyModel.t_h*60, vehicle);
 			tripTracker.setAnnualDistance_km(30_000);

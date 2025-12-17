@@ -80,7 +80,7 @@ v_currentPowerElectricity_kW = 0;
 v_currentPowerMethane_kW = 0;
 v_currentPowerHydrogen_kW = 0;
 v_currentPowerHeat_kW = 0;
-v_currentPowerDiesel_kW = 0;
+v_currentPowerPetroleumFuel_kW = 0;
 
 v_currentElectricityConsumption_kW = 0;
 v_currentElectricityProduction_kW = 0;

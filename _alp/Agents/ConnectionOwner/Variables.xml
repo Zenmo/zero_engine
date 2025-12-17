@@ -481,7 +481,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1669024165241</Id>
-		<Name><![CDATA[v_dieselVolume_kWh]]></Name>
+		<Name><![CDATA[v_petroleumFuelVolume_kWh]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>740</X>
 		<Y>770</Y>
@@ -504,7 +504,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1669024172107</Id>
-		<Name><![CDATA[v_balanceDiesel_eur]]></Name>
+		<Name><![CDATA[v_balancePetroleumFuel_eur]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>-240</X>
 		<Y>750</Y>
@@ -870,7 +870,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1676900973470</Id>
-		<Name><![CDATA[v_totalDieselUsed_kWh]]></Name>
+		<Name><![CDATA[v_totalPetroleumFuelUsed_kWh]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>550</X>
 		<Y>770</Y>

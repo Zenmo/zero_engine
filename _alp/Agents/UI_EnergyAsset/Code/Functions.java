@@ -10,7 +10,7 @@ if (j_ea != null) {
 	v_currentConsumptionHydrogen_kW = j_ea.hydrogenConsumption_kW;
 	v_currentProductionHeat_kW = j_ea.heatProduction_kW;
 	v_currentConsumptionHeat_kW = j_ea.heatConsumption_kW;
-	v_currentConsumptionDiesel_kW = j_ea.dieselConsumption_kW;
+	v_currentConsumptionPetroleumFuel_kW = j_ea.petroleumFuelConsumption_kW;
 	v_currentStateOfCharge_r = j_ea.getCurrentStateOfCharge();
 	v_powerFraction_fr = j_ea.v_powerFraction_fr;
 	*/
@@ -40,7 +40,7 @@ v_currentProductionHydrogen_kW = arr[2];
 v_currentConsumptionHydrogen_kW = arr[6];
 v_currentProductionHeat_kW = arr[3];
 v_currentConsumptionHeat_kW = arr[7];
-v_currentConsumptionDiesel_kW = arr[8];
+v_currentConsumptionPetroleumFuel_kW = arr[8];
 /*ALCODEEND*/}
 
 double f_setCoordinatesUIElements()
@@ -81,7 +81,7 @@ v_currentProductionHydrogen_kW += arr[2];
 v_currentConsumptionHydrogen_kW += arr[6];
 v_currentProductionHeat_kW += arr[3];
 v_currentConsumptionHeat_kW += arr[7];
-v_currentConsumptionDiesel_kW += arr[8];
+v_currentConsumptionPetroleumFuel_kW += arr[8];
 /*ALCODEEND*/}
 
 double f_addFlows(J_FlowsMap flowsMap)
@@ -94,7 +94,7 @@ v_currentProductionHydrogen_kW = max(0, -flowsMap.get(OL_EnergyCarriers.HYDROGEN
 v_currentConsumptionHydrogen_kW = max(0, flowsMap.get(OL_EnergyCarriers.HYDROGEN));
 v_currentProductionHeat_kW = max(0, -flowsMap.get(OL_EnergyCarriers.HEAT));
 v_currentConsumptionHeat_kW = max(0, flowsMap.get(OL_EnergyCarriers.HEAT));
-v_currentConsumptionDiesel_kW = max(0, flowsMap.get(OL_EnergyCarriers.DIESEL));
+v_currentConsumptionPetroleumFuel_kW = max(0, flowsMap.get(OL_EnergyCarriers.PETROLEUM_FUEL));
 
 
 /*ALCODEEND*/}
@@ -109,7 +109,7 @@ v_currentProductionHydrogen_kW = max(0, -flowsMap.get(OL_EnergyCarriers.HYDROGEN
 v_currentConsumptionHydrogen_kW = max(0, flowsMap.get(OL_EnergyCarriers.HYDROGEN));
 v_currentProductionHeat_kW = max(0, -flowsMap.get(OL_EnergyCarriers.HEAT));
 v_currentConsumptionHeat_kW = max(0, flowsMap.get(OL_EnergyCarriers.HEAT));
-v_currentConsumptionDiesel_kW = max(0, flowsMap.get(OL_EnergyCarriers.DIESEL));
+v_currentConsumptionPetroleumFuel_kW = max(0, flowsMap.get(OL_EnergyCarriers.PETROLEUM_FUEL));
 
 
 /*ALCODEEND*/}
