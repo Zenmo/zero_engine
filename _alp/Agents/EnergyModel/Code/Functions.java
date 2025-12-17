@@ -978,9 +978,9 @@ for (J_EA e : c_energyAssets) {
 			}
 		}
 		if (e instanceof J_EAStorageHeat) { // includes J_EABuilding
-			totalAmbientHeating_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
-			totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
-			totalEnergyProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
+			totalAmbientHeating_MWh += ((J_EAStorageHeat)e).ambientEnergyAbsorbed_kWh/1000;
+			totalHeatProduced_MWh += ((J_EAStorageHeat)e).ambientEnergyAbsorbed_kWh/1000;
+			totalEnergyProduced_MWh += ((J_EAStorageHeat)e).ambientEnergyAbsorbed_kWh/1000;
 			deltaThermalEnergySinceStart_MWh += (((J_EAStorageHeat)e).getRemainingHeatStorageHeat_kWh() - ((J_EAStorageHeat)e).getStartingHeatStorageHeat_kWh())/1000;						
 		}
 		if (e instanceof J_EAEV) {

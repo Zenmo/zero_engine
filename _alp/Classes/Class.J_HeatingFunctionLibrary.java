@@ -22,8 +22,8 @@ public abstract class J_HeatingFunctionLibrary {
     		else if(remainingPTProduction_kW > 0) {
     			chargeSetpoint_kW = remainingPTProduction_kW;
     		}
-    		hotWaterBuffer.v_powerFraction_fr = chargeSetpoint_kW / hotWaterBuffer.getCapacityHeat_kW();
-    		hotWaterBuffer.f_updateAllFlows(hotWaterBuffer.v_powerFraction_fr);
+    		double powerFraction_fr = chargeSetpoint_kW / hotWaterBuffer.getCapacityHeat_kW();
+    		hotWaterBuffer.f_updateAllFlows(powerFraction_fr);
     		
 			double heatBufferCharge_kW = hotWaterBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
 			
@@ -57,8 +57,8 @@ public abstract class J_HeatingFunctionLibrary {
 		double heatIntoBuffer_kW =  hotWaterDemandFromHeatingAsset_kW - hotWaterDemand_kW;
 				
 
-		hotWaterBuffer.v_powerFraction_fr = heatIntoBuffer_kW / hotWaterBuffer.getCapacityHeat_kW();
-		hotWaterBuffer.f_updateAllFlows(hotWaterBuffer.v_powerFraction_fr);
+		double powerFraction_fr = heatIntoBuffer_kW / hotWaterBuffer.getCapacityHeat_kW();
+		hotWaterBuffer.f_updateAllFlows(powerFraction_fr);
 
 		
     	return hotWaterDemandFromHeatingAsset_kW;

@@ -87,9 +87,6 @@
 		<Parameter>
 			<Name><![CDATA[p_uid]]></Name>
 		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_schillabel_heatingPBL]]></Name>
-		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

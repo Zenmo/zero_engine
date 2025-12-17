@@ -45,8 +45,11 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     }
 
     @Override
-    //public Pair<J_FlowsMap, Double> f_updateAllFlows(double time_h) {
-    public void f_updateAllFlows(double time_h) {
+    public void f_updateAllFlows(double powerFraction_fr) {
+    	throw new RuntimeException("J_EAProfile.f_updateAllFlows(powerFraction_fr) not supperted for J_EAProfile! Use J_EAProfile.f_updateProfileFlows(t_h) instead!");
+    }
+    
+    public void f_updateProfileFlows(double time_h) {
 
     	operate(time_h-this.profileStarTime_h);
 

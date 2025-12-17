@@ -86,8 +86,8 @@ public class J_EAChargePoint extends zero_engine.J_EA implements Serializable {
 			}
 			
 			// Call the regular J_EA updateAllFlows and operate
-			this.v_powerFraction_fr = power_kW / this.capacityElectric_kW;
-			super.f_updateAllFlows( );
+			double powerFraction_fr = power_kW / this.capacityElectric_kW;
+			super.f_updateAllFlows(powerFraction_fr);
 	    	return;
 	    }
 	    
