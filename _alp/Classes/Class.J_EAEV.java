@@ -34,6 +34,11 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
      * Constructor initializing the fields
      */
     public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
+    	this(parentAgent, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timestep_h, energyConsumption_kWhpkm, vehicleScaling, energyAssetType, tripTracker, true);
+    }
+    
+    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {    
+    	this.available = available;
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectricity_kW; // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh;
@@ -42,7 +47,7 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		this.timestep_h = timestep_h;
 		this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 		this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.ELECTRIC_VEHICLE; // AANPASSING ATE: VRAGEN AAN GILLIS: asset type meegeven in functie J_EAV, want scheelt switch statement in iEA functie.
+	    this.energyAssetType = energyAssetType;
 	    this.tripTracker = tripTracker;
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;	    	
@@ -63,7 +68,6 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		
 		registerEnergyAsset();
     }
-    
     
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {

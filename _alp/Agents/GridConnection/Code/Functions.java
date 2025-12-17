@@ -255,7 +255,6 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		c_electricVehicles.add(ev);
 		energyModel.c_EVs.add(ev);	
 		ev.setV2GActive(p_chargingManagement.getV2GActive());
-		
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
@@ -281,7 +280,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		
 		vehicle.tripTracker = tripTracker;	
 	}
-	else if(vehicle instanceof J_EAEV ev){
+	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){
 		tripTracker.prepareNextActivity((energyModel.t_h-energyModel.p_runStartTime_h)*60, p_chargePoint);
 	}
 	c_tripTrackers.add( tripTracker );
