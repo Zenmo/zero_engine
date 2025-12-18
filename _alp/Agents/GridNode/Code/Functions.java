@@ -559,23 +559,36 @@ return ds;
 
 double f_getCurrentChargingInformation()
 {/*ALCODESTART::1758209089894*/
-v_currentChargingPower_kW = 0;
-v_currentNumberOfChargingChargePoints = 0;
+v_currentChargingPowerBalancingThisGN_kW = 0;
+v_currentNumberOfChargeRequestsBalancingThisGN = 0;
 
 for(GridConnection GC : c_connectedGridConnections){
-	if(GC instanceof GCPublicCharger){
-		for(J_EAChargePoint charger : GC.c_chargers){
-			v_currentChargingPower_kW += charger.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-			v_currentNumberOfChargingChargePoints += charger.getCurrentNumberOfChargingSockets();
+	if(GC.f_getChargingManagement() instanceof J_ChargingManagementGridBalancing){
+		for(J_EAEV ev : GC.c_electricVehicles){
+			v_currentChargingPowerBalancingThisGN_kW += ev.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 		}
+		for(J_EAChargingSession cs : GC.c_chargingSessions){
+			v_currentChargingPowerBalancingThisGN_kW += cs.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
+		}
+		v_currentNumberOfChargeRequestsBalancingThisGN += GC.f_getChargePoint().getCurrentNumberOfChargeRequests();
 	}
 }
 
 // Low pass filter
 double filterTimeScale_h = 5*24;
 double filterDiffGain_r = 1/(filterTimeScale_h/energyModel.p_timeStep_h);
-v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_currentChargingPower_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
+v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_currentChargingPowerBalancingThisGN_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
 //v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
 
+/*ALCODEEND*/}
+
+int f_getCurrentNumberOfChargeRequestsBalancingThisGN()
+{/*ALCODESTART::1765548180792*/
+return v_currentNumberOfChargeRequestsBalancingThisGN;
+/*ALCODEEND*/}
+
+double f_getCurrentChargingPowerBalancingThisGN_kW()
+{/*ALCODESTART::1765548222744*/
+return v_currentChargingPowerBalancingThisGN_kW;
 /*ALCODEEND*/}
 

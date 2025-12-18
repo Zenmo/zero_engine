@@ -38,10 +38,10 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
     	super.operate(ratioOfCapacity);
     }
     
-	@Override
+	/*@Override
 	public double getCurrentTemperature() {
 		return outputTemperature_degC;
-	}
+	}*/
  
 	/**
 	 * This number is here for model snapshot storing purpose<br>

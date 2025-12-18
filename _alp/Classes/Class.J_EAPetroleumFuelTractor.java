@@ -49,7 +49,7 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
     }
     
     @Override
-    public void f_updateAllFlows(double t_h) {
+    public void f_updateProfileFlows(double t_h) {
          operate(t_h);
          if (parentAgent instanceof GridConnection) {        
             ((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
@@ -57,6 +57,11 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
         this.lastFlowsMap.cloneMap(this.flowsMap);
         this.lastEnergyUse_kW = this.energyUse_kW;
         this.clear();
+    }
+    
+    @Override
+    public void f_updateAllFlows(double powerFraction_fr) {
+    	throw new RuntimeException("J_EADieselTractor.f_updateAllFlows(powerFraction_fr) not supperted for J_EADieselTractor! Use J_EADieselTractor.f_updateProfileFlows(t_h) instead!");
     }
     
     @Override

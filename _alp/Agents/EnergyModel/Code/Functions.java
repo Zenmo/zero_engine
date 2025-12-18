@@ -129,20 +129,23 @@ v_totalBatteryChargeAmount_MWh = 0;
 v_totalBatteryEnergyUsed_MWh = 0;
 
 for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs and c_storageAssets
-	if( ea instanceof J_EAStorageElectric ) {
-		J_EAStorageElectric e = (J_EAStorageElectric)ea;
-		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
-		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
+	if( ea instanceof J_EAStorageElectric storageElectric) {
+		v_totalBatteryDischargeAmount_MWh += storageElectric.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += storageElectric.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += storageElectric.getEnergyUsed_kWh() / 1000;
 	}
 	
-	if( ea instanceof J_EAEV ) {
-		J_EAEV e = (J_EAEV)ea;
-		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
-		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
+	if( ea instanceof J_EAEV ev) {
+		v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
 	}
 	
+	if( ea instanceof J_EAChargingSession cs) {
+		v_totalBatteryDischargeAmount_MWh += cs.getTotalDischargeAmount_kWh() / 1000;
+		v_totalBatteryChargeAmount_MWh += cs.getTotalChargeAmount_kWh() / 1000;
+		v_totalBatteryEnergyUsed_MWh += cs.getEnergyUsed_kWh() / 1000;
+	}
 }
 
 //Calculate delta stored energy in battery for energy balance check
@@ -267,8 +270,8 @@ for (GridConnection GC : c_gridConnections) {
 	
 	GC.c_tripTrackers.forEach(tt->{
 		tt.storeAndResetState();
-		tt.setStartIndex(p_runStartTime_h);
-		tt.prepareNextActivity(p_runStartTime_h*60);
+		tt.setStartIndex(p_runStartTime_h, GC.f_getChargePoint());
+		//tt.prepareNextActivity(p_runStartTime_h*60, GC.f_getChargePoint());
 		});
 	if (GC instanceof GCHouse) {
 		if (((GCHouse)GC).p_cookingTracker != null) {
@@ -407,7 +410,7 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->{
 		tt.restoreState();
-		tt.prepareNextActivity((t_h-p_runStartTime_h)*60);
+		//tt.prepareNextActivity((t_h-p_runStartTime_h)*60, GC.f_getChargePoint());
 		});	
 	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
 	if (GC instanceof GCHouse) {
@@ -483,6 +486,9 @@ if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % (p_runEndTime_h - p_run
 
 //Update t_h
 t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
+
+//Update time variables
+J_TimeVariables.updateTimeVariables(v_timeStepsElapsed);
 
 // Update tijdreeksen in leesbare variabelen
 f_updateTimeseries(t_h);
@@ -978,9 +984,9 @@ for (J_EA e : c_energyAssets) {
 			}
 		}
 		if (e instanceof J_EAStorageHeat) { // includes J_EABuilding
-			totalAmbientHeating_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
-			totalHeatProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
-			totalEnergyProduced_MWh += ((J_EAStorageHeat)e).energyAbsorbed_kWh/1000;
+			totalAmbientHeating_MWh += ((J_EAStorageHeat)e).ambientEnergyAbsorbed_kWh/1000;
+			totalHeatProduced_MWh += ((J_EAStorageHeat)e).ambientEnergyAbsorbed_kWh/1000;
+			totalEnergyProduced_MWh += ((J_EAStorageHeat)e).ambientEnergyAbsorbed_kWh/1000;
 			deltaThermalEnergySinceStart_MWh += (((J_EAStorageHeat)e).getRemainingHeatStorageHeat_kWh() - ((J_EAStorageHeat)e).getStartingHeatStorageHeat_kWh())/1000;						
 		}
 		if (e instanceof J_EAEV) {

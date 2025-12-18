@@ -68,13 +68,29 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return this.consumptionScaling_fr;
     }
     
+    @Override
+    public void f_updateAllFlows(double v_powerFraction_fr) {
+		throw new RuntimeException("J_EAConsumption.f_updateAllFlows() should be called without arguments!");
+	}
+	
+	public void f_updateAllFlows() {
+		double ratioOfCapacity = profilePointer.getCurrentValue();		
+		this.operate(ratioOfCapacity);
+		if (ratioOfCapacity>0.0) { // Skip when there is no consumption -> saves time?
+			if (parentAgent instanceof GridConnection) {    		
+	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
+	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
+	    	}
+
+		}
+		this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
+    }
+    
 	@Override
 	public void operate(double ratioOfCapacity) {
-		
-		if (this.profilePointer != null) {			
-			ratioOfCapacity = this.profilePointer.getCurrentValue();
-		}
-		
+
     	double consumption_kW = ratioOfCapacity * this.yearlyDemand_kWh * this.consumptionScaling_fr;
 		
     	this.energyUse_kW = consumption_kW;
@@ -85,33 +101,6 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			assetFlowsMap.put(this.assetFlowCategory, consumption_kW);
 		}
    	}
-	
-    /*public Pair<J_FlowsMap, Double> curtailElectricityConsumption(double curtailmentSetpoint_kW) {
-    	if (this.energyCarrier != OL_EnergyCarriers.ELECTRICITY) {
-    		throw new RuntimeException("Unable to curtail the Consumption asset with energycarrier: " + this.energyCarrier);
-    	}
-
-    	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
-    	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
-    	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
-    	loadLoad_kWh += curtailmentPower_kW * timestep_h;
-
-    	J_FlowsMap flowsMap = new J_FlowsMap();
-    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -curtailmentPower_kW);
-    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, -curtailmentPower_kW);
-    	
-    	this.energyUse_kW = -curtailmentPower_kW;
-
-    	this.lastFlowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY) - curtailmentPower_kW);
-
-    	this.lastEnergyUse_kW -= curtailmentPower_kW;
-    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
-    	}
-    	return new Pair(flowsMap, this.energyUse_kW);
-    }*/
 
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;

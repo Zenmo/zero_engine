@@ -13,6 +13,7 @@ import java.util.EnumSet;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
+
 public class J_ChargingManagementSimple implements I_ChargingManagement {
 
     private GridConnection gc;
@@ -22,11 +23,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementSimple() {
-    	
-    }
-    
-    public J_ChargingManagementSimple( GridConnection gc ) {
+    public J_ChargingManagementSimple( GridConnection gc) {
     	this.gc = gc;
     }
       
@@ -38,13 +35,11 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging() {
+    public void manageCharging(J_ChargePoint chargePoint) {
     	double t_h = gc.energyModel.t_h;
-    	for (J_EAEV ev : gc.c_electricVehicles) {
-    		if (ev.available) {			
-	    		// just charge 'dumb', full power until full
-	    		ev.f_updateAllFlows(1.0);
-    		}
+
+    	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
+    		chargePoint.charge(chargeRequest, chargePoint.getMaxChargingCapacity_kW(chargeRequest));
     	}
     }
     
@@ -66,10 +61,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     
     //Store and reset states
 	public void storeStatesAndReset() {
-		//Noting to reset and store
+		
 	}
 	public void restoreStates() {
-		//Nothing to restore
+		
 	}
 	
 	
@@ -78,11 +73,4 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 		return "Active charging type: " + this.activeChargingType;
 
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

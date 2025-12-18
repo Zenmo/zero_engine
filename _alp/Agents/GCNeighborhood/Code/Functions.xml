@@ -218,6 +218,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1736869275213</Id>
 		<Name><![CDATA[f_batteryManagementBalanceNoGCCapacity_NBH]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1680</X>
 		<Y>570</Y>
 		<Label>

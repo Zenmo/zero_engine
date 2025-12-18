@@ -47,6 +47,7 @@
 
 @author: Gillis Hommen
 @since: 28-12-2022]]></Description>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1230</X>
 		<Y>180</Y>
 		<Label>

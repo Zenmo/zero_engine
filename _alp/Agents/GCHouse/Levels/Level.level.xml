@@ -128,4 +128,78 @@
 		</Font>
 		<Alignment>LEFT</Alignment>
 	</Text>
+	<TimePlot>
+		<Id>1765379026595</Id>
+		<Name><![CDATA[HeatpumpPlot1]]></Name>
+		<X>1940</X>
+		<Y>790</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<AutoUpdate>true</AutoUpdate>
+		<RecurrenceProperties>
+			<Id>1765379026593</Id>
+			<OccurrenceAtTime>true</OccurrenceAtTime>
+			<OccurrenceDate>1674979200000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[15]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Width>490</Width>
+		<Height>260</Height>
+		<BackgroundColor/>
+		<BorderColor/>
+		<ChartArea>
+			<XOffset>50</XOffset>
+			<YOffset>30</YOffset>
+			<Width>410</Width>
+			<Height>170</Height>
+			<BackgroundColor>-1</BackgroundColor>
+			<BorderColor>-16777216</BorderColor>
+			<GridColor>-12566464</GridColor>
+		</ChartArea>
+		<Legend>
+			<Place>SOUTH</Place>
+			<TextColor>-16777216</TextColor>
+			<Size>30</Size>
+		</Legend>
+		<Labels>
+			<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+			<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+			<TextColor>-12566464</TextColor>
+		</Labels>
+		<ShowLegend>true</ShowLegend>
+		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
+		<TimeWindowUnits>DAY</TimeWindowUnits>
+		<VerScaleFromExpression>0</VerScaleFromExpression>
+		<VerScaleToExpression>1</VerScaleToExpression>
+		<VerScaleType>AUTO</VerScaleType>
+		<DrawLine>true</DrawLine>
+		<Interpolation>LINEAR</Interpolation>
+		<DatasetExpression>
+			<Title>Min</Title>
+			<Id>1765380741625</Id>
+			<Expression>my_dataset</Expression>
+			<Color>-2448096</Color>
+			<Expression2>p_BuildingThermalAsset.getCurrentTemperature()</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<SamplesToKeep>288</SamplesToKeep>
+		<TimeWindowExpression>3</TimeWindowExpression>
+		<FillAreaUnderLine>false</FillAreaUnderLine>
+		<LabelFormat>dd_MM_HH</LabelFormat>
+	</TimePlot>
 </Presentation>

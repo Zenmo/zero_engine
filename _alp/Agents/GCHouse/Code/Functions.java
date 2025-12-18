@@ -295,9 +295,10 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 	p_cookingTracker.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h); // also calls f_updateAllFlows in HOB asset	
 	
 	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
-	if (p_BuildingThermalAsset != null) {
+	throw new RuntimeException("Cooking trackers and HOBs are not properly integrated with current heating management!");
+	/*if (p_BuildingThermalAsset != null) {
 		p_BuildingThermalAsset.v_powerFraction_fr += residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW(); // Does this work out correctly with new heatingManagement structure??
-	}
+	}*/
 }
 /*ALCODEEND*/}
 

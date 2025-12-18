@@ -34,7 +34,7 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
     	super.operate(ratioOfCapacity);
     }
     
-	@Override
+	//@Override
 	public double getCurrentTemperature() {
 		return outputTemperature_degC;
 	}

@@ -33,7 +33,6 @@ abstract public class J_EA implements Cloneable {
 	 public OL_EnergyAssetType energyAssetType;
 	 public OL_AssetFlowCategories assetFlowCategory;
 	 public String energyAssetName;
-	 protected double v_powerFraction_fr = 0; // Better to make this one protected? Public is needed to access from other packages, for example when inheriting a GC-type in your project with its own flexmanagement functions
 	 protected J_FlowsMap flowsMap = new J_FlowsMap();
 	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
 	 protected J_ValueMap assetFlowsMap = new J_ValueMap(OL_AssetFlowCategories.class);
@@ -48,12 +47,7 @@ abstract public class J_EA implements Cloneable {
   	 protected double timestep_h;
  
   	 protected boolean isRemoved = false;
-  	 
-  	 // Are these needed?
-	 protected double heatProduced_kWh = 0.0;
-	 protected double heatConsumed_kWh = 0.0;
-	 protected double electricityProduced_kWh = 0.0;
-	 
+
     /**
      * Default constructor
      */
@@ -68,15 +62,7 @@ abstract public class J_EA implements Cloneable {
 		registerEnergyAsset();
     }
     
-    protected void registerEnergyAsset() {
-		/*if (parentAgent instanceof GridConnection) {
-			this.selectedEnergyCarriers = ((GridConnection)parentAgent).energyModel.c_selectedEnergyCarriers;
-		}
-		else if (parentAgent instanceof GridNode) {
-			this.selectedEnergyCarriers = ((GridNode)parentAgent).energyModel.c_selectedEnergyCarriers;
-		}*/
-		
-		// TODO: check if EA is using an energycarrier that is not in the selectedenergycarriers. If so, throw an error!
+    protected void registerEnergyAsset() {	
     	if ( parentAgent instanceof GridConnection) {
     		((GridConnection)parentAgent).f_connectToJ_EA(this);
     	} else {
@@ -100,20 +86,12 @@ abstract public class J_EA implements Cloneable {
     		((GridConnection)parentAgent).f_removeTheJ_EA(this);
     	} else {    		
     		traceln("Energy asset %s doesn't have a valid parent agent! Energy Asset not removed!", this);
-    	}
-    	
+    	}    	
     }
    
     public void f_updateAllFlows(double powerFraction_fr) {
-
-     	//double powerFractionBounded_fr = min(1,max(-1, powerFraction_fr));
-     	this.v_powerFraction_fr = min(1,max(-1, powerFraction_fr));
-     	this.f_updateAllFlows();
-     	
-    }
-    
-    public void f_updateAllFlows() {
-     	operate(this.v_powerFraction_fr);
+     	powerFraction_fr = min(1,max(-1, powerFraction_fr));
+     	operate(powerFraction_fr);
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
     	}
@@ -123,15 +101,10 @@ abstract public class J_EA implements Cloneable {
     	this.clear();
     }
     
-    public void f_setPowerFraction_fr(double powerFraction_fr) {
-    	this.v_powerFraction_fr = powerFraction_fr;
-    }
-    
     public void clear() {
 	    flowsMap.clear();
 	    assetFlowsMap.clear();
     	energyUse_kW = 0;
-    	v_powerFraction_fr = 0;
     }
 
 	public abstract void operate(double ratioOfCapacity);
@@ -146,16 +119,6 @@ abstract public class J_EA implements Cloneable {
     public void restoreStates() {
     	// Each energy asset that has some states should overwrite this function!
     	energyUsed_kWh = energyUsedStored_kWh;
-    }
-    
-    public double getCurrentTemperature() {
-    	throw new RuntimeException("Method getCurrentTemperature() should be overridden in child class of J_EA!");
-    	//return 0;
-    }
-      
-    public void updateAmbientTemperature(double currentAmbientTemperature_degC) {
-    	// only for storage agents. Does it belong in this superclass?
-    	throw new RuntimeException("Method updateAmbientTemperature() should be overridden in child class of J_EA!");
     }
     
     public double getEnergyUsed_kWh() {
@@ -180,13 +143,7 @@ abstract public class J_EA implements Cloneable {
 		return allActiveEnergyCarriers;
 	}
 	
-    //public void setUI_EnergyAsset(UI_EnergyAsset ui_energyAsset) {
-    	//this.ui_energyAsset = ui_energyAsset;
-    //}
-    
     public J_FlowsMap getLastFlows() {
-    	//return lastFlowsArray;
-    	//return new Pair(this.lastFlowsMap, this.lastEnergyUse_kW);
     	return this.lastFlowsMap;
     }
     
@@ -205,10 +162,7 @@ abstract public class J_EA implements Cloneable {
 	 public void setAssetFlowCategory(OL_AssetFlowCategories assetFlowCat) {
 		 this.assetFlowCategory = assetFlowCat;
 	 }
-    
-//    public double getOutputTemperature_degC() {
-//   	return 0;
-//    }
+
 	/* 
     @Override    
     public Object clone() { 

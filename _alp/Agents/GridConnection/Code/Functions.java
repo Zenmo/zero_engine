@@ -134,8 +134,6 @@ f_manageHeating();
 
 f_manageEVCharging();
 
-f_manageChargePoints();
-
 f_manageBattery();
 /*ALCODEEND*/}
 
@@ -158,25 +156,13 @@ v_currentFinalEnergyConsumption_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
-// Categorical power flows
-/*v_fixedConsumptionElectric_kW = 0;
-v_electricHobConsumption_kW = 0;
-v_heatPumpElectricityConsumption_kW = 0;
-v_hydrogenElectricityConsumption_kW = 0;
-v_evChargingPowerElectric_kW = 0;
-v_batteryPowerElectric_kW = 0;
-v_windProductionElectric_kW = 0;
-v_pvProductionElectric_kW = 0;
-v_ptProductionHeat_kW = 0;
-v_conversionPowerElectric_kW = 0;
-v_CHPProductionElectric_kW = 0;
-v_districtHeatDelivery_kW = 0;*/
 
 if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity();
 }
 
-c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h));
+c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h, p_chargePoint));
+c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(energyModel.t_h, p_chargePoint));
 
 f_operateFixedAssets();
 f_operateFlexAssets();
@@ -184,10 +170,6 @@ f_operateFlexAssets();
 f_curtailment();
 
 f_connectionMetering();
-
-//if (!Double.isFinite(v_currentPowerElectricity_kW)) {
-//	traceln("Gridconnection %s with connection_id %s has NaN or infinite v_currentPowerElectricity_kW at time %s!", p_gridConnectionID, p_company_connection_id, energyModel.t_h);
-//}
 /*ALCODEEND*/}
 
 double f_operateFixedAssets()
@@ -196,7 +178,7 @@ c_petroleumFuelVehicles.forEach(v -> v.f_updateAllFlows());
 c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
 c_consumptionAssets.forEach(c -> c.f_updateAllFlows());
 c_productionAssets.forEach(p -> p.f_updateAllFlows());
-c_profileAssets.forEach(p -> p.f_updateAllFlows(energyModel.t_h));
+c_profileAssets.forEach(p -> p.f_updateProfileFlows(energyModel.t_h));
 /*ALCODEEND*/}
 
 double f_resetStates()
@@ -218,206 +200,22 @@ v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runS
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 
+//Store states and reset charge point
+if(p_chargePoint != null){
+	p_chargePoint.storeStatesAndReset();
+}
 /*ALCODEEND*/}
 
 double f_manageEVCharging()
 {/*ALCODESTART::1671095995172*/
-if(c_electricVehicles.size() > 0){
+if(c_electricVehicles.size() + c_chargingSessions.size() > 0 ){
 	if (p_chargingManagement == null) {
-		//throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
-		traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
-		
+		throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
+		//traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
 	} else {
-		p_chargingManagement.manageCharging();
+		p_chargingManagement.manageCharging(p_chargePoint);
 	}
 }
-
-/*ALCODEEND*/}
-
-double f_simpleCharging()
-{/*ALCODESTART::1671095995175*/
-// Removing items while going through a loop, so we do so in reverse order
-
-ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
-int countDeletedItems = 0;
-
-for ( int i = 0; i < copiedVehicleList.size(); i++ ) {
-	J_EAEV ev = copiedVehicleList.get(i);
-	if (ev.vehicleScaling != 0) {
-		if( !ev.getAvailability() || ev.getCurrentStateOfCharge_fr() == 1 ) {
-			ev.f_updateAllFlows( 0.0 );
-			c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-			countDeletedItems ++;
-		}
-		else {
-			ev.f_updateAllFlows( 1.0 );
-		}
-	}
-}
-/*ALCODEEND*/}
-
-double f_maxSpreadCharging()
-{/*ALCODESTART::1671095995177*/
-ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
-int countDeletedItems = 0;
-
-for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	J_EAEV ev = copiedVehicleList.get(i);
-	if (ev.vehicleScaling != 0) {
-		if(!ev.getAvailability() || ev.getCurrentStateOfCharge_fr() == 1) {
-			ev.f_updateAllFlows( 0.0 );
-			c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-			countDeletedItems ++;
-		}
-		else {
-			double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getCurrentStateOfCharge_kWh());
-			double maxChargingPower_kW = ev.getCapacityElectric_kW();
-			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-			
-			double emptyKWhInBattery = ev.getStorageCapacity_kWh() - ev.getCurrentStateOfCharge_kWh();
-			double timeToNextTrip_h = ev.tripTracker.v_nextEventStartTime_min / 60 - energyModel.t_h;			
-			// At the end of the simulation the triptracker returns back to the start of the year, so we make sure the timeToNextTrip is not negative
-			timeToNextTrip_h = (timeToNextTrip_h % 8760 + 8760) % 8760;
-			
-			double chargingPower_kW;		
-			if ( energyModel.t_h >= chargeDeadline_h && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-				//traceln("Urgency charging! May exceed connection capacity!");
-				chargingPower_kW = maxChargingPower_kW / 2 ;	// delen door 2 als quickfix doordat HAVI trucks anders mega pieken veroorzaken in de middag waardoor 'slim' laden beetje nutteloos lijkt
-			}
-			else {
-				chargingPower_kW = emptyKWhInBattery / timeToNextTrip_h;
-			}
-			
-			chargingPower_kW = min(chargingPower_kW, maxChargingPower_kW); // cap the charging speed at the electric capacity
-			double ratio_fr = chargingPower_kW / maxChargingPower_kW;
-			ev.f_updateAllFlows( ratio_fr );
-		}
-	}
-}
-/*ALCODEEND*/}
-
-double f_maxPowerCharging(double availableCapacityForCharging_kW)
-{/*ALCODESTART::1671095995179*/
-double remainingChargingPower_kW = availableCapacityForCharging_kW;
-
-ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
-int countDeletedItems = 0;
-
-// Sort vehicles by time until charge deadline
-copiedVehicleList.sort((ev1, ev2) -> Double.compare(f_getChargeDeadline(ev1), f_getChargeDeadline(ev2)));
-c_vehiclesAvailableForCharging = copiedVehicleList;
-
-for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	J_EAEV ev = copiedVehicleList.get(i);
-	if (ev.vehicleScaling != 0) {
-		if( !ev.getAvailability() || ev.getCurrentStateOfCharge_fr() == 1 ) {
-			ev.f_updateAllFlows( 0.0 );
-			c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-			countDeletedItems ++;
-		}
-		else {
-			//traceln("current time: " + energyModel.t_h);
-			//traceln("ev: " + ev);
-			//traceln("dist: " + ev.getTripTracker().v_tripDist_km);
-			double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getCurrentStateOfCharge_kWh());
-			//traceln("chargeNeedForNextTrip_kWh: " + chargeNeedForNextTrip_kWh);
-			double maxChargingPower_kW = ev.getCapacityElectric_kW();
-			double chargeDeadline_h = floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-			
-			//double starttime = ev.tripTracker.v_nextEventStartTime_min / 60;
-			//traceln("starttime: " + starttime);
-			//traceln("chargeDeadline_h: " + chargeDeadline_h);
-			
-			double chargingPower_kW;
-			if ( energyModel.t_h >= chargeDeadline_h && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-				//traceln("Urgency charging! May exceed connection capacity!");
-				chargingPower_kW = maxChargingPower_kW;	
-			}
-			else {
-				chargingPower_kW = remainingChargingPower_kW;
-			}
-			
-			chargingPower_kW = min(chargingPower_kW, maxChargingPower_kW);
-			remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW);
-			double ratio_fr = chargingPower_kW / maxChargingPower_kW;
-			ev.f_updateAllFlows( ratio_fr );
-			//gridConnection.v_evChargingPowerElectric_kW += flowsArray[4] - flowsArray[0];
-			
-			//double x = flowsArray[4] - flowsArray[0];
-			//traceln("flow: " + x);
-			//traceln("ev: " + ev);
-			
-		}
-	}
-}
-/*ALCODEEND*/}
-
-double f_chargeOnPrice(double currentElectricityPriceConsumption_eurpkWh,double availableChargingPower_kW)
-{/*ALCODESTART::1671095995181*/
-ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
-int countDeletedItems = 0;
-
-double remainingChargePower_kW = availableChargingPower_kW;
-
-for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	J_EAEV vehicle = copiedVehicleList.get(i);
-	
-	if (vehicle.getVehicleScaling() == 0) {
-		continue;
-	}
-	
-	if(!vehicle.getAvailability() ){
-		vehicle.f_updateAllFlows( 0 );
-		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-		countDeletedItems ++;
-	} else {
-		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
-		double chargeNeedForNextTrip_kWh = max(0, vehicle.energyNeedForNextTrip_kWh - vehicle.getCurrentStateOfCharge_kWh());
-		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-		double maxChargingPower_kW = vehicle.getCapacityElectric_kW();
-		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
-		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
-
-		double priceGain_kWhpeur = 1; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-		double urgencyGain_eurpkWh = 0.4; // How strongly WTP-price shifts based on charging flexibility
-		double maxSpreadChargingPower_kW = min(chargeNeedForNextTrip_kWh / (max(1, timeToNextTrip_min - v_additionalTimeSpreadCharging_MIN) / 60), maxChargingPower_kW);
-		//traceln("maxSpreadChargingPower_kW" + maxSpreadChargingPower_kW);
-		double WTPoffset_eurpkWh = 0.05*(1-energyModel.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
-		
-		double chargeSetpoint_kW = 0;
-
-		if ( energyModel.t_h*60 >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-			//traceln("Urgency charging! May exceed connection capacity!");
-			chargeSetpoint_kW = maxChargingPower_kW;				
-		} else if ( vehicle.getCurrentStateOfCharge_fr() < 0.15 ) {
-			chargeSetpoint_kW = min(remainingChargePower_kW, maxChargingPower_kW);
-		} else {
-			//double WTPprice_eurpkWh = v_electricityPriceLowPassed_eurpkWh - flexibilityGain_eurph * (chargeDeadline_min - energyModel.t_h*60 - 600);
-			v_WTPCharging_eurpkWh = WTPoffset_eurpkWh + v_electricityPriceLowPassed_eurpkWh + urgencyGain_eurpkWh * ( maxSpreadChargingPower_kW / maxChargingPower_kW ); // Scale WTP based on flexibility expressed in terms of power-fraction
-			//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); // Scale WTP based on flexibility expressed in terms of power-fraction
-			chargeSetpoint_kW = max(0, maxChargingPower_kW * (v_WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_kWhpeur);
-			chargeSetpoint_kW = min(remainingChargePower_kW, chargeSetpoint_kW);
-			//traceln("Trying to charge cheaply, time " + energyModel.t_h*60 + " minutes, charge setpoint: " + chargeSetpoint_kW + " kW");
-			/*if (this.getIndex() == 0){
-				traceln("wtp = " + v_WTPCharging_eurpkWh);
-				traceln("remainingChargePower_kW: " + remainingChargePower_kW + "charge setpoint kW: " + chargeSetpoint_kW);
-			}*/
-		}
-		//}
-		//traceln("Hello! Charge setpoint: " + chargeSetpoint_kW);
-		//Pair<J_FlowsMap, Double> flowsPair = vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
-		vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
-		//v_evChargingPowerElectric_kW += flowsMap.get(OL_EnergyCarriers.ELECTRICITY);
-		
-		// This seems wrong? the evChargingPowerElectric is keeping track of the total, but is subtracted every time!!
-		//remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW 
-
-		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);;
-		
-	}
-	
-}
-
 
 /*ALCODEEND*/}
 
@@ -451,6 +249,9 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		if(p_chargingManagement == null){
 			f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 		}
+		if(p_chargePoint == null){
+			p_chargePoint = new J_ChargePoint(true, true);
+		}
 		c_electricVehicles.add(ev);
 		energyModel.c_EVs.add(ev);	
 		ev.setV2GActive(p_chargingManagement.getV2GActive());
@@ -460,10 +261,10 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
 		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 		} else if (vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
@@ -471,13 +272,16 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 			while (rowIndex == 28 || rowIndex == 42 || rowIndex == 150) { // 445, 457, 483, 540, 563 all impossible triptrackers for vehicles with 116 kWh and 0.16 kWhpkm
 				rowIndex = uniform_discr(0, 200);
 			}
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle);
+			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
 		}
 		
 		vehicle.tripTracker = tripTracker;	
+	}
+	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){
+		tripTracker.prepareNextActivity((energyModel.t_h-energyModel.p_runStartTime_h)*60, p_chargePoint);
 	}
 	c_tripTrackers.add( tripTracker );
 	//v_vehicleIndex ++;
@@ -556,11 +360,15 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
-} else if (j_ea instanceof J_EAChargePoint charger) {
+} else if (j_ea instanceof J_EAChargingSession chargingSession) {
 	if(p_chargingManagement == null){
 		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
-	c_chargers.add(charger);
+	if(p_chargePoint == null){
+		p_chargePoint = new J_ChargePoint(true, true);
+	}
+	c_chargingSessions.add(chargingSession);
+	chargingSession.setV2GActive(p_chargingManagement.getV2GActive());
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
 		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
@@ -573,82 +381,6 @@ double f_connectToJ_EA(J_EA j_ea)
 {/*ALCODESTART::1693307881182*/
 f_connectToJ_EA_default(j_ea);
 // Abstract method to be used call GC-subtype specific functions
-/*ALCODEEND*/}
-
-double f_chargeOnPrice_V2G(double currentElectricityPriceConsumption_eurpkWh,double availableChargingPower_kW)
-{/*ALCODESTART::1695822607494*/
-ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
-int countDeletedItems = 0;
-
-double remainingChargePower_kW = availableChargingPower_kW;
-
-for ( int i = 0; i < copiedVehicleList.size(); i++ ){
-	J_EAEV vehicle = copiedVehicleList.get(i);
-	
-	if (vehicle.getVehicleScaling() == 0) {
-		continue;
-	}
-	
-	if(!vehicle.getAvailability() ){
-		vehicle.f_updateAllFlows( 0 );
-		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
-		countDeletedItems ++;
-	} else {
-		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
-		double chargeNeedForNextTrip_kWh = vehicle.energyNeedForNextTrip_kWh - vehicle.getCurrentStateOfCharge_kWh();
-		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - energyModel.t_h*60;
-		double maxChargingPower_kW = vehicle.getCapacityElectric_kW();
-		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - energyModel.t_h*60;
-		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * 60 * energyModel.p_timeStep_h;
-
-		double priceGain_kWhpeur = 1; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-		double urgencyGain_eurpkWh = 0.4; // How strongly WTP-price shifts based on charging flexibility
-		double maxSpreadChargingPower_kW = min(chargeNeedForNextTrip_kWh / (max(1, timeToNextTrip_min - v_additionalTimeSpreadCharging_MIN) / 60), maxChargingPower_kW);
-		//traceln("maxSpreadChargingPower_kW" + maxSpreadChargingPower_kW);
-		double WTPoffset_eurpkWh = 0;
-		if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 499) {
-			WTPoffset_eurpkWh = 0.05*(1-energyModel.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
-		} else {
-			WTPoffset_eurpkWh = 0.02;
-		}
-		double V2G_WTR_offset_eurpkWh = 0.05;
-		double chargeSetpoint_kW = 0;
-
-		if ( energyModel.t_h*60 >= chargeDeadline_min - 15 && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-			//traceln("Urgency charging! May exceed connection capacity!");
-			chargeSetpoint_kW = maxChargingPower_kW;				
-		} else if ( vehicle.getCurrentStateOfCharge_fr() < 0.15 ) {
-			chargeSetpoint_kW = min(remainingChargePower_kW, maxChargingPower_kW);
-		} else {
-			//double WTPprice_eurpkWh = v_electricityPriceLowPassed_eurpkWh - flexibilityGain_eurph * (chargeDeadline_min - energyModel.t_h*60 - 600);
-			v_WTPCharging_eurpkWh = WTPoffset_eurpkWh + v_electricityPriceLowPassed_eurpkWh + urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / maxChargingPower_kW ); // Scale WTP based on flexibility expressed in terms of power-fraction
-			//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); // Scale WTP based on flexibility expressed in terms of power-fraction
-			chargeSetpoint_kW = max(0, maxChargingPower_kW * (v_WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_kWhpeur);
-			chargeSetpoint_kW = min(remainingChargePower_kW, chargeSetpoint_kW);
-			
-			if ( chargeNeedForNextTrip_kWh < -maxChargingPower_kW*energyModel.p_timeStep_h && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price			
-				v_WTRV2G_eurpkWh  = V2G_WTR_offset_eurpkWh + v_electricityPriceLowPassed_eurpkWh; // Scale WTP based on flexibility expressed in terms of power-fraction
-				chargeSetpoint_kW = min(0, -maxChargingPower_kW * (currentElectricityPriceConsumption_eurpkWh / v_WTRV2G_eurpkWh - 1) * priceGain_kWhpeur);
-				/*if (chargeSetpoint_kW < 0) {
-					traceln(" V2G Active! Power: " + chargeSetpoint_kW );
-				}*/
-				
-			}
-			//traceln("Trying to charge cheaply, time " + energyModel.t_h*60 + " minutes, charge setpoint: " + chargeSetpoint_kW + " kW");
-			/*if (this.getIndex() == 0){
-				traceln("wtp = " + v_WTPCharging_eurpkWh);
-				traceln("remainingChargePower_kW: " + remainingChargePower_kW + "charge setpoint kW: " + chargeSetpoint_kW);
-			}*/
-		}
-
-		vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
-
-		remainingChargePower_kW = availableChargingPower_kW - vehicle.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-		
-	}
-}
-
-
 /*ALCODEEND*/}
 
 double f_initialize()
@@ -772,22 +504,24 @@ double f_removeTheJ_EA_default(J_EA j_ea)
 c_energyAssets.remove(j_ea);
 energyModel.c_energyAssets.remove(j_ea);
 
-if (j_ea instanceof J_EAVehicle) {
-	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
+if (j_ea instanceof J_EAVehicle vehicle) {
 	if (vehicle instanceof J_EAPetroleumFuelVehicle) {
-		c_petroleumFuelVehicles.remove( (J_EAPetroleumFuelVehicle)vehicle );		
+		c_petroleumFuelVehicles.remove( vehicle );		
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
-		c_hydrogenVehicles.remove((J_EAHydrogenVehicle)vehicle);		
-	} else if (vehicle instanceof J_EAEV) {
-		c_electricVehicles.remove(j_ea);
-		energyModel.c_EVs.remove((J_EAEV)vehicle);
+		c_hydrogenVehicles.remove(vehicle);		
+	} else if (vehicle instanceof J_EAEV ev) {
+		c_electricVehicles.remove(ev);
+		energyModel.c_EVs.remove(ev);
+		if(p_chargePoint.isRegistered(ev)){
+			p_chargePoint.deregisterChargingRequest(ev);
+		}
 	}
-	c_vehicleAssets.remove(j_ea);
+	c_vehicleAssets.remove(vehicle);
 		
 	J_ActivityTrackerTrips tripTracker = vehicle.tripTracker;
 	c_tripTrackers.remove( tripTracker );
 	vehicle.tripTracker = null;
-	//v_vehicleIndex --;
+
 } else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
@@ -799,12 +533,9 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if (j_ea instanceof J_EAProduction) {
 	c_productionAssets.remove((J_EAProduction)j_ea);
-	//energyModel.c_productionAssets.remove((J_EAProduction)j_ea);
+
 	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
-		if (otherPV == null) {
-			//v_liveAssetsMetaData.hasPV = false;
-		}
 		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
 		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
 		if ( p_parentNodeElectric != null ) {
@@ -871,8 +602,8 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	c_profileAssets.remove((J_EAProfile)j_ea);
-} else if (j_ea instanceof J_EAChargePoint) {
-	c_chargers.remove(j_ea);
+} else if (j_ea instanceof J_EAChargingSession) {
+	c_chargingSessions.remove(j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -889,8 +620,10 @@ double f_resetStatesAfterRapidRun()
 //Reset specificGC states after rapid run
 f_resetSpecificGCStatesAfterRapidRun();
 
-
-
+//Restore states in charge point
+if(p_chargePoint != null){
+	p_chargePoint.restoreStates();
+}
 
 
 /*ALCODEEND*/}
@@ -1167,7 +900,7 @@ else {
 	}
 	
 	//Fast forward time dependent energy assets (if present)
-	c_chargers.forEach(charger -> charger.fastForwardCharingSessions(energyModel.t_h));
+	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(energyModel.t_h, p_chargePoint));
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
@@ -1176,26 +909,11 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_getChargeDeadline(J_EAEV ev)
-{/*ALCODESTART::1725455130676*/
-double chargeNeedForNextTrip_kWh = max(0, ev.getEnergyNeedForNextTrip_kWh() - ev.getCurrentStateOfCharge_kWh());
-double maxChargingPower_kW = ev.getCapacityElectric_kW();
-
-return floor((ev.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / energyModel.p_timeStep_h) * energyModel.p_timeStep_h;
-
-/*ALCODEEND*/}
-
 double f_initializeDataSets()
 {/*ALCODESTART::1730728785333*/
 v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, (int)(168 / energyModel.p_timeStep_h));
 v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / energyModel.p_timeStep_h));
-
-/*ALCODEEND*/}
-
-double f_manageChargePoints()
-{/*ALCODESTART::1750258434630*/
-c_chargers.forEach( x -> x.f_updateAllFlows(energyModel.t_h) );
 
 /*ALCODEEND*/}
 
@@ -1382,7 +1100,6 @@ double f_activateV2GChargingMode(boolean enableV2G)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
 	p_chargingManagement.setV2GActive(enableV2G);
-	c_chargers.forEach(charger -> charger.setV2GActive(enableV2G));
 	if (enableV2G){
 		f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW);
 	}
@@ -1418,7 +1135,7 @@ switch (chargingType) {
 		managementClass = J_ChargingManagementLocalBalancing.class;
 		break;
 	case BALANCE_GRID:
-		managementClass = J_ChargingManagementLocalBalancing.class;
+		managementClass = J_ChargingManagementGridBalancing.class;
 		break;
 	case MAX_POWER:
 		managementClass = J_ChargingManagementMaxAvailablePower.class;
@@ -1436,16 +1153,6 @@ catch (Exception e) {
 }
 
 p_chargingManagement = chargingManagement;
-
-//TEMPORARY UNTIL CHARGEPOINT MANAGEMENT AND EV CHARGING MANAGEMENT ARE COMBINED
-if (c_chargers.size()>0){
-	if (chargingType == null) {
-			throw new RuntimeException("Charging strategy needed when chargers are present!");
-	}
-	else{
-		c_chargers.forEach(charger -> charger.setChargingAttitude(chargingType));
-	}
-}
 
 //Add new asset management to energyModel
 if(this.p_chargingManagement != null){
@@ -1580,5 +1287,15 @@ return p_chargingManagement;
 I_HeatingManagement f_getHeatingManagement()
 {/*ALCODESTART::1762940962079*/
 return p_heatingManagement;
+/*ALCODEEND*/}
+
+J_ChargePoint f_getChargePoint()
+{/*ALCODESTART::1765551413839*/
+return p_chargePoint;
+/*ALCODEEND*/}
+
+J_ChargePoint f_setChargePoint(J_ChargePoint chargePoint)
+{/*ALCODESTART::1765551488579*/
+this.p_chargePoint = chargePoint;
 /*ALCODEEND*/}
 

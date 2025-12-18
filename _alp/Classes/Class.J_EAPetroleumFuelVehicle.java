@@ -15,6 +15,9 @@ public class J_EAPetroleumFuelVehicle extends J_EAVehicle implements Serializabl
      * Constructor initializing the fields
      */
     public J_EAPetroleumFuelVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker ) {
+    	this(ownerAssetAgent, energyConsumption_kWhpkm, timestep_h, vehicleScaling, energyAssetType, tripTracker, true );
+    }
+    public J_EAPetroleumFuelVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available ) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    /*if (energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN) {
@@ -22,8 +25,9 @@ public class J_EAPetroleumFuelVehicle extends J_EAVehicle implements Serializabl
 	    }*/
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE; // AANPASSING ATE, scheelt code in Interface
-	    this.tripTracker = tripTracker; 
+	    this.energyAssetType = energyAssetType;
+	    this.tripTracker = tripTracker;
+	    this.available = available;
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;
 	    }		
@@ -31,7 +35,7 @@ public class J_EAPetroleumFuelVehicle extends J_EAVehicle implements Serializabl
 		registerEnergyAsset();
 	}
     
-    @Override
+    //@Override
     public void f_updateAllFlows() {
     	
     	flowsMap.put(OL_EnergyCarriers.PETROLEUM_FUEL, this.energyUse_kW);
