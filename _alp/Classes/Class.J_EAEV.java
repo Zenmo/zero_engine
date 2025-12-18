@@ -38,7 +38,6 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
     }
     
     public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {    
-    	this.available = available;
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectricity_kW; // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh;
@@ -49,6 +48,7 @@ public class J_EAEV extends J_EAVehicle implements I_ChargingRequest {
 		this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
 	    this.tripTracker = tripTracker;
+    	this.available = available;
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;	    	
 	    }
