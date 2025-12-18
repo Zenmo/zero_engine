@@ -509,9 +509,12 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		c_dieselVehicles.remove(vehicle);		
 	} else if (vehicle instanceof J_EAHydrogenVehicle) {
 		c_hydrogenVehicles.remove(vehicle);		
-	} else if (vehicle instanceof J_EAEV) {
-		c_electricVehicles.remove(vehicle);
-		energyModel.c_EVs.remove(vehicle);
+	} else if (vehicle instanceof J_EAEV ev) {
+		c_electricVehicles.remove(ev);
+		energyModel.c_EVs.remove(ev);
+		if(p_chargePoint.isRegistered(ev)){
+			p_chargePoint.deregisterChargingRequest(ev);
+		}
 	}
 	c_vehicleAssets.remove(vehicle);
 		
