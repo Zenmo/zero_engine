@@ -68,6 +68,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     	return this.consumptionScaling_fr;
     }
     
+    @Override
     public void f_updateAllFlows(double v_powerFraction_fr) {
 		throw new RuntimeException("J_EAConsumption.f_updateAllFlows() should be called without arguments!");
 	}

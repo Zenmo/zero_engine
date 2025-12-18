@@ -111,6 +111,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    throw new RuntimeException("J_EAProduction operate override is called!");
 	}
 	
+    @Override
 	public void f_updateAllFlows(double v_powerFraction_fr) {
 		throw new RuntimeException("J_EAProduction.f_updateAllFlows() should be called without arguments!");
 	}

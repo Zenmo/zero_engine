@@ -32,7 +32,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
      */
     public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
 		this.parentAgent = parentAgent;
-		//this.heatStorageType = OL_EAStorageTypes.HEATMODEL_BUILDING;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
 		this.timestep_h = timestep_h;
@@ -40,7 +39,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.temperature_degC = initialTemperature_degC;
 		this.heatCapacity_JpK = heatCapacity_JpK;
 		this.ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
-		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
 		this.energyAssetType = OL_EnergyAssetType.BUILDINGTHERMALS;
 	    if (lossFactor_WpK < 0) {
@@ -60,8 +58,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 
 	public double solarHeating() {
-		//traceln("solarAbsorptionFactor_m2: %s", solarAbsorptionFactor_m2);
-		//traceln("solarRadiation_Wpm2: %s", solarRadiation_Wpm2);
 		double solarHeating_kW = this.solarAbsorptionFactor_m2 * this.solarRadiation_Wpm2 / 1000;
 		return solarHeating_kW;
 
@@ -77,10 +73,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
-		//traceln("Building heatCapacity_JpK: %s", this.heatCapacity_JpK);
-		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
-		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
-		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 		if (ratioOfChargeCapacity_r < 0) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
@@ -91,8 +83,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
 		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timestep_h); // Only heat gain from outside air and/or solar irradiance!
 
-		double inputPower_kW = ratioOfChargeCapacity_r * this.capacityHeat_kW; // positive power means lowering the buffer temperature!
-		//traceln("inputPower_kW: %s", inputPower_kW);		
+		double inputPower_kW = ratioOfChargeCapacity_r * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
     	
 		double deltaEnergy_kWh = (solarHeating_kW - lossPower_kW)* this.timestep_h;
 		if (this.interiorDelayTime_h != 0.0) {
@@ -106,9 +97,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.heatCharged_kWh += inputPower_kW * this.timestep_h;
 		
 		this.flowsMap.put(OL_EnergyCarriers.HEAT, inputPower_kW);
-		/*if (Double.isNaN(this.energyUse_kW)) {
-    		throw new RuntimeException("Building thermal model energyUse_kW is NaN!");
-    	}*/
+
 		if (this.assetFlowCategory != null) {
 			assetFlowsMap.put(this.assetFlowCategory, inputPower_kW);
 		}
@@ -122,15 +111,12 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			"temp = " + this.temperature_degC + ", " +
 			"lossFactor_WpK = " + this.lossFactor_WpK + ", "+
 			"heatCapacity_JpK = " + this.heatCapacity_JpK + ", "+
-			//"ambientTemperature_degC = "+this.ambientTemperature_degC + ", " +
-			//"heatConsumed_kWh = "+ this.heatConsumed_kWh + "kWh" +
 			"parentAgent = " + parentAgent; // + ", "
 	}
 
 	@Override
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		double tempDelta_degC = deltaEnergy_kWh / (this.heatCapacity_JpK / 3.6E6 );
-		//traceln("heatCapacity_JpK: %s", heatCapacity_JpK);
 		this.temperature_degC += tempDelta_degC;
 	}
 
@@ -186,31 +172,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.exteriorReleaseSchedule_kWh = this.exteriorReleaseScheduleStored_kWh;		
     }
 
-	/*@Override
-	public double getMinTemperature_degC() {
-		return minTemperature_degC;
-	}*/
-
-	/*@Override
-	public double getMaxTemperature_degC() {
-		return maxTemperature_degC;
-	}*/
-
-	/*public double getStorageCapacity() {
-		return storageCapacity_kWh;
-	}*/
-
-	/*public double getHeatCapacity_JpK() {
-		return heatCapacity_JpK;
-	}*/
-
-	/*
-	@Override
-	public double getHeatCapacity_kW() {
-    	return capacityHeat_kW;
-    }
-	*/
-
 	/*@Override //Storage assets limiteren de opname van warmte niet met 1. Dat is nodig voor de buffer. Die kan wel maximaal zijn capaciteit leverern, maar kan meer opnemen. @Gillis is dat logisch of willen we andere oplossing?
     public double[] operateBounded(double ratioOfCapacity) {
     	double limitedRatioOfCapacity = max(-1, ratioOfCapacity);
@@ -225,7 +186,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	public void updateSolarRadiation(double solarRadiation_Wpm2) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
 		this.solarRadiation_Wpm2 = solarRadiation_Wpm2;
-		//traceln("Updating solarRadiation of building to %s Wpm2!", solarRadiation_Wpm2);
 	}
 	
 	
