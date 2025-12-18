@@ -132,10 +132,10 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		//traceln("sourceAssetHeatPower_kW is set to: "+sourceAssetHeatPower_kW);
 	}
 	
-	@Override
+	/*@Override
 	public double getCurrentTemperature() {
 		return outputTemperature_degC;
-	}
+	}*/
 	
 	public void setBaseTemperature_degC( double baseTemperature_degC) {
 		this.baseTemperature_degC = baseTemperature_degC;

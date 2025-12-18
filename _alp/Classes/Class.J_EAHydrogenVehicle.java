@@ -32,7 +32,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
 		registerEnergyAsset();
 	}
     
-    @Override
+    //@Override
     public void f_updateAllFlows() {
     	
     	flowsMap.put(OL_EnergyCarriers.HYDROGEN, this.energyUse_kW);

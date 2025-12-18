@@ -35,7 +35,7 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 		registerEnergyAsset();
 	}
     
-    @Override
+    //@Override
     public void f_updateAllFlows() {
     	
     	flowsMap.put(OL_EnergyCarriers.DIESEL, this.energyUse_kW);

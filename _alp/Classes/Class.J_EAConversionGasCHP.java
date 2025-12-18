@@ -51,8 +51,8 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 		this.energyUse_kW = methaneConsumption_kW - heatProduction_kW - electricityProduction_kW ;
 		this.energyUsed_kWh += energyUse_kW * timestep_h;
 
-		this.heatProduced_kWh += heatProduction_kW * timestep_h;
-		this.electricityProduced_kWh += electricityProduction_kW * timestep_h;
+		//this.heatProduced_kWh += heatProduction_kW * timestep_h;
+		//this.electricityProduced_kWh += electricityProduction_kW * timestep_h;
 		
 		flowsMap.put(OL_EnergyCarriers.HEAT, -heatProduction_kW);		
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, -electricityProduction_kW);
@@ -93,7 +93,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 				+ "Current heat output: " + -this.getLastFlows().get(OL_EnergyCarriers.HEAT) + " kW";
 	}
 	
-	@Override
+	//@Override
 	public double getCurrentTemperature() {
 		return outputTemperature_degC;
 	}

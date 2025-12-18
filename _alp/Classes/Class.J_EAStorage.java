@@ -20,8 +20,7 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
     public J_EAStorage() {
     }
 
-    public void calculateLoss() {
-    }
+    //public abstract double calculateLoss();
 
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		stateOfCharge_fr += deltaEnergy_kWh / storageCapacity_kWh;
@@ -58,14 +57,14 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 		return this.stateOfCharge_fr * this.storageCapacity_kWh;
 	}
 		
-	@Override
+	/*@Override
 	public double getCurrentTemperature() {
 		return 0;
 	}
 
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) {
-	}
+	}*/
 
     @Override
 	public String toString() {
