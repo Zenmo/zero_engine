@@ -10,7 +10,7 @@ public abstract class J_EAVehicle extends J_EA implements Serializable {
 	protected boolean availableStored = true;
 	protected double energyConsumption_kWhpkm;
 	//private MobilityTracker mobilityTracker = null;
-	public double vehicleScaling;
+	protected double vehicleScaling;
 	public double mileage_km = 0;
 	public J_ActivityTrackerTrips tripTracker;
     /**
@@ -48,7 +48,7 @@ public abstract class J_EAVehicle extends J_EA implements Serializable {
 		return available;
 	}
 	
-	public double getVehicleScaling() {
+	public double getVehicleScaling_fr() {
 		return vehicleScaling;
 	}
 	

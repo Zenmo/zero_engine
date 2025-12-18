@@ -698,12 +698,16 @@
 					<Name><![CDATA[MAX_POWER]]></Name>
 				</Option>
 				<Option>
-					<Id>1755703015841</Id>
-					<Name><![CDATA[CUSTOM]]></Name>
+					<Id>1765536978989</Id>
+					<Name><![CDATA[OFF_PEAK_INTERVAL]]></Name>
 				</Option>
 				<Option>
 					<Id>1762853393712</Id>
 					<Name><![CDATA[NONE]]></Name>
+				</Option>
+				<Option>
+					<Id>1755703015841</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1117,6 +1121,7 @@
 			<Folder>
 				<Id>1752681631114</Id>
 				<Name><![CDATA[GIS]]></Name>
+				<ParentId>1752677832758</ParentId>
 			</Folder>
 			<Folder>
 				<Id>1752681639768</Id>
@@ -1163,6 +1168,11 @@
 				<Id>1762850978631</Id>
 				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
 				<ParentId>1762850958928</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1764938574089</Id>
+				<Name><![CDATA[Globals]]></Name>
+				<ParentId>1752680962144</ParentId>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1526,17 +1536,6 @@
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1749649002419</Id>
-				<Name><![CDATA[J_ChargingSession]]></Name>
-				<Folder>1752680962144</Folder>
-			</JavaClass>
-			<JavaClass>
-				<Id>1749651263461</Id>
-				<Name><![CDATA[J_EACharger]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1752677257516</Id>
 				<Name><![CDATA[I_BatteryManagement]]></Name>
 				<Folder>1762850659543</Folder>
@@ -1703,11 +1702,6 @@
 				<Folder>1762850659543</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1755171209007</Id>
-				<Name><![CDATA[J_EAChargePoint]]></Name>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1755518393955</Id>
 				<Name><![CDATA[J_ChargingManagementMaxAvailablePower]]></Name>
 				<Folder>1762850586274</Folder>
@@ -1790,6 +1784,46 @@
 			<JavaClass>
 				<Id>1763570262548</Id>
 				<Name><![CDATA[J_GlobalParameters]]></Name>
+				<Folder>1764938574089</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1764337491572</Id>
+				<Name><![CDATA[I_ChargingRequest]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1764936717326</Id>
+				<Name><![CDATA[J_TimeVariables]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1764936749914</Id>
+				<Name><![CDATA[J_TimeParameters]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1765192207409</Id>
+				<Name><![CDATA[J_EAChargingSession]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1765383541339</Id>
+				<Name><![CDATA[J_ChargePoint]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1765537283263</Id>
+				<Name><![CDATA[J_ChargingManagementGridBalancing]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1765878809347</Id>
+				<Name><![CDATA[I_ChargePointRegistration]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1765901157331</Id>
+				<Name><![CDATA[J_ChargingSessionData]]></Name>
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>

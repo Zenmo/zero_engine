@@ -15,6 +15,9 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
      * Constructor initializing the fields
      */
     public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker ) {
+    	this(ownerAssetAgent, energyConsumption_kWhpkm, timestep_h, vehicleScaling, energyAssetType, tripTracker, true );
+    }
+    public J_EADieselVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available ) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    /*if (energyAssetType == OL_EnergyAssetType.DIESEL_VAN) {
@@ -23,7 +26,8 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType; //OL_EnergyAssetType.DIESEL_VEHICLE; // AANPASSING ATE, scheelt code in Interface
-	    this.tripTracker = tripTracker; 
+	    this.tripTracker = tripTracker;
+	    this.available = available;
 	    if (tripTracker != null) {
 	    	tripTracker.Vehicle=this;
 	    }		
