@@ -218,7 +218,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1668601315863</Id>
-		<Name><![CDATA[v_currentConsumptionDiesel_kW]]></Name>
+		<Name><![CDATA[v_currentConsumptionPetroleumFuel_kW]]></Name>
 		<X>90</X>
 		<Y>500</Y>
 		<Label>

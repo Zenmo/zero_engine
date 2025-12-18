@@ -1,38 +1,38 @@
 import java.util.*;
 
-public class J_EADieselTractor extends J_EAProfile implements Serializable {
-    final static double DIESEL_ENERGY_DENSITY_KWH_PER_L = 9.7;
+public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializable {
+    final static double PETROLEUM_FUEL_ENERGY_DENSITY_KWH_PER_L = 9.7;
     
-    final double[] dieselConsumptionPerWeek_L;
+    final double[] petroleumFuelConsumptionPerWeek_L;
     final double workDayStart_h = 6;
     final double workDayEnd_h = 17;
  
     /**
      * @param parentAgent
-     * @param yearlyDieselConsumption_l diesel consumption of a single tractor for a whole year
-     * @param dieselConsumptionPerWeek profile of a year of diesel consumption. 
+     * @param yearlyPetroleumFuelConsumption_l petroleumFuel consumption of a single tractor for a whole year
+     * @param petroleumFuelConsumptionPerWeek profile of a year of petroleumFuel consumption. 
      *  Usually expressed in L per ha per week for a specific crop or mix of crops. 
      *  For our purpose the unit doesn't matter.
      * @param timeStep_h
      */
-    public J_EADieselTractor(Agent parentAgent, double yearlyDieselConsumption_L, double[] dieselConsumptionPerWeek, double timeStep_h) {
+    public J_EAPetroleumFuelTractor(Agent parentAgent, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, double timeStep_h) {
         if (parentAgent == null) {
-            throw new RuntimeException("Diesel tractor missing parent agent");
+            throw new RuntimeException("PetroleumFuel tractor missing parent agent");
         }
         
-        if (yearlyDieselConsumption_L <= 100.0) {
+        if (yearlyPetroleumFuelConsumption_L <= 100.0) {
             throw new RuntimeException(
-                String.format("Diesel tractor fuel usage conspicuously low: %d L", yearlyDieselConsumption_L)
+                String.format("PetroleumFuel tractor fuel usage conspicuously low: %d L", yearlyPetroleumFuelConsumption_L)
             );
         }
         
-        if (dieselConsumptionPerWeek == null) {
-            throw new RuntimeException("Tractor diesel consumption profile is null");
+        if (petroleumFuelConsumptionPerWeek == null) {
+            throw new RuntimeException("Tractor petroleumFuel consumption profile is null");
         }
         
-        if (dieselConsumptionPerWeek.length != 52) {
+        if (petroleumFuelConsumptionPerWeek.length != 52) {
             throw new RuntimeException(
-                String.format("Tractor diesel consumption profile has %d weeks instead of 52", dieselConsumptionPerWeek.length)
+                String.format("Tractor petroleumFuel consumption profile has %d weeks instead of 52", petroleumFuelConsumptionPerWeek.length)
             );
         }
         
@@ -41,10 +41,10 @@ public class J_EADieselTractor extends J_EAProfile implements Serializable {
         }
         
         this.parentAgent = parentAgent;
-        this.dieselConsumptionPerWeek_L = calculateDieselConsumptionPerWeek_L(yearlyDieselConsumption_L, dieselConsumptionPerWeek);
+        this.petroleumFuelConsumptionPerWeek_L = calculatePetroleumFuelConsumptionPerWeek_L(yearlyPetroleumFuelConsumption_L, petroleumFuelConsumptionPerWeek);
         this.timestep_h = timeStep_h;
         
-        this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.DIESEL);
+        this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.PETROLEUM_FUEL);
         registerEnergyAsset();
     }
     
@@ -73,16 +73,16 @@ public class J_EADieselTractor extends J_EAProfile implements Serializable {
         
         double currentPower_kW = currentPower_kW(t_h);    
         
-        this.flowsMap.put(OL_EnergyCarriers.DIESEL, currentPower_kW);
+        this.flowsMap.put(OL_EnergyCarriers.PETROLEUM_FUEL, currentPower_kW);
         this.energyUse_kW = currentPower_kW;
         this.energyUsed_kWh += currentPower_kW * timestep_h;    
     }
     
-    private static double[] calculateDieselConsumptionPerWeek_L(double yearlyDieselConsumption_l, double[] weekProfile) {
+    private static double[] calculatePetroleumFuelConsumptionPerWeek_L(double yearlyPetroleumFuelConsumption_l, double[] weekProfile) {
         var profileSum = Arrays.stream(weekProfile).sum();
         
         return Arrays.stream(weekProfile)
-                .map(weekValue -> yearlyDieselConsumption_l * weekValue / profileSum)
+                .map(weekValue -> yearlyPetroleumFuelConsumption_l * weekValue / profileSum)
                 .toArray();
     }
     
@@ -113,9 +113,9 @@ public class J_EADieselTractor extends J_EAProfile implements Serializable {
         if(week == 52) {
         	week = 51;
         }
-        double thisWeekDieselConsumption_L = this.dieselConsumptionPerWeek_L[week];
-        double thisWeekDieselConsumption_kWh = thisWeekDieselConsumption_L * DIESEL_ENERGY_DENSITY_KWH_PER_L;
-        double power_kW = thisWeekDieselConsumption_kWh / workHoursPerWeek();
+        double thisWeekPetroleumFuelConsumption_L = this.petroleumFuelConsumptionPerWeek_L[week];
+        double thisWeekPetroleumFuelConsumption_kWh = thisWeekPetroleumFuelConsumption_L * PETROLEUM_FUEL_ENERGY_DENSITY_KWH_PER_L;
+        double power_kW = thisWeekPetroleumFuelConsumption_kWh / workHoursPerWeek();
         return power_kW;
     }
     

@@ -114,7 +114,7 @@ if(p_gridConnectionID.contains("agrohub")) {
 		//v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
 		//v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
 		//v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-		//v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+		//v_currentPowerPetroleumFuel_kW += v.petroleumFuelConsumption_kW;
 	}
 	
 	//traceln("Agroenergyhub logic!");

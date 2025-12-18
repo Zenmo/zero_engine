@@ -20,7 +20,7 @@ public class J_SimulationResults implements Serializable {
 	public double totalMethaneExport_MWh;
 	public double totalHydrogenImport_MWh;
 	public double totalHydrogenExport_MWh;
-	public double totalDieselImport_MWh;
+	public double totalPetroleumFuelImport_MWh;
 	public Map<String,Double> totalBatteryUnitsInstalled = new LinkedHashMap<String,Double>();
 	public Map<String,Double> totalBatteryChargeAmount_MWh = new LinkedHashMap<String,Double>();
 	public Map<String,Double> totalBatteryDischargeAmount_MWh = new LinkedHashMap<String,Double>();
@@ -46,7 +46,7 @@ public class J_SimulationResults implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_SimulationResults( double v_gridNodeLoadElectricityHSMS_kW, double v_gridNodeLoadElectricityMSLS_kW, double cumulativeCapacityHS, double cumulativeCapacityLS, double netOverload_pct, LinkedHashMap<String,Double> c_timesOfNodePeakLoads_h, LinkedHashMap<String,Double> gridConnectionMaxLoad_fr, double MSLSnodePeakPositiveLoadElectricity_kW, double MSLSnodePeakNegativeLoadElectricity_kW, double totalElectricityImport_MWh, double totalElectricityExport_MWh, double totalMethaneImport_MWh, double totalMethaneExport_MWh, double totalHydrogenImport_MWh, double totalHydrogenExport_MWh, double totalDieselImport_MWh, LinkedHashMap<String,Double> totalBatteryUnitsInstalled, LinkedHashMap<String,Double> totalBatteryChargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryDischargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryInstalledCapacity_MWh, LinkedHashMap<Integer,Double> c_globalElectricityImportProfile_MWhph, LinkedHashMap<Integer,Double> c_globalElectricityExportProfile_MWhph, LinkedHashMap<Integer,Double> totalEVHourlyChargingProfile_kWh, LinkedHashMap<Integer,Double> totalEHGVHourlyChargingProfile_kWh, LinkedHashMap<Integer,Double> totalBatteryHourlyChargingProfile_kWh, double totalSelfConsumption_fr, double totalSelfSufficiency_fr, double TotalEnergyUsed_MWh, double TotalEnergyProduced_MWh, double TotalEnergyCurtailed_MWh, double shareElectricvehiclesInHouseholds) {
+    public J_SimulationResults( double v_gridNodeLoadElectricityHSMS_kW, double v_gridNodeLoadElectricityMSLS_kW, double cumulativeCapacityHS, double cumulativeCapacityLS, double netOverload_pct, LinkedHashMap<String,Double> c_timesOfNodePeakLoads_h, LinkedHashMap<String,Double> gridConnectionMaxLoad_fr, double MSLSnodePeakPositiveLoadElectricity_kW, double MSLSnodePeakNegativeLoadElectricity_kW, double totalElectricityImport_MWh, double totalElectricityExport_MWh, double totalMethaneImport_MWh, double totalMethaneExport_MWh, double totalHydrogenImport_MWh, double totalHydrogenExport_MWh, double totalPetroleumFuelImport_MWh, LinkedHashMap<String,Double> totalBatteryUnitsInstalled, LinkedHashMap<String,Double> totalBatteryChargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryDischargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryInstalledCapacity_MWh, LinkedHashMap<Integer,Double> c_globalElectricityImportProfile_MWhph, LinkedHashMap<Integer,Double> c_globalElectricityExportProfile_MWhph, LinkedHashMap<Integer,Double> totalEVHourlyChargingProfile_kWh, LinkedHashMap<Integer,Double> totalEHGVHourlyChargingProfile_kWh, LinkedHashMap<Integer,Double> totalBatteryHourlyChargingProfile_kWh, double totalSelfConsumption_fr, double totalSelfSufficiency_fr, double TotalEnergyUsed_MWh, double TotalEnergyProduced_MWh, double TotalEnergyCurtailed_MWh, double shareElectricvehiclesInHouseholds) {
 		this.HSMSPeakLoadElectricity_kW = v_gridNodeLoadElectricityHSMS_kW;
 		this.MSLSPeakLoadElectricity_kW = v_gridNodeLoadElectricityMSLS_kW;
 		this.cumulativeCapacityHS = cumulativeCapacityHS;
@@ -62,7 +62,7 @@ public class J_SimulationResults implements Serializable {
 		this.totalMethaneExport_MWh = totalMethaneExport_MWh;
 		this.totalHydrogenImport_MWh = totalHydrogenImport_MWh;
 		this.totalHydrogenExport_MWh = totalHydrogenExport_MWh;
-		this.totalDieselImport_MWh = totalDieselImport_MWh;
+		this.totalPetroleumFuelImport_MWh = totalPetroleumFuelImport_MWh;
 		this.totalBatteryUnitsInstalled = totalBatteryUnitsInstalled;
 		this.totalBatteryChargeAmount_MWh = totalBatteryChargeAmount_MWh;
 		this.totalBatteryDischargeAmount_MWh = totalBatteryDischargeAmount_MWh;
@@ -95,7 +95,7 @@ public class J_SimulationResults implements Serializable {
 			"totalMethaneExport_MWh = " + totalMethaneExport_MWh + " " +
 			"totalHydrogenImport_MWh = " + totalHydrogenImport_MWh + " " +
 			"totalHydrogenExport_MWh = " + totalHydrogenExport_MWh + " "+
-			"totalDieselImport_MWh = " + totalDieselImport_MWh + " " +
+			"totalPetroleumFuelImport_MWh = " + totalPetroleumFuelImport_MWh + " " +
 			"totalBatteryUnitsInstalled = " + totalBatteryUnitsInstalled + " "+
 			"totalBatteryChargeAmount_MWh = " + totalBatteryChargeAmount_MWh + " "+
 			"totalBatteryDischargeAmount_MWh = " + totalBatteryDischargeAmount_MWh + " "+
@@ -113,7 +113,7 @@ public class J_SimulationResults implements Serializable {
 			"shareElectricvehiclesInHouseholds = " + shareElectricvehiclesInHouseholds + " fr";
 	}
 
-	public void updateData( double v_gridNodePeakLoadElectricityHSMS_kW, double v_gridNodePeakLoadElectricityMSLS_kW, double cumulativeCapacityHS, double cumulativeCapacityLS, double netOverload_pct, LinkedHashMap<String,Double> c_timesOfNodePeakLoads_h, LinkedHashMap<String,Double> gridConnectionMaxLoad_fr, double MSLSnodePeakPositiveLoadElectricity_kW, double MSLSnodePeakNegativeLoadElectricity_kW, double totalElectricityImport_MWh, double totalElectricityExport_MWh, double totalMethaneImport_MWh, double totalMethaneExport_MWh, double totalHydrogenImport_MWh, double totalHydrogenExport_MWh, double totalDieselImport_MWh, LinkedHashMap<String,Double> totalBatteryUnitsInstalled, LinkedHashMap<String,Double> totalBatteryChargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryDischargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryInstalledCapacity_MWh, double totalSelfConsumption_fr, double totalSelfSufficiency_fr, double TotalEnergyUsed_MWh, double TotalEnergyProduced_MWh, double TotalEnergyCurtailed_MWh, double shareElectricvehiclesInHouseholds) {
+	public void updateData( double v_gridNodePeakLoadElectricityHSMS_kW, double v_gridNodePeakLoadElectricityMSLS_kW, double cumulativeCapacityHS, double cumulativeCapacityLS, double netOverload_pct, LinkedHashMap<String,Double> c_timesOfNodePeakLoads_h, LinkedHashMap<String,Double> gridConnectionMaxLoad_fr, double MSLSnodePeakPositiveLoadElectricity_kW, double MSLSnodePeakNegativeLoadElectricity_kW, double totalElectricityImport_MWh, double totalElectricityExport_MWh, double totalMethaneImport_MWh, double totalMethaneExport_MWh, double totalHydrogenImport_MWh, double totalHydrogenExport_MWh, double totalPetroleumFuelImport_MWh, LinkedHashMap<String,Double> totalBatteryUnitsInstalled, LinkedHashMap<String,Double> totalBatteryChargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryDischargeAmount_MWh, LinkedHashMap<String,Double> totalBatteryInstalledCapacity_MWh, double totalSelfConsumption_fr, double totalSelfSufficiency_fr, double TotalEnergyUsed_MWh, double TotalEnergyProduced_MWh, double TotalEnergyCurtailed_MWh, double shareElectricvehiclesInHouseholds) {
 		this.HSMSPeakLoadElectricity_kW = v_gridNodePeakLoadElectricityHSMS_kW;
 		this.MSLSPeakLoadElectricity_kW = v_gridNodePeakLoadElectricityMSLS_kW;
 		this.cumulativeCapacityHS =cumulativeCapacityHS;
@@ -129,7 +129,7 @@ public class J_SimulationResults implements Serializable {
 		this.totalMethaneExport_MWh = roundToDecimal( totalMethaneExport_MWh, 2 );
 		this.totalHydrogenImport_MWh = roundToDecimal( totalHydrogenImport_MWh, 2 );
 		this.totalHydrogenExport_MWh = roundToDecimal( totalHydrogenExport_MWh, 2 );
-		this.totalDieselImport_MWh = roundToDecimal( totalDieselImport_MWh, 2 );
+		this.totalPetroleumFuelImport_MWh = roundToDecimal( totalPetroleumFuelImport_MWh, 2 );
 		this.totalBatteryUnitsInstalled = totalBatteryUnitsInstalled;
 		this.totalBatteryChargeAmount_MWh = totalBatteryChargeAmount_MWh;
 		this.totalBatteryDischargeAmount_MWh = totalBatteryDischargeAmount_MWh;

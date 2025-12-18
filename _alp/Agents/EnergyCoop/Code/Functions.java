@@ -335,7 +335,7 @@ traceln("Energy produced: "+ energyProduced_kWh);
 
 //Total selfconsumption, selfsufficiency
 double totalSelfConsumption_fr = 1 - (v_electricityExported_kWh + v_methaneExported_kWh + v_hydrogenExported_kWh + v_heatExported_kWh)/energyProduced_kWh;
-double totalSelfSufficiency_fr = 1 - (v_electricityImported_kWh + v_methaneImported_kWh + v_hydrogenImported_kWh + v_heatImported_kWh + v_dieselImported_kWh)/energyConsumed_kWh;
+double totalSelfSufficiency_fr = 1 - (v_electricityImported_kWh + v_methaneImported_kWh + v_hydrogenImported_kWh + v_heatImported_kWh + v_petroleumFuelImported_kWh)/energyConsumed_kWh;
 
 double totalSelfSufficiency_fr_check = (energyProduced_kWh - (v_electricityExported_kWh + v_methaneExported_kWh + v_hydrogenExported_kWh + v_heatExported_kWh))/energyConsumed_kWh;
 traceln("Coop selfconsumption: " + totalSelfConsumption_fr + "%");
@@ -859,14 +859,14 @@ double f_fillAnnualDatasetsOLD()
 double v_currentPowerElectricity_kW = - v_electricitySurplus_kW;
 double v_currentPowerMethane_kW = v_methaneVolume_kWh / energyModel.p_timeStep_h;
 double v_currentPowerHydrogen_kW = v_hydrogenVolume_kWh / energyModel.p_timeStep_h;
-double v_currentPowerDiesel_kW = v_dieselVolume_kWh / energyModel.p_timeStep_h;
+double v_currentPowerPetroleumFuel_kW = v_petroleumFuelVolume_kWh / energyModel.p_timeStep_h;
 double v_currentPowerHeat_kW = v_heatVolume_kWh / energyModel.p_timeStep_h;
 
-//double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerDiesel_kW));
-//double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerDiesel_kW));
+//double currentImport_kW = (max(0,v_currentPowerElectricity_kW) + max(0,v_currentPowerHeat_kW) + max(0,v_currentPowerMethane_kW) + max(0,v_currentPowerHydrogen_kW) + max(0,v_currentPowerPetroleumFuel_kW));
+//double currentExport_kW = (max(0,-v_currentPowerElectricity_kW) + max(0,-v_currentPowerHeat_kW) + max(0,-v_currentPowerMethane_kW) + max(0,-v_currentPowerHydrogen_kW) + max(0,-v_currentPowerPetroleumFuel_kW));
 
-double currentImport_MWh = (max(0,v_electricityVolume_kWh) + max(0,v_heatVolume_kWh) + max(0,v_methaneVolume_kWh) + max(0,v_hydrogenVolume_kWh) + max(0,v_dieselVolume_kWh))/1000;
-double currentExport_MWh = (max(0,-v_electricityVolume_kWh) + max(0,-v_heatVolume_kWh) + max(0,-v_methaneVolume_kWh) + max(0,-v_hydrogenVolume_kWh) + max(0,-v_dieselVolume_kWh))/1000;
+double currentImport_MWh = (max(0,v_electricityVolume_kWh) + max(0,v_heatVolume_kWh) + max(0,v_methaneVolume_kWh) + max(0,v_hydrogenVolume_kWh) + max(0,v_petroleumFuelVolume_kWh))/1000;
+double currentExport_MWh = (max(0,-v_electricityVolume_kWh) + max(0,-v_heatVolume_kWh) + max(0,-v_methaneVolume_kWh) + max(0,-v_hydrogenVolume_kWh) + max(0,-v_petroleumFuelVolume_kWh))/1000;
 double currentImport_kW = currentImport_MWh * 1000 / energyModel.p_timeStep_h;
 double currentExport_kW = currentExport_MWh * 1000 / energyModel.p_timeStep_h;
 //traceln("ElectricityVolume_kWh: %s kWh, current production: %s kW", v_electricityVolume_kWh, v_currentOwnElectricityProduction_kW);	
@@ -883,7 +883,7 @@ acc_annualCustomerFeedIn_kW.addStep( v_currentCustomerFeedIn_kW);
 
 acc_annualMethaneBalance_kW.addStep( v_methaneVolume_kWh/energyModel.p_timeStep_h);
 acc_annualHydrogenBalance_kW.addStep( v_hydrogenVolume_kWh/energyModel.p_timeStep_h);
-acc_annualDieselBalance_kW.addStep( v_dieselVolume_kWh/energyModel.p_timeStep_h);
+acc_annualPetroleumFuelBalance_kW.addStep( v_petroleumFuelVolume_kWh/energyModel.p_timeStep_h);
 
 // Demand
 v_dailyBaseloadElectricityDemand_kW += v_fixedConsumptionElectric_kW;
@@ -891,7 +891,7 @@ v_dailyHeatPumpElectricityDemand_kW += v_heatPumpElectricityConsumption_kW;
 v_dailyElectricVehicleDemand_kW += max(0,v_evChargingPowerElectric_kW);
 v_dailyBatteriesDemand_kW += max(0,v_batteryPowerElectric_kW);
 v_dailyNaturalGasDemand_kW += max(0, v_currentPowerMethane_kW);
-v_dailyDieselDemand_kW += max(0, v_currentPowerDiesel_kW);
+v_dailyPetroleumFuelDemand_kW += max(0, v_currentPowerPetroleumFuel_kW);
 v_dailyHydrogenDemand_kW += max(0, v_currentPowerHydrogen_kW);
 //v_dailyDistrictHeatDemand_kWh += 
 // Supply
@@ -913,7 +913,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	data_annualElectricVehicleDemand_kW.add(energyModel.t_h, v_dailyElectricVehicleDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualBatteriesDemand_kW.add(energyModel.t_h, v_dailyBatteriesDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualNaturalGasDemand_kW.add(energyModel.t_h, v_dailyNaturalGasDemand_kW/(24 / energyModel.p_timeStep_h));
-	data_annualDieselDemand_kW.add(energyModel.t_h, v_dailyDieselDemand_kW/(24 / energyModel.p_timeStep_h));
+	data_annualPetroleumFuelDemand_kW.add(energyModel.t_h, v_dailyPetroleumFuelDemand_kW/(24 / energyModel.p_timeStep_h));
 	data_annualHydrogenDemand_kW.add(energyModel.t_h, v_dailyHydrogenDemand_kW/(24 / energyModel.p_timeStep_h));
 	//data_annualDistrictHeatSupply_MWh.add(energyModel.t_h, v_dailyDistrictHeatDemand_kWh/(24 / energyModel.p_timeStep_h));
 	// Supply
@@ -933,7 +933,7 @@ if (energyModel.t_h % 24 == 24-energyModel.p_timeStep_h) {
 	v_dailyElectricVehicleDemand_kW = 0;
 	v_dailyBatteriesDemand_kW = 0;
 	v_dailyNaturalGasDemand_kW = 0;
-	v_dailyDieselDemand_kW = 0;
+	v_dailyPetroleumFuelDemand_kW = 0;
 	v_dailyHydrogenDemand_kW = 0;
 	//v_dailyDistrictHeatDemand_kWh = 0;
 	v_dailyPVGeneration_kW = 0;
@@ -953,7 +953,7 @@ if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < en
 	data_summerWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0,v_evChargingPowerElectric_kW));
 	data_summerWeekBatteriesDemand_kW.add(energyModel.t_h, max(0,v_batteryPowerElectric_kW));
 	data_summerWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
-	data_summerWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
+	data_summerWeekPetroleumFuelDemand_kW.add(energyModel.t_h, max(0, v_currentPowerPetroleumFuel_kW));
 	data_summerWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
 	
 	data_summerWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
@@ -966,7 +966,7 @@ if (energyModel.t_h >= energyModel.p_startHourSummerWeek && energyModel.t_h < en
 	acc_summerElectricityBalance_kW.addStep(v_currentPowerElectricity_kW);
 	acc_summerMethaneBalance_kW.addStep(v_currentPowerMethane_kW);
 	acc_summerHydrogenBalance_kW.addStep(v_currentPowerHydrogen_kW);
-	acc_summerDieselBalance_kW.addStep(v_currentPowerDiesel_kW);
+	acc_summerPetroleumFuelBalance_kW.addStep(v_currentPowerPetroleumFuel_kW);
 	acc_summerHeatBalance_kW.addStep(v_currentPowerHeat_kW);
 	acc_summerTotalImport_kW.addStep(currentImport_kW);
 	acc_summerTotalExport_kW.addStep(currentExport_kW);
@@ -987,7 +987,7 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 	data_winterWeekElectricVehicleDemand_kW.add(energyModel.t_h, max(0, v_evChargingPowerElectric_kW));
 	data_winterWeekBatteriesDemand_kW.add(energyModel.t_h, max(0, v_batteryPowerElectric_kW));
 	data_winterWeekNaturalGasDemand_kW.add(energyModel.t_h, max(0, v_currentPowerMethane_kW));
-	data_winterWeekDieselDemand_kW.add(energyModel.t_h, max(0, v_currentPowerDiesel_kW));
+	data_winterWeekPetroleumFuelDemand_kW.add(energyModel.t_h, max(0, v_currentPowerPetroleumFuel_kW));
 	data_winterWeekHydrogenDemand_kW.add(energyModel.t_h, max(0, v_currentPowerHydrogen_kW));
 	
 	data_winterWeekPVGeneration_kW.add(energyModel.t_h, v_pvProductionElectric_kW);
@@ -1000,7 +1000,7 @@ if (energyModel.t_h >= energyModel.p_startHourWinterWeek && energyModel.t_h < en
 	acc_winterElectricityBalance_kW.addStep(v_currentPowerElectricity_kW);
 	acc_winterMethaneBalance_kW.addStep(v_currentPowerMethane_kW);
 	acc_winterHydrogenBalance_kW.addStep(v_currentPowerHydrogen_kW);
-	acc_winterDieselBalance_kW.addStep(v_currentPowerDiesel_kW);
+	acc_winterPetroleumFuelBalance_kW.addStep(v_currentPowerPetroleumFuel_kW);
 	acc_winterHeatBalance_kW.addStep(v_currentPowerHeat_kW);
 	acc_winterTotalImport_kW.addStep(currentImport_kW);
 	acc_winterTotalExport_kW.addStep(currentExport_kW);
@@ -1024,7 +1024,7 @@ if(energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) { // Daytime totals. U
 	v_daytimeEnergyProduced_MWh += v_currentEnergyProduction_kW / 1000 * energyModel.p_timeStep_h;
 		
 	v_daytimeMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
-	v_daytimeDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
+	v_daytimePetroleumFuelImport_MWh += v_currentPowerPetroleumFuel_kW / 1000 * energyModel.p_timeStep_h;
 	v_daytimeHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
 	v_daytimeHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
 	
@@ -1044,7 +1044,7 @@ if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan - 1)*24) % (24*7) < (24*5)) { 
 	v_weekdayEnergyProduced_MWh += v_currentEnergyProduction_kW * energyModel.p_timeStep_h/1000;
 	
 	v_weekdayMethaneImport_MWh += v_currentPowerMethane_kW / 1000 * energyModel.p_timeStep_h;
-	v_weekdayDieselImport_MWh += v_currentPowerDiesel_kW / 1000 * energyModel.p_timeStep_h;
+	v_weekdayPetroleumFuelImport_MWh += v_currentPowerPetroleumFuel_kW / 1000 * energyModel.p_timeStep_h;
 	v_weekdayHydrogenImport_MWh += max(0, v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
 	v_weekdayHydrogenExport_MWh += max(0, -v_currentPowerHydrogen_kW) / 1000 * energyModel.p_timeStep_h;
 	

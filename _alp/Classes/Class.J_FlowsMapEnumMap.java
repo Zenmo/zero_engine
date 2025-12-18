@@ -136,8 +136,8 @@ public class J_FlowsMapEnumMap extends EnumMap<OL_EnergyCarriers, Double> {
 	    			return HEAT_CONSUMPTION_KW;
 	    		case METHANE:
 	    			return METHANE_CONSUMPTION_KW;
-	    		case DIESEL:
-	    			return DIESEL_CONSUMPTION_KW;
+	    		case PETROLEUM_FUEL:
+	    			return PETROLEUM_FUEL_CONSUMPTION_KW;
 	    		case HYDROGEN:
 	    			return HYDROGEN_CONSUMPTION_KW;
 	    		default:
@@ -152,8 +152,8 @@ public class J_FlowsMapEnumMap extends EnumMap<OL_EnergyCarriers, Double> {
 	    			return HEAT_PRODUCTION_KW;
 	    		case METHANE:
 	    			return METHANE_PRODUCTION_KW;
-	    		case DIESEL:
-	    			return DIESEL_PRODUCTION_KW;
+	    		case PETROLEUM_FUEL:
+	    			return PETROLEUM_FUEL_PRODUCTION_KW;
 	    		case HYDROGEN:
 	    			return HYDROGEN_PRODUCTION_KW;
 	    		default:

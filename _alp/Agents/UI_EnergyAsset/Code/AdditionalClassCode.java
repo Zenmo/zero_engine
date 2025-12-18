@@ -8,5 +8,5 @@
 			+ v_currentConsumptionHeat_kW - v_currentProductionHeat_kW
 			+ v_currentConsumptionHydrogen_kW - v_currentProductionHydrogen_kW
 			+ v_currentConsumptionMethane_kW - v_currentProductionMethane_kW
-			+ v_currentConsumptionDiesel_kW),2);
+			+ v_currentConsumptionPetroleumFuel_kW),2);
 	}*/

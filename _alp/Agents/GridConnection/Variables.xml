@@ -1376,7 +1376,7 @@
 	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1669115948280</Id>
-		<Name><![CDATA[c_dieselVehicles]]></Name>
+		<Name><![CDATA[c_petroleumFuelVehicles]]></Name>
 		<X>620</X>
 		<Y>670</Y>
 		<Label>
@@ -1388,7 +1388,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_EADieselVehicle</ElementClass>
+			<ElementClass>J_EAPetroleumFuelVehicle</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

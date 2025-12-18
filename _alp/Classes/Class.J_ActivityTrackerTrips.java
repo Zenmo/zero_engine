@@ -131,9 +131,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
         		}
     		}
     	} else {
-    		if (Vehicle instanceof J_EADieselVehicle) {
-    			J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)Vehicle;
-    			dieselVehicle.progressTrip(v_tripDist_km / currentTripTimesteps_n);
+    		if (Vehicle instanceof J_EAPetroleumFuelVehicle) {
+    			J_EAPetroleumFuelVehicle petroleumFuelVehicle = (J_EAPetroleumFuelVehicle)Vehicle;
+    			petroleumFuelVehicle.progressTrip(v_tripDist_km / currentTripTimesteps_n);
     		}
     		else if (Vehicle instanceof J_EAHydrogenVehicle) {
     			J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)Vehicle;
