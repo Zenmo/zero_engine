@@ -115,88 +115,6 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1671095995175</Id>
-		<Name><![CDATA[f_simpleCharging]]></Name>
-		<Description><![CDATA[Charging when arriving home, not taking grid limits into account]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1960</X>
-		<Y>320</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1671095995177</Id>
-		<Name><![CDATA[f_maxSpreadCharging]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1970</X>
-		<Y>360</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1671095995179</Id>
-		<Name><![CDATA[f_maxPowerCharging]]></Name>
-		<Description><![CDATA[Charge at max power taking grid constaints into account]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1970</X>
-		<Y>380</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[availableCapacityForCharging_kW]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1671095995181</Id>
-		<Name><![CDATA[f_chargeOnPrice]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1970</X>
-		<Y>420</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[currentElectricityPriceConsumption_eurpkWh]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[availableChargingPower_kW]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1677512714652</Id>
 		<Name><![CDATA[f_setOperatingSwitches]]></Name>
 		<X>910</X>
@@ -247,31 +165,6 @@
 		<Parameter>
 			<Name><![CDATA[j_ea]]></Name>
 			<Type><![CDATA[J_EA]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1695822607494</Id>
-		<Name><![CDATA[f_chargeOnPrice_V2G]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1970</X>
-		<Y>440</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[currentElectricityPriceConsumption_eurpkWh]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[availableChargingPower_kW]]></Name>
-			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -550,49 +443,12 @@
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1725455130676</Id>
-		<Name><![CDATA[f_getChargeDeadline]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1990</X>
-		<Y>400</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[ev]]></Name>
-			<Type><![CDATA[J_EAEV]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1730728785333</Id>
 		<Name><![CDATA[f_initializeDataSets]]></Name>
 		<X>910</X>
 		<Y>70</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1750258434630</Id>
-		<Name><![CDATA[f_manageChargePoints]]></Name>
-		<X>920</X>
-		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -795,7 +651,7 @@
 		<Name><![CDATA[f_addChargingManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>650</X>
-		<Y>500</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -835,7 +691,7 @@
 		<Id>1762851936576</Id>
 		<Name><![CDATA[f_setChargingManagement]]></Name>
 		<X>650</X>
-		<Y>480</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -891,7 +747,7 @@
 		<Id>1762853347370</Id>
 		<Name><![CDATA[f_getCurrentChargingType]]></Name>
 		<X>650</X>
-		<Y>520</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -907,7 +763,7 @@
 		<Id>1762853561122</Id>
 		<Name><![CDATA[f_getV2GActive]]></Name>
 		<X>650</X>
-		<Y>540</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -923,7 +779,7 @@
 		<Id>1762853894937</Id>
 		<Name><![CDATA[f_getBatteryManagement]]></Name>
 		<X>650</X>
-		<Y>750</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -959,7 +815,7 @@
 		<Id>1762855733010</Id>
 		<Name><![CDATA[f_setBatteryManagement]]></Name>
 		<X>650</X>
-		<Y>730</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -979,7 +835,7 @@
 		<Id>1762940915048</Id>
 		<Name><![CDATA[f_getChargingManagement]]></Name>
 		<X>650</X>
-		<Y>560</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1003,6 +859,42 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ChargePoint</ReturnType>
+		<Id>1765551413839</Id>
+		<Name><![CDATA[f_getChargePoint]]></Name>
+		<X>660</X>
+		<Y>640</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>J_ChargePoint</ReturnType>
+		<Id>1765551488579</Id>
+		<Name><![CDATA[f_setChargePoint]]></Name>
+		<X>660</X>
+		<Y>620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[chargePoint]]></Name>
+			<Type><![CDATA[J_ChargePoint]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
