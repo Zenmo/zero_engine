@@ -676,6 +676,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1712842800772</Id>
 		<Name><![CDATA[v_dayOfWeek1jan]]></Name>
+		<Description><![CDATA[Index of day-of-week; 1 = Monday, 7 = Sunday]]></Description>
 		<X>-610</X>
 		<Y>130</Y>
 		<Label>
