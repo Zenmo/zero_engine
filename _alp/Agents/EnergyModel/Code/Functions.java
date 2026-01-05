@@ -1229,8 +1229,9 @@ return date;
 
 double f_loopSimulation()
 {/*ALCODESTART::1758619562148*/
-//v_timeStepsElapsed = 0;
-//f_clearAllLiveDatasets();
+v_liveSimLoopCount++;
+v_timeStepsElapsed = 0;
+f_clearAllLiveDatasets();
 traceln("The simulation has been looped.");
 /*ALCODEEND*/}
 
