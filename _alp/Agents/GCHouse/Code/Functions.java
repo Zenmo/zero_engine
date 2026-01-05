@@ -1,32 +1,8 @@
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1664963959146*/
 f_manageCookingTracker();
 f_manageAirco();
-super.f_operateFlexAssets();
-
-/*
-double availablePowerAtPrice_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-if (p_owner != null){
-	v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-	availablePowerAtPrice_kW = p_owner.f_getAvailablePowerAtPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-} else {
-	//v_currentElectricityPriceConsumption_eurpkWh = 0.3;
-}
-
-f_manageHeating();
-
-if( c_electricVehicles.size() > 0){
-	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	//f_maxPowerCharging( max(0, availableChargingCapacity));
-	f_manageEVCharging();
-	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
-}
-
-f_manageChargers();
-
-f_manageBattery();*/
+super.f_operateFlexAssets(timeVariables);
 /*ALCODEEND*/}
 
 double f_createThermalStorageModel()

@@ -33,7 +33,7 @@ if( myParentEnergyCoop instanceof EnergyCoop) {
 }*/
 /*ALCODEEND*/}
 
-double f_connectionMetering()
+double f_connectionMetering(J_TimeVariables timeVariables,boolean isRapidRun)
 {/*ALCODESTART::1660212665961*/
 if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
 	//if (p_BuildingThermalAsset == null || !p_BuildingThermalAsset.hasHeatBuffer()) {
@@ -44,10 +44,10 @@ if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentP
 	//}
 }
 
-if (energyModel.v_isRapidRun){
-	f_rapidRunDataLogging();
+if (isRapidRun){
+	f_rapidRunDataLogging(timeVariables);
 } else {
-	f_fillLiveDataSets();
+	f_fillLiveDataSets(timeVariables);
 }
 
 /*
@@ -127,7 +127,7 @@ v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
 
 /*ALCODEEND*/}
 
-double f_operateFlexAssets()
+double f_operateFlexAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1664961435385*/
 //Must be overwritten in child agent
 f_manageHeating();
@@ -137,7 +137,7 @@ f_manageEVCharging();
 f_manageBattery();
 /*ALCODEEND*/}
 
-double f_calculateEnergyBalance()
+double f_calculateEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)
 {/*ALCODESTART::1668528273163*/
 v_previousPowerElectricity_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
 v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
@@ -158,21 +158,21 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
 
 if (v_enableNFato) {
-	f_nfatoUpdateConnectionCapacity();
+	f_nfatoUpdateConnectionCapacity(timeVariables);
 }
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h, p_chargePoint));
 c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(energyModel.t_h, p_chargePoint));
 
-f_operateFixedAssets();
-f_operateFlexAssets();
+f_operateFixedAssets(timeVariables);
+f_operateFlexAssets(timeVariables);
 
 f_curtailment();
 
-f_connectionMetering();
+f_connectionMetering(timeVariables, isRapidRun);
 /*ALCODEEND*/}
 
-double f_operateFixedAssets()
+double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
 c_petroleumFuelVehicles.forEach(v -> v.f_updateAllFlows());
 c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
@@ -680,17 +680,15 @@ if (v_enableCurtailment) {
 }
 /*ALCODEEND*/}
 
-double f_nfatoUpdateConnectionCapacity()
+double f_nfatoUpdateConnectionCapacity(J_TimeVariables timeVariables)
 {/*ALCODESTART::1720430481154*/
-int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
-
-double timeOfDay = energyModel.t_h % 24;
+double timeOfDay = timeVariables.getT_h() % 24;
 int hourOfDay = (int) timeOfDay;
 
 if (timeOfDay == hourOfDay) {
-	int previousHour = ((hourOfDay - 1) % 24 + 24) % 24;
-	if (dayOfWeek == 0 || dayOfWeek == 6) {
-		if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
+	int previousHour = ((hourOfDay - 1) % 24 + 24) % 24; // modulo twice because of java's convention with negative numbers
+	if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY || timeVariables.getDayOfWeek() == OL_Days.SUNDAY) {
+		if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
 			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
 			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
 		}
@@ -700,7 +698,7 @@ if (timeOfDay == hourOfDay) {
 		}
 	}
 	else {
-		if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous weekend capacity
+		if (timeVariables.getDayOfWeek() == OL_Days.MONDAY && hourOfDay == 0) { // Sunday night we need to subtract the previous weekend capacity
 			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
 			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
 		}
@@ -712,16 +710,15 @@ if (timeOfDay == hourOfDay) {
 }
 /*ALCODEEND*/}
 
-double f_nfatoSetConnectionCapacity(boolean reset)
+double f_nfatoSetConnectionCapacity(boolean reset,J_TimeVariables timeVariables)
 {/*ALCODESTART::1720431721926*/
 int mult = reset == true ? -1 : 1; // When reset is true we need to subtract the capacity, else we add
 
-int dayOfWeek = (int) ((energyModel.t_h / 24 + energyModel.v_dayOfWeek1jan) % 7);
 double timeOfDay = energyModel.t_h % 24;
 int hourOfDay = (int) timeOfDay;
 
-if (dayOfWeek == 0 || dayOfWeek == 6) {
-	if (dayOfWeek == 6 && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
+if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY || timeVariables.getDayOfWeek() == OL_Days.SUNDAY) {
+	if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
 		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
 		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
 	}
@@ -731,7 +728,7 @@ if (dayOfWeek == 0 || dayOfWeek == 6) {
 	}
 }
 else {
-	if (dayOfWeek == 1 && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
+	if (timeVariables.getDayOfWeek() == OL_Days.MONDAY && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
 		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
 		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
 	}
@@ -775,12 +772,9 @@ for(var AC : assetFlowsMap_kW.keySet()) {
 }
 /*ALCODEEND*/}
 
-double f_fillLiveDataSets()
+double f_fillLiveDataSets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1722518225504*/
-//Current timestep
-double currentTime_h = energyModel.t_h-energyModel.p_runStartTime_h;
-
-v_liveData.addTimeStep(currentTime_h,
+v_liveData.addTimeStep(timeVariables.getAnyLogicTime_h(),
 	fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
 	fm_currentProductionFlows_kW,
@@ -793,7 +787,7 @@ v_liveData.addTimeStep(currentTime_h,
 );
 /*ALCODEEND*/}
 
-double f_rapidRunDataLogging()
+double f_rapidRunDataLogging(J_TimeVariables timeVariables)
 {/*ALCODESTART::1722518905501*/
 v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
 	fm_currentConsumptionFlows_kW,
@@ -806,10 +800,10 @@ v_rapidRunData.addTimeStep(fm_currentBalanceFlows_kW,
 	v_currentPrimaryEnergyProductionHeatpumps_kW, 
 	v_currentEnergyCurtailed_kW, 
 	v_batteryStoredEnergy_kWh/1000,
-	energyModel);
+	timeVariables);
 /*ALCODEEND*/}
 
-double f_setActive(boolean setActive)
+double f_setActive(boolean setActive,J_TimeVariables timeVariables)
 {/*ALCODESTART::1722584668566*/
 if((energyModel.c_pausedGridConnections.contains(this) && !setActive) || 
   (!energyModel.c_pausedGridConnections.contains(this) && setActive)){
@@ -841,7 +835,7 @@ if (!setActive) {
 	}
 	
 	// Reset Connection Capacity to default
-	f_nfatoSetConnectionCapacity(true);
+	f_nfatoSetConnectionCapacity(true, timeVariables);
 	
 	// Is setting all of these to zero overkill?
 	fm_currentProductionFlows_kW.clear();
@@ -871,7 +865,7 @@ else {
 	}
 	
 	// Set Connection Capacity according to NFATO
-	f_nfatoSetConnectionCapacity(false);
+	f_nfatoSetConnectionCapacity(false, timeVariables);
 	
 	v_isActive = setActive; // v_isActive must be true before calling updateActiveAssetData!
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));

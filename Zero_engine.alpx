@@ -1096,6 +1096,39 @@
 					<Name><![CDATA[TRACTOR]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1767622041762</Id>
+				<Name><![CDATA[OL_Days]]></Name>
+				<Description><![CDATA[Sunday has index 0 so that the indices correspond with the convention of the Java Enum DayOfWeek]]></Description>
+				<Option>
+					<Id>1767622041769</Id>
+					<Name><![CDATA[SUNDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041763</Id>
+					<Name><![CDATA[MONDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041764</Id>
+					<Name><![CDATA[TUESDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041765</Id>
+					<Name><![CDATA[WEDNESDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041766</Id>
+					<Name><![CDATA[THURSDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041767</Id>
+					<Name><![CDATA[FRIDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041768</Id>
+					<Name><![CDATA[SATURDAY]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>

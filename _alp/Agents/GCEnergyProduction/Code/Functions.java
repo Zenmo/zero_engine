@@ -1,4 +1,4 @@
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1671111800831*/
 /*for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElektrolyser) {

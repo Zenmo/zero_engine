@@ -1,4 +1,4 @@
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1719849166911*/
 //Manage the heating assets
 

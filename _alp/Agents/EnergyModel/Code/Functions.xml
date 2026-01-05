@@ -471,6 +471,10 @@
 			<Name><![CDATA[gcList]]></Name>
 			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -490,6 +494,10 @@
 		<Parameter>
 			<Name><![CDATA[energyCoop]]></Name>
 			<Type><![CDATA[EnergyCoop]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

@@ -78,12 +78,12 @@ for( GridConnection GC : c_connectedGridConnections) {
 
 /*ALCODEEND*/}
 
-double f_nodeMetering()
+double f_nodeMetering(J_TimeVariables timeVariables,boolean isRapidRun)
 {/*ALCODESTART::1660216693598*/
 //v_averageAbsoluteLoadElectricity_kW = ( v_electricityDrawn_kWh + v_electricityDelivered_kWh ) / energyModel.t_h;
 //v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteElectricity_kW);
 
-if (energyModel.v_isRapidRun){
+if (isRapidRun){
 	/*if (energyModel.b_enableDLR) {
 		acc_annualElectricityBalance_kW.addStep(100*v_currentLoadElectricity_kW/ (p_capacity_kW * energyModel.v_currentDLRfactor_fr));
 		//acc_DLR_kW.addStep( p_capacity_kW * energyModel.v_currentDLRfactor_fr);
@@ -111,11 +111,11 @@ if (energyModel.v_isRapidRun){
 	v_annualExcessExport_MWh += currentExcessExport_MWh;
 	
 	// Year
-	if (energyModel.t_h % 1 == 0) {
+	if (timeVariables.getT_h() % 1 == 0) {
 		data_totalLoad_kW.add(energyModel.t_h, v_currentLoad_kW);
 	}
 	// SummerWeek
-	if (energyModel.b_isSummerWeek) {
+	if (timeVariables.isSummerWeek()) {
 		v_summerWeekImport_MWh += currentImport_MWh;
 		v_summerWeekExport_MWh += currentExport_MWh;
 		v_summerWeekExcessImport_MWh += currentExcessImport_MWh;
@@ -124,7 +124,7 @@ if (energyModel.v_isRapidRun){
 		data_summerWeekLoad_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_currentLoad_kW);
 	}
 	// Winterweek
-	if (energyModel.b_isWinterWeek) {
+	if (timeVariables.isWinterWeek()) {
 		v_winterWeekImport_MWh += currentImport_MWh;
 		v_winterWeekExport_MWh += currentExport_MWh;
 		v_winterWeekExcessImport_MWh += currentExcessImport_MWh;
@@ -133,14 +133,14 @@ if (energyModel.v_isRapidRun){
 		data_winterWeekLoad_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_currentLoad_kW);
 	}
 	// Daytime
-	if (energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) {
+	if (timeVariables.isDaytime()) {
 		v_daytimeImport_MWh += currentImport_MWh;
 		v_daytimeExport_MWh += currentExport_MWh;
 		v_daytimeExcessImport_MWh += currentExcessImport_MWh;
 		v_daytimeExcessExport_MWh += currentExcessExport_MWh;
 	}
 	// Weekdays
-	if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan-1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if (timeVariables.isWeekday()) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayImport_MWh += currentImport_MWh;
 		v_weekdayExport_MWh += currentExport_MWh;
 		v_weekdayExcessImport_MWh += currentExcessImport_MWh;
@@ -227,7 +227,7 @@ if( p_energyAssetList != null) {
 }
 /*ALCODEEND*/}
 
-double f_calculateEnergyBalance()
+double f_calculateEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)
 {/*ALCODESTART::1688370981599*/
 f_sumLoads();
 // Low-pass filtered grid load
@@ -243,7 +243,7 @@ if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 
 //v_currentLocalNodalPrice_eurpkWh = (abs(v_filteredLoadCongestionPricing_kW / currentNodeCapacity_kW) - p_localNodalPricingTreshold_fr) / (1-p_localNodalPricingTreshold_fr) * p_localNodalPricingFactor_eurpkWh;
 
-if (energyModel.v_isRapidRun) {
+if (isRapidRun) {
 	if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 		if (abs(v_currentLoadElectricityLowPassed_kW) > p_capacity_kW) {
 			//traceln("Overloaded gridNode %s! %s kW", p_gridNodeID, abs(v_currentLoadElectricityLowPassed_kW));
@@ -289,7 +289,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT) & b_transportBufferValid ) { // 
 }
 */
 //traceln("GridNode " + p_gridNodeID + " update at time " + time(HOUR));
-f_nodeMetering();
+f_nodeMetering(timeVariables, isRapidRun);
 
 f_getCurrentChargingInformation();
 /*ALCODEEND*/}
@@ -514,9 +514,9 @@ AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
 return AllLowerLVLConnectedGridConnections;
 /*ALCODEEND*/}
 
-J_LoadDurationCurves f_getDuurkrommes()
+J_LoadDurationCurves f_getDuurkrommes(J_TimeParameters timeParameters)
 {/*ALCODESTART::1753341238941*/
-return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
+return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), timeParameters);
 /*ALCODEEND*/}
 
 DataSet f_getPeakImportWeekDataSet()

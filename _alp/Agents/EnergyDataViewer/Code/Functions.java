@@ -455,7 +455,7 @@ v_dataBatterySOCLiveWeek_.add(timeAxisValue, SOC);
 
 double f_updateLoadDurationCurve(I_EnergyData data)
 {/*ALCODESTART::1741792546545*/
-J_LoadDurationCurves ldc = data.getRapidRunData().getLoadDurationCurves(energyModel);
+J_LoadDurationCurves ldc = data.getRapidRunData().getLoadDurationCurves();
 
 v_dataNetbelastingDuurkrommeYear_kW = ldc.ds_loadDurationCurveTotal_kW;
 v_dataNetbelastingDuurkrommeYearVorige_kW = ldc.ds_previousLoadDurationCurveTotal_kW;

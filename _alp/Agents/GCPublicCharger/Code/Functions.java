@@ -16,7 +16,7 @@ for ( J_EAProfile e : c_profileAssets){
 
 /*ALCODEEND*/}
 
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1726749088568*/
 //Manage charging
 f_manageEVCharging();

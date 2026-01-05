@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
 	
+	//protected J_TimeParameters timeParameters;
+	
 	 protected Agent parentAgent;
 	 public OL_EnergyAssetType energyAssetType;
 	 public OL_AssetFlowCategories assetFlowCategory;

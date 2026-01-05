@@ -33,8 +33,6 @@ import java.io.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;  
-import java.time.LocalDate;
-import java.time.DayOfWeek;
 import java.text.SimpleDateFormat;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
@@ -54,7 +52,7 @@ import com.querydsl.core.types.dsl.TimeExpression;
 
 import com.anylogic.cloud.util.DateUtils;]]></Import>
 	<Implements>I_EnergyData</Implements>
-	<StartupCode><![CDATA[v_liveData = new J_LiveData(this);
+	<StartupCode><![CDATA[v_liveData = new J_LiveData();
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);

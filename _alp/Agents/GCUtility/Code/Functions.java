@@ -1,4 +1,4 @@
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1698936515692*/
 f_manageHeating();
 

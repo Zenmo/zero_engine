@@ -210,7 +210,7 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_operateFlexAssets_override()
+double f_operateFlexAssets_override(J_TimeVariables timeVariables)
 {/*ALCODESTART::1708089644411*/
 for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElectrolyser) {

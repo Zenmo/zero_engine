@@ -6,9 +6,10 @@ import zeroPackage.ZeroMath;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
 public class J_RapidRunData {
+	
+	private J_TimeParameters timeParameters;
 	private boolean storeTotalAssetFlows = true;
-	public Agent parentAgent;
-	private double timeStep_h;
+	
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
 	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
 	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
@@ -112,8 +113,10 @@ public class J_RapidRunData {
     /**
      * Default constructor
      */
-    public J_RapidRunData(Agent parentAgent) {
-    	this.parentAgent = parentAgent;
+    public J_RapidRunData(J_TimeParameters timeParameters, boolean storeTotalAssetFlows) {
+    	// TODO: Remove parentAgent as an argument and find a way to determine storeAssetFlows in another way (before the constructor is called?)
+    	this.timeParameters = timeParameters;
+    	/*
     	if (parentAgent instanceof GridConnection) {
     		if (((GridConnection)parentAgent).p_owner == null) {
     			storeTotalAssetFlows = false;
@@ -123,6 +126,8 @@ public class J_RapidRunData {
 	    		}
     		}
     	}
+    	*/
+    	this.storeTotalAssetFlows = storeTotalAssetFlows;
     }
     
     public boolean setStoreTotalAssetFlows(boolean storeTotalAssetFlows) {
@@ -134,8 +139,11 @@ public class J_RapidRunData {
     	return this.storeTotalAssetFlows;
     }
     
-    public void initializeAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers, EnumSet<OL_AssetFlowCategories> activeAssetFlows) {
-    	this.timeStep_h = timeStep_h;
+    public void initializeAccumulators(EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers, EnumSet<OL_AssetFlowCategories> activeAssetFlows) {
+    	// This is quite a large function so (for readability) we define
+    	double timeStep_h = this.timeParameters.getTimeStep_h();
+    	double simDuration_h = this.timeParameters.getRunEndTime_h() - this.timeParameters.getRunStartTime_h();
+    	
     	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
     	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
@@ -360,7 +368,7 @@ public class J_RapidRunData {
     }
     
     public J_RapidRunData getClone() {
-    	J_RapidRunData clone = new J_RapidRunData(this.parentAgent);
+    	J_RapidRunData clone = new J_RapidRunData(this.timeParameters, this.storeTotalAssetFlows);
 
     	clone.activeEnergyCarriers=this.activeEnergyCarriers.clone();
     	clone.activeConsumptionEnergyCarriers=this.activeConsumptionEnergyCarriers.clone();
@@ -455,7 +463,7 @@ public class J_RapidRunData {
     		double v_currentPrimaryEnergyProductionHeatpumps_kW,
     		double v_currentEnergyCurtailed_kW,
     		double currentStoredEnergyBatteries_MWh,
-    		EnergyModel energyModel
+    		J_TimeVariables timeVariables
     	) {
     	
     	//EnergyCarrier import/exports
@@ -471,7 +479,7 @@ public class J_RapidRunData {
 	    }
     	
 	    // Daytime totals. Use overal-total minus daytime total to get nighttime totals.
-    	if(energyModel.b_isDaytime) { 
+    	if(timeVariables.isDaytime()) { 
     		
     		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     			double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);    			
@@ -497,7 +505,7 @@ public class J_RapidRunData {
     	}
 
     	// Weekend totals. Use overal-totals minus weekend totals to get weekday totals.
-    	if (!energyModel.b_isWeekday) { // 
+    	if (!timeVariables.isWeekday()) { // 
     		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     			double currentBalance_kW = fm_currentBalanceFlows_kW.get(EC);
     			if(activeConsumptionEnergyCarriers.contains(EC)){
@@ -522,7 +530,7 @@ public class J_RapidRunData {
     	}
 
     	//========== SUMMER WEEK ==========//
-    	if (energyModel.b_isSummerWeek){
+    	if (timeVariables.isSummerWeek()){
     		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     			am_summerWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC) );
     		}
@@ -560,7 +568,7 @@ public class J_RapidRunData {
     	}
 
     	//========== WINTER WEEK ==========// 
-    	if (energyModel.b_isWinterWeek){
+    	if (timeVariables.isWinterWeek()){
     		for (OL_EnergyCarriers EC : activeEnergyCarriers) {
     			am_winterWeekBalanceAccumulators_kW.get(EC).addStep( fm_currentBalanceFlows_kW.get(EC) );
     		}
@@ -616,8 +624,8 @@ public class J_RapidRunData {
     }
    
     
-    public J_LoadDurationCurves getLoadDurationCurves(EnergyModel energyModel) {
-    	return new J_LoadDurationCurves(this.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), energyModel);    		
+    public J_LoadDurationCurves getLoadDurationCurves() {
+    	return new J_LoadDurationCurves(this.am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(), this.timeParameters);
     }
     
     public double getTotalOverloadDurationDelivery_hr() {
@@ -669,7 +677,7 @@ public class J_RapidRunData {
     	        maxIndex = i;
     	    }
     	}
-    	return maxIndex*timeStep_h;
+    	return maxIndex*this.timeParameters.getTimeStep_h();
     }
     
     public Double getLowestBalanceTime_h(OL_EnergyCarriers EC) {
@@ -681,7 +689,7 @@ public class J_RapidRunData {
     	        minIndex = i;
     	    }
     	}
-    	return minIndex*timeStep_h;
+    	return minIndex*this.timeParameters.getTimeStep_h();
     }
     
     public double getHighestBalanceWeekStart_h(OL_EnergyCarriers EC) {
@@ -734,13 +742,13 @@ public class J_RapidRunData {
     			requiredBatteryCapacity_kWh = 0.0;
     		} else {
 	    		//traceln("possibleGrowth: %s ", possibleGrowthFactor_fr);
-	    		double[] dayProfile_kW = Arrays.copyOfRange(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(),roundToInt(24.0/timeStep_h * maxDay), roundToInt(24.0/timeStep_h * (maxDay+1)));
+	    		double[] dayProfile_kW = Arrays.copyOfRange(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(),roundToInt(24.0/this.timeParameters.getTimeStep_h() * maxDay), roundToInt(24.0/this.timeParameters.getTimeStep_h() * (maxDay+1)));
 	    		double[] dayProfileScaled_kW = ZeroMath.arrayMultiply(dayProfile_kW, possibleGrowthFactor_fr);
-	    		double[] SoC_kWh = new double[roundToInt(24/timeStep_h)+1];
+	    		double[] SoC_kWh = new double[roundToInt(24/this.timeParameters.getTimeStep_h())+1];
 	    		double minSoC_kWh = 0.0;
 	    		double maxSoC_kWh = 0.0;
-	    		for(int i = 0; i < roundToInt(24/timeStep_h); i++) {
-	    			SoC_kWh[i+1] = SoC_kWh[i] + (dayProfileScaled_kW[i] - possibleGrowthFactor_fr * dailyAvgs_kW[maxDay] ) * timeStep_h;
+	    		for(int i = 0; i < roundToInt(24/this.timeParameters.getTimeStep_h()); i++) {
+	    			SoC_kWh[i+1] = SoC_kWh[i] + (dayProfileScaled_kW[i] - possibleGrowthFactor_fr * dailyAvgs_kW[maxDay] ) * this.timeParameters.getTimeStep_h();
 	    			minSoC_kWh = min(minSoC_kWh, SoC_kWh[i+1]);
 	    			maxSoC_kWh = max(maxSoC_kWh, SoC_kWh[i+1]);
 	    		}
