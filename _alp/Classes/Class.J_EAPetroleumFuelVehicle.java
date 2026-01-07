@@ -73,7 +73,7 @@ public class J_EAPetroleumFuelVehicle extends J_EAVehicle implements Serializabl
     public boolean endTrip(double tripDist_km) {
 		
 		if(available) {
-			traceln("Trip not ended because vehicle never left!, tripIdentifier = " + tripTracker.tripPatternIdentifier);
+			traceln("Trip not ended because vehicle never left!");
 			return false;
 		} else {
 	    	this.available = true;

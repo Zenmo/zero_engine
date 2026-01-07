@@ -280,8 +280,8 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 		
 		vehicle.tripTracker = tripTracker;	
 	}
-	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){
-		tripTracker.prepareNextActivity((energyModel.t_h-energyModel.p_runStartTime_h)*60, p_chargePoint);
+	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){ // J_EAEV that already has triptracker, but still needs to prepare next trip to determine chargedeadline.
+		tripTracker.prepareNextActivity(energyModel.t_h*60, p_chargePoint);
 	}
 	c_tripTrackers.add( tripTracker );
 	//v_vehicleIndex ++;

@@ -42,7 +42,7 @@ b_isWinterWeek = (t_h % 8760) >= p_startOfWinterWeek_h && (t_h % 8760) < p_start
 b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
 t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
 
-c_profiles.forEach(p -> p.updateValue(t_h));
+c_profiles.forEach(p -> p.updateValue(t_h)); // 
 //v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
 //v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
 //v_currentSolarPowerNormalized_r = pp_PVProduction35DegSouth_fr.getCurrentValue();
@@ -589,44 +589,9 @@ double f_initializeEngine()
 if (b_isInitialized) {
 	throw new RuntimeException("Error: Engine was initalized a second time.");
 }
-// Initialize time and date
-//v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
-t_h = p_runStartTime_h;
 
-Date startDate = date();
-p_year = startDate.getYear() + 1900;
-
-LocalDate localDate = LocalDate.of(p_year, 1, 1);
-v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
-p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
-p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
-
-
-
-int monthIdx = 0;
-while ( t_h > hourOfYearPerMonth[monthIdx] ) {
-	monthIdx++;
-	if (monthIdx==hourOfYearPerMonth.length){
-		break;
-	}	
-}
-
-int dayOfMonth = 1+(int)((t_h - hourOfYearPerMonth[monthIdx])/24.0);
-traceln("Day of month start: %s", dayOfMonth);
-traceln("Month of year start: %s", monthIdx);
-startDate.setMonth(monthIdx);
-startDate.setDate(dayOfMonth);
-startDate.setHours(0);
-startDate.setMinutes(0);
-traceln("Startdate: %s", startDate);
-//startDate.set
-getExperiment().getEngine().setStartDate(startDate); 
-
-
-//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
 
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
-
 f_buildGridNodeTree();
 c_gridConnections.forEach(GC -> GC.f_initialize());
 
@@ -1264,6 +1229,7 @@ return date;
 
 double f_loopSimulation()
 {/*ALCODESTART::1758619562148*/
+v_liveSimLoopCount++;
 v_timeStepsElapsed = 0;
 f_clearAllLiveDatasets();
 traceln("The simulation has been looped.");
@@ -1375,5 +1341,40 @@ double f_removeAssetManagement(I_AssetManagement assetManagement)
 {/*ALCODESTART::1762791721568*/
 //Should only be called by GC
 c_assetManagement.remove(assetManagement);
+/*ALCODEEND*/}
+
+double f_initializeTimeDates()
+{/*ALCODESTART::1767178014622*/
+// Initialize time and date
+t_h = p_runStartTime_h;
+
+Date startDate = date();
+p_year = startDate.getYear() + 1900;
+
+LocalDate localDate = LocalDate.of(p_year, 1, 1);
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
+p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
+
+int monthIdx = 0;
+while ( t_h > hourOfYearPerMonth[monthIdx] ) {
+	monthIdx++;
+	if (monthIdx==hourOfYearPerMonth.length){
+		break;
+	}	
+}
+
+int dayOfMonth = 1+(int)((t_h - hourOfYearPerMonth[monthIdx])/24.0);
+traceln("Day of month start: %s", dayOfMonth);
+traceln("Month of year start: %s", monthIdx);
+startDate.setMonth(monthIdx);
+startDate.setDate(dayOfMonth);
+startDate.setHours(0);
+startDate.setMinutes(0);
+traceln("Startdate: %s", startDate);
+//startDate.set
+getExperiment().getEngine().setStartDate(startDate); 
+
+
 /*ALCODEEND*/}
 
