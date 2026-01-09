@@ -1113,7 +1113,8 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1722429053561</Id>
-		<Name><![CDATA[p_name]]></Name>
+		<Name><![CDATA[p_annotation]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>50</X>
 		<Y>80</Y>
 		<Label>
@@ -1234,32 +1235,6 @@
 			<ParameterEditor>
 				<Id>1753366605957</Id>
 				<EditorContolType>CHECK_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1757330831065</Id>
-		<Name><![CDATA[p_uid]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>50</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[String]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1757330831063</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
