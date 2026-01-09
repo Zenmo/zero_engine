@@ -67,7 +67,7 @@
 			<Name><![CDATA[p_purposeBAG]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_name]]></Name>
+			<Name><![CDATA[p_annotation]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -83,9 +83,6 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[v_isActive]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_uid]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
