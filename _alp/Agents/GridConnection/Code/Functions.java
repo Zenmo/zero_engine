@@ -430,7 +430,7 @@ if (p_parentNodeElectricID == null) {
 
 f_connectToParents();
 if ( p_parentNodeElectric == null ) {
-	traceln("GC: %s with id %s and name %s", this, p_gridConnectionID, p_name);
+	traceln("GC: %s with id %s", this, p_gridConnectionID);
 	traceln("GN id %s", p_parentNodeElectricID);
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
 }
