@@ -988,9 +988,6 @@
 				<Name><![CDATA[p_eigenOprit]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1475,9 +1472,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_purposeBAG]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
