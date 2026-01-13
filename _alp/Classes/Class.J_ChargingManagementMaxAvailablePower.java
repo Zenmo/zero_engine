@@ -30,8 +30,8 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     	return activeChargingType;
     }
     
-    public void manageCharging(J_ChargePoint chargePoint) {
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
+    	double t_h = timeVariables.getT_h();
 
     	double remainingChargingPower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(ELECTRICITY);
     	if (gc.p_batteryAsset!=null) {
@@ -58,7 +58,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
 			double chargingPower_kW = min(max(0,chargingSetpoint_kW), chargePoint.getMaxChargingCapacity_kW(chargingRequest));
 			
 			//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargingPower_kW); 
+	       	chargePoint.charge(chargingRequest, chargingPower_kW, timeVariables); 
 			remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW); // Assumes the asset complies with the command!   			
     	}
     }

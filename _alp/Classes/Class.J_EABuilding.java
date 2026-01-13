@@ -30,11 +30,11 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     /**
      * Constructor initializing the fields
      */
-    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
+    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
 		this.parentAgent = parentAgent;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
-		this.timestep_h = timestep_h;
+		this.timeParameters = timeParameters;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
 		this.heatCapacity_JpK = heatCapacity_JpK;
@@ -64,37 +64,37 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 	
 	@Override
-	public void f_updateAllFlows(double powerFraction_fr) {
+	public void f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
 		if (powerFraction_fr > 1) {			
 			traceln("JEABuilding capacityHeat_kW is too low! "+ capacityHeat_kW);
 		}
-		super.f_updateAllFlows(powerFraction_fr);
+		super.f_updateAllFlows(powerFraction_fr, timeVariables);
 	}
 
 	@Override
-	public void operate(double ratioOfChargeCapacity_r) {
-		if (ratioOfChargeCapacity_r < 0) {
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+		if (powerFraction_fr < 0) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
 		
 		double lossPower_kW = calculateLoss(); // Heat exchange with environment through convection
 		double solarHeating_kW = solarHeating(); // Heat influx from sunlight
 		this.energyUse_kW = lossPower_kW - solarHeating_kW;
-		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
-		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timestep_h); // Only heat gain from outside air and/or solar irradiance!
+		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
+		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat gain from outside air and/or solar irradiance!
 
-		double inputPower_kW = ratioOfChargeCapacity_r * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
+		double inputPower_kW = powerFraction_fr * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
     	
-		double deltaEnergy_kWh = (solarHeating_kW - lossPower_kW)* this.timestep_h;
+		double deltaEnergy_kWh = (solarHeating_kW - lossPower_kW)* this.timeParameters.getTimeStep_h();
 		if (this.interiorDelayTime_h != 0.0) {
-			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timestep_h );
+			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timeParameters.getTimeStep_h() );
     	}
 		else { 
-			deltaEnergy_kWh += inputPower_kW * this.timestep_h; // to check the request with the energy currently in storage
+			deltaEnergy_kWh += inputPower_kW * this.timeParameters.getTimeStep_h(); // to check the request with the energy currently in storage
 		}
 		updateStateOfCharge( deltaEnergy_kWh );
 		
-		this.heatCharged_kWh += inputPower_kW * this.timestep_h;
+		this.heatCharged_kWh += inputPower_kW * this.timeParameters.getTimeStep_h();
 		
 		this.flowsMap.put(OL_EnergyCarriers.HEAT, inputPower_kW);
 

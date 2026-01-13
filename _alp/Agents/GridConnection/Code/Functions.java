@@ -130,11 +130,11 @@ v_assetFlows.setFlows(v_fixedConsumptionElectric_kW,
 double f_operateFlexAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1664961435385*/
 //Must be overwritten in child agent
-f_manageHeating();
+f_manageHeating(timeVariables);
 
-f_manageEVCharging();
+f_manageEVCharging(timeVariables);
 
-f_manageBattery();
+f_manageBattery(timeVariables);
 /*ALCODEEND*/}
 
 double f_calculateEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)
@@ -162,7 +162,7 @@ if (v_enableNFato) {
 }
 
 c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h, p_chargePoint));
-c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(energyModel.t_h, p_chargePoint));
+c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint));
 
 f_operateFixedAssets(timeVariables);
 f_operateFlexAssets(timeVariables);
@@ -174,11 +174,11 @@ f_connectionMetering(timeVariables, isRapidRun);
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
-c_petroleumFuelVehicles.forEach(v -> v.f_updateAllFlows());
-c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
-c_consumptionAssets.forEach(c -> c.f_updateAllFlows());
-c_productionAssets.forEach(p -> p.f_updateAllFlows());
-c_profileAssets.forEach(p -> p.f_updateProfileFlows(energyModel.t_h));
+c_petroleumFuelVehicles.forEach(v -> ((J_EAFixed)v).f_updateAllFlows(timeVariables));
+c_hydrogenVehicles.forEach(v -> ((J_EAFixed)v).f_updateAllFlows(timeVariables));
+c_consumptionAssets.forEach(c -> c.f_updateAllFlows(timeVariables));
+c_productionAssets.forEach(p -> p.f_updateAllFlows(timeVariables));
+c_profileAssets.forEach(p -> p.f_updateAllFlows(timeVariables));
 /*ALCODEEND*/}
 
 double f_resetStates()
@@ -206,14 +206,14 @@ if(p_chargePoint != null){
 }
 /*ALCODEEND*/}
 
-double f_manageEVCharging()
+double f_manageEVCharging(J_TimeVariables timeVariables)
 {/*ALCODESTART::1671095995172*/
 if(c_electricVehicles.size() + c_chargingSessions.size() > 0 ){
 	if (p_chargingManagement == null) {
 		throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
 		//traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
 	} else {
-		p_chargingManagement.manageCharging(p_chargePoint);
+		p_chargingManagement.manageCharging(p_chargePoint, timeVariables);
 	}
 }
 
@@ -240,11 +240,17 @@ if (j_ea instanceof I_HeatingAsset) {
 	}
 }
 
-if (j_ea instanceof J_EAVehicle vehicle) {
-	if (vehicle instanceof J_EAPetroleumFuelVehicle petroleumFuelVehicle) {
-		c_petroleumFuelVehicles.add( petroleumFuelVehicle );		
-	} else if (vehicle instanceof J_EAHydrogenVehicle hydrogenVehicle) {
-		c_hydrogenVehicles.add(hydrogenVehicle);		
+if (j_ea instanceof I_Vehicle vehicle) {
+	if (vehicle instanceof J_EAFuelVehicle fuelVehicle) {
+		if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.PETROLEUM_FUEL) {
+			c_petroleumFuelVehicles.add(fuelVehicle);
+		}
+		else if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.HYDROGEN) {
+			c_hydrogenVehicles.add(fuelVehicle);		
+		}
+		else {
+			traceln("Warning! f_connectToJ_EA found a vehicle with unknown energy carrier.");
+		}
 	} else if (vehicle instanceof J_EAEV ev) {
 		if(p_chargingManagement == null){
 			f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
@@ -259,10 +265,11 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
-		if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+		OL_EnergyAssetType assetType = ((J_EA)vehicle).getEAType();
+		if (assetType == OL_EnergyAssetType.ELECTRIC_TRUCK || assetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || assetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
-		} else if (vehicle.energyAssetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_VAN || vehicle.energyAssetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+		} else if (assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || assetType == OL_EnergyAssetType.ELECTRIC_VAN || assetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
 			tripTracker.setAnnualDistance_km(30_000);
@@ -278,7 +285,7 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
 		}
 		
-		vehicle.tripTracker = tripTracker;	
+		vehicle.setTripTracker(tripTracker);
 	}
 	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){
 		tripTracker.prepareNextActivity((energyModel.t_h-energyModel.p_runStartTime_h)*60, p_chargePoint);
@@ -504,11 +511,17 @@ double f_removeTheJ_EA_default(J_EA j_ea)
 c_energyAssets.remove(j_ea);
 energyModel.c_energyAssets.remove(j_ea);
 
-if (j_ea instanceof J_EAVehicle vehicle) {
-	if (vehicle instanceof J_EAPetroleumFuelVehicle) {
-		c_petroleumFuelVehicles.remove( vehicle );		
-	} else if (vehicle instanceof J_EAHydrogenVehicle) {
-		c_hydrogenVehicles.remove(vehicle);		
+if (j_ea instanceof I_Vehicle vehicle) {
+	if (vehicle instanceof J_EAFuelVehicle fuelVehicle) {
+		if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.PETROLEUM_FUEL) {
+			c_petroleumFuelVehicles.remove( vehicle );
+		}
+		else if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.HYDROGEN) {
+			c_hydrogenVehicles.remove(vehicle);
+		}
+		else {
+			traceln("Warning! f_removeTheJ_EA found a vehicle with unknown energy carrier.");			
+		}
 	} else if (vehicle instanceof J_EAEV ev) {
 		c_electricVehicles.remove(ev);
 		energyModel.c_EVs.remove(ev);
@@ -518,9 +531,9 @@ if (j_ea instanceof J_EAVehicle vehicle) {
 	}
 	c_vehicleAssets.remove(vehicle);
 		
-	J_ActivityTrackerTrips tripTracker = vehicle.tripTracker;
+	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
 	c_tripTrackers.remove( tripTracker );
-	vehicle.tripTracker = null;
+	vehicle.setTripTracker(null);
 
 } else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
@@ -911,21 +924,21 @@ v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.a
 
 /*ALCODEEND*/}
 
-double f_manageHeating()
+double f_manageHeating(J_TimeVariables timeVariables)
 {/*ALCODESTART::1753099764237*/
 if (p_heatingManagement != null) {
-	p_heatingManagement.manageHeating();
+	p_heatingManagement.manageHeating(timeVariables);
 }
 /*ALCODEEND*/}
 
-double f_manageBattery()
+double f_manageBattery(J_TimeVariables timeVariables)
 {/*ALCODESTART::1752570332887*/
 if (p_batteryAsset != null) {
 	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
 		if (p_batteryManagement == null) {
 			throw new RuntimeException("Tried to operate battery without algorithm in GC: " + p_gridConnectionID);
 		}
-		p_batteryManagement.manageBattery();
+		p_batteryManagement.manageBattery(timeVariables);
 	}
 }
 /*ALCODEEND*/}

@@ -40,8 +40,8 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging(J_ChargePoint chargePoint) {
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
+    	double t_h = timeVariables.getT_h();
 
     	//double currentElectricityPriceConsumption_eurpkWh = gc.p_owner.f_getElectricityPrice(gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
     	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;
@@ -66,7 +66,7 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 				}    
 			}
 	    	//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW);					
+	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables);					
     	}
     }
 

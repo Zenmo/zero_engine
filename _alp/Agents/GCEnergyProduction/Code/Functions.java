@@ -6,9 +6,9 @@ double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 	}
 }*/
 
-f_manageEVCharging();
+f_manageEVCharging(timeVariables);
 
-f_manageBattery();
+f_manageBattery(timeVariables);
 
 /*ALCODEEND*/}
 

@@ -15,7 +15,7 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
      *  For our purpose the unit doesn't matter.
      * @param timeStep_h
      */
-    public J_EAPetroleumFuelTractor(Agent parentAgent, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, double timeStep_h) {
+    public J_EAPetroleumFuelTractor(Agent parentAgent, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, J_TimeParameters timeParameters) {
         if (parentAgent == null) {
             throw new RuntimeException("PetroleumFuel tractor missing parent agent");
         }
@@ -36,42 +36,22 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
             );
         }
         
-        if (timeStep_h <= 0.0) {
-            throw new RuntimeException("Tractor timestep is off");
-        }
-        
         this.parentAgent = parentAgent;
         this.petroleumFuelConsumptionPerWeek_L = calculatePetroleumFuelConsumptionPerWeek_L(yearlyPetroleumFuelConsumption_L, petroleumFuelConsumptionPerWeek);
-        this.timestep_h = timeStep_h;
+        this.timeParameters = timeParameters;
         
         this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.PETROLEUM_FUEL);
         registerEnergyAsset();
-    }
+    }    
     
     @Override
-    public void f_updateProfileFlows(double t_h) {
-         operate(t_h);
-         if (parentAgent instanceof GridConnection) {        
-            ((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-        }
-        this.lastFlowsMap.cloneMap(this.flowsMap);
-        this.lastEnergyUse_kW = this.energyUse_kW;
-        this.clear();
-    }
-    
-    @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
-    	throw new RuntimeException("J_EADieselTractor.f_updateAllFlows(powerFraction_fr) not supperted for J_EADieselTractor! Use J_EADieselTractor.f_updateProfileFlows(t_h) instead!");
-    }
-    
-    @Override
-    public void operate(double t_h) {
-        if (!shouldWork(t_h)) {
+    public void operate(J_TimeVariables timeVariables) {
+        if (!shouldWork(timeVariables.getT_h())) {
             this.flowsMap.clear();
             return;
         }
         
-        double currentPower_kW = currentPower_kW(t_h);    
+        double currentPower_kW = currentPower_kW(timeVariables.getT_h());    
         
         this.flowsMap.put(OL_EnergyCarriers.PETROLEUM_FUEL, currentPower_kW);
         this.energyUse_kW = currentPower_kW;

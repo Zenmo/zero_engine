@@ -28,27 +28,26 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
+	protected J_TimeParameters timeParameters;
 	
-	//protected J_TimeParameters timeParameters;
-	
-	 protected Agent parentAgent;
-	 public OL_EnergyAssetType energyAssetType;
-	 public OL_AssetFlowCategories assetFlowCategory;
-	 public String energyAssetName;
-	 protected J_FlowsMap flowsMap = new J_FlowsMap();
-	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
-	 protected J_ValueMap assetFlowsMap = new J_ValueMap(OL_AssetFlowCategories.class);
-	 protected double lastEnergyUse_kW = 0.0;
+	protected Agent parentAgent;
+	protected OL_EnergyAssetType energyAssetType;
+	protected OL_AssetFlowCategories assetFlowCategory;
+	protected String energyAssetName;
+	protected J_FlowsMap flowsMap = new J_FlowsMap();
+	protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
+	protected J_ValueMap assetFlowsMap = new J_ValueMap(OL_AssetFlowCategories.class);
+	protected double lastEnergyUse_kW = 0.0;
 	 
-	 protected EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeProductionEnergyCarriers in GridConnections and EnergyModel	
-	 protected EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeConsumptionEnergyCarriers in GridConnections and EnergyModel
-
-	 protected double energyUsed_kWh = 0.0;
-	 protected double energyUse_kW = 0.0;
-	 protected double energyUsedStored_kWh = 0.0;
-  	 protected double timestep_h;
- 
-  	 protected boolean isRemoved = false;
+	protected EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeProductionEnergyCarriers in GridConnections and EnergyModel	
+	protected EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeConsumptionEnergyCarriers in GridConnections and EnergyModel
+		
+	protected double energyUsed_kWh = 0.0;
+	protected double energyUse_kW = 0.0;
+	protected double energyUsedStored_kWh = 0.0;
+	protected double timestep_h;
+	 
+	protected boolean isRemoved = false;
 
     /**
      * Default constructor
@@ -90,18 +89,6 @@ abstract public class J_EA implements Cloneable {
     		traceln("Energy asset %s doesn't have a valid parent agent! Energy Asset not removed!", this);
     	}    	
     }
-   
-    public void f_updateAllFlows(double powerFraction_fr) {
-     	powerFraction_fr = min(1,max(-1, powerFraction_fr));
-     	operate(powerFraction_fr);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
-    	}
-    
-    	this.lastFlowsMap.cloneMap(this.flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
-    }
     
     public void clear() {
 	    flowsMap.clear();
@@ -109,8 +96,6 @@ abstract public class J_EA implements Cloneable {
     	energyUse_kW = 0;
     }
 
-	public abstract void operate(double ratioOfCapacity);
-     
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
     	energyUsedStored_kWh = energyUsed_kWh;

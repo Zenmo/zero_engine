@@ -36,8 +36,8 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging(J_ChargePoint chargePoint) {
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
+    	double t_h = timeVariables.getT_h();
     
     	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
 	    	double chargeSetpoint_kW = 0;
@@ -66,7 +66,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 			}
 
 	    	//Send the chargepower setpoint to the chargepoint
-	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW);
+	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW, timeVariables);
     	}
  
     }

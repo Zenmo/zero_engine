@@ -74,23 +74,10 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		}
 		double heatLoss_kW = lossFactor_WpK * ( temperature_degC - ambientTemperature_degC )  * 0.001;
 		return heatLoss_kW;
-		
-		/*
-		double deltaEnergy_kWh = ( -heatLoss_W / 1000 ) * timestep_h;
-		energyUse_kW = heatLoss_W / 1000;
-		energyUsed_kWh += max(0,energyUse_kW * timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
-		ambientEnergyAbsorbed_kWh += max(0,-energyUse_kW * timestep_h); // Only heat gain when outside is hotter than inside!
-		//traceln("Ambient temperature " + ambientTemperature_degC);
-		//traceln("heatCapacity JpK " + heatCapacity_JpK );
-		//traceln("tempdelta loss"+tempDelta);
-		//traceln("lossfacter: " + lossFactor_WpK);
-		
-		updateStateOfCharge( deltaEnergy_kWh );
-		*/
 	}
 
 	@Override
-	public void operate(double ratioOfChargeCapacity_r) {
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
@@ -99,7 +86,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.energyUse_kW = lossPower_kW;
 		energyUsed_kWh += max(0,energyUse_kW * timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
 		
-		double inputPower_kW = ratioOfChargeCapacity_r * capacityHeat_kW; // positive power means adding heat to the buffer
+		double inputPower_kW = powerFraction_fr * capacityHeat_kW; // positive power means adding heat to the buffer
 		double heatDischarged_kW = max(-inputPower_kW, 0);
 		double heatCharged_kW = max(inputPower_kW, 0);
 		heatDischarged_kWh += heatDischarged_kW * timestep_h;
@@ -220,21 +207,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	public double getRemainingHeatStorageHeat_kWh() {
 		return (this.temperature_degC - this.minTemperature_degC) * heatCapacity_JpK /3.6e6;
 	}
-	/*
-	@Override
-	public double getHeatCapacity_kW() {
-    	return capacityHeat_kW;
-    }
-	*/
-	
-	/*@Override //Storage assets limiteren de opname van warmte niet met 1. Dat is nodig voor de buffer. Die kan wel maximaal zijn capaciteit leverern, maar kan meer opnemen. @Gillis is dat logisch of willen we andere oplossing?
-    public double[] operateBounded(double ratioOfCapacity) {
-    	double limitedRatioOfCapacity = max(-1, ratioOfCapacity);
-    	double[] arr = operate(limitedRatioOfCapacity);
-    	return arr;
-    }*/
 
-	//@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) {
 		this.updateAmbientTemperatureHasBeenCalled = true;
 		ambientTemperature_degC = currentAmbientTemperature_degC;

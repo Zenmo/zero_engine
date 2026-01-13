@@ -1,7 +1,7 @@
 /**
  * J_EAStorage
  */
-public abstract class J_EAStorage extends J_EA implements Serializable {
+public abstract class J_EAStorage extends J_EAFlex implements Serializable {
 
 	protected OL_EnergyCarriers storageMedium;
 	protected double storageCapacity_kWh;

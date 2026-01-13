@@ -18,7 +18,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionGasCHP(Agent parentAgent, double outputElectricCapacity_kW, double outputHeatCapacity_kW, double efficiency, double timestep_h, double outputTemperature_degC ) {
+    public J_EAConversionGasCHP(Agent parentAgent, double outputElectricCapacity_kW, double outputHeatCapacity_kW, double efficiency, J_TimeParameters timeParameters, double outputTemperature_degC ) {
 	    if (outputElectricCapacity_kW < 0 || outputHeatCapacity_kW < 0 || (outputElectricCapacity_kW == 0 && outputHeatCapacity_kW == 0)) {
 	    	throw new RuntimeException("Impossible capacities for J_EAConversionGasCHP. outputElectricCapacity_kW: " + outputElectricCapacity_kW + ", outputHeatCapacity_kW: " + outputHeatCapacity_kW);
 	    }
@@ -27,7 +27,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	    this.outputHeatCapacity_kW = outputHeatCapacity_kW; 
 	    this.eta_r = efficiency;
 	    this.inputCapacity_kW = (outputElectricCapacity_kW + outputHeatCapacity_kW) / this.eta_r ;
-	    this.timestep_h = timestep_h;
+	    this.timeParameters = timeParameters;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    
 	    this.energyAssetType = OL_EnergyAssetType.METHANE_CHP;
@@ -43,13 +43,13 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	}
 
 	@Override
-    public void operate(double ratioOfCapacity) {
-    	double electricityProduction_kW = this.outputElectricCapacity_kW * ratioOfCapacity;
-		double heatProduction_kW = this.outputHeatCapacity_kW * ratioOfCapacity;
-		double methaneConsumption_kW = this.inputCapacity_kW * ratioOfCapacity;
+    public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+    	double electricityProduction_kW = this.outputElectricCapacity_kW * powerFraction_fr;
+		double heatProduction_kW = this.outputHeatCapacity_kW * powerFraction_fr;
+		double methaneConsumption_kW = this.inputCapacity_kW * powerFraction_fr;
 		
 		this.energyUse_kW = methaneConsumption_kW - heatProduction_kW - electricityProduction_kW ;
-		this.energyUsed_kWh += energyUse_kW * timestep_h;
+		this.energyUsed_kWh += energyUse_kW * this.timeParameters.getTimeStep_h();
 
 		//this.heatProduced_kWh += heatProduction_kW * timestep_h;
 		//this.electricityProduced_kWh += electricityProduction_kW * timestep_h;

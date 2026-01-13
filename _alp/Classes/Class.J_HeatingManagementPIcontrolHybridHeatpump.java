@@ -54,7 +54,7 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	this.timeStep_h = gc.energyModel.p_timeStep_h;
     }
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
@@ -63,7 +63,7 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	
     	if(hasPT) {
 	    	//Adjust the hot water and overall heat demand with the buffer and pt
-	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
 	    }
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
@@ -105,9 +105,9 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	}
     	
     	//Updat flows with found asset powers
-		heatPumpAsset.f_updateAllFlows( heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW() );
-		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW() );
-		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+		heatPumpAsset.f_updateAllFlows( heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW(), timeVariables );
+		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW(), timeVariables );
+		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables );
     }
     
     

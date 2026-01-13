@@ -1,7 +1,7 @@
 /**
  * J_EAConsumption
  */
-public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
+public class J_EAConsumption extends zero_engine.J_EAFixed implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	public double yearlyDemand_kWh;
 	protected OL_EnergyCarriers energyCarrier;
@@ -17,7 +17,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, double timestep_h, J_ProfilePointer profile) {
+    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, J_TimeParameters timeParameters, J_ProfilePointer profile) {
 		/*if (yearlyDemand_kWh == 0.0) {
 			throw new RuntimeException("Unable to construct J_EAConsumption: " + name + " because consumption is zero." );
 		}*/
@@ -28,7 +28,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		this.yearlyDemand_kWh = yearlyDemand_kWh;
 		this.energyCarrier =  energyCarrier;
 		
-		this.timestep_h = timestep_h;
+		this.timeParameters = timeParameters;
 		if (profile == null) {
 			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
 		} else {
@@ -55,10 +55,6 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 
 		registerEnergyAsset();
     }
-
-    public String getAssetName() {
-    	return this.energyAssetName;
-    }
     
     public void setConsumptionScaling_fr(double consumptionScaling_fr) {
     	this.consumptionScaling_fr = consumptionScaling_fr;
@@ -67,34 +63,15 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     public double getConsumptionScaling_fr() {
     	return this.consumptionScaling_fr;
     }
-    
-    @Override
-    public void f_updateAllFlows(double v_powerFraction_fr) {
-		throw new RuntimeException("J_EAConsumption.f_updateAllFlows() should be called without arguments!");
-	}
-	
-	public void f_updateAllFlows() {
-		double ratioOfCapacity = profilePointer.getCurrentValue();		
-		this.operate(ratioOfCapacity);
-		if (ratioOfCapacity>0.0) { // Skip when there is no consumption -> saves time?
-			if (parentAgent instanceof GridConnection) {    		
-	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
-	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-	    	}
-
-		}
-		this.lastFlowsMap.cloneMap(this.flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
-    }
-    
+        
 	@Override
-	public void operate(double ratioOfCapacity) {
+	public void operate(J_TimeVariables timeVariables) {
+		double ratioOfCapacity = profilePointer.getCurrentValue();		
 
     	double consumption_kW = ratioOfCapacity * this.yearlyDemand_kWh * this.consumptionScaling_fr;
 		
     	this.energyUse_kW = consumption_kW;
-    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
 
 		flowsMap.put(this.energyCarrier, consumption_kW);		
 		if (this.assetFlowCategory != null) {

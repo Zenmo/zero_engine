@@ -25,6 +25,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1721138603366</Id>
 		<Name><![CDATA[f_manageFuelCell]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1070</X>
 		<Y>600</Y>
 		<Label>

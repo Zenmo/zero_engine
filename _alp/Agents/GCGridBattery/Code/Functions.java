@@ -56,7 +56,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 
 double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1666956527771*/
-f_manageBattery();
+f_manageBattery(timeVariables);
 /*ALCODEEND*/}
 
 double f_operateFixedConsumptionAssets_overwrite()

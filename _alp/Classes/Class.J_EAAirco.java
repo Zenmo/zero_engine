@@ -1,17 +1,17 @@
 /**
  * Airco
  */	
-public class J_EAAirco extends zero_engine.J_EA implements Serializable {
+public class J_EAAirco extends zero_engine.J_EAFlex implements Serializable {
 	
 	double capacityElectric_kW;
 	int remainingONtimesteps = 0;
     /**
      * Default constructor
      */
-    public J_EAAirco(Agent parentAgent, double capacityElectric_kW, double timestep_h) {
+    public J_EAAirco(Agent parentAgent, double capacityElectric_kW, J_TimeParameters timeParameters) {
     	this.parentAgent = parentAgent;
     	this.capacityElectric_kW = capacityElectric_kW;
-    	this.timestep_h = timestep_h;	
+    	this.timeParameters = timeParameters;	
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
 		//this.assetFlowCategory = OL_AssetFlowCategories.AIRCO; // bestaat nog niet!
 		this.registerEnergyAsset();
@@ -19,12 +19,12 @@ public class J_EAAirco extends zero_engine.J_EA implements Serializable {
     
     
 	@Override
-    public void operate(double ratioOfCapacity) {
+    public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
 		if( remainingONtimesteps > 0) {
 			this.remainingONtimesteps--;
-			double electricityConsumption_kW = ratioOfCapacity * this.capacityElectric_kW;
+			double electricityConsumption_kW = powerFraction_fr * this.capacityElectric_kW;
 			this.energyUse_kW = electricityConsumption_kW;
-			this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+			this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
 			this.flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
 		}
 	}

@@ -8,12 +8,12 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
      * Default constructor
      */
 
-    public J_EAConversionElectricHeater(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    public J_EAConversionElectricHeater(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, double outputTemperature_degC) {
 	    this.parentAgent = parentAgent;
 	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
-	    this.timestep_h = timestep_h;	    
+	    this.timeParameters = timeParameters;	    
 	    this.outputTemperature_degC = outputTemperature_degC;
 
 	    this.energyAssetType = OL_EnergyAssetType.ELECTRIC_HEATER;
@@ -28,10 +28,10 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	}
 	
     @Override
-    public void operate(double ratioOfCapacity) {
-    	((GridConnection)this.parentAgent).fm_heatFromEnergyCarrier_kW.addFlow(this.energyCarrierConsumed, ratioOfCapacity * this.outputCapacity_kW);
-    	((GridConnection)this.parentAgent).fm_consumptionForHeating_kW.addFlow(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
-    	super.operate(ratioOfCapacity);
+    public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+    	((GridConnection)this.parentAgent).fm_heatFromEnergyCarrier_kW.addFlow(this.energyCarrierConsumed, powerFraction_fr * this.outputCapacity_kW);
+    	((GridConnection)this.parentAgent).fm_consumptionForHeating_kW.addFlow(this.energyCarrierConsumed, powerFraction_fr * this.inputCapacity_kW);
+    	super.operate(powerFraction_fr, timeVariables);
     }
     
 	//@Override

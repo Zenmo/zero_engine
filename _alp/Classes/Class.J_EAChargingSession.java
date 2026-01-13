@@ -1,7 +1,7 @@
 /**
  * J_EAChargingSession
  */	
-public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingRequest {
+public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_ChargingRequest {
 	
 	private List<J_ChargingSessionData> chargingSessionDataList;
 	private int socketNb;
@@ -38,12 +38,12 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
     /**
      * Default constructor
      */
-	public J_EAChargingSession(GridConnection parentGC, List<J_ChargingSessionData> chargingSessionDataList, int socketNb) {
+	public J_EAChargingSession(GridConnection parentGC, List<J_ChargingSessionData> chargingSessionDataList, int socketNb, J_TimeParameters timeParameters) {
 		this.parentAgent = parentGC;	
 		
 		this.socketNb = socketNb;
     	this.chargingSessionDataList = chargingSessionDataList;
-    	this.timestep_h = parentGC.energyModel.p_timeStep_h;
+    	this.timeParameters = timeParameters;
     	
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);   	
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
@@ -53,9 +53,9 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	}
 	
 	@Override
-	public void operate(double ratioOfChargeCapacity_r) {
-    	double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.getVehicleChargingCapacity_kW(); // capped between -1 and 1 does already happen in f_updateAllFlows()!
-    	double chargePower_kW = max(min(chargeSetpoint_kW, (this.getStorageCapacity_kWh() - this.getCurrentSOC_kWh()) / this.timestep_h), -this.getCurrentSOC_kWh() / this.timestep_h); // Limit charge power to stay within SoC 0-100
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+    	double chargeSetpoint_kW = powerFraction_fr * this.getVehicleChargingCapacity_kW(); // capped between -1 and 1 does already happen in f_updateAllFlows()!
+    	double chargePower_kW = max(min(chargeSetpoint_kW, (this.getStorageCapacity_kWh() - this.getCurrentSOC_kWh()) / this.timeParameters.getTimeStep_h()), -this.getCurrentSOC_kWh() / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
     	
     	//Round to floating point precision
     	chargePower_kW = roundToDecimal(chargePower_kW, J_GlobalParameters.floatingPointPrecision);
@@ -63,8 +63,8 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
     	//Bookkeeping of energy flows
     	double electricityProduction_kW = max(-chargePower_kW, 0);
 		double electricityConsumption_kW = max(chargePower_kW, 0);
-		this.currentChargingSessionSOC_kWh += chargePower_kW * this.timestep_h;
-		this.currentSessionChargingBalance_kWh += chargePower_kW * this.timestep_h;
+		this.currentChargingSessionSOC_kWh += chargePower_kW * this.timeParameters.getTimeStep_h();
+		this.currentSessionChargingBalance_kWh += chargePower_kW * this.timeParameters.getTimeStep_h();
 
 		updateChargingHistory( electricityProduction_kW, electricityConsumption_kW );
 
@@ -87,13 +87,13 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	
 
 	
-	public void manageCurrentChargingSession(double t_h, I_ChargePointRegistration chargePointRegistration) {
+	public void manageCurrentChargingSession(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration) {
 		
-		if (this.currentChargingSessionData != null && t_h >= this.currentChargingSessionData.getLeaveTime_h()) { // End session
+		if (this.currentChargingSessionData != null && timeVariables.getT_h() >= this.currentChargingSessionData.getLeaveTime_h()) { // End session
 			if (this.getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.getRemainingChargeDemand_kWh()); }
 			this.energyUsed_kWh += this.currentSessionChargingBalance_kWh; //Add all netto energy charged to the vehicle as final consumption
-			this.energyUse_kW += this.currentSessionChargingBalance_kWh/this.timestep_h; //Add all netto energy charged to the vehicle as final consumption
-			f_updateAllFlows(0.0); //Call needed to transfer energyUse_kW to add flows
+			this.energyUse_kW += this.currentSessionChargingBalance_kWh/this.timeParameters.getTimeStep_h(); //Add all netto energy charged to the vehicle as final consumption
+			f_updateAllFlows(0.0, timeVariables); //Call needed to transfer energyUse_kW to add flows
 			this.currentChargingSessionData = null;
 			chargePointRegistration.deregisterChargingRequest(this);
 			this.currentSessionChargingBalance_kWh = 0;
@@ -116,9 +116,9 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 			} else {					
 				loadChargingSessionData(this.chargingSessionDataList.get(nextSessionIndex));
 				
-				if (t_h > this.currentChargingSessionData.getStartTime_h()) { 
-					traceln("Chargesession %s started %s hours too late!", this.nextSessionIndex, t_h - this.currentChargingSessionData.getStartTime_h());	
-					if (t_h >= this.currentChargingSessionData.getLeaveTime_h()) { 
+				if (timeVariables.getT_h() > this.currentChargingSessionData.getStartTime_h()) { 
+					traceln("Chargesession %s started %s hours too late!", this.nextSessionIndex, timeVariables.getT_h() - this.currentChargingSessionData.getStartTime_h());	
+					if (timeVariables.getT_h() >= this.currentChargingSessionData.getLeaveTime_h()) { 
 						traceln("!!Chargesession started after its endTime_h!!");
 					}
 				}
@@ -126,7 +126,7 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 			}
 		} 
 
-		if(this.currentChargingSessionData != null && this.currentChargingSessionData.getStartTime_h() == t_h) {
+		if(this.currentChargingSessionData != null && this.currentChargingSessionData.getStartTime_h() == timeVariables.getT_h()) {
 			chargePointRegistration.registerChargingRequest(this);
 		}
 	}
@@ -234,8 +234,8 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
     
 	
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
-		this.totalCharged_kWh += electricityConsumed_kW * this.timestep_h;
-		this.totalDischarged_kWh += electricityProduced_kW * this.timestep_h;
+		this.totalCharged_kWh += electricityConsumed_kW * this.timeParameters.getTimeStep_h();
+		this.totalDischarged_kWh += electricityProduced_kW * this.timeParameters.getTimeStep_h();
 	}
 	
 	

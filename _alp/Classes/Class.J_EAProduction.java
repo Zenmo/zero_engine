@@ -1,7 +1,7 @@
 /**
  * J_EAProduction
  */
-public class J_EAProduction extends zero_engine.J_EA implements Serializable {
+public class J_EAProduction extends zero_engine.J_EAFixed implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	protected double totalEnergyCurtailed_kWh=0;
@@ -17,7 +17,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	/**
      * Constructor initializing the fields
      */
-	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, double timestep_h, J_ProfilePointer profile) {
+	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, J_TimeParameters timeParameters, J_ProfilePointer profile) {
 	    this.parentAgent = parentAgent;
 	    this.energyAssetType = type;
 	    if (type == OL_EnergyAssetType.PHOTOVOLTAIC) {
@@ -35,7 +35,7 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    this.energyCarrier = energyCarrier;
 	    this.capacity_kW = capacity_kW;
 
-	    this.timestep_h = timestep_h;
+	    this.timeParameters = timeParameters;
 	    //this.outputTemperature_degC = outputTemperature_degC;
 		if (profile == null) {
 			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
@@ -97,26 +97,21 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	}
 	
 	@Override
-    public void operate(double ratioOfCapacity) {
-		ratioOfCapacity = profilePointer.getCurrentValue();
+    public void operate(J_TimeVariables timeVariables) {
+		double powerFraction_fr = profilePointer.getCurrentValue();
 		
 		//if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
-			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
+			double currentProduction_kW = powerFraction_fr * this.capacity_kW;
 			
 	    	this.energyUse_kW = -currentProduction_kW;
-	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
+	    	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h(); 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
 	    	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
 		//}
 	    throw new RuntimeException("J_EAProduction operate override is called!");
 	}
 	
-    @Override
-	public void f_updateAllFlows(double v_powerFraction_fr) {
-		throw new RuntimeException("J_EAProduction.f_updateAllFlows() should be called without arguments!");
-	}
-	
-	public void f_updateAllFlows() {
+	public void f_updateAllFlows(J_TimeVariables timeVariables) {
 		double ratioOfCapacity = profilePointer.getCurrentValue();
 		
 		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?

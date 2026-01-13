@@ -45,7 +45,7 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	this.currentHeatingType = heatingType;
     }
 
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
@@ -54,7 +54,7 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	if (heatTransferToNetwork_kW > heatingAsset.getOutputCapacity_kW()) {
     		throw new RuntimeException("Heating asset in " + this.getClass() + " does not have sufficient capacity.");
     	}
-    	heatingAsset.f_updateAllFlows( heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW() );
+    	heatingAsset.f_updateAllFlows( heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW(), timeVariables );
     	previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     }
     

@@ -134,7 +134,7 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_manageElectrolyser(J_EAConversionElectrolyser ElectrolyserAsset)
+double f_manageElectrolyser(J_EAConversionElectrolyser ElectrolyserAsset,J_TimeVariables timeVariables)
 {/*ALCODESTART::1708089250229*/
 
 if (ElectrolyserAsset.getInputCapacity_kW()>0) {
@@ -187,7 +187,7 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	//Output
 	//double[] flowsArray = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
 	//Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getCapacityElectric_kW());
-	ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getInputCapacity_kW());
+	ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getInputCapacity_kW(), timeVariables);
 		
 	//v_conversionPowerElectric_kW += ElectrolyserAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 	//v_hydrogenElectricityConsumption_kW += ElectrolyserAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
@@ -214,15 +214,15 @@ double f_operateFlexAssets_override(J_TimeVariables timeVariables)
 {/*ALCODESTART::1708089644411*/
 for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElectrolyser) {
-		f_manageElectrolyser((J_EAConversionElectrolyser)v);
+		f_manageElectrolyser((J_EAConversionElectrolyser)v, timeVariables);
 	}
 }
 
 // Determine EV charging
-f_manageEVCharging();
+f_manageEVCharging(timeVariables);
 
 // Operate battery
-f_manageBattery();
+f_manageBattery(timeVariables);
 
 /*ALCODEEND*/}
 

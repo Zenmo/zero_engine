@@ -71,8 +71,8 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	//traceln("Endtimes: %s", endtimes_min);
     }
     
-    public void manageActivities(double t_h) {
-    	double time_min = t_h * 60;
+    public void manageActivities(J_TimeVariables timeVariables) {
+    	double time_min = timeVariables.getAnyLogicTime_h() * 60;
     	//traceln("Cooking tracker current time: " + time_min);
     	//traceln("Event index: " + v_eventIndex);
     	//traceln("startTimes: " + starttimes_min);
@@ -138,7 +138,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     		this.powerFraction_fr = 0;
     	}
     	//if (powerFraction_fr > 0 ) { traceln("Cooking event in progress!"); }
-    	HOB.f_updateAllFlows(powerFraction_fr);
+    	HOB.f_updateAllFlows(powerFraction_fr, timeVariables);
     }
     
     @Override

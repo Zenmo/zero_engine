@@ -27,8 +27,8 @@ public class J_BatteryManagementOff implements I_BatteryManagement {
     	this.gc = gc;
     }
 
-    public void manageBattery() {
-    	gc.p_batteryAsset.f_updateAllFlows(0.0);
+    public void manageBattery(J_TimeVariables timeVariables) {
+    	gc.p_batteryAsset.f_updateAllFlows(0.0, timeVariables);
     }
     
 

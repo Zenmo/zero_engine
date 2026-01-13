@@ -45,7 +45,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     }
       
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
@@ -53,7 +53,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	if(hasPT) {//Adjust the hot water and overall heat demand with the buffer and pt
-    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!
+    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables); // also updates fm_currentBalanceFlows_kW(heat)!
     	}
     	
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
@@ -85,11 +85,11 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 			
 	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
 			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-			building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+			building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables );
     	} else {    	    	
     		heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
     	}
-		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
+		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW(), timeVariables );
     }
     
     

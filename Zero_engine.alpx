@@ -1399,6 +1399,7 @@
 			<JavaClass>
 				<Id>1668600448637</Id>
 				<Name><![CDATA[J_EAHydrogenVehicle]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1452,6 +1453,7 @@
 			<JavaClass>
 				<Id>1692862773194</Id>
 				<Name><![CDATA[J_EAVehicle]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1467,11 +1469,12 @@
 			<JavaClass>
 				<Id>1707992650964</Id>
 				<Name><![CDATA[J_EAConversionFuelCell]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1711009967838</Id>
-				<Name><![CDATA[J_EAPetroleumFuelVehicle]]></Name>
+				<Name><![CDATA[J_EAFuelVehicle]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1858,6 +1861,21 @@
 				<Id>1765901157331</Id>
 				<Name><![CDATA[J_ChargingSessionData]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1767709602608</Id>
+				<Name><![CDATA[J_EAFlex]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1767709611303</Id>
+				<Name><![CDATA[J_EAFixed]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1767716018663</Id>
+				<Name><![CDATA[I_Vehicle]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

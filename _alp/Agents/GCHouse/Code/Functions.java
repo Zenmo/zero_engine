@@ -1,7 +1,7 @@
 double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1664963959146*/
-f_manageCookingTracker();
-f_manageAirco();
+f_manageCookingTracker(timeVariables);
+f_manageAirco(timeVariables);
 super.f_operateFlexAssets(timeVariables);
 /*ALCODEEND*/}
 
@@ -264,11 +264,11 @@ double f_setEnergyLabel()
 traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");
 /*ALCODEEND*/}
 
-double f_manageCookingTracker()
+double f_manageCookingTracker(J_TimeVariables timeVariables)
 {/*ALCODESTART::1726334759211*/
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h); // also calls f_updateAllFlows in HOB asset	
+	p_cookingTracker.manageActivities(timeVariables); // also calls f_updateAllFlows in HOB asset	
 	
 	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	throw new RuntimeException("Cooking trackers and HOBs are not properly integrated with current heating management!");
@@ -278,7 +278,7 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 }
 /*ALCODEEND*/}
 
-double f_manageAirco()
+double f_manageAirco(J_TimeVariables timeVariables)
 {/*ALCODESTART::1749648447119*/
 if( p_airco != null ) {
 	if (p_airco.remainingONtimesteps == 0){
@@ -317,7 +317,7 @@ if( p_airco != null ) {
 			p_airco.turnOnAirco( nbTimestepsOn );
 		}
 	}
-	p_airco.f_updateAllFlows( 1.0 );
+	p_airco.f_updateAllFlows( 1.0, timeVariables );
 }
 /*ALCODEEND*/}
 

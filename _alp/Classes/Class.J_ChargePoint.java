@@ -46,11 +46,11 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     
     
     //Charge chargingRequest trough socket
-    public void charge( I_ChargingRequest chargingRequest, double charge_kW ) {
+    public void charge( I_ChargingRequest chargingRequest, double charge_kW, J_TimeVariables timeVariables ) {
 		if (charge_kW < 0 && !this.V2GCapable) {
 			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable");
 		}
-		chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getVehicleChargingCapacity_kW());
+		chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getVehicleChargingCapacity_kW(), timeVariables);
     }
     
     protected void performCheck() { //This call will check if all chargingrequest have been charged in a timestep. 

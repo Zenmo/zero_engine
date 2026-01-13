@@ -51,9 +51,9 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
      * This algorithm tries to aim for a fixed SOC (0.5 by default) 
      * so that it can take the connection capacity of the GC into account and prevent any peaks when they occur.
      */
-    public void manageBattery() {
+    public void manageBattery(J_TimeVariables timeVariables) {
     	if (this.target == null) {
-    		gc.p_batteryAsset.f_updateAllFlows(0);
+    		gc.p_batteryAsset.f_updateAllFlows(0, timeVariables);
     		return;
     	}
     	double feedbackGain_kWpSOC = feedbackGain_fr * gc.p_batteryAsset.getCapacityElectric_kW();
@@ -68,7 +68,7 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
 
     	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
     	
-    	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
+    	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables );
     }
   
     public void setTarget( Agent agent ) {

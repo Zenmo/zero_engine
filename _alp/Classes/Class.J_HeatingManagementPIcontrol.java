@@ -59,7 +59,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	this.timeStep_h = gc.energyModel.p_timeStep_h;
     }
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
@@ -74,11 +74,11 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	//Manage hot water if additional systems are present
     	if(this.hasPT) {
 	    	//Adjust the hot water and overall heat demand with the buffer and pt
-	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
 	    	currentHeatDemand_kW += remainingHotWaterDemand_kW;
     	}
     	else if(this.hasHotWaterBuffer) {
-    		double heatDemandFromHeatingAssetForHotWater_kW = J_HeatingFunctionLibrary.manageHotWaterHeatBuffer(this.hotWaterBuffer, hotWaterDemand_kW, availableAssetPowerForHotWater_kWth, this.timeStep_h);
+    		double heatDemandFromHeatingAssetForHotWater_kW = J_HeatingFunctionLibrary.manageHotWaterHeatBuffer(this.hotWaterBuffer, hotWaterDemand_kW, availableAssetPowerForHotWater_kWth, this.timeStep_h, timeVariables);
     		currentHeatDemand_kW += heatDemandFromHeatingAssetForHotWater_kW;
     	}
     	else {
@@ -106,10 +106,10 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	
 
     	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + currentHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
-		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
+		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW(), timeVariables );
 		
 		double heatIntoBuilding_kW = max(0, assetPower_kW - currentHeatDemand_kW);    			
-		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables );
 
     }    
     

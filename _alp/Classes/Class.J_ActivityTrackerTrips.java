@@ -9,7 +9,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	
 	public ArrayList<Double> distances_km = new ArrayList<>();
 	private int rowIndex;
-	public J_EAVehicle Vehicle;
+	public I_Vehicle Vehicle;
 	public double v_idleTimeToNextTrip_min;
 	public double v_idleTimeToNextTripStored_min;
 	public double v_tripDist_km;
@@ -26,7 +26,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     public J_ActivityTrackerTrips() {
     }
     
-    public J_ActivityTrackerTrips(EnergyModel main, TextFile tripsCsv, int rowIndex, double time_min, J_EAVehicle Vehicle, I_ChargePointRegistration chargePointRegistration) {
+    public J_ActivityTrackerTrips(EnergyModel main, TextFile tripsCsv, int rowIndex, double time_min, I_Vehicle Vehicle, I_ChargePointRegistration chargePointRegistration) {
     	this.energyModel = main;
     	this.rowIndex = rowIndex;
     	this.Vehicle = Vehicle;		

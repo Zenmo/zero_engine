@@ -19,13 +19,13 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionElectrolyser(Agent parentAgent, double inputElectricCapacity_kW, double efficiency_r, double  timestep_h, OL_ElectrolyserState electrolyserState, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
+    public J_EAConversionElectrolyser(Agent parentAgent, double inputElectricCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, OL_ElectrolyserState electrolyserState, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
 	    this.parentAgent = parentAgent;
 	    this.electrolyserState = electrolyserState;
 	    this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
-	    this.timestep_h = timestep_h;
+	    this.timeParameters = timeParameters;
 	    this.startUpTimeStandby_h = startUpTimeStandby_s/3600;
 	    
 	    this.loadChangeTime_h = loadChangeTime_s/3600;
@@ -44,8 +44,8 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	}
     
     @Override
-    public void f_updateAllFlows( double powerFraction_fr ) {
-		this.operate( min(1, max(0,powerFraction_fr)) );
+    public void f_updateAllFlows( double powerFraction_fr, J_TimeVariables timeVariables) {
+		this.operate( min(1, max(0,powerFraction_fr)), timeVariables );
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);		
     	}
@@ -55,8 +55,8 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     }
     
     @Override
-    public void operate(double ratioOfCapacity) {
-		double electricityConsumption_kW = inputCapacity_kW * ratioOfCapacity;
+    public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+		double electricityConsumption_kW = inputCapacity_kW * powerFraction_fr;
 		double hydrogenProduction_kW = 0;
 		if (electrolyserState == OL_ElectrolyserState.POWER_UP) {
 			this.remainingPowerUpDuration_timesteps--;
@@ -68,7 +68,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 		}
     	
     	this.energyUse_kW = (electricityConsumption_kW - hydrogenProduction_kW);
-		this.energyUsed_kWh += energyUse_kW * timestep_h;
+		this.energyUsed_kWh += energyUse_kW * this.timeParameters.getTimeStep_h();
 
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);
 		flowsMap.put(OL_EnergyCarriers.HYDROGEN, -hydrogenProduction_kW);

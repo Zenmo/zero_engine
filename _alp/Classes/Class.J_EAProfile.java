@@ -1,7 +1,7 @@
 /**
  * J_EAProfile
  */
-public class J_EAProfile extends zero_engine.J_EA implements Serializable {
+public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 
 	public OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	public double[] a_energyProfile_kWh;
@@ -42,26 +42,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     public void setStartTime_h(double startTime_h) {    	
     	this.profileStarTime_h = startTime_h;
     }
-
-    @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
-    	throw new RuntimeException("J_EAProfile.f_updateAllFlows(powerFraction_fr) not supperted for J_EAProfile! Use J_EAProfile.f_updateProfileFlows(t_h) instead!");
-    }
-    
-    public void f_updateProfileFlows(double time_h) {
-
-    	operate(time_h-this.profileStarTime_h);
-
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-    	}
-    	this.lastFlowsMap.cloneMap(flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
-    }
     
     @Override
-    public void operate(double time_h) {
+    public void operate(J_TimeVariables timeVariables) {
+    	double time_h = timeVariables.getT_h()-this.profileStarTime_h;
     	if (enableProfileLooping && time_h >= a_energyProfile_kWh.length * profileTimestep_h) {
     		time_h = time_h % a_energyProfile_kWh.length * profileTimestep_h;
     	} else if ( (int)floor(time_h/profileTimestep_h) >= a_energyProfile_kWh.length ) {
@@ -82,10 +66,6 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 			this.assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
 		}
     }
-
-	public double getEnergyUsed_kWh() {
-		return energyUsed_kWh;
-	}
 
     public void curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);

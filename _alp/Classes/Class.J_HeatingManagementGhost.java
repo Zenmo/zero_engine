@@ -36,7 +36,7 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
     	this.currentHeatingType = heatingType;
     }
 
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}

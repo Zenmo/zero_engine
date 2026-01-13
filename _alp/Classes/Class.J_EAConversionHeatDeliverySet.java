@@ -14,13 +14,13 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
      * Constructor initializing the fields
      */
     
-    public J_EAConversionHeatDeliverySet(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
+    public J_EAConversionHeatDeliverySet(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, double outputTemperature_degC) {
 
     	this.parentAgent = parentAgent;
 	    this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
-	    this.timestep_h = timestep_h;	    
+	    this.timeParameters = timeParameters;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    
 	    this.energyAssetType = OL_EnergyAssetType.HEAT_DELIVERY_SET;

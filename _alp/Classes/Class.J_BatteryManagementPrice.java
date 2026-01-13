@@ -52,7 +52,7 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
      * This algorithm determines the battery behaviour with the historical national EPEX price. 
      * It has a boolean flag wether or not to take the GC's connection capacity into account.
      */
-    public void manageBattery() {
+    public void manageBattery(J_TimeVariables timeVariables) {
 	    // Get the national EPEX price
 	    double currentElectricityPriceCharge_eurpkWh = gc.energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;
 	
@@ -82,7 +82,7 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	    }
 	
-	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
+	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables );
     }
     
     

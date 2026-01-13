@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
-public abstract class J_EAVehicle extends J_EA implements Serializable {
+public abstract class J_EAVehicle extends J_EAFlex implements Serializable {
 	public boolean available = true;
 	protected boolean availableStored = true;
 	protected double energyConsumption_kWhpkm;
@@ -19,7 +19,7 @@ public abstract class J_EAVehicle extends J_EA implements Serializable {
     public J_EAVehicle() {
     }
 
-    public boolean startTrip() {
+    public boolean startTrip(J_TimeVariables timeVariables) {
     	return false;
     }
     
@@ -27,7 +27,7 @@ public abstract class J_EAVehicle extends J_EA implements Serializable {
     	return false;
     }
     
-    public void operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity, J_TimeVariables timeVariables) {
     	traceln("***Warning*** abstract J_EAVehicle operate! This is a dummy function, doing nothing!");
 		//return null;
     }

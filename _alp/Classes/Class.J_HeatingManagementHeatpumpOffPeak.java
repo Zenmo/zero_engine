@@ -65,17 +65,17 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     }
     
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
-    		calculatePreHeatParameters();
+    		calculatePreHeatParameters(timeVariables);
     	}
-    	double t_h = gc.energyModel.t_h;
+    	double t_h = timeVariables.getT_h();
     	double timeOfDay_h = gc.energyModel.t_hourOfDay;
     	
     	//Calculate preheat paramters for the next reduced heating interval
     	if(timeOfDay_h == endTimeOfReducedHeatingInterval_hr) {
-    		calculatePreHeatParameters();
+    		calculatePreHeatParameters(timeVariables);
     	}
     	
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
@@ -88,11 +88,11 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	//Manage hot water if additional systems are present
     	if(this.hasPT) {
 	    	//Adjust the hot water and overall heat demand with the buffer and pt
-	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
 	    	currentHeatDemand_kW += remainingHotWaterDemand_kW;
     	}
     	else if(this.hasHotWaterBuffer) {
-    		double heatDemandFromHeatingAssetForHotWater_kW = J_HeatingFunctionLibrary.manageHotWaterHeatBuffer(this.hotWaterBuffer, hotWaterDemand_kW, availableAssetPowerForHotWater_kWth, this.timeStep_h);
+    		double heatDemandFromHeatingAssetForHotWater_kW = J_HeatingFunctionLibrary.manageHotWaterHeatBuffer(this.hotWaterBuffer, hotWaterDemand_kW, availableAssetPowerForHotWater_kWth, this.timeStep_h, timeVariables);
     		currentHeatDemand_kW += heatDemandFromHeatingAssetForHotWater_kW;
     	}
     	else {
@@ -134,15 +134,15 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     	
     	//Set asset power
     	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(), buildingHeatingDemand_kW + currentHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
-		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW() );
+		heatingAsset.f_updateAllFlows( assetPower_kW / heatingAsset.getOutputCapacity_kW(), timeVariables );
 		
 		//Set building power (other heat demand gets bias if asset does not have enough capacity)
 		double heatIntoBuilding_kW = max(0, assetPower_kW - currentHeatDemand_kW);    			
-		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables );
     }    
     
-    private void calculatePreHeatParameters() {
-		double energyModel_time_h = gc.energyModel.t_h;
+    private void calculatePreHeatParameters(J_TimeVariables timeVariables) {
+		double energyModel_time_h = timeVariables.getT_h();
 		double p_timestep_h = gc.energyModel.p_timeStep_h;
 		J_ProfilePointer ambientTemperatureProfilePointer = gc.energyModel.pp_ambientTemperature_degC;
 		

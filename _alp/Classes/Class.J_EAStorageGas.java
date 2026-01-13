@@ -28,11 +28,10 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
     }
 
 	@Override
-	public void operate(double ratioOfChargeCapacity_r) {
-    	double deltaEnergy_kWh;   // to check the request with the energy currently in storage
-    	double inputPower_kW = ratioOfChargeCapacity_r * capacityGas_kW; // Gas power going into Storage, negative if going out.
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+    	double inputPower_kW = powerFraction_fr * capacityGas_kW; // Gas power going into Storage, negative if going out.
 
-    	deltaEnergy_kWh = inputPower_kW * timestep_h;
+    	double deltaEnergy_kWh = inputPower_kW * timestep_h;
     	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * storageCapacity_kWh) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * storageCapacity_kWh ); // Prevent overcharge
 
