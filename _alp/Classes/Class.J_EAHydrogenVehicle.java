@@ -67,7 +67,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
     public boolean endTrip(double tripDist_km) {
 		
 		if(available) {
-			traceln("Trip not ended because EV never left!");
+			traceln("Trip not ended because vehicle never left!");
 			return false;
 		} else {
 	    	available = true;

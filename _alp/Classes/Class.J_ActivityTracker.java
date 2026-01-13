@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 	    creatorVisibility = Visibility.NONE
 	)
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
-public class J_ActivityTracker implements Serializable {
+public abstract class J_ActivityTracker implements Serializable {
 	protected EnergyModel energyModel;
 
 	// Tripdata

@@ -18,7 +18,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	public double v_nextEventStartTime_min;
 	public double distanceScaling_fr = 1.0;
 	public double currentTripTimesteps_n;
-	public String tripPatternIdentifier; 
+	//public String tripPatternIdentifier; 
 	
     /**
      * Default constructor
@@ -51,30 +51,22 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     		distances_km.add(tripsCsv.readDouble());
     	}
 
-	    // If trips have in inputdata have a 1-week schedule (endtime < 10080), then duplicate activities until the end of the year
-    	if (endtimes_min.get(nbActivities-1) < 10080) {
-		    for (int weeks = 1; weeks < 53; weeks++) {
-		    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
-		    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
-		    		endtimes_min.add(endtimes_min.get(eventIdx) + 10080*weeks);
-		    		distances_km.add(distances_km.get(eventIdx));
-		    	}
-		    }
-	    }
-    	
-    	double currentAnnualDistance_km = distances_km.stream().mapToDouble(a -> a).sum();
-    	//traceln("Number of trips: %s, total annual distance: %s km", nbActivities, currentAnnualDistance_km);    	
-    	//traceln("Total annual distance: %s", currentAnnualDistance_km);
-	    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
-	    while ( starttimes_min.get(v_eventIndex) < time_min ) {	
-	    	v_eventIndex++;
-	    	if ( v_eventIndex > starttimes_min.size() - 1 ) {	
-	    		break;
-	    	}
-	    }
-	    prepareNextActivity(time_min, chargePointRegistration);    	
-    }
+      	// 'forward' to next current activity
+       	setStartIndex(time_min/60.0, chargePointRegistration);    
+   }
    
+   private double getTimeSinceWeekStart(double time_min) {
+	   double timeSinceWeekStart_min = (time_min + (energyModel.v_dayOfWeek1jan-1) * 24 * 60) % (7*24*60); //  Trip start/end-times are all defined as minutes since monday 00:00h
+	   return timeSinceWeekStart_min;
+   }
+    
+   private void setNextTrip() {
+	   v_eventIndex++;
+	   if ( v_eventIndex > starttimes_min.size() - 1 ) {	
+	   		v_eventIndex = 0;
+	   }
+   }
+       
    public void setVehicle(J_EAVehicle Vehicle) {
 	   this.Vehicle = Vehicle;
    }
@@ -82,21 +74,13 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
    public void setDistanceScaling_fr(double distanceScaling_fr) {
 	   this.distanceScaling_fr = distanceScaling_fr;
    }
-   
-   
+      
    public double getAnnualDistance_km() {
-	   double currentAnnualDistance_km = distances_km.stream().mapToDouble(a -> a).sum();
+	   double currentAnnualDistance_km = 52 * distances_km.stream().mapToDouble(a -> a).sum(); // assumed trip-data is one week long!! Hence the 52, for 52 weeks in a year.
 	   return currentAnnualDistance_km;
    }
+   
    public void setAnnualDistance_km(double desiredAnnualDistance_km) { // Scale trips to come to a certain total annual distance traveled. This can lead to unfeasibly long trips for EVs!!
-	   /* double currentAnnualDistance_km = 0;
-	   int tripNo=0;
-	   // Get current annual distance
-	   while (endtimes_min.get(tripNo) < 60*24*365) {
-		   currentAnnualDistance_km += distances_km.get(tripNo);
-		   tripNo++;
-	   }
-	   */
 	   double currentAnnualDistance_km = getAnnualDistance_km();
 	   double scalingFactor_f = desiredAnnualDistance_km / currentAnnualDistance_km;
 	   
@@ -113,9 +97,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     
    public void manageActivities(double t_h, I_ChargePointRegistration chargePointRegistration) {
 		double time_min = t_h * 60;
+		double timeSinceWeekStart_min = getTimeSinceWeekStart(time_min); //  Trip start/end-times are all defined as minutes since monday 00:00h, trips are looped indefinitely
     	if (Vehicle.getAvailability()) { // at start of timestep! check for multiple 'events' in timestep!
     		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h * 60) ) { // is a trip starting this timestep?
-        	if ( time_min >= starttimes_min.get(v_eventIndex) ) { // is a trip starting this timestep?
+        	if ( timeSinceWeekStart_min >= starttimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < starttimes_min.get(v_eventIndex)) { // is a trip starting this timestep?
     			//currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
     			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
     			
@@ -124,9 +109,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     				chargePointRegistration.deregisterChargingRequest(EV);
     			}
         		//if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the trip also ending this timestep?
-            	if (time_min >= endtimes_min.get(v_eventIndex) ) { // is the trip also ending this timestep?
+            	if (timeSinceWeekStart_min >= endtimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < endtimes_min.get(v_eventIndex)) { // is the trip also ending this timestep?
         			Vehicle.endTrip(v_tripDist_km);
-        			v_eventIndex++;
+        			setNextTrip();//v_eventIndex++;
         			prepareNextActivity(time_min, chargePointRegistration);
         		}
     		}
@@ -140,12 +125,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     			hydrogenVehicle.progressTrip(v_tripDist_km / currentTripTimesteps_n);
     		}
     		//if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*energyModel.p_timeStep_h)) * 60*energyModel.p_timeStep_h ) { // is a trip ending this timestep?
-        	if (time_min >= endtimes_min.get(v_eventIndex) ) { // is a trip ending this timestep?
+        	if (timeSinceWeekStart_min >= endtimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < endtimes_min.get(v_eventIndex)) { // is a trip ending this timestep?
     			Vehicle.endTrip(v_tripDist_km);
-    			v_eventIndex++;
+    			setNextTrip();//v_eventIndex++;
     			prepareNextActivity(time_min, chargePointRegistration);
         		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
-            	if (time_min >= starttimes_min.get(v_eventIndex) ) { // is the next trip also starting this timestep?
+            	if (timeSinceWeekStart_min >= starttimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < starttimes_min.get(v_eventIndex) ) { // is the next trip also starting this timestep?
         			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
         			Vehicle.startTrip();
         			if(Vehicle instanceof J_EAEV EV) {
@@ -160,22 +145,32 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
    	public void setStartIndex(double t_h, I_ChargePointRegistration chargePointRegistration) {
    		// 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
    		double time_min = t_h * 60.0;
-	    while ( starttimes_min.get(v_eventIndex) < time_min ) {	
-	    	v_eventIndex++;
-	    	if ( v_eventIndex > starttimes_min.size() - 1 ) {	
-	    		break;
+   		
+   		double timeSinceWeekStart_min = getTimeSinceWeekStart(time_min);
+    	boolean looped = false;
+	    while ( starttimes_min.get(v_eventIndex) < (timeSinceWeekStart_min ) ) {	
+	    	setNextTrip(); // Skip to the next trip.
+
+	    	if (v_eventIndex == starttimes_min.size()-1 ) { 
+	    		if (looped) { // break while loop!
+	    			setNextTrip(); // Reverts to first trip of week
+	    			break;
+	    		} else {
+	    			looped = true;
+	    		}
 	    	}
+	    	
 	    }
 	    prepareNextActivity(time_min, chargePointRegistration);    	
    	}
     
     public void prepareNextActivity(double time_min, I_ChargePointRegistration chargePointRegistration) {
-		if ( v_eventIndex >= starttimes_min.size()  ) {
+		/*if ( v_eventIndex >= starttimes_min.size()  ) { // This should only happen at the end of the year, not every week.
 			v_eventIndex = 0;
-		}
-		
+		}*/
+       	double timeSinceWeekStart_min = getTimeSinceWeekStart(time_min);
 	    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-		v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
+		v_idleTimeToNextTrip_min = (v_nextEventStartTime_min - timeSinceWeekStart_min) % (24*7*60); // Modulo 24*7*60 needed because otherwise negative values can occur when trip starts 'next week'.
 		v_tripDist_km = distanceScaling_fr * distances_km.get( v_eventIndex ); // Update upcoming trip distance
 
 		if (Vehicle instanceof J_EAEV ev) {

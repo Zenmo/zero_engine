@@ -55,14 +55,13 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	}
     	
     	while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
-    		starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
-    		endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
+    		starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );  // Source data is always just one day, repeating every day.
+    		endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 ); // Source data is always just one day, repeating every day.
     		v_eventIndex++;
     		if ( v_eventIndex > starttimes_min.size() - 1 ) {
     			v_eventIndex = 0;
     		}
     	}
-    	
     	
     	initalStarttimes_min = new ArrayList<>(starttimes_min);
     	initalEndtimes_min = new ArrayList<>(endtimes_min);

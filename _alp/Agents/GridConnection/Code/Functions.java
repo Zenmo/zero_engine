@@ -287,8 +287,8 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		
 		vehicle.setTripTracker(tripTracker);
 	}
-	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){
-		tripTracker.prepareNextActivity((energyModel.t_h-energyModel.p_runStartTime_h)*60, p_chargePoint);
+	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){ // J_EAEV that already has triptracker, but still needs to prepare next trip to determine chargedeadline.
+		tripTracker.prepareNextActivity(energyModel.t_h*60, p_chargePoint);
 	}
 	c_tripTrackers.add( tripTracker );
 	//v_vehicleIndex ++;
@@ -437,7 +437,7 @@ if (p_parentNodeElectricID == null) {
 
 f_connectToParents();
 if ( p_parentNodeElectric == null ) {
-	traceln("GC: %s with id %s and name %s", this, p_gridConnectionID, p_name);
+	traceln("GC: %s with id %s", this, p_gridConnectionID);
 	traceln("GN id %s", p_parentNodeElectricID);
 	throw new RuntimeException("Exception: GridConnection not connected to GridNodeElectric!");
 }

@@ -206,7 +206,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -222,9 +222,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -967,7 +964,7 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
@@ -991,9 +988,6 @@
 				<Name><![CDATA[p_eigenOprit]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1010,9 +1004,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_buildingType_heatingPBL]]></Name>
@@ -1153,7 +1144,7 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
@@ -1172,9 +1163,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1291,7 +1279,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -1310,9 +1298,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1429,7 +1414,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -1489,9 +1474,6 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1505,9 +1487,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1624,7 +1603,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -1640,9 +1619,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1759,7 +1735,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -1778,9 +1754,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2236,7 +2209,7 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
@@ -2285,9 +2258,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2405,7 +2375,7 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_name]]></Name>
+				<Name><![CDATA[p_annotation]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
@@ -2457,9 +2427,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_uid]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
