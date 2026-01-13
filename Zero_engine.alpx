@@ -398,31 +398,22 @@
 			</OptionList>
 			<OptionList>
 				<Id>1659701773383</Id>
-				<Name><![CDATA[OL_AreaType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_PBL_OwnershipType]]></Name>
+				<Description><![CDATA[OwnershipType: 
+0: Koop
+1: Particulier Huur
+2: Sociale Huur]]></Description>
 				<Option>
-					<Id>1659701782496</Id>
-					<Name><![CDATA[NEIGHBORHOOD]]></Name>
+					<Id>1768317131071</Id>
+					<Name><![CDATA[TYPE_0]]></Name>
 				</Option>
 				<Option>
-					<Id>1659701773953</Id>
-					<Name><![CDATA[RES]]></Name>
+					<Id>1768317109568</Id>
+					<Name><![CDATA[TYPE_1]]></Name>
 				</Option>
 				<Option>
-					<Id>1659701788868</Id>
-					<Name><![CDATA[INDUSTRY]]></Name>
-				</Option>
-				<Option>
-					<Id>1659701795639</Id>
-					<Name><![CDATA[BUSINESS]]></Name>
-				</Option>
-				<Option>
-					<Id>1697466302695</Id>
-					<Name><![CDATA[HVTRANSFORMER]]></Name>
-				</Option>
-				<Option>
-					<Id>1713426522585</Id>
-					<Name><![CDATA[PARCEL]]></Name>
+					<Id>1768317127860</Id>
+					<Name><![CDATA[TYPE_2]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -455,39 +446,67 @@
 			</OptionList>
 			<OptionList>
 				<Id>1660226249511</Id>
-				<Name><![CDATA[OL_ActorType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_PBL_ConstructionPeriod]]></Name>
+				<Description><![CDATA[Bouwperiode (B)
+0: Tot en met 1929
+1: 1930 t/m 1945
+2: 1946 t/m 1964
+3: 1965 t/m 1974
+4; 1975 t/m 1991
+5: 1992 t/m 1995
+6: 1996 t/m 1999
+7: 2000 t/m 2005
+8: 2006 t/m 2010
+9: 2011 t/m 2014
+10: 2015 t/m 2020
+11: 2021 en later]]></Description>
 				<Option>
-					<Id>1660226249512</Id>
-					<Name><![CDATA[CONNECTIONOWNER]]></Name>
+					<Id>1768317455510</Id>
+					<Name><![CDATA[TYPE_0]]></Name>
 				</Option>
 				<Option>
-					<Id>1660226249513</Id>
-					<Name><![CDATA[GOV]]></Name>
+					<Id>1768317424302</Id>
+					<Name><![CDATA[TYPE_1]]></Name>
 				</Option>
 				<Option>
-					<Id>1660226249514</Id>
-					<Name><![CDATA[SUPPLIERENERGY]]></Name>
+					<Id>1768317424303</Id>
+					<Name><![CDATA[TYPE_2]]></Name>
 				</Option>
 				<Option>
-					<Id>1660226249515</Id>
-					<Name><![CDATA[COOPENERGY]]></Name>
+					<Id>1768317424304</Id>
+					<Name><![CDATA[TYPE_3]]></Name>
 				</Option>
 				<Option>
-					<Id>1660577544099</Id>
-					<Name><![CDATA[OPERATORGRID]]></Name>
+					<Id>1768317424305</Id>
+					<Name><![CDATA[TYPE_4]]></Name>
 				</Option>
 				<Option>
-					<Id>1692796172966</Id>
-					<Name><![CDATA[GOVHOLON]]></Name>
+					<Id>1768317424306</Id>
+					<Name><![CDATA[TYPE_5]]></Name>
 				</Option>
 				<Option>
-					<Id>1703256179429</Id>
-					<Name><![CDATA[SUBTENANT]]></Name>
+					<Id>1768317424307</Id>
+					<Name><![CDATA[TYPE_6]]></Name>
 				</Option>
 				<Option>
-					<Id>1717960308322</Id>
-					<Name><![CDATA[CPO]]></Name>
+					<Id>1768317426354</Id>
+					<Name><![CDATA[TYPE_7]]></Name>
+				</Option>
+				<Option>
+					<Id>1768317426355</Id>
+					<Name><![CDATA[TYPE_8]]></Name>
+				</Option>
+				<Option>
+					<Id>1768317426356</Id>
+					<Name><![CDATA[TYPE_9]]></Name>
+				</Option>
+				<Option>
+					<Id>1768317426357</Id>
+					<Name><![CDATA[TYPE_10]]></Name>
+				</Option>
+				<Option>
+					<Id>1768317426358</Id>
+					<Name><![CDATA[TYPE_11]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1098,6 +1117,41 @@
 				<Option>
 					<Id>1762354709859</Id>
 					<Name><![CDATA[TRACTOR]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1768309588451</Id>
+				<Name><![CDATA[OL_PBL_BuildingType]]></Name>
+				<Description><![CDATA[PBL BuildingType: 
+1: vrijstaand
+2: 2-onder-1 kap
+3: rijwoning hoekwoning
+4: rijwoning tussenwoning
+5: appartementen t/m 4 (meergezinswoningen t/m 4 verdiepingen)
+6: appartementen 5>= (meergezinswoningen 5 of meer verdiepingen)]]></Description>
+				<Option>
+					<Id>1768309847959</Id>
+					<Name><![CDATA[TYPE_1]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309856061</Id>
+					<Name><![CDATA[TYPE_2]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309858840</Id>
+					<Name><![CDATA[TYPE_3]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309924957</Id>
+					<Name><![CDATA[TYPE_4]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309929674</Id>
+					<Name><![CDATA[TYPE_5]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309931760</Id>
+					<Name><![CDATA[TYPE_6]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
@@ -1827,6 +1881,11 @@
 			<JavaClass>
 				<Id>1765901157331</Id>
 				<Name><![CDATA[J_ChargingSessionData]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768309433547</Id>
+				<Name><![CDATA[J_PBLParameters]]></Name>
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>

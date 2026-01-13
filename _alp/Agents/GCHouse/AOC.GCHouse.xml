@@ -84,6 +84,9 @@
 		<Parameter>
 			<Name><![CDATA[v_isActive]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_PBLParameters]]></Name>
+		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>

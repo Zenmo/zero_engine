@@ -1006,22 +1006,7 @@
 				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_buildingType_heatingPBL]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_ownership_heatingPBL]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_constructionPeriod_heatingPBL]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_localFactor_heatingPBL]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_regionalClimateCorrectionFactor_heatingPBL]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_schillabel_heatingPBL]]></Name>
+				<Name><![CDATA[p_PBLParameters]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

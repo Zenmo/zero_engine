@@ -82,14 +82,17 @@ public class J_AVGC_data implements Serializable {
 	public int p_avgEVsPerPublicCharger;
 	public double p_avgPTPower_kWpm2;
 	public double p_avgPTPanelSize_m2;
+	
 	public double p_avgMaxHeatBufferTemperature_degC;
 	public double p_avgMinHeatBufferTemperature_degC;
 	public double p_avgHeatBufferWaterVolumePerPTSurface_m3pm2;
 	public double p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
+	
 	public double p_avgAnnualTravelDistancePrivateCar_km;
 	public double p_avgAnnualTravelDistanceCompanyCar_km;
 	public double p_avgAnnualTravelDistanceVan_km;
 	public double p_avgAnnualTravelDistanceTruck_km;
+	public double p_minAnnualTravelDistanceSurveyVehicle_km;
 	/**
      * Default constructor
      */
@@ -100,11 +103,4 @@ public class J_AVGC_data implements Serializable {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }
