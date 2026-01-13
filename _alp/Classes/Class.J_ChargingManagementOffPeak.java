@@ -20,8 +20,8 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     private double initialValueGCdemandLowPassed_kW = 0.5;
     private double GCdemandLowPassed_kW = this.initialValueGCdemandLowPassed_kW;
     
-    private double startTimeOfReducedChargingInterval_hr = 17; // Hour of the day
-    private double endTimeOfReducedChargingInterval_hr = 21; // Hour of the day
+    private double startTimeOfReducedChargingInterval_hr = 10; // Hour of the day
+    private double endTimeOfReducedChargingInterval_hr = 16; // Hour of the day
     
     private boolean V2GActive = false;
     

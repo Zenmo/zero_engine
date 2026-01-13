@@ -1829,6 +1829,11 @@
 				<Name><![CDATA[J_ChargingSessionData]]></Name>
 				<Folder>1752680962144</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1768247832774</Id>
+				<Name><![CDATA[J_ChargingManagementMaxSpread]]></Name>
+				<Folder>1762850586274</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

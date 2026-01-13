@@ -1136,6 +1136,8 @@ switch (chargingType) {
 		break;
 	case BALANCE_GRID:
 		managementClass = J_ChargingManagementGridBalancing.class;
+		//managementClass = J_ChargingManagementOffPeak.class;
+		managementClass = J_ChargingManagementMaxSpread.class;
 		break;
 	case MAX_POWER:
 		managementClass = J_ChargingManagementMaxAvailablePower.class;
