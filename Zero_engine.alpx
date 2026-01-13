@@ -73,6 +73,10 @@
 					<Id>1668600528877</Id>
 					<Name><![CDATA[PETROLEUM_FUEL]]></Name>
 				</Option>
+				<Option>
+					<Id>1768208053323</Id>
+					<Name><![CDATA[IRON_POWDER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118262286</Id>
@@ -348,6 +352,14 @@
 				<Option>
 					<Id>1749651086661</Id>
 					<Name><![CDATA[CHARGER]]></Name>
+				</Option>
+				<Option>
+					<Id>1768208070794</Id>
+					<Name><![CDATA[IRON_POWDER_BURNER]]></Name>
+				</Option>
+				<Option>
+					<Id>1768208427790</Id>
+					<Name><![CDATA[IRON_POWDER_CHP]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1829,6 +1841,21 @@
 				<Id>1765901157331</Id>
 				<Name><![CDATA[J_ChargingSessionData]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768207843859</Id>
+				<Name><![CDATA[J_EAConversionIronPowderBurner]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768208151233</Id>
+				<Name><![CDATA[J_EAConversionIronPowderCHP]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768213936976</Id>
+				<Name><![CDATA[J_EAStorageIronPowder]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
