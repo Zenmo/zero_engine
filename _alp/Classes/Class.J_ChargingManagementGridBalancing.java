@@ -17,7 +17,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
     private double timeStep_h;
-    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
+    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private boolean V2GActive = false;
 
     /**
