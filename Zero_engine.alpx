@@ -419,6 +419,7 @@
 			<OptionList>
 				<Id>1659711659517</Id>
 				<Name><![CDATA[OL_BuildingType]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1659711661606</Id>
 					<Name><![CDATA[House]]></Name>
@@ -643,7 +644,7 @@
 			</OptionList>
 			<OptionList>
 				<Id>1665487983362</Id>
-				<Name><![CDATA[OL_GridConnectionIsolationLabel]]></Name>
+				<Name><![CDATA[OL_GridConnectionInsulationLabel]]></Name>
 				<Option>
 					<Id>1665487983978</Id>
 					<Name><![CDATA[A]]></Name>
@@ -1152,6 +1153,46 @@
 				<Option>
 					<Id>1768309931760</Id>
 					<Name><![CDATA[TYPE_6]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1768384843601</Id>
+				<Name><![CDATA[OL_GridConnectionEnergyLabel]]></Name>
+				<Option>
+					<Id>1768384856548</Id>
+					<Name><![CDATA[A]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856549</Id>
+					<Name><![CDATA[B]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856550</Id>
+					<Name><![CDATA[C]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856551</Id>
+					<Name><![CDATA[D]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856552</Id>
+					<Name><![CDATA[E]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856553</Id>
+					<Name><![CDATA[F]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856554</Id>
+					<Name><![CDATA[G]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856555</Id>
+					<Name><![CDATA[NONE]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856556</Id>
+					<Name><![CDATA[UNKNOWN]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>

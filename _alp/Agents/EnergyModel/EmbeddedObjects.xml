@@ -176,7 +176,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -222,6 +222,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -931,7 +934,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -982,7 +985,7 @@
 				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_bouwjaar]]></Name>
+				<Name><![CDATA[p_buildYear]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_eigenOprit]]></Name>
@@ -1007,6 +1010,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_PBLParameters]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1093,7 +1099,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -1148,6 +1154,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1234,7 +1243,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -1283,6 +1292,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1372,7 +1384,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -1473,6 +1485,9 @@
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1561,7 +1576,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -1604,6 +1619,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1690,7 +1708,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -1739,6 +1757,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2158,7 +2179,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -2243,6 +2264,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2333,7 +2357,7 @@
 				<Name><![CDATA[p_cookingTracker]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_energyLabel]]></Name>
+				<Name><![CDATA[p_insulationLabel]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_DHWAsset]]></Name>
@@ -2412,6 +2436,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

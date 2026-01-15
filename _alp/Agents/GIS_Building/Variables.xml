@@ -53,6 +53,7 @@
 	<Variable Class="Parameter">
 		<Id>1696858052551</Id>
 		<Name><![CDATA[p_buildingType]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>40</X>
 		<Y>300</Y>
 		<Label>
