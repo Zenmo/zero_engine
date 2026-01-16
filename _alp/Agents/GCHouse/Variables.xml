@@ -227,9 +227,9 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1717323052486</Id>
-		<Name><![CDATA[p_bouwjaar]]></Name>
+		<Name><![CDATA[p_buildYear]]></Name>
 		<X>50</X>
-		<Y>510</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -254,7 +254,7 @@
 		<Id>1722350833847</Id>
 		<Name><![CDATA[p_eigenOprit]]></Name>
 		<X>50</X>
-		<Y>530</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -279,7 +279,7 @@
 		<Id>1726685123865</Id>
 		<Name><![CDATA[p_cookingMethod]]></Name>
 		<X>250</X>
-		<Y>510</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -387,10 +387,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1765292486713</Id>
-		<Name><![CDATA[p_buildingType_heatingPBL]]></Name>
-		<X>-300</X>
-		<Y>50</Y>
+		<Id>1768324597791</Id>
+		<Name><![CDATA[p_PBLParameters]]></Name>
+		<X>50</X>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -399,136 +399,11 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[int]]></Type>
+			<Type><![CDATA[J_PBLParameters]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>
-				<Id>1765292486711</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1765292501616</Id>
-		<Name><![CDATA[p_ownership_heatingPBL]]></Name>
-		<X>-300</X>
-		<Y>70</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[int]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1765292501614</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1765292517522</Id>
-		<Name><![CDATA[p_constructionPeriod_heatingPBL]]></Name>
-		<X>-300</X>
-		<Y>90</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[int]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1765292517520</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1765292532994</Id>
-		<Name><![CDATA[p_localFactor_heatingPBL]]></Name>
-		<X>-300</X>
-		<Y>130</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1765292532992</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1765292546817</Id>
-		<Name><![CDATA[p_regionalClimateCorrectionFactor_heatingPBL]]></Name>
-		<X>-300</X>
-		<Y>150</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1765292546815</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1765357455086</Id>
-		<Name><![CDATA[p_schillabel_heatingPBL]]></Name>
-		<X>-300</X>
-		<Y>110</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[OL_GridConnectionIsolationLabel]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<ParameterEditor>
-				<Id>1765357455084</Id>
+				<Id>1768324597789</Id>
 				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>

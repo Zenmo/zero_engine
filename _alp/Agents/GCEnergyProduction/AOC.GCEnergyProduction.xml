@@ -37,7 +37,7 @@
 			<Name><![CDATA[p_cookingTracker]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_energyLabel]]></Name>
+			<Name><![CDATA[p_insulationLabel]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_DHWAsset]]></Name>
@@ -83,6 +83,9 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[v_isActive]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_energyLabel]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
