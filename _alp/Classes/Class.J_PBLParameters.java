@@ -4,7 +4,6 @@
 public class J_PBLParameters {
 	private final OL_PBL_BuildingType buildingType;
 	private final OL_PBL_OwnershipType ownershipType;
-	private final OL_PBL_ConstructionPeriod constructionPeriod;
 	private final OL_GridConnectionInsulationLabel defaultInsulationLabel;
 	private final double localFactor;
 	private final double regionalClimateCorrectionFactor;
@@ -13,10 +12,9 @@ public class J_PBLParameters {
 	/**
      * Default constructor
      */
-    public J_PBLParameters(OL_PBL_BuildingType buildingType, OL_PBL_OwnershipType ownershipType, OL_PBL_ConstructionPeriod constructionPeriod, OL_GridConnectionInsulationLabel defaultInsulationLabel, Double localFactor, Double regionalClimateCorrectionFactor) {
+    public J_PBLParameters(OL_PBL_BuildingType buildingType, OL_PBL_OwnershipType ownershipType, OL_GridConnectionInsulationLabel defaultInsulationLabel, Double localFactor, Double regionalClimateCorrectionFactor) {
     	this.buildingType = buildingType;
     	this.ownershipType = ownershipType;
-    	this.constructionPeriod = constructionPeriod;
     	this.defaultInsulationLabel = defaultInsulationLabel;
     	this.localFactor = localFactor;
     	this.regionalClimateCorrectionFactor = regionalClimateCorrectionFactor;
@@ -28,10 +26,6 @@ public class J_PBLParameters {
 
     public OL_PBL_OwnershipType getOwnershipType() {
         return ownershipType;
-    }
-
-    public OL_PBL_ConstructionPeriod getConstructionPeriod() {
-        return constructionPeriod;
     }
 
     public OL_GridConnectionInsulationLabel getDefaultInsulationLabel() {
@@ -50,10 +44,9 @@ public class J_PBLParameters {
     public String toString() {
         return "PBL parameters: \n" +
                 "buildingType = " + buildingType +
-                ", \n ownershipType = " + ownershipType +
-                ", \n constructionPeriod = " + constructionPeriod +
-                ", \n defaultIsolationLabel = " + defaultInsulationLabel +
-                ", \n localFactor = " + localFactor +
-                ", \n regionalClimateCorrectionFactor = " + regionalClimateCorrectionFactor;
+                ",\n ownershipType = " + ownershipType +
+                ",\n defaultIsolationLabel = " + defaultInsulationLabel +
+                ",\n localFactor = " + localFactor +
+                ",\n regionalClimateCorrectionFactor = " + regionalClimateCorrectionFactor;
     }
 }
