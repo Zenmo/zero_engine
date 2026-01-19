@@ -2,7 +2,7 @@
  * J_PBLParameters
  */	
 public class J_PBLParameters {
-	private final OL_PBL_BuildingType buildingType;
+	private final OL_PBL_DwellingType dwellingType;
 	private final OL_PBL_OwnershipType ownershipType;
 	private final OL_GridConnectionInsulationLabel defaultInsulationLabel;
 	private final double localFactor;
@@ -12,16 +12,16 @@ public class J_PBLParameters {
 	/**
      * Default constructor
      */
-    public J_PBLParameters(OL_PBL_BuildingType buildingType, OL_PBL_OwnershipType ownershipType, OL_GridConnectionInsulationLabel defaultInsulationLabel, Double localFactor, Double regionalClimateCorrectionFactor) {
-    	this.buildingType = buildingType;
+    public J_PBLParameters(OL_PBL_DwellingType dwellingType, OL_PBL_OwnershipType ownershipType, OL_GridConnectionInsulationLabel defaultInsulationLabel, Double localFactor, Double regionalClimateCorrectionFactor) {
+    	this.dwellingType = dwellingType;
     	this.ownershipType = ownershipType;
     	this.defaultInsulationLabel = defaultInsulationLabel;
     	this.localFactor = localFactor;
     	this.regionalClimateCorrectionFactor = regionalClimateCorrectionFactor;
     }
     
-    public OL_PBL_BuildingType getBuildingType() {
-        return buildingType;
+    public OL_PBL_DwellingType getDwellingType() {
+        return dwellingType;
     }
 
     public OL_PBL_OwnershipType getOwnershipType() {
@@ -43,7 +43,7 @@ public class J_PBLParameters {
     @Override
     public String toString() {
         return "PBL parameters: \n" +
-                "buildingType = " + buildingType +
+                "dwellingType = " + dwellingType +
                 ",\n ownershipType = " + ownershipType +
                 ",\n defaultIsolationLabel = " + defaultInsulationLabel +
                 ",\n localFactor = " + localFactor +

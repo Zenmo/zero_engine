@@ -1057,8 +1057,8 @@
 			</OptionList>
 			<OptionList>
 				<Id>1768309588451</Id>
-				<Name><![CDATA[OL_PBL_BuildingType]]></Name>
-				<Description><![CDATA[PBL BuildingType: 
+				<Name><![CDATA[OL_PBL_DwellingType]]></Name>
+				<Description><![CDATA[PBL Dwellingtypes: 
 1: vrijstaand
 2: 2-onder-1 kap
 3: rijwoning hoekwoning
