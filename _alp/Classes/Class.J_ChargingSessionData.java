@@ -63,7 +63,7 @@ public class J_ChargingSessionData {
 	}
 
     public double getEnergyNeededForNextTrip_kWh() {
-    	return this.chargingDemand_kWh;
+    	return this.chargingDemand_kWh + this.initialSOC_kWh;
     }
     
     public J_ChargingSessionData getClone() {

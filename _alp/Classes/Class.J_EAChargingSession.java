@@ -54,10 +54,11 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 	
 	@Override
 	public void operate(double ratioOfChargeCapacity_r) {
+
     	double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.getVehicleChargingCapacity_kW(); // capped between -1 and 1 does already happen in f_updateAllFlows()!
     	double chargePower_kW = max(min(chargeSetpoint_kW, (this.getStorageCapacity_kWh() - this.getCurrentSOC_kWh()) / this.timestep_h), -this.getCurrentSOC_kWh() / this.timestep_h); // Limit charge power to stay within SoC 0-100
-    	
-    	//Round to floating point precision
+
+		//Round to floating point precision
     	chargePower_kW = roundToDecimal(chargePower_kW, J_GlobalParameters.floatingPointPrecision);
     	
     	//Bookkeeping of energy flows
@@ -80,7 +81,7 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
 				assetFlowsMap.put(OL_AssetFlowCategories.V2GPower_kW, electricityProduction_kW);
 			}
 			else {
-				throw new RuntimeException("Trying to discharge a chargingsession, that does not have the capability or where v2g is not activated!");
+				throw new RuntimeException("Trying to discharge a chargingsession, that does not have the capability or where v2g is not activated! (chargePower_kW = " + chargePower_kW + ")");
 			}
 		}
 	}
@@ -161,7 +162,7 @@ public class J_EAChargingSession extends zero_engine.J_EA implements I_ChargingR
     }
     
     public double getRemainingChargeDemand_kWh() {
-        return (this.currentChargingSessionData.getEnergyNeededForNextTrip_kWh() * this.vehicleScaling) - this.currentSessionChargingBalance_kWh;
+        return (this.currentChargingSessionData.getEnergyNeededForNextTrip_kWh() * this.vehicleScaling) - getCurrentSOC_kWh();
     }
     
 	public double getRemainingAverageChargingDemand_kW(double t_h) {
