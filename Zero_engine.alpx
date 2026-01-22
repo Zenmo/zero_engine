@@ -1864,6 +1864,11 @@
 				<Name><![CDATA[J_PBLParameters]]></Name>
 				<Folder>1752680962144</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1769089556772</Id>
+				<Name><![CDATA[J_HeatingManagementCHP]]></Name>
+				<Folder>1762850578079</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

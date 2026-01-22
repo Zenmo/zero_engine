@@ -187,10 +187,4 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 	public String toString() {
 		return "HeatingManagement Simple with heating type: " + getCurrentHeatingType().toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
 }
