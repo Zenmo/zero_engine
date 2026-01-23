@@ -8,10 +8,10 @@ public class J_EAAirco extends zero_engine.J_EAFlex implements Serializable {
     /**
      * Default constructor
      */
-    public J_EAAirco(Agent parentAgent, double capacityElectric_kW, J_TimeParameters timeParameters) {
-    	this.parentAgent = parentAgent;
-    	this.capacityElectric_kW = capacityElectric_kW;
+    public J_EAAirco(I_AssetOwner owner, double capacityElectric_kW, J_TimeParameters timeParameters) {
+		this.setOwner(owner);
     	this.timeParameters = timeParameters;	
+    	this.capacityElectric_kW = capacityElectric_kW;
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
 		//this.assetFlowCategory = OL_AssetFlowCategories.AIRCO; // bestaat nog niet!
 		this.registerEnergyAsset();

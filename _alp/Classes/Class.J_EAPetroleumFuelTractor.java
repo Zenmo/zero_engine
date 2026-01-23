@@ -15,8 +15,8 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
      *  For our purpose the unit doesn't matter.
      * @param timeStep_h
      */
-    public J_EAPetroleumFuelTractor(Agent parentAgent, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, J_TimeParameters timeParameters) {
-        if (parentAgent == null) {
+    public J_EAPetroleumFuelTractor(I_AssetOwner owner, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, J_TimeParameters timeParameters) {
+        if (owner == null) {
             throw new RuntimeException("PetroleumFuel tractor missing parent agent");
         }
         
@@ -36,9 +36,9 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
             );
         }
         
-        this.parentAgent = parentAgent;
-        this.petroleumFuelConsumptionPerWeek_L = calculatePetroleumFuelConsumptionPerWeek_L(yearlyPetroleumFuelConsumption_L, petroleumFuelConsumptionPerWeek);
+        this.setOwner(owner);
         this.timeParameters = timeParameters;
+        this.petroleumFuelConsumptionPerWeek_L = calculatePetroleumFuelConsumptionPerWeek_L(yearlyPetroleumFuelConsumption_L, petroleumFuelConsumptionPerWeek);
         
         this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.PETROLEUM_FUEL);
         registerEnergyAsset();
@@ -46,7 +46,7 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
     
     @Override
     public void operate(J_TimeVariables timeVariables) {
-        if (!shouldWork(timeVariables.getT_h())) {
+        if (!shouldWork(timeVariables)) {
             this.flowsMap.clear();
             return;
         }
@@ -66,18 +66,14 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
                 .toArray();
     }
     
-    private boolean shouldWork(double currentStep_h) {
-        return isWorkTime(currentStep_h) && isWorkDay();
+    private boolean shouldWork(J_TimeVariables timeVariables) {
+        return isWorkTime(timeVariables.getT_h()) && !timeVariables.isWeekday();
     }
     
     private boolean isWorkTime(double currentStep_h) {
         double timeOfDay = currentStep_h % 24;
         
         return timeOfDay >= workDayStart_h && timeOfDay < workDayEnd_h;
-    }
-    
-    private boolean isWorkDay() {
-        return ((GridConnection)parentAgent).energyModel.b_isWeekday;
     }
     
     private double workHoursPerWeek() {

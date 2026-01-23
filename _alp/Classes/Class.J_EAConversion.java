@@ -17,22 +17,22 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
      * Constructor initializing the fields
      */
     
-    public J_EAConversion(Agent parentAgent, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, J_TimeParameters timeParameters) {
-	    this.parentAgent = parentAgent;
+    public J_EAConversion(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, J_TimeParameters timeParameters) {
+	    this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
 	    this.energyAssetType = energyAssetType;
 	    this.outputCapacity_kW = outputCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
-	    this.timeParameters = timeParameters;	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset();
 	}
 
     @Override
-    public void f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
+    public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
     	powerFraction_fr = roundToDecimal(powerFraction_fr, J_GlobalParameters.floatingPointPrecision);
     	if(powerFraction_fr < 0) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
@@ -40,10 +40,11 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
     	else if ( powerFraction_fr == 0 ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
-    		return;
+	     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
+    		return flowPacket;
     	}
     	else {
-    		super.f_updateAllFlows( powerFraction_fr, timeVariables );
+    		return super.f_updateAllFlows( powerFraction_fr, timeVariables );
     	}
     }
     

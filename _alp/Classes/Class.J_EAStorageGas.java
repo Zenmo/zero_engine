@@ -16,8 +16,8 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageGas(Agent parentAgent, double capacityGas_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
-		this.parentAgent = parentAgent;
+    public J_EAStorageGas(I_AssetOwner owner, double capacityGas_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
+		this.setOwner(owner);
 		this.capacityGas_kW = capacityGas_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.stateOfCharge_fr = stateOfCharge_fr;
@@ -50,7 +50,6 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 	public String toString() {
 		return 
 			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + parentAgent +" " +
 			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
 			"storageCapacity_kWh = " + this.storageCapacity_kWh +" "+
 			"capacityGas_kW = " + this.capacityGas_kW +" "+

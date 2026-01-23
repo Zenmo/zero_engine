@@ -19,22 +19,22 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
     /**
      * Constructor initializing the fields
      */
-    public J_EAFuelVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier ) {
-    	this(ownerAssetAgent, energyConsumption_kWhpkm, timeParameters, vehicleScaling, energyAssetType, tripTracker, energyCarrier, true );
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier ) {
+    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, energyAssetType, tripTracker, energyCarrier, true );
     }
-    public J_EAFuelVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
 	    if (energyCarrier == OL_EnergyCarriers.HEAT) {
 	    	throw new RuntimeException("Invalid choice of energy carrier for J_EAFuelVehicle");
 	    }
-    	this.parentAgent = ownerAssetAgent;
-	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
+		this.setOwner(owner);
 	    this.timeParameters = timeParameters;
+	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
 	    this.tripTracker = tripTracker;
 	    this.available = available;
 	    if (tripTracker != null) {
-	    	tripTracker.Vehicle=this;
+	    	tripTracker.vehicle=this;
 	    }
 	    
 	    this.energyCarrierConsumed = energyCarrier;
@@ -43,14 +43,13 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	}
     
     @Override
-    public void f_updateAllFlows(J_TimeVariables timeVariables) {
+    public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
     	flowsMap.put(this.energyCarrierConsumed, this.energyUse_kW);
-    	if (parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-    	}
+     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	clear(); 
+    	return flowPacket;
     }
     
     @Override
@@ -71,7 +70,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 
     public boolean endTrip(double tripDist_km) {	
 		if(available) {
-			traceln("Trip not ended because vehicle never left!, tripIdentifier = " + tripTracker.tripPatternIdentifier);
+			traceln("Trip not ended because vehicle never left!");
 			return false;
 		} else {
 	    	this.available = true;
@@ -143,7 +142,6 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	@Override
 	public String toString() {
 		return
-			"parentAgent = " + parentAgent + " " +
 			"energy carrier = " + energyCarrierConsumed + " " +		
 			"energyConsumption_kWhpkm =" + energyConsumption_kWhpkm + " " +
 			"vehicleScaling = " + vehicleScaling;
@@ -154,5 +152,5 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	 * It needs to be changed when this class gets changed
 	 */
 	private static final long serialVersionUID = 1L;
-
 }
+

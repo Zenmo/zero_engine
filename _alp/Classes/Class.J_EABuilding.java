@@ -30,11 +30,11 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     /**
      * Constructor initializing the fields
      */
-    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
-		this.parentAgent = parentAgent;
+    public J_EABuilding(I_AssetOwner owner, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
+		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
-		this.timeParameters = timeParameters;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
 		this.heatCapacity_JpK = heatCapacity_JpK;
@@ -64,11 +64,11 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 	
 	@Override
-	public void f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
+	public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
 		if (powerFraction_fr > 1) {			
 			traceln("JEABuilding capacityHeat_kW is too low! "+ capacityHeat_kW);
 		}
-		super.f_updateAllFlows(powerFraction_fr, timeVariables);
+		return super.f_updateAllFlows(powerFraction_fr, timeVariables);
 	}
 
 	@Override
@@ -110,8 +110,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			"energyUsed_kWh (heat losses) = " + this.energyUsed_kWh + "kWh, " +
 			"temp = " + this.temperature_degC + ", " +
 			"lossFactor_WpK = " + this.lossFactor_WpK + ", "+
-			"heatCapacity_JpK = " + this.heatCapacity_JpK + ", "+
-			"parentAgent = " + parentAgent; // + ", "
+			"heatCapacity_JpK = " + this.heatCapacity_JpK;
 	}
 
 	@Override

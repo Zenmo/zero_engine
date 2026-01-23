@@ -161,7 +161,7 @@ if (v_enableNFato) {
 	f_nfatoUpdateConnectionCapacity(timeVariables);
 }
 
-c_tripTrackers.forEach(t -> t.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h, p_chargePoint));
+c_tripTrackers.forEach(t -> t.manageActivities(timeVariables, p_chargePoint));
 c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint));
 
 f_operateFixedAssets(timeVariables);
@@ -174,11 +174,26 @@ f_connectionMetering(timeVariables, isRapidRun);
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
-c_petroleumFuelVehicles.forEach(v -> ((J_EAFixed)v).f_updateAllFlows(timeVariables));
-c_hydrogenVehicles.forEach(v -> ((J_EAFixed)v).f_updateAllFlows(timeVariables));
-c_consumptionAssets.forEach(c -> c.f_updateAllFlows(timeVariables));
-c_productionAssets.forEach(p -> p.f_updateAllFlows(timeVariables));
-c_profileAssets.forEach(p -> p.f_updateAllFlows(timeVariables));
+for (J_EAFixed j_ea : c_petroleumFuelVehicles) {
+	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
+	f_addFlows(flowPacket, j_ea);
+}
+for (J_EAFixed j_ea : c_hydrogenVehicles) {
+	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
+	f_addFlows(flowPacket, j_ea);
+}
+for (J_EAFixed j_ea : c_consumptionAssets) {
+	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
+	f_addFlows(flowPacket, j_ea);
+}
+for (J_EAFixed j_ea : c_productionAssets) {
+	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
+	f_addFlows(flowPacket, j_ea);
+}
+for (J_EAFixed j_ea : c_profileAssets) {
+	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
+	f_addFlows(flowPacket, j_ea);
+}
 /*ALCODEEND*/}
 
 double f_resetStates()
@@ -264,14 +279,16 @@ if (j_ea instanceof I_Vehicle vehicle) {
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
+	
+	// TODO: Needs a refactor, this code that creates a triptracker is very different from the rest of the functionality of this function. It is also the only part of the function that uses timeParameters and timeVariables. However the trip CSVs make it awkward to place it in the constructor of the asset.
 	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
 		OL_EnergyAssetType assetType = ((J_EA)vehicle).getEAType();
 		if (assetType == OL_EnergyAssetType.ELECTRIC_TRUCK || assetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || assetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
+			tripTracker = new J_ActivityTrackerTrips(energyModel.p_timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
 		} else if (assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || assetType == OL_EnergyAssetType.ELECTRIC_VAN || assetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
+			tripTracker = new J_ActivityTrackerTrips(energyModel.p_timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
 			tripTracker.setAnnualDistance_km(30_000);
 		} else {
 			//traceln("Adding passenger vehicle to gridconnection %s", this);
@@ -279,7 +296,7 @@ if (j_ea instanceof I_Vehicle vehicle) {
 			while (rowIndex == 28 || rowIndex == 42 || rowIndex == 150) { // 445, 457, 483, 540, 563 all impossible triptrackers for vehicles with 116 kWh and 0.16 kWhpkm
 				rowIndex = uniform_discr(0, 200);
 			}
-			tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsCsv, rowIndex, (energyModel.t_h-energyModel.p_runStartTime_h)*60, vehicle, p_chargePoint);
+			tripTracker = new J_ActivityTrackerTrips(energyModel.p_timeParameters, energyModel.p_householdTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
 			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
 			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
@@ -469,19 +486,19 @@ f_initializeDataSets();
 
 /*ALCODEEND*/}
 
-double f_addFlows(J_FlowsMap flowsMap,double energyUse_kW,J_ValueMap assetFlowsMap,J_EA caller)
+double f_addFlows(J_FlowPacket flowPacket,J_EA caller)
 {/*ALCODESTART::1702373771433*/
 if (caller instanceof J_EAStorageElectric) { 
-	fm_currentBalanceFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
+	fm_currentBalanceFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, flowPacket.flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
 
 	// Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need an element in flowsmap indicating power into storage??
-	fm_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
-	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
+	fm_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, flowPacket.energyUse_kW));
+	v_currentFinalEnergyConsumption_kW += max(0, flowPacket.energyUse_kW);
 	v_batteryStoredEnergy_kWh += ((J_EAStorageElectric)caller).getCurrentStateOfCharge_kWh();
 } else {
-	fm_currentBalanceFlows_kW.addFlows(flowsMap);
-	for (OL_EnergyCarriers EC : flowsMap.keySet()) {
-		double flow_kW = flowsMap.get(EC);		
+	fm_currentBalanceFlows_kW.addFlows(flowPacket.flowsMap);
+	for (OL_EnergyCarriers EC : flowPacket.flowsMap.keySet()) {
+		double flow_kW = flowPacket.flowsMap.get(EC);		
 		if (flow_kW < 0) {
 			fm_currentProductionFlows_kW.addFlow(EC, -flow_kW);
 		}
@@ -489,15 +506,15 @@ if (caller instanceof J_EAStorageElectric) {
 			fm_currentConsumptionFlows_kW.addFlow(EC, flow_kW);
 		}
 	}
-	v_currentPrimaryEnergyProduction_kW += max(0, -energyUse_kW);
-	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
+	v_currentPrimaryEnergyProduction_kW += max(0, -flowPacket.energyUse_kW);
+	v_currentFinalEnergyConsumption_kW += max(0, flowPacket.energyUse_kW);
 }
 
 if ( caller instanceof J_EAConversionHeatPump ) {
-	v_currentPrimaryEnergyProductionHeatpumps_kW -= energyUse_kW;
+	v_currentPrimaryEnergyProductionHeatpumps_kW -= flowPacket.energyUse_kW;
 }
 
-fm_currentAssetFlows_kW.addFlows(assetFlowsMap);
+fm_currentAssetFlows_kW.addFlows(flowPacket.assetFlowsMap);
 /*ALCODEEND*/}
 
 double f_removeTheJ_EA(J_EA j_ea)
@@ -938,7 +955,7 @@ if (p_batteryAsset != null) {
 		if (p_batteryManagement == null) {
 			throw new RuntimeException("Tried to operate battery without algorithm in GC: " + p_gridConnectionID);
 		}
-		p_batteryManagement.manageBattery(timeVariables);
+		J_FlowPacket flowPacket p_batteryManagement.manageBattery(timeVariables);
 	}
 }
 /*ALCODEEND*/}
@@ -1304,5 +1321,10 @@ return p_chargePoint;
 J_ChargePoint f_setChargePoint(J_ChargePoint chargePoint)
 {/*ALCODESTART::1765551488579*/
 this.p_chargePoint = chargePoint;
+/*ALCODEEND*/}
+
+boolean f_isActive()
+{/*ALCODESTART::1769161115659*/
+return v_isActive;
 /*ALCODEEND*/}
 

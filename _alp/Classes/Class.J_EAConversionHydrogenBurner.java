@@ -13,12 +13,12 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
     /**
      * Constructor initializing the fields
      */    
-    public J_EAConversionHydrogenBurner(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, double outputTemperature_degC) {
-    	this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputHeatCapacity_kW;
+    public J_EAConversionHydrogenBurner(I_AssetOwner owner, double outputHeatCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, double outputTemperature_degC) {
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
+    	this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
-	    this.timeParameters = timeParameters;	    
 	    this.outputTemperature_degC = outputTemperature_degC;
 
 	    this.energyAssetType = OL_EnergyAssetType.HYDROGEN_BURNER;

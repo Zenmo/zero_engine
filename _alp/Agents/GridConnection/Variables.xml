@@ -1363,7 +1363,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>I_Vehicle</ElementClass>
+			<ElementClass>J_EAFuelVehicle</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
@@ -1435,7 +1435,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>I_Vehicle</ElementClass>
+			<ElementClass>J_EAFuelVehicle</ElementClass>
 			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>

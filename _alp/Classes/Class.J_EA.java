@@ -29,8 +29,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
 	protected J_TimeParameters timeParameters;
-	
-	protected Agent parentAgent;
+	private I_AssetOwner owner;
 	protected OL_EnergyAssetType energyAssetType;
 	protected OL_AssetFlowCategories assetFlowCategory;
 	protected String energyAssetName;
@@ -54,21 +53,17 @@ abstract public class J_EA implements Cloneable {
      */
     public J_EA() {
     }
-
-    /**
-     * Constructor initializing the fields
-     */
-    public J_EA(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double capacityGas_kW) {
-		this.parentAgent = parentAgent;
-		registerEnergyAsset();
+    
+    protected void setOwner(I_AssetOwner owner) {
+    	this.owner = owner;
     }
     
-    protected void registerEnergyAsset() {	
-    	if ( parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_connectToJ_EA(this);
-    	} else {
-    		traceln("Energy asset %s doesn't have a valid parent agent! Will not be operated!", this);
-    	}
+    protected boolean ownerIsActive() {
+    	return this.owner.f_isActive();
+    }
+    
+    public void registerEnergyAsset() {	
+    	this.owner.f_connectToJ_EA(this);
     }
     
     public void reRegisterEnergyAsset() {
@@ -83,11 +78,7 @@ abstract public class J_EA implements Cloneable {
     
     public void removeEnergyAsset() {
     	this.isRemoved = true;
-    	if ( parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_removeTheJ_EA(this);
-    	} else {    		
-    		traceln("Energy asset %s doesn't have a valid parent agent! Energy Asset not removed!", this);
-    	}    	
+    	this.owner.f_removeTheJ_EA(this);    	
     }
     
     public void clear() {
@@ -110,10 +101,6 @@ abstract public class J_EA implements Cloneable {
     
     public double getEnergyUsed_kWh() {
     	return energyUsed_kWh;
-    }
-    
-    public Agent getParentAgent() {
-    	return parentAgent;
     }
     
 	public EnumSet<OL_EnergyCarriers> getActiveProductionEnergyCarriers() {
@@ -149,21 +136,4 @@ abstract public class J_EA implements Cloneable {
 	 public void setAssetFlowCategory(OL_AssetFlowCategories assetFlowCat) {
 		 this.assetFlowCategory = assetFlowCat;
 	 }
-
-	/* 
-    @Override    
-    public Object clone() { 
-    	try {
-    		return super.clone(); 
-    	} catch (CloneNotSupportedException e) {
-    		throw new RuntimeException(e);
-    	}
-    } 
-    */
-	 
-	@Override
-	public String toString() {
-		return
-			"ownerAgent = " + parentAgent.getIndex() +" ";
-	}
 }

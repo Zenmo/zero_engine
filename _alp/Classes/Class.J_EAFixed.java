@@ -9,15 +9,13 @@ abstract public class J_EAFixed extends J_EA {
     public J_EAFixed() {
     }
     
-    public void f_updateAllFlows(J_TimeVariables timeVariables) {
+    public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
      	operate(timeVariables);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
-    	}
-    
+     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
+    	return flowPacket;
     }
     
 	public abstract void operate(J_TimeVariables timeVariables);

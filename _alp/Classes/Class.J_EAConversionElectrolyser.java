@@ -19,13 +19,13 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionElectrolyser(Agent parentAgent, double inputElectricCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, OL_ElectrolyserState electrolyserState, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
-	    this.parentAgent = parentAgent;
-	    this.electrolyserState = electrolyserState;
+    public J_EAConversionElectrolyser(I_AssetOwner owner, double inputElectricCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, OL_ElectrolyserState electrolyserState, double loadChangeTime_s, double startUpTimeShutdown_s, double startUpTimeStandby_s, double startUpTimeIdle_s) {
+		this.setOwner(owner);
+	    this.timeParameters = timeParameters;
+		this.electrolyserState = electrolyserState;
 	    this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.eta_r;
-	    this.timeParameters = timeParameters;
 	    this.startUpTimeStandby_h = startUpTimeStandby_s/3600;
 	    
 	    this.loadChangeTime_h = loadChangeTime_s/3600;
@@ -44,14 +44,13 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	}
     
     @Override
-    public void f_updateAllFlows( double powerFraction_fr, J_TimeVariables timeVariables) {
+    public J_FlowPacket f_updateAllFlows( double powerFraction_fr, J_TimeVariables timeVariables) {
 		this.operate( min(1, max(0,powerFraction_fr)), timeVariables );
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);		
-    	}
+     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
     	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
+    	return flowPacket;
     }
     
     @Override
@@ -131,7 +130,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "
+		return  this.energyAssetType + ", "
 				+ "Current state: " + this.electrolyserState + ", "
 				+ "InputCapacity: " + this.inputCapacity_kW + " kW, " 
 				+ "with efficiency: " + this.eta_r + ", "

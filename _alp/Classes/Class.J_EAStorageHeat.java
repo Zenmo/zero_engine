@@ -37,8 +37,8 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageHeat(Agent parentAgent, OL_EnergyAssetType energyAssetType, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, OL_AmbientTempType ambientTempType ) {
-		this.parentAgent = parentAgent;
+    public J_EAStorageHeat(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, OL_AmbientTempType ambientTempType ) {
+		this.setOwner(owner);
 		this.energyAssetType = energyAssetType;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
@@ -105,9 +105,9 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		updateStateOfCharge( deltaEnergy_kWh );
 		
 		if (this.temperature_degC > this.maxTemperature_degC) {
-			traceln("Warning!! Heat storage temperature too high! Strorage asset: %s in GC %s", this, this.parentAgent);
+			traceln("Warning!! Heat storage temperature too high! Strorage asset: %s", this);
 		} else if (this.temperature_degC < this.minTemperature_degC) {
-			traceln("Warning!! Heat storage temperature too low! Strorage asset: %s in GC %s", this, this.parentAgent);
+			traceln("Warning!! Heat storage temperature too low! Strorage asset: %s", this);
 		}
 
 		flowsMap.put(OL_EnergyCarriers.HEAT, heatCharged_kW-heatDischarged_kW);		
@@ -140,7 +140,6 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 			"type = " + this.getClass().toString() + " " +
 			"Energy consumed = " + this.energyUsed_kWh +
 			" temp = " + this.temperature_degC + " " +
-			"parentAgent = " + parentAgent +" " +
 			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
 			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
 			"minTemperature_degC = " + this.minTemperature_degC+" "+

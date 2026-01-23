@@ -273,7 +273,7 @@ for (GridConnection GC : c_gridConnections) {
 	
 	GC.c_tripTrackers.forEach(tt->{
 		tt.storeAndResetState();
-		tt.setStartIndex(p_runStartTime_h, GC.f_getChargePoint());
+		tt.setStartIndex(p_timeVariables, GC.f_getChargePoint());
 		//tt.prepareNextActivity(p_runStartTime_h*60, GC.f_getChargePoint());
 		});
 	if (GC instanceof GCHouse) {
@@ -966,7 +966,7 @@ double totalEnergyUsed_MWh = 0;
 double totalEnergyChargedOutsideModel_MWh = 0;
 double totalHeatProduced_MWh = 0;
 for (J_EA e : c_energyAssets) {
-	if (((GridConnection) e.getParentAgent()).v_isActive ) {
+	if (e.ownerIsActive()) {
 		double EnergyUsed_kWh = e.getEnergyUsed_kWh();
 		if (EnergyUsed_kWh > 0) {
 			if( e instanceof J_EAConversionGasCHP ) {

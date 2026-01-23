@@ -38,24 +38,24 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
     /**
      * Constructor initializing the fields
      */
-    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
-    	this(parentAgent, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, energyAssetType, tripTracker, true);
+    public J_EAEV(I_AssetOwner owner, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
+    	this(owner, capacityElectricity_kW, storageCapacity_kWh, stateOfCharge_fr, timeParameters, energyConsumption_kWhpkm, vehicleScaling, energyAssetType, tripTracker, true);
     }
     
-    public J_EAEV(Agent parentAgent, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {    
-		this.parentAgent = parentAgent;
+    public J_EAEV(I_AssetOwner owner, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {    
+		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 		this.capacityElectric_kW = capacityElectricity_kW; // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialstateOfCharge_fr = stateOfCharge_fr;
 		this.stateOfCharge_fr = initialstateOfCharge_fr;
-		this.timeParameters = timeParameters;
 		this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 		this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
 	    this.tripTracker = tripTracker;
     	this.available = available;
 	    if (tripTracker != null) {
-	    	tripTracker.Vehicle=this;	    	
+	    	tripTracker.vehicle=this;	    	
 	    }
 	    // Validation checks
 	    if (capacityElectric_kW <= 0 || storageCapacity_kWh <= 0 || energyConsumption_kWhpkm <= 0) {
@@ -140,7 +140,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / this.timeParameters.getTimeStep_h();
 			if (stateOfCharge_fr < 0) {
-				traceln("EV of type: " + this.energyAssetType + " from GC " + this.parentAgent + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%");
+				traceln("EV of type: " + this.energyAssetType + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%");
 			}
 			this.available = true;
 			return true;

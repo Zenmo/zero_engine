@@ -17,8 +17,9 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	/**
      * Constructor initializing the fields
      */
-	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, J_TimeParameters timeParameters, J_ProfilePointer profile) {
-	    this.parentAgent = parentAgent;
+	public J_EAProduction(I_AssetOwner owner, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, J_TimeParameters timeParameters, J_ProfilePointer profile) {
+	    this.setOwner(owner);
+	    this.timeParameters = timeParameters;
 	    this.energyAssetType = type;
 	    if (type == OL_EnergyAssetType.PHOTOVOLTAIC) {
 	    	this.assetFlowCategory = OL_AssetFlowCategories.pvProductionElectric_kW;
@@ -35,7 +36,6 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	    this.energyCarrier = energyCarrier;
 	    this.capacity_kW = capacity_kW;
 
-	    this.timeParameters = timeParameters;
 	    //this.outputTemperature_degC = outputTemperature_degC;
 		if (profile == null) {
 			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
@@ -49,7 +49,7 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 		registerEnergyAsset();
 	}
 	
-	public void setCapacityElectric_kW(double capacityElectric_kW) {
+	public void setCapacityElectric_kW(double capacityElectric_kW, GridConnection gc) {
 		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
 		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 			double difference_kW = capacityElectric_kW - this.capacity_kW;
@@ -111,7 +111,7 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	    throw new RuntimeException("J_EAProduction operate override is called!");
 	}
 	
-	public void f_updateAllFlows(J_TimeVariables timeVariables) {
+	public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
 		double ratioOfCapacity = profilePointer.getCurrentValue();
 		
 		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
@@ -121,16 +121,14 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
 	       	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
-	       	if (parentAgent instanceof GridConnection) {    		
-	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
-	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-	    	}
-
 		}
+     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
 		this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
-    }
+     	return flowPacket;
+
+	}
     
     public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	
@@ -184,9 +182,9 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 			"energyProduced_kWh = " + (-this.energyUsed_kWh) +  " ";
 	}
 
-	public String getOwnerAgent() {
-		return parentAgent.agentInfo();
-	}
+	//public String getOwnerAgent() {
+		//return parentAgent.agentInfo();
+	//}
 
 	/*public double getCurrentTemperature() {
 		return outputTemperature_degC;

@@ -18,8 +18,8 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageElectric(Agent parentAgent, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
-		this.parentAgent = parentAgent;
+    public J_EAStorageElectric(I_AssetOwner owner, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
+		this.setOwner(owner);
 		this.capacityElectric_kW = capacityElectric_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialstateOfCharge_fr = stateOfCharge_fr;
@@ -94,7 +94,6 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	public String toString() {
 		return 
 			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + parentAgent +" " +
 			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
 			"storageCapacity_kWh = " + this.storageCapacity_kWh +" "+
 			"capacityElectric_kW = " + this.capacityElectric_kW +" "+

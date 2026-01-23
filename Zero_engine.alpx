@@ -1880,6 +1880,16 @@
 				<Name><![CDATA[I_Vehicle]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1768403352982</Id>
+				<Name><![CDATA[I_AssetOwner]]></Name>
+				<Folder>1752677823817</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769156012154</Id>
+				<Name><![CDATA[J_FlowPacket]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

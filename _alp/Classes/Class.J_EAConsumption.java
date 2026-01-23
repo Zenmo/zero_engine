@@ -17,18 +17,15 @@ public class J_EAConsumption extends zero_engine.J_EAFixed implements Serializab
     /**
      * Constructor initializing the fields
      */
-    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, J_TimeParameters timeParameters, J_ProfilePointer profile) {
-		/*if (yearlyDemand_kWh == 0.0) {
-			throw new RuntimeException("Unable to construct J_EAConsumption: " + name + " because consumption is zero." );
-		}*/
+    public J_EAConsumption(I_AssetOwner owner, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, J_TimeParameters timeParameters, J_ProfilePointer profile) {
+    	this.setOwner(owner);
+		this.timeParameters = timeParameters;
     	
     	this.energyAssetName = name;
 		this.energyAssetType = type;
-    	this.parentAgent = parentAgent;
 		this.yearlyDemand_kWh = yearlyDemand_kWh;
 		this.energyCarrier =  energyCarrier;
 		
-		this.timeParameters = timeParameters;
 		if (profile == null) {
 			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
 		} else {

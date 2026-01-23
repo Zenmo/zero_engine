@@ -18,16 +18,16 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionGasCHP(Agent parentAgent, double outputElectricCapacity_kW, double outputHeatCapacity_kW, double efficiency, J_TimeParameters timeParameters, double outputTemperature_degC ) {
+    public J_EAConversionGasCHP(I_AssetOwner owner, double outputElectricCapacity_kW, double outputHeatCapacity_kW, double efficiency, J_TimeParameters timeParameters, double outputTemperature_degC ) {
 	    if (outputElectricCapacity_kW < 0 || outputHeatCapacity_kW < 0 || (outputElectricCapacity_kW == 0 && outputHeatCapacity_kW == 0)) {
 	    	throw new RuntimeException("Impossible capacities for J_EAConversionGasCHP. outputElectricCapacity_kW: " + outputElectricCapacity_kW + ", outputHeatCapacity_kW: " + outputHeatCapacity_kW);
 	    }
-    	this.parentAgent = parentAgent;
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;
 	    this.outputElectricCapacity_kW = outputElectricCapacity_kW;
 	    this.outputHeatCapacity_kW = outputHeatCapacity_kW; 
 	    this.eta_r = efficiency;
 	    this.inputCapacity_kW = (outputElectricCapacity_kW + outputHeatCapacity_kW) / this.eta_r ;
-	    this.timeParameters = timeParameters;
 	    this.outputTemperature_degC = outputTemperature_degC;
 	    
 	    this.energyAssetType = OL_EnergyAssetType.METHANE_CHP;
@@ -85,7 +85,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "				
+		return  this.energyAssetType + ", "				
 				+ "OutputElectricCapacity: " + this.outputElectricCapacity_kW + " kW, " 
 				+ "OutputHeatCapacity: " + this.outputHeatCapacity_kW + " kW, "
 				+ "with efficiency: " + this.eta_r + ", "

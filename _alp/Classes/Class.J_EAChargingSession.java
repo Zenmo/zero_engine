@@ -38,12 +38,11 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
     /**
      * Default constructor
      */
-	public J_EAChargingSession(GridConnection parentGC, List<J_ChargingSessionData> chargingSessionDataList, int socketNb, J_TimeParameters timeParameters) {
-		this.parentAgent = parentGC;	
-		
+	public J_EAChargingSession(I_AssetOwner owner, List<J_ChargingSessionData> chargingSessionDataList, int socketNb, J_TimeParameters timeParameters) {
+		this.setOwner(owner);
+    	this.timeParameters = timeParameters;
 		this.socketNb = socketNb;
     	this.chargingSessionDataList = chargingSessionDataList;
-    	this.timeParameters = timeParameters;
     	
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);   	
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);

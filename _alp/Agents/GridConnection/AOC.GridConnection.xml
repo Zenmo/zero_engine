@@ -55,7 +55,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 //@JsonIgnoreProperties({"va_gridConnection","_origin_VA","_pl_powerFlows_autoUpdateEvent_xjal","_SOC_plot_autoUpdateEvent_xjal"})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")]]></Import>
-	<Implements>I_EnergyData</Implements>
+	<Implements>I_EnergyData, I_AssetOwner</Implements>
 	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);
 
 

@@ -9,12 +9,12 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
      * Default constructor
      */
 	// The efficiency is the amount of heat that is retained within the building
-    public J_EAElectricHob(Agent ownerAgent, double inputCapacity_kW, double efficiency, J_TimeParameters timeParameters, double outputTemperature_degC) {
-    	this.parentAgent= ownerAgent;
+    public J_EAElectricHob(I_AssetOwner owner, double inputCapacity_kW, double efficiency, J_TimeParameters timeParameters, double outputTemperature_degC) {
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;
 	    this.inputCapacity_kW = inputCapacity_kW;
 	    this.eta_r = efficiency;
 	    this.outputCapacity_kW = inputCapacity_kW * efficiency;
-	    this.timeParameters = timeParameters;
 	    //this.outputTemperature_degC = outputTemperature_degC;
 		this.energyCarrierProduced = OL_EnergyCarriers.HEAT;
 		this.energyCarrierConsumed = OL_EnergyCarriers.ELECTRICITY;
@@ -40,13 +40,11 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 	@Override
 	public String toString() {
 		return
-			"AssetType = " + energyAssetType + 
-			" parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
+			"AssetType = " + energyAssetType + ", " +
+			"Energy consumed = " + this.energyUsed_kWh + ", " +
 			" capacityElectric_kW = " + this.inputCapacity_kW +" "+
-			"eta_r = " + this.eta_r+" " +
-			//"outputTemperature_degC = " + this.outputTemperature_degC + " "+
-			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
-			//"heatProducted_kWh = " +this.heatProduced_kWh + " ";
+			"eta_r = " + this.eta_r+ ", " +
+			"energyUsed_kWh (losses) = " + this.energyUsed_kWh;
 	}
 	
 	/**

@@ -20,19 +20,15 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h) {
-	    this.parentAgent= parentAgent;
+    public J_EAProfile(I_AssetOwner owner, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h) {
+		this.setOwner(owner);
 	    this.energyCarrier = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
 	    //this.profileType = profileType;
 	    this.profileTimestep_h = profileTimestep_h;
 	    this.assetFlowCategory = assetCategory;
 
-	    if (parentAgent instanceof GridConnection) {
-	    	this.timestep_h = ((GridConnection)parentAgent).energyModel.p_timeStep_h;
-	    } else {
-	    	this.timestep_h = profileTimestep_h;
-	    }
+	    this.timestep_h = profileTimestep_h;
 	    
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 	    
@@ -102,7 +98,7 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 	@Override
 	public String toString() {
 		return
-			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
+			"Energy consumed = " + this.energyUsed_kWh +
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
 	}
 	
