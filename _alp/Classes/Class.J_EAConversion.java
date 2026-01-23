@@ -96,7 +96,7 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "			
+		return  this.energyAssetType + ", "			
 				+ this.energyCarrierConsumed + " -> " + this.energyCarrierProduced + ", "
 				+ "OutputCapacity: " + this.outputCapacity_kW + " kW, " 
 				+ "with efficiency: " + this.eta_r + ", "

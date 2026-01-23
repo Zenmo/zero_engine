@@ -3,7 +3,7 @@
  */	
 public abstract class J_HeatingFunctionLibrary {
 
-	public static double  managePTAndHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, List<J_EAProduction> ptAssets, double hotWaterDemand_kW, J_TimeVariables timeVariables){
+	public static double  managePTAndHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, List<J_EAProduction> ptAssets, double hotWaterDemand_kW, J_TimeVariables timeVariables, GridConnection gc){
     	//Calculate the pt production
     	double ptProduction_kW = 0;
     	for (J_EA j_ea : ptAssets) {
@@ -37,7 +37,7 @@ public abstract class J_HeatingFunctionLibrary {
     	
     	if (remainingPTProduction_kW > 0) {//Heat (for now always curtail over produced heat!)
     		for (J_EAProduction j_ea : ptAssets) {
-    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);
+    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW, gc);
     			
     			if (remainingPTProduction_kW <= 0) {
     				break;

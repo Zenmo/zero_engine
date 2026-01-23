@@ -63,7 +63,7 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	
     	if(hasPT) {
 	    	//Adjust the hot water and overall heat demand with the buffer and pt
-	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables, gc); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
 	    }
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);

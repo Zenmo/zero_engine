@@ -147,10 +147,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	public void setStorageCapacity_kWh(double storageCapacity_kWh, GridConnection gc) {
 		double difference_kWh = storageCapacity_kWh - this.storageCapacity_kWh;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-			gc.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
-			gc.c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000);
-			gc.energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
-		}
+		gc.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
+		gc.c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000);
+		gc.energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
 	}
 
 	public void setCapacityElectric_kW(double capacityElectric_kW) {

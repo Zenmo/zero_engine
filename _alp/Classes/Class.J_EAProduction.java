@@ -18,7 +18,10 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
      * Constructor initializing the fields
      */
 	public J_EAProduction(I_AssetOwner owner, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, J_TimeParameters timeParameters, J_ProfilePointer profile) {
-	    this.setOwner(owner);
+		if (profile == null) {
+			throw new RuntimeException("profile pointer for J_EAProduction " + name + " is is null");
+		}
+		this.setOwner(owner);
 	    this.timeParameters = timeParameters;
 	    this.energyAssetType = type;
 	    if (type == OL_EnergyAssetType.PHOTOVOLTAIC) {
@@ -36,15 +39,8 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	    this.energyCarrier = energyCarrier;
 	    this.capacity_kW = capacity_kW;
 
-	    //this.outputTemperature_degC = outputTemperature_degC;
-		if (profile == null) {
-			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
-		} else {
-			profilePointer = profile;
-		}
-		if (profile == null) {			
-			throw new RuntimeException("J_EAProduction needs to have valid profilePointer!");
-		}
+		this.profilePointer = profile;
+
 	    this.activeProductionEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
@@ -130,7 +126,7 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 
 	}
     
-    public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
+    public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW, GridConnection gc) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	
     	if(this.energyCarrier != curtailedEnergyCarrier) {
     		//new RuntimeException("Trying to curtail the wrong a production asset with the wrong energyCarrier");
@@ -149,10 +145,8 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
     	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW); // production is a negative flow, so to remove production, a positive value must be added to lastFlows.
     	this.lastEnergyUse_kW += curtailmentPower_kW; // production is a negative flow, so to remove production, a positive value must be added to lastEnergyUse_kW.
     	
-    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW, this);
-    	}
+    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);  		
+    	gc.f_removeFlows(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW, this);
     	clear();
     	
     	return curtailmentPower_kW;
@@ -176,7 +170,6 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	public String toString() {
 		return
 			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + parentAgent +" " +
 			"capacity_kW = " + capacity_kW +" "+
 			"energyCarrier = " + energyCarrier +" "+
 			"energyProduced_kWh = " + (-this.energyUsed_kWh) +  " ";

@@ -53,7 +53,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	if(hasPT) {//Adjust the hot water and overall heat demand with the buffer and pt
-    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables); // also updates fm_currentBalanceFlows_kW(heat)!
+    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables, gc); // also updates fm_currentBalanceFlows_kW(heat)!
     	}
     	
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
