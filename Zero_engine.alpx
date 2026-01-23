@@ -1871,11 +1871,6 @@
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1765192207409</Id>
-				<Name><![CDATA[J_EAChargingSession]]></Name>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1765383541339</Id>
 				<Name><![CDATA[J_ChargePoint]]></Name>
 				<Folder>1762850586274</Folder>
@@ -1929,6 +1924,11 @@
 				<Id>1769089556772</Id>
 				<Name><![CDATA[J_HeatingManagementCHP]]></Name>
 				<Folder>1762850578079</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769163992129</Id>
+				<Name><![CDATA[J_EAChargingSession]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
