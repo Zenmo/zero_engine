@@ -14,7 +14,7 @@ public interface I_ChargingRequest {
 	
 	public boolean getV2GCapable();
 	
-	// The total energy needed before the leave time
+	// The total energy needed in the battery (SOC) before the leave time
 	public double getEnergyNeedForNextTrip_kWh();
 	
 	// The remaining energy needed before the leave time

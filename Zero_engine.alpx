@@ -398,36 +398,28 @@
 			</OptionList>
 			<OptionList>
 				<Id>1659701773383</Id>
-				<Name><![CDATA[OL_AreaType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_PBL_OwnershipType]]></Name>
+				<Description><![CDATA[OwnershipType: 
+0: Koop
+1: Particulier Huur
+2: Sociale Huur]]></Description>
 				<Option>
-					<Id>1659701782496</Id>
-					<Name><![CDATA[NEIGHBORHOOD]]></Name>
+					<Id>1768317131071</Id>
+					<Name><![CDATA[TYPE_0]]></Name>
 				</Option>
 				<Option>
-					<Id>1659701773953</Id>
-					<Name><![CDATA[RES]]></Name>
+					<Id>1768317109568</Id>
+					<Name><![CDATA[TYPE_1]]></Name>
 				</Option>
 				<Option>
-					<Id>1659701788868</Id>
-					<Name><![CDATA[INDUSTRY]]></Name>
-				</Option>
-				<Option>
-					<Id>1659701795639</Id>
-					<Name><![CDATA[BUSINESS]]></Name>
-				</Option>
-				<Option>
-					<Id>1697466302695</Id>
-					<Name><![CDATA[HVTRANSFORMER]]></Name>
-				</Option>
-				<Option>
-					<Id>1713426522585</Id>
-					<Name><![CDATA[PARCEL]]></Name>
+					<Id>1768317127860</Id>
+					<Name><![CDATA[TYPE_2]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659711659517</Id>
 				<Name><![CDATA[OL_BuildingType]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1659711661606</Id>
 					<Name><![CDATA[House]]></Name>
@@ -451,43 +443,6 @@
 				<Option>
 					<Id>1660054094472</Id>
 					<Name><![CDATA[Other]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
-				<Id>1660226249511</Id>
-				<Name><![CDATA[OL_ActorType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Option>
-					<Id>1660226249512</Id>
-					<Name><![CDATA[CONNECTIONOWNER]]></Name>
-				</Option>
-				<Option>
-					<Id>1660226249513</Id>
-					<Name><![CDATA[GOV]]></Name>
-				</Option>
-				<Option>
-					<Id>1660226249514</Id>
-					<Name><![CDATA[SUPPLIERENERGY]]></Name>
-				</Option>
-				<Option>
-					<Id>1660226249515</Id>
-					<Name><![CDATA[COOPENERGY]]></Name>
-				</Option>
-				<Option>
-					<Id>1660577544099</Id>
-					<Name><![CDATA[OPERATORGRID]]></Name>
-				</Option>
-				<Option>
-					<Id>1692796172966</Id>
-					<Name><![CDATA[GOVHOLON]]></Name>
-				</Option>
-				<Option>
-					<Id>1703256179429</Id>
-					<Name><![CDATA[SUBTENANT]]></Name>
-				</Option>
-				<Option>
-					<Id>1717960308322</Id>
-					<Name><![CDATA[CPO]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -624,7 +579,7 @@
 			</OptionList>
 			<OptionList>
 				<Id>1665487983362</Id>
-				<Name><![CDATA[OL_GridConnectionIsolationLabel]]></Name>
+				<Name><![CDATA[OL_GridConnectionInsulationLabel]]></Name>
 				<Option>
 					<Id>1665487983978</Id>
 					<Name><![CDATA[A]]></Name>
@@ -1131,6 +1086,81 @@
 				<Option>
 					<Id>1767622041768</Id>
 					<Name><![CDATA[SATURDAY]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1768309588451</Id>
+				<Name><![CDATA[OL_PBL_DwellingType]]></Name>
+				<Description><![CDATA[PBL Dwellingtypes: 
+1: vrijstaand
+2: 2-onder-1 kap
+3: rijwoning hoekwoning
+4: rijwoning tussenwoning
+5: appartementen t/m 4 (meergezinswoningen t/m 4 verdiepingen)
+6: appartementen 5>= (meergezinswoningen 5 of meer verdiepingen)]]></Description>
+				<Option>
+					<Id>1768309847959</Id>
+					<Name><![CDATA[TYPE_1]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309856061</Id>
+					<Name><![CDATA[TYPE_2]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309858840</Id>
+					<Name><![CDATA[TYPE_3]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309924957</Id>
+					<Name><![CDATA[TYPE_4]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309929674</Id>
+					<Name><![CDATA[TYPE_5]]></Name>
+				</Option>
+				<Option>
+					<Id>1768309931760</Id>
+					<Name><![CDATA[TYPE_6]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1768384843601</Id>
+				<Name><![CDATA[OL_GridConnectionEnergyLabel]]></Name>
+				<Option>
+					<Id>1768384856548</Id>
+					<Name><![CDATA[A]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856549</Id>
+					<Name><![CDATA[B]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856550</Id>
+					<Name><![CDATA[C]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856551</Id>
+					<Name><![CDATA[D]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856552</Id>
+					<Name><![CDATA[E]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856553</Id>
+					<Name><![CDATA[F]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856554</Id>
+					<Name><![CDATA[G]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856555</Id>
+					<Name><![CDATA[NONE]]></Name>
+				</Option>
+				<Option>
+					<Id>1768384856556</Id>
+					<Name><![CDATA[UNKNOWN]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
@@ -1889,6 +1919,16 @@
 				<Id>1769156012154</Id>
 				<Name><![CDATA[J_FlowPacket]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768309433547</Id>
+				<Name><![CDATA[J_PBLParameters]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769089556772</Id>
+				<Name><![CDATA[J_HeatingManagementCHP]]></Name>
+				<Folder>1762850578079</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

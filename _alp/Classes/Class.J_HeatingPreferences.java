@@ -67,8 +67,15 @@ public class J_HeatingPreferences {
     	return this.minComfortTemperature_degC;
     }
     
-    
-    
+	public double getCurrentPreferedTemperatureSetpoint_degC(double timeOfDay_h) {
+		if (timeOfDay_h < getStartOfDayTime_h() || timeOfDay_h >= getStartOfNightTime_h()) {
+			return getNightTimeSetPoint_degC();
+		}
+		else {
+			return getDayTimeSetPoint_degC();
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return 
