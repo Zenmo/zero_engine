@@ -30,20 +30,17 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     		this.initializeAssets();
     	}
     	
-    	throw new RuntimeException("CHP MANAGEMENT IS NOT FINISHED YET!");
-    	/*
-       	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	
-    	double heatingAssetPower_kW = 0;
-   	    	
-    	heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
-    	*/
+    	double heatingAssetPower_kW = heatDemand_kW;
+    	
+    	double CHPPowerRatioSetPoint = heatingAssetPower_kW / ((J_EAConversionGasCHP)heatingAsset).getOutputHeatCapacity_kW();
+    	heatingAsset.f_updateAllFlows(CHPPowerRatioSetPoint);
     }
     
     
     public void initializeAssets() {
-    	if (validHeatingType == this.currentHeatingType) {
+    	if (validHeatingType != this.currentHeatingType) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
     	}
     	List<J_EAProduction> ptAssets = findAll(gc.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);
