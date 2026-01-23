@@ -25,7 +25,7 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     }
       
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}

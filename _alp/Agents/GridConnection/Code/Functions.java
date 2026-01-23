@@ -955,7 +955,7 @@ if (p_batteryAsset != null) {
 		if (p_batteryManagement == null) {
 			throw new RuntimeException("Tried to operate battery without algorithm in GC: " + p_gridConnectionID);
 		}
-		J_FlowPacket flowPacket p_batteryManagement.manageBattery(timeVariables);
+		p_batteryManagement.manageBattery(timeVariables);
 	}
 }
 /*ALCODEEND*/}

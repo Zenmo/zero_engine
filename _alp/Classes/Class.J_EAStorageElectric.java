@@ -144,18 +144,13 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		return this.etaDischarge_r;
 	}
 	
-	public void setStorageCapacity_kWh(double storageCapacity_kWh) {
+	public void setStorageCapacity_kWh(double storageCapacity_kWh, GridConnection gc) {
 		double difference_kWh = storageCapacity_kWh - this.storageCapacity_kWh;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-		if (this.parentAgent instanceof GridConnection) {		
-			((GridConnection)this.parentAgent).v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
-			((GridConnection) this.parentAgent).c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000);
-			((GridConnection)this.parentAgent).energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
+			gc.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
+			gc.c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000);
+			gc.energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += difference_kWh/1000;
 		}
-		// TODO: Fix for new FLOWSMAP
-		//if (storageCapacity_kWh == 0) {			
-			//Arrays.fill(lastFlowsArray,0);
-		//}
 	}
 
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
