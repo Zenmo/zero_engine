@@ -99,6 +99,10 @@ abstract public class J_EA implements Cloneable {
     	energyUsed_kWh = energyUsedStored_kWh;
     }
     
+    public I_AssetOwner getOwner() {
+    	return this.owner;
+    }
+    
     public double getEnergyUsed_kWh() {
     	return energyUsed_kWh;
     }
@@ -123,6 +127,10 @@ abstract public class J_EA implements Cloneable {
     
 	 public OL_EnergyAssetType getEAType() {
 		 return energyAssetType;
+	 }
+	 
+	 public OL_AssetFlowCategories getAssetFlowCategory() {
+		 return this.assetFlowCategory;
 	 }
 
 	 public void setEnergyAssetName(String name) {

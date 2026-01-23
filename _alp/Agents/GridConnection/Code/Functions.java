@@ -924,7 +924,7 @@ else {
 	}
 	
 	//Fast forward time dependent energy assets (if present)
-	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(energyModel.t_h, p_chargePoint));
+	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(timeVariables.getT_h(), p_chargePoint));
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();

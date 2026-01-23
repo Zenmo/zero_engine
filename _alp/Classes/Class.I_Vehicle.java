@@ -13,4 +13,6 @@ public interface I_Vehicle
 	double getVehicleScaling_fr();
 	double getEnergyConsumption_kWhpkm();
 	
+	//Temporary, till replaced with getVehicleType() (Car, Van, Truck, Tractor) and getFuelType() (ELE, Petrol, h2)
+	OL_EnergyAssetType getEAType();
 }
