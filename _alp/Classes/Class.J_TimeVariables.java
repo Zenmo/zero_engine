@@ -16,6 +16,13 @@ public final class J_TimeVariables {
 	private boolean isWinterWeek;
 	private boolean isLastTimeStepOfDay;
 	
+	/**
+     * Default constructor
+     */
+	public J_TimeVariables(int v_timeStepsElapsed, J_TimeParameters timeParameters){
+		updateTimeVariables(v_timeStepsElapsed, timeParameters);
+	}
+	
 	public void updateTimeVariables(int v_timeStepsElapsed, J_TimeParameters timeParameters) {
 		timeStepsElapsed = v_timeStepsElapsed;
 		anyLogicTime_h = timeStepsElapsed * timeParameters.getTimeStep_h();
