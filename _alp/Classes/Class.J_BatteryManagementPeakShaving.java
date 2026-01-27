@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
 
 	private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private Agent target = gc;
 	private OL_ResultScope targetType = OL_ResultScope.GRIDCONNECTION;
 	
@@ -29,8 +30,9 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
 		
 	}
 	
-    public J_BatteryManagementPeakShaving( GridConnection gc ) {
+    public J_BatteryManagementPeakShaving( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	if (gc instanceof GCGridBattery) {
     		target = null;
     		this.targetType = null;    		

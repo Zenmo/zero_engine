@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 public class J_ChargingManagementMaxAvailablePower implements I_ChargingManagement {
 	private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.MAX_POWER;
     
     private boolean V2GActive = false;
@@ -22,8 +23,9 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     /**
      * Default constructor
      */
-    public J_ChargingManagementMaxAvailablePower( GridConnection gc) {
+    public J_ChargingManagementMaxAvailablePower( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {

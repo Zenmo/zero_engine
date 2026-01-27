@@ -16,6 +16,7 @@ import java.util.EnumSet;
 public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private double timeStep_h;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private boolean V2GActive = false;
@@ -23,9 +24,10 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementGridBalancing( GridConnection gc) {
+    public J_ChargingManagementGridBalancing( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
-    	this.timeStep_h = gc.energyModel.p_timeParameters.getTimeStep_h();
+    	this.timeParameters = timeParameters;
+    	this.timeStep_h = timeParameters.getTimeStep_h();
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {

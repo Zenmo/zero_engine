@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
 
     /**
      * Default constructor
@@ -24,8 +25,9 @@ public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryMana
     	
     }
     
-    public J_BatteryManagementSelfConsumptionGridNode( GridConnection gc ) {
+    public J_BatteryManagementSelfConsumptionGridNode( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     /**
@@ -62,11 +64,4 @@ public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryMana
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

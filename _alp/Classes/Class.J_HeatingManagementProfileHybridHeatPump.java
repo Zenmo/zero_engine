@@ -17,6 +17,7 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	
 	private boolean isInitialized = false;
 	private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
@@ -31,8 +32,9 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 		
 	}
 	
-    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
 
@@ -156,11 +158,4 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

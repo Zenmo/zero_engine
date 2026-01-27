@@ -36,8 +36,9 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 		
 	}
     
-    public J_BatteryManagementPrice( GridConnection gc ) {
+    public J_BatteryManagementPrice( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     public J_BatteryManagementPrice( GridConnection gc, J_TimeParameters timeParameters, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
@@ -110,11 +111,4 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

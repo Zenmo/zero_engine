@@ -5,6 +5,7 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private OL_GridConnectionHeatingType validHeatingType = OL_GridConnectionHeatingType.GAS_CHP;
 
 	private OL_GridConnectionHeatingType currentHeatingType;
@@ -19,8 +20,9 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     	
     }
     
-    public J_HeatingManagementCHP( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementCHP( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
       

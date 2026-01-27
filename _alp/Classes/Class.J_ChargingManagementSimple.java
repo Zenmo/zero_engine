@@ -17,14 +17,16 @@ import java.util.EnumSet;
 public class J_ChargingManagementSimple implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
     private boolean V2GActive = false;
 
     /**
      * Default constructor
      */
-    public J_ChargingManagementSimple( GridConnection gc) {
+    public J_ChargingManagementSimple( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {

@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement {
 
 	GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private double currentChargeSetpoint_kW = 0;
 	private double storedCurrentChargeSetpoint_kW;
     /**
@@ -24,8 +25,9 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 
     }
 	
-    public J_BatteryManagementExternalSetpoint( GridConnection gc) {
+    public J_BatteryManagementExternalSetpoint( GridConnection gc, J_TimeParameters timeParameters_) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     public double setChargeSetpoint_kW(double chargeSetpoint_kW) {

@@ -17,6 +17,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.CUSTOM
 	);
@@ -68,8 +69,9 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	
     }
     
-    public J_HeatingManagementNeighborhood( GridConnection gc, OL_GridConnectionHeatingType heatingType ) {
+    public J_HeatingManagementNeighborhood( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
     
@@ -336,12 +338,4 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
 	public String toString() {
 		return super.toString();
 	}
-
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

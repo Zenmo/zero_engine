@@ -58,7 +58,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     public J_HeatingManagementHeatpumpOffPeak() {
     }
 
-    public J_HeatingManagementHeatpumpOffPeak( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementHeatpumpOffPeak( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
     	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
