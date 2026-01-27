@@ -49,8 +49,8 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
     }
     
     @Override
-    public void f_updateProfileFlows(double t_h) {
-         operate(t_h);
+    public void f_updateAllFlows() {
+         operate(((GridConnection)parentAgent).energyModel.t_h); // temporary ugly hack
          if (parentAgent instanceof GridConnection) {        
             ((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
         }

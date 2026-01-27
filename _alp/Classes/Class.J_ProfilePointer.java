@@ -19,6 +19,7 @@ public class J_ProfilePointer implements Serializable {
 	public String name = "";
 	private double currentValue = 0;
 	private TableFunction tableFunction;
+	private OL_ProfileUnits profileUnits;
 	
     /**
      * Default constructor
@@ -27,9 +28,10 @@ public class J_ProfilePointer implements Serializable {
 	
 	}
 	
-    public J_ProfilePointer(String name, TableFunction tableFunction) {
+    public J_ProfilePointer(String name, TableFunction tableFunction, OL_ProfileUnits profileUnits) {
     	this.name = name;
     	this.tableFunction = tableFunction;
+    	this.profileUnits = profileUnits;
     }
 
     public void updateValue(double t_h) {
@@ -54,6 +56,10 @@ public class J_ProfilePointer implements Serializable {
     
     public void setTableFunction(TableFunction tf) {
     	this.tableFunction = tf;
+    }
+    
+    public OL_ProfileUnits getProfileUnits() {
+    	return profileUnits;
     }
     
 	@Override

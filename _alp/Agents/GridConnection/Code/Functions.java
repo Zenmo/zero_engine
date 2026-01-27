@@ -178,7 +178,7 @@ c_petroleumFuelVehicles.forEach(v -> v.f_updateAllFlows());
 c_hydrogenVehicles.forEach(v -> v.f_updateAllFlows());
 c_consumptionAssets.forEach(c -> c.f_updateAllFlows());
 c_productionAssets.forEach(p -> p.f_updateAllFlows());
-c_profileAssets.forEach(p -> p.f_updateProfileFlows(energyModel.t_h));
+c_profileAssets.forEach(p -> p.f_updateAllFlows());
 /*ALCODEEND*/}
 
 double f_resetStates()

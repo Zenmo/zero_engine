@@ -2,14 +2,15 @@
  * J_EAProfile
  */
 public class J_EAProfile extends zero_engine.J_EA implements Serializable {
-
-	public OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
-	public double[] a_energyProfile_kWh;
-	private double profileTimestep_h;
-    private double profileStarTime_h = 0;
-	public double lostLoad_kWh = 0;
-	private double profileScaling_fr = 1;
-	private boolean enableProfileLooping = true;
+	protected J_ProfilePointer profilePointer;
+	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
+	protected OL_EnergyCarriers energyCarrier; // = OL_EnergyCarriers.ELECTRICITY;
+	//public double[] a_energyProfile_kWh;
+	//private double profileTimestep_h;
+    //private double profileStarTime_h = 0;
+	protected double lostLoad_kWh = 0;
+	protected double profileScaling_fr = 1; // This factor can be used to change the magnitude of the profile in this asset, for example when an energy-saving slider is operated.
+	//private boolean enableProfileLooping = true;
 	
     /**
      * Default constructor
@@ -20,7 +21,30 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h) {
+    /*public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h, double startTime_h) {
+    	this(parentAgent, energyCarrier, profile_kWh, assetCategory, profileTimestep_h);
+    	this.profileStarTime_h = startTime_h;
+    }*/
+
+    public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, J_ProfilePointer profile, OL_AssetFlowCategories assetCategory, double timeStep_h) {
+	    this.parentAgent= parentAgent;
+	    this.energyCarrier = energyCarrier;
+		if (profile == null) {
+			throw new RuntimeException("Cannot create J_EAProfile without a valid ProfilePointer!");
+		} else {
+			profilePointer = profile;
+		}	
+	    this.assetFlowCategory = assetCategory;
+
+	   	this.timestep_h = timeStep_h;
+	    
+	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
+	    
+		registerEnergyAsset();
+	}
+    
+    
+    /*public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h) {
 	    this.parentAgent= parentAgent;
 	    this.energyCarrier = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
@@ -41,25 +65,55 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     
     public void setStartTime_h(double startTime_h) {    	
     	this.profileStarTime_h = startTime_h;
-    }
+    }*/
 
     @Override
     public void f_updateAllFlows(double powerFraction_fr) {
     	throw new RuntimeException("J_EAProfile.f_updateAllFlows(powerFraction_fr) not supperted for J_EAProfile! Use J_EAProfile.f_updateProfileFlows(t_h) instead!");
     }
     
-    public void f_updateProfileFlows(double time_h) {
+    public void f_updateAllFlows() {
+    	//operate(time_h-this.profileStarTime_h);    	
+    	double profileValue = profilePointer.getCurrentValue();		
+    	
+    	double currentPower_kW = profileValue * this.profileUnitScaler_r * this.profileScaling_fr;
+		
+    	this.energyUse_kW = currentPower_kW;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
 
-    	operate(time_h-this.profileStarTime_h);
+		flowsMap.put(this.energyCarrier, currentPower_kW);		
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
+		}
+    	
+		//this.operate(ratioOfCapacity);
+		if (currentPower_kW==0.0) { // Skip when there is no consumption -> saves time?
+			if (parentAgent instanceof GridConnection) {    		
+	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
+	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
+	    	}
 
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-    	}
-    	this.lastFlowsMap.cloneMap(flowsMap);
+		}
+		this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
     }
     
+	@Override
+	public void operate(double ratioOfCapacity) {
+		/*
+    	double currentPower_kW = ratioOfCapacity * this.yearlyDemand_kWh * this.consumptionScaling_fr;
+		
+    	this.energyUse_kW = currentPower_kW;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+
+		flowsMap.put(this.energyCarrier, currentPower_kW);		
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
+		}*/
+   	}
+    
+    /* Old J_EAProfile implementation
     @Override
     public void operate(double time_h) {
     	if (enableProfileLooping && time_h >= a_energyProfile_kWh.length * profileTimestep_h) {
@@ -81,7 +135,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		if (this.assetFlowCategory != null) {
 			this.assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
 		}
-    }
+    } */
 
 	public double getEnergyUsed_kWh() {
 		return energyUsed_kWh;
@@ -105,8 +159,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	if (parentAgent instanceof GridConnection) {    		
     		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
     	}
-    }
-	
+    }    
+    
     public double getProfileScaling_fr() {
     	return profileScaling_fr;
     }

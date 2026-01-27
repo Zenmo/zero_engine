@@ -1,7 +1,7 @@
 /**
  * J_EAProduction
  */
-public class J_EAProduction extends zero_engine.J_EA implements Serializable {
+public class J_EAProduction extends zero_engine.J_EAProfile implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	protected double totalEnergyCurtailed_kWh=0;
@@ -20,6 +20,17 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, double timestep_h, J_ProfilePointer profile) {
 	    this.parentAgent = parentAgent;
 	    this.energyAssetType = type;
+	    this.energyAssetName = name;
+	    this.energyCarrier = energyCarrier;
+	    this.capacity_kW = capacity_kW;
+	    
+		if (profile.getProfileUnits() == OL_ProfileUnits.NORMALIZEDPOWER) {
+			this.profileUnitScaler_r = capacity_kW;
+			this.profilePointer = profile;
+		} else {
+			throw new RuntimeException("Invalid OL_ProfileUnits type for J_EAProduction!");
+		}
+	    
 	    if (type == OL_EnergyAssetType.PHOTOVOLTAIC) {
 	    	this.assetFlowCategory = OL_AssetFlowCategories.pvProductionElectric_kW;
 	    } else if (type == OL_EnergyAssetType.WINDMILL) {
@@ -31,20 +42,10 @@ public class J_EAProduction extends zero_engine.J_EA implements Serializable {
 	    } else {
 	    	throw new RuntimeException("No valid OL_EnergyAssetType, cannot assign AssetFlowCategory!");
 	    }
-	    this.energyAssetName = name;
-	    this.energyCarrier = energyCarrier;
-	    this.capacity_kW = capacity_kW;
 
 	    this.timestep_h = timestep_h;
 	    //this.outputTemperature_degC = outputTemperature_degC;
-		if (profile == null) {
-			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
-		} else {
-			profilePointer = profile;
-		}
-		if (profile == null) {			
-			throw new RuntimeException("J_EAProduction needs to have valid profilePointer!");
-		}
+
 	    this.activeProductionEnergyCarriers.add(this.energyCarrier);
 		registerEnergyAsset();
 	}
