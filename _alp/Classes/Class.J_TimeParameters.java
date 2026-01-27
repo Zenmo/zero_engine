@@ -20,7 +20,6 @@ public final class J_TimeParameters {
 		double timeStep_h,
 		int startYear,
 		double[] hourOfYearPerMonth,
-		int dayOfWeek1jan,
 		double runStartTime_h,
 		double runEndTime_h,
 		int summerWeekNumber,
