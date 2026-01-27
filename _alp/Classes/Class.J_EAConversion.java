@@ -28,7 +28,7 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	    this.energyCarrierConsumed = energyCarrierConsumed;
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 
     @Override
@@ -57,6 +57,20 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
     	if (this.assetFlowCategory != null) {
     		this.assetFlowsMap.put(this.assetFlowCategory, powerFraction_fr * this.outputCapacity_kW);
     	}
+	}
+	
+	public J_FlowsMap get_heatFromEnergyCarrier_kW() {
+		J_FlowsMap flowMap = new J_FlowsMap();
+		flowMap.put(this.energyCarrierConsumed, this.getLastFlows().get(OL_EnergyCarriers.HEAT));
+		return flowMap;
+	}
+	
+	public J_FlowsMap get_consumptionForHeating_kW() {
+		J_FlowsMap flowMap = new J_FlowsMap();
+		if (this.activeProductionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) { // small check to catch conversion assets like electrolysers.
+			flowMap.put(this.energyCarrierConsumed, this.getLastFlows().get(this.energyCarrierConsumed));
+		}
+		return flowMap;		
 	}
 	
 	public void setInputCapacity_kW ( double inputCapacity_kW ) {

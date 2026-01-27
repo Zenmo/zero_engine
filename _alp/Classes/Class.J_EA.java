@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
 	protected J_TimeParameters timeParameters;
-	private I_AssetOwner owner;
+	private I_AssetOwner owner; // This is private because it is not allowed for the children to access this.
 	protected OL_EnergyAssetType energyAssetType;
 	protected OL_AssetFlowCategories assetFlowCategory;
 	protected String energyAssetName;
@@ -44,7 +44,6 @@ abstract public class J_EA implements Cloneable {
 	protected double energyUsed_kWh = 0.0;
 	protected double energyUse_kW = 0.0;
 	protected double energyUsedStored_kWh = 0.0;
-	protected double timestep_h;
 	 
 	protected boolean isRemoved = false;
 
@@ -62,17 +61,17 @@ abstract public class J_EA implements Cloneable {
     	return this.owner.f_isActive();
     }
     
-    public void registerEnergyAsset() {	
-    	this.owner.f_connectToJ_EA(this);
+    public void registerEnergyAsset(J_TimeParameters timeParameters) {	
+    	this.owner.f_connectToJ_EA(this, timeParameters);
     }
     
-    public void reRegisterEnergyAsset() {
+    public void reRegisterEnergyAsset(J_TimeParameters timeParameters) {
     	if (!this.isRemoved) {
     		throw new RuntimeException("Can not register energy asset that was not removed.");
     	}
     	else {
     		this.isRemoved = false;
-    		this.registerEnergyAsset();
+    		this.registerEnergyAsset(timeParameters);
     	}
     }
     

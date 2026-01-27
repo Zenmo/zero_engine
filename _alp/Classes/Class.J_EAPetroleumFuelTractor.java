@@ -41,7 +41,7 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
         this.petroleumFuelConsumptionPerWeek_L = calculatePetroleumFuelConsumptionPerWeek_L(yearlyPetroleumFuelConsumption_L, petroleumFuelConsumptionPerWeek);
         
         this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.PETROLEUM_FUEL);
-        registerEnergyAsset();
+        registerEnergyAsset(timeParameters);
     }    
     
     @Override
@@ -55,7 +55,7 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
         
         this.flowsMap.put(OL_EnergyCarriers.PETROLEUM_FUEL, currentPower_kW);
         this.energyUse_kW = currentPower_kW;
-        this.energyUsed_kWh += currentPower_kW * timestep_h;    
+        this.energyUsed_kWh += currentPower_kW * timeParameters.getTimeStep_h();    
     }
     
     private static double[] calculatePetroleumFuelConsumptionPerWeek_L(double yearlyPetroleumFuelConsumption_l, double[] weekProfile) {
@@ -81,7 +81,7 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
     }
     
     private int workTimeStepsPerWeek() {
-        return roundToInt(workHoursPerWeek() / this.timestep_h);
+        return roundToInt(workHoursPerWeek() / this.timeParameters.getTimeStep_h());
     }
     
     private double currentPower_kW(double currentStep_h) {

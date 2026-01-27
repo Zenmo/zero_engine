@@ -5,7 +5,7 @@ public final class J_TimeVariables {
 	////Time Variables -> Updated every timestep
 	private double t_h; //Current energymodel runtime: t_h = 0, corresponds to 'jan 1 0:00' of the start year 
 	private double anyLogicTime_h; // anyLogicTime is the experiment time used for DataSets/ResultsUI. t = 0 corresponds to the start of the simulation
-	private double t_hourOfDay;
+	private double timeOfDay_h;
 	private double timeStepsElapsed;
 
 	private OL_Days dayOfWeek;
@@ -34,7 +34,7 @@ public final class J_TimeVariables {
 		isSummerWeek = (t_h % 8760) >= timeParameters.getStartOfSummerWeek_h() && (t_h % 8760) < timeParameters.getStartOfSummerWeek_h() + 24*7;
 		isWinterWeek = (t_h % 8760) >= timeParameters.getStartOfWinterWeek_h() && (t_h % 8760) < timeParameters.getStartOfWinterWeek_h() + 24*7;
 		isLastTimeStepOfDay = t_h % 24 == (24-timeParameters.getTimeStep_h());
-		t_hourOfDay = t_h % 24;
+		timeOfDay_h = t_h % 24;
 	}
 	
 	public double getT_h() {
@@ -45,8 +45,8 @@ public final class J_TimeVariables {
 		return anyLogicTime_h;
 	}
 
-	public double getT_hourOfDay() {
-	    return t_hourOfDay;
+	public double getTimeOfDay_h() {
+	    return timeOfDay_h;
 	}
 
 	public OL_Days getDayOfWeek() {

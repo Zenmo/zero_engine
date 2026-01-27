@@ -39,7 +39,7 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
         this.activeProductionEnergyCarriers.addAll(energyCarriersProduced);
     	this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
     	this.assetFlowCategory = OL_AssetFlowCategories.CHPProductionElectric_kW;
-	    registerEnergyAsset();
+	    registerEnergyAsset(timeParameters);
 	}
 
 	@Override

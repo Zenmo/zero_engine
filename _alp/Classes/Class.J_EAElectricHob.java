@@ -22,7 +22,7 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 	    this.assetFlowCategory = OL_AssetFlowCategories.electricHobConsumption_kW;
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
 
     @Override

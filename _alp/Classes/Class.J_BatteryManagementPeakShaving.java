@@ -53,7 +53,7 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
      */
     public void manageBattery(J_TimeVariables timeVariables) {
     	if (this.target == null) {
-    		gc.p_batteryAsset.f_updateAllFlows(0, timeVariables);
+        	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, 0.0, timeVariables);
     		return;
     	}
     	double feedbackGain_kWpSOC = feedbackGain_fr * gc.p_batteryAsset.getCapacityElectric_kW();
@@ -68,7 +68,8 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
 
     	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
     	
-    	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables );
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+
     }
   
     public void setTarget( Agent agent ) {

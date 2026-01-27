@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.DayOfWeek;
 /**
  * J_TimeParameters
  */	
@@ -22,20 +24,18 @@ public final class J_TimeParameters {
 		double runStartTime_h,
 		double runEndTime_h,
 		int summerWeekNumber,
-		int winterWeekNumber,
-		double startOfSummerWeek_h,
-		double startOfWinterWeek_h
+		int winterWeekNumber
 	) {
 		this.timeStep_h = timeStep_h;
 		this.startYear = startYear;
 		this.hourOfYearPerMonth = hourOfYearPerMonth;
-		this.dayOfWeek1jan = dayOfWeek1jan;
 		this.runStartTime_h = runStartTime_h;
 		this.runEndTime_h = runEndTime_h;
 		this.summerWeekNumber = summerWeekNumber;
 		this.winterWeekNumber = winterWeekNumber;
-		this.startOfSummerWeek_h = startOfSummerWeek_h;
-		this.startOfWinterWeek_h = startOfWinterWeek_h;
+		this.dayOfWeek1jan = DayOfWeek.from(LocalDate.of(startYear, 1, 1)).getValue();
+		this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
+		this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));
 	}
 	
 	////Time Parameter getters

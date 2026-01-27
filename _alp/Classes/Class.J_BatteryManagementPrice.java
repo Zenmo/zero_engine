@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementPrice implements I_BatteryManagement {
 
     private GridConnection gc;
+    J_TimeParameters timeParameters;
     // Parameters used:
     private boolean stayWithinConnectionLimits = true; // When this flag is true the battery stays within the contracted capacity of the GC
     private double chargeDischarge_offset_eurpkWh = 0.0; // This term determines the minimal price difference before the battery is used
@@ -39,13 +40,14 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
     	this.gc = gc;
     }
     
-    public J_BatteryManagementPrice( GridConnection gc, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
+    public J_BatteryManagementPrice( GridConnection gc, J_TimeParameters timeParameters, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.stayWithinConnectionLimits = stayWithinConnectionLimits;
     	this.chargeDischarge_offset_eurpkWh = chargeDischarge_offset_eurpkWh;
     	this.WTPfeedbackGain_eurpSOC = WTPfeedbackGain_eurpSOC;
     	this.priceGain_kWhpeur = priceGain_kWhpeur;
-        this.lowPassFactor_fr = gc.energyModel.p_timeStep_h / priceTimescale_h;
+        this.lowPassFactor_fr = timeParameters.getTimeStep_h() / priceTimescale_h;
     }
     
     /**
@@ -82,7 +84,8 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	    }
 	
-	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables );
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+
     }
     
     

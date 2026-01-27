@@ -18,13 +18,13 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageElectric(I_AssetOwner owner, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
+    public J_EAStorageElectric(I_AssetOwner owner, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters ) {
 		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 		this.capacityElectric_kW = capacityElectric_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialstateOfCharge_fr = stateOfCharge_fr;
 		this.stateOfCharge_fr = this.initialstateOfCharge_fr;
-		this.timestep_h = timestep_h;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
 		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
 		this.etaCharge_r = Math.sqrt(eta_r);
@@ -32,7 +32,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	    this.activeProductionEnergyCarriers.add(this.storageMedium);		
 		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
 		this.assetFlowCategory = OL_AssetFlowCategories.batteriesChargingPower_kW;
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
     
 	@Override
@@ -42,9 +42,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     	
     	// charging/discharging losses
     	if (inputPower_kW > 0) { // charging (the battery 'consumes' electricity)
-    		deltaEnergy_kWh = etaCharge_r * inputPower_kW * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is smaller than inputPower_kW * timestep_h!
+    		deltaEnergy_kWh = etaCharge_r * inputPower_kW * timeParameters.getTimeStep_h(); // Actual change of energy content of battery after losses. deltaEnergy_kWh is smaller than inputPower_kW * timestep_h!
     	} else { // discharging (the battery 'produces' electricity)
-    		deltaEnergy_kWh = inputPower_kW / etaDischarge_r * timestep_h; // Actual change of energy content of battery after losses. deltaEnergy_kWh is larger than inputPower_kW * timestep_h!
+    		deltaEnergy_kWh = inputPower_kW / etaDischarge_r * timeParameters.getTimeStep_h(); // Actual change of energy content of battery after losses. deltaEnergy_kWh is larger than inputPower_kW * timestep_h!
     	}
 
     	// Limit SoC to feasible range (0-1)
@@ -54,20 +54,20 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     	double electricityConsumption_kW = 0;
     	double electricityProduction_kW = 0;
     	if (deltaEnergy_kWh > 0) { // charging, deltaEnergy_kWh and inputPower_kW positive
-    		inputPower_kW = deltaEnergy_kWh / timestep_h / etaCharge_r;
+    		inputPower_kW = deltaEnergy_kWh / timeParameters.getTimeStep_h() / etaCharge_r;
     		electricityConsumption_kW = inputPower_kW;
     		electricityProduction_kW = 0;
     		energyUse_kW = (1-etaCharge_r)*inputPower_kW;    		
     	} else { // discharging, deltaEnergy_kWh and inputPower_kW negative
-    		inputPower_kW = deltaEnergy_kWh / timestep_h * etaDischarge_r;
+    		inputPower_kW = deltaEnergy_kWh / timeParameters.getTimeStep_h() * etaDischarge_r;
     		electricityConsumption_kW = 0;
     		electricityProduction_kW = -inputPower_kW; 
-    		energyUse_kW = -deltaEnergy_kWh / timestep_h * (1-etaDischarge_r);
+    		energyUse_kW = -deltaEnergy_kWh / timeParameters.getTimeStep_h() * (1-etaDischarge_r);
     	}
-    	energyUsed_kWh += energyUse_kW * timestep_h;
+    	energyUsed_kWh += energyUse_kW * timeParameters.getTimeStep_h();
     	
-		discharged_kWh += electricityProduction_kW * timestep_h; // Not the change-in-SoC, but the energy flowing out of the battery after losses.
-		charged_kWh += electricityConsumption_kW * timestep_h; // Not the change-in-SoC, but the energy flowing into the battery before losses.
+		discharged_kWh += electricityProduction_kW * timeParameters.getTimeStep_h(); // Not the change-in-SoC, but the energy flowing out of the battery after losses.
+		charged_kWh += electricityConsumption_kW * timeParameters.getTimeStep_h(); // Not the change-in-SoC, but the energy flowing into the battery before losses.
 		
 		updateStateOfCharge( deltaEnergy_kWh );
 		//traceln("Battery SoC: %s", stateOfCharge_fr);
@@ -108,21 +108,21 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 
 	public double getCapacityAvailable_kW() {
 		double availableCapacity_kW;
-		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityElectric_kW * timestep_h) {
+		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityElectric_kW * timeParameters.getTimeStep_h()) {
 			availableCapacity_kW = capacityElectric_kW;
 		}
 		else {
-			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timestep_h; // Allow to drain completely
+			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timeParameters.getTimeStep_h(); // Allow to drain completely
 		}
 		return availableCapacity_kW;
 	}
 	
 	public double getMaxChargePower_kW() { // Always a positive number!
-		return min(capacityElectric_kW, (1-stateOfCharge_fr) * storageCapacity_kWh / timestep_h / etaCharge_r);
+		return min(capacityElectric_kW, (1-stateOfCharge_fr) * storageCapacity_kWh / timeParameters.getTimeStep_h() / etaCharge_r);
 	}
 	
 	public double getMaxDischargePower_kW() { // Always a positive number!
-		return min(capacityElectric_kW, stateOfCharge_fr * storageCapacity_kWh / timestep_h * etaDischarge_r);
+		return min(capacityElectric_kW, stateOfCharge_fr * storageCapacity_kWh / timeParameters.getTimeStep_h() * etaDischarge_r);
 	}
 	
 	public double getCapacityElectric_kW() {

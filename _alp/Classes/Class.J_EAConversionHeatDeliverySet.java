@@ -36,7 +36,7 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    	throw new RuntimeException(String.format("Exception: J_EAConversionHeatDeliverySet with capacityHeat_kW = 0, invalid state! Energy Asset: %s", this));
 	    }
 	    
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 
 	/**

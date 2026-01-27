@@ -1284,15 +1284,6 @@
 			</AnimationProperties>
 			<Inputs>
 				<RunConfigurationInput>
-					<Id>1661517220706</Id>
-					<Name><![CDATA[P time step h]]></Name>
-					<InputReference>
-						<PackageName>zero_engine</PackageName>
-						<ClassName>EnergyModel</ClassName>
-						<ItemName>p_timeStep_h</ItemName>
-					</InputReference>
-				</RunConfigurationInput>
-				<RunConfigurationInput>
 					<Id>1661517213660</Id>
 					<Name><![CDATA[B add kpi visuals]]></Name>
 					<InputReference>

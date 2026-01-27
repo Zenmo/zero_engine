@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
@@ -32,9 +33,10 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementOffPeak( GridConnection gc) {
+    public J_ChargingManagementOffPeak( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
-    	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.timeParameters = timeParameters;
+    	this.filterDiffGain_r = 1/(filterTimeScale_h/timeParameters.getTimeStep_h());
     }
    
     

@@ -42,7 +42,7 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 		this.profilePointer = profile;
 
 	    this.activeProductionEnergyCarriers.add(this.energyCarrier);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 	
 	public void setCapacityElectric_kW(double capacityElectric_kW, GridConnection gc) {
@@ -114,7 +114,7 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
 			
 	    	this.energyUse_kW = -currentProduction_kW;
-	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
+	    	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h(); 	    	    	
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
 	       	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
 		}
@@ -135,8 +135,8 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
     	
     	double currentProduction_kW = -this.lastFlowsMap.get(curtailedEnergyCarrier);
     	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW)); // Can only curtail what was produced in the first place.
-    	energyUsed_kWh += curtailmentPower_kW * timestep_h; // energyUsed_kWh is negative for production assets. Curtailment makes it 'less negative', so a positive number is added to energyUsed_kWh.
-    	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timestep_h;
+    	energyUsed_kWh += curtailmentPower_kW * timeParameters.getTimeStep_h(); // energyUsed_kWh is negative for production assets. Curtailment makes it 'less negative', so a positive number is added to energyUsed_kWh.
+    	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * timeParameters.getTimeStep_h();
     	J_FlowsMap curtailmentFlow = new J_FlowsMap();
     	curtailmentFlow.put(curtailedEnergyCarrier, -curtailmentPower_kW); // To remove production, a negative flow must be removed. Thus this flowmap with a negative flow will be sent to GC.f_removeFlows()
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);

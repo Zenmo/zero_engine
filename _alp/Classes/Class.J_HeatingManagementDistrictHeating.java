@@ -54,7 +54,8 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	if (heatTransferToNetwork_kW > heatingAsset.getOutputCapacity_kW()) {
     		throw new RuntimeException("Heating asset in " + this.getClass() + " does not have sufficient capacity.");
     	}
-    	heatingAsset.f_updateAllFlows( heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW(), timeVariables );
+    	gc.f_updateFlexAssetFlows(heatingAsset, heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
+
     	previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     }
     

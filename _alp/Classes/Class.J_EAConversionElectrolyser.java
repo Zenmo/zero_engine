@@ -40,7 +40,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
     
     @Override

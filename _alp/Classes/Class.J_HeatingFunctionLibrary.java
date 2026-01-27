@@ -23,7 +23,8 @@ public abstract class J_HeatingFunctionLibrary {
     			chargeSetpoint_kW = remainingPTProduction_kW;
     		}
     		double powerFraction_fr = chargeSetpoint_kW / hotWaterBuffer.getCapacityHeat_kW();
-    		hotWaterBuffer.f_updateAllFlows(powerFraction_fr, timeVariables);
+        	gc.f_updateFlexAssetFlows(hotWaterBuffer, powerFraction_fr, timeVariables);
+
     		
 			double heatBufferCharge_kW = hotWaterBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
 			
@@ -47,7 +48,7 @@ public abstract class J_HeatingFunctionLibrary {
     	return remainingHotWater_kW;
     }
 	
-	public static double  manageHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, double hotWaterDemand_kW, double availableHeatingPower_kWth, double timeStep_h, J_TimeVariables timeVariables){
+	public static double  manageHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, double hotWaterDemand_kW, double availableHeatingPower_kWth, double timeStep_h, J_TimeVariables timeVariables, GridConnection gc){
 		if(hotWaterDemand_kW > availableHeatingPower_kWth + hotWaterBuffer.getCurrentStateOfCharge_kWh() / timeStep_h) {
 			throw new RuntimeException("Hot water demand is higher than available power.");
 		}
@@ -58,7 +59,8 @@ public abstract class J_HeatingFunctionLibrary {
 				
 
 		double powerFraction_fr = heatIntoBuffer_kW / hotWaterBuffer.getCapacityHeat_kW();
-		hotWaterBuffer.f_updateAllFlows(powerFraction_fr, timeVariables);
+    	gc.f_updateFlexAssetFlows(hotWaterBuffer, powerFraction_fr, timeVariables);
+
 
 		
     	return hotWaterDemandFromHeatingAsset_kW;

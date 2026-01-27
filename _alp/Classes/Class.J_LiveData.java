@@ -58,18 +58,18 @@ public class J_LiveData {
     	
     }
     
-    public void resetLiveDatasets(double startTime, double endTime, double timeStep_h) {
+    public void resetLiveDatasets(J_TimeParameters timeParameters) {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
-    		DataSet dsDemand = new DataSet( (int)(168 / timeStep_h) );
-    		for (double t = startTime; t < endTime; t += timeStep_h) {
+    		DataSet dsDemand = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
+    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
     			dsDemand.add( t, 0);
     		}
     		dsm_liveDemand_kW.put( EC, dsDemand);
     	}
     	
     	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
-    		DataSet dsSupply = new DataSet( (int)(168 / timeStep_h) );
-    		for (double t = startTime; t < endTime; t += timeStep_h) {
+    		DataSet dsSupply = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
+    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
     			dsSupply.add( t, 0);
     		}
     		dsm_liveSupply_kW.put( EC, dsSupply);
@@ -77,12 +77,12 @@ public class J_LiveData {
     	
     	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
 			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
-				DataSet dsAsset = new DataSet((int)(168 / timeStep_h));
+				DataSet dsAsset = new DataSet((int)(168 / timeParameters.getTimeStep_h()));
 				dsm_liveAssetFlows_kW.put(AC, dsAsset);
 			}
     	}
     	
-		for (double t = startTime; t < endTime; t += timeStep_h) {
+		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
 			
 			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
 				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
@@ -164,5 +164,4 @@ public class J_LiveData {
         
         return sb.toString();
 	}
-
 }

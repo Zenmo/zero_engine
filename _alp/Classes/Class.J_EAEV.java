@@ -71,7 +71,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
 		}
 		
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
     
 	@Override

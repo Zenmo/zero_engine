@@ -48,7 +48,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
 		this.assetFlowCategory = OL_AssetFlowCategories.buildingHeating_kW;
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
 
 	@Override
@@ -192,14 +192,14 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	// Interior heat buffer may represent the radiator or floor heating. Typical delay is 0.5 or 3 hours respectively.	
 	public void addInteriorHeatBuffer(double delayTime_h) {
 		this.interiorDelayTime_h = delayTime_h;
-		this.interiorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timestep_h) ];
+		this.interiorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timeParameters.getTimeStep_h()) ];
 		this.interiorReleaseScheduleIndex = 0;
 	}
 
 	// Exterior heat buffer may represent the walls and roof of the building. Typical delay is 8 hours.
 	public void addExteriorHeatBuffer(double delayTime_h) {
 		this.exteriorDelayTime_h = delayTime_h;
-		this.exteriorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timestep_h) ];
+		this.exteriorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timeParameters.getTimeStep_h()) ];
 		this.exteriorReleaseScheduleIndex = 0;
 	}
 	

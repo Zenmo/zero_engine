@@ -43,13 +43,13 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	if (heatPumpAsset.getCOP() > 3.0 ) {
     		if (heatDemand_kW < heatPumpAsset.getOutputCapacity_kW()) {
-    			heatPumpAsset.f_updateAllFlows( heatDemand_kW / heatPumpAsset.getOutputCapacity_kW(), timeVariables );
-    			gasBurnerAsset.f_updateAllFlows( 0.0, timeVariables );
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, heatDemand_kW / heatPumpAsset.getOutputCapacity_kW(), timeVariables);
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, 0.0, timeVariables);
     			return;
     		}
     		else if (heatDemand_kW < heatPumpAsset.getOutputCapacity_kW() + gasBurnerAsset.getOutputCapacity_kW() ) {
-    			heatPumpAsset.f_updateAllFlows( 1.0, timeVariables );
-    			gasBurnerAsset.f_updateAllFlows( (heatDemand_kW - heatPumpAsset.getOutputCapacity_kW()) / gasBurnerAsset.getOutputCapacity_kW(), timeVariables );
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, 1.0, timeVariables);
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, (heatDemand_kW - heatPumpAsset.getOutputCapacity_kW()) / gasBurnerAsset.getOutputCapacity_kW(), timeVariables);
     			return;
     		}
     		else {
@@ -58,13 +58,13 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	}
     	else {
     		if (heatDemand_kW < gasBurnerAsset.getOutputCapacity_kW()) {
-    			gasBurnerAsset.f_updateAllFlows( heatDemand_kW / gasBurnerAsset.getOutputCapacity_kW(), timeVariables );
-    			heatPumpAsset.f_updateAllFlows( 0.0, timeVariables );
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, heatDemand_kW / gasBurnerAsset.getOutputCapacity_kW(), timeVariables);
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, 0.0, timeVariables);
     			return;
     		}
     		else if (heatDemand_kW < gasBurnerAsset.getOutputCapacity_kW() + heatPumpAsset.getOutputCapacity_kW() ) {
-    			gasBurnerAsset.f_updateAllFlows( 1.0, timeVariables );
-    			heatPumpAsset.f_updateAllFlows( (heatDemand_kW - gasBurnerAsset.getOutputCapacity_kW()) / heatPumpAsset.getOutputCapacity_kW(), timeVariables );
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, 1.0, timeVariables);
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, (heatDemand_kW - gasBurnerAsset.getOutputCapacity_kW()) / heatPumpAsset.getOutputCapacity_kW(), timeVariables);
     			return;
     		}
     		else {

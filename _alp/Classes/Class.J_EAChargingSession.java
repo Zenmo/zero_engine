@@ -48,7 +48,7 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
 		this.setV2GActive(this.V2GActive);
 		
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 	
 	@Override

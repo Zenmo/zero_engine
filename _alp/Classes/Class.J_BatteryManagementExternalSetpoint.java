@@ -42,9 +42,8 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
     }
     
     public void manageBattery(J_TimeVariables timeVariables) {
-    	
         //Manage the battery with the set charge setpoint
-    	gc.p_batteryAsset.f_updateAllFlows(this.currentChargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, this.currentChargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
 
     	//Reset the value again.
     	this.currentChargeSetpoint_kW = 0;

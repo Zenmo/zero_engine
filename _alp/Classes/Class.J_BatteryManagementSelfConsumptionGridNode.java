@@ -37,8 +37,8 @@ public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryMana
     public void manageBattery(J_TimeVariables timeVariables) {
     	double nodePreviousLoad_kW = gc.p_parentNodeElectric.v_currentLoad_kW;
     	double chargeSetpoint_kW = -(nodePreviousLoad_kW - gc.p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY));
-    	
-    	gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables );
+
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
     }
     
     

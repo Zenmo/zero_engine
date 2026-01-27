@@ -37,12 +37,12 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageHeat(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, OL_AmbientTempType ambientTempType ) {
+    public J_EAStorageHeat(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, OL_AmbientTempType ambientTempType ) {
 		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 		this.energyAssetType = energyAssetType;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
-		this.timestep_h = timestep_h;
 		this.temperature_degC = initialTemperature_degC;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.minTemperature_degC = minTemperature_degC;
@@ -62,7 +62,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.stateOfCharge_fr = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
 
 	public double calculateLoss() {
@@ -84,13 +84,13 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		
 		double lossPower_kW = calculateLoss(); // Heat lost to the environment; this call also updates energyUse_kW and the 'state of charge' (temperature).
 		this.energyUse_kW = lossPower_kW;
-		energyUsed_kWh += max(0,energyUse_kW * timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
+		energyUsed_kWh += max(0,energyUse_kW * timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
 		
 		double inputPower_kW = powerFraction_fr * capacityHeat_kW; // positive power means adding heat to the buffer
 		double heatDischarged_kW = max(-inputPower_kW, 0);
 		double heatCharged_kW = max(inputPower_kW, 0);
-		heatDischarged_kWh += heatDischarged_kW * timestep_h;
-		heatCharged_kWh += heatCharged_kW * timestep_h;
+		heatDischarged_kWh += heatDischarged_kW * timeParameters.getTimeStep_h();
+		heatCharged_kWh += heatCharged_kW * timeParameters.getTimeStep_h();
 		
 		//Don't cap, but give warnings when out of range!
 		/*double potentialTempDelta_degC = (inputPower_kW-lossPower_kW) * timestep_h / (heatCapacity_JpK / (3.6E6) ); // Calculate potential deltaT for check if capping of input is needed
@@ -101,7 +101,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 			inputPower_kW = (minTemperature_degC - temperature_degC) * (heatCapacity_JpK / (3.6E6) )/timestep_h;
 		}*/
 		
-    	double deltaEnergy_kWh = (inputPower_kW-lossPower_kW) * timestep_h; // to check the request with the energy currently in storage   	
+    	double deltaEnergy_kWh = (inputPower_kW-lossPower_kW) * timeParameters.getTimeStep_h(); // to check the request with the energy currently in storage   	
 		updateStateOfCharge( deltaEnergy_kWh );
 		
 		if (this.temperature_degC > this.maxTemperature_degC) {

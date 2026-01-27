@@ -85,27 +85,28 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	if(gasBurner.getOutputCapacity_kW() != 0){
     		double powerFraction_GASBURNER = powerDemandDivision_kW[0] / gasBurner.getOutputCapacity_kW();    		
     		//Gas burner control (always assigned to primary heating asset)	
-    		gasBurner.f_updateAllFlows(powerFraction_GASBURNER, timeVariables);
+        	gc.f_updateFlexAssetFlows(gasBurner, powerFraction_GASBURNER, timeVariables);
     	}
     	if(heatPump.getOutputCapacity_kW() != 0){
     		double powerFraction_HEATPUMP  = powerDemandDivision_kW[1] / heatPump.getOutputCapacity_kW();    		
     		//Heatpump control (always assigned to secondary heating asset)
-    		heatPump.f_updateAllFlows(powerFraction_HEATPUMP, timeVariables);
+        	gc.f_updateFlexAssetFlows(heatPump, powerFraction_HEATPUMP, timeVariables);
+
     	}
     	if(heatDeliverySet.getOutputCapacity_kW() != 0){
     		double powerFraction_HEATDELIVERYSET = powerDemandDivision_kW[2] / heatDeliverySet.getOutputCapacity_kW();    		
     		//Heat delivery set control (always assigned to tertiary heating asset)
-    		heatDeliverySet.f_updateAllFlows(powerFraction_HEATDELIVERYSET, timeVariables);
+        	gc.f_updateFlexAssetFlows(heatDeliverySet, powerFraction_HEATDELIVERYSET, timeVariables);
     	}
     	if(hydrogenBurner.getOutputCapacity_kW() != 0){
     		double powerFraction_HYDROGENBURNER = powerDemandDivision_kW[3] / hydrogenBurner.getOutputCapacity_kW();
     		//Hydrogen burner(always assigned to quaternary heating asset)
-    		hydrogenBurner.f_updateAllFlows(powerFraction_HYDROGENBURNER, timeVariables);
+        	gc.f_updateFlexAssetFlows(hydrogenBurner, powerFraction_HYDROGENBURNER, timeVariables);
     	}
     	if(lowTempHeatGridHeatPump.getOutputCapacity_kW() != 0){
     		double powerFraction_LOWTEMPHEATGRID = powerDemandDivision_kW[4] / lowTempHeatGridHeatPump.getOutputCapacity_kW();
     		//Hydrogen burner(always assigned to quaternary heating asset)
-    		lowTempHeatGridHeatPump.f_updateAllFlows(powerFraction_LOWTEMPHEATGRID, timeVariables);
+        	gc.f_updateFlexAssetFlows(lowTempHeatGridHeatPump, powerFraction_LOWTEMPHEATGRID, timeVariables);
     	}
     }
     

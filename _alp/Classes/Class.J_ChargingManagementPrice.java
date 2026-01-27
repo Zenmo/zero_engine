@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementPrice implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.PRICE;
     private double initialValueElectricityPriceLowPassed_eurpkWh = 0.1;
     private double electricityPriceLowPassed_eurpkWh = this.initialValueElectricityPriceLowPassed_eurpkWh;
@@ -28,9 +29,10 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementPrice( GridConnection gc) {
+    public J_ChargingManagementPrice( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
-    	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.timeParameters = timeParameters;
+    	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/timeParameters.getTimeStep_h());
     }
         
     public OL_ChargingAttitude getCurrentChargingType() {

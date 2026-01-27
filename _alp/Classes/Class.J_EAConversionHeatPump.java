@@ -46,7 +46,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);   	
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 
 	public void updateParameters(double baseTemperature_degC, double outputTemperature_degC) {

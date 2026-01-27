@@ -49,7 +49,7 @@ public class J_EAConsumption extends zero_engine.J_EAFixed implements Serializab
 			}
 		}
 
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
     
     public void setConsumptionScaling_fr(double consumptionScaling_fr) {

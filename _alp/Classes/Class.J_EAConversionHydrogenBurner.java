@@ -28,20 +28,8 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
-
-    @Override
-    public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
-    	((GridConnection)this.parentAgent).fm_heatFromEnergyCarrier_kW.addFlow(this.energyCarrierConsumed, powerFraction_fr * this.outputCapacity_kW);
-    	((GridConnection)this.parentAgent).fm_consumptionForHeating_kW.addFlow(this.energyCarrierConsumed, powerFraction_fr * this.inputCapacity_kW);
-    	super.operate(powerFraction_fr, timeVariables);
-    }
-    
-	/*@Override
-	public double getCurrentTemperature() {
-		return outputTemperature_degC;
-	}*/
  
 	/**
 	 * This number is here for model snapshot storing purpose<br>

@@ -29,7 +29,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     	this.HOB=HOB;
     	//int rowIndex = uniform_discr(2, 300); 
 
-    	this.timeStep_min = 60 * this.HOB.timestep_h;
+    	this.timeStep_min = 60 * this.HOB.timeParameters.getTimeStep_h();
     	
     	inputCookingActivities.close();
     	inputCookingActivities.canReadMore();

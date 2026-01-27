@@ -25,13 +25,11 @@ public class J_EAConversionElectricHeater extends J_EAConversion implements Seri
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 	
     @Override
     public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
-    	((GridConnection)this.parentAgent).fm_heatFromEnergyCarrier_kW.addFlow(this.energyCarrierConsumed, powerFraction_fr * this.outputCapacity_kW);
-    	((GridConnection)this.parentAgent).fm_consumptionForHeating_kW.addFlow(this.energyCarrierConsumed, powerFraction_fr * this.inputCapacity_kW);
     	super.operate(powerFraction_fr, timeVariables);
     }
     

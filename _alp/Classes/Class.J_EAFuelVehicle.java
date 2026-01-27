@@ -39,7 +39,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	    
 	    this.energyCarrierConsumed = energyCarrier;
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
     
     @Override
@@ -88,7 +88,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	    	double energyUsedThisTimestep_kWh = marginalTripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 	    	energyUsed_kWh += energyUsedThisTimestep_kWh;
 	    	//petroleumFuelConsumption_kW = energyUsedThisTimestep_kWh / timestep_h;
-	    	energyUse_kW += energyUsedThisTimestep_kWh / timestep_h;
+	    	energyUse_kW += energyUsedThisTimestep_kWh / timeParameters.getTimeStep_h();
 			return true;
 		}
 	}

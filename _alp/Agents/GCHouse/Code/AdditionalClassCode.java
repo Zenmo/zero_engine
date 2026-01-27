@@ -1,6 +1,6 @@
 @Override
-public void f_connectToJ_EA(J_EA j_ea){
-	f_connectToJ_EA_default(j_ea);
+public void f_connectToJ_EA(J_EA j_ea, J_TimeParameters timeParameters){
+	f_connectToJ_EA_default(j_ea, timeParameters);
 	f_connectTo_J_EA_House(j_ea);
 }
 

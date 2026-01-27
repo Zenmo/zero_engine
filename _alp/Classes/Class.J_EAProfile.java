@@ -20,19 +20,16 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(I_AssetOwner owner, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h) {
+    public J_EAProfile(I_AssetOwner owner, OL_EnergyCarriers energyCarrier, double[] profile_kWh, OL_AssetFlowCategories assetCategory, double profileTimestep_h, J_TimeParameters timeParameters) {
 		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 	    this.energyCarrier = energyCarrier;
 	    this.a_energyProfile_kWh = profile_kWh;
 	    //this.profileType = profileType;
 	    this.profileTimestep_h = profileTimestep_h;
-	    this.assetFlowCategory = assetCategory;
-
-	    this.timestep_h = profileTimestep_h;
-	    
+	    this.assetFlowCategory = assetCategory;	    
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
-	    
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
     
     public void setStartTime_h(double startTime_h) {    	
@@ -56,7 +53,7 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 
     	double currentPower_kW = this.profileScaling_fr * this.a_energyProfile_kWh[(int)floor(time_h/profileTimestep_h)]/profileTimestep_h;
     	this.energyUse_kW = currentPower_kW;
-		this.energyUsed_kWh += timestep_h * energyUse_kW; 
+		this.energyUsed_kWh += timeParameters.getTimeStep_h() * energyUse_kW; 
 		this.flowsMap.put(this.energyCarrier, currentPower_kW);		
 		if (this.assetFlowCategory != null) {
 			this.assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
@@ -66,8 +63,8 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
     public void curtailElectricityConsumption(double curtailmentSetpoint_kW, GridConnection gc) {
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
-    	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
-    	lostLoad_kWh += curtailmentPower_kW * timestep_h;
+    	energyUsed_kWh -= curtailmentPower_kW * timeParameters.getTimeStep_h();
+    	lostLoad_kWh += curtailmentPower_kW * timeParameters.getTimeStep_h();
     	J_FlowsMap flowsMap = new J_FlowsMap();
     	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);    	
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);

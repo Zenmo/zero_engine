@@ -16,31 +16,31 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageGas(I_AssetOwner owner, double capacityGas_kW, double storageCapacity_kWh, double stateOfCharge_fr, double timestep_h ) {
+    public J_EAStorageGas(I_AssetOwner owner, double capacityGas_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters ) {
 		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 		this.capacityGas_kW = capacityGas_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.stateOfCharge_fr = stateOfCharge_fr;
-		this.timestep_h = timestep_h;
 	    this.activeProductionEnergyCarriers.add(this.energyCarrier);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
 
 	@Override
 	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
     	double inputPower_kW = powerFraction_fr * capacityGas_kW; // Gas power going into Storage, negative if going out.
 
-    	double deltaEnergy_kWh = inputPower_kW * timestep_h;
+    	double deltaEnergy_kWh = inputPower_kW * timeParameters.getTimeStep_h();
     	deltaEnergy_kWh = - min( -deltaEnergy_kWh, (stateOfCharge_fr * storageCapacity_kWh) ); // Prevent negative charge
     	deltaEnergy_kWh = min(deltaEnergy_kWh, (1 - stateOfCharge_fr) * storageCapacity_kWh ); // Prevent overcharge
 
-    	inputPower_kW = deltaEnergy_kWh / timestep_h;
+    	inputPower_kW = deltaEnergy_kWh / timeParameters.getTimeStep_h();
 
 		double methaneProduction_kW = max(-inputPower_kW, 0);
 		double methaneConsumption_kW = max(inputPower_kW, 0);
-		discharged_kWh += methaneProduction_kW * timestep_h;
-		charged_kWh += methaneConsumption_kW * timestep_h;
+		discharged_kWh += methaneProduction_kW * timeParameters.getTimeStep_h();
+		charged_kWh += methaneConsumption_kW * timeParameters.getTimeStep_h();
 		
 		updateStateOfCharge( deltaEnergy_kWh );
 		flowsMap.put(OL_EnergyCarriers.METHANE, methaneConsumption_kW-methaneProduction_kW);
@@ -64,11 +64,11 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializa
 
 	public double getCapacityAvailable_kW() {
 		double availableCapacity_kW;
-		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityGas_kW * timestep_h) {
+		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityGas_kW * timeParameters.getTimeStep_h()) {
 			availableCapacity_kW = capacityGas_kW;
 		}
 		else {
-			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timestep_h; // Allow to drain completely
+			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timeParameters.getTimeStep_h(); // Allow to drain completely
 		}
 		return availableCapacity_kW;
 	}

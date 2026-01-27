@@ -564,7 +564,7 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 
 /*ALCODEEND*/}
 
-double f_initialize()
+double f_initialize(J_TimeParameters timeParameters)
 {/*ALCODESTART::1669042410671*/
 v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
 v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
@@ -595,15 +595,16 @@ for(GridConnection GC:c_memberGridConnections){
 	}
 }
 
-acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
-acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
-acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760);
+acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
+acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
+acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
 
 //========== LIVE WEEK DATASETS ==========//
-v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, roundToInt(168/energyModel.p_timeStep_h));
-v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, roundToInt(168/energyModel.p_timeStep_h));
+v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, roundToInt(168/timeParameters.getTimeStep_h()));
+v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, roundToInt(168/timeParameters.getTimeStep_h()));
+v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, roundToInt(168/timeParameters.getTimeStep_h()));
 
+v_lowPassFactor_fr = min(1, 0.8*1.2 * timeParameters.getTimeStep_h()); //0.2 
 /*ALCODEEND*/}
 
 double f_updateIncentives()
@@ -762,7 +763,7 @@ acc_totalOwnElectricityProduction_kW.reset();
 acc_totalCustomerDelivery_kW.reset();
 acc_totalCustomerFeedIn_kW.reset();
 
-v_rapidRunData.resetAccumulators(energyModel.p_runEndTime_h - energyModel.p_runStartTime_h, energyModel.p_timeStep_h, v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
+v_rapidRunData.resetAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
 
 /*ALCODEEND*/}
 
@@ -1074,7 +1075,7 @@ double f_initializeCustomCoop(List<GridConnection> gcList,J_TimeParameters timeP
 c_memberGridConnections.addAll(gcList);
 
 //Basic initialization
-f_initialize();
+f_initialize(timeParameters);
 
 //Collect live datasets
 f_collectGridConnectionLiveData();
@@ -1118,27 +1119,27 @@ if(allGCHaveOriginalRapidRun){
 }
 /*ALCODEEND*/}
 
-double f_getGroupContractDeliveryCapacity_kW(J_RapidRunData rapidRunData)
+double f_getGroupContractDeliveryCapacity_kW(J_RapidRunData rapidRunData,J_TimeParameters timeParameters)
 {/*ALCODESTART::1740059187265*/
 DataSet data_netbelastingDuurkromme_kW = rapidRunData.getLoadDurationCurves().ds_loadDurationCurveTotal_kW;
 int arraySize = data_netbelastingDuurkromme_kW.size();
-if (arraySize < 8760/energyModel.p_timeStep_h){
+if (arraySize < 8760/timeParameters.getTimeStep_h()){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
 	return 0.0;
 } else {
-	return max(0,data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/energyModel.p_timeStep_h)));
+	return max(0,data_netbelastingDuurkromme_kW.getY(roundToInt(0.25*35/timeParameters.getTimeStep_h())));
 }
 /*ALCODEEND*/}
 
-double f_getGroupContractFeedinCapacity_kW(J_RapidRunData rapidRunData)
+double f_getGroupContractFeedinCapacity_kW(J_RapidRunData rapidRunData,J_TimeParameters timeParameters)
 {/*ALCODESTART::1740059261369*/
 DataSet data_netbelastingDuurkromme_kW = rapidRunData.getLoadDurationCurves().ds_loadDurationCurveTotal_kW;
 int arraySize = data_netbelastingDuurkromme_kW.size();
-if (arraySize < 8760/energyModel.p_timeStep_h){
+if (arraySize < 8760/timeParameters.getTimeStep_h()){
 	traceln("GroupContractDeliveryCapacity is zero because simulation is less than a full year long!");
 	return 0.0;
 } else {
-	return -min(0,data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/energyModel.p_timeStep_h)));
+	return -min(0,data_netbelastingDuurkromme_kW.getY(arraySize-roundToInt(0.25*35/timeParameters.getTimeStep_h())));
 }
 /*ALCODEEND*/}
 
@@ -1452,65 +1453,65 @@ fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 
 /*ALCODEEND*/}
 
-EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
+EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC,J_TimeParameters timeParameters)
 {/*ALCODESTART::1754380102233*/
 if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
 	v_liveData.activeEnergyCarriers.add(EC);
 	v_liveData.activeConsumptionEnergyCarriers.add(EC);
 	
-	DataSet dsDemand = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	DataSet dsDemand = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
 	
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+	for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
 		dsDemand.add( t, 0);
 	}
 	v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
 }
 /*ALCODEEND*/}
 
-EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
+EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC,J_TimeParameters timeParameters)
 {/*ALCODESTART::1754380102235*/
 if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
 	v_liveData.activeEnergyCarriers.add(EC);
 	v_liveData.activeProductionEnergyCarriers.add(EC);
 	
-	DataSet dsSupply = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	DataSet dsSupply = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+	for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
 		dsSupply.add( t, 0);
 	}
 	v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
 }
 /*ALCODEEND*/}
 
-EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
+EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC,J_TimeParameters timeParameters)
 {/*ALCODESTART::1754380102237*/
 if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 	v_liveAssetsMetaData.activeAssetFlows.add(AC);
 	
-	DataSet dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+	DataSet dsAsset = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
 	
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+	for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
 		dsAsset.add( t, 0);
 	}
 	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
 	
 	if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
-		dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+		dsAsset = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
 		
-		for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
 			dsAsset.add( t, 0);
 		}
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
 	}
 	if (AC == OL_AssetFlowCategories.V2GPower_kW && !v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
-		dsAsset = new DataSet( (int)(168 / energyModel.p_timeStep_h) );
+		dsAsset = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
 		
-		for (double t = startTime; t <= endTime; t += energyModel.p_timeStep_h) {
+		for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
 			dsAsset.add( t, 0);
 		}
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);

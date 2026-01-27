@@ -258,7 +258,11 @@ public class J_RapidRunData {
 	    am_assetFlowsWeekend_kW.createEmptyAccumulators( this.assetsMetaData.activeAssetFlows, false, timeStep_h, 2 / 7 * (simDuration_h) + 48);
     }
 
-    public void resetAccumulators(double simDuration_h, double timeStep_h, EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
+    public void resetAccumulators(EnumSet<OL_EnergyCarriers> v_activeEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeConsumptionEnergyCarriers, EnumSet<OL_EnergyCarriers> v_activeProductionEnergyCarriers) {
+    	// For readability we define
+    	double timeStep_h = this.timeParameters.getTimeStep_h();
+    	double simDuration_h = this.timeParameters.getRunEndTime_h() - this.timeParameters.getRunStartTime_h();
+    	
     	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
     	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
