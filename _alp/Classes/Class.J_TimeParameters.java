@@ -1,6 +1,8 @@
 /**
  * J_TimeParameters
  */	
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+@JsonIgnoreType
 public class J_TimeParameters {
 	////Time parameters:
 	private static double timeStep_h = 0.25;

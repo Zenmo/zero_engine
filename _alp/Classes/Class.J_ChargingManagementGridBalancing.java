@@ -23,6 +23,9 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     /**
      * Default constructor
      */
+    public J_ChargingManagementGridBalancing( ) {
+    }
+    
     public J_ChargingManagementGridBalancing( GridConnection gc) {
     	this.gc = gc;
     	this.timeStep_h = gc.energyModel.p_timeParameters.getTimeStep_h();

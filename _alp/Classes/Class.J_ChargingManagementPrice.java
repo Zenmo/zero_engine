@@ -28,6 +28,9 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     /**
      * Default constructor
      */
+    public J_ChargingManagementPrice( ) {
+    }
+    
     public J_ChargingManagementPrice( GridConnection gc) {
     	this.gc = gc;
     	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/gc.energyModel.p_timeStep_h);

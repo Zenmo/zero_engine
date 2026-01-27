@@ -1,6 +1,8 @@
 /**
  * J_TimeVariables
  */	
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+@JsonIgnoreType
 public class J_TimeVariables {
 	////Time Variables -> Updated every timestep
 	private static double t_h = 0; //Current energymodel runtime: t_h = 0, corresponds to 'jan 1 0:00' of the start year 

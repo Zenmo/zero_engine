@@ -1,6 +1,16 @@
 /**
  * J_ChargePoint
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // 
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+
 public class J_ChargePoint implements I_ChargePointRegistration{
 	
 	private boolean hasSocketRestrictions;
@@ -15,6 +25,11 @@ public class J_ChargePoint implements I_ChargePointRegistration{
 
 	private List<I_ChargingRequest> storedActiveChargingRequests = null;
 
+	//Constructor for (de-)serialisation
+	public J_ChargePoint() {
+		
+	};
+	
 	/**
      * Default constructor
      * No restrictions on sockets

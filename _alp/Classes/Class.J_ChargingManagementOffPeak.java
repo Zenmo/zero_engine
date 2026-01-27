@@ -32,6 +32,9 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     /**
      * Default constructor
      */
+    public J_ChargingManagementOffPeak( ) {
+    }
+    
     public J_ChargingManagementOffPeak( GridConnection gc) {
     	this.gc = gc;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
