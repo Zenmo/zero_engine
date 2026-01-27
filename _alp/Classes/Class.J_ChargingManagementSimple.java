@@ -38,10 +38,8 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      * 
      */
     public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
-    	double t_h = timeVariables.getT_h();
-
     	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
-    		chargePoint.charge(chargeRequest, chargePoint.getMaxChargingCapacity_kW(chargeRequest), timeVariables);
+    		chargePoint.charge(chargeRequest, chargePoint.getMaxChargingCapacity_kW(chargeRequest), timeVariables, gc);
     	}
     }
     

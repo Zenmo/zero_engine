@@ -87,7 +87,7 @@ if (v_enableNFato) {
 }
 
 c_tripTrackers.forEach(t -> t.manageActivities(timeVariables, p_chargePoint));
-c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint));
+c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint, this));
 
 f_operateFixedAssets(timeVariables);
 f_operateFlexAssets(timeVariables);
@@ -947,7 +947,7 @@ if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
 }
 if (isGhost) {
-	this.p_heatingManagement = new J_HeatingManagementGhost( this, heatingType );
+	this.p_heatingManagement = new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType );
 	//Add new asset management to energyModel
 	if(this.p_heatingManagement != null){
 		energyModel.f_registerAssetManagement(this.p_heatingManagement);
@@ -969,7 +969,7 @@ if (managementClass == null) {
 
 I_HeatingManagement heatingManagement = null;
 try {
-	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, OL_GridConnectionHeatingType.class).newInstance(this, heatingType);
+	heatingManagement = managementClass.getDeclaredConstructor(GridConnection.class, J_TimeParameters.class, OL_GridConnectionHeatingType.class).newInstance(this, energyModel.p_timeParameters, heatingType);
 }
 catch (Exception e) {
 	e.printStackTrace();
@@ -1104,7 +1104,7 @@ switch (chargingType) {
 
 I_ChargingManagement chargingManagement = null;
 try {
-	chargingManagement = managementClass.getDeclaredConstructor(GridConnection.class).newInstance(this);
+	chargingManagement = managementClass.getDeclaredConstructor(GridConnection.class, J_TimeParameters.class).newInstance(this, energyModel.p_timeParameters);
 }
 catch (Exception e) {
 	e.printStackTrace();

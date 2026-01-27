@@ -82,10 +82,8 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
 				}
 			}
 	    	//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables); 
+	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables, gc); 
     	}
-    	
-
     }
 
     public void setStartTimeOfReducedChargingInterval_hr(double startTimeOfReducedChargingInterval_hr) {

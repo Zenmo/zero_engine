@@ -85,4 +85,21 @@ public final class J_TimeVariables {
 		date.setTime(startDateUnixTime_ms + runtime_ms);
 		return date;
 	}
+	
+	
+	@Override
+	public String toString() {
+	    return "J_TimeVariables{" +
+	            "t_h=" + t_h +
+	            ", anyLogicTime_h=" + anyLogicTime_h +
+	            ", timeOfDay_h=" + timeOfDay_h +
+	            ", timeStepsElapsed=" + timeStepsElapsed +
+	            ", dayOfWeek=" + dayOfWeek +
+	            ", isDaytime=" + isDaytime +
+	            ", isWeekday=" + isWeekday +
+	            ", isSummerWeek=" + isSummerWeek +
+	            ", isWinterWeek=" + isWinterWeek +
+	            ", isLastTimeStepOfDay=" + isLastTimeStepOfDay +
+	            '}';
+	}
 }

@@ -362,7 +362,6 @@ for(v_timeStepsElapsed = 0; v_timeStepsElapsed < (p_timeParameters.getRunEndTime
 								v_currentEnergyCurtailed_kW,
 								v_batteryStoredEnergy_kWh/1000,
 								p_timeVariables);
-	v_timeStepsElapsed++;
 }	
 
 

@@ -116,8 +116,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	public boolean startTrip(J_TimeVariables timeVariables) {
 		if (available) {
 			this.available = false;
-			//Update (charging) flows to zero, becausde vehicle is away.
-			this.f_updateAllFlows(0.0, timeVariables);
+			//Update (charging) flows to zero, because vehicle is away.
+			((GridConnection)this.getOwner()).f_updateFlexAssetFlows(this , 0.0, timeVariables);
 			return true;
 		} else {
 			traceln("Trip not started because EV not available!");

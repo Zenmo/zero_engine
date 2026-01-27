@@ -68,7 +68,7 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 				}    
 			}
 	    	//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables);					
+	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables, gc);					
     	}
     }
 

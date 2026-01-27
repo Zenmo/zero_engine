@@ -155,10 +155,4 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
 		this.capacityElectric_kW = capacityElectric_kW;
 	}
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
-
 }

@@ -118,7 +118,9 @@ public class J_EAProduction extends zero_engine.J_EAFixed implements Serializabl
 	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
 	       	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
 		}
-     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
+     	J_FlowsMap flowsMapCopy = new J_FlowsMap();
+     	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+     	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
 		this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();

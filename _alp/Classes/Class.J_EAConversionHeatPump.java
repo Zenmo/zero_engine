@@ -175,9 +175,4 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			"heatConsumed_kWh = " + heatConsumed_kWh + " ";
 	}
 	*/	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }

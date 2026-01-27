@@ -60,7 +60,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
 			double chargingPower_kW = min(max(0,chargingSetpoint_kW), chargePoint.getMaxChargingCapacity_kW(chargingRequest));
 			
 			//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargingPower_kW, timeVariables); 
+	       	chargePoint.charge(chargingRequest, chargingPower_kW, timeVariables, gc); 
 			remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW); // Assumes the asset complies with the command!   			
     	}
     }

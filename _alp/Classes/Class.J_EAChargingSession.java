@@ -87,13 +87,13 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 	
  
 	
-	public void manageCurrentChargingSession(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration) {
+	public void manageCurrentChargingSession(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration, GridConnection GC) {
 		
 		if (this.currentChargingSessionData != null && timeVariables.getT_h() >= this.currentChargingSessionData.getLeaveTime_h()) { // End session
 			if (this.getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.getRemainingChargeDemand_kWh()); }
 			this.energyUsed_kWh += this.currentSessionChargingBalance_kWh; //Add all netto energy charged to the vehicle as final consumption
 			this.energyUse_kW += this.currentSessionChargingBalance_kWh/this.timeParameters.getTimeStep_h(); //Add all netto energy charged to the vehicle as final consumption
-			f_updateAllFlows(0.0, timeVariables); //Call needed to transfer energyUse_kW to add flows
+			GC.f_updateFlexAssetFlows(this, 0.0, timeVariables); //Call needed to transfer energyUse_kW to add flows
 			this.currentChargingSessionData = null;
 			chargePointRegistration.deregisterChargingRequest(this);
 			this.currentSessionChargingBalance_kWh = 0;

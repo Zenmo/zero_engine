@@ -45,12 +45,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
     
     @Override
     public J_FlowPacket f_updateAllFlows( double powerFraction_fr, J_TimeVariables timeVariables) {
-		this.operate( min(1, max(0,powerFraction_fr)), timeVariables );
-     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
-    	this.lastFlowsMap.cloneMap(this.flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
-    	return flowPacket;
+		return super.f_updateAllFlows(min(1, max(0,powerFraction_fr)), timeVariables );
     }
     
     @Override

@@ -68,7 +68,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 			}
 
 	    	//Send the chargepower setpoint to the chargepoint
-	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW, timeVariables);
+	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW, timeVariables, gc);
     	}
  
     }

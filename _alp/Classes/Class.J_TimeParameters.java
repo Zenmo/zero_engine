@@ -69,93 +69,19 @@ public final class J_TimeParameters {
 	    return startOfWinterWeek_h;
 	}
 	
-	////Time parameter setters: Can only be called once, after that they are made final.
-	/*
-	public void setTimeStep_h(double p_timeStep_h) {
-		this.timeStep_h = p_timeStep_h;
+	@Override
+	public String toString() {
+	    return "J_TimeParameters{" +
+	            "timeStep_h=" + timeStep_h +
+	            ", startYear=" + startYear +
+	            ", hourOfYearPerMonth=" + java.util.Arrays.toString(hourOfYearPerMonth) +
+	            ", dayOfWeek1jan=" + dayOfWeek1jan +
+	            ", runStartTime_h=" + runStartTime_h +
+	            ", runEndTime_h=" + runEndTime_h +
+	            ", summerWeekNumber=" + summerWeekNumber +
+	            ", winterWeekNumber=" + winterWeekNumber +
+	            ", startOfSummerWeek_h=" + startOfSummerWeek_h +
+	            ", startOfWinterWeek_h=" + startOfWinterWeek_h +
+	            '}';
 	}
-	
-	public void setStartYear(int p_startYear) {
-		if(!startYearIsFinal) {
-			startYear = p_startYear;
-			startYearIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set startYear while it is final!");
-		}
-	}
-	public void setHourOfYearPerMonth(double[] p_hourOfYearPerMonth) {
-		if(!hourOfYearPerMonthIsFinal) {
-			hourOfYearPerMonth = p_hourOfYearPerMonth;
-			hourOfYearPerMonthIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set hourOfYearPerMonth while it is final!");
-		}
-	}
-	public void setDayOfWeek1jan(int p_dayOfWeek1jan) {
-		if(!dayOfWeek1janIsFinal) {
-			dayOfWeek1jan = p_dayOfWeek1jan;
-			dayOfWeek1janIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set dayOfWeek1jan while it is final!");
-		}
-	}
-	public void setRunStartTime_h(double p_runStartTime_h) {
-		if(!runStartTime_hIsFinal) {
-			runStartTime_h = p_runStartTime_h;
-			runStartTime_hIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set runStartTime_h while it is final!");
-		}
-	}
-	public void setRunEndTime_h(double p_runEndTime_h) {
-		if(!runEndTime_hIsFinal) {
-			runEndTime_h = p_runEndTime_h;
-			runEndTime_hIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set runEndTime_h while it is final!");
-		}
-	}
-	public void setWinterWeekNumber(int p_winterWeekNumber) {
-		if(!winterWeekNumberIsFinal) {
-			winterWeekNumber = p_winterWeekNumber;
-			winterWeekNumberIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set winterWeekNumber while it is final!");
-		}
-	}
-	public void setSummerWeekNumber(int p_summerWeekNumber) {
-		if(!summerWeekNumberIsFinal) {
-			summerWeekNumber = p_summerWeekNumber;
-			summerWeekNumberIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set summerWeekNumber while it is final!");
-		}
-	}
-	public void setStartOfSummerWeek_h(double p_startOfSummerWeek_h) {
-		if(!startOfSummerWeek_hIsFinal) {
-			startOfSummerWeek_h = p_startOfSummerWeek_h;
-			startOfSummerWeek_hIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set startOfSummerWeek_h while it is final!");
-		}
-	}
-	public void setStartOfWinterWeek_h(double p_startOfWinterWeek_h) {
-		if(!startOfWinterWeek_hIsFinal) {
-			startOfWinterWeek_h = p_startOfWinterWeek_h;
-			startOfWinterWeek_hIsFinal = true;
-		}
-		else {
-			throw new RuntimeException("Trying to set startOfWinterWeek_h while it is final!");
-		}
-	}
-	*/
-
 }

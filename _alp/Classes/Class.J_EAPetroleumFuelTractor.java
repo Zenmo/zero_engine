@@ -94,10 +94,4 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
         double power_kW = thisWeekPetroleumFuelConsumption_kWh / workHoursPerWeek();
         return power_kW;
     }
-    
-    /**
-     * This number is here for model snapshot storing purpose<br>
-     * It needs to be changed when this class gets changed
-     */ 
-    private static final long serialVersionUID = 1L;
 }

@@ -96,10 +96,4 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 			"Energy consumed = " + this.energyUsed_kWh +
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
 	}
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }

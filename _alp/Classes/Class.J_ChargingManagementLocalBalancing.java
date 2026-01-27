@@ -64,7 +64,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 				}    
 			}
 	    	//Send the chargepower setpoint to the chargepoint			
-			chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables);  		
+			chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables, gc);  		
     	}
     }
 

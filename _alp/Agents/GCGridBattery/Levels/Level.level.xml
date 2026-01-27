@@ -3,8 +3,9 @@
 	<TimePlot>
 		<Id>1682065741241</Id>
 		<Name><![CDATA[SOC_plot]]></Name>
-		<X>520</X>
-		<Y>560</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>570</X>
+		<Y>1020</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

@@ -45,7 +45,9 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
     @Override
     public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
     	flowsMap.put(this.energyCarrierConsumed, this.energyUse_kW);
-     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
+    	J_FlowsMap flowsMapCopy = new J_FlowsMap();
+     	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+     	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
     	this.lastFlowsMap = flowsMap;
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	clear(); 

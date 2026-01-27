@@ -40,7 +40,9 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
     	else if ( powerFraction_fr == 0 ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
-	     	J_FlowPacket flowPacket = new J_FlowPacket(this.flowsMap, this.energyUse_kW, this.assetFlowsMap);
+         	J_FlowsMap flowsMapCopy = new J_FlowsMap();
+         	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+         	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
     		return flowPacket;
     	}
     	else {
