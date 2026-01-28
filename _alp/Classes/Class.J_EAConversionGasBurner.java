@@ -37,14 +37,4 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 	    
 	    registerEnergyAsset(timeParameters);
 	}
-    
-    @Override
-    public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
-    	super.operate(powerFraction_fr, timeVariables);
-    }
-    
-	/*@Override
-	public double getCurrentTemperature() {
-		return outputTemperature_degC;
-	}*/
 }
