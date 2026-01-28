@@ -47,7 +47,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
-		this.assetFlowCategory = OL_AssetFlowCategories.buildingHeating_kW;
+		this.assetFlowCategory = OL_AssetFlowCategories.spaceHeating_kW;
 		registerEnergyAsset(timeParameters);
     }
 

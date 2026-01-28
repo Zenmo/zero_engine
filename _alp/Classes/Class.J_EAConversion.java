@@ -63,7 +63,7 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	
 	public J_FlowsMap get_heatFromEnergyCarrier_kW() {
 		J_FlowsMap flowMap = new J_FlowsMap();
-		flowMap.put(this.energyCarrierConsumed, this.getLastFlows().get(OL_EnergyCarriers.HEAT));
+		flowMap.put(this.energyCarrierConsumed, -this.getLastFlows().get(OL_EnergyCarriers.HEAT));
 		return flowMap;
 	}
 	
