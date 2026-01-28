@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementOff implements I_BatteryManagement {
 
 	GridConnection gc;
+    private J_TimeParameters timeParameters;
+
 	
     /**
      * Default constructor
@@ -23,12 +25,13 @@ public class J_BatteryManagementOff implements I_BatteryManagement {
 
     }
 	
-    public J_BatteryManagementOff( GridConnection gc) {
+    public J_BatteryManagementOff( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
 
-    public void manageBattery() {
-    	gc.p_batteryAsset.f_updateAllFlows(0.0);
+    public void manageBattery(J_TimeVariables timeVariables) {
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, 0.0, timeVariables);
     }
     
 

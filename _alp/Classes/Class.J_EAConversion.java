@@ -1,7 +1,7 @@
 /**
  * J_EAConversion
  */
-public class J_EAConversion extends zero_engine.J_EA implements Serializable {
+public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable {
 	protected OL_EnergyCarriers energyCarrierProduced;
 	protected OL_EnergyCarriers energyCarrierConsumed;
 	protected double eta_r;
@@ -17,22 +17,22 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
      * Constructor initializing the fields
      */
     
-    public J_EAConversion(Agent parentAgent, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, double timestep_h) {
-	    this.parentAgent = parentAgent;
+    public J_EAConversion(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, J_TimeParameters timeParameters) {
+	    this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
 	    this.energyAssetType = energyAssetType;
 	    this.outputCapacity_kW = outputCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
 	    this.energyCarrierProduced = energyCarrierProduced;
 	    this.energyCarrierConsumed = energyCarrierConsumed;
-	    this.timestep_h = timestep_h;	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 
     @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
+    public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
     	powerFraction_fr = roundToDecimal(powerFraction_fr, J_GlobalParameters.floatingPointPrecision);
     	if(powerFraction_fr < 0) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
@@ -40,22 +40,39 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
     	else if ( powerFraction_fr == 0 ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
-    		return;
+         	J_FlowsMap flowsMapCopy = new J_FlowsMap();
+         	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+         	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
+    		return flowPacket;
     	}
     	else {
-    		super.f_updateAllFlows( powerFraction_fr );
+    		return super.f_updateAllFlows( powerFraction_fr, timeVariables );
     	}
     }
     
 	@Override
-	public void operate(double ratioOfCapacity) {
-		this.energyUse_kW = ratioOfCapacity * this.inputCapacity_kW * (1 - this.eta_r);
-		this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
-    	this.flowsMap.put(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
-    	this.flowsMap.addFlow(this.energyCarrierProduced, -ratioOfCapacity * this.outputCapacity_kW); // We don't put here, in case the energy carrier is the same
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+		this.energyUse_kW = powerFraction_fr * this.inputCapacity_kW * (1 - this.eta_r);
+		this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
+    	this.flowsMap.put(this.energyCarrierConsumed, powerFraction_fr * this.inputCapacity_kW);
+    	this.flowsMap.addFlow(this.energyCarrierProduced, -powerFraction_fr * this.outputCapacity_kW); // We don't put here, in case the energy carrier is the same
     	if (this.assetFlowCategory != null) {
-    		this.assetFlowsMap.put(this.assetFlowCategory, ratioOfCapacity * this.outputCapacity_kW);
+    		this.assetFlowsMap.put(this.assetFlowCategory, powerFraction_fr * this.outputCapacity_kW);
     	}
+	}
+	
+	public J_FlowsMap get_heatFromEnergyCarrier_kW() {
+		J_FlowsMap flowMap = new J_FlowsMap();
+		flowMap.put(this.energyCarrierConsumed, -this.getLastFlows().get(OL_EnergyCarriers.HEAT));
+		return flowMap;
+	}
+	
+	public J_FlowsMap get_consumptionForHeating_kW() {
+		J_FlowsMap flowMap = new J_FlowsMap();
+		if (this.activeProductionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) { // small check to catch conversion assets like electrolysers.
+			flowMap.put(this.energyCarrierConsumed, this.getLastFlows().get(this.energyCarrierConsumed));
+		}
+		return flowMap;		
 	}
 	
 	public void setInputCapacity_kW ( double inputCapacity_kW ) {
@@ -95,7 +112,7 @@ public class J_EAConversion extends zero_engine.J_EA implements Serializable {
 	
 	@Override
 	public String toString() {	
-		return  this.energyAssetType + " in GC: " + this.parentAgent + ", "			
+		return  this.energyAssetType + ", "			
 				+ this.energyCarrierConsumed + " -> " + this.energyCarrierProduced + ", "
 				+ "OutputCapacity: " + this.outputCapacity_kW + " kW, " 
 				+ "with efficiency: " + this.eta_r + ", "

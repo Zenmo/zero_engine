@@ -3193,9 +3193,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new DataSet(roundToInt((energyModel.p_runEndTime_h - energyModel.p_runStartTime_h)/24))]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -3215,9 +3212,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new DataSet(672)]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -3237,9 +3231,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[DataSet]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new DataSet(672)]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

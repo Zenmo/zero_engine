@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
+
 
     /**
      * Default constructor
@@ -23,8 +25,9 @@ public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
     	
     }
     
-    public J_BatteryManagementSelfConsumption( GridConnection gc ) {
+    public J_BatteryManagementSelfConsumption( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     /**
@@ -33,8 +36,8 @@ public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
      * If there is overproduction and room in the battery it will charge.
      * If there is more consumption than production it will discharge the battery to make up for the difference untill the battery is empty.
      */
-    public void manageBattery() {
-    	gc.p_batteryAsset.f_updateAllFlows( -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / gc.p_batteryAsset.getCapacityElectric_kW() );
+    public void manageBattery(J_TimeVariables timeVariables) {
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
     }
 
     
@@ -57,11 +60,4 @@ public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

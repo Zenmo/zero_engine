@@ -120,7 +120,7 @@ public class J_HeatingManagementBuildingHybridHeatPump implements I_HeatingManag
     			remainingPTProduction_kW = max(0, remainingPTProduction_kW - heatBufferCharge_kW);
     	    	if (remainingPTProduction_kW > 0) {//Heat (for now always curtail over produced heat!)
     	    		for (J_EAProduction j_ea : ptAssets) {
-    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);
+    	    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW, gc);
     	    			
     	    			if (remainingPTProduction_kW <= 0) {
     	    				break;

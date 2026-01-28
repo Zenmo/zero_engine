@@ -184,7 +184,7 @@ geupdate vanuit
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[min(1, 0.8 * energyModel.p_timeStep_h) //0.2 ]]></Code>
+				<Code><![CDATA[min(1, 0.8 * 0.25) // min(1, 0.8 * energyModel.p_timeStep_h), is there an initialisation function for GridNode?]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -360,7 +360,7 @@ geupdate vanuit
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[min(1, 0.25 * energyModel.p_timeStep_h) // smaller value results in more filtering]]></Code>
+				<Code><![CDATA[min(1, 0.25 * 0.25) // min(1, 0.25 * energyModel.p_timeStep_h), is there an initialisation function for GridNode?]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>

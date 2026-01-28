@@ -134,8 +134,9 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_manageElectrolyser(J_EAConversionElectrolyser ElectrolyserAsset)
+double f_manageElectrolyser(J_EAConversionElectrolyser ElectrolyserAsset,J_TimeVariables timeVariables)
 {/*ALCODESTART::1708089250229*/
+// TODO: add timeParameters to this function?
 
 if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	//double availableCapacityFromBatteries_kW = p_batteryAsset == null ? 0 : ((J_EAStorageElectric)p_batteryAsset.j_ea).getCapacityAvailable_kW(); 
@@ -152,9 +153,9 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	
 	
 	//Electrolyser output based on current and future regime
-	electrolyserSetpointElectric_kW = f_electrolyserRegime(electrolyserSetpointElectric_kW, excessElectricPower_kW, ElectrolyserAsset);
+	electrolyserSetpointElectric_kW = f_electrolyserRegime(electrolyserSetpointElectric_kW, excessElectricPower_kW, ElectrolyserAsset, energyModel.p_timeParameters, timeVariables);
 	
-	data_liveWeekElectrolyserPower_kW.add(energyModel.t_h, electrolyserSetpointElectric_kW);
+	data_liveWeekElectrolyserPower_kW.add(timeVariables.getT_h(), electrolyserSetpointElectric_kW);
 		
 	/*
 	if (p_elektrolyserOperationMode==OL_ElektrolyserOperationMode.BALANCE) {
@@ -182,13 +183,8 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	// Limit elektrolyser power to available electric power on connection (assuming it is last in merit!)
 	electrolyserSetpointElectric_kW = min(availableElectricPower_kW,max(electrolyserSetpointElectric_kW, excessElectricPower_kW));
 	
+	f_updateFlexAssetFlows(ElectrolyserAsset, electrolyserSetpointElectric_kW/ElectrolyserAsset.getInputCapacity_kW(), timeVariables);
 	
-	
-	//Output
-	//double[] flowsArray = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getElectricCapacity_kW());
-	//Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getCapacityElectric_kW());
-	ElectrolyserAsset.f_updateAllFlows(electrolyserSetpointElectric_kW/ElectrolyserAsset.getInputCapacity_kW());
-		
 	//v_conversionPowerElectric_kW += ElectrolyserAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 	//v_hydrogenElectricityConsumption_kW += ElectrolyserAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
 	
@@ -196,7 +192,7 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 	
 	
 	// This variable is reset after a rapidrun, but not saved before running the headless simulation.
-	v_hydrogenInStorage_kWh -= ElectrolyserAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeStep_h;
+	v_hydrogenInStorage_kWh -= ElectrolyserAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeParameters.getTimeStep_h();
 	
 	/*if (b_useHydrogenLocally) {
 		List<GridConnection> receivingGCs = findAll(energyModel.c_gridConnections, gc -> gc.b_useHydrogenLocally && gc != this);
@@ -210,35 +206,35 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_operateFlexAssets_override()
+double f_operateFlexAssets_override(J_TimeVariables timeVariables)
 {/*ALCODESTART::1708089644411*/
 for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElectrolyser) {
-		f_manageElectrolyser((J_EAConversionElectrolyser)v);
+		f_manageElectrolyser((J_EAConversionElectrolyser)v, timeVariables);
 	}
 }
 
 // Determine EV charging
-f_manageEVCharging();
+f_manageEVCharging(timeVariables);
 
 // Operate battery
-f_manageBattery();
+f_manageBattery(timeVariables);
 
 /*ALCODEEND*/}
 
-double f_electrolyserRegime(double elektrolyserSetpointElectric_kW,double excessElectricPower_kW,J_EAConversionElectrolyser ElectrolyserAsset)
+double f_electrolyserRegime(double elektrolyserSetpointElectric_kW,double excessElectricPower_kW,J_EAConversionElectrolyser ElectrolyserAsset,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1708447959640*/
 double solar_forecast_kW;
 double wind_forecast_kW;
 
-double forecast_time_h = ElectrolyserAsset.getStartUpTimeStandby_h()+ 2*energyModel.p_timeStep_h;
+double forecast_time_h = ElectrolyserAsset.getStartUpTimeStandby_h()+ 2*timeParameters.getTimeStep_h();
 
 //Get current limitation values
 //Pair<J_FlowsMap, Double> flowsPair = ElectrolyserAsset.getLastFlows();
 J_FlowsMap flowsMap = ElectrolyserAsset.getLastFlows();
 double previousElectrolyserConsumption_kW = max(0,flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
 double currentGridNodePowerFlow_kW = this.p_parentNodeElectric.v_currentLoad_kW - previousElectrolyserConsumption_kW;
-data_liveWeekGridNoderPowerFlow_kW.add(energyModel.t_h, this.p_parentNodeElectric.v_currentLoad_kW);
+data_liveWeekGridNoderPowerFlow_kW.add(timeVariables.getT_h(), this.p_parentNodeElectric.v_currentLoad_kW);
 
 
 switch (p_electrolyserOperationMode){
@@ -247,7 +243,7 @@ switch (p_electrolyserOperationMode){
 		f_electrolyserRegimeControl_Price(excessElectricPower_kW, ElectrolyserAsset);
 	break;
 	case BALANCE:
-		f_electrolyserRegimeControl_Balance(currentGridNodePowerFlow_kW, forecast_time_h, ElectrolyserAsset);
+		f_electrolyserRegimeControl_Balance(currentGridNodePowerFlow_kW, forecast_time_h, ElectrolyserAsset, timeParameters, timeVariables);
 	break;	
 	case ALWAYS_IDLE:
 		f_electrolyserRegimeControl_AlwaysIdle(currentGridNodePowerFlow_kW, ElectrolyserAsset);
@@ -260,7 +256,7 @@ switch (ElectrolyserAsset.getState()){
 		elektrolyserSetpointElectric_kW = 0;
 		
 		if(energyModel.v_isRapidRun){
-		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + energyModel.p_timeStep_h;
+		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + timeParameters.getTimeStep_h();
 		}
 	break;
 	
@@ -268,7 +264,7 @@ switch (ElectrolyserAsset.getState()){
 		elektrolyserSetpointElectric_kW = 0;
 		
 		if(energyModel.v_isRapidRun){
-		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + energyModel.p_timeStep_h;
+		v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + timeParameters.getTimeStep_h();
 		}
 	break;
 	
@@ -276,8 +272,8 @@ switch (ElectrolyserAsset.getState()){
 		elektrolyserSetpointElectric_kW = 0.025*ElectrolyserAsset.getInputCapacity_kW(); // 1 - 5 percent of nominal load to keep it warm!
 		
 		if(energyModel.v_isRapidRun){
-			v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + energyModel.p_timeStep_h;
-			v_totalEnergyLossIdle_kWh = v_totalEnergyLossIdle_kWh + elektrolyserSetpointElectric_kW*energyModel.p_timeStep_h;
+			v_totalDownTimeElectrolyser_hr = v_totalDownTimeElectrolyser_hr + timeParameters.getTimeStep_h();
+			v_totalEnergyLossIdle_kWh = v_totalEnergyLossIdle_kWh + elektrolyserSetpointElectric_kW * timeParameters.getTimeStep_h();
 		}
 	break;
 	
@@ -390,7 +386,7 @@ double f_manageFuelCell()
 
 /*ALCODEEND*/}
 
-double f_electrolyserRegimeControl_Balance(double currentGridNodePowerFlow_kW,double forecast_time_h,J_EAConversionElectrolyser ElectrolyserAsset)
+double f_electrolyserRegimeControl_Balance(double currentGridNodePowerFlow_kW,double forecast_time_h,J_EAConversionElectrolyser ElectrolyserAsset,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1715611921617*/
 double solar_forecast_kW;
 double wind_forecast_kW;
@@ -398,9 +394,9 @@ double wind_forecast_kW;
 //Initialize limitation values
 if (c_forecast_RES_kW.size() == 0){
 		
-	for(int i = energyModel.v_timeStepsElapsed; i < energyModel.v_timeStepsElapsed + roundToInt(forecast_time_h/energyModel.p_timeStep_h); i++){
-		solar_forecast_kW = - energyModel.pp_PVProduction35DegSouth_fr.getValue(energyModel.t_h + i*energyModel.p_timeStep_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-		wind_forecast_kW = - energyModel.pp_windProduction_fr.getValue(energyModel.t_h + i*energyModel.p_timeStep_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	for(int i = energyModel.v_timeStepsElapsed; i < energyModel.v_timeStepsElapsed + roundToInt(forecast_time_h/timeParameters.getTimeStep_h()); i++){
+		solar_forecast_kW = - energyModel.pp_PVProduction35DegSouth_fr.getValue(timeVariables.getT_h() + i*timeParameters.getTimeStep_h()) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		wind_forecast_kW = - energyModel.pp_windProduction_fr.getValue(timeVariables.getT_h() + i*timeParameters.getTimeStep_h()) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		
 		c_forecast_RES_kW.add(solar_forecast_kW + wind_forecast_kW);
 		
@@ -410,7 +406,7 @@ if (c_forecast_RES_kW.size() == 0){
 }
 
 //Get future limitation values
-else if(energyModel.v_timeStepsElapsed < (8760-forecast_time_h)/energyModel.p_timeStep_h){
+else if(energyModel.v_timeStepsElapsed < (8760-forecast_time_h)/timeParameters.getTimeStep_h()){
 	
 	//Get current RES production
 	double currentRESProduction_kW = c_forecast_RES_kW.get(0);
@@ -418,8 +414,8 @@ else if(energyModel.v_timeStepsElapsed < (8760-forecast_time_h)/energyModel.p_ti
 	//Update forecast array RES
 	c_forecast_RES_kW.remove(0);
 	
-	solar_forecast_kW = - energyModel.pp_PVProduction35DegSouth_fr.getValue(energyModel.t_h + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-	wind_forecast_kW = - energyModel.pp_windProduction_fr.getValue(energyModel.t_h + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+	solar_forecast_kW = - energyModel.pp_PVProduction35DegSouth_fr.getValue(timeVariables.getT_h() + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+	wind_forecast_kW = - energyModel.pp_windProduction_fr.getValue(timeVariables.getT_h() + forecast_time_h) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 	
 	c_forecast_RES_kW.add(solar_forecast_kW + wind_forecast_kW); 
 	
@@ -427,16 +423,16 @@ else if(energyModel.v_timeStepsElapsed < (8760-forecast_time_h)/energyModel.p_ti
 	c_forecast_gridNodePowerFlow_kW.remove(0);
 	
 	//Get past grid node power flow and weather (last week) if last week forecast prediction is selected.
-	if (b_forecast_lastWeekBased && data_liveWeekElectrolyserPower_kW.size() > 672 - roundToInt(forecast_time_h/energyModel.p_timeStep_h)){ // Use last week to create the forecast	
+	if (b_forecast_lastWeekBased && data_liveWeekElectrolyserPower_kW.size() > 672 - roundToInt(forecast_time_h/timeParameters.getTimeStep_h())){ // Use last week to create the forecast	
 	
-		double lastWeekGridNodePowerFlow_kW = data_liveWeekGridNoderPowerFlow_kW.getY(roundToInt(forecast_time_h/energyModel.p_timeStep_h)) - data_liveWeekElectrolyserPower_kW.getY(roundToInt(forecast_time_h/energyModel.p_timeStep_h));
-		double solar_lastWeek_kW = - energyModel.pp_PVProduction35DegSouth_fr.getValue(energyModel.t_h + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
-		double wind_lastWeek_kW = - energyModel.pp_windProduction_fr.getValue(energyModel.t_h + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+		double lastWeekGridNodePowerFlow_kW = data_liveWeekGridNoderPowerFlow_kW.getY(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())) - data_liveWeekElectrolyserPower_kW.getY(roundToInt(forecast_time_h/timeParameters.getTimeStep_h()));
+		double solar_lastWeek_kW = - energyModel.pp_PVProduction35DegSouth_fr.getValue(timeVariables.getT_h() + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+		double wind_lastWeek_kW = - energyModel.pp_windProduction_fr.getValue(timeVariables.getT_h() + forecast_time_h - 168) * energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW;
 			
 		c_forecast_gridNodePowerFlow_kW.add(lastWeekGridNodePowerFlow_kW - solar_lastWeek_kW - wind_lastWeek_kW + solar_forecast_kW + wind_forecast_kW);
 	}
 	else{//use current power flow to predict forecast
-		c_forecast_gridNodePowerFlow_kW.add(currentGridNodePowerFlow_kW - currentRESProduction_kW + c_forecast_RES_kW.get(roundToInt(forecast_time_h/energyModel.p_timeStep_h)-1));
+		c_forecast_gridNodePowerFlow_kW.add(currentGridNodePowerFlow_kW - currentRESProduction_kW + c_forecast_RES_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-1));
 	}
 }
 
@@ -450,9 +446,9 @@ switch (ElectrolyserAsset.getState()){
 
 	case STANDBY: // Ready to be powered on, but no electricity consumption.
 		//Check if electrolyser will be able to be functional at least two time steps when powering up, if so: power_up = true.
-		if (c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/energyModel.p_timeStep_h)-2) < v_gridNodeCongestionLimit_kW && c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/energyModel.p_timeStep_h)-1) < v_gridNodeCongestionLimit_kW){
+		if (c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-2) < v_gridNodeCongestionLimit_kW && c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-1) < v_gridNodeCongestionLimit_kW){
 			ElectrolyserAsset.setElectrolyserState(OL_ElectrolyserState.POWER_UP);
-			ElectrolyserAsset.setRemainingPowerUpDuration_timesteps(roundToInt(ElectrolyserAsset.getStartUpTimeStandby_h()/energyModel.p_timeStep_h));
+			ElectrolyserAsset.setRemainingPowerUpDuration_timesteps(roundToInt(ElectrolyserAsset.getStartUpTimeStandby_h()/timeParameters.getTimeStep_h()));
 		}
 	break;
 	

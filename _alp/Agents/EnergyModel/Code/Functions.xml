@@ -14,10 +14,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[t_h]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -34,10 +30,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[t_h]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -54,10 +46,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[t_h]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -74,10 +62,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[t_h]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -110,10 +94,6 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[t_h]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="private" StaticFunction="false">
@@ -471,6 +451,10 @@
 			<Name><![CDATA[gcList]]></Name>
 			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -490,6 +474,10 @@
 		<Parameter>
 			<Name><![CDATA[energyCoop]]></Name>
 			<Type><![CDATA[EnergyCoop]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -807,6 +795,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1767178014622</Id>
 		<Name><![CDATA[f_initializeTimeDates]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>700</X>
 		<Y>50</Y>
 		<Label>

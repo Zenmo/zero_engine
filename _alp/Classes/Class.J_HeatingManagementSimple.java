@@ -16,6 +16,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.GAS_BURNER, 
 		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
@@ -39,13 +40,14 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	
     }
     
-    public J_HeatingManagementSimple( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementSimple( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
       
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
@@ -53,7 +55,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	double hotWaterDemand_kW = gc.p_DHWAsset != null ? gc.p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT) : 0;
     	
     	if(hasPT) {//Adjust the hot water and overall heat demand with the buffer and pt
-    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // also updates fm_currentBalanceFlows_kW(heat)!
+    		double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables, gc); // also updates fm_currentBalanceFlows_kW(heat)!
     	}
     	
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
@@ -63,11 +65,11 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	if(this.building != null) {
         	double buildingHeatingDemand_kW = 0;
 	    	double buildingTemp_degC = building.getCurrentTemperature();
-	    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+	    	double timeOfDay_h = timeVariables.getTimeOfDay_h();
 	    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
 	    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) {
 	    			// Nighttime and building temperature too low
-	    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();
 	    		}
 	    		else {
 	    			// Nighttime and building temperature acceptable
@@ -76,7 +78,7 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 	    	else {
 	    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
 	    			// Daytime and building temperature too low
-	    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / gc.energyModel.p_timeStep_h;
+	    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();
 	    		}
 	    		else {
 	    			// Daytime and building temperature acceptable
@@ -85,11 +87,13 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 			
 	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
 			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-			building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+	    	gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);
+
     	} else {    	    	
     		heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
     	}
-		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
+    	gc.f_updateFlexAssetFlows(heatingAsset, heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
+
     }
     
     

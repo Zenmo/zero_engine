@@ -12,5 +12,5 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 public interface I_BatteryManagement extends I_AssetManagement
 {
-	void manageBattery();
+	void manageBattery(J_TimeVariables timeVariables);
 }

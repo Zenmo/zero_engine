@@ -755,7 +755,7 @@
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>energyDataViewer.f_fillEnergyDataViewer(this);
+			<ActionCode>energyDataViewer.f_fillEnergyDataViewer(this, p_timeParameters);
 energyDataViewer.viewArea.navigateTo();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>
@@ -1082,7 +1082,7 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<Id>1753355115074</Id>
 		<Name><![CDATA[line_timeParametersAndVariables]]></Name>
 		<X>1050</X>
-		<Y>360</Y>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1110,7 +1110,7 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<Id>1753355117052</Id>
 		<Name><![CDATA[txt_timeParametersAndVariables]]></Name>
 		<X>1150</X>
-		<Y>340</Y>
+		<Y>350</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

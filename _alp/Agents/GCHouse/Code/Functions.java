@@ -1,32 +1,8 @@
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1664963959146*/
-f_manageCookingTracker();
-f_manageAirco();
-super.f_operateFlexAssets();
-
-/*
-double availablePowerAtPrice_kW = v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-if (p_owner != null){
-	v_currentElectricityPriceConsumption_eurpkWh = p_owner.f_getElectricityPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-	availablePowerAtPrice_kW = p_owner.f_getAvailablePowerAtPrice( fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) );
-	v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-} else {
-	//v_currentElectricityPriceConsumption_eurpkWh = 0.3;
-}
-
-f_manageHeating();
-
-if( c_electricVehicles.size() > 0){
-	double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-	double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-	//f_maxPowerCharging( max(0, availableChargingCapacity));
-	f_manageEVCharging();
-	//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
-}
-
-f_manageChargers();
-
-f_manageBattery();*/
+f_manageCookingTracker(timeVariables);
+f_manageAirco(timeVariables);
+super.f_operateFlexAssets(timeVariables);
 /*ALCODEEND*/}
 
 double f_createThermalStorageModel()
@@ -288,11 +264,11 @@ double f_setEnergyLabel()
 traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");
 /*ALCODEEND*/}
 
-double f_manageCookingTracker()
+double f_manageCookingTracker(J_TimeVariables timeVariables)
 {/*ALCODESTART::1726334759211*/
 // Add heat from cooking assets to house
 if (p_cookingTracker != null) { // check for presence of cooking asset
-	p_cookingTracker.manageActivities(energyModel.t_h-energyModel.p_runStartTime_h); // also calls f_updateAllFlows in HOB asset	
+	p_cookingTracker.manageActivities(timeVariables); // also calls f_updateAllFlows in HOB asset	
 	
 	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
 	throw new RuntimeException("Cooking trackers and HOBs are not properly integrated with current heating management!");
@@ -302,7 +278,7 @@ if (p_cookingTracker != null) { // check for presence of cooking asset
 }
 /*ALCODEEND*/}
 
-double f_manageAirco()
+double f_manageAirco(J_TimeVariables timeVariables)
 {/*ALCODESTART::1749648447119*/
 if( p_airco != null ) {
 	if (p_airco.remainingONtimesteps == 0){
@@ -341,7 +317,7 @@ if( p_airco != null ) {
 			p_airco.turnOnAirco( nbTimestepsOn );
 		}
 	}
-	p_airco.f_updateAllFlows( 1.0 );
+	p_airco.f_updateAllFlows( 1.0, timeVariables );
 }
 /*ALCODEEND*/}
 
