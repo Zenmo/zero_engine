@@ -28,77 +28,56 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 abstract public class J_EA implements Cloneable {
-	
-	 protected Agent parentAgent;
-	 public OL_EnergyAssetType energyAssetType;
-	 public OL_AssetFlowCategories assetFlowCategory;
-	 public String energyAssetName;
-	 protected J_FlowsMap flowsMap = new J_FlowsMap();
-	 protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
-	 protected J_ValueMap assetFlowsMap = new J_ValueMap(OL_AssetFlowCategories.class);
-	 protected double lastEnergyUse_kW = 0.0;
+	protected J_TimeParameters timeParameters;
+	private I_AssetOwner owner; // This is private because it is not allowed for the children to access this.
+	protected OL_EnergyAssetType energyAssetType;
+	protected OL_AssetFlowCategories assetFlowCategory;
+	protected String energyAssetName;
+	protected J_FlowsMap flowsMap = new J_FlowsMap();
+	protected J_FlowsMap lastFlowsMap = new J_FlowsMap();
+	protected J_ValueMap assetFlowsMap = new J_ValueMap(OL_AssetFlowCategories.class);
+	protected double lastEnergyUse_kW = 0.0;
 	 
-	 protected EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeProductionEnergyCarriers in GridConnections and EnergyModel	
-	 protected EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeConsumptionEnergyCarriers in GridConnections and EnergyModel
-
-	 protected double energyUsed_kWh = 0.0;
-	 protected double energyUse_kW = 0.0;
-	 protected double energyUsedStored_kWh = 0.0;
-  	 protected double timestep_h;
- 
-  	 protected boolean isRemoved = false;
+	protected EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeProductionEnergyCarriers in GridConnections and EnergyModel	
+	protected EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers = EnumSet.noneOf(OL_EnergyCarriers.class); // To fill activeConsumptionEnergyCarriers in GridConnections and EnergyModel
+		
+	protected double energyUsed_kWh = 0.0;
+	protected double energyUse_kW = 0.0;
+	protected double energyUsedStored_kWh = 0.0;
+	 
+	protected boolean isRemoved = false;
 
     /**
      * Default constructor
      */
     public J_EA() {
     }
-
-    /**
-     * Constructor initializing the fields
-     */
-    public J_EA(Agent parentAgent, double capacityElectric_kW, double capacityHeat_kW, double capacityGas_kW) {
-		this.parentAgent = parentAgent;
-		registerEnergyAsset();
+    
+    protected void setOwner(I_AssetOwner owner) {
+    	this.owner = owner;
     }
     
-    protected void registerEnergyAsset() {	
-    	if ( parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_connectToJ_EA(this);
-    	} else {
-    		traceln("Energy asset %s doesn't have a valid parent agent! Will not be operated!", this);
-    	}
+    protected boolean ownerIsActive() {
+    	return this.owner.f_isActive();
     }
     
-    public void reRegisterEnergyAsset() {
+    public void registerEnergyAsset(J_TimeParameters timeParameters) {	
+    	this.owner.f_connectToJ_EA(this, timeParameters);
+    }
+    
+    public void reRegisterEnergyAsset(J_TimeParameters timeParameters) {
     	if (!this.isRemoved) {
     		throw new RuntimeException("Can not register energy asset that was not removed.");
     	}
     	else {
     		this.isRemoved = false;
-    		this.registerEnergyAsset();
+    		this.registerEnergyAsset(timeParameters);
     	}
     }
     
     public void removeEnergyAsset() {
     	this.isRemoved = true;
-    	if ( parentAgent instanceof GridConnection) {
-    		((GridConnection)parentAgent).f_removeTheJ_EA(this);
-    	} else {    		
-    		traceln("Energy asset %s doesn't have a valid parent agent! Energy Asset not removed!", this);
-    	}    	
-    }
-   
-    public void f_updateAllFlows(double powerFraction_fr) {
-     	powerFraction_fr = min(1,max(-1, powerFraction_fr));
-     	operate(powerFraction_fr);
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);    		
-    	}
-    
-    	this.lastFlowsMap.cloneMap(this.flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
+    	this.owner.f_removeTheJ_EA(this);    	
     }
     
     public void clear() {
@@ -107,8 +86,6 @@ abstract public class J_EA implements Cloneable {
     	energyUse_kW = 0;
     }
 
-	public abstract void operate(double ratioOfCapacity);
-     
     public void storeStatesAndReset() {
     	// Each energy asset that has some states should overwrite this function!
     	energyUsedStored_kWh = energyUsed_kWh;
@@ -121,12 +98,12 @@ abstract public class J_EA implements Cloneable {
     	energyUsed_kWh = energyUsedStored_kWh;
     }
     
-    public double getEnergyUsed_kWh() {
-    	return energyUsed_kWh;
+    public I_AssetOwner getOwner() {
+    	return this.owner;
     }
     
-    public Agent getParentAgent() {
-    	return parentAgent;
+    public double getEnergyUsed_kWh() {
+    	return energyUsed_kWh;
     }
     
 	public EnumSet<OL_EnergyCarriers> getActiveProductionEnergyCarriers() {
@@ -150,6 +127,10 @@ abstract public class J_EA implements Cloneable {
 	 public OL_EnergyAssetType getEAType() {
 		 return energyAssetType;
 	 }
+	 
+	 public OL_AssetFlowCategories getAssetFlowCategory() {
+		 return this.assetFlowCategory;
+	 }
 
 	 public void setEnergyAssetName(String name) {
 		 this.energyAssetName = name;
@@ -162,21 +143,4 @@ abstract public class J_EA implements Cloneable {
 	 public void setAssetFlowCategory(OL_AssetFlowCategories assetFlowCat) {
 		 this.assetFlowCategory = assetFlowCat;
 	 }
-
-	/* 
-    @Override    
-    public Object clone() { 
-    	try {
-    		return super.clone(); 
-    	} catch (CloneNotSupportedException e) {
-    		throw new RuntimeException(e);
-    	}
-    } 
-    */
-	 
-	@Override
-	public String toString() {
-		return
-			"ownerAgent = " + parentAgent.getIndex() +" ";
-	}
 }

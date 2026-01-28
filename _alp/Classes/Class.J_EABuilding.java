@@ -30,11 +30,11 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     /**
      * Constructor initializing the fields
      */
-    public J_EABuilding(Agent parentAgent, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
-		this.parentAgent = parentAgent;
+    public J_EABuilding(I_AssetOwner owner, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
+		this.setOwner(owner);
+		this.timeParameters = timeParameters;
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
-		this.timestep_h = timestep_h;
 		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
 		this.heatCapacity_JpK = heatCapacity_JpK;
@@ -47,8 +47,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	    
 	    this.activeProductionEnergyCarriers.add(OL_EnergyCarriers.HEAT);		
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.HEAT);
-		this.assetFlowCategory = OL_AssetFlowCategories.buildingHeating_kW;
-		registerEnergyAsset();
+		this.assetFlowCategory = OL_AssetFlowCategories.spaceHeating_kW;
+		registerEnergyAsset(timeParameters);
     }
 
 	@Override
@@ -64,37 +64,37 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 	
 	@Override
-	public void f_updateAllFlows(double powerFraction_fr) {
+	public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
 		if (powerFraction_fr > 1) {			
 			traceln("JEABuilding capacityHeat_kW is too low! "+ capacityHeat_kW);
 		}
-		super.f_updateAllFlows(powerFraction_fr);
+		return super.f_updateAllFlows(powerFraction_fr, timeVariables);
 	}
 
 	@Override
-	public void operate(double ratioOfChargeCapacity_r) {
-		if (ratioOfChargeCapacity_r < 0) {
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+		if (powerFraction_fr < 0) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
 		
 		double lossPower_kW = calculateLoss(); // Heat exchange with environment through convection
 		double solarHeating_kW = solarHeating(); // Heat influx from sunlight
 		this.energyUse_kW = lossPower_kW - solarHeating_kW;
-		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timestep_h); // Only heat loss! Not heat gain when outside is hotter than inside!
-		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timestep_h); // Only heat gain from outside air and/or solar irradiance!
+		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
+		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat gain from outside air and/or solar irradiance!
 
-		double inputPower_kW = ratioOfChargeCapacity_r * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
+		double inputPower_kW = powerFraction_fr * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
     	
-		double deltaEnergy_kWh = (solarHeating_kW - lossPower_kW)* this.timestep_h;
+		double deltaEnergy_kWh = (solarHeating_kW - lossPower_kW)* this.timeParameters.getTimeStep_h();
 		if (this.interiorDelayTime_h != 0.0) {
-			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timestep_h );
+			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timeParameters.getTimeStep_h() );
     	}
 		else { 
-			deltaEnergy_kWh += inputPower_kW * this.timestep_h; // to check the request with the energy currently in storage
+			deltaEnergy_kWh += inputPower_kW * this.timeParameters.getTimeStep_h(); // to check the request with the energy currently in storage
 		}
 		updateStateOfCharge( deltaEnergy_kWh );
 		
-		this.heatCharged_kWh += inputPower_kW * this.timestep_h;
+		this.heatCharged_kWh += inputPower_kW * this.timeParameters.getTimeStep_h();
 		
 		this.flowsMap.put(OL_EnergyCarriers.HEAT, inputPower_kW);
 
@@ -110,8 +110,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			"energyUsed_kWh (heat losses) = " + this.energyUsed_kWh + "kWh, " +
 			"temp = " + this.temperature_degC + ", " +
 			"lossFactor_WpK = " + this.lossFactor_WpK + ", "+
-			"heatCapacity_JpK = " + this.heatCapacity_JpK + ", "+
-			"parentAgent = " + parentAgent; // + ", "
+			"heatCapacity_JpK = " + this.heatCapacity_JpK;
 	}
 
 	@Override
@@ -193,14 +192,14 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	// Interior heat buffer may represent the radiator or floor heating. Typical delay is 0.5 or 3 hours respectively.	
 	public void addInteriorHeatBuffer(double delayTime_h) {
 		this.interiorDelayTime_h = delayTime_h;
-		this.interiorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timestep_h) ];
+		this.interiorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timeParameters.getTimeStep_h()) ];
 		this.interiorReleaseScheduleIndex = 0;
 	}
 
 	// Exterior heat buffer may represent the walls and roof of the building. Typical delay is 8 hours.
 	public void addExteriorHeatBuffer(double delayTime_h) {
 		this.exteriorDelayTime_h = delayTime_h;
-		this.exteriorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timestep_h) ];
+		this.exteriorReleaseSchedule_kWh = new double[ (int)(delayTime_h / this.timeParameters.getTimeStep_h()) ];
 		this.exteriorReleaseScheduleIndex = 0;
 	}
 	

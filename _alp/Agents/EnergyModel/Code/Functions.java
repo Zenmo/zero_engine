@@ -1,7 +1,7 @@
-double f_updatePricesForNextTimestep(double t_h)
+double f_updatePricesForNextTimestep()
 {/*ALCODESTART::1664894248130*/
 // Update the dayaheadprice
-nationalEnergyMarket.f_updateEnergyPrice();
+nationalEnergyMarket.f_updateEnergyPrice(p_timeParameters, p_timeVariables);
 
 //
 for (EnergySupplier e : pop_energySuppliers) {
@@ -33,32 +33,21 @@ for (GridNode GN : c_gridNodeExecutionListReverse) {
 //}
 /*ALCODEEND*/}
 
-double f_updateTimeseries(double t_h)
+double f_updateTimeseries()
 {/*ALCODESTART::1664952601107*/
-b_isDaytime = t_h % 24 > 6 && t_h % 24 < 18;
-b_isWeekday = (t_h+(v_dayOfWeek1jan-1)*24) % (24*7) < (24*5);
-b_isSummerWeek = (t_h % 8760) >= p_startOfSummerWeek_h && (t_h % 8760) < p_startOfSummerWeek_h + 24*7;
-b_isWinterWeek = (t_h % 8760) >= p_startOfWinterWeek_h && (t_h % 8760) < p_startOfWinterWeek_h + 24*7;
-b_isLastTimeStepOfDay = t_h % 24 == (24-p_timeStep_h);
-t_hourOfDay = t_h % 24; // Assumes modelrun starts at midnight.
+c_profiles.forEach(p -> p.updateValue(p_timeVariables.getT_h())); // 
 
-c_profiles.forEach(p -> p.updateValue(t_h)); // 
-//v_currentAmbientTemperature_degC = pp_ambientTemperature_degC.getCurrentValue();
-//v_currentWindPowerNormalized_r = pp_windProduction_fr.getCurrentValue();
-//v_currentSolarPowerNormalized_r = pp_PVProduction35DegSouth_fr.getCurrentValue();
-//v_currentCookingDemand_fr = tf_cooking_demand(t_h);
-
-if (b_enableDLR) {
-	v_currentDLRfactor_fr = 1 + max(-0.1,pp_windProduction_fr.getCurrentValue() * 0.025*(30-pp_ambientTemperature_degC.getCurrentValue()) + 0.5 - pp_PVProduction35DegSouth_fr.getCurrentValue());
+//if (b_enableDLR) {
+	//v_currentDLRfactor_fr = 1 + max(-0.1,pp_windProduction_fr.getCurrentValue() * 0.025*(30-pp_ambientTemperature_degC.getCurrentValue()) + 0.5 - pp_PVProduction35DegSouth_fr.getCurrentValue());
 	//v_currentDLRfactor_fr = 1 + uniform(-0.1, 1.0);
-	v_minDLRfactor_fr = min (v_minDLRfactor_fr, v_currentDLRfactor_fr);
-	v_maxDLRfactor_fr = max (v_maxDLRfactor_fr, v_currentDLRfactor_fr);
-	acc_totalDLRfactor_f.addStep( v_currentDLRfactor_fr);
+	//v_minDLRfactor_fr = min (v_minDLRfactor_fr, v_currentDLRfactor_fr);
+	//v_maxDLRfactor_fr = max (v_maxDLRfactor_fr, v_currentDLRfactor_fr);
+	//acc_totalDLRfactor_f.addStep( v_currentDLRfactor_fr);
 	/*if (v_currentDLRfactor_fr < 0.5) {
 		traceln("v_currentDLRfactor_fr is invalid! %s", v_currentDLRfactor_fr);
 		pauseSimulation();
 	}*/
-}
+//}
 //traceln("Current DLR factor: %s, ", v_currentDLRfactor_fr);
 //traceln("Time hour " + time(HOUR) + ", t_h " + t_h + ", fleet demand " + v_currentLogisticsFleetEDemand_fr);
 
@@ -66,13 +55,13 @@ if (b_enableDLR) {
 f_updateAmbientDependentAssets();
 
 // Update forecasts,  the relevant profile pointers are already updated above
-c_forecasts.forEach(f -> f.updateForecast(t_h));
-//v_SolarYieldForecast_fr = pf_PVProduction35DegSouth_fr.getForecast();
-//v_WindYieldForecast_fr = pf_windProduction_fr.getForecast();
+c_forecasts.forEach(f -> f.updateForecast(p_timeVariables.getT_h()));
+
 // The ElectricityYieldForecast assumes solar and wind forecasts have the same forecast time
 if ( v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW > 0 ) {
 	v_electricityYieldForecast_fr = (pf_PVProduction35DegSouth_fr.getForecast() * v_liveAssetsMetaData.totalInstalledPVPower_kW + pf_windProduction_fr.getForecast() * v_liveAssetsMetaData.totalInstalledWindPower_kW) / (v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW);
 }
+
 // And price forecast! 
 //v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
 
@@ -80,16 +69,15 @@ for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_updateForecasts();
 }
 
-
 /*ALCODEEND*/}
 
-double f_calculateGridnodeFlows(double t_h)
+double f_calculateGridnodeFlows()
 {/*ALCODESTART::1665051878402*/
 v_currentElectricityImport_kW = 0;
 v_currentElectricityExport_kW = 0;
 
 for(GridNode n : c_gridNodeExecutionList) {
-	n.f_calculateEnergyBalance();
+	n.f_calculateEnergyBalance(p_timeVariables, p_timeParameters, v_isRapidRun);
 }
 
 for(GridNode n : c_gridNodesTopLevel) {
@@ -101,7 +89,7 @@ for(GridNode n : c_gridNodesTopLevel) {
 
 /*ALCODEEND*/}
 
-double f_calculateActorFlows(double t_h)
+double f_calculateActorFlows()
 {/*ALCODESTART::1665051962956*/
 /*
 if (b_parallelizeConnectionOwners) {
@@ -114,7 +102,7 @@ if (b_parallelizeConnectionOwners) {
 */
 
 for (EnergyCoop h : pop_energyCoops) {
-	h.f_calculateEnergyBalance();
+	h.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
 }
 /*for (EnergySupplier e : pop_energySuppliers) {
 	e.f_updateFinances();
@@ -156,7 +144,7 @@ if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
 traceln("Electricity delta in batteries (including EVs): "+ v_batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
 /*ALCODEEND*/}
 
-double f_calculateGridConnectionFlows(double t_h)
+double f_calculateGridConnectionFlows()
 {/*ALCODESTART::1668528129020*/
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
@@ -172,11 +160,11 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
 
 if (b_parallelizeGridConnections) {
-	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance());
+	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun));
 } 
 else {
 	for(GridConnection gc : c_gridConnections) {
-		gc.f_calculateEnergyBalance();
+		gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
 	}
 }
 
@@ -199,7 +187,7 @@ for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to
 }
 
 for (GridConnection gc : c_subGridConnections) {
-	gc.f_calculateEnergyBalance();
+	gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
 }
 
 v_currentEnergyImport_kW = 0.0;
@@ -217,19 +205,19 @@ f_runAggregators();
 
 double f_initializeForecasts()
 {/*ALCODESTART::1671636439933*/
-pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_forecastTime_h, t_h, p_timeStep_h);
+pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_ambientTemperature_degC);
 
-pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_forecastTime_h, t_h, p_timeStep_h);
+pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_PVProduction35DegSouth_fr);
 
-pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_forecastTime_h, t_h, p_timeStep_h);
+pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_PVProduction15DegEastWest_fr);
 
-pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_forecastTime_h, t_h, p_timeStep_h);
+pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_windProduction_fr);
 
-pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_forecastTime_h, t_h, p_timeStep_h);
+pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
 
 /*ALCODEEND*/}
@@ -261,16 +249,17 @@ for (GridConnection GC : c_gridConnections) {
 			GC.v_previousRunData = GC.v_rapidRunData;
 		}
 	} 
-	GC.v_rapidRunData = new J_RapidRunData(GC);
+	// TODO: Fix Boolean store assets here?
+	GC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();
 	GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
-	GC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, GC.v_liveData.activeEnergyCarriers, GC.v_liveData.activeConsumptionEnergyCarriers, GC.v_liveData.activeProductionEnergyCarriers, GC.v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();
+	GC.v_rapidRunData.initializeAccumulators(GC.v_liveData.activeEnergyCarriers, GC.v_liveData.activeConsumptionEnergyCarriers, GC.v_liveData.activeProductionEnergyCarriers, GC.v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();
 		
 	GC.f_resetStates();
 	
 	GC.c_tripTrackers.forEach(tt->{
 		tt.storeAndResetState();
-		tt.setStartIndex(p_runStartTime_h, GC.f_getChargePoint());
+		tt.setStartIndex(p_timeVariables, GC.f_getChargePoint());
 		//tt.prepareNextActivity(p_runStartTime_h*60, GC.f_getChargePoint());
 		});
 	if (GC instanceof GCHouse) {
@@ -284,7 +273,7 @@ for (GridConnection GC : c_subGridConnections) {
 }
 
 for (GridNode GN : pop_gridNodes) {
-	GN.f_resetStates();
+	GN.f_resetStates(p_timeParameters);
 }
 
 for (ConnectionOwner CO : pop_connectionOwners) {
@@ -303,13 +292,13 @@ for (EnergyCoop EC : pop_energyCoops) {
 			EC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, EC.v_liveData.activeEnergyCarriers, EC.v_liveData.activeConsumptionEnergyCarriers, EC.v_liveData.activeProductionEnergyCarriers, EC.v_liveAssetsMetaData.activeAssetFlows);
 		}*/
 	} 
-	EC.v_rapidRunData = new J_RapidRunData(EC);
+	EC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
 	EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
 	//if(EC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 	EC.v_rapidRunData.setStoreTotalAssetFlows(true);
 	//}	
-	EC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, EC.v_liveData.activeEnergyCarriers, EC.v_liveData.activeConsumptionEnergyCarriers, EC.v_liveData.activeProductionEnergyCarriers, EC.v_liveAssetsMetaData.activeAssetFlows);
+	EC.v_rapidRunData.initializeAccumulators(EC.v_liveData.activeEnergyCarriers, EC.v_liveData.activeConsumptionEnergyCarriers, EC.v_liveData.activeProductionEnergyCarriers, EC.v_liveAssetsMetaData.activeAssetFlows);
 	EC.f_resetStates();
 
 }
@@ -318,45 +307,46 @@ for (EnergyCoop EC : pop_energyCoops) {
 int v_timeStepsElapsed_live = v_timeStepsElapsed;
 v_timeStepsElapsed=0;
 
-c_profiles.forEach(p -> p.updateValue(p_runStartTime_h));
-c_forecasts.forEach(p -> p.initializeForecast(p_runStartTime_h)); 
+c_profiles.forEach(p -> p.updateValue(p_timeParameters.getRunStartTime_h()));
+c_forecasts.forEach(p -> p.initializeForecast(p_timeParameters.getRunStartTime_h())); 
 
 if (v_rapidRunData != null && b_storePreviousRapidRunData) {
 	v_previousRunData = v_rapidRunData;
 }
-v_rapidRunData = new J_RapidRunData(this);
+v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();	
 v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
-v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers, v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();	
+v_rapidRunData.initializeAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers, v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();	
 f_resetAnnualValues();
 
 v_isRapidRun = true;
 
 ////Run energy calculations loop
-for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
+for(v_timeStepsElapsed = 0; v_timeStepsElapsed < (p_timeParameters.getRunEndTime_h()-p_timeParameters.getRunStartTime_h())/p_timeParameters.getTimeStep_h(); v_timeStepsElapsed++ ){
 	// Update time-series for model-wide variables (such as temps, wind, etc.)
 	double startTime = System.currentTimeMillis();
-	f_updateTimeseries(t_h);
+	p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
+	f_updateTimeseries();
 	v_timeSeriesRuntime_ms += (System.currentTimeMillis()-startTime);
 	
 	// Operate assets on each gridConnection
 	startTime = System.currentTimeMillis();
-	f_calculateGridConnectionFlows(t_h);
+	f_calculateGridConnectionFlows();
 	v_gridConnectionsRuntime_ms += (System.currentTimeMillis()-startTime);
 	
 	// Calculate grid node flows
 	startTime = System.currentTimeMillis();
-	f_calculateGridnodeFlows(t_h);
+	f_calculateGridnodeFlows();
 	v_gridNodesRuntime_ms += (System.currentTimeMillis()-startTime);
 	
 	// Financial accounting of energy flows
 	startTime = System.currentTimeMillis();
-	f_calculateActorFlows(t_h);
+	f_calculateActorFlows();
 	v_financialsRuntime_ms += (System.currentTimeMillis()-startTime);
 	
 	// Update elektriciteitsprijzen
 	startTime = System.currentTimeMillis();
-	f_updatePricesForNextTimestep(t_h);
+	f_updatePricesForNextTimestep();
 	v_incentivesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 	//Run rapid data logging
@@ -371,8 +361,7 @@ for(t_h = p_runStartTime_h; t_h < p_runEndTime_h; t_h += p_timeStep_h){
 								v_currentPrimaryEnergyProductionHeatpumps_kW, 
 								v_currentEnergyCurtailed_kW,
 								v_batteryStoredEnergy_kWh/1000,
-								this);
-	v_timeStepsElapsed++;
+								p_timeVariables);
 }	
 
 
@@ -392,7 +381,7 @@ traceln("---FINISHED YEAR MODEL RUN----");
 
 ////Return model to previous state to continue simulation run
 v_timeStepsElapsed = v_timeStepsElapsed_live;
-t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
+p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
 
 for (J_EA EA : c_energyAssets) {
@@ -426,12 +415,12 @@ double duration = System.currentTimeMillis() - startTime1;
 
 traceln("*** headless run duration: "+ duration/1000 + " s ***");
 
-traceln("Live-sim t_h after rapidRun: %s", t_h);
+traceln("Live-sim t_h after rapidRun: %s", p_timeVariables.getT_h());
 if (b_isDeserialised) {
 	traceln("Anylogic Model time(HOUR): %s", time(HOUR));
 }
-c_profiles.forEach(p -> p.updateValue(t_h)); 
-c_forecasts.forEach(p -> p.initializeForecast(t_h)); 
+c_profiles.forEach(p -> p.updateValue(p_timeVariables.getT_h())); 
+c_forecasts.forEach(p -> p.initializeForecast(p_timeVariables.getT_h())); 
 
 /*ALCODEEND*/}
 
@@ -470,40 +459,37 @@ traceln("Energy export: "+ v_totalEnergyExport_MWh + " MWh");
 
 double f_resetAnnualValues()
 {/*ALCODESTART::1699958741073*/
-v_rapidRunData.resetAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
+v_rapidRunData.resetAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
 
 // Others
-acc_totalDLRfactor_f.reset();
+//acc_totalDLRfactor_f.reset();
 
 
 /*ALCODEEND*/}
 
 double f_runTimestep()
 {/*ALCODESTART::1701162826549*/
-if(t_h-p_runStartTime_h!=0.0 && (t_h-p_runStartTime_h) % (p_runEndTime_h - p_runStartTime_h) == 0.0) {
+if( p_timeVariables.getAnyLogicTime_h() != 0.0 && p_timeVariables.getAnyLogicTime_h() % (p_timeParameters.getRunEndTime_h() - p_timeParameters.getRunStartTime_h()) == 0.0) {
 	f_loopSimulation();
 }
 
-//Update t_h
-t_h = p_runStartTime_h + v_timeStepsElapsed * p_timeStep_h;
-
-//Update time variables
-J_TimeVariables.updateTimeVariables(v_timeStepsElapsed);
+// The very first step is to update time variables
+p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
 // Update tijdreeksen in leesbare variabelen
-f_updateTimeseries(t_h);
+f_updateTimeseries();
 
 // Operate assets on each gridConnection
-f_calculateGridConnectionFlows(t_h);
+f_calculateGridConnectionFlows();
 
 // Calculate grid node flows
-f_calculateGridnodeFlows(t_h);
+f_calculateGridnodeFlows();
 
 // Financial accounting of energy flows
-f_calculateActorFlows(t_h);
+f_calculateActorFlows();
 
 // Update elektriciteitsprijzen
-f_updatePricesForNextTimestep(t_h);
+f_updatePricesForNextTimestep();
 
 //Update live data
 f_updateLiveData();
@@ -590,16 +576,48 @@ if (b_isInitialized) {
 	throw new RuntimeException("Error: Engine was initalized a second time.");
 }
 
+/*
+Date startDate = date();
+p_year = startDate.getYear() + 1900;
+
+LocalDate localDate = LocalDate.of(p_year, 1, 1);
+v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
+p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
+
+
+
+int monthIdx = 0;
+while ( t_h > hourOfYearPerMonth[monthIdx] ) {
+	monthIdx++;
+	if (monthIdx==hourOfYearPerMonth.length){
+		break;
+	}	
+}
+
+int dayOfMonth = 1+(int)((t_h - hourOfYearPerMonth[monthIdx])/24.0);
+traceln("Day of month start: %s", dayOfMonth);
+traceln("Month of year start: %s", monthIdx);
+startDate.setMonth(monthIdx);
+startDate.setDate(dayOfMonth);
+startDate.setHours(0);
+startDate.setMinutes(0);
+traceln("Startdate: %s", startDate);
+//startDate.set
+getExperiment().getEngine().setStartDate(startDate); 
+*/
+
+//traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
 
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 f_buildGridNodeTree();
-c_gridConnections.forEach(GC -> GC.f_initialize());
+c_gridConnections.forEach(GC -> GC.f_initialize(p_timeParameters));
 
 // Only relevant for deserialisation:
-c_pausedGridConnections.forEach(GC -> GC.f_initialize());
+c_pausedGridConnections.forEach(GC -> GC.f_initialize(p_timeParameters));
 
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
-pop_energyCoops.forEach(EC -> EC.f_initialize()); // Not yet robust when there is no supplier initialized!
+pop_energyCoops.forEach(EC -> EC.f_initialize(p_timeParameters)); // Not yet robust when there is no supplier initialized!
 
 
 
@@ -668,27 +686,27 @@ double f_initializePause()
 {/*ALCODESTART::1722590514591*/
 for (GridConnection GC : UtilityConnections) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false);
+		GC.f_setActive(false, p_timeVariables);
 	}
 }
 for (GridConnection GC : EnergyProductionSites) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false);
+		GC.f_setActive(false, p_timeVariables);
 	}
 }
 for (GridConnection GC : EnergyConversionSites) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false);
+		GC.f_setActive(false, p_timeVariables);
 	}
 }
 for (GridConnection GC : GridBatteries) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false);
+		GC.f_setActive(false, p_timeVariables);
 	}
 }
 for (GridConnection GC : PublicChargers) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false);
+		GC.f_setActive(false, p_timeVariables);
 	}
 }
 /*ALCODEEND*/}
@@ -717,7 +735,7 @@ return profilePointer;
 double f_updateLiveData()
 {/*ALCODESTART::1731329529733*/
 //Current timestep
-double currentTime_h = t_h-p_runStartTime_h;
+double currentTime_h = p_timeVariables.getAnyLogicTime_h();
 
 v_liveData.addTimeStep(currentTime_h,
 	fm_currentBalanceFlows_kW,
@@ -735,12 +753,12 @@ v_liveData.addTimeStep(currentTime_h,
 
 double f_initializeLiveDataSets()
 {/*ALCODESTART::1731573713521*/
-v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeEnergyCarriers, roundToInt(168/p_timeStep_h));
-v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeEnergyCarriers, roundToInt(168/p_timeStep_h));
-v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, roundToInt(168/p_timeStep_h));
+v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeEnergyCarriers, roundToInt(168/p_timeParameters.getTimeStep_h()));
+v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeEnergyCarriers, roundToInt(168/p_timeParameters.getTimeStep_h()));
+v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, roundToInt(168/p_timeParameters.getTimeStep_h()));
 /*ALCODEEND*/}
 
-EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList)
+EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList,J_TimeParameters timeParameters)
 {/*ALCODESTART::1739958854535*/
 // Add energyCoop
 EnergyCoop energyCoop = add_pop_energyCoops();
@@ -756,7 +774,7 @@ energyCoop.p_actorID = "Custom Coop for filtered GC list";
 	}
 }*/
 // Initialisation, collecting data and calculating KPIs.
-energyCoop.f_initializeCustomCoop(gcList);
+energyCoop.f_initializeCustomCoop(gcList, timeParameters);
 
 // Adding this coop to the list of coops in the GC
 gcList.forEach(gc -> gc.c_parentCoops.add(energyCoop));
@@ -765,7 +783,7 @@ gcList.forEach(gc -> gc.c_parentCoops.add(energyCoop));
 return energyCoop;
 /*ALCODEEND*/}
 
-EnergyCoop f_removeEnergyCoop(EnergyCoop energyCoop)
+EnergyCoop f_removeEnergyCoop(EnergyCoop energyCoop,J_TimeVariables timeVariables)
 {/*ALCODESTART::1739972940581*/
 // Connect GCs, connectionOwners and energyCoop and gather data
 for(Agent CO : energyCoop.c_coopCustomers){
@@ -788,7 +806,7 @@ for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 	if(GC instanceof GCGridBattery && GC.f_getBatteryManagement() instanceof J_BatteryManagementPeakShaving && ((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).getTargetType() == OL_ResultScope.ENERGYCOOP){
 		((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).setTarget(null);
 		((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).setTargetType( OL_ResultScope.ENERGYCOOP );
-		GC.f_setActive(false);
+		GC.f_setActive(false, timeVariables);
 	}
 }
 
@@ -804,11 +822,11 @@ if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
 	v_liveData.activeEnergyCarriers.add(EC);
 	v_liveData.activeConsumptionEnergyCarriers.add(EC);
 	
-	DataSet dsDemand = new DataSet( (int)(168 / p_timeStep_h) );
+	DataSet dsDemand = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 	
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 		dsDemand.add( t, 0);
 	}
 	v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
@@ -839,10 +857,10 @@ if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
 	v_liveData.activeEnergyCarriers.add(EC);
 	v_liveData.activeProductionEnergyCarriers.add(EC);
 	
-	DataSet dsSupply = new DataSet( (int)(168 / p_timeStep_h) );
+	DataSet dsSupply = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 		dsSupply.add( t, 0);
 	}
 	v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
@@ -931,7 +949,7 @@ double totalEnergyUsed_MWh = 0;
 double totalEnergyChargedOutsideModel_MWh = 0;
 double totalHeatProduced_MWh = 0;
 for (J_EA e : c_energyAssets) {
-	if (((GridConnection) e.getParentAgent()).v_isActive ) {
+	if (e.ownerIsActive()) {
 		double EnergyUsed_kWh = e.getEnergyUsed_kWh();
 		if (EnergyUsed_kWh > 0) {
 			if( e instanceof J_EAConversionGasCHP ) {
@@ -1035,7 +1053,7 @@ v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTR
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;*/
 
-v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
+v_liveData.resetLiveDatasets(p_timeParameters);
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1052,7 +1070,7 @@ for (EnergyCoop ec : pop_energyCoops) {
 	ec.v_liveData.connectionMetaData = ec.v_liveConnectionMetaData;
 	ec.v_liveData.assetsMetaData = ec.v_liveAssetsMetaData;
 	*/
-	ec.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
+	ec.v_liveData.resetLiveDatasets(p_timeParameters);
 
 	ec.fm_currentProductionFlows_kW = new J_FlowsMap();
 	ec.fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1072,7 +1090,7 @@ for (GridConnection gc : allGridConnections) {
 	gc.v_liveData.connectionMetaData = gc.v_liveConnectionMetaData;
 	gc.v_liveData.assetsMetaData = gc.v_liveAssetsMetaData;
 	*/
-	gc.v_liveData.resetLiveDatasets(p_runStartTime_h, p_runStartTime_h, p_timeStep_h);
+	gc.v_liveData.resetLiveDatasets(p_timeParameters);
 	
 	gc.fm_currentProductionFlows_kW = new J_FlowsMap();
 	gc.fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1086,13 +1104,15 @@ for (GridConnection gc : allGridConnections) {
 
 // Initialize time and date
 //v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
-t_h = p_runStartTime_h;
+v_timeStepsElapsed = 0;
+p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
+/*
 Date startDate = date();
 p_year = startDate.getYear() + 1900;
 
 LocalDate localDate = LocalDate.of(p_year, 1, 1);
-v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
+//v_dayOfWeek1jan = DayOfWeek.from(localDate).getValue();
 p_startOfWinterWeek_h = roundToInt(24 * (p_winterWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 49 is winterweek.
 p_startOfSummerWeek_h = roundToInt(24 * (p_summerWeekNumber * 7 + (8-v_dayOfWeek1jan)%7)); // Week 18 is summerweek.
 
@@ -1114,6 +1134,7 @@ startDate.setMinutes(0);
 traceln("Startdate: %s", startDate);
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
+*/
 
 f_initializeForecasts();
 
@@ -1146,7 +1167,7 @@ J_DataSetMap peakImportWeekAssetFlows = new J_DataSetMap(OL_AssetFlowCategories.
 for (OL_AssetFlowCategories AC : v_rapidRunData.am_assetFlowsAccumulators_kW.keySet()) {
 	double[] assetFlowArray_kW = v_rapidRunData.am_assetFlowsAccumulators_kW.get(AC).getTimeSeries_kW();
 	for (int i=startIdx; i<endIdx; i++) {
-		peakImportWeekAssetFlows.get(AC).add(p_timeStep_h * i, assetFlowArray_kW[i]);
+		peakImportWeekAssetFlows.get(AC).add(p_timeParameters.getTimeStep_h() * i, assetFlowArray_kW[i]);
 	}
 }
 
@@ -1156,7 +1177,7 @@ J_DataSetMap peakExportWeekAssetFlows = new J_DataSetMap(OL_AssetFlowCategories.
 for (OL_AssetFlowCategories AC : v_rapidRunData.am_assetFlowsAccumulators_kW.keySet()) {
 	double[] assetFlowArray_kW = v_rapidRunData.am_assetFlowsAccumulators_kW.get(AC).getTimeSeries_kW();
 	for (int i=startIdx; i<endIdx; i++) {
-		peakExportWeekAssetFlows.get(AC).add(p_timeStep_h * i, assetFlowArray_kW[i]);
+		peakExportWeekAssetFlows.get(AC).add(p_timeParameters.getTimeStep_h() * i, assetFlowArray_kW[i]);
 	}
 }
 
@@ -1169,27 +1190,27 @@ EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
 if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 	v_liveAssetsMetaData.activeAssetFlows.add(AC);
 	
-	DataSet dsAsset = new DataSet( (int)(168 / p_timeStep_h) );
+	DataSet dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 	
 	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
 	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 		dsAsset.add( t, 0);
 	}
 	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
 	
 	if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
-		dsAsset = new DataSet( (int)(168 / p_timeStep_h) );
+		dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 		
-		for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+		for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 			dsAsset.add( t, 0);
 		}
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
 	}
 	if (AC == OL_AssetFlowCategories.V2GPower_kW && !v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
-		dsAsset = new DataSet( (int)(168 / p_timeStep_h) );
+		dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 		
-		for (double t = startTime; t <= endTime; t += p_timeStep_h) {
+		for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 			dsAsset.add( t, 0);
 		}
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
@@ -1221,7 +1242,7 @@ Date f_getDate()
 {/*ALCODESTART::1758012535712*/
 Date startDate = getExperiment().getEngine().getStartDate();
 long startDateUnixTime_ms = startDate.getTime();
-long runtime_ms = (long) (v_timeStepsElapsed * p_timeStep_h * 60 * 60 * 1000);
+long runtime_ms = (long) (v_timeStepsElapsed * p_timeParameters.getTimeStep_h() * 60 * 60 * 1000);
 Date date = new Date();
 date.setTime(startDateUnixTime_ms + runtime_ms);
 return date;

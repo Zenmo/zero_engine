@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementLocalBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_LOCAL;
     private double filterTimeScale_h = 5*24;
     private double filterDiffGain_r;
@@ -28,9 +29,10 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     /**
      * Default constructor
      */
-    public J_ChargingManagementLocalBalancing( GridConnection gc) {
+    public J_ChargingManagementLocalBalancing( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
-    	this.filterDiffGain_r = 1/(filterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.timeParameters = timeParameters;
+    	this.filterDiffGain_r = 1/(filterTimeScale_h/timeParameters.getTimeStep_h());
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -40,8 +42,8 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging(J_ChargePoint chargePoint) {    	
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {    	
+    	double t_h = timeVariables.getT_h();
 
     	// Use current GC-load (so without EV charging!) as an 'equivalent price' signal, and use EV battery flexibility to make local load flatter.
     	double currentBalanceBeforeEV_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
@@ -62,7 +64,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 				}    
 			}
 	    	//Send the chargepower setpoint to the chargepoint			
-			chargePoint.charge(chargingRequest, chargeSetpoint_kW);  		
+			chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables, gc);  		
     	}
     }
 

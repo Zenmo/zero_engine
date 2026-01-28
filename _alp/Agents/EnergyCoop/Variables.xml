@@ -872,9 +872,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[min(1, 0.8*1.2 * energyModel.p_timeStep_h) //0.2 ]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -955,9 +952,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760)]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -996,9 +990,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760)]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1132,9 +1123,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[ZeroAccumulator]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new ZeroAccumulator(true, energyModel.p_timeStep_h, 8760)]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">

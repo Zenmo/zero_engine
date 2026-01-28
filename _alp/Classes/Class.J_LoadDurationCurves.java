@@ -3,7 +3,6 @@
  */	
 public class J_LoadDurationCurves implements Serializable {
 	private boolean firstRun = true;
-	private EnergyModel energyModel;
 	
 	public int arraySize;
 	private double[] netLoadArrayAnnual_kW;
@@ -31,12 +30,14 @@ public class J_LoadDurationCurves implements Serializable {
     public J_LoadDurationCurves() {
     }
    
-    public J_LoadDurationCurves(double[] loadArray_kW, EnergyModel energyModel) {
-    	this.energyModel = energyModel;
-    	calculateLoadDurationCurves(loadArray_kW);	
+    public J_LoadDurationCurves(double[] loadArray_kW, J_TimeParameters timeParameters) {
+    	calculateLoadDurationCurves(loadArray_kW, timeParameters);
     }    
     
-    public void calculateLoadDurationCurves(double[] loadArray_kW) {
+    public void calculateLoadDurationCurves(double[] loadArray_kW, J_TimeParameters timeParameters) {
+    	// This is quite a large function so for readability we define
+    	double timeStep_h = timeParameters.getTimeStep_h();
+    	
     	this.arraySize = loadArray_kW.length;
     	if (ds_loadDurationCurveTotal_kW != null) {	
     		if (ds_previousLoadDurationCurveTotal_kW != null) { // Not second run either!
@@ -49,8 +50,8 @@ public class J_LoadDurationCurves implements Serializable {
     
     	this.netLoadArrayAnnual_kW = Arrays.copyOf(loadArray_kW,arraySize);
     	this.loadDuractionCurveTotal_kW = new double[arraySize];
-    	this.netLoadArraySummerweek_kW = new double[roundToInt(168 / energyModel.p_timeStep_h)];
-    	this.netLoadArrayWinterweek_kW= new double[roundToInt(168 / energyModel.p_timeStep_h)];
+    	this.netLoadArraySummerweek_kW = new double[roundToInt(168 / timeStep_h)];
+    	this.netLoadArrayWinterweek_kW= new double[roundToInt(168 / timeStep_h)];
     	this.netLoadArrayDaytime_kW = new double[arraySize/2];
     	this.netLoadArrayNighttime_kW = new double[arraySize/2];
     	// For different years the amount of weekdays and weekend days may be different, so the size will be variable for now
@@ -83,34 +84,34 @@ public class J_LoadDurationCurves implements Serializable {
     	for(int i=0; i<arraySize ; i++) {
     		if (!firstRun) {
     			// First we make sure to store our previous Load Curve
-    			ds_previousLoadDurationCurveTotal_kW.add(i*energyModel.p_timeStep_h,ds_loadDurationCurveTotal_kW.getY(i));		
+    			ds_previousLoadDurationCurveTotal_kW.add(i*timeStep_h, ds_loadDurationCurveTotal_kW.getY(i));		
     		}
     		
     		if (replaceSummerWinterWithPeaks) {
 	    		// peak weeks
-	    		if (i >= (minIndex - roundToInt(84 / energyModel.p_timeStep_h)) && i < (minIndex + roundToInt(84 / energyModel.p_timeStep_h)) ) {
+	    		if (i >= (minIndex - roundToInt(84 / timeStep_h)) && i < (minIndex + roundToInt(84 / timeStep_h)) ) {
 	    			netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 	    			i_summer++;
 	    		}
 	    		
-	    		if (i >= (maxIndex - roundToInt(84 / energyModel.p_timeStep_h)) && i < (maxIndex + roundToInt(84 / energyModel.p_timeStep_h)) ) {
+	    		if (i >= (maxIndex - roundToInt(84 / timeStep_h)) && i < (maxIndex + roundToInt(84 / timeStep_h)) ) {
 	    			netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 	    			i_winter++;
 	    		}
 			} else {
 				// summer/winter
-				if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfSummerWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfSummerWeek_h+24*7) {
+				if (timeParameters.getRunStartTime_h() + i*timeStep_h > timeParameters.getStartOfSummerWeek_h() && timeParameters.getRunStartTime_h() + i*timeStep_h<= timeParameters.getStartOfSummerWeek_h() + 24*7) {
 					netLoadArraySummerweek_kW[i_summer]=-netLoadArrayAnnual_kW[i];
 					i_summer++;
 				}
-				if (energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h > energyModel.p_startOfWinterWeek_h && energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h<= energyModel.p_startOfWinterWeek_h+24*7) {
+				if (timeParameters.getRunStartTime_h() + i*timeStep_h > timeParameters.getStartOfWinterWeek_h() && timeParameters.getRunStartTime_h() + i*timeStep_h<= timeParameters.getStartOfWinterWeek_h() + 24*7) {
 					netLoadArrayWinterweek_kW[i_winter]=-netLoadArrayAnnual_kW[i];
 					i_winter++;
 				}
 			}
     		
     		// day/night
-    		if (i*energyModel.p_timeStep_h % 24 > 6 && i*energyModel.p_timeStep_h % 24 <= 18) { //daytime
+    		if (i*timeStep_h % 24 > 6 && i*timeStep_h % 24 <= 18) { //daytime
     			netLoadArrayDaytime_kW[i_day]=-netLoadArrayAnnual_kW[i];
     			i_day++;
     		} else {
@@ -118,7 +119,7 @@ public class J_LoadDurationCurves implements Serializable {
     			i_night++;
     		}
     		//Weekday/weekend
-    		if (((energyModel.p_runStartTime_h + i*energyModel.p_timeStep_h+ 24*(energyModel.v_dayOfWeek1jan-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+    		if (((timeParameters.getRunStartTime_h() + i*timeStep_h+ 24*(timeParameters.getDayOfWeek1jan()-1)) % (24*7)) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
     			listNetLoadArrayWeekday_kW.add(-netLoadArrayAnnual_kW[i]);
     			i_weekday++;
     		} else {
@@ -156,7 +157,7 @@ public class J_LoadDurationCurves implements Serializable {
     	ds_loadDurationCurveTotal_kW = new DataSet(roundToInt(arraySize));
     	for(int i=0; i< arraySize; i++) {
     		loadDuractionCurveTotal_kW[i]=netLoadArrayAnnual_kW[arraySize-i-1];
-    		ds_loadDurationCurveTotal_kW.add(i*energyModel.p_timeStep_h, loadDuractionCurveTotal_kW[i] );    		
+    		ds_loadDurationCurveTotal_kW.add(i*timeStep_h, loadDuractionCurveTotal_kW[i] );    		
     	}
     	
     	// Week
@@ -164,28 +165,28 @@ public class J_LoadDurationCurves implements Serializable {
     	ds_loadDurationCurveSummer_kW = new DataSet(arraySize);
     	ds_loadDurationCurveWinter_kW = new DataSet(arraySize);
     	for(int i=0; i< arraySize; i++) {
-    		ds_loadDurationCurveSummer_kW.add(i*energyModel.p_timeStep_h, -netLoadArraySummerweek_kW[i]);
-    		ds_loadDurationCurveWinter_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWinterweek_kW[i]);
+    		ds_loadDurationCurveSummer_kW.add(i*timeStep_h, -netLoadArraySummerweek_kW[i]);
+    		ds_loadDurationCurveWinter_kW.add(i*timeStep_h, -netLoadArrayWinterweek_kW[i]);
     	}
     	    	// Day / Night
     	arraySize = netLoadArrayDaytime_kW.length;
     	ds_loadDurationCurveDaytime_kW = new DataSet(arraySize);
     	ds_loadDurationCurveNighttime_kW = new DataSet(arraySize);
     	for(int i=0; i< arraySize; i++) {
-    		ds_loadDurationCurveDaytime_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayDaytime_kW[i]);
-    		ds_loadDurationCurveNighttime_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayNighttime_kW[i]);
+    		ds_loadDurationCurveDaytime_kW.add(i*timeStep_h, -netLoadArrayDaytime_kW[i]);
+    		ds_loadDurationCurveNighttime_kW.add(i*timeStep_h, -netLoadArrayNighttime_kW[i]);
     	}
     	// Weekday
     	arraySize = netLoadArrayWeekday_kW.length;
     	ds_loadDurationCurveWeekday_kW = new DataSet(arraySize);
     	for(int i=0; i< arraySize; i++) {
-    		ds_loadDurationCurveWeekday_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekday_kW[i]);
+    		ds_loadDurationCurveWeekday_kW.add(i*timeStep_h, -netLoadArrayWeekday_kW[i]);
     	}
     	// Weekend
     	arraySize = netLoadArrayWeekend_kW.length;
     	ds_loadDurationCurveWeekend_kW = new DataSet(arraySize);
     	for(int i=0; i< arraySize; i++) {
-    		ds_loadDurationCurveWeekend_kW.add(i*energyModel.p_timeStep_h, -netLoadArrayWeekend_kW[i]);
+    		ds_loadDurationCurveWeekend_kW.add(i*timeStep_h, -netLoadArrayWeekend_kW[i]);
     	}
     }
 
@@ -201,5 +202,5 @@ public class J_LoadDurationCurves implements Serializable {
 	 * It needs to be changed when this class gets changed
 	 */ 
 	private static final long serialVersionUID = 1L;
-
-}
+	
+}													

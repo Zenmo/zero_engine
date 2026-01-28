@@ -16,6 +16,7 @@ import java.util.EnumSet;
 public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private double timeStep_h;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.BALANCE_GRID;
     private boolean V2GActive = false;
@@ -23,9 +24,10 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementGridBalancing( GridConnection gc) {
+    public J_ChargingManagementGridBalancing( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
-    	this.timeStep_h = gc.energyModel.p_timeParameters.getTimeStep_h();
+    	this.timeParameters = timeParameters;
+    	this.timeStep_h = timeParameters.getTimeStep_h();
     }
       
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -36,8 +38,8 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging(J_ChargePoint chargePoint) {
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
+    	double t_h = timeVariables.getT_h();
     
     	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
 	    	double chargeSetpoint_kW = 0;
@@ -66,7 +68,7 @@ public class J_ChargingManagementGridBalancing implements I_ChargingManagement {
 			}
 
 	    	//Send the chargepower setpoint to the chargepoint
-	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW);
+	       	chargePoint.charge(chargeRequest, chargeSetpoint_kW, timeVariables, gc);
     	}
  
     }

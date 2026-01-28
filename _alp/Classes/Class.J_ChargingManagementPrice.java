@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_ChargingManagementPrice implements I_ChargingManagement {
 
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.PRICE;
     private double initialValueElectricityPriceLowPassed_eurpkWh = 0.1;
     private double electricityPriceLowPassed_eurpkWh = this.initialValueElectricityPriceLowPassed_eurpkWh;
@@ -28,9 +29,10 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     /**
      * Default constructor
      */
-    public J_ChargingManagementPrice( GridConnection gc) {
+    public J_ChargingManagementPrice( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
-    	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/gc.energyModel.p_timeStep_h);
+    	this.timeParameters = timeParameters;
+    	this.priceFilterDiffGain_r = 1/(priceFilterTimeScale_h/timeParameters.getTimeStep_h());
     }
         
     public OL_ChargingAttitude getCurrentChargingType() {
@@ -40,8 +42,8 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
      * One of the simplest charging algorithms.
      * 
      */
-    public void manageCharging(J_ChargePoint chargePoint) {
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
+    	double t_h = timeVariables.getT_h();
 
     	//double currentElectricityPriceConsumption_eurpkWh = gc.p_owner.f_getElectricityPrice(gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
     	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;
@@ -66,7 +68,7 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 				}    
 			}
 	    	//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW);					
+	       	chargePoint.charge(chargingRequest, chargeSetpoint_kW, timeVariables, gc);					
     	}
     }
 

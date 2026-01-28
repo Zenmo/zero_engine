@@ -138,8 +138,6 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 				</RecurrenceCode>
 			</RecurrenceProperties>
 			<FreezeXAxis>false</FreezeXAxis>
-			<HorizontalAxisExpression>energyModel.t_h</HorizontalAxisExpression>
-			<VerticalAxisExpression>v_currentLoad_kW</VerticalAxisExpression>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 		<DataSet>
@@ -169,8 +167,6 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 				</RecurrenceCode>
 			</RecurrenceProperties>
 			<FreezeXAxis>false</FreezeXAxis>
-			<HorizontalAxisExpression>energyModel.t_h</HorizontalAxisExpression>
-			<VerticalAxisExpression>p_capacity_kW</VerticalAxisExpression>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 		<DataSet>
@@ -200,8 +196,6 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 				</RecurrenceCode>
 			</RecurrenceProperties>
 			<FreezeXAxis>false</FreezeXAxis>
-			<HorizontalAxisExpression>energyModel.t_h</HorizontalAxisExpression>
-			<VerticalAxisExpression>-p_capacity_kW</VerticalAxisExpression>
 			<SamplesToKeep>672</SamplesToKeep>
 		</DataSet>
 		<DataSet>

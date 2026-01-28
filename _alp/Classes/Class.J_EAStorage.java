@@ -1,7 +1,7 @@
 /**
  * J_EAStorage
  */
-public abstract class J_EAStorage extends J_EA implements Serializable {
+public abstract class J_EAStorage extends J_EAFlex implements Serializable {
 
 	protected OL_EnergyCarriers storageMedium;
 	protected double storageCapacity_kWh;
@@ -70,11 +70,4 @@ public abstract class J_EAStorage extends J_EA implements Serializable {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
-
 }
