@@ -37,7 +37,7 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     	double heatingAssetPower_kW = heatDemand_kW;
     	
     	double CHPPowerRatioSetPoint = heatingAssetPower_kW / ((J_EAConversionGasCHP)heatingAsset).getOutputHeatCapacity_kW();
-    	heatingAsset.f_updateAllFlows(CHPPowerRatioSetPoint);
+    	gc.f_updateFlexAssetFlows(heatingAsset, CHPPowerRatioSetPoint, timeVariables);
     }
     
     
