@@ -2,12 +2,9 @@
  * J_EAConsumption
  */
 public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializable {
-	//protected J_ProfilePointer profilePointer;
-	public double yearlyDemand_kWh;
-	//protected OL_EnergyCarriers energyCarrier;
-	//private double consumptionScaling_fr = 1;
+
+	private double yearlyDemand_kWh;
 	//public double loadLoad_kWh = 0;
-	//private J_profilePointer profilePointer;
 	/**
      * Default constructor
      */
@@ -107,6 +104,10 @@ public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializ
 
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;
+    }
+    
+    public double getYearlyDemand_kWh() {
+    	return yearlyDemand_kWh;
     }
     
 	@Override

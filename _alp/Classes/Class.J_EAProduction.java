@@ -2,8 +2,8 @@
  * J_EAProduction
  */
 public class J_EAProduction extends zero_engine.J_EAProfile implements Serializable {
-	protected J_ProfilePointer profilePointer;
-	protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+	//protected J_ProfilePointer profilePointer;
+	//protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	protected double totalEnergyCurtailed_kWh=0;
 	//protected double outputTemperature_degC;
 	protected double capacity_kW;
@@ -98,7 +98,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	}
 	
 	@Override
-    public void operate(double ratioOfCapacity) {
+    public void operate(double ratioOfCapacity) {		
 		ratioOfCapacity = profilePointer.getCurrentValue();
 		
 		//if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
@@ -112,6 +112,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	    throw new RuntimeException("J_EAProduction operate override is called!");
 	}
 	
+	/*
     @Override
 	public void f_updateAllFlows(double v_powerFraction_fr) {
 		throw new RuntimeException("J_EAProduction.f_updateAllFlows() should be called without arguments!");
@@ -136,7 +137,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 		this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
-    }
+    }*/
     
     public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	

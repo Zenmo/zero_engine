@@ -81,9 +81,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     }
     
     public void f_updateAllFlows() {
-    	//operate(time_h-this.profileStarTime_h);    	
     	double profileValue = profilePointer.getCurrentValue();		
-    	
     	double currentPower_kW = profileValue * this.profileUnitScaler_r * this.profileScaling_fr;
 		
     	this.energyUse_kW = currentPower_kW;
@@ -95,12 +93,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		}
     	
 		//this.operate(ratioOfCapacity);
-		if (currentPower_kW==0.0) { // Skip when there is no consumption -> saves time?
+		if (currentPower_kW!=0.0) { // Skip when there is no consumption -> saves time?
 			if (parentAgent instanceof GridConnection) {    		
-	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
 	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
 	    	}
-
 		}
 		this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;

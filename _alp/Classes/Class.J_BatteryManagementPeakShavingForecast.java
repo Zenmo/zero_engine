@@ -139,14 +139,14 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 				    double COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
 					
 				    //traceln(genericHeatDemandProfile.getProfilePointer().getValue(time)*genericHeatDemandProfile.yearlyDemand_kWh);
-				    nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += genericHeatDemandProfile.getProfilePointer().getValue(time)*genericHeatDemandProfile.yearlyDemand_kWh*genericHeatDemandProfile.getConsumptionScaling_fr() / COP_r;
+				    nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += genericHeatDemandProfile.getProfilePointer().getValue(time)*genericHeatDemandProfile.getYearlyDemand_kWh()*genericHeatDemandProfile.getConsumptionScaling_fr() / COP_r;
 				}
 			}
 		}
 		for(J_EAConsumption genericBuildingProfile : genericBuildingProfiles) {
 			if(genericBuildingProfile != null){ //table function 
 				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
-					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += genericBuildingProfile.getProfilePointer().getValue(time)*genericBuildingProfile.yearlyDemand_kWh*genericBuildingProfile.getConsumptionScaling_fr();
+					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += genericBuildingProfile.getProfilePointer().getValue(time)*genericBuildingProfile.getYearlyDemand_kWh()*genericBuildingProfile.getConsumptionScaling_fr();
 				}
 			}
 		}
