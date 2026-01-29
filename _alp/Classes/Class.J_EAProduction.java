@@ -140,7 +140,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
     	this.clear();
     }*/
     
-    public J_FlowPacket curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW, GridConnection gc) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
+    public J_FlowPacket curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	
     	/*if(this.energyCarrier != curtailedEnergyCarrier) {
     		//new RuntimeException("Trying to curtail the wrong a production asset with the wrong energyCarrier");

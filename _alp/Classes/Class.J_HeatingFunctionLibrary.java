@@ -38,9 +38,9 @@ public abstract class J_HeatingFunctionLibrary {
     	
     	if (remainingPTProduction_kW > 0) {//Heat (for now always curtail over produced heat!)
     		for (J_EAProduction j_ea : ptAssets) {
-    			J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW, gc);
+    			J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);
     			gc.f_removeFlows(flowPacket, j_ea);
-    			remainingPTProduction_kW += flowPacket.energyUse_kW;
+    			remainingPTProduction_kW += flowPacket.energyUse_kW; // Curtailed energyUse_kW will be a negative number when curtailing a production asset, hence the += !
     			
     			if (remainingPTProduction_kW <= 0) {
     				break;

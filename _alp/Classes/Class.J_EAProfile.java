@@ -117,7 +117,7 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 		}
     } */
 
-    public J_FlowPacket curtailElectricityConsumption(double curtailmentSetpoint_kW, GridConnection gc) {
+    public J_FlowPacket curtailElectricityConsumption(double curtailmentSetpoint_kW) {
     	double currentElectricityConsumption_kW = max(0,this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY));
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh -= curtailmentPower_kW * this.timeParameters.getTimeStep_h();
