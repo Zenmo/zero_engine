@@ -50,6 +50,16 @@ public class J_ValueMap <E extends Enum<E>> implements Serializable {
     	return this;
     }
     
+    public final J_ValueMap removeFlows( J_ValueMap f) {
+    	int len = valuesArray.length;
+		for(int i=0; i<len; i++) {
+			//this.valuesArray[i]=this.valuesArray[i]+f.valuesArray[i];
+			this.valuesArray[i]-=f.valuesArray[i];
+		}
+		this.enumSet.addAll(f.enumSet); 
+    	return this;
+    }
+    
     public final J_ValueMap addFlow( E key, double value) {
     	enumSet.add(key);
     	this.valuesArray[key.ordinal()]+=value;

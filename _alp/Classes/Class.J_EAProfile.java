@@ -117,8 +117,8 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 		}
     } */
 
-    public void curtailElectricityConsumption(double curtailmentSetpoint_kW, GridConnection gc) {
-    	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
+    public J_FlowPacket curtailElectricityConsumption(double curtailmentSetpoint_kW, GridConnection gc) {
+    	double currentElectricityConsumption_kW = max(0,this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY));
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
     	energyUsed_kWh -= curtailmentPower_kW * this.timeParameters.getTimeStep_h();
     	lostLoad_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h();
@@ -127,12 +127,13 @@ public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
     	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW);
     	
-    	this.energyUse_kW = -curtailmentPower_kW;
-
     	this.lastFlowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY) - curtailmentPower_kW);
     	this.lastEnergyUse_kW -= curtailmentPower_kW;
 
-    	gc.f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);    	
+    	//gc.f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);    	    
+    	J_FlowPacket flowPacket = new J_FlowPacket(flowsMap, curtailmentPower_kW, assetFlows_kW);
+     	return flowPacket;
+
     }    
     
     public J_ProfilePointer getProfilePointer() {

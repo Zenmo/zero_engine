@@ -6,7 +6,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	//protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
 	protected double totalEnergyCurtailed_kWh=0;
 	//protected double outputTemperature_degC;
-	protected double capacity_kW;
+	//protected double capacity_kW;
 
     /**
      * Default constructor
@@ -23,7 +23,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	    this.energyAssetType = type;
 	    this.energyAssetName = name;
 	    this.energyCarrier = energyCarrier;
-	    this.capacity_kW = capacity_kW;
+	    //this.capacity_kW = capacity_kW;
 	    this.signScaler_r = -1.0;
 		if (profile.getProfileUnits() == OL_ProfileUnits.NORMALIZEDPOWER) {
 			this.profileUnitScaler_r = capacity_kW;
@@ -51,7 +51,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	public void setCapacityElectric_kW(double capacityElectric_kW, GridConnection gc) {
 		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
 		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-			double difference_kW = capacityElectric_kW - this.capacity_kW;
+			double difference_kW = capacityElectric_kW - this.profileUnitScaler_r;
 			if (this.energyAssetType == OL_EnergyAssetType.WINDMILL) {		
 				gc.v_liveAssetsMetaData.totalInstalledWindPower_kW += difference_kW;
 				if (gc.p_parentNodeElectric != null) {
@@ -69,7 +69,8 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 				gc.energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += difference_kW;
 			}
 	
-			this.capacity_kW = capacityElectric_kW;
+			this.profileUnitScaler_r = capacityElectric_kW;
+			
 		} else {			
 			throw new RuntimeException("Production assets energy carrier is not electricity!");
 		}
@@ -77,7 +78,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	
 	public double getCapacityElectric_kW() {
 		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
-			return this.capacity_kW;
+			return this.profileUnitScaler_r;
 		} else {			
 			throw new RuntimeException("J_EAProduction is not electric!");
 		}
@@ -85,7 +86,7 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	
 	public double getCapacityHeat_kW() {
 		if (energyCarrier == OL_EnergyCarriers.HEAT) {
-			return capacity_kW;			
+			return profileUnitScaler_r;			
 		} else {			
 			throw new RuntimeException("J_EAProduction is not thermal!");
 		}
@@ -139,14 +140,14 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
     	this.clear();
     }*/
     
-    public double curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW, GridConnection gc) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
+    public J_FlowPacket curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW, GridConnection gc) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	
-    	if(this.energyCarrier != curtailedEnergyCarrier) {
+    	/*if(this.energyCarrier != curtailedEnergyCarrier) {
     		//new RuntimeException("Trying to curtail the wrong a production asset with the wrong energyCarrier");
     		return 0;
-    	}
+    	}*/
     	
-    	double currentProduction_kW = -this.lastFlowsMap.get(curtailedEnergyCarrier );
+    	double currentProduction_kW = max(0,-this.lastFlowsMap.get(curtailedEnergyCarrier));
     	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW)); // Can only curtail what was produced in the first place.
     	energyUsed_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h(); // energyUsed_kWh is negative for production assets. Curtailment makes it 'less negative', so a positive number is added to energyUsed_kWh.
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h();
@@ -158,13 +159,9 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
     	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW); // production is a negative flow, so to remove production, a positive value must be added to lastFlows.
     	this.lastEnergyUse_kW += curtailmentPower_kW; // production is a negative flow, so to remove production, a positive value must be added to lastEnergyUse_kW.
     	
-    	//traceln("Electricity production of asset %s curtailed by %s kW!", this, curtailmentPower_kW);
-
-		gc.f_removeFlows(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW, this);
-
-    	clear();
-    	
-    	return curtailmentPower_kW;
+		//gc.f_removeFlows(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW, this);
+     	J_FlowPacket flowPacket = new J_FlowPacket(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW);
+     	return flowPacket;
     }
     
     public double getEnergyCurtailed_kWh() {
@@ -186,8 +183,9 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 		return
 			"type = " + this.getClass().toString() + " " +
 			"owner = " + this.getOwner() +" " +
-			"capacity_kW = " + capacity_kW +" "+
+			"capacity_kW = " + profileUnitScaler_r +" "+
 			"energyCarrier = " + energyCarrier +" "+
+			"assetFlowCategory = " + this.assetFlowCategory + " " +
 			"energyProduced_kWh = " + (-this.energyUsed_kWh) +  " ";
 	}
 

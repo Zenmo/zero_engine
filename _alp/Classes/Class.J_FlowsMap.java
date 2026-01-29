@@ -53,6 +53,16 @@ public class J_FlowsMap implements Serializable {
     	return this;
     }
     
+    public final J_FlowsMap removeFlows( J_FlowsMap f) {
+    	int len = valuesArray.length;
+		for(int i=0; i<len; i++) {
+			//this.valuesArray[i]=this.valuesArray[i]+f.valuesArray[i];
+			this.valuesArray[i]-=f.valuesArray[i];
+		}
+		this.energyCarrierList.addAll(f.energyCarrierList); 
+    	return this;
+    }
+    
     public final J_FlowsMap addFlow( OL_EnergyCarriers key, double value) {
     	energyCarrierList.add(key);
     	this.valuesArray[key.ordinal()]+=value;
