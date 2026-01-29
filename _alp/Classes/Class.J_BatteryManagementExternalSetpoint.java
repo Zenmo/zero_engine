@@ -25,7 +25,7 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 
     }
 	
-    public J_BatteryManagementExternalSetpoint( GridConnection gc, J_TimeParameters timeParameters_) {
+    public J_BatteryManagementExternalSetpoint( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
     	this.timeParameters = timeParameters;
     }
