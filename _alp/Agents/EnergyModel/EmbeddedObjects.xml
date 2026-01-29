@@ -88,7 +88,7 @@
 				<Name><![CDATA[p_originalCapacity_kW]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_hasProfileData]]></Name>
+				<Name><![CDATA[p_profileType]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
