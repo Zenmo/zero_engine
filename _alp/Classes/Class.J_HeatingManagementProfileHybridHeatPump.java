@@ -17,6 +17,7 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	
 	private boolean isInitialized = false;
 	private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
@@ -31,25 +32,26 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 		
 	}
 	
-    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementProfileHybridHeatPump( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
 
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
     	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	if (heatPumpAsset.getCOP() > 3.0 ) {
     		if (heatDemand_kW < heatPumpAsset.getOutputCapacity_kW()) {
-    			heatPumpAsset.f_updateAllFlows( heatDemand_kW / heatPumpAsset.getOutputCapacity_kW() );
-    			gasBurnerAsset.f_updateAllFlows( 0.0 );
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, heatDemand_kW / heatPumpAsset.getOutputCapacity_kW(), timeVariables);
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, 0.0, timeVariables);
     			return;
     		}
     		else if (heatDemand_kW < heatPumpAsset.getOutputCapacity_kW() + gasBurnerAsset.getOutputCapacity_kW() ) {
-    			heatPumpAsset.f_updateAllFlows( 1.0 );
-    			gasBurnerAsset.f_updateAllFlows( (heatDemand_kW - heatPumpAsset.getOutputCapacity_kW()) / gasBurnerAsset.getOutputCapacity_kW() );
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, 1.0, timeVariables);
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, (heatDemand_kW - heatPumpAsset.getOutputCapacity_kW()) / gasBurnerAsset.getOutputCapacity_kW(), timeVariables);
     			return;
     		}
     		else {
@@ -58,13 +60,13 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	}
     	else {
     		if (heatDemand_kW < gasBurnerAsset.getOutputCapacity_kW()) {
-    			gasBurnerAsset.f_updateAllFlows( heatDemand_kW / gasBurnerAsset.getOutputCapacity_kW() );
-    			heatPumpAsset.f_updateAllFlows( 0.0 );
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, heatDemand_kW / gasBurnerAsset.getOutputCapacity_kW(), timeVariables);
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, 0.0, timeVariables);
     			return;
     		}
     		else if (heatDemand_kW < gasBurnerAsset.getOutputCapacity_kW() + heatPumpAsset.getOutputCapacity_kW() ) {
-    			gasBurnerAsset.f_updateAllFlows( 1.0 );
-    			heatPumpAsset.f_updateAllFlows( (heatDemand_kW - gasBurnerAsset.getOutputCapacity_kW()) / heatPumpAsset.getOutputCapacity_kW() );
+    	    	gc.f_updateFlexAssetFlows(gasBurnerAsset, 1.0, timeVariables);
+    	    	gc.f_updateFlexAssetFlows(heatPumpAsset, (heatDemand_kW - gasBurnerAsset.getOutputCapacity_kW()) / heatPumpAsset.getOutputCapacity_kW(), timeVariables);
     			return;
     		}
     		else {
@@ -156,11 +158,4 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

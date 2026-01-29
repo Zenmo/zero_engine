@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
 public class J_ChargingManagementMaxAvailablePower implements I_ChargingManagement {
 	private GridConnection gc;
+    private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.MAX_POWER;
     
     private boolean V2GActive = false;
@@ -22,16 +23,17 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     /**
      * Default constructor
      */
-    public J_ChargingManagementMaxAvailablePower( GridConnection gc) {
+    public J_ChargingManagementMaxAvailablePower( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
     }
     
-    public void manageCharging(J_ChargePoint chargePoint) {
-    	double t_h = gc.energyModel.t_h;
+    public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
+    	double t_h = timeVariables.getT_h();
 
     	double remainingChargingPower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(ELECTRICITY);
     	if (gc.p_batteryAsset!=null) {
@@ -58,7 +60,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
 			double chargingPower_kW = min(max(0,chargingSetpoint_kW), chargePoint.getMaxChargingCapacity_kW(chargingRequest));
 			
 			//Send the chargepower setpoints to the chargepoint
-	       	chargePoint.charge(chargingRequest, chargingPower_kW); 
+	       	chargePoint.charge(chargingRequest, chargingPower_kW, timeVariables, gc); 
 			remainingChargingPower_kW = max(0, remainingChargingPower_kW - chargingPower_kW); // Assumes the asset complies with the command!   			
     	}
     }

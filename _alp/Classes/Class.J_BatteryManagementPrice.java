@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementPrice implements I_BatteryManagement {
 
     private GridConnection gc;
+    J_TimeParameters timeParameters;
     // Parameters used:
     private boolean stayWithinConnectionLimits = true; // When this flag is true the battery stays within the contracted capacity of the GC
     private double chargeDischarge_offset_eurpkWh = 0.0; // This term determines the minimal price difference before the battery is used
@@ -35,24 +36,26 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 		
 	}
     
-    public J_BatteryManagementPrice( GridConnection gc ) {
+    public J_BatteryManagementPrice( GridConnection gc, J_TimeParameters timeParameters ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
-    public J_BatteryManagementPrice( GridConnection gc, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
+    public J_BatteryManagementPrice( GridConnection gc, J_TimeParameters timeParameters, boolean stayWithinConnectionLimits, double chargeDischarge_offset_eurpkWh, double WTPfeedbackGain_eurpSOC, double priceGain_kWhpeur, double priceTimescale_h ) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.stayWithinConnectionLimits = stayWithinConnectionLimits;
     	this.chargeDischarge_offset_eurpkWh = chargeDischarge_offset_eurpkWh;
     	this.WTPfeedbackGain_eurpSOC = WTPfeedbackGain_eurpSOC;
     	this.priceGain_kWhpeur = priceGain_kWhpeur;
-        this.lowPassFactor_fr = gc.energyModel.p_timeStep_h / priceTimescale_h;
+        this.lowPassFactor_fr = timeParameters.getTimeStep_h() / priceTimescale_h;
     }
     
     /**
      * This algorithm determines the battery behaviour with the historical national EPEX price. 
      * It has a boolean flag wether or not to take the GC's connection capacity into account.
      */
-    public void manageBattery() {
+    public void manageBattery(J_TimeVariables timeVariables) {
 	    // Get the national EPEX price
 	    double currentElectricityPriceCharge_eurpkWh = gc.energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;
 	
@@ -82,7 +85,8 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 	    }
 	
-	    gc.p_batteryAsset.f_updateAllFlows( chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW() );
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+
     }
     
     
@@ -107,11 +111,4 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

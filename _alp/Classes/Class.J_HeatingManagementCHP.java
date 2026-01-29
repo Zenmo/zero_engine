@@ -5,6 +5,7 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
 
     private boolean isInitialized = false;
     private GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private OL_GridConnectionHeatingType validHeatingType = OL_GridConnectionHeatingType.GAS_CHP;
 
 	private OL_GridConnectionHeatingType currentHeatingType;
@@ -19,31 +20,29 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     	
     }
     
-    public J_HeatingManagementCHP( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementCHP( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
       
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
     	
-    	throw new RuntimeException("CHP MANAGEMENT IS NOT FINISHED YET!");
-    	/*
-       	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	double heatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     	
-    	double heatingAssetPower_kW = 0;
-   	    	
-    	heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-		heatingAsset.f_updateAllFlows( heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW() );
-    	*/
+    	double heatingAssetPower_kW = heatDemand_kW;
+    	
+    	double CHPPowerRatioSetPoint = heatingAssetPower_kW / ((J_EAConversionGasCHP)heatingAsset).getOutputHeatCapacity_kW();
+    	gc.f_updateFlexAssetFlows(heatingAsset, CHPPowerRatioSetPoint, timeVariables);
     }
     
     
     public void initializeAssets() {
-    	if (validHeatingType == this.currentHeatingType) {
+    	if (validHeatingType != this.currentHeatingType) {
     		throw new RuntimeException(this.getClass() + " does not support heating type: " + this.currentHeatingType);
     	}
     	List<J_EAProduction> ptAssets = findAll(gc.c_productionAssets, ea -> ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL);

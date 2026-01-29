@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingManagement{
 	private boolean isInitialized = false;
 	private GridConnection gc;
+	private J_TimeParameters timeParameters;
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
 	);
@@ -32,7 +33,6 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     private double P_gain_kWpDegC = 1*1;
     private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
-    private double timeStep_h;
     
     //Temperature setpoint low pass filter
     private double filteredCurrentSetpoint_degC;
@@ -48,13 +48,13 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     public J_HeatingManagementPIcontrolHybridHeatpump() {
     }
 
-    public J_HeatingManagementPIcontrolHybridHeatpump( GridConnection gc, OL_GridConnectionHeatingType heatingType) {
+    public J_HeatingManagementPIcontrolHybridHeatpump( GridConnection gc, J_TimeParameters timeParameters, OL_GridConnectionHeatingType heatingType) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
-    	this.timeStep_h = gc.energyModel.p_timeStep_h;
     }
     
-    public void manageHeating() {
+    public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
@@ -63,13 +63,13 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	
     	if(hasPT) {
 	    	//Adjust the hot water and overall heat demand with the buffer and pt
-	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
+	    	double remainingHotWaterDemand_kW = J_HeatingFunctionLibrary.managePTAndHotWaterHeatBuffer(hotWaterBuffer, ptAssets, hotWaterDemand_kW, timeVariables, gc); // This function updates the buffer and curtails PT if needed -> current balanceflow is updated accordingly.
 	    }
     	
     	double otherHeatDemand_kW = gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
 
     	double buildingTemp_degC = building.getCurrentTemperature();
-    	double timeOfDay_h = gc.energyModel.t_hourOfDay;
+    	double timeOfDay_h = timeVariables.getTimeOfDay_h();
     	double buildingHeatingDemand_kW = 0;
     	
     	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
@@ -78,13 +78,13 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	}
     	
     	//Smooth the setpoint signal
-    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / this.timeStep_h) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
+    	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / timeParameters.getTimeStep_h()) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);
     	
     	
     	//Determine the building heat demand using the found temp setpoint and PI controller
     	double deltaT_degC = this.filteredCurrentSetpoint_degC - building.getCurrentTemperature(); // Positive deltaT when heating is needed
     	
-    	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeStep_h); // max(0,...) to prevent buildup of negative integrator during warm periods.
+    	I_state_hDegC = max(0,I_state_hDegC + deltaT_degC * timeParameters.getTimeStep_h()); // max(0,...) to prevent buildup of negative integrator during warm periods.
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
     	
     	
@@ -105,9 +105,9 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	}
     	
     	//Updat flows with found asset powers
-		heatPumpAsset.f_updateAllFlows( heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW() );
-		gasBurnerAsset.f_updateAllFlows( gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW() );
-		building.f_updateAllFlows( heatIntoBuilding_kW / building.getCapacityHeat_kW() );
+    	gc.f_updateFlexAssetFlows(heatPumpAsset, heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW(), timeVariables);
+    	gc.f_updateFlexAssetFlows(gasBurnerAsset, gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW(), timeVariables);
+    	gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);
     }
     
     

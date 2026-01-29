@@ -15,8 +15,8 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
      *  For our purpose the unit doesn't matter.
      * @param timeStep_h
      */
-    public J_EAPetroleumFuelTractor(Agent parentAgent, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, double timeStep_h) {
-        if (parentAgent == null) {
+    public J_EAPetroleumFuelTractor(I_AssetOwner owner, double yearlyPetroleumFuelConsumption_L, double[] petroleumFuelConsumptionPerWeek, J_TimeParameters timeParameters) {
+        if (owner == null) {
             throw new RuntimeException("PetroleumFuel tractor missing parent agent");
         }
         
@@ -36,46 +36,26 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
             );
         }
         
-        if (timeStep_h <= 0.0) {
-            throw new RuntimeException("Tractor timestep is off");
-        }
-        
-        this.parentAgent = parentAgent;
+        this.setOwner(owner);
+        this.timeParameters = timeParameters;
         this.petroleumFuelConsumptionPerWeek_L = calculatePetroleumFuelConsumptionPerWeek_L(yearlyPetroleumFuelConsumption_L, petroleumFuelConsumptionPerWeek);
-        this.timestep_h = timeStep_h;
         
         this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.PETROLEUM_FUEL);
-        registerEnergyAsset();
-    }
+        registerEnergyAsset(timeParameters);
+    }    
     
     @Override
-    public void f_updateAllFlows() {
-         operate(((GridConnection)parentAgent).energyModel.t_h); // temporary ugly hack
-         if (parentAgent instanceof GridConnection) {        
-            ((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-        }
-        this.lastFlowsMap.cloneMap(this.flowsMap);
-        this.lastEnergyUse_kW = this.energyUse_kW;
-        this.clear();
-    }
-    
-    @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
-    	throw new RuntimeException("J_EADieselTractor.f_updateAllFlows(powerFraction_fr) not supperted for J_EADieselTractor! Use J_EADieselTractor.f_updateProfileFlows(t_h) instead!");
-    }
-    
-    @Override
-    public void operate(double t_h) {
-        if (!shouldWork(t_h)) {
+    public void operate(J_TimeVariables timeVariables) {
+        if (!shouldWork(timeVariables)) {
             this.flowsMap.clear();
             return;
         }
         
-        double currentPower_kW = currentPower_kW(t_h);    
+        double currentPower_kW = currentPower_kW(timeVariables.getT_h());    
         
         this.flowsMap.put(OL_EnergyCarriers.PETROLEUM_FUEL, currentPower_kW);
         this.energyUse_kW = currentPower_kW;
-        this.energyUsed_kWh += currentPower_kW * timestep_h;    
+        this.energyUsed_kWh += currentPower_kW * timeParameters.getTimeStep_h();    
     }
     
     private static double[] calculatePetroleumFuelConsumptionPerWeek_L(double yearlyPetroleumFuelConsumption_l, double[] weekProfile) {
@@ -86,8 +66,8 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
                 .toArray();
     }
     
-    private boolean shouldWork(double currentStep_h) {
-        return isWorkTime(currentStep_h) && isWorkDay();
+    private boolean shouldWork(J_TimeVariables timeVariables) {
+        return isWorkTime(timeVariables.getT_h()) && !timeVariables.isWeekday();
     }
     
     private boolean isWorkTime(double currentStep_h) {
@@ -96,16 +76,12 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
         return timeOfDay >= workDayStart_h && timeOfDay < workDayEnd_h;
     }
     
-    private boolean isWorkDay() {
-        return ((GridConnection)parentAgent).energyModel.b_isWeekday;
-    }
-    
     private double workHoursPerWeek() {
         return 5 * (workDayEnd_h - workDayStart_h);
     }
     
     private int workTimeStepsPerWeek() {
-        return roundToInt(workHoursPerWeek() / this.timestep_h);
+        return roundToInt(workHoursPerWeek() / this.timeParameters.getTimeStep_h());
     }
     
     private double currentPower_kW(double currentStep_h) {
@@ -118,10 +94,4 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
         double power_kW = thisWeekPetroleumFuelConsumption_kWh / workHoursPerWeek();
         return power_kW;
     }
-    
-    /**
-     * This number is here for model snapshot storing purpose<br>
-     * It needs to be changed when this class gets changed
-     */ 
-    private static final long serialVersionUID = 1L;
 }

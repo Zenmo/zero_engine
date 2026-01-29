@@ -547,7 +547,7 @@
 			<EmbeddedIcon>false</EmbeddedIcon>
 			<TextColor>-16777216</TextColor>
 			<Enabled>true</Enabled>
-			<ActionCode>energyModel.energyDataViewer.f_fillEnergyDataViewer(this);
+			<ActionCode>energyModel.energyDataViewer.f_fillEnergyDataViewer(this, energyModel.p_timeParameters);
 energyModel.energyDataViewer.viewArea.navigateTo();</ActionCode>
 		</BasicProperties>
 		<ExtendedProperties>

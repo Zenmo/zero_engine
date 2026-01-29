@@ -21,7 +21,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     private Agent target = parentGC;
     private OL_ResultScope targetType = OL_ResultScope.GRIDCONNECTION;
     List<GridConnection> c_targetGridConnections = new ArrayList<GridConnection>();
-    double p_timestep_h;
+    private J_TimeParameters timeParameters;
 	
     //Stored
 	private double[] storedBatteryChargingSchedule_kW;
@@ -31,9 +31,9 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 	}
 	
     
-	public J_BatteryManagementPeakShavingForecast( GridConnection parentGC ) {
+	public J_BatteryManagementPeakShavingForecast( GridConnection parentGC, J_TimeParameters timeParameters ) {
     	this.parentGC = parentGC;
-    	p_timestep_h = parentGC.energyModel.p_timeStep_h;
+    	this.timeParameters = timeParameters;
     	if (parentGC instanceof GCGridBattery) {
     		this.setTarget(null);
     	} else {
@@ -43,30 +43,30 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 	
 	
 	
-	public void manageBattery() {
+	public void manageBattery(J_TimeVariables timeVariables) {
 		if (this.target == null) {
-			parentGC.p_batteryAsset.f_updateAllFlows(0);
+	    	parentGC.f_updateFlexAssetFlows(parentGC.p_batteryAsset, 0.0, timeVariables);
     		return;
     	}
-		int index = roundToInt((parentGC.energyModel.t_h % 24)/p_timestep_h);
+		int index = roundToInt(timeVariables.getTimeOfDay_h()/timeParameters.getTimeStep_h());
 		if(index == 0){
-			this.batteryChargingSchedule_kW = this.calculateBatteryChargingSchedule();
+			this.batteryChargingSchedule_kW = this.calculateBatteryChargingSchedule(timeVariables);
 		}
-		parentGC.p_batteryAsset.f_updateAllFlows( this.batteryChargingSchedule_kW[index] / parentGC.p_batteryAsset.getCapacityElectric_kW() );
+		parentGC.f_updateFlexAssetFlows(parentGC.p_batteryAsset, this.batteryChargingSchedule_kW[index] / parentGC.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
     }
 	
 	
 	
-	private double[] getNettoBalanceForecast_kW() {	
+	private double[] getNettoBalanceForecast_kW(J_TimeVariables timeVariables) {	
 		
 		double[] nettoBalanceTotal_kW = new double[96];
-		double energyModel_time_h = parentGC.energyModel.t_h;
+		double energyModel_time_h = timeVariables.getT_h();
 
 		//For simulation that cross the year end
-		double hour_of_simulation_year = energyModel_time_h - parentGC.energyModel.p_runStartTime_h;
+		double hour_of_simulation_year = timeVariables.getAnyLogicTime_h();
 
-		int startTimeDayIndex = roundToInt(hour_of_simulation_year/p_timestep_h);
-		int endTimeDayIndex = roundToInt((hour_of_simulation_year + 24)/p_timestep_h);
+		int startTimeDayIndex = roundToInt(hour_of_simulation_year/timeParameters.getTimeStep_h());
+		int endTimeDayIndex = roundToInt((hour_of_simulation_year + 24)/timeParameters.getTimeStep_h());
 		
 		List<J_EAProfile> elecConsumptionProfiles = new ArrayList<J_EAProfile>(); //survey inkoop profile data
 		List<J_EAProfile> elecHeatPumpProfiles = new ArrayList<J_EAProfile>(); //survey WP profile data
@@ -91,7 +91,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		for(J_EAProfile elecConsumptionProfile : elecConsumptionProfiles) {
 			if(elecConsumptionProfile != null){
 				//double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.a_energyProfile_kWh, startTimeDayIndex, endTimeDayIndex), elecConsumptionProfile.getProfileScaling_fr()/p_timestep_h);
-				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.profilePointer.getAllValues(), startTimeDayIndex, endTimeDayIndex), elecConsumptionProfile.getProfileScaling_fr()*elecConsumptionProfile.getProfileUnitScaler_fr()/p_timestep_h);
+				double[] tempNettoBalance_kW = ZeroMath.arrayMultiply(Arrays.copyOfRange(elecConsumptionProfile.profilePointer.getAllValues(), startTimeDayIndex, endTimeDayIndex), elecConsumptionProfile.getProfileScaling_fr()*elecConsumptionProfile.getProfileUnitScaler_fr());
 				for (int i = 0; i < tempNettoBalance_kW.length; i++) {
 					nettoBalanceTotal_kW[i] += tempNettoBalance_kW[i];
 				}
@@ -121,10 +121,10 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 				//traceln(heatPower_kW);
 				double eta_r = parentGC.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
 				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
-			    for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
+			    for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += timeParameters.getTimeStep_h()){
 			    	double baseTemperature_degC = parentGC.energyModel.pp_ambientTemperature_degC.getValue(time);
 			    	double COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
-			    	nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += heatPower_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] / COP_r;
+			    	nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/timeParameters.getTimeStep_h())] += heatPower_kW[roundToInt((time-energyModel_time_h)/timeParameters.getTimeStep_h())] / COP_r;
 				}
 			}
 		}
@@ -134,26 +134,26 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 				double eta_r = parentGC.energyModel.avgc_data.p_avgEfficiencyHeatpump_fr;
 				double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
 				
-				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
+				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += timeParameters.getTimeStep_h()){
 				    double baseTemperature_degC = parentGC.energyModel.pp_ambientTemperature_degC.getValue(time);
 				    double COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
 					
 				    //traceln(genericHeatDemandProfile.getProfilePointer().getValue(time)*genericHeatDemandProfile.yearlyDemand_kWh);
-				    nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += genericHeatDemandProfile.getProfilePointer().getValue(time)*genericHeatDemandProfile.getYearlyDemand_kWh()*genericHeatDemandProfile.getConsumptionScaling_fr() / COP_r;
+				    nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/timeParameters.getTimeStep_h())] += genericHeatDemandProfile.getProfilePointer().getValue(time)*genericHeatDemandProfile.getYearlyDemand_kWh()*genericHeatDemandProfile.getConsumptionScaling_fr() / COP_r;
 				}
 			}
 		}
 		for(J_EAConsumption genericBuildingProfile : genericBuildingProfiles) {
 			if(genericBuildingProfile != null){ //table function 
 				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
-					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] += genericBuildingProfile.getProfilePointer().getValue(time)*genericBuildingProfile.getYearlyDemand_kWh()*genericBuildingProfile.getConsumptionScaling_fr();
+					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/timeParameters.getTimeStep_h())] += genericBuildingProfile.getProfilePointer().getValue(time)*genericBuildingProfile.getYearlyDemand_kWh()*genericBuildingProfile.getConsumptionScaling_fr();
 				}
 			}
 		}
 		for(J_EAProduction productionAssetProfile : productionAssetProfiles) {
 			if (productionAssetProfile != null) { //table function 
-				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
-					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/p_timestep_h)] -= productionAssetProfile.getProfilePointer().getValue(time)*productionAssetProfile.getCapacityElectric_kW();
+				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += timeParameters.getTimeStep_h()){
+					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/timeParameters.getTimeStep_h())] -= productionAssetProfile.getProfilePointer().getValue(time)*productionAssetProfile.getCapacityElectric_kW();
 				}
 			}
 		}
@@ -164,9 +164,9 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 	
 	
 	
-	private double[] calculateBatteryChargingSchedule() {
+	private double[] calculateBatteryChargingSchedule(J_TimeVariables timeVariables) {
 			
-		double[] nettoBalanceTotal_kW = getNettoBalanceForecast_kW();
+		double[] nettoBalanceTotal_kW = getNettoBalanceForecast_kW(timeVariables);
 		double amountOfHoursInADay = 24;
 		
 		//Initialize chargepoint array
@@ -176,15 +176,15 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		double totalExport_kWh = 0;
 		for(int i = 0; i < nettoBalanceTotal_kW.length; i++){
 			if(nettoBalanceTotal_kW[i] < 0){
-				totalExport_kWh += min(parentGC.p_batteryAsset.getCapacityElectric_kW(), -nettoBalanceTotal_kW[i])*p_timestep_h;
+				totalExport_kWh += min(parentGC.p_batteryAsset.getCapacityElectric_kW(), -nettoBalanceTotal_kW[i])*timeParameters.getTimeStep_h();
 			}
 		}
 			
 		//Flatten the morning net balance while charging
 		double totalDailyImport_kWh = 0;
 		for(int i = 0; i < nettoBalanceTotal_kW.length; i++){
-			if(i< amountOfHoursInADay/p_timestep_h){
-				totalDailyImport_kWh += max(0,nettoBalanceTotal_kW[i]*p_timestep_h);
+			if(i< amountOfHoursInADay/timeParameters.getTimeStep_h()){
+				totalDailyImport_kWh += max(0,nettoBalanceTotal_kW[i]*timeParameters.getTimeStep_h());
 			}
 		}
 

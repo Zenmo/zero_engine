@@ -51,6 +51,10 @@
 			<Name><![CDATA[data]]></Name>
 			<Type><![CDATA[I_EnergyData]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -111,6 +115,10 @@
 			<Name><![CDATA[data]]></Name>
 			<Type><![CDATA[I_EnergyData]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -130,6 +138,10 @@
 		<Parameter>
 			<Name><![CDATA[data]]></Name>
 			<Type><![CDATA[I_EnergyData]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

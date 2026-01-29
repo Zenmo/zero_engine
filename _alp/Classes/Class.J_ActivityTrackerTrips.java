@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 public class J_ActivityTrackerTrips extends J_ActivityTracker implements Serializable {
 	
+	private J_TimeParameters timeParameters;
+	
 	public ArrayList<Double> distances_km = new ArrayList<>();
 	private int rowIndex;
-	public J_EAVehicle Vehicle;
+	public I_Vehicle vehicle;
 	public double v_idleTimeToNextTrip_min;
 	public double v_idleTimeToNextTripStored_min;
 	public double v_tripDist_km;
@@ -26,10 +28,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     public J_ActivityTrackerTrips() {
     }
     
-    public J_ActivityTrackerTrips(EnergyModel main, TextFile tripsCsv, int rowIndex, double time_min, J_EAVehicle Vehicle, I_ChargePointRegistration chargePointRegistration) {
-    	this.energyModel = main;
+    public J_ActivityTrackerTrips(J_TimeParameters timeParameters, TextFile tripsCsv, int rowIndex, J_TimeVariables timeVariables, I_Vehicle vehicle, I_ChargePointRegistration chargePointRegistration) {
+    	this.timeParameters = timeParameters;
     	this.rowIndex = rowIndex;
-    	this.Vehicle = Vehicle;		
+    	this.vehicle = vehicle;		
     	
     	tripsCsv.close();
     	tripsCsv.canReadMore();
@@ -52,11 +54,11 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	}
 
       	// 'forward' to next current activity
-       	setStartIndex(time_min/60.0, chargePointRegistration);    
+       	setStartIndex(timeVariables, chargePointRegistration);    
    }
    
    private double getTimeSinceWeekStart(double time_min) {
-	   double timeSinceWeekStart_min = (time_min + (energyModel.v_dayOfWeek1jan-1) * 24 * 60) % (7*24*60); //  Trip start/end-times are all defined as minutes since monday 00:00h
+	   double timeSinceWeekStart_min = (time_min + (timeParameters.getDayOfWeek1jan()-1) * 24 * 60) % (7*24*60); //  Trip start/end-times are all defined as minutes since monday 00:00h
 	   return timeSinceWeekStart_min;
    }
     
@@ -67,8 +69,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	   }
    }
        
-   public void setVehicle(J_EAVehicle Vehicle) {
-	   this.Vehicle = Vehicle;
+   public void setVehicle(I_Vehicle vehicle) {
+	   this.vehicle = vehicle;
    }
    
    public void setDistanceScaling_fr(double distanceScaling_fr) {
@@ -95,56 +97,50 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	   //traceln("Desired annual distance was: %s km", desiredAnnualDistance_km);
    }
     
-   public void manageActivities(double t_h, I_ChargePointRegistration chargePointRegistration) {
-		double time_min = t_h * 60;
+   public void manageActivities(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration) {
+		double time_min = timeVariables.getT_h() * 60;
 		double timeSinceWeekStart_min = getTimeSinceWeekStart(time_min); //  Trip start/end-times are all defined as minutes since monday 00:00h, trips are looped indefinitely
-    	if (Vehicle.getAvailability()) { // at start of timestep! check for multiple 'events' in timestep!
+    	if (vehicle.getAvailability()) { // at start of timestep! check for multiple 'events' in timestep!
     		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h * 60) ) { // is a trip starting this timestep?
-        	if ( timeSinceWeekStart_min >= starttimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < starttimes_min.get(v_eventIndex)) { // is a trip starting this timestep?
+        	if ( timeSinceWeekStart_min >= starttimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-timeParameters.getTimeStep_h() * 60) < starttimes_min.get(v_eventIndex)) { // is a trip starting this timestep?
     			//currentTripDuration = roundToInt(endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) / (energyModel.p_timeStep_h * 60));
-    			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
+    			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (timeParameters.getTimeStep_h() * 60))));
     			
-    			Vehicle.startTrip();
-    			if(Vehicle instanceof J_EAEV EV) {
+    			vehicle.startTrip(timeVariables);
+    			if(vehicle instanceof J_EAEV EV) {
     				chargePointRegistration.deregisterChargingRequest(EV);
     			}
         		//if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the trip also ending this timestep?
-            	if (timeSinceWeekStart_min >= endtimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < endtimes_min.get(v_eventIndex)) { // is the trip also ending this timestep?
-        			Vehicle.endTrip(v_tripDist_km);
+            	if (timeSinceWeekStart_min >= endtimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-timeParameters.getTimeStep_h() * 60) < endtimes_min.get(v_eventIndex)) { // is the trip also ending this timestep?
+            		vehicle.endTrip(v_tripDist_km);
         			setNextTrip();//v_eventIndex++;
         			prepareNextActivity(time_min, chargePointRegistration);
         		}
     		}
     	} else {
-    		if (Vehicle instanceof J_EAPetroleumFuelVehicle) {
-    			J_EAPetroleumFuelVehicle petroleumFuelVehicle = (J_EAPetroleumFuelVehicle)Vehicle;
-    			petroleumFuelVehicle.progressTrip(v_tripDist_km / currentTripTimesteps_n);
-    		}
-    		else if (Vehicle instanceof J_EAHydrogenVehicle) {
-    			J_EAHydrogenVehicle hydrogenVehicle = (J_EAHydrogenVehicle)Vehicle;
-    			hydrogenVehicle.progressTrip(v_tripDist_km / currentTripTimesteps_n);
+    		if (vehicle instanceof J_EAFuelVehicle fuelVehicle) {
+    			fuelVehicle.progressTrip(v_tripDist_km / currentTripTimesteps_n);
     		}
     		//if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*energyModel.p_timeStep_h)) * 60*energyModel.p_timeStep_h ) { // is a trip ending this timestep?
-        	if (timeSinceWeekStart_min >= endtimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < endtimes_min.get(v_eventIndex)) { // is a trip ending this timestep?
-    			Vehicle.endTrip(v_tripDist_km);
+        	if (timeSinceWeekStart_min >= endtimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-timeParameters.getTimeStep_h() * 60) < endtimes_min.get(v_eventIndex)) { // is a trip ending this timestep?
+    			vehicle.endTrip(v_tripDist_km);
     			setNextTrip();//v_eventIndex++;
     			prepareNextActivity(time_min, chargePointRegistration);
         		//if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*energyModel.p_timeStep_h)) * (energyModel.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
-            	if (timeSinceWeekStart_min >= starttimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-energyModel.p_timeStep_h * 60) < starttimes_min.get(v_eventIndex) ) { // is the next trip also starting this timestep?
-        			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (energyModel.p_timeStep_h * 60))));
-        			Vehicle.startTrip();
-        			if(Vehicle instanceof J_EAEV EV) {
+            	if (timeSinceWeekStart_min >= starttimes_min.get(v_eventIndex) && (timeSinceWeekStart_min-timeParameters.getTimeStep_h() * 60) < starttimes_min.get(v_eventIndex) ) { // is the next trip also starting this timestep?
+        			currentTripTimesteps_n = max(1,roundToInt(((endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex)) / (timeParameters.getTimeStep_h() * 60))));
+        			vehicle.startTrip(timeVariables);
+        			if(vehicle instanceof J_EAEV EV) {
         				chargePointRegistration.deregisterChargingRequest(EV);
         			}
         		}
     		}
-
     	}
     }
    
-   	public void setStartIndex(double t_h, I_ChargePointRegistration chargePointRegistration) {
+   	public void setStartIndex(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration) {
    		// 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
-   		double time_min = t_h * 60.0;
+   		double time_min = timeVariables.getT_h() * 60.0;
    		
    		double timeSinceWeekStart_min = getTimeSinceWeekStart(time_min);
     	boolean looped = false;
@@ -173,9 +169,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		v_idleTimeToNextTrip_min = (v_nextEventStartTime_min - timeSinceWeekStart_min) % (24*7*60); // Modulo 24*7*60 needed because otherwise negative values can occur when trip starts 'next week'.
 		v_tripDist_km = distanceScaling_fr * distances_km.get( v_eventIndex ); // Update upcoming trip distance
 
-		if (Vehicle instanceof J_EAEV ev) {
+		if (vehicle instanceof J_EAEV ev) {
 			
-			v_energyNeedForNextTrip_kWh = ev.energyConsumption_kWhpkm * v_tripDist_km;
+			v_energyNeedForNextTrip_kWh = ev.getEnergyConsumption_kWhpkm() * v_tripDist_km;
 			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
 				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh(),2));
 			}
@@ -191,7 +187,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				nextTripDist_km = distanceScaling_fr*distances_km.get( v_eventIndex+1 );
 				nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
 			}
-			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*ev.getVehicleChargingCapacity_kW());
+			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.getEnergyConsumption_kWhpkm() - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*ev.getVehicleChargingCapacity_kW());
 			/*if (additionalChargingNeededForNextTrip_kWh>0) {
 				traceln("*******Additional charging required to prepare for trip after next trip!*********");
 			}*/
@@ -237,7 +233,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		v_tripDist_km = distanceScaling_fr * distances_km.get( v_eventIndex ); // Update upcoming trip distance
 		v_energyNeedForNextTrip_kWh = v_energyNeedForNextTripStored_kWh;
 		
-		if(Vehicle instanceof J_EAEV ev) {
+		if(vehicle instanceof J_EAEV ev) {
 			ev.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
 		}
 	}
