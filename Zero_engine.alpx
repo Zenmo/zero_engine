@@ -1030,6 +1030,10 @@
 					<Id>1764838296618</Id>
 					<Name><![CDATA[spaceHeating_kW]]></Name>
 				</Option>
+				<Option>
+					<Id>1769617059977</Id>
+					<Name><![CDATA[electricHeaterElectricityConsumption_kW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1762354709855</Id>
