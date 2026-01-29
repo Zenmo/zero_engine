@@ -17,14 +17,14 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 	/**
      * Constructor initializing the fields
      */
-	public J_EAProduction(Agent parentAgent, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, J_TimeParameters timeParameters, J_ProfilePointer profile) {
-		I_AssetOwner owner;
+	public J_EAProduction(I_AssetOwner owner, OL_EnergyAssetType type, String name, OL_EnergyCarriers energyCarrier, double capacity_kW, J_TimeParameters timeParameters, J_ProfilePointer profile) {
+		this.setOwner(owner);
 	    this.timeParameters = timeParameters;
 	    this.energyAssetType = type;
 	    this.energyAssetName = name;
 	    this.energyCarrier = energyCarrier;
 	    this.capacity_kW = capacity_kW;
-	    
+	    this.signScaler_r = -1.0;
 		if (profile.getProfileUnits() == OL_ProfileUnits.NORMALIZEDPOWER) {
 			this.profileUnitScaler_r = capacity_kW;
 			this.profilePointer = profile;

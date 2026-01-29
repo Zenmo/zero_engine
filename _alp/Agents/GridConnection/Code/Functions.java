@@ -309,10 +309,10 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		
 	}
-} else if  (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
+} else if  (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAChargingSession chargingSession) {
 	if(p_chargingManagement == null){
 		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
