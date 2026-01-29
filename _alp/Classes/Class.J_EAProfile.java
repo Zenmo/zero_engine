@@ -2,7 +2,7 @@ import zeroPackage.ZeroMath;
 /**
  * J_EAProfile
  */
-public class J_EAProfile extends zero_engine.J_EA implements Serializable {
+public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
 	protected OL_EnergyCarriers energyCarrier; // = OL_EnergyCarriers.ELECTRICITY;
@@ -27,8 +27,8 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	this.profileStarTime_h = startTime_h;
     }*/
 
-    public J_EAProfile(Agent parentAgent, OL_EnergyCarriers energyCarrier, J_ProfilePointer profile, OL_AssetFlowCategories assetCategory, double timeStep_h) {
-	    this.parentAgent= parentAgent;
+    public J_EAProfile(I_AssetOwner owner, OL_EnergyCarriers energyCarrier, J_ProfilePointer profile, OL_AssetFlowCategories assetCategory, J_TimeParameters timeParameters) {
+	    this.setOwner(owner);
 	    this.energyCarrier = energyCarrier;
 		if (profile == null) {
 			throw new RuntimeException("Cannot create J_EAProfile without a valid ProfilePointer!");
@@ -43,12 +43,10 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 			}
 		}	
 	    this.assetFlowCategory = assetCategory;
-
-	   	this.timestep_h = timeStep_h;
 	    
 	    this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 	    
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
     
     
@@ -74,37 +72,41 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     public void setStartTime_h(double startTime_h) {    	
     	this.profileStarTime_h = startTime_h;
     }*/
-
-    @Override
-    public void f_updateAllFlows(double powerFraction_fr) {
-    	throw new RuntimeException("J_EAProfile.f_updateAllFlows(powerFraction_fr) not supperted for J_EAProfile! Use J_EAProfile.f_updateProfileFlows(t_h) instead!");
-    }
     
-    public void f_updateAllFlows() {
+    public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
     	double profileValue = profilePointer.getCurrentValue();		
     	double currentPower_kW = profileValue * this.profileUnitScaler_r * this.profileScaling_fr;
 		
     	this.energyUse_kW = currentPower_kW;
-    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
 
 		flowsMap.put(this.energyCarrier, currentPower_kW);		
 		if (this.assetFlowCategory != null) {
 			assetFlowsMap.put(this.assetFlowCategory, currentPower_kW);
 		}
-    	
-		//this.operate(ratioOfCapacity);
-		if (currentPower_kW!=0.0) { // Skip when there is no consumption -> saves time?
-			if (parentAgent instanceof GridConnection) {    		
-	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-	    	}
-		}
+     	J_FlowsMap flowsMapCopy = new J_FlowsMap();    	
+     	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+     	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
 		this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
+    	return flowPacket;
     }
     
+    /*
+    public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
+     	operate(timeVariables);
+     	J_FlowsMap flowsMapCopy = new J_FlowsMap();
+     	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+     	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
+    	return flowPacket;
+    }*/
+    
 	@Override
-	public void operate(double ratioOfCapacity) {
+	public void operate(J_TimeVariables timeVariables) {
 		/*
     	double currentPower_kW = ratioOfCapacity * this.yearlyDemand_kWh * this.consumptionScaling_fr;
 		
@@ -145,11 +147,11 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 		return energyUsed_kWh;
 	}
 
-    public void curtailElectricityConsumption(double curtailmentSetpoint_kW) {
+    public void curtailElectricityConsumption(double curtailmentSetpoint_kW, GridConnection gc) {
     	double currentElectricityConsumption_kW = this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY);
     	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
-    	energyUsed_kWh -= curtailmentPower_kW * timestep_h;
-    	lostLoad_kWh += curtailmentPower_kW * timestep_h;
+    	energyUsed_kWh -= curtailmentPower_kW * this.timeParameters.getTimeStep_h();
+    	lostLoad_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h();
     	J_FlowsMap flowsMap = new J_FlowsMap();
     	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);    	
     	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
@@ -160,9 +162,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	this.lastFlowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY) - curtailmentPower_kW);
     	this.lastEnergyUse_kW -= curtailmentPower_kW;
 
-    	if (parentAgent instanceof GridConnection) {    		
-    		((GridConnection)parentAgent).f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);
-    	}
+    	gc.f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);    	
     }    
     
     public double getProfileUnitScaler_fr() {
@@ -200,7 +200,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	@Override
 	public String toString() {
 		return
-			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
+			"owner = " + this.getOwner() +", Energy consumed = " + this.energyUsed_kWh +
 			"assetFlowCategory = " + this.assetFlowCategory + " ";
 	}
 	

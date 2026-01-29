@@ -14,14 +14,16 @@ public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializ
     /**
      * Constructor initializing the fields
      */
-    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, double timestep_h, J_ProfilePointer profile) {
+    public J_EAConsumption(I_AssetOwner owner, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, J_TimeParameters timeParameters, J_ProfilePointer profile) {
 		/*if (yearlyDemand_kWh == 0.0) {
 			throw new RuntimeException("Unable to construct J_EAConsumption: " + name + " because consumption is zero." );
 		}*/
-    	
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
+		
     	this.energyAssetName = name;
 		this.energyAssetType = type;
-    	this.parentAgent = parentAgent;
+    	
 		this.yearlyDemand_kWh = yearlyDemand_kWh;
 		if (profile.getProfileUnits() == OL_ProfileUnits.YEARLYTOTALFRACTION) {
 			this.profileUnitScaler_r = yearlyDemand_kWh;
@@ -31,8 +33,7 @@ public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializ
 		}
 		this.energyCarrier =  energyCarrier;
 		
-		this.timestep_h = timestep_h;
-
+		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 		
 		if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
@@ -52,7 +53,7 @@ public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializ
 			}
 		}
 
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
 
     public String getAssetName() {
@@ -114,7 +115,7 @@ public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializ
 	public String toString() {
 		return
 			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + this.parentAgent +" " +
+			"owner = " + this.getOwner() +" " +
 			"energyCarrier = " + this.energyCarrier + " " + 
 			"yearlyDemand_kWh = " + this.yearlyDemand_kWh;
 	}

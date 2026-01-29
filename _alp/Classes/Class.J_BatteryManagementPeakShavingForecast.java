@@ -145,7 +145,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		}
 		for(J_EAConsumption genericBuildingProfile : genericBuildingProfiles) {
 			if(genericBuildingProfile != null){ //table function 
-				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += p_timestep_h){
+				for(double time = energyModel_time_h; time < energyModel_time_h + 24; time += timeParameters.getTimeStep_h()){
 					nettoBalanceTotal_kW[roundToInt((time-energyModel_time_h)/timeParameters.getTimeStep_h())] += genericBuildingProfile.getProfilePointer().getValue(time)*genericBuildingProfile.getYearlyDemand_kWh()*genericBuildingProfile.getConsumptionScaling_fr();
 				}
 			}
