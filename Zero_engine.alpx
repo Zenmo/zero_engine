@@ -800,6 +800,10 @@
 					<Id>1769528326971</Id>
 					<Name><![CDATA[TEMPERATURE_DEGC]]></Name>
 				</Option>
+				<Option>
+					<Id>1769674053743</Id>
+					<Name><![CDATA[KW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1722411204920</Id>

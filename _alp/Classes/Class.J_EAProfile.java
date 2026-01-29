@@ -1,3 +1,4 @@
+import zeroPackage.ZeroMath;
 /**
  * J_EAProfile
  */
@@ -33,6 +34,13 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 			throw new RuntimeException("Cannot create J_EAProfile without a valid ProfilePointer!");
 		} else {
 			profilePointer = profile;
+			if (profilePointer.getProfileUnits() == OL_ProfileUnits.KWHPQUARTERHOUR) {
+				profileUnitScaler_r = 4.0;
+			} else if (profilePointer.getProfileUnits() == OL_ProfileUnits.KW) {
+				profileUnitScaler_r = 1.0;				
+			} else {
+				throw new RuntimeException("Unsupported ProfileUnits of profilePointer for J_EAProfile!");
+			}
 		}	
 	    this.assetFlowCategory = assetCategory;
 
@@ -161,12 +169,32 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
     	}
     }    
     
+    public double getProfileUnitScaler_fr() {
+    	return this.profileUnitScaler_r;
+    }
+    
     public double getProfileScaling_fr() {
-    	return profileScaling_fr;
+    	return this.profileScaling_fr;
     }
     
     public void setProfileScaling_fr( double scaling_fr ) {
     	this.profileScaling_fr = scaling_fr;
+    }
+    
+    public double getPeakPower_kW() {
+    	return max(profilePointer.getAllValues()) * this.profileUnitScaler_r * this.profileScaling_fr;
+    }
+    
+    public double getBaseConsumption_kWh() {
+    	double[] values = profilePointer.getAllValues();
+    	double[] arguments = profilePointer.getTableFunction().getArguments();
+    	double dataTimeStep_h = (arguments[arguments.length-1] - arguments[0])/arguments.length;
+    	double baseConsumption_kWh = ZeroMath.arraySumPos(values) * dataTimeStep_h * this.profileUnitScaler_r;
+    	return baseConsumption_kWh;
+    }
+    
+    public double getTotalConsumption_kWh() {
+    	return this.getBaseConsumption_kWh() * this.profileScaling_fr;
     }
     
     public OL_EnergyCarriers getEnergyCarrier() {
@@ -177,7 +205,7 @@ public class J_EAProfile extends zero_engine.J_EA implements Serializable {
 	public String toString() {
 		return
 			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
-			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
+			"assetFlowCategory = " + this.assetFlowCategory + " ";
 	}
 	
 	/**
