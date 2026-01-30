@@ -178,35 +178,6 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 
 /*ALCODEEND*/}
 
-double f_manageCharging_overwrite()
-{/*ALCODESTART::1675014184707*/
-double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-//double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
-double availableChargingCapacity = v_liveConnectionMetaData.contractedDeliveryCapacity_kW + availableCapacityFromBatteries - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-//v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge_fr();
-
-switch (p_chargingAttitudeVehicles) {
-	case SIMPLE:
-		f_simpleCharging();
-	break;
-	case V1G:
-	case MAX_SPREAD:
-		f_maxSpreadCharging();
-	break;
-	case CHEAP:
-		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
-	break;	
-	case V2G:
-		//v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_connectionCapacity_kW); 
-		//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
-	break;	
-	default:
-		traceln("Incorrect charging mode in household @f_manageCharging_overwrite");
-}
-
-/*ALCODEEND*/}
-
 double f_determineChargingDemandOfEV()
 {/*ALCODESTART::1675034695162*/
 //J_EAEV EVinstance = (J_EAEV)p_householdEV;
@@ -243,25 +214,6 @@ double f_connectTo_J_EA_House(J_EA j_ea)
 if (j_ea instanceof J_EAAirco) {
 	p_airco = (J_EAAirco)j_ea;
 }
-/*if (j_ea instanceof J_EAEV) {
-	if (p_householdEV != null){
-	    	throw new RuntimeException(String.format("Exception: trying to assign 2 EVs to a household!! --> one of them will not charge! "));
-	}
-	p_householdEV = (J_EAEV)j_ea;
-}*/
-
-
-
-/*ALCODEEND*/}
-
-double f_setAnnualEnergyDemand()
-{/*ALCODESTART::1696923950404*/
-traceln("Placeholder function f_setAnnualEnergyDemand called! Nothing will happen.");
-/*ALCODEEND*/}
-
-double f_setEnergyLabel()
-{/*ALCODESTART::1696924006982*/
-traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");
 /*ALCODEEND*/}
 
 double f_manageCookingTracker(J_TimeVariables timeVariables)
@@ -326,10 +278,5 @@ double f_removeTheJ_EA_house(J_EA j_ea)
 if (j_ea instanceof J_EAAirco) {
 	p_airco = null;
 }
-/*
-if (j_ea instanceof J_EAEV) {
-	p_householdEV = null;
-}
-*/
 /*ALCODEEND*/}
 

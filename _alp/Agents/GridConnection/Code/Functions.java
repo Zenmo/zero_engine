@@ -54,12 +54,9 @@ if (isRapidRun){
 
 double f_operateFlexAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1664961435385*/
-//Must be overwritten in child agent
-f_manageHeating(timeVariables);
-
-f_manageEVCharging(timeVariables);
-
-f_manageBattery(timeVariables);
+if(p_energyManagement != null){
+	p_energyManagement.manageFlexAssets(timeVariables);
+}
 /*ALCODEEND*/}
 
 double f_calculateEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)

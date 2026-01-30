@@ -6,7 +6,7 @@
 		<Id>1664963959146</Id>
 		<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
 		<X>910</X>
-		<Y>220</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -65,23 +65,6 @@
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1675014184707</Id>
-		<Name><![CDATA[f_manageCharging_overwrite]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1160</X>
-		<Y>280</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1675034695162</Id>
 		<Name><![CDATA[f_determineChargingDemandOfEV]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -101,8 +84,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1693300820997</Id>
 		<Name><![CDATA[f_connectTo_J_EA_House]]></Name>
-		<X>1090</X>
-		<Y>90</Y>
+		<X>1080</X>
+		<Y>100</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -114,38 +97,6 @@
 			<Name><![CDATA[j_ea]]></Name>
 			<Type><![CDATA[J_EA]]></Type>
 		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1696923950404</Id>
-		<Name><![CDATA[f_setAnnualEnergyDemand]]></Name>
-		<X>1010</X>
-		<Y>-80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1696924006982</Id>
-		<Name><![CDATA[f_setEnergyLabel]]></Name>
-		<X>1090</X>
-		<Y>60</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="protected" StaticFunction="false">
@@ -193,8 +144,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1749722407831</Id>
 		<Name><![CDATA[f_removeTheJ_EA_house]]></Name>
-		<X>1090</X>
-		<Y>110</Y>
+		<X>1130</X>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -1240,6 +1240,11 @@
 				<Name><![CDATA[Globals]]></Name>
 				<ParentId>1752680962144</ParentId>
 			</Folder>
+			<Folder>
+				<Id>1769779065902</Id>
+				<Name><![CDATA[EnergyManagement]]></Name>
+				<ParentId>1762850551601</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -1920,6 +1925,16 @@
 				<Id>1769163992129</Id>
 				<Name><![CDATA[J_EAChargingSession]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769779168982</Id>
+				<Name><![CDATA[I_EnergyManagement]]></Name>
+				<Folder>1769779065902</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769779330692</Id>
+				<Name><![CDATA[J_EnergyManagementDefault]]></Name>
+				<Folder>1769779065902</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
