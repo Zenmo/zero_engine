@@ -1158,6 +1158,30 @@
 					<Name><![CDATA[UNKNOWN]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1769684176467</Id>
+				<Name><![CDATA[OL_GridNodeProfileLoaderType]]></Name>
+				<Description><![CDATA[NO_PROFILE => No gridnode profile
+NET_LOAD => Copy exact net load onto grid node (delivery and feedin exact but doesnt represent consumption and production accurately)
+INCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more accurate consumption profile and also create a production profile on the gridnode (delivery will be exact, consumption will be more accurate but feedin will not be exact).
+EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more accurate consumption profile but will not create a production profile on the gridnode itself -> it is necessary that the gridconnections get their own production assets (delivery will be exact, consumption will be more accurate but feedin will not be exact).]]></Description>
+				<Option>
+					<Id>1769684176468</Id>
+					<Name><![CDATA[NO_PROFILE]]></Name>
+				</Option>
+				<Option>
+					<Id>1769684176469</Id>
+					<Name><![CDATA[NET_LOAD]]></Name>
+				</Option>
+				<Option>
+					<Id>1769698085430</Id>
+					<Name><![CDATA[INCLUDE_PV]]></Name>
+				</Option>
+				<Option>
+					<Id>1769684176470</Id>
+					<Name><![CDATA[EXCLUDE_PV]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
