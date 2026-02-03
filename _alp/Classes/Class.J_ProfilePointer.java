@@ -34,10 +34,13 @@ public class J_ProfilePointer implements Serializable {
 	}
 	
     public J_ProfilePointer(String name, double[] profile, double dataTimeStep_h, double dataStartTime_h, OL_ProfileUnits profileUnits) {
+    	if (profileUnits == null) {
+    		throw new RuntimeException("Attemtping to create J_ProfilePointer with null profileUnits!");
+    	}
     	this.name = name;
     	this.a_profile = profile;
     	this.dataTimeStep_h = dataTimeStep_h;
-    	this.dataStartTime_h = dataStartTime_h;	
+    	this.dataStartTime_h = dataStartTime_h;	    	
     	this.profileUnits = profileUnits;
     }
 
@@ -84,11 +87,5 @@ public class J_ProfilePointer implements Serializable {
 	public String toString() {
 		return "profile: " + this.name + " current value: " + this.currentValue; 
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
 
 }
