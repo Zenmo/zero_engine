@@ -349,6 +349,14 @@
 					<Id>1749651086661</Id>
 					<Name><![CDATA[CHARGER]]></Name>
 				</Option>
+				<Option>
+					<Id>1770131334713</Id>
+					<Name><![CDATA[METHANE_GENERATOR]]></Name>
+				</Option>
+				<Option>
+					<Id>1770131381146</Id>
+					<Name><![CDATA[DIESEL_GENERATOR]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659525715752</Id>
@@ -1028,6 +1036,14 @@
 				<Option>
 					<Id>1769617059977</Id>
 					<Name><![CDATA[electricHeaterElectricityConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1770131982612</Id>
+					<Name><![CDATA[dieselGeneratorProductionElectric_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1770132010080</Id>
+					<Name><![CDATA[methaneGeneratorProductionElectric_kW]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
