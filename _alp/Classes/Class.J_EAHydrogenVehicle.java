@@ -14,13 +14,13 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
-    	this(ownerAssetAgent, energyConsumption_kWhpkm, timestep_h, vehicleScaling, energyAssetType, tripTracker, true);
+    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker) {
+    	this(ownerAssetAgent, energyConsumption_kWhpkm, timeParameters, vehicleScaling, energyAssetType, tripTracker, true);
     }
-    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, double timestep_h, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {
+    public J_EAHydrogenVehicle(Agent ownerAssetAgent, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {
 	    this.parentAgent = ownerAssetAgent;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
-	    this.timestep_h = timestep_h;
+	    this.timeParameters = timeParameters;
 	    this.vehicleScaling = vehicleScaling;
 	    this.energyAssetType = energyAssetType;
 	    this.tripTracker = tripTracker;
@@ -52,7 +52,7 @@ public class J_EAHydrogenVehicle extends J_EAVehicle implements Serializable {
     }*/
     
 	@Override
-	public boolean startTrip() {
+	public boolean startTrip(J_TimeVariables timeVariables) {
 		if (available) {
 			available = false;
 			//traceln("Hydrogen vehicle starting trip!");

@@ -23,10 +23,10 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionHeatPump(Agent parentAgent, double inputElectricCapacity_kW, double eta_r, double timestep_h, double outputTemperature_degC, double baseTemperature_degC, double sourceAssetHeatPower_kW, double belowZeroHeatpumpEtaReductionFactor, OL_AmbientTempType ambientTempType ) {
-	    this.parentAgent = parentAgent;
-	    this.inputCapacity_kW = inputElectricCapacity_kW;
-	    this.timestep_h = timestep_h;
+    public J_EAConversionHeatPump(I_AssetOwner owner, double inputElectricCapacity_kW, double eta_r, J_TimeParameters timeParameters, double outputTemperature_degC, double baseTemperature_degC, double sourceAssetHeatPower_kW, double belowZeroHeatpumpEtaReductionFactor, OL_AmbientTempType ambientTempType ) {
+		this.setOwner(owner);
+	    this.timeParameters = timeParameters;
+		this.inputCapacity_kW = inputElectricCapacity_kW;
 	    this.eta_r = eta_r;
 	    this.outputTemperature_degC = outputTemperature_degC;
 
@@ -46,7 +46,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);   	
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
 
 	public void updateParameters(double baseTemperature_degC, double outputTemperature_degC) {
@@ -95,10 +95,10 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	}
 	
 	@Override
-	public void operate(double ratioOfCapacity) {
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
 
-		double electricityConsumption_kW = ratioOfCapacity * this.inputCapacity_kW;
-		this.totalElectricityConsumed_kWh += electricityConsumption_kW * timestep_h;
+		double electricityConsumption_kW = powerFraction_fr * this.inputCapacity_kW;
+		this.totalElectricityConsumed_kWh += electricityConsumption_kW * this.timeParameters.getTimeStep_h();
     	double heatProduction_kW = electricityConsumption_kW * this.COP_r;
 
     	/*
@@ -124,7 +124,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		
 	    }
     	this.assetFlowsMap.addFlow	(OL_AssetFlowCategories.heatPumpElectricityConsumption_kW, electricityConsumption_kW);
-		this.energyUsed_kWh += energyUse_kW * timestep_h;
+		this.energyUsed_kWh += energyUse_kW * this.timeParameters.getTimeStep_h();
 	}
 
 	public void setSourceAssetHeatPower(double sourceAssetHeatPower_kW) {
@@ -175,9 +175,4 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 			"heatConsumed_kWh = " + heatConsumed_kWh + " ";
 	}
 	*/	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }

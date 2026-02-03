@@ -13,12 +13,12 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
     /**
      * Constructor initializing the fields
      */    
-    public J_EAConversionHydrogenBurner(Agent parentAgent, double outputHeatCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
-    	this.parentAgent = parentAgent;
-	    this.outputCapacity_kW = outputHeatCapacity_kW;
+    public J_EAConversionHydrogenBurner(I_AssetOwner owner, double outputHeatCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, double outputTemperature_degC) {
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
+    	this.outputCapacity_kW = outputHeatCapacity_kW;
 	    this.eta_r = efficiency_r;
 	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
-	    this.timestep_h = timestep_h;	    
 	    this.outputTemperature_degC = outputTemperature_degC;
 
 	    this.energyAssetType = OL_EnergyAssetType.HYDROGEN_BURNER;
@@ -28,20 +28,8 @@ public class J_EAConversionHydrogenBurner extends zero_engine.J_EAConversion imp
 	    
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
 	}
-
-    @Override
-    public void operate(double ratioOfCapacity) {
-    	((GridConnection)this.parentAgent).fm_heatFromEnergyCarrier_kW.addFlow(this.energyCarrierConsumed, ratioOfCapacity * this.outputCapacity_kW);
-    	((GridConnection)this.parentAgent).fm_consumptionForHeating_kW.addFlow(this.energyCarrierConsumed, ratioOfCapacity * this.inputCapacity_kW);
-    	super.operate(ratioOfCapacity);
-    }
-    
-	/*@Override
-	public double getCurrentTemperature() {
-		return outputTemperature_degC;
-	}*/
  
 	/**
 	 * This number is here for model snapshot storing purpose<br>

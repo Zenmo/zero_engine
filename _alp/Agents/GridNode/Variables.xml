@@ -184,7 +184,7 @@ geupdate vanuit
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[min(1, 0.8 * energyModel.p_timeStep_h) //0.2 ]]></Code>
+				<Code><![CDATA[min(1, 0.8 * 0.25) // min(1, 0.8 * energyModel.p_timeStep_h), is there an initialisation function for GridNode?]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -360,7 +360,7 @@ geupdate vanuit
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
 			<InitialValue Class="CodeValue">
-				<Code><![CDATA[min(1, 0.25 * energyModel.p_timeStep_h) // smaller value results in more filtering]]></Code>
+				<Code><![CDATA[min(1, 0.25 * 0.25) // min(1, 0.25 * energyModel.p_timeStep_h), is there an initialisation function for GridNode?]]></Code>
 			</InitialValue>
 		</Properties>
 	</Variable>
@@ -1842,7 +1842,7 @@ geupdate vanuit
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1749630347422</Id>
-		<Name><![CDATA[p_hasProfileData]]></Name>
+		<Name><![CDATA[p_profileType]]></Name>
 		<X>50</X>
 		<Y>470</Y>
 		<Label>
@@ -1853,15 +1853,15 @@ geupdate vanuit
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[boolean]]></Type>
+			<Type><![CDATA[OL_GridNodeProfileLoaderType]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[false]]></Code>
+				<Code><![CDATA[OL_GridNodeProfileLoaderType.NO_PROFILE]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1749630347420</Id>
-				<EditorContolType>CHECK_BOX</EditorContolType>
+				<EditorContolType>TEXT_BOX</EditorContolType>
 				<MinSliderValue>0</MinSliderValue>
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>

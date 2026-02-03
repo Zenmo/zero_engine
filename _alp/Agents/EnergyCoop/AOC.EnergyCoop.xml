@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		</Parameter>
 	</Parameters>
 	<Implements>I_EnergyData</Implements>
-	<StartupCode><![CDATA[v_liveData = new J_LiveData(this);
+	<StartupCode><![CDATA[v_liveData = new J_LiveData();
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);

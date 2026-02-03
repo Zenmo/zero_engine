@@ -6,7 +6,6 @@ import java.util.EnumSet;
 
 public class J_LiveData {
 	
-	public Agent parentAgent;
 	public EnumSet<OL_EnergyCarriers> activeEnergyCarriers;
 	public EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers;
 	public EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers;
@@ -30,13 +29,9 @@ public class J_LiveData {
      * Default constructor
      */
 	
-	public J_LiveData() { // needed for deserialisation
+	public J_LiveData() {
 	
 	}
-	
-    public J_LiveData(Agent parentAgent) {
-    	this.parentAgent = parentAgent;
-    }
 
     public void clearLiveDatasets() {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
@@ -63,18 +58,18 @@ public class J_LiveData {
     	
     }
     
-    public void resetLiveDatasets(double startTime, double endTime, double timeStep_h) {
+    public void resetLiveDatasets(J_TimeParameters timeParameters) {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
-    		DataSet dsDemand = new DataSet( (int)(168 / timeStep_h) );
-    		for (double t = startTime; t < endTime; t += timeStep_h) {
+    		DataSet dsDemand = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
+    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
     			dsDemand.add( t, 0);
     		}
     		dsm_liveDemand_kW.put( EC, dsDemand);
     	}
     	
     	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
-    		DataSet dsSupply = new DataSet( (int)(168 / timeStep_h) );
-    		for (double t = startTime; t < endTime; t += timeStep_h) {
+    		DataSet dsSupply = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
+    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
     			dsSupply.add( t, 0);
     		}
     		dsm_liveSupply_kW.put( EC, dsSupply);
@@ -82,12 +77,12 @@ public class J_LiveData {
     	
     	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
 			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
-				DataSet dsAsset = new DataSet((int)(168 / timeStep_h));
+				DataSet dsAsset = new DataSet((int)(168 / timeParameters.getTimeStep_h()));
 				dsm_liveAssetFlows_kW.put(AC, dsAsset);
 			}
     	}
     	
-		for (double t = startTime; t < endTime; t += timeStep_h) {
+		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
 			
 			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
 				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
@@ -105,26 +100,26 @@ public class J_LiveData {
 		}
     }
     
-    public void addTimeStep(double currentTime_h, J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap<OL_AssetFlowCategories> assetFlowsMap, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, double currentStoredEnergyBatteries_MWh) {
+    public void addTimeStep(double AnyLogicTime_h, J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap<OL_AssetFlowCategories> assetFlowsMap, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, double currentStoredEnergyBatteries_MWh) {
 
     	//Energy carrier flows
     	for (OL_EnergyCarriers EC : activeConsumptionEnergyCarriers) {
-    		this.dsm_liveDemand_kW.get(EC).add( currentTime_h, roundToDecimal(fm_currentConsumptionFlows_kW.get(EC), 3) );
+    		this.dsm_liveDemand_kW.get(EC).add( AnyLogicTime_h, roundToDecimal(fm_currentConsumptionFlows_kW.get(EC), 3) );
     	}
     	for (OL_EnergyCarriers EC : activeProductionEnergyCarriers) {
-    		this.dsm_liveSupply_kW.get(EC).add( currentTime_h, roundToDecimal(fm_currentProductionFlows_kW.get(EC), 3) );
+    		this.dsm_liveSupply_kW.get(EC).add( AnyLogicTime_h, roundToDecimal(fm_currentProductionFlows_kW.get(EC), 3) );
     	}
 
     	//Electricity balance
-    	this.data_liveElectricityBalance_kW.add(currentTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+    	this.data_liveElectricityBalance_kW.add(AnyLogicTime_h, fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
 
     	//Total demand and supply
-    	this.data_totalDemand_kW.add(currentTime_h, v_currentFinalEnergyConsumption_kW);
-    	this.data_totalSupply_kW.add(currentTime_h, v_currentPrimaryEnergyProduction_kW);
+    	this.data_totalDemand_kW.add(AnyLogicTime_h, v_currentFinalEnergyConsumption_kW);
+    	this.data_totalSupply_kW.add(AnyLogicTime_h, v_currentPrimaryEnergyProduction_kW);
 
     	//Live capacity datasets
-    	this.data_gridCapacityDemand_kW.add(currentTime_h, connectionMetaData.contractedDeliveryCapacity_kW);
-    	this.data_gridCapacitySupply_kW.add(currentTime_h, -connectionMetaData.contractedFeedinCapacity_kW);
+    	this.data_gridCapacityDemand_kW.add(AnyLogicTime_h, connectionMetaData.contractedDeliveryCapacity_kW);
+    	this.data_gridCapacitySupply_kW.add(AnyLogicTime_h, -connectionMetaData.contractedFeedinCapacity_kW);
 
     	//// Gather specific electricity flows from corresponding energy assets
 		//for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
@@ -134,16 +129,16 @@ public class J_LiveData {
 				traceln("Trying to add assetflow: %s", AC);
 				traceln("Parent GC: %s", ((GridConnection)parentAgent).p_gridConnectionID);
 			}*/
-			dsm_liveAssetFlows_kW.get(AC).add(currentTime_h, roundToDecimal(assetFlowsMap.get(AC),3));
+			dsm_liveAssetFlows_kW.get(AC).add(AnyLogicTime_h, roundToDecimal(assetFlowsMap.get(AC),3));
 		}
     	
 		//Batteries    
-    	this.data_batteryStoredEnergyLiveWeek_MWh.add(currentTime_h, currentStoredEnergyBatteries_MWh);
+    	this.data_batteryStoredEnergyLiveWeek_MWh.add(AnyLogicTime_h, currentStoredEnergyBatteries_MWh);
     	if(assetsMetaData.totalInstalledBatteryStorageCapacity_MWh > 0){
-    		this.data_batterySOC_fr.add(currentTime_h, roundToDecimal(currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh, 3) );	
+    		this.data_batterySOC_fr.add(AnyLogicTime_h, roundToDecimal(currentStoredEnergyBatteries_MWh/assetsMetaData.totalInstalledBatteryStorageCapacity_MWh, 3) );	
     	}
     	else{
-    		this.data_batterySOC_fr.add(currentTime_h, 0);	
+    		this.data_batterySOC_fr.add(AnyLogicTime_h, 0);	
     	}	
 	
 
@@ -169,5 +164,4 @@ public class J_LiveData {
         
         return sb.toString();
 	}
-
 }

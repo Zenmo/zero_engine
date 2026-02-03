@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement {
 
 	GridConnection gc;
+    private J_TimeParameters timeParameters;
 	private double currentChargeSetpoint_kW = 0;
 	private double storedCurrentChargeSetpoint_kW;
     /**
@@ -24,8 +25,9 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 
     }
 	
-    public J_BatteryManagementExternalSetpoint( GridConnection gc) {
+    public J_BatteryManagementExternalSetpoint( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
+    	this.timeParameters = timeParameters;
     }
     
     public double setChargeSetpoint_kW(double chargeSetpoint_kW) {
@@ -41,10 +43,9 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
     	return this.currentChargeSetpoint_kW;
     }
     
-    public void manageBattery() {
-    	
+    public void manageBattery(J_TimeVariables timeVariables) {
         //Manage the battery with the set charge setpoint
-    	gc.p_batteryAsset.f_updateAllFlows(this.currentChargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW());
+    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, this.currentChargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
 
     	//Reset the value again.
     	this.currentChargeSetpoint_kW = 0;

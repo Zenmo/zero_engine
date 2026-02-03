@@ -78,12 +78,12 @@ for( GridConnection GC : c_connectedGridConnections) {
 
 /*ALCODEEND*/}
 
-double f_nodeMetering()
+double f_nodeMetering(J_TimeVariables timeVariables,J_TimeParameters timeParameters,boolean isRapidRun)
 {/*ALCODESTART::1660216693598*/
 //v_averageAbsoluteLoadElectricity_kW = ( v_electricityDrawn_kWh + v_electricityDelivered_kWh ) / energyModel.t_h;
 //v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteElectricity_kW);
 
-if (energyModel.v_isRapidRun){
+if (isRapidRun){
 	/*if (energyModel.b_enableDLR) {
 		acc_annualElectricityBalance_kW.addStep(100*v_currentLoadElectricity_kW/ (p_capacity_kW * energyModel.v_currentDLRfactor_fr));
 		//acc_DLR_kW.addStep( p_capacity_kW * energyModel.v_currentDLRfactor_fr);
@@ -92,7 +92,7 @@ if (energyModel.v_isRapidRun){
 	}*/
 	
 	if ( ((Double)v_currentLoad_kW).isNaN() ){
-		traceln("v_currentLoad_kW is NaN! On GridNode %s, time %s h", this, energyModel.t_h);
+		traceln("v_currentLoad_kW is NaN! On GridNode %s, time %s h", this, timeVariables.getT_h());
 		pauseSimulation();
 	}
 	
@@ -100,10 +100,10 @@ if (energyModel.v_isRapidRun){
 		acc_annualElectricityBalance_kW.addStep( v_currentLoad_kW);
 	}
 	
-	double currentImport_MWh = max(0, v_currentLoad_kW) * energyModel.p_timeStep_h / 1000;
-	double currentExport_MWh = max(0, -v_currentLoad_kW) * energyModel.p_timeStep_h / 1000;
-	double currentExcessImport_MWh = max(0, v_currentLoad_kW - p_capacity_kW) * energyModel.p_timeStep_h / 1000;
-	double currentExcessExport_MWh = max(0, -v_currentLoad_kW - p_capacity_kW) * energyModel.p_timeStep_h / 1000;
+	double currentImport_MWh = max(0, v_currentLoad_kW) * timeParameters.getTimeStep_h() / 1000;
+	double currentExport_MWh = max(0, -v_currentLoad_kW) * timeParameters.getTimeStep_h() / 1000;
+	double currentExcessImport_MWh = max(0, v_currentLoad_kW - p_capacity_kW) * timeParameters.getTimeStep_h() / 1000;
+	double currentExcessExport_MWh = max(0, -v_currentLoad_kW - p_capacity_kW) * timeParameters.getTimeStep_h() / 1000;
 	
 	v_totalImport_MWh += currentImport_MWh;
 	v_totalExport_MWh += currentExport_MWh;
@@ -111,41 +111,46 @@ if (energyModel.v_isRapidRun){
 	v_annualExcessExport_MWh += currentExcessExport_MWh;
 	
 	// Year
-	if (energyModel.t_h % 1 == 0) {
-		data_totalLoad_kW.add(energyModel.t_h, v_currentLoad_kW);
+	if (timeVariables.getT_h() % 1 == 0) {
+		data_totalLoad_kW.add(timeVariables.getT_h(), v_currentLoad_kW);
 	}
 	// SummerWeek
-	if (energyModel.b_isSummerWeek) {
+	if (timeVariables.isSummerWeek()) {
 		v_summerWeekImport_MWh += currentImport_MWh;
 		v_summerWeekExport_MWh += currentExport_MWh;
 		v_summerWeekExcessImport_MWh += currentExcessImport_MWh;
 		v_summerWeekExcessExport_MWh += currentExcessExport_MWh;
 		
-		data_summerWeekLoad_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_currentLoad_kW);
+		data_summerWeekLoad_kW.add(timeVariables.getAnyLogicTime_h(), v_currentLoad_kW);
 	}
 	// Winterweek
-	if (energyModel.b_isWinterWeek) {
+	if (timeVariables.isWinterWeek()) {
 		v_winterWeekImport_MWh += currentImport_MWh;
 		v_winterWeekExport_MWh += currentExport_MWh;
 		v_winterWeekExcessImport_MWh += currentExcessImport_MWh;
 		v_winterWeekExcessExport_MWh += currentExcessExport_MWh;
 		
-		data_winterWeekLoad_kW.add(energyModel.t_h-energyModel.p_runStartTime_h, v_currentLoad_kW);
+		data_winterWeekLoad_kW.add(timeVariables.getAnyLogicTime_h(), v_currentLoad_kW);
 	}
 	// Daytime
-	if (energyModel.t_h % 24 > 6 && energyModel.t_h % 24 < 18) {
+	if (timeVariables.isDaytime()) {
 		v_daytimeImport_MWh += currentImport_MWh;
 		v_daytimeExport_MWh += currentExport_MWh;
 		v_daytimeExcessImport_MWh += currentExcessImport_MWh;
 		v_daytimeExcessExport_MWh += currentExcessExport_MWh;
 	}
 	// Weekdays
-	if ((energyModel.t_h+(energyModel.v_dayOfWeek1jan-1)*24) % (24*7) < (24*5)) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
+	if (timeVariables.isWeekday()) { // Simulation starts on a Thursday, hence the +3 day offset on t_h
 		v_weekdayImport_MWh += currentImport_MWh;
 		v_weekdayExport_MWh += currentExport_MWh;
 		v_weekdayExcessImport_MWh += currentExcessImport_MWh;
 		v_weekdayExcessExport_MWh += currentExcessExport_MWh;
 	}
+}
+else {
+	data_liveCapacitySupply_kW.add(timeVariables.getT_h(), -p_capacity_kW);
+	data_liveCapacityDemand_kW.add(timeVariables.getT_h(), p_capacity_kW);
+	data_liveLoad_kW.add(timeVariables.getT_h(), v_currentLoad_kW);
 }
 /*ALCODEEND*/}
 
@@ -227,7 +232,7 @@ if( p_energyAssetList != null) {
 }
 /*ALCODEEND*/}
 
-double f_calculateEnergyBalance()
+double f_calculateEnergyBalance(J_TimeVariables timeVariables,J_TimeParameters timeParameters,boolean isRapidRun)
 {/*ALCODESTART::1688370981599*/
 f_sumLoads();
 // Low-pass filtered grid load
@@ -243,23 +248,23 @@ if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 
 //v_currentLocalNodalPrice_eurpkWh = (abs(v_filteredLoadCongestionPricing_kW / currentNodeCapacity_kW) - p_localNodalPricingTreshold_fr) / (1-p_localNodalPricingTreshold_fr) * p_localNodalPricingFactor_eurpkWh;
 
-if (energyModel.v_isRapidRun) {
+if (isRapidRun) {
 	if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 		if (abs(v_currentLoadElectricityLowPassed_kW) > p_capacity_kW) {
 			//traceln("Overloaded gridNode %s! %s kW", p_gridNodeID, abs(v_currentLoadElectricityLowPassed_kW));
-			v_totalTimeOverloaded_h	+= energyModel.p_timeStep_h;
+			v_totalTimeOverloaded_h	+= timeParameters.getTimeStep_h();
 		}
 		if( abs( v_currentLoadElectricityLowPassed_kW ) > abs(v_peakLoadFilteredElectricity_kW) ) { // store maximum absolute load, but retain sign!
 			v_peakLoadFilteredElectricity_kW = ( v_currentLoadElectricityLowPassed_kW );
-			v_timeOfPeakLoadFiltered_h = energyModel.t_h;
+			v_timeOfPeakLoadFiltered_h = timeVariables.getT_h();
 		}
 		if( v_currentLoadElectricityLowPassed_kW < v_peakNegLoadElectricity_kW ) { // store peak negative load and time
 			v_peakNegLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
-			v_timeOfPeakNegLoadFiltered_h = energyModel.t_h;
+			v_timeOfPeakNegLoadFiltered_h = timeVariables.getT_h();
 		}
 		if( v_currentLoadElectricityLowPassed_kW > v_peakPosLoadElectricity_kW ) { // store peak positive load and time
 			v_peakPosLoadElectricity_kW = v_currentLoadElectricityLowPassed_kW ;
-			v_timeOfPeakPosLoadFiltered_h = energyModel.t_h;
+			v_timeOfPeakPosLoadFiltered_h = timeVariables.getT_h();
 		}
 	}
 
@@ -289,9 +294,9 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT) & b_transportBufferValid ) { // 
 }
 */
 //traceln("GridNode " + p_gridNodeID + " update at time " + time(HOUR));
-f_nodeMetering();
+f_nodeMetering(timeVariables, timeParameters, isRapidRun);
 
-f_getCurrentChargingInformation();
+f_getCurrentChargingInformation(timeParameters);
 /*ALCODEEND*/}
 
 double f_addGridBatteryLoad()
@@ -304,7 +309,7 @@ for( Agent a : subConnections.getConnections() ) {
 
 /*ALCODEEND*/}
 
-double f_resetStates()
+double f_resetStates(J_TimeParameters timeParameters)
 {/*ALCODESTART::1698919552330*/
 // Current status
 v_currentLoad_kW = 0;
@@ -363,7 +368,7 @@ v_weekendExcessImport_MWh = 0;
 v_weekendExcessExport_MWh = 0;
 
 // Reset Accumulators
-acc_annualElectricityBalance_kW = new ZeroAccumulator(true, energyModel.p_timeStep_h, energyModel.p_runEndTime_h - energyModel.p_runStartTime_h);
+acc_annualElectricityBalance_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), timeParameters.getRunEndTime_h() - timeParameters.getRunStartTime_h());
 //acc_annualElectricityBalance_kW.reset();
 /*ALCODEEND*/}
 
@@ -514,12 +519,12 @@ AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
 return AllLowerLVLConnectedGridConnections;
 /*ALCODEEND*/}
 
-J_LoadDurationCurves f_getDuurkrommes()
+J_LoadDurationCurves f_getDuurkrommes(J_TimeParameters timeParameters)
 {/*ALCODESTART::1753341238941*/
-return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), energyModel);
+return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW(), timeParameters);
 /*ALCODEEND*/}
 
-DataSet f_getPeakImportWeekDataSet()
+DataSet f_getPeakImportWeekDataSet(J_TimeParameters timeParameters)
 {/*ALCODESTART::1754461654982*/
 double[] elecBalance_kW = acc_annualElectricityBalance_kW.getTimeSeries_kW();
 
@@ -530,15 +535,15 @@ for (int i = 1; i < elecBalance_kW.length; i++) {
     }
 }
 
-double peakTime_h = maxIndex*energyModel.p_timeStep_h;
+double peakTime_h = maxIndex*timeParameters.getTimeStep_h();
 double duration_h = acc_annualElectricityBalance_kW.getDuration();
 double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
-DataSet ds = acc_annualElectricityBalance_kW.getDataSet(energyModel.p_runStartTime_h, accStartTime_h, accStartTime_h+24*7);
+DataSet ds = acc_annualElectricityBalance_kW.getDataSet(timeParameters.getRunStartTime_h(), accStartTime_h, accStartTime_h+24*7);
    
 return ds;
 /*ALCODEEND*/}
 
-DataSet f_getPeakExportWeekDataSet()
+DataSet f_getPeakExportWeekDataSet(J_TimeParameters timeParameters)
 {/*ALCODESTART::1754462048041*/
 double[] elecBalance_kW = acc_annualElectricityBalance_kW.getTimeSeries_kW();
 
@@ -549,15 +554,15 @@ for (int i = 1; i < elecBalance_kW.length; i++) {
     }
 }
 
-double peakTime_h = minIndex*energyModel.p_timeStep_h;
+double peakTime_h = minIndex*timeParameters.getTimeStep_h();
 double duration_h = acc_annualElectricityBalance_kW.getDuration();
 double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
-DataSet ds = acc_annualElectricityBalance_kW.getDataSet(energyModel.p_runStartTime_h, accStartTime_h, accStartTime_h+24*7);
+DataSet ds = acc_annualElectricityBalance_kW.getDataSet(timeParameters.getRunStartTime_h(), accStartTime_h, accStartTime_h+24*7);
    
 return ds;
 /*ALCODEEND*/}
 
-double f_getCurrentChargingInformation()
+double f_getCurrentChargingInformation(J_TimeParameters timeParameters)
 {/*ALCODESTART::1758209089894*/
 v_currentChargingPowerBalancingThisGN_kW = 0;
 v_currentNumberOfChargeRequestsBalancingThisGN = 0;
@@ -576,7 +581,7 @@ for(GridConnection GC : c_connectedGridConnections){
 
 // Low pass filter
 double filterTimeScale_h = 5*24;
-double filterDiffGain_r = 1/(filterTimeScale_h/energyModel.p_timeStep_h);
+double filterDiffGain_r = 1/(filterTimeScale_h/timeParameters.getTimeStep_h());
 v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_currentChargingPowerBalancingThisGN_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
 //v_lowPassedLoadFilter_kW += (v_currentLoad_kW - v_lowPassedLoadFilter_kW) * filterDiffGain_r;	
 

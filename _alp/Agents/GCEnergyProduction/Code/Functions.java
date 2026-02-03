@@ -1,4 +1,4 @@
-double f_operateFlexAssets_overwrite()
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
 {/*ALCODESTART::1671111800831*/
 /*for( J_EA v : c_conversionAssets ){
 	if (v instanceof J_EAConversionElektrolyser) {
@@ -6,9 +6,9 @@ double f_operateFlexAssets_overwrite()
 	}
 }*/
 
-f_manageEVCharging();
+f_manageEVCharging(timeVariables);
 
-f_manageBattery();
+f_manageBattery(timeVariables);
 
 /*ALCODEEND*/}
 

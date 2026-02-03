@@ -3,7 +3,7 @@
  */	
 public abstract class J_HeatingFunctionLibrary {
 
-	public static double  managePTAndHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, List<J_EAProduction> ptAssets, double hotWaterDemand_kW){
+	public static double  managePTAndHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, List<J_EAProduction> ptAssets, double hotWaterDemand_kW, J_TimeVariables timeVariables, GridConnection gc){
     	//Calculate the pt production
     	double ptProduction_kW = 0;
     	for (J_EA j_ea : ptAssets) {
@@ -23,7 +23,8 @@ public abstract class J_HeatingFunctionLibrary {
     			chargeSetpoint_kW = remainingPTProduction_kW;
     		}
     		double powerFraction_fr = chargeSetpoint_kW / hotWaterBuffer.getCapacityHeat_kW();
-    		hotWaterBuffer.f_updateAllFlows(powerFraction_fr);
+        	gc.f_updateFlexAssetFlows(hotWaterBuffer, powerFraction_fr, timeVariables);
+
     		
 			double heatBufferCharge_kW = hotWaterBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
 			
@@ -37,7 +38,9 @@ public abstract class J_HeatingFunctionLibrary {
     	
     	if (remainingPTProduction_kW > 0) {//Heat (for now always curtail over produced heat!)
     		for (J_EAProduction j_ea : ptAssets) {
-    			remainingPTProduction_kW -= j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);
+    			J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction( OL_EnergyCarriers.HEAT, remainingPTProduction_kW);
+    			gc.f_removeFlows(flowPacket, j_ea);
+    			remainingPTProduction_kW += flowPacket.energyUse_kW; // Curtailed energyUse_kW will be a negative number when curtailing a production asset, hence the += !
     			
     			if (remainingPTProduction_kW <= 0) {
     				break;
@@ -47,7 +50,7 @@ public abstract class J_HeatingFunctionLibrary {
     	return remainingHotWater_kW;
     }
 	
-	public static double  manageHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, double hotWaterDemand_kW, double availableHeatingPower_kWth, double timeStep_h){
+	public static double  manageHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, double hotWaterDemand_kW, double availableHeatingPower_kWth, double timeStep_h, J_TimeVariables timeVariables, GridConnection gc){
 		if(hotWaterDemand_kW > availableHeatingPower_kWth + hotWaterBuffer.getCurrentStateOfCharge_kWh() / timeStep_h) {
 			throw new RuntimeException("Hot water demand is higher than available power.");
 		}
@@ -58,7 +61,8 @@ public abstract class J_HeatingFunctionLibrary {
 				
 
 		double powerFraction_fr = heatIntoBuffer_kW / hotWaterBuffer.getCapacityHeat_kW();
-		hotWaterBuffer.f_updateAllFlows(powerFraction_fr);
+    	gc.f_updateFlexAssetFlows(hotWaterBuffer, powerFraction_fr, timeVariables);
+
 
 		
     	return hotWaterDemandFromHeatingAsset_kW;

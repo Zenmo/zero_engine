@@ -1,13 +1,10 @@
 /**
  * J_EAConsumption
  */
-public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
-	protected J_ProfilePointer profilePointer;
-	public double yearlyDemand_kWh;
-	protected OL_EnergyCarriers energyCarrier;
-	private double consumptionScaling_fr = 1;
-	public double loadLoad_kWh = 0;
-	//private J_profilePointer profilePointer;
+public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializable {
+
+	private double yearlyDemand_kWh;
+	//public double loadLoad_kWh = 0;
 	/**
      * Default constructor
      */
@@ -17,23 +14,26 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAConsumption(Agent parentAgent, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, double timestep_h, J_ProfilePointer profile) {
+    public J_EAConsumption(I_AssetOwner owner, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, J_TimeParameters timeParameters, J_ProfilePointer profile) {
 		/*if (yearlyDemand_kWh == 0.0) {
 			throw new RuntimeException("Unable to construct J_EAConsumption: " + name + " because consumption is zero." );
 		}*/
-    	
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
+		
     	this.energyAssetName = name;
 		this.energyAssetType = type;
-    	this.parentAgent = parentAgent;
+    	
 		this.yearlyDemand_kWh = yearlyDemand_kWh;
+		if (profile.getProfileUnits() == OL_ProfileUnits.YEARLYTOTALFRACTION) {
+			this.profileUnitScaler_r = yearlyDemand_kWh;
+			this.profilePointer = profile;
+		} else {
+			throw new RuntimeException("Invalid OL_ProfileUnits type for J_EAConsumption!");
+		}
 		this.energyCarrier =  energyCarrier;
 		
-		this.timestep_h = timestep_h;
-		if (profile == null) {
-			profilePointer = ((GridConnection)parentAgent).energyModel.f_findProfile(name);
-		} else {
-			profilePointer = profile;
-		}		
+		
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
 		
 		if (this.energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
@@ -53,7 +53,7 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 			}
 		}
 
-		registerEnergyAsset();
+		registerEnergyAsset(timeParameters);
     }
 
     public String getAssetName() {
@@ -61,14 +61,15 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
     }
     
     public void setConsumptionScaling_fr(double consumptionScaling_fr) {
-    	this.consumptionScaling_fr = consumptionScaling_fr;
+    	this.profileScaling_fr = consumptionScaling_fr;
     }
     
     public double getConsumptionScaling_fr() {
-    	return this.consumptionScaling_fr;
+    	return this.profileScaling_fr;
     }
     
-    @Override
+    
+    /*@Override
     public void f_updateAllFlows(double v_powerFraction_fr) {
 		throw new RuntimeException("J_EAConsumption.f_updateAllFlows() should be called without arguments!");
 	}
@@ -100,17 +101,22 @@ public class J_EAConsumption extends zero_engine.J_EA implements Serializable {
 		if (this.assetFlowCategory != null) {
 			assetFlowsMap.put(this.assetFlowCategory, consumption_kW);
 		}
-   	}
+   	}*/
 
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;
+    }
+    
+    @Override
+    public double getBaseConsumption_kWh() {
+    	return yearlyDemand_kWh;
     }
     
 	@Override
 	public String toString() {
 		return
 			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + this.parentAgent +" " +
+			"owner = " + this.getOwner() +" " +
 			"energyCarrier = " + this.energyCarrier + " " + 
 			"yearlyDemand_kWh = " + this.yearlyDemand_kWh;
 	}

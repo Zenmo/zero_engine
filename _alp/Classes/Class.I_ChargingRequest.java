@@ -39,5 +39,5 @@ public interface I_ChargingRequest {
 	public double getVehicleScaling_fr();
 	
 	// Sends the power into the EV/ChargingSession to update the SOC, ChargeDeadline etc...
-    public void f_updateAllFlows(double powerFraction_fr);
+    public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables);
 }

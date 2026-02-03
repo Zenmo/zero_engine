@@ -779,35 +779,30 @@
 			</OptionList>
 			<OptionList>
 				<Id>1718560423698</Id>
-				<Name><![CDATA[OL_ProfileAssetType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_ProfileUnits]]></Name>
 				<Option>
 					<Id>1718560423699</Id>
-					<Name><![CDATA[ELECTRICITYBASELOAD]]></Name>
+					<Name><![CDATA[KWHPQUARTERHOUR]]></Name>
 				</Option>
 				<Option>
 					<Id>1718560423700</Id>
-					<Name><![CDATA[CHARGING]]></Name>
+					<Name><![CDATA[YEARLYTOTALFRACTION]]></Name>
 				</Option>
 				<Option>
 					<Id>1718713672051</Id>
-					<Name><![CDATA[WINDTURBINE]]></Name>
+					<Name><![CDATA[NORMALIZEDPOWER]]></Name>
 				</Option>
 				<Option>
-					<Id>1718713684483</Id>
-					<Name><![CDATA[SOLARPANELS]]></Name>
+					<Id>1769528317155</Id>
+					<Name><![CDATA[PRICE_EURPMWH]]></Name>
 				</Option>
 				<Option>
-					<Id>1727254638101</Id>
-					<Name><![CDATA[HEATDEMAND]]></Name>
+					<Id>1769528326971</Id>
+					<Name><![CDATA[TEMPERATURE_DEGC]]></Name>
 				</Option>
 				<Option>
-					<Id>1734018498969</Id>
-					<Name><![CDATA[METHANEDEMAND]]></Name>
-				</Option>
-				<Option>
-					<Id>1753774385666</Id>
-					<Name><![CDATA[HEATPUMP_ELECTRICITY_CONSUMPTION]]></Name>
+					<Id>1769674053743</Id>
+					<Name><![CDATA[KW]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1031,8 +1026,8 @@
 					<Name><![CDATA[spaceHeating_kW]]></Name>
 				</Option>
 				<Option>
-					<Id>1764838299076</Id>
-					<Name><![CDATA[buildingHeating_kW]]></Name>
+					<Id>1769617059977</Id>
+					<Name><![CDATA[electricHeaterElectricityConsumption_kW]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1053,6 +1048,39 @@
 				<Option>
 					<Id>1762354709859</Id>
 					<Name><![CDATA[TRACTOR]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1767622041762</Id>
+				<Name><![CDATA[OL_Days]]></Name>
+				<Description><![CDATA[Sunday has index 0 so that the indices correspond with the convention of the Java Enum DayOfWeek]]></Description>
+				<Option>
+					<Id>1767622041769</Id>
+					<Name><![CDATA[SUNDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041763</Id>
+					<Name><![CDATA[MONDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041764</Id>
+					<Name><![CDATA[TUESDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041765</Id>
+					<Name><![CDATA[WEDNESDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041766</Id>
+					<Name><![CDATA[THURSDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041767</Id>
+					<Name><![CDATA[FRIDAY]]></Name>
+				</Option>
+				<Option>
+					<Id>1767622041768</Id>
+					<Name><![CDATA[SATURDAY]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1128,6 +1156,30 @@
 				<Option>
 					<Id>1768384856556</Id>
 					<Name><![CDATA[UNKNOWN]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1769684176467</Id>
+				<Name><![CDATA[OL_GridNodeProfileLoaderType]]></Name>
+				<Description><![CDATA[NO_PROFILE => No gridnode profile
+NET_LOAD => Copy exact net load onto grid node (delivery and feedin exact but doesnt represent consumption and production accurately)
+INCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more accurate consumption profile and also create a production profile on the gridnode (delivery will be exact, consumption will be more accurate but feedin will not be exact).
+EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more accurate consumption profile but will not create a production profile on the gridnode itself -> it is necessary that the gridconnections get their own production assets (delivery will be exact, consumption will be more accurate but feedin will not be exact).]]></Description>
+				<Option>
+					<Id>1769684176468</Id>
+					<Name><![CDATA[NO_PROFILE]]></Name>
+				</Option>
+				<Option>
+					<Id>1769684176469</Id>
+					<Name><![CDATA[NET_LOAD]]></Name>
+				</Option>
+				<Option>
+					<Id>1769698085430</Id>
+					<Name><![CDATA[INCLUDE_PV]]></Name>
+				</Option>
+				<Option>
+					<Id>1769684176470</Id>
+					<Name><![CDATA[EXCLUDE_PV]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
@@ -1250,15 +1302,6 @@
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
 			</AnimationProperties>
 			<Inputs>
-				<RunConfigurationInput>
-					<Id>1661517220706</Id>
-					<Name><![CDATA[P time step h]]></Name>
-					<InputReference>
-						<PackageName>zero_engine</PackageName>
-						<ClassName>EnergyModel</ClassName>
-						<ItemName>p_timeStep_h</ItemName>
-					</InputReference>
-				</RunConfigurationInput>
 				<RunConfigurationInput>
 					<Id>1661517213660</Id>
 					<Name><![CDATA[B add kpi visuals]]></Name>
@@ -1399,6 +1442,7 @@
 			<JavaClass>
 				<Id>1668600448637</Id>
 				<Name><![CDATA[J_EAHydrogenVehicle]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1452,6 +1496,7 @@
 			<JavaClass>
 				<Id>1692862773194</Id>
 				<Name><![CDATA[J_EAVehicle]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1467,11 +1512,12 @@
 			<JavaClass>
 				<Id>1707992650964</Id>
 				<Name><![CDATA[J_EAConversionFuelCell]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1711009967838</Id>
-				<Name><![CDATA[J_EAPetroleumFuelVehicle]]></Name>
+				<Name><![CDATA[J_EAFuelVehicle]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1835,11 +1881,6 @@
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1765192207409</Id>
-				<Name><![CDATA[J_EAChargingSession]]></Name>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1765383541339</Id>
 				<Name><![CDATA[J_ChargePoint]]></Name>
 				<Folder>1762850586274</Folder>
@@ -1860,6 +1901,31 @@
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
+				<Id>1767709602608</Id>
+				<Name><![CDATA[J_EAFlex]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1767709611303</Id>
+				<Name><![CDATA[J_EAFixed]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1767716018663</Id>
+				<Name><![CDATA[I_Vehicle]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1768403352982</Id>
+				<Name><![CDATA[I_AssetOwner]]></Name>
+				<Folder>1752677823817</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769156012154</Id>
+				<Name><![CDATA[J_FlowPacket]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
 				<Id>1768309433547</Id>
 				<Name><![CDATA[J_PBLParameters]]></Name>
 				<Folder>1752680962144</Folder>
@@ -1868,6 +1934,11 @@
 				<Id>1769089556772</Id>
 				<Name><![CDATA[J_HeatingManagementCHP]]></Name>
 				<Folder>1762850578079</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769163992129</Id>
+				<Name><![CDATA[J_EAChargingSession]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
