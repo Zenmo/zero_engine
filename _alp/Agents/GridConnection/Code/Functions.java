@@ -123,6 +123,7 @@ for (J_EAFixed j_ea : c_profileAssets) {
 }
 
 
+
 /*ALCODEEND*/}
 
 double f_resetStates()
@@ -309,10 +310,10 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 		
 	}
-} else if  (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
+} else if  (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAChargingSession chargingSession) {
 	if(p_chargingManagement == null){
 		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
@@ -606,7 +607,8 @@ if (v_enableCurtailment) {
 		// Keep feedin power within connection capacity
 		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
 			for (J_EAProduction j_ea : c_productionAssets) {
-				j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW, this);
+				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+				f_removeFlows(flowPacket, j_ea);
 				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
 					break;
 				}
@@ -617,7 +619,8 @@ if (v_enableCurtailment) {
 		if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
 			if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
 				for (J_EAProduction j_ea : c_productionAssets) {
-					j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), this);
+					J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+					f_removeFlows(flowPacket, j_ea);
 					if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
 						break;
 					}
@@ -632,7 +635,8 @@ if (v_enableCurtailment) {
 		
 			double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
 			for (J_EAProduction j_ea : c_productionAssets) {
-				j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY), this);
+				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+				f_removeFlows(flowPacket, j_ea);
 				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
 					break;
 				}
@@ -703,37 +707,39 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_removeFlows(J_FlowsMap flowsMap,double energyUse_kW,J_ValueMap<OL_AssetFlowCategories> assetFlowsMap_kW,J_EA caller)
+double f_removeFlows(J_FlowPacket flowPacket,J_EA caller)
 {/*ALCODESTART::1722512642645*/
-for (OL_EnergyCarriers EC : flowsMap.keySet()) {
-	fm_currentBalanceFlows_kW.addFlow(EC, -flowsMap.get(EC));
+for (OL_EnergyCarriers EC : flowPacket.flowsMap.keySet()) {
+	fm_currentBalanceFlows_kW.addFlow(EC, -flowPacket.flowsMap.get(EC));
 	
-	if (flowsMap.get(EC) < 0) {
-		fm_currentProductionFlows_kW.addFlow(EC, flowsMap.get(EC));
+	if (flowPacket.flowsMap.get(EC) < 0) {
+		fm_currentProductionFlows_kW.addFlow(EC, flowPacket.flowsMap.get(EC));
 	}
-	else if (flowsMap.get(EC) > 0){
-		fm_currentConsumptionFlows_kW.addFlow(EC, -flowsMap.get(EC));
+	else if (flowPacket.flowsMap.get(EC) > 0){
+		fm_currentConsumptionFlows_kW.addFlow(EC, -flowPacket.flowsMap.get(EC));
 	}
 }
 
 if (caller instanceof J_EAStorageElectric) { 
 	// Only allocate battery losses as consumption. Charging/discharging is neither production nor consumption. Do we need an element in flowsmap indicating power into storage??
-	fm_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, energyUse_kW));
-	v_currentFinalEnergyConsumption_kW += max(0, energyUse_kW);
+	fm_currentConsumptionFlows_kW.addFlow(OL_EnergyCarriers.ELECTRICITY, max(0, flowPacket.energyUse_kW));
+	v_currentFinalEnergyConsumption_kW += max(0, flowPacket.energyUse_kW);
 } else {
-	double curtailment_kW = max(0, -energyUse_kW);
-	double lostLoad_kW = max(0, energyUse_kW);
+	double curtailment_kW = max(0, -flowPacket.energyUse_kW);
+	double lostLoad_kW = max(0, flowPacket.energyUse_kW);
 	v_currentEnergyCurtailed_kW += curtailment_kW;
 	v_currentPrimaryEnergyProduction_kW -= curtailment_kW;
 	v_currentFinalEnergyConsumption_kW -= lostLoad_kW;
 }
 
 if ( caller instanceof J_EAConversionHeatPump ) {
-	v_currentPrimaryEnergyProductionHeatpumps_kW += energyUse_kW;
+	v_currentPrimaryEnergyProductionHeatpumps_kW += flowPacket.energyUse_kW;
 }
-for(var AC : assetFlowsMap_kW.keySet()) {
-	fm_currentAssetFlows_kW.addFlow(AC, -assetFlowsMap_kW.get(AC));
-}
+fm_currentAssetFlows_kW.removeFlows(flowPacket.assetFlowsMap);
+/*for(var AC : flowPacket.assetFlowsMap.keySet()) {
+	fm_currentAssetFlows_kW.addFlow(AC, -flowPacket.assetFlowsMap.get(AC));
+}*/
+
 /*ALCODEEND*/}
 
 double f_fillLiveDataSets(J_TimeVariables timeVariables)

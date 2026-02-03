@@ -779,35 +779,30 @@
 			</OptionList>
 			<OptionList>
 				<Id>1718560423698</Id>
-				<Name><![CDATA[OL_ProfileAssetType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_ProfileUnits]]></Name>
 				<Option>
 					<Id>1718560423699</Id>
-					<Name><![CDATA[ELECTRICITYBASELOAD]]></Name>
+					<Name><![CDATA[KWHPQUARTERHOUR]]></Name>
 				</Option>
 				<Option>
 					<Id>1718560423700</Id>
-					<Name><![CDATA[CHARGING]]></Name>
+					<Name><![CDATA[YEARLYTOTALFRACTION]]></Name>
 				</Option>
 				<Option>
 					<Id>1718713672051</Id>
-					<Name><![CDATA[WINDTURBINE]]></Name>
+					<Name><![CDATA[NORMALIZEDPOWER]]></Name>
 				</Option>
 				<Option>
-					<Id>1718713684483</Id>
-					<Name><![CDATA[SOLARPANELS]]></Name>
+					<Id>1769528317155</Id>
+					<Name><![CDATA[PRICE_EURPMWH]]></Name>
 				</Option>
 				<Option>
-					<Id>1727254638101</Id>
-					<Name><![CDATA[HEATDEMAND]]></Name>
+					<Id>1769528326971</Id>
+					<Name><![CDATA[TEMPERATURE_DEGC]]></Name>
 				</Option>
 				<Option>
-					<Id>1734018498969</Id>
-					<Name><![CDATA[METHANEDEMAND]]></Name>
-				</Option>
-				<Option>
-					<Id>1753774385666</Id>
-					<Name><![CDATA[HEATPUMP_ELECTRICITY_CONSUMPTION]]></Name>
+					<Id>1769674053743</Id>
+					<Name><![CDATA[KW]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
