@@ -107,7 +107,8 @@ public class J_EAConsumption extends zero_engine.J_EAProfile implements Serializ
     	return this.profilePointer;
     }
     
-    public double getYearlyDemand_kWh() {
+    @Override
+    public double getBaseConsumption_kWh() {
     	return yearlyDemand_kWh;
     }
     
