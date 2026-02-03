@@ -1080,6 +1080,7 @@ for (EnergyCoop ec : pop_energyCoops) {
 	ec.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
 	ec.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
 	ec.fm_consumptionForHeating_kW = new J_FlowsMap();
+	ec.f_startAfterDeserialisation(p_timeParameters);
 }
 
 // Reconstruct the LiveData class in the GridConnections and add EnergyCarriers
