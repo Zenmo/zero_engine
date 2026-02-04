@@ -1271,3 +1271,23 @@ J_FlowPacket fp = j_ea.f_updateAllFlows(powerFraction_fr, timeVariables);
 f_addFlows(fp, j_ea);
 /*ALCODEEND*/}
 
+double f_setEnergyManagement(I_EnergyManagement energyManagement)
+{/*ALCODESTART::1770207133902*/
+//Remove old asset management from energyModel
+if(this.p_energyManagement != null){
+	energyModel.f_removeAssetManagement(this.p_energyManagement);
+}
+
+this.p_energyManagement = energyManagement;
+
+//Remove old asset management from energyModel
+if(this.p_energyManagement != null){
+	energyModel.f_registerAssetManagement(this.p_energyManagement);
+}
+/*ALCODEEND*/}
+
+I_EnergyManagement f_getEnergyManagement()
+{/*ALCODESTART::1770213430210*/
+return this.p_energyManagement;
+/*ALCODEEND*/}
+
