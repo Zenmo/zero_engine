@@ -397,7 +397,7 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1722512642645</Id>
@@ -412,16 +412,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[flowsMap]]></Name>
-			<Type><![CDATA[J_FlowsMap]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[energyUse_kW]]></Name>
-			<Type><![CDATA[double]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[assetFlowsMap_kW]]></Name>
-			<Type><![CDATA[J_ValueMap<OL_AssetFlowCategories>]]></Type>
+			<Name><![CDATA[flowPacket]]></Name>
+			<Type><![CDATA[J_FlowPacket]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[caller]]></Name>

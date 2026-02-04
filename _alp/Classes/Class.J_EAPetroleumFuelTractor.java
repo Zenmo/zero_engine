@@ -45,6 +45,21 @@ public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializabl
     }    
     
     @Override
+    public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
+    	this.operate(timeVariables);
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, Math.abs(energyUse_kW));
+		}
+     	J_FlowsMap flowsMapCopy = new J_FlowsMap();    	
+     	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
+     	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
+		this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastEnergyUse_kW = this.energyUse_kW;
+    	this.clear();
+    	return flowPacket;
+    }
+    
+    @Override
     public void operate(J_TimeVariables timeVariables) {
         if (!shouldWork(timeVariables)) {
             this.flowsMap.clear();
