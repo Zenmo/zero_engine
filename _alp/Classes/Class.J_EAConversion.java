@@ -1,7 +1,7 @@
 /**
  * J_EAConversion
  */
-public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable {
+public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable, I_HeatingAsset {
 	protected OL_EnergyCarriers energyCarrierProduced;
 	protected OL_EnergyCarriers energyCarrierConsumed;
 	protected double eta_r;

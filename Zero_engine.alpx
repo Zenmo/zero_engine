@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010504"
+                   AnyLogicVersion="8.9.7.202512121156"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -72,6 +72,10 @@
 				<Option>
 					<Id>1668600528877</Id>
 					<Name><![CDATA[PETROLEUM_FUEL]]></Name>
+				</Option>
+				<Option>
+					<Id>1770223618949</Id>
+					<Name><![CDATA[IRON_POWDER]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -349,6 +353,10 @@
 					<Id>1749651086661</Id>
 					<Name><![CDATA[CHARGER]]></Name>
 				</Option>
+				<Option>
+					<Id>1770224439834</Id>
+					<Name><![CDATA[IRON_BURNER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659525715752</Id>
@@ -571,6 +579,10 @@
 				<Option>
 					<Id>1752073245369</Id>
 					<Name><![CDATA[LT_DISTRICTHEAT]]></Name>
+				</Option>
+				<Option>
+					<Id>1770223717611</Id>
+					<Name><![CDATA[IRON_BURNER]]></Name>
 				</Option>
 				<Option>
 					<Id>1753795270678</Id>

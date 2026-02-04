@@ -45,7 +45,6 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	this.timeParameters = timeParameters;
     	this.currentHeatingType = heatingType;
     }
-      
     
     public void manageHeating(J_TimeVariables timeVariables) {
     	if ( !isInitialized ) {
