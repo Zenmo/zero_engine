@@ -33,11 +33,10 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 
     @Override
     public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
-    	powerFraction_fr = roundToDecimal(powerFraction_fr, J_GlobalParameters.floatingPointPrecision);
-    	if(powerFraction_fr < 0) {
+    	if(DoubleCompare.lessThanZero(powerFraction_fr)) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
     	}
-    	else if ( powerFraction_fr == 0 ) {
+    	else if ( DoubleCompare.equalsZero(powerFraction_fr) ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
          	J_FlowsMap flowsMapCopy = new J_FlowsMap();
