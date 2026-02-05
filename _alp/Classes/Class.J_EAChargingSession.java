@@ -58,7 +58,7 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
     	double chargePower_kW = max(min(chargeSetpoint_kW, (this.getStorageCapacity_kWh() - this.getCurrentSOC_kWh()) / this.timeParameters.getTimeStep_h()), -this.getCurrentSOC_kWh() / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
  
 		//Round to floating point precision
-    	chargePower_kW = roundToDecimal(chargePower_kW, J_GlobalParameters.floatingPointPrecision);
+    	chargePower_kW = roundToDecimal(chargePower_kW, 10);
     	
     	//Bookkeeping of energy flows
     	double electricityProduction_kW = max(-chargePower_kW, 0);

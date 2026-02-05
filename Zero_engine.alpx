@@ -73,6 +73,10 @@
 					<Id>1668600528877</Id>
 					<Name><![CDATA[PETROLEUM_FUEL]]></Name>
 				</Option>
+				<Option>
+					<Id>1770284609246</Id>
+					<Name><![CDATA[IRON_POWDER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118262286</Id>
