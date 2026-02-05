@@ -35,7 +35,7 @@ if( myParentEnergyCoop instanceof EnergyCoop) {
 
 double f_connectionMetering(J_TimeVariables timeVariables,boolean isRapidRun)
 {/*ALCODESTART::1660212665961*/
-if ( abs(fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT) - fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT)) > 0.1 && p_parentNodeHeat == null ) {
+if ( DoubleCompare.greaterThanZero(abs(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT))) && p_parentNodeHeat == null ) {
 	//if (p_BuildingThermalAsset == null || !p_BuildingThermalAsset.hasHeatBuffer()) {
 		traceln("heat consumption: %s kW", fm_currentConsumptionFlows_kW.get(OL_EnergyCarriers.HEAT));
 		traceln("heat production: %s kW", fm_currentProductionFlows_kW.get(OL_EnergyCarriers.HEAT));
