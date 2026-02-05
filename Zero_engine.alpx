@@ -357,6 +357,14 @@
 					<Id>1770224439834</Id>
 					<Name><![CDATA[IRON_BURNER]]></Name>
 				</Option>
+				<Option>
+					<Id>1770131334713</Id>
+					<Name><![CDATA[METHANE_GENERATOR]]></Name>
+				</Option>
+				<Option>
+					<Id>1770131381146</Id>
+					<Name><![CDATA[DIESEL_GENERATOR]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659525715752</Id>
@@ -791,35 +799,30 @@
 			</OptionList>
 			<OptionList>
 				<Id>1718560423698</Id>
-				<Name><![CDATA[OL_ProfileAssetType]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_ProfileUnits]]></Name>
 				<Option>
 					<Id>1718560423699</Id>
-					<Name><![CDATA[ELECTRICITYBASELOAD]]></Name>
+					<Name><![CDATA[KWHPQUARTERHOUR]]></Name>
 				</Option>
 				<Option>
 					<Id>1718560423700</Id>
-					<Name><![CDATA[CHARGING]]></Name>
+					<Name><![CDATA[YEARLYTOTALFRACTION]]></Name>
 				</Option>
 				<Option>
 					<Id>1718713672051</Id>
-					<Name><![CDATA[WINDTURBINE]]></Name>
+					<Name><![CDATA[NORMALIZEDPOWER]]></Name>
 				</Option>
 				<Option>
-					<Id>1718713684483</Id>
-					<Name><![CDATA[SOLARPANELS]]></Name>
+					<Id>1769528317155</Id>
+					<Name><![CDATA[PRICE_EURPMWH]]></Name>
 				</Option>
 				<Option>
-					<Id>1727254638101</Id>
-					<Name><![CDATA[HEATDEMAND]]></Name>
+					<Id>1769528326971</Id>
+					<Name><![CDATA[TEMPERATURE_DEGC]]></Name>
 				</Option>
 				<Option>
-					<Id>1734018498969</Id>
-					<Name><![CDATA[METHANEDEMAND]]></Name>
-				</Option>
-				<Option>
-					<Id>1753774385666</Id>
-					<Name><![CDATA[HEATPUMP_ELECTRICITY_CONSUMPTION]]></Name>
+					<Id>1769674053743</Id>
+					<Name><![CDATA[KW]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1046,6 +1049,14 @@
 					<Id>1769617059977</Id>
 					<Name><![CDATA[electricHeaterElectricityConsumption_kW]]></Name>
 				</Option>
+				<Option>
+					<Id>1770131982612</Id>
+					<Name><![CDATA[dieselGeneratorProductionElectric_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1770132010080</Id>
+					<Name><![CDATA[methaneGeneratorProductionElectric_kW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1762354709855</Id>
@@ -1173,6 +1184,30 @@
 				<Option>
 					<Id>1768384856556</Id>
 					<Name><![CDATA[UNKNOWN]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1769684176467</Id>
+				<Name><![CDATA[OL_GridNodeProfileLoaderType]]></Name>
+				<Description><![CDATA[NO_PROFILE => No gridnode profile
+NET_LOAD => Copy exact net load onto grid node (delivery and feedin exact but doesnt represent consumption and production accurately)
+INCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more accurate consumption profile and also create a production profile on the gridnode (delivery will be exact, consumption will be more accurate but feedin will not be exact).
+EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more accurate consumption profile but will not create a production profile on the gridnode itself -> it is necessary that the gridconnections get their own production assets (delivery will be exact, consumption will be more accurate but feedin will not be exact).]]></Description>
+				<Option>
+					<Id>1769684176468</Id>
+					<Name><![CDATA[NO_PROFILE]]></Name>
+				</Option>
+				<Option>
+					<Id>1769684176469</Id>
+					<Name><![CDATA[NET_LOAD]]></Name>
+				</Option>
+				<Option>
+					<Id>1769698085430</Id>
+					<Name><![CDATA[INCLUDE_PV]]></Name>
+				</Option>
+				<Option>
+					<Id>1769684176470</Id>
+					<Name><![CDATA[EXCLUDE_PV]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
@@ -1854,11 +1889,6 @@
 				<Folder>1762850578079</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1763570262548</Id>
-				<Name><![CDATA[J_GlobalParameters]]></Name>
-				<Folder>1764938574089</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1764337491572</Id>
 				<Name><![CDATA[I_ChargingRequest]]></Name>
 				<Folder>1762850586274</Folder>
@@ -1932,6 +1962,11 @@
 				<Id>1769163992129</Id>
 				<Name><![CDATA[J_EAChargingSession]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1770210283060</Id>
+				<Name><![CDATA[DoubleCompare]]></Name>
+				<Folder>1764938574089</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
