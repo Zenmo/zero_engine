@@ -73,10 +73,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	@Override
 	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
-		if (powerFraction_fr < 0) {
+		
+		if (DoubleCompare.lessThanZero(powerFraction_fr)) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
-		
 		double lossPower_kW = calculateLoss(); // Heat exchange with environment through convection
 		double solarHeating_kW = solarHeating(); // Heat influx from sunlight
 		this.energyUse_kW = lossPower_kW - solarHeating_kW;
