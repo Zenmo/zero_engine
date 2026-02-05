@@ -7,6 +7,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
+	private double windowVentilation_fr;
 	
 	//Slider scaling factor
 	private double lossScalingFactor_fr = 1;
@@ -30,7 +31,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     /**
      * Constructor initializing the fields
      */
-    public J_EABuilding(I_AssetOwner owner, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2 ) {
+    public J_EABuilding(I_AssetOwner owner, double capacityHeat_kW, double lossFactor_WpK, J_TimeParameters timeParameters, double initialTemperature_degC, double heatCapacity_JpK, double solarAbsorptionFactor_m2) {
 		this.setOwner(owner);
 		this.timeParameters = timeParameters;
 		this.capacityHeat_kW = capacityHeat_kW;
@@ -63,7 +64,12 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	}
 	
-	@Override
+	public double ventilationLoss( double lossPower_kW) {
+		double ventilationLoss_kW = this.windowVentilation_fr * lossPower_kW;
+		return ventilationLoss_kW;
+	}
+	
+		@Override
 	public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
 		if (powerFraction_fr > 1) {			
 			traceln("JEABuilding capacityHeat_kW is too low! "+ capacityHeat_kW);
@@ -77,15 +83,18 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
 		
+		double baseloadElectricityDemand_kW = 0;
+		double electricityToHeatConversion_fr = 0;
 		double lossPower_kW = calculateLoss(); // Heat exchange with environment through convection
+		double ventilationLoss_kW = ventilationLoss(lossPower_kW);
 		double solarHeating_kW = solarHeating(); // Heat influx from sunlight
-		this.energyUse_kW = lossPower_kW - solarHeating_kW;
+		this.energyUse_kW = lossPower_kW + ventilationLoss_kW - solarHeating_kW;
 		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
 		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat gain from outside air and/or solar irradiance!
 
 		double inputPower_kW = powerFraction_fr * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
     	
-		double deltaEnergy_kWh = (solarHeating_kW - lossPower_kW)* this.timeParameters.getTimeStep_h();
+		double deltaEnergy_kWh = (solarHeating_kW - (lossPower_kW + ventilationLoss_kW))* this.timeParameters.getTimeStep_h();
 		if (this.interiorDelayTime_h != 0.0) {
 			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timeParameters.getTimeStep_h() );
     	}
@@ -131,6 +140,10 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	
 	public void setLossFactor_WpK( double lossFactor_WpK) {
 		this.lossFactor_WpK = lossFactor_WpK;
+	}
+	
+	public void setWindowVentilation_fr( double ventilation_fr) {
+		this.windowVentilation_fr = ventilation_fr;
 	}
 	
 	public void setLossScalingFactor_fr( double lossScalingFactor_fr) {
