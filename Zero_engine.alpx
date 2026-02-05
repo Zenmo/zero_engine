@@ -73,6 +73,10 @@
 					<Id>1668600528877</Id>
 					<Name><![CDATA[PETROLEUM_FUEL]]></Name>
 				</Option>
+				<Option>
+					<Id>1770284609246</Id>
+					<Name><![CDATA[IRON_POWDER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118262286</Id>
@@ -348,6 +352,14 @@
 				<Option>
 					<Id>1749651086661</Id>
 					<Name><![CDATA[CHARGER]]></Name>
+				</Option>
+				<Option>
+					<Id>1770131334713</Id>
+					<Name><![CDATA[METHANE_GENERATOR]]></Name>
+				</Option>
+				<Option>
+					<Id>1770131381146</Id>
+					<Name><![CDATA[DIESEL_GENERATOR]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1028,6 +1040,14 @@
 				<Option>
 					<Id>1769617059977</Id>
 					<Name><![CDATA[electricHeaterElectricityConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1770131982612</Id>
+					<Name><![CDATA[dieselGeneratorProductionElectric_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1770132010080</Id>
+					<Name><![CDATA[methaneGeneratorProductionElectric_kW]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1861,11 +1881,6 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Folder>1762850578079</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1763570262548</Id>
-				<Name><![CDATA[J_GlobalParameters]]></Name>
-				<Folder>1764938574089</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1764337491572</Id>
 				<Name><![CDATA[I_ChargingRequest]]></Name>
 				<Folder>1762850586274</Folder>
@@ -1939,6 +1954,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1769163992129</Id>
 				<Name><![CDATA[J_EAChargingSession]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1770210283060</Id>
+				<Name><![CDATA[DoubleCompare]]></Name>
+				<Folder>1764938574089</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
