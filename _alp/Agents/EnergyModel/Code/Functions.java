@@ -205,7 +205,7 @@ f_runAggregators();
 
 double f_initializeForecasts()
 {/*ALCODESTART::1671636439933*/
-pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, 24, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_ambientTemperature_degC);
 
 pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());

@@ -195,6 +195,10 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		return lossFactor_WpK;
 	}
 	
+	public double getAmbientTemperature_degC() {
+		return ambientTemperature_degC;
+	}
+	
 	public OL_AmbientTempType getAmbientTempType() {
 		return this.ambientTempType;
 	}
