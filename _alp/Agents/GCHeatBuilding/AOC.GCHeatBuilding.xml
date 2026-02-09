@@ -1,14 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ActiveObjectClass>
-	<Id>1658752913454</Id>
-	<Name><![CDATA[UI_GridNode]]></Name>
+	<Id>1658752695711</Id>
+	<Name><![CDATA[GCHeatBuilding]]></Name>
 	<ExcludeFromBuild>true</ExcludeFromBuild>
-	<Folder>1752737189062</Folder>
-	<StartupCode><![CDATA[f_setNodeVisual();]]></StartupCode>
+	<Folder>1752677823817</Folder>
+	<ExtendsReference>
+		<PackageName>zero_engine</PackageName>
+		<ClassName>GridConnection</ClassName>
+	</ExtendsReference>
+	<Parameters>
+		<Parameter>
+			<Name><![CDATA[p_parentNodeElectricID]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_gridConnectionID]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_parentNodeHeatID]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_BuildingThermalAsset]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_ownerID]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_batteryAsset]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_electrolyserOperationMode]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_heatBuffer]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_gasBuffer]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_cookingTracker]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_insulationLabel]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_DHWAsset]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_longitude]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_latitude]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_GISPoint]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_owner]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_roofSurfaceArea_m2]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_purposeBAG]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_curtailmentMode]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_annotation]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_address]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_parentNodeHeat]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_parentNodeElectric]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[v_isActive]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_energyLabel]]></Name>
+		</Parameter>
+	</Parameters>
 	<Generic>false</Generic>
 	<GenericParameter>
-		<Id>1658752913452</Id>
-		<Name><![CDATA[1658752913452]]></Name>
+		<Id>1658752695709</Id>
+		<Name><![CDATA[1658752695709]]></Name>
 		<GenericParameterValue Class="CodeValue">
 			<Code><![CDATA[T extends Agent]]></Code>
 		</GenericParameterValue>
@@ -65,7 +148,7 @@
 	</EnvironmentProperties>
 	<DatasetsCreationProperties>
 		<AutoCreate>true</AutoCreate>
-		<Id>1658477089924</Id>
+		<Id>1658477089995</Id>
 		<OccurrenceAtTime>true</OccurrenceAtTime>
 		<OccurrenceDate>1658822400000</OccurrenceDate>
 		<OccurrenceTime Class="CodeUnitValue">
@@ -78,10 +161,10 @@
 		</RecurrenceCode>
 	</DatasetsCreationProperties>
 	<ScaleRuler>
-		<Id>1658752913450</Id>
+		<Id>1658752695707</Id>
 		<Name><![CDATA[scale]]></Name>
 		<X>0</X>
-		<Y>-180</Y>
+		<Y>-150</Y>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
@@ -94,17 +177,15 @@
 		<Scale>10</Scale>
 		<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 	</ScaleRuler>
-	<CurrentLevel>1658752913453</CurrentLevel>
-	<ConnectionsId>1658752913449</ConnectionsId>
-	<Variables xmlns:al="http://anylogic.com"/>
-	<Events xmlns:al="http://anylogic.com"/>
-	<Functions xmlns:al="http://anylogic.com"/>
+	<CurrentLevel>1658752695710</CurrentLevel>
+	<ConnectionsId>1658752695706</ConnectionsId>
 	<AgentLinks>
 		<AgentLink>
-			<Id>1658752913449</Id>
+			<Id>1658752695706</Id>
 			<Name><![CDATA[connections]]></Name>
-			<X>250</X>
-			<Y>-80</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>50</X>
+			<Y>-50</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -116,31 +197,6 @@
 			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 			<AgentLinkBidirectional>true</AgentLinkBidirectional>
 			<MessageType>Object</MessageType>
-			<DrawLine>true</DrawLine>
-			<LineStyle>DOTTED</LineStyle>
-			<LineWidth>0.5</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
-		<AgentLink>
-			<Id>1658760368568</Id>
-			<Name><![CDATA[realAgent]]></Name>
-			<X>240</X>
-			<Y>-110</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>SINGLE_LINK</AgentLinkType>
-			<AgentReferenceId>1658477288308</AgentReferenceId>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
 			<LineStyle>SOLID</LineStyle>
 			<LineWidth>1</LineWidth>
 			<LineColor>-16777216</LineColor>
@@ -151,7 +207,7 @@
 	</AgentLinks>
 	<Presentation>
 		<Level>
-			<Id>1658752913453</Id>
+			<Id>1658752695710</Id>
 			<Name><![CDATA[level]]></Name>
 			<X>0</X>
 			<Y>0</Y>

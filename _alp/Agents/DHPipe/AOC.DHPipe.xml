@@ -1,32 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ActiveObjectClass>
-	<Id>1658752695711</Id>
-	<Name><![CDATA[A_SubTenant]]></Name>
-	<ExcludeFromBuild>true</ExcludeFromBuild>
-	<Folder>1752737189062</Folder>
-	<ExtendsReference>
-		<PackageName>zero_engine</PackageName>
-		<ClassName>Actor</ClassName>
-	</ExtendsReference>
-	<Parameters>
-		<Parameter>
-			<Name><![CDATA[p_actorID]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorType]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorGroup]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorSubgroup]]></Name>
-		</Parameter>
-	</Parameters>
-	<StartupCode><![CDATA[energyModel.c_actors.add(this);]]></StartupCode>
+	<Id>1658752913454</Id>
+	<Name><![CDATA[DHPipe]]></Name>
+	<Folder>1770626518456</Folder>
 	<Generic>false</Generic>
 	<GenericParameter>
-		<Id>1658752695709</Id>
-		<Name><![CDATA[1658752695709]]></Name>
+		<Id>1658752913452</Id>
+		<Name><![CDATA[1658752913452]]></Name>
 		<GenericParameterValue Class="CodeValue">
 			<Code><![CDATA[T extends Agent]]></Code>
 		</GenericParameterValue>
@@ -83,7 +63,7 @@
 	</EnvironmentProperties>
 	<DatasetsCreationProperties>
 		<AutoCreate>true</AutoCreate>
-		<Id>1658477089995</Id>
+		<Id>1658477089924</Id>
 		<OccurrenceAtTime>true</OccurrenceAtTime>
 		<OccurrenceDate>1658822400000</OccurrenceDate>
 		<OccurrenceTime Class="CodeUnitValue">
@@ -96,10 +76,10 @@
 		</RecurrenceCode>
 	</DatasetsCreationProperties>
 	<ScaleRuler>
-		<Id>1658752695707</Id>
+		<Id>1658752913450</Id>
 		<Name><![CDATA[scale]]></Name>
 		<X>0</X>
-		<Y>-150</Y>
+		<Y>-180</Y>
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>false</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
@@ -112,13 +92,15 @@
 		<Scale>10</Scale>
 		<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 	</ScaleRuler>
-	<CurrentLevel>1658752695710</CurrentLevel>
-	<ConnectionsId>1658752695706</ConnectionsId>
+	<CurrentLevel>1658752913453</CurrentLevel>
+	<ConnectionsId>1658752913449</ConnectionsId>
 	<Variables xmlns:al="http://anylogic.com"/>
+	<Functions xmlns:al="http://anylogic.com"/>
 	<AgentLinks>
 		<AgentLink>
-			<Id>1658752695706</Id>
+			<Id>1658752913449</Id>
 			<Name><![CDATA[connections]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<X>50</X>
 			<Y>-50</Y>
 			<Label>
@@ -132,37 +114,9 @@
 			<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 			<AgentLinkBidirectional>true</AgentLinkBidirectional>
 			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
-			<LineColor>-16777216</LineColor>
-			<LineZOrder>UNDER_AGENTS</LineZOrder>
-			<LineArrow>NONE</LineArrow>
-			<LineArrowPosition>END</LineArrowPosition>
-		</AgentLink>
-		<AgentLink>
-			<Id>1703256686877</Id>
-			<Name><![CDATA[l_mainTenant]]></Name>
-			<Description><![CDATA[Link naar onderliggende actor of netConnection. Gebruikt om actoren te linken aan netConnection objecten, of actoren aan actoren te linken (bijv. leden van de Coop)
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
-			<X>220</X>
-			<Y>-50</Y>
-			<Label>
-				<X>15</X>
-				<Y>0</Y>
-			</Label>
-			<PublicFlag>false</PublicFlag>
-			<PresentationFlag>true</PresentationFlag>
-			<ShowLabel>true</ShowLabel>
-			<HandleReceiveInConnections>false</HandleReceiveInConnections>
-			<AgentLinkType>SINGLE_LINK</AgentLinkType>
-			<AgentReferenceId>1660224852394</AgentReferenceId>
-			<AgentLinkBidirectional>false</AgentLinkBidirectional>
-			<MessageType>Object</MessageType>
-			<LineStyle>SOLID</LineStyle>
-			<LineWidth>1</LineWidth>
+			<DrawLine>true</DrawLine>
+			<LineStyle>DOTTED</LineStyle>
+			<LineWidth>0.5</LineWidth>
 			<LineColor>-16777216</LineColor>
 			<LineZOrder>UNDER_AGENTS</LineZOrder>
 			<LineArrow>NONE</LineArrow>
@@ -171,7 +125,7 @@
 	</AgentLinks>
 	<Presentation>
 		<Level>
-			<Id>1658752695710</Id>
+			<Id>1658752913453</Id>
 			<Name><![CDATA[level]]></Name>
 			<X>0</X>
 			<Y>0</Y>
@@ -185,6 +139,7 @@
 			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 			<Z>0</Z>
 			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+			<Presentation xmlns:al="http://anylogic.com"/>
 		</Level>
 	</Presentation>
 </ActiveObjectClass>

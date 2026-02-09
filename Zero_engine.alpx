@@ -1279,6 +1279,10 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Name><![CDATA[Globals]]></Name>
 				<ParentId>1752680962144</ParentId>
 			</Folder>
+			<Folder>
+				<Id>1770626518456</Id>
+				<Name><![CDATA[DistrictHeating]]></Name>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
