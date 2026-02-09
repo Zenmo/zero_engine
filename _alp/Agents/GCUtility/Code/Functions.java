@@ -5,13 +5,6 @@ f_manageHeating(timeVariables);
 f_manageEVCharging(timeVariables);
 
 f_manageBattery(timeVariables);
-
-/*
-// Disabled the fuelcell call, the specific asset has been removed. If there is need for it again, please use the generic conversion asset.
-if (v_enableFuelCell) {
-	f_manageFuelCell();
-}
-*/
 /*ALCODEEND*/}
 
 double f_manageFuelCell()

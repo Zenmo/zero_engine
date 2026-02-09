@@ -10,34 +10,43 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	/**
      * Default constructor
      */
-    public J_EAConversion() {
+	public J_EAConversion() {
+	}
+    
+	/**
+     * Constructor initializing the fields, and setting assetFlowCatagory (Assetflowcatagory is filled with OUTPUT product of the conversion!)
+     */
+    public J_EAConversion(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, OL_AssetFlowCategories assetFlowCatagory, J_TimeParameters timeParameters) {   	
+    	this.assetFlowCategory = assetFlowCatagory;
+    	construct(owner, energyAssetType, outputCapacity_kW, efficiency_r, energyCarrierProduced, energyCarrierConsumed, timeParameters);
     }
 
     /**
      * Constructor initializing the fields
      */
-    
     public J_EAConversion(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, J_TimeParameters timeParameters) {
-	    this.setOwner(owner);
-	    this.timeParameters = timeParameters;	    
-	    this.energyAssetType = energyAssetType;
-	    this.outputCapacity_kW = outputCapacity_kW;
-	    this.eta_r = efficiency_r;
-	    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
-	    this.energyCarrierProduced = energyCarrierProduced;
-	    this.energyCarrierConsumed = energyCarrierConsumed;
-	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
-		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		registerEnergyAsset(timeParameters);
+    	construct(owner, energyAssetType, outputCapacity_kW, efficiency_r, energyCarrierProduced, energyCarrierConsumed, timeParameters);
 	}
+	    private void construct(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, J_TimeParameters timeParameters) {
+		    this.setOwner(owner);
+		    this.timeParameters = timeParameters;	    
+		    this.energyAssetType = energyAssetType;
+		    this.outputCapacity_kW = outputCapacity_kW;
+		    this.eta_r = efficiency_r;
+		    this.inputCapacity_kW = this.outputCapacity_kW / this.eta_r;
+		    this.energyCarrierProduced = energyCarrierProduced;
+		    this.energyCarrierConsumed = energyCarrierConsumed;
+		    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);		
+			this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
+			registerEnergyAsset(timeParameters);
+	    }
 
     @Override
     public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
-    	powerFraction_fr = roundToDecimal(powerFraction_fr, J_GlobalParameters.floatingPointPrecision);
-    	if(powerFraction_fr < 0) {
+    	if(DoubleCompare.lessThanZero(powerFraction_fr)) {
 			throw new RuntimeException("Impossible to operate conversion asset with negative powerfraction.");    		
     	}
-    	else if ( powerFraction_fr == 0 ) {
+    	else if ( DoubleCompare.equalsZero(powerFraction_fr) ) {
     		this.lastFlowsMap.clear();
     		this.lastEnergyUse_kW = 0;
          	J_FlowsMap flowsMapCopy = new J_FlowsMap();
@@ -118,11 +127,4 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 				+ "with efficiency: " + this.eta_r + ", "
 				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
 	}
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
-
 }                         
