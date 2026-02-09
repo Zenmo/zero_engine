@@ -200,8 +200,8 @@
 		<Id>1678703448389</Id>
 		<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>250</X>
-		<Y>440</Y>
+		<X>2020</X>
+		<Y>-10</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

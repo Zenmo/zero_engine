@@ -2,7 +2,6 @@
 <ActiveObjectClass>
 	<Id>1663773842879</Id>
 	<Name><![CDATA[GCEnergyProduction]]></Name>
-	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677823817</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
@@ -180,7 +179,6 @@
 	<CurrentLevel>1663773842878</CurrentLevel>
 	<ConnectionsId>1663773842874</ConnectionsId>
 	<Variables xmlns:al="http://anylogic.com"/>
-	<Functions xmlns:al="http://anylogic.com"/>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1663773842874</Id>

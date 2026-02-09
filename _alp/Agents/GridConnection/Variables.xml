@@ -616,9 +616,6 @@
               AccessType="private"
               StaticVariable="false">
 			<Type><![CDATA[I_EnergyManagement]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new J_EnergyManagementDefault(this, energyModel.p_timeParameters);]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">

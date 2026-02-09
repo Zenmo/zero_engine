@@ -220,6 +220,66 @@ FullCapacity.]]></Description>
 			</InitialValue>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1770636052222</Id>
+		<Name><![CDATA[v_totalHydrogenUsed_MWh]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2360</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1770636052224</Id>
+		<Name><![CDATA[v_enableFuelCell]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2360</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[boolean]]></Type>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1770636052226</Id>
+		<Name><![CDATA[v_maxHydrogenPower_kW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2360</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1707860525999</Id>
 		<Name><![CDATA[p_conversionEfficiency]]></Name>

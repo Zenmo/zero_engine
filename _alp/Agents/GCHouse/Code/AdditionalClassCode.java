@@ -14,11 +14,3 @@ public void f_removeTheJ_EA(J_EA j_ea){
 public void f_operateFlexAssets(J_TimeVariables timeVariables){
 	f_operateFlexAssets_overwrite(timeVariables);
 }
-
-/*
-@Override 
-public void f_manageEVCharging(){
-	f_manageCharging_overwrite();
-}*/
-
-

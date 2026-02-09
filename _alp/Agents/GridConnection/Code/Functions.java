@@ -175,6 +175,10 @@ f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea, timeParameters);
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
+if(j_ea instanceof J_EAFlex && p_energyManagement == null){
+	f_setEnergyManagement(new J_EnergyManagementDefault(this, timeParameters));
+}
+
 if (j_ea instanceof I_HeatingAsset) {
 	c_heatingAssets.add((J_EAConversion)j_ea);
 	if (p_heatingManagement != null) {

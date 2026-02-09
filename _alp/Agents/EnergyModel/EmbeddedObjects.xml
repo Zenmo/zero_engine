@@ -2227,21 +2227,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isInitialCharger1]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingProfileName1]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[chargingSessionSocket1]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[chargingSessionSocket2]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargerAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_isChargingCentre]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2388,9 +2373,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
