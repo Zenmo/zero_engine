@@ -595,6 +595,7 @@ for(GridConnection GC:c_memberGridConnections){
 	}
 }
 
+
 acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
 acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
 acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
@@ -1425,8 +1426,14 @@ for (int i=0; i < liveWeekSize; i++){
 }
 /*ALCODEEND*/}
 
-double f_startAfterDeserialisation()
+double f_startAfterDeserialisation(J_TimeParameters timeParameters)
 {/*ALCODESTART::1753348770752*/
+acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
+acc_totalCustomerDelivery_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
+acc_totalCustomerFeedIn_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
+
+v_liveData.resetLiveDatasets(timeParameters);
+/*
 v_liveData = new J_LiveData(this);
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
@@ -1435,7 +1442,7 @@ v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRI
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;
 
-v_liveData.resetLiveDatasets(energyModel.p_runStartTime_h, energyModel.p_runStartTime_h + 24 * 7, energyModel.p_timeStep_h);
+
 
 for (GridConnection gc : c_memberGridConnections) {
 	for (OL_EnergyCarriers EC : gc.v_liveData.activeProductionEnergyCarriers) {
@@ -1450,6 +1457,8 @@ fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
 fm_currentBalanceFlows_kW = new J_FlowsMap();
 fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+*/
+
 
 /*ALCODEEND*/}
 

@@ -1059,6 +1059,8 @@ fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
 fm_currentBalanceFlows_kW = new J_FlowsMap();
 fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
+fm_consumptionForHeating_kW = new J_FlowsMap();
 
 // Reconstruct the LiveData class in the EnergyCoops
 for (EnergyCoop ec : pop_energyCoops) {
@@ -1076,6 +1078,9 @@ for (EnergyCoop ec : pop_energyCoops) {
 	ec.fm_currentConsumptionFlows_kW = new J_FlowsMap();
 	ec.fm_currentBalanceFlows_kW = new J_FlowsMap();
 	ec.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+	ec.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
+	ec.fm_consumptionForHeating_kW = new J_FlowsMap();
+	ec.f_startAfterDeserialisation(p_timeParameters);
 }
 
 // Reconstruct the LiveData class in the GridConnections and add EnergyCarriers
@@ -1096,7 +1101,8 @@ for (GridConnection gc : allGridConnections) {
 	gc.fm_currentConsumptionFlows_kW = new J_FlowsMap();
 	gc.fm_currentBalanceFlows_kW = new J_FlowsMap();
 	gc.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-	
+	gc.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
+	gc.fm_consumptionForHeating_kW = new J_FlowsMap();
 	/*for (J_EA j_ea : gc.c_energyAssets) {
 		gc.f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
 	}*/

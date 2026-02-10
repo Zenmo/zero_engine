@@ -3,6 +3,8 @@
  */	
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,    // 
@@ -12,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
     creatorVisibility = Visibility.NONE
 )
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingManagement{
 	private boolean isInitialized = false;
 	private GridConnection gc;
