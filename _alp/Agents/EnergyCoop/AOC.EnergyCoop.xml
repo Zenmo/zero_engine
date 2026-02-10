@@ -54,7 +54,8 @@ fm_currentConsumptionFlows_kW = new J_FlowsMap();
 fm_currentBalanceFlows_kW = new J_FlowsMap();
 fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
 fm_consumptionForHeating_kW = new J_FlowsMap();
-fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);]]></StartupCode>
+fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660731375014</Id>

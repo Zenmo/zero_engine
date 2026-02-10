@@ -1,6 +1,21 @@
 /**
  * J_ChargingSessionData
  */	
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // 
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 public class J_ChargingSessionData {
 	private double startTime_h;
 	private double endTime_h;
@@ -18,7 +33,13 @@ public class J_ChargingSessionData {
 	private boolean V2GCapableOverride = true;
 	
     /**
-     * Default constructor
+     * Constructor for (de-)serialisation
+     */
+	public J_ChargingSessionData() {
+	}
+	
+    /**
+     * Default constructor initializing the fields
      */
     public J_ChargingSessionData(double startTime_quarterhours, double endTime_quarterhours, double chargingDemand_kWh, double batterySize_kWh, double chargingPower_kW, int socketNb, boolean V2GCapable, double timeStep_h) {
     
