@@ -1,6 +1,22 @@
 /**
  * J_TimeVariables
  */	
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+//import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+@JsonAutoDetect(
+	    fieldVisibility = Visibility.ANY,    // also stores full profiles to file. Maybe arrange a way to 'skip' this?
+	    getterVisibility = Visibility.NONE,
+	    isGetterVisibility = Visibility.NONE,
+	    setterVisibility = Visibility.NONE,
+	    creatorVisibility = Visibility.NONE
+	)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 public final class J_TimeVariables {
 	////Time Variables -> Updated every timestep
 	private double t_h; //Current energymodel runtime: t_h = 0, corresponds to 'jan 1 0:00' of the start year 
@@ -19,6 +35,10 @@ public final class J_TimeVariables {
 	/**
      * Default constructor
      */
+	public J_TimeVariables() {
+		
+	}
+	
 	public J_TimeVariables(int v_timeStepsElapsed, J_TimeParameters timeParameters){
 		updateTimeVariables(v_timeStepsElapsed, timeParameters);
 	}

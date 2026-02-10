@@ -36,8 +36,14 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 	private int storedNextSessionIndex;	
 	
     /**
-     * Default constructor
+     * Constructor for (de-)serialisation
      */
+	public J_EAChargingSession() {
+	}
+	
+    /**
+     * Default constructor initializing the fields
+     */	
 	public J_EAChargingSession(I_AssetOwner owner, List<J_ChargingSessionData> chargingSessionDataList, int socketNb, J_TimeParameters timeParameters) {
 		this.setOwner(owner);	
 		this.timeParameters = timeParameters;

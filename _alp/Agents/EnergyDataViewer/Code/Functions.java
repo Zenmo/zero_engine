@@ -382,7 +382,7 @@ v_dataElectricityCHPProductionWinterWeek_kW = data.getRapidRunData().acc_winterW
 */
 // Other
 v_dataNetLoadWinterWeek_kW = data.getRapidRunData().am_winterWeekBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getDataSet(winterWeekStartTime_h);
-v_dataBatterySOCSummerWeek_fr = new DataSet((int) (168 / timeParameters.getTimeStep_h()));
+v_dataBatterySOCWinterWeek_fr = new DataSet((int) (168 / timeParameters.getTimeStep_h()));
 DataSet winterWeekBatteryStorage = data.getRapidRunData().ts_winterWeekBatteriesStoredEnergy_MWh.getDataSet(winterWeekStartTime_h);
 for (int i = 0; i < winterWeekBatteryStorage.size(); i++) {
     // Get the x and y values from the source dataset

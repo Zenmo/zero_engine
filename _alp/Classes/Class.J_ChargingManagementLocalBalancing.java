@@ -29,7 +29,10 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     /**
      * Default constructor
      */
-    public J_ChargingManagementLocalBalancing( GridConnection gc, J_TimeParameters timeParameters ) {
+    public J_ChargingManagementLocalBalancing( ) {
+    }
+    
+    public J_ChargingManagementLocalBalancing( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
     	this.timeParameters = timeParameters;
     	this.filterDiffGain_r = 1/(filterTimeScale_h/timeParameters.getTimeStep_h());
