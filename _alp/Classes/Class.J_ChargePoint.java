@@ -3,6 +3,9 @@
  */	
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @JsonAutoDetect(
     fieldVisibility = Visibility.ANY,    // 
     getterVisibility = Visibility.NONE,
@@ -10,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
     setterVisibility = Visibility.NONE,
     creatorVisibility = Visibility.NONE
 )
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
 public class J_ChargePoint implements I_ChargePointRegistration{
 	
@@ -25,9 +29,10 @@ public class J_ChargePoint implements I_ChargePointRegistration{
 
 	private List<I_ChargingRequest> storedActiveChargingRequests = null;
 
-	//Constructor for (de-)serialisation
+    /**
+     * Constructor for (de-)serialisation
+     */
 	public J_ChargePoint() {
-		
 	};
 	
 	/**
