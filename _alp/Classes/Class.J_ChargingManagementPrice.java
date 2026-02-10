@@ -49,7 +49,13 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;
     	electricityPriceLowPassed_eurpkWh += (currentElectricityPriceConsumption_eurpkWh-electricityPriceLowPassed_eurpkWh) * priceFilterDiffGain_r ;
        	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
+       		double duration_h = chargingRequest.getLeaveTime_h() - t_h;
+    		if (duration_h <= 0) {
+   				traceln("ChargingRequest starting after endtime! Skipping session! Duration_h: %s", duration_h);
+   				//throw new RuntimeException("ChargingRequest starting after endtime!");
+   			}
 			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+			//traceln("Charging need: %s, getEnergyNeedForNextTrip_kWh: %s", chargeNeedForNextTrip_kWh, chargingRequest.getEnergyNeedForNextTrip_kWh());
 			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
 			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
 			double chargeSetpoint_kW = 0;    			

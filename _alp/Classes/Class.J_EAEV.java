@@ -76,6 +76,9 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
     
 	@Override
 	public void operate(double ratioOfChargeCapacity_r, J_TimeVariables timeVariables) {
+		if (!available) {
+			throw new RuntimeException("Trying to charge EV that is not available for charging!");
+		}
 		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.capacityElectric_kW * vehicleScaling; // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
     	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
     	
@@ -115,9 +118,10 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	
 	public boolean startTrip(J_TimeVariables timeVariables) {
 		if (available) {
+			((GridConnection)this.getOwner()).f_updateFlexAssetFlows(this , 0.0, timeVariables);
 			this.available = false;
 			//Update (charging) flows to zero, because vehicle is away.
-			((GridConnection)this.getOwner()).f_updateFlexAssetFlows(this , 0.0, timeVariables);
+
 			return true;
 		} else {
 			traceln("Trip not started because EV not available!");
@@ -135,6 +139,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			return true;
 		} else {
 			//mileage_km += tripDist_km;
+			double consumption_fr = (tripDist_km * energyConsumption_kWhpkm) / (storageCapacity_kWh);
+			//traceln("J_EAEV.endTrip(), trip consumption: %s [pct of SoC], specific consumption kWh/km: %s", 100*consumption_fr, energyConsumption_kWhpkm);
 			stateOfCharge_fr -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / (storageCapacity_kWh * vehicleScaling);
 
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
@@ -176,9 +182,10 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	public double getLeaveTime_h() {
 		return getNextTripStartTime_h();
 	}	
-		public double getNextTripStartTime_h() {
-			return this.tripTracker.v_nextEventStartTime_min / 60;
-		}
+	
+	public double getNextTripStartTime_h() {
+		return this.tripTracker.getNextEventStartTime_h();
+	}
 
 	public double getCurrentStateOfCharge_fr() {
     	return this.stateOfCharge_fr;
@@ -251,6 +258,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	
 	@Override
     public void storeStatesAndReset() {
+		//traceln("EV reset!");
     	energyUsedStored_kWh = energyUsed_kWh;
     	energyUsed_kWh = 0.0;
     	stateOfChargeStored_r = stateOfCharge_fr;
