@@ -85,7 +85,7 @@ public class FlexAssetScheduler {
 
         while (asset.profile_kW[cheapestTimeIdxsSorted[i]] >= asset.maxPower_kW || !asset.allowedOperatingTimes[cheapestTimeIdxsSorted[i]]) {
             i++;
-            if (i == loadProfile_kW.length - 1) {
+            if (i == loadProfile_kW.length) { // Why minus 1? 
                 throw new RuntimeException("Warning: No more scheduling opportunities available! Work remaining: " + workRemaining_kWh);
             }
         }
