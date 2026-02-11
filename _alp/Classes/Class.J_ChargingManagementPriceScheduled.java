@@ -48,11 +48,11 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
         	}
         }
         
-        public void checkIfFinished() {
+        /*public void checkIfFinished() {
         	if (currentIdx < chargeProfile_kW.length) {
         		traceln("Warning!! Charge sesssion aborted too early! Missing %s timesteps!", chargeProfile_kW.length-currentIdx);
         	}
-        }
+        }*/
     }
     
     private List<I_ChargingRequest> previousChargingRequests = new ArrayList<>();    
@@ -88,12 +88,8 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			// Get session duration
        			double duration_h = chargingRequest.getLeaveTime_h() - t_h;
        			int length = (int)ceil(duration_h/timeParameters.getTimeStep_h()); // 
-       			if (abs(length*timeParameters.getTimeStep_h() - duration_h) < .0001 && (length*timeParameters.getTimeStep_h() - duration_h) != 0.0) {
-       				traceln("Rounding errors in duration_h! duration_h: %s", duration_h);
-       			}
        			if (duration_h <= 0) {
        				traceln("ChargingRequest starting after endtime! Duration_h: %s", duration_h);
-
        				//throw new RuntimeException("ChargingRequest starting after endtime!");
        			}
        			// Get price curve for duration
@@ -106,45 +102,41 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			} /*else {
        				traceln("Charging session long enough for chargeNeedForNextTrip_kWh");
        			}*/
-       			chargeNeedForNextTrip_kWh=max(0,min(chargeNeedForNextTrip_kWh, maxChargePower_kW * timeParameters.getTimeStep_h()*(length)-0.001));
-       			double[] loadProfile_kW = new double[length];
+       			chargeNeedForNextTrip_kWh=max(0,min(chargeNeedForNextTrip_kWh, maxChargePower_kW * timeParameters.getTimeStep_h()*length));
+       			double[] chargeProfile_kW = new double[length];
        			if (chargeNeedForNextTrip_kWh>0) {
        				//traceln("Profile length: %s, price-curve length: %s", loadProfile_kW.length, priceCurve.length);
-       				loadProfile_kW = FlexAssetScheduler.scheduleWrapper(loadProfile_kW, asset, chargeNeedForNextTrip_kWh, market, timeParameters.getTimeStep_h(), false);
-       				double chargeVolumeCheck_kWh = ZeroMath.arraySum(loadProfile_kW) * timeParameters.getTimeStep_h();
-       				if (chargeVolumeCheck_kWh < chargeNeedForNextTrip_kWh - 1e-10) {
+       				chargeProfile_kW = FlexAssetScheduler.scheduleWrapper(chargeProfile_kW, asset, chargeNeedForNextTrip_kWh, market, timeParameters.getTimeStep_h(), false);
+       				
+       				/*
+       				double chargeVolumeCheck_kWh = ZeroMath.arraySum(chargeProfile_kW) * timeParameters.getTimeStep_h();
+       				if (DoubleCompare.greaterThanZero(chargeNeedForNextTrip_kWh - chargeVolumeCheck_kWh)) {
        					traceln("Warning!! Scheduled charging energy is lower than chargeNeedForNextTrip_kWh! Deficit: %s", chargeNeedForNextTrip_kWh - chargeVolumeCheck_kWh);
        				}
+       				for (int i = 0; i< length; i++) {
+       					if (chargeProfile_kW[i] > maxChargePower_kW) {
+       						double excessChargePower_kW = chargeProfile_kW[i] - maxChargePower_kW;
+       						String err = String.format("Scheduled chargePower greater than maxChargePower_kW!! Excess: %s", excessChargePower_kW);
+       						System.err.print(err); 
+       					}
+       				}*/
        			}
-				//traceln("Starting session! Profile length: %s, charging need: %s", loadProfile_kW.length, chargeNeedForNextTrip_kWh);
-       			// Store loadProfile_kW. How to keep track of timestep within such a profile?
+       			
        			previousChargingRequests.add(chargingRequest);
-       			activeSessions.add(new ActiveSession(chargingRequest, loadProfile_kW, t_h));       			
+       			activeSessions.add(new ActiveSession(chargingRequest, chargeProfile_kW, t_h));       			
        		} 
        	}
    		// Execute charging of active sessions
 		for (ActiveSession session : activeSessions) {			
-			//int index = roundToInt((t_h - session.startTime_h)/timeParameters.getTimeStep_h());
-			//if (session.chargeProfile_kW.length>0) {
 			if (!currentChargingRequests.contains(session.chargingRequest)) { // || index == session.chargeProfile_kW.length) {
-				session.isFinished=true;
-				session.checkIfFinished();
-			//} else if (timeParameters.getTimeStep_h()<session.chargingRequest.getLeaveTime_h() && session.chargeProfile_kW.length>0) {
+				throw new RuntimeException("ChargingSession was prematurely aborted!");
 			} else if (session.chargeProfile_kW.length>0) {
-				//chargePoint.charge(session.chargingRequest, session.chargeProfile_kW[index], timeVariables, gc);	
 				session.charge(chargePoint, gc, timeVariables);
 			}
 			
 			if (session.isFinished) {
 				previousChargingRequests.remove(session.chargingRequest);
 			}
-			/*if (index == session.chargeProfile_kW.length-1 || session.chargeProfile_kW.length==0) { // session ending, remove session from list
-				//traceln("Ending session! Profile length: %s", session.chargeProfile_kW.length);
-				previousChargingRequests.remove(session.chargingRequest);
-				//activeSessions.remove(session);
-				session.isFinished = true;
-			}*/
-			//traceln("Scheduled charging, profile length: %s, current index: %s, current power: %s kW", session.chargeProfile_kW.length, index, session.chargeProfile_kW[index]);
 		}       					
 		activeSessions.removeIf(session -> session.isFinished); // Must be outside of for-loop over this collection!
     }
@@ -172,8 +164,9 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
 		previousChargingRequestsStored = previousChargingRequests;    
 		activeSessionsStored = activeSessions;
 	    
-		previousChargingRequests = new ArrayList<>();    
-	    activeSessions = new ArrayList<>();	    
+		previousChargingRequests.clear();// = new ArrayList<>();    
+	    activeSessions.clear();// = new ArrayList<>();	 
+	    //traceln("active session reset!");
 	}
 	public void restoreStates() {
 		previousChargingRequests = previousChargingRequestsStored;
