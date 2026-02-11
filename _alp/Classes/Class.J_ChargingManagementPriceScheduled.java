@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import zeroPackage.Market;
 import zeroPackage.FlexConsumptionAsset;
 import zeroPackage.FlexAssetScheduler;
+import zeroPackage.ZeroMath;
 
 
 @JsonAutoDetect(
@@ -46,6 +47,12 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
         		this.isFinished = true;
         	}
         }
+        
+        public void checkIfFinished() {
+        	if (currentIdx < chargeProfile_kW.length) {
+        		traceln("Warning!! Charge sesssion aborted too early! Missing %s timesteps!", chargeProfile_kW.length-currentIdx);
+        	}
+        }
     }
     
     private List<I_ChargingRequest> previousChargingRequests = new ArrayList<>();    
@@ -80,7 +87,10 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			double maxChargePower_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);
        			// Get session duration
        			double duration_h = chargingRequest.getLeaveTime_h() - t_h;
-       			int length = (int)floor(duration_h/timeParameters.getTimeStep_h()); // 
+       			int length = (int)ceil(duration_h/timeParameters.getTimeStep_h()); // 
+       			if (abs(length*timeParameters.getTimeStep_h() - duration_h) < .0001 && (length*timeParameters.getTimeStep_h() - duration_h) != 0.0) {
+       				traceln("Rounding errors in duration_h! duration_h: %s", duration_h);
+       			}
        			if (duration_h <= 0) {
        				traceln("ChargingRequest starting after endtime! Duration_h: %s", duration_h);
 
@@ -93,12 +103,18 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			FlexConsumptionAsset asset = new FlexConsumptionAsset(maxChargePower_kW, 20, timeParameters.getTimeStep_h(), length*timeParameters.getTimeStep_h(), null);
        			if (chargeNeedForNextTrip_kWh > (maxChargePower_kW * timeParameters.getTimeStep_h()*(length) )) {
        				traceln("Warning! chargeNeedForNextTrip_kWh is too high for duration of charging session! Deficit: %s", chargeNeedForNextTrip_kWh - (maxChargePower_kW*(timeParameters.getTimeStep_h()*(length))));
-       			}
+       			} /*else {
+       				traceln("Charging session long enough for chargeNeedForNextTrip_kWh");
+       			}*/
        			chargeNeedForNextTrip_kWh=max(0,min(chargeNeedForNextTrip_kWh, maxChargePower_kW * timeParameters.getTimeStep_h()*(length)-0.001));
        			double[] loadProfile_kW = new double[length];
        			if (chargeNeedForNextTrip_kWh>0) {
        				//traceln("Profile length: %s, price-curve length: %s", loadProfile_kW.length, priceCurve.length);
        				loadProfile_kW = FlexAssetScheduler.scheduleWrapper(loadProfile_kW, asset, chargeNeedForNextTrip_kWh, market, timeParameters.getTimeStep_h(), false);
+       				double chargeVolumeCheck_kWh = ZeroMath.arraySum(loadProfile_kW) * timeParameters.getTimeStep_h();
+       				if (chargeVolumeCheck_kWh < chargeNeedForNextTrip_kWh - 1e-10) {
+       					traceln("Warning!! Scheduled charging energy is lower than chargeNeedForNextTrip_kWh! Deficit: %s", chargeNeedForNextTrip_kWh - chargeVolumeCheck_kWh);
+       				}
        			}
 				//traceln("Starting session! Profile length: %s, charging need: %s", loadProfile_kW.length, chargeNeedForNextTrip_kWh);
        			// Store loadProfile_kW. How to keep track of timestep within such a profile?
@@ -112,6 +128,7 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
 			//if (session.chargeProfile_kW.length>0) {
 			if (!currentChargingRequests.contains(session.chargingRequest)) { // || index == session.chargeProfile_kW.length) {
 				session.isFinished=true;
+				session.checkIfFinished();
 			//} else if (timeParameters.getTimeStep_h()<session.chargingRequest.getLeaveTime_h() && session.chargeProfile_kW.length>0) {
 			} else if (session.chargeProfile_kW.length>0) {
 				//chargePoint.charge(session.chargingRequest, session.chargeProfile_kW[index], timeVariables, gc);	

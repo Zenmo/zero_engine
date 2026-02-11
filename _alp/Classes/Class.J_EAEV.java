@@ -23,7 +23,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	private boolean V2GActive = false;
 
 	// Should this be in here?	
-	public double energyNeedForNextTrip_kWh;
+	private double energyNeedForNextTrip_kWh;
 	//public OL_EVChargingNeed chargingNeed;
 	private double energyChargedOutsideModelArea_kWh = 0;
 	private double energyChargedOutsideModelAreaStored_kWh;
@@ -160,6 +160,10 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
     
 	public void setTripTracker(J_ActivityTrackerTrips tracker) {
 		this.tripTracker = tracker;
+	}
+	
+	public void setEnergyNeedForNextTrip_kWh(double energyNeedForNextTrip_kWh) {
+		this.energyNeedForNextTrip_kWh = energyNeedForNextTrip_kWh;
 	}
 	
 	public J_ActivityTrackerTrips getTripTracker() {

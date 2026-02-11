@@ -116,7 +116,7 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     
 	public double getChargeDeadline_h(I_ChargingRequest chargingRequest) {
 		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
-		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+		double chargeTimeMargin_h = 0.25;//5; // Margin to be ready with charging before start of next trip
 		double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getMaxChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
 		return chargeDeadline_h;    		

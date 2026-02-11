@@ -183,7 +183,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
 				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh(),2));
 			}
-			v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
+			//v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
 			// Check if more charging is needed for next trip!
 			double nextTripDist_km = 0;
 			double nextTripStartTime_min = 0;
@@ -200,8 +200,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				traceln("*******Additional charging required to prepare for trip after next trip!*********");
 			}*/
 			v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
+			v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());
 			//traceln("TripTracker, energyNeedForNextTrip: %s", v_energyNeedForNextTrip_kWh);
-			ev.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
+			ev.setEnergyNeedForNextTrip_kWh(v_energyNeedForNextTrip_kWh);
 			/*if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {
 				traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
 				traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
@@ -247,7 +248,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		v_energyNeedForNextTrip_kWh = v_energyNeedForNextTripStored_kWh;
 		
 		if(vehicle instanceof J_EAEV ev) {
-			ev.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
+			ev.setEnergyNeedForNextTrip_kWh(v_energyNeedForNextTrip_kWh);
 		}
 	}
     
