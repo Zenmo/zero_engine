@@ -1807,7 +1807,7 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			</JavaClass>
 			<JavaClass>
 				<Id>1755521265097</Id>
-				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
+				<Name><![CDATA[J_ChargingManagementPriceScheduled]]></Name>
 				<Folder>1762850586274</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -1959,6 +1959,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1770210283060</Id>
 				<Name><![CDATA[DoubleCompare]]></Name>
 				<Folder>1764938574089</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1770648718773</Id>
+				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
+				<Folder>1762850586274</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
