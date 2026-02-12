@@ -2,7 +2,7 @@
  * J_HeatingFunctionLibrary
  */	
 public abstract class J_HeatingFunctionLibrary {
-	public static double heatingDaysSetpoint_degC = 18;
+	public static double heatingDaysAvgTempTreshold_degC = 18;
 	public static double heatLossByWindowVentilationMultiplier = 5;
 	/*
 	public void setHeatingDaysSetpoint_degC(double value) {

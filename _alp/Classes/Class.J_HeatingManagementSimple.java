@@ -70,8 +70,8 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 	    	
 	    	//Stookdagen approximation > boven 18 graden is niet verwarmen
 	    	double avgTemp24h_degC = gc.energyModel.pf_ambientTemperature_degC.getForecast();
-	    	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysSetpoint_degC) {
-	    		buildingHeatingDemand_kW = max(0,J_HeatingFunctionLibrary.heatingDaysSetpoint_degC - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();	
+	    	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
+	    		buildingHeatingDemand_kW = max(0, heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();	
 	    	}
 	    	///On heating days
 	    	else {
