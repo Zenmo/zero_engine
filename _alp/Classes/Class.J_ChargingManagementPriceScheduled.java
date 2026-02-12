@@ -34,7 +34,7 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
         private int currentIdx = 0;
         //private double endTime_h;
 
-        public ActiveSession(I_ChargingRequest chargingRequest, double[] chargeProfile_kW, double startTime_h) {
+        public ActiveSession(I_ChargingRequest chargingRequest, double[] chargeProfile_kW) {
             this.chargingRequest = chargingRequest;
             this.chargeProfile_kW = chargeProfile_kW;
             //this.startTime_h = startTime_h;            
@@ -73,7 +73,7 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
     	return activeChargingType;
     }
     /**
-     * One of the simplest charging algorithms.
+     * This charging strategy creates a charging schedule that is quasi-cost-optimal, and allows the inclusion of a market feedback mechanism to reduce excessive charging spikes during minimum price intervals.
      * 
      */
     public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
@@ -97,9 +97,9 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			double marketFeedback_eurpMWhpkW = 20; // PLACEHOLDER VALUE!
        			Market market = new Market(priceCurve, marketFeedback_eurpMWhpkW, 0, 0, 0);
        			FlexConsumptionAsset asset = new FlexConsumptionAsset(maxChargePower_kW, 20, timeParameters.getTimeStep_h(), length*timeParameters.getTimeStep_h(), null);
-       			if (chargeNeedForNextTrip_kWh > (maxChargePower_kW * timeParameters.getTimeStep_h()*(length) )) {
+       			/*if (chargeNeedForNextTrip_kWh > (maxChargePower_kW * timeParameters.getTimeStep_h()*(length) )) {
        				traceln("Warning! chargeNeedForNextTrip_kWh is too high for duration of charging session! Deficit: %s", chargeNeedForNextTrip_kWh - (maxChargePower_kW*(timeParameters.getTimeStep_h()*(length))));
-       			} /*else {
+       			} else {
        				traceln("Charging session long enough for chargeNeedForNextTrip_kWh");
        			}*/
        			chargeNeedForNextTrip_kWh=max(0,min(chargeNeedForNextTrip_kWh, maxChargePower_kW * timeParameters.getTimeStep_h()*length));
@@ -123,24 +123,33 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			}
        			
        			previousChargingRequests.add(chargingRequest);
-       			activeSessions.add(new ActiveSession(chargingRequest, chargeProfile_kW, t_h));       			
+       			activeSessions.add(new ActiveSession(chargingRequest, chargeProfile_kW));       			
        		} 
        	}
    		// Execute charging of active sessions
 		for (ActiveSession session : activeSessions) {			
 			if (!currentChargingRequests.contains(session.chargingRequest)) { // || index == session.chargeProfile_kW.length) {
-				throw new RuntimeException("ChargingSession was prematurely aborted!");
+				//throw new RuntimeException("ChargingSession was prematurely aborted!");
+				traceln("Warning! ChargingSession was prematurely aborted! t_h: %s", t_h);
+				//traceln("ChargingRequest: %s", session.chargingRequest);
+				session.isFinished = true;
+				previousChargingRequests.remove(session.chargingRequest);
 			} else if (session.chargeProfile_kW.length>0) {
 				session.charge(chargePoint, gc, timeVariables);
-			}
-			
-			if (session.isFinished) {
-				previousChargingRequests.remove(session.chargingRequest);
-			}
+				if (session.isFinished) {
+					previousChargingRequests.remove(session.chargingRequest);
+				}
+			}			
 		}       					
 		activeSessions.removeIf(session -> session.isFinished); // Must be outside of for-loop over this collection!
     }
 
+    public void abortSession(I_ChargingRequest chargingRequest) {
+    	previousChargingRequests.remove(chargingRequest);
+    	ActiveSession session = findFirst(activeSessions, x -> x.chargingRequest == chargingRequest);
+    	activeSessions.remove(session);
+    }
+    
 	public void setV2GActive(boolean activateV2G) {
 		throw new RuntimeException("ChargingManagementPriceScheduled does not support V2G charging!");
 		/*
@@ -164,8 +173,8 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
 		previousChargingRequestsStored = previousChargingRequests;    
 		activeSessionsStored = activeSessions;
 	    
-		previousChargingRequests.clear();// = new ArrayList<>();    
-	    activeSessions.clear();// = new ArrayList<>();	 
+		previousChargingRequests = new ArrayList<>(); // Don't use clear()! It will also clear the 'stored' list; as it's not a copy, just a pointer to the same list!
+	    activeSessions = new ArrayList<>();	 
 	    //traceln("active session reset!");
 	}
 	public void restoreStates() {
