@@ -188,11 +188,21 @@
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
-			<Title>Min</Title>
+			<Title>Building temp</Title>
 			<Id>1765380741625</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-2448096</Color>
 			<Expression2>p_BuildingThermalAsset.getCurrentTemperature()</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<DatasetExpression>
+			<Title>Amb temp</Title>
+			<Id>1770221619232</Id>
+			<Expression>my_dataset1</Expression>
+			<Color>-9728477</Color>
+			<Expression2>energyModel.pp_ambientTemperature_degC.getCurrentValue()</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

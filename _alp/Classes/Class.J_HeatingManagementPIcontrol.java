@@ -90,8 +90,13 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	double timeOfDay_h = timeVariables.getTimeOfDay_h();
     	double buildingHeatingDemand_kW = 0;
     	
-    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
-    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+    	J_HeatingFunctionLibrary.setWindowVentilation_fr(this.building, heatingPreferences.getWindowOpenSetpoint_degc() ); 
+    	
+     	double avgTemp24h_degC = gc.energyModel.pf_ambientTemperature_degC.getForecast();
+    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();     	
+    	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
+    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
+    	} else if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     	}
     	
