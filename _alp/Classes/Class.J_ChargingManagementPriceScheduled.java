@@ -130,7 +130,7 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
 		for (ActiveSession session : activeSessions) {			
 			if (!currentChargingRequests.contains(session.chargingRequest)) { // || index == session.chargeProfile_kW.length) {
 				//throw new RuntimeException("ChargingSession was prematurely aborted!");
-				traceln("Warning! ChargingSession was prematurely aborted! t_h: %s", t_h);
+				traceln("Warning! ChargingSession was prematurely aborted! Ignore this warning if it occurs after changing EV-sliders during live-sim.");
 				//traceln("ChargingRequest: %s", session.chargingRequest);
 				session.isFinished = true;
 				previousChargingRequests.remove(session.chargingRequest);
