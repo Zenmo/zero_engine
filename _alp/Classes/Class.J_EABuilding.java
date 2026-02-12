@@ -7,7 +7,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
-	private double windowVentilation_fr;
+	private double additionalVentilationLosses_fr = 0;
 	
 	//Slider scaling factor
 	private double lossScalingFactor_fr = 1;
@@ -64,9 +64,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 
 	}
 	
-	public double ventilationLoss( double lossPower_kW) {
-		double ventilationLoss_kW = this.windowVentilation_fr * lossPower_kW;
-		return ventilationLoss_kW;
+	public double calculateAdditionalVentilationLoss() {
+		double additionalVentilationLoss_kW = this.additionalVentilationLosses_fr * calculateLoss();
+		return additionalVentilationLoss_kW;
 	}
 	
 		@Override
@@ -84,15 +84,15 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
 		double lossPower_kW = calculateLoss(); // Heat exchange with environment through convection
-		double ventilationLoss_kW = ventilationLoss(lossPower_kW);
+		double additionalVentilationLoss_kW = calculateAdditionalVentilationLoss();
 		double solarHeating_kW = solarHeating(); // Heat influx from sunlight
-		this.energyUse_kW = lossPower_kW + ventilationLoss_kW - solarHeating_kW;
+		this.energyUse_kW = lossPower_kW + additionalVentilationLoss_kW - solarHeating_kW;
 		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
 		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat gain from outside air and/or solar irradiance!
 
 		double inputPower_kW = powerFraction_fr * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
     	
-		double deltaEnergy_kWh = (solarHeating_kW - (lossPower_kW + ventilationLoss_kW))* this.timeParameters.getTimeStep_h();
+		double deltaEnergy_kWh = (solarHeating_kW - (lossPower_kW + additionalVentilationLoss_kW))* this.timeParameters.getTimeStep_h();
 		if (this.interiorDelayTime_h != 0.0) {
 			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timeParameters.getTimeStep_h() );
     	}
@@ -140,8 +140,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.lossFactor_WpK = lossFactor_WpK;
 	}
 	
-	public void setWindowVentilation_fr( double ventilation_fr) {
-		this.windowVentilation_fr = ventilation_fr;
+	public void setAdditionalVentilation_fr( double ventilation_fr) {
+		this.additionalVentilationLosses_fr = ventilation_fr;
 	}
 	
 	public void setLossScalingFactor_fr( double lossScalingFactor_fr) {
@@ -181,13 +181,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		this.interiorReleaseSchedule_kWh = this.interiorReleaseScheduleStored_kWh;
 		this.exteriorReleaseSchedule_kWh = this.exteriorReleaseScheduleStored_kWh;		
     }
-
-	/*@Override //Storage assets limiteren de opname van warmte niet met 1. Dat is nodig voor de buffer. Die kan wel maximaal zijn capaciteit leverern, maar kan meer opnemen. @Gillis is dat logisch of willen we andere oplossing?
-    public double[] operateBounded(double ratioOfCapacity) {
-    	double limitedRatioOfCapacity = max(-1, ratioOfCapacity);
-    	double[] arr = operate(limitedRatioOfCapacity);
-    	return arr;
-    }*/
 	
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??

@@ -78,12 +78,12 @@ public abstract class J_HeatingFunctionLibrary {
     }
 	
 	public static void setWindowVentilation_fr( J_EABuilding dwelling, double windowOpenSetpoint_degc) {
-		double windowVentilation_fr = 0;
+		double additionalVentilation_fr = 0;
 		
 		if( dwelling.getCurrentTemperature() > windowOpenSetpoint_degc && dwelling.getAmbientTemperature_degC() < dwelling.getCurrentTemperature() ) {
-			windowVentilation_fr = heatLossByWindowVentilationMultiplier;
+			additionalVentilation_fr = heatLossByWindowVentilationMultiplier;
 		}
-		dwelling.setWindowVentilation_fr(windowVentilation_fr);
+		dwelling.setAdditionalVentilation_fr(additionalVentilation_fr);
 	}
 }
  

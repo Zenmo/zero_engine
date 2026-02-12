@@ -205,19 +205,19 @@ f_runAggregators();
 
 double f_initializeForecasts()
 {/*ALCODESTART::1671636439933*/
-pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, 24, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_tempForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_ambientTemperature_degC);
 
-pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_pvForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_PVProduction35DegSouth_fr);
 
-pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_pvForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_PVProduction15DegEastWest_fr);
 
-pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_windForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_windProduction_fr);
 
-pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_epexForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
 
 /*ALCODEEND*/}
