@@ -1095,6 +1095,7 @@ switch (chargingType) {
 		break;
 	case PRICE:
 		managementClass = J_ChargingManagementPrice.class;
+		//managementClass = J_ChargingManagementPriceScheduled.class;
 		break;
 	case BALANCE_LOCAL:
 		managementClass = J_ChargingManagementLocalBalancing.class;
