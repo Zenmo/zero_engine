@@ -57,7 +57,7 @@ public class FlexAssetScheduler {
 
         double workRemaining_kWh = work_kWh;
 
-        while (workRemaining_kWh > 0) {
+        while (workRemaining_kWh > 1e-10) {
             double[] localMarginalPriceCurve_eurpMWh;
             if (separateMarketAndCongestion) {
                 localMarginalPriceCurve_eurpMWh = market.getMarginalPriceCurveUpwards(subtractArrays(newLoadProfile_kW, previousLoadProfile_kW), newLoadProfile_kW);
@@ -90,7 +90,7 @@ public class FlexAssetScheduler {
             }
         }
 
-        double addedPower_kW = Math.min(asset.minPower_kW, workRemaining_kWh / timeStep_h);
+        double addedPower_kW = Math.min(asset.minPower_kW, Math.min(workRemaining_kWh / timeStep_h, asset.maxPower_kW - asset.profile_kW[cheapestTimeIdxsSorted[i]])); // addedPower_kW is positive for consumption!
 
         loadProfile_kW[cheapestTimeIdxsSorted[i]] += addedPower_kW; // Update the load profile, also for the caller of this method! (test this to be sure?)
         asset.profile_kW[cheapestTimeIdxsSorted[i]] += addedPower_kW;

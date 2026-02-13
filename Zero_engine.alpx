@@ -657,6 +657,10 @@
 					<Name><![CDATA[PRICE]]></Name>
 				</Option>
 				<Option>
+					<Id>1770894434248</Id>
+					<Name><![CDATA[PRICE_MARKET_FEEDBACK]]></Name>
+				</Option>
+				<Option>
 					<Id>1755522163223</Id>
 					<Name><![CDATA[BALANCE_LOCAL]]></Name>
 				</Option>

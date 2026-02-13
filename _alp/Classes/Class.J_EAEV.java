@@ -24,6 +24,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 
 	// Should this be in here?	
 	private double energyNeedForNextTrip_kWh;
+	private double energyNeedForNextTripStored_kWh;
 	//public OL_EVChargingNeed chargingNeed;
 	private double energyChargedOutsideModelArea_kWh = 0;
 	private double energyChargedOutsideModelAreaStored_kWh;
@@ -269,6 +270,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
     	stateOfCharge_fr = initialstateOfCharge_fr;
     	availableStored = available;
     	available = true;
+    	energyNeedForNextTripStored_kWh = energyNeedForNextTrip_kWh;
+    	energyNeedForNextTrip_kWh = 0;
     	energyChargedOutsideModelAreaStored_kWh = energyChargedOutsideModelArea_kWh;
     	energyChargedOutsideModelArea_kWh = 0;
     	charged_kWh = 0;
@@ -281,6 +284,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
     	energyUsed_kWh = energyUsedStored_kWh;    	
     	stateOfCharge_fr = stateOfChargeStored_r;
     	available = availableStored;
+    	energyNeedForNextTrip_kWh = energyNeedForNextTripStored_kWh;
     	energyChargedOutsideModelArea_kWh = energyChargedOutsideModelAreaStored_kWh;
     	charged_kWh = 0;
     	discharged_kWh = 0;

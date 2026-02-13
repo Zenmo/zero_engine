@@ -15,8 +15,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	public double v_idleTimeToNextTrip_min;
 	public double v_idleTimeToNextTripStored_min;
 	public double v_tripDist_km;
-	public double v_energyNeedForNextTrip_kWh;
-	public double v_energyNeedForNextTripStored_kWh;
+	//public double v_energyNeedForNextTrip_kWh;
+	//public double v_energyNeedForNextTripStored_kWh;
 	public double v_nextEventStartTime_min;
 	public double distanceScaling_fr = 1.0;
 	public double currentTripTimesteps_n;
@@ -145,7 +145,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
    		
    		double timeSinceWeekStart_min = getTimeSinceWeekStart(time_min);
     	boolean looped = false;
-	    while ( starttimes_min.get(v_eventIndex) < (timeSinceWeekStart_min ) ) {	
+	    while ( starttimes_min.get(v_eventIndex) < (timeSinceWeekStart_min ) ) { // If this occurs 'during' a trip, that trip is ignored, it is not executed.
 	    	setNextTrip(); // Skip to the next trip.
 
 	    	if (v_eventIndex == starttimes_min.size()-1 ) { 
@@ -179,9 +179,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 
 		if (vehicle instanceof J_EAEV ev) {
 			
-			v_energyNeedForNextTrip_kWh = ev.getEnergyConsumption_kWhpkm() * v_tripDist_km;
-			if (v_idleTimeToNextTrip_min > 0 && (v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
-				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(v_energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh(),2));
+			double energyNeedForNextTrip_kWh = ev.getEnergyConsumption_kWhpkm() * v_tripDist_km;
+			if (v_idleTimeToNextTrip_min > 0 && (energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> v_idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
+				traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(v_idleTimeToNextTrip_min/60,2), roundToDecimal(energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh(),2));
 			}
 			//v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
 			// Check if more charging is needed for next trip!
@@ -199,10 +199,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			/*if (additionalChargingNeededForNextTrip_kWh>0) {
 				traceln("*******Additional charging required to prepare for trip after next trip!*********");
 			}*/
-			v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
-			v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());
+			energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
+			energyNeedForNextTrip_kWh = min(energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());
 			//traceln("TripTracker, energyNeedForNextTrip: %s", v_energyNeedForNextTrip_kWh);
-			ev.setEnergyNeedForNextTrip_kWh(v_energyNeedForNextTrip_kWh);
+			ev.setEnergyNeedForNextTrip_kWh(energyNeedForNextTrip_kWh);
 			/*if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {
 				traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
 				traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
@@ -232,10 +232,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	@Override
     public void storeAndResetState() {
     	v_eventIndexStored = v_eventIndex;
-    	v_energyNeedForNextTripStored_kWh = v_energyNeedForNextTrip_kWh;
+    	//v_energyNeedForNextTripStored_kWh = v_energyNeedForNextTrip_kWh;
     	v_idleTimeToNextTripStored_min = v_idleTimeToNextTrip_min;
-    	v_eventIndex = 0;
-    	v_energyNeedForNextTrip_kWh = 0;
+    	//v_eventIndex = 0; Taken care of by setStartIndex() call!
+    	//v_energyNeedForNextTrip_kWh = 0;
     	v_idleTimeToNextTrip_min = 0;
     }
 	
@@ -245,11 +245,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
 		v_idleTimeToNextTrip_min = v_idleTimeToNextTripStored_min;
 		v_tripDist_km = distanceScaling_fr * distances_km.get( v_eventIndex ); // Update upcoming trip distance
-		v_energyNeedForNextTrip_kWh = v_energyNeedForNextTripStored_kWh;
 		
+		/*
+		v_energyNeedForNextTrip_kWh = v_energyNeedForNextTripStored_kWh;
 		if(vehicle instanceof J_EAEV ev) {
 			ev.setEnergyNeedForNextTrip_kWh(v_energyNeedForNextTrip_kWh);
-		}
+		}*/
 	}
     
     

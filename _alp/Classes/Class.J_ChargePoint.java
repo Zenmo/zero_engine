@@ -183,6 +183,7 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     public void storeStatesAndReset() {
     	this.storedActiveChargingRequests = new ArrayList<>(this.currentActiveChargingRequests);
     	this.currentActiveChargingRequests.clear();
+    	//traceln("ChargePoint sessions cleared!");
     }
     
     public void restoreStates() {

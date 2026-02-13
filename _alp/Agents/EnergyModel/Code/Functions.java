@@ -232,6 +232,9 @@ traceln(" ");
 
 double startTime1 = System.currentTimeMillis();
 
+int v_timeStepsElapsed_live = v_timeStepsElapsed;
+v_timeStepsElapsed=0;
+p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
 //// Store and reset model states
 for (J_EA EA : c_energyAssets) {
@@ -302,10 +305,6 @@ for (EnergyCoop EC : pop_energyCoops) {
 	EC.f_resetStates();
 
 }
-
-
-int v_timeStepsElapsed_live = v_timeStepsElapsed;
-v_timeStepsElapsed=0;
 
 c_profiles.forEach(p -> p.updateValue(p_timeParameters.getRunStartTime_h()));
 c_forecasts.forEach(p -> p.initializeForecast(p_timeParameters.getRunStartTime_h())); 
