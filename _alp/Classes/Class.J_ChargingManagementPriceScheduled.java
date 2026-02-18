@@ -21,7 +21,7 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
     private GridConnection gc;
     private J_TimeParameters timeParameters;
     private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.PRICE;
-    
+    private double marketFeedback_eurpMWhpkW = 40; // PLACEHOLDER VALUE!
     private boolean V2GActive = false;
     
     //Stored
@@ -72,6 +72,14 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
     }
+    
+    public double getMarketFeedback_eurpMWhpkW() {
+    	return marketFeedback_eurpMWhpkW;
+    }
+    
+    public void setMarketFeedback_eurpMWhpkW(double marketFeedback_eurpMWhpkW) {
+    	this.marketFeedback_eurpMWhpkW = marketFeedback_eurpMWhpkW;
+    }
     /**
      * This charging strategy creates a charging schedule that is quasi-cost-optimal, and allows the inclusion of a market feedback mechanism to reduce excessive charging spikes during minimum price intervals.
      * 
@@ -95,7 +103,6 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			}
        			// Get price curve for duration
        			double[] priceCurve = Arrays.copyOfRange(gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getAllValues(), roundToInt(t_h/timeParameters.getTimeStep_h()), length+roundToInt(t_h/timeParameters.getTimeStep_h()));
-       			double marketFeedback_eurpMWhpkW = 40; // PLACEHOLDER VALUE!
        			Market market = new Market(priceCurve, marketFeedback_eurpMWhpkW, 0, 0, 0);
        			FlexConsumptionAsset asset = new FlexConsumptionAsset(maxChargePower_kW, 20, timeParameters.getTimeStep_h(), length*timeParameters.getTimeStep_h(), null);
        			/*if (chargeNeedForNextTrip_kWh > (maxChargePower_kW * timeParameters.getTimeStep_h()*(length) )) {
