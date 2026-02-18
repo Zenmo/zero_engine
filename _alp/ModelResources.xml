@@ -12,4 +12,10 @@
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
+	<Resource>
+		<Id>1771252627320</Id>
+		<Path>timeseries-1.0-SNAPSHOT.jar</Path>
+		<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		<Location>FILE_SYSTEM</Location>
+	</Resource>
 </ModelResources>

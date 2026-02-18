@@ -1,5 +1,11 @@
 import java.time.LocalDate;
 import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.temporal.TemporalField;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -22,62 +28,80 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public final class J_TimeParameters {
 	////Time parameters:
 	private final double timeStep_h;
-	private final int startYear;
-	private final double[] hourOfYearPerMonth;
-	private final int dayOfWeek1jan;
-	private final double runStartTime_h;
-	private final double runEndTime_h;
+	//private final int startYear;
+	//private final Date startDate;
+	private final Instant startInstant;
+	//private final double[] hourOfYearPerMonth;
+	//private final int dayOfWeek1jan;
+	//private final double runStartTime_h;
+	//private final double runEndTime_h;
+	private final double simDuration_h;
 	private final int summerWeekNumber;
 	private final int winterWeekNumber;
-	private final double startOfSummerWeek_h;
-	private final double startOfWinterWeek_h;
+	//private final double startOfSummerWeek_h;
+	//private final double startOfWinterWeek_h;
+
 	
-	public J_TimeParameters(
+	/*public J_TimeParameters(
 		double timeStep_h,
-		int startYear,
-		double[] hourOfYearPerMonth,
-		double runStartTime_h,
-		double runEndTime_h,
+		Instant startInstant,
+		//int startYear,
+		//double[] hourOfYearPerMonth,
+		//double runStartTime_h,
+		//double runEndTime_h,
+		double simDuration_h,
 		int summerWeekNumber,
 		int winterWeekNumber
 	) {
 		this.timeStep_h = timeStep_h;
-		this.startYear = startYear;
-		this.hourOfYearPerMonth = hourOfYearPerMonth;
-		this.runStartTime_h = runStartTime_h;
-		this.runEndTime_h = runEndTime_h;
+		this.startInstant = startInstant;
+		//this.hourOfYearPerMonth = hourOfYearPerMonth;
+		//this.runStartTime_h = runStartTime_h;
+		//this.runEndTime_h = runEndTime_h;
+		this.simDuration_h = simDuration_h;
 		this.summerWeekNumber = summerWeekNumber;
 		this.winterWeekNumber = winterWeekNumber;
-		this.dayOfWeek1jan = DayOfWeek.from(LocalDate.of(startYear, 1, 1)).getValue();
+		int dayOfWeek1jan = this.getDayOfWeek1jan();
 		this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
 		this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));
-	}
+		
+		//int month = timeParameters.get
+		ZonedDateTime timestamp = ZonedDateTime.of(
+		        this.startYear, 1, 1,    // Year, Month, Day; should still derive Month and Day from runStartTime_h!
+		        0, 0, 0, 0,    // Hour, Minute, Second, Nano
+		        ZoneId.of("CET"));
+		        
+		// 2. Convert to Instant (Point in time)
+		//this.startInstant = timestamp.toInstant();
+	}*/
 	
 	// Creator for deserialisation. (needed because of final fields!)
 	@JsonCreator
     public J_TimeParameters(
         @JsonProperty("timeStep_h") double timeStep_h,
-        @JsonProperty("startYear") int startYear,
-        @JsonProperty("hourOfYearPerMonth") double[] hourOfYearPerMonth,
-        @JsonProperty("dayOfWeek1jan") int dayOfWeek1jan,
-        @JsonProperty("runStartTime_h") double runStartTime_h,
-        @JsonProperty("runEndTime_h") double runEndTime_h,
+        @JsonProperty("startInstant") Instant startInstant,
+        //@JsonProperty("hourOfYearPerMonth") double[] hourOfYearPerMonth,
+        //@JsonProperty("dayOfWeek1jan") int dayOfWeek1jan,
+        //@JsonProperty("runStartTime_h") double runStartTime_h,
+        //@JsonProperty("runEndTime_h") double runEndTime_h,
+        @JsonProperty("simDuration_h") double simDuration_h,
         @JsonProperty("summerWeekNumber") int summerWeekNumber,
-        @JsonProperty("winterWeekNumber") int winterWeekNumber,
-        @JsonProperty("startOfSummerWeek_h") double startOfSummerWeek_h,
-        @JsonProperty("startOfWinterWeek_h") double startOfWinterWeek_h
+        @JsonProperty("winterWeekNumber") int winterWeekNumber
+        //@JsonProperty("startOfSummerWeek_h") double startOfSummerWeek_h,
+        //@JsonProperty("startOfWinterWeek_h") double startOfWinterWeek_h
     ) {
-		this(timeStep_h, startYear, hourOfYearPerMonth, runStartTime_h, runEndTime_h, summerWeekNumber, winterWeekNumber);
-		/*this.timeStep_h = timeStep_h;
-		this.startYear = startYear;
-		this.hourOfYearPerMonth = hourOfYearPerMonth;
-		this.runStartTime_h = runStartTime_h;
-		this.runEndTime_h = runEndTime_h;
+		//this(timeStep_h, startInstant, simDuration_h, summerWeekNumber, winterWeekNumber);
+		this.timeStep_h = timeStep_h;
+		this.startInstant = startInstant;
+		//this.hourOfYearPerMonth = hourOfYearPerMonth;
+		//this.runStartTime_h = runStartTime_h;
+		//this.runEndTime_h = runEndTime_h;
+		this.simDuration_h = simDuration_h;
 		this.summerWeekNumber = summerWeekNumber;
 		this.winterWeekNumber = winterWeekNumber;
-		this.dayOfWeek1jan = DayOfWeek.from(LocalDate.of(startYear, 1, 1)).getValue();
-		this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
-		this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));*/
+		int dayOfWeek1jan = this.getDayOfWeek1jan();
+		//this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
+		//this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));
     }
 	
 	////Time Parameter getters
@@ -85,20 +109,29 @@ public final class J_TimeParameters {
 	    return timeStep_h;
 	}
 	public int getStartYear() {
-	    return startYear;
+	    return startInstant.atZone(ZoneId.of("CET")).getYear();
 	}
+	/*
 	public double[] getHourOfYearPerMonth() {
 	    return hourOfYearPerMonth;
-	}
+	}*/
 	public int getDayOfWeek1jan() {
+		int startYear = this.getStartYear();
+		int dayOfWeek1jan = DayOfWeek.from(LocalDate.of(startYear, 1, 1)).getValue();
 	    return dayOfWeek1jan;
 	}
 	public double getRunStartTime_h() {
-	    return runStartTime_h;
+		return (startInstant.atZone(ZoneId.of("CET")).getDayOfYear() -1) * 24;
 	}
+	    
 	public double getRunEndTime_h() {
-	    return runEndTime_h;
+	    return this.getRunStartTime_h() + this.simDuration_h;
 	}
+	
+	public double getRunDuration_h() {
+		return simDuration_h;
+	}
+	
 	public int getSummerWeekNumber() {
 	    return summerWeekNumber;
 	}
@@ -106,25 +139,29 @@ public final class J_TimeParameters {
 	    return winterWeekNumber;
 	}
 	public double getStartOfSummerWeek_h() {
-	    return startOfSummerWeek_h;
+	    return roundToInt(24 * (summerWeekNumber * 7 + (8-this.getDayOfWeek1jan())%7));
 	}
 	public double getStartOfWinterWeek_h() {
-	    return startOfWinterWeek_h;
+	    return roundToInt(24 * (winterWeekNumber * 7 + (8-this.getDayOfWeek1jan())%7));
+	}
+	
+	public Instant getStartInstant() {
+		return this.startInstant;
 	}
 	
 	@Override
 	public String toString() {
 	    return "J_TimeParameters{" +
 	            "timeStep_h=" + timeStep_h +
-	            ", startYear=" + startYear +
-	            ", hourOfYearPerMonth=" + java.util.Arrays.toString(hourOfYearPerMonth) +
-	            ", dayOfWeek1jan=" + dayOfWeek1jan +
-	            ", runStartTime_h=" + runStartTime_h +
-	            ", runEndTime_h=" + runEndTime_h +
+	            ", startInstant=" + this.startInstant +
+	            //", hourOfYearPerMonth=" + java.util.Arrays.toString(hourOfYearPerMonth) +
+	            ", dayOfWeek1jan=" + this.getDayOfWeek1jan() +
+	            ", runStartTime_h=" + this.getRunStartTime_h() +
+	            ", runEndTime_h=" + this.getRunEndTime_h() +
 	            ", summerWeekNumber=" + summerWeekNumber +
 	            ", winterWeekNumber=" + winterWeekNumber +
-	            ", startOfSummerWeek_h=" + startOfSummerWeek_h +
-	            ", startOfWinterWeek_h=" + startOfWinterWeek_h +
+	            //", startOfSummerWeek_h=" + startOfSummerWeek_h +
+	            //", startOfWinterWeek_h=" + startOfWinterWeek_h +
 	            '}';
 	}
 }

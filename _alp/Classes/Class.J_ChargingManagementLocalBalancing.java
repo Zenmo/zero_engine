@@ -53,7 +53,8 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	GCdemandLowPassed_kW += (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * filterDiffGain_r;
     	
        	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
-			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+			//double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+			double chargeNeedForNextTrip_kWh = chargingRequest.getStorageCapacity_kWh() - chargingRequest.getCurrentSOC_kWh(); // 
 			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
 			double avgPowerDemandTillTrip_kW = chargeNeedForNextTrip_kWh / (chargingRequest.getLeaveTime_h() - t_h);
 			double chargeSetpoint_kW = 0;    			
@@ -61,7 +62,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
 			} else {
 				double flexGain_r = 1.0; // how strongly to 'follow' currentBalanceBeforeEV_kW
-				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(2,remainingFlexTime_h*flexGain_r)));			    				
+				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
     			if ( this.V2GActive && chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
 					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
 				}    

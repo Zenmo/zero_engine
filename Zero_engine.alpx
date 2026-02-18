@@ -1980,6 +1980,14 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<Imported>true</Imported>
 			<Folder>false</Folder>
 		</ClassPathEntry>
+		<ClassPathEntry>
+			<ResourceReference>
+				<PackageName>zero_engine</PackageName>
+				<ClassName>timeseries-1.0-SNAPSHOT.jar</ClassName>
+			</ResourceReference>
+			<Imported>true</Imported>
+			<Folder>false</Folder>
+		</ClassPathEntry>
 		<CloudModelUuid>f5586290-2a06-4a7c-8c59-bd77840932c3</CloudModelUuid>
 	</Model>
 	<ConvertersApplied>

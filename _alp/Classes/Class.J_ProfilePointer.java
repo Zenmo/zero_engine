@@ -1,6 +1,15 @@
-/**
- * J_ProfilePointer
- */	
+
+//// * J_ProfilePointer
+//// */	
+import com.zenmo.timeseries.untyped.ArrayTimeSeries;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.Temporal;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -21,11 +30,12 @@ public class J_ProfilePointer implements Serializable {
 	private OL_ProfileUnits profileUnits;
 	
 	// Using internal array instead of tableFunction
-	private double[] a_profile;
-	private double dataTimeStep_h;
-	private double dataStartTime_h; // relative to 00:00h on jan 1st of simulation year
-	private boolean enableProfileLooping = true;
+	//private double[] a_profile;
+	//private double dataTimeStep_h;
+	//private double dataStartTime_h; // relative to 00:00h on jan 1st of simulation year
+	//private boolean enableProfileLooping = true;
 	
+	private ArrayTimeSeries arrayTimeSeries;
     /**
      * Default constructor
      */
@@ -33,26 +43,48 @@ public class J_ProfilePointer implements Serializable {
 	
 	}
 	
-    public J_ProfilePointer(String name, double[] profile, double dataTimeStep_h, double dataStartTime_h, OL_ProfileUnits profileUnits) {
+    public J_ProfilePointer(String name, double[] profile, Instant startInstant, Duration timeStep, OL_ProfileUnits profileUnits) {
     	if (profileUnits == null) {
     		throw new RuntimeException("Attemtping to create J_ProfilePointer with null profileUnits!");
     	}
     	this.name = name;
-    	this.a_profile = profile;
-    	this.dataTimeStep_h = dataTimeStep_h;
-    	this.dataStartTime_h = dataStartTime_h;	    	
     	this.profileUnits = profileUnits;
+    	//this.a_profile = profile;
+    	//this.dataTimeStep_h = dataTimeStep_h;
+    	this.arrayTimeSeries = ArrayTimeSeries.builder().values(profile).start(startInstant).step(timeStep).build();   	
+    	
+    }
+    
+    public double getValue(double t_h) {
+    	//this.currentValue = this.getValue(t_h);
+    	/*ZonedDateTime timestamp = ZonedDateTime.of(
+                2023, 1, 1,    // Year, Month, Day
+                0, 0, 0, 0,    // Hour, Minute, Second, Nano
+                ZoneId.of("CET"));               
+                
+        // 2. Convert to Instant (Point in time)
+
+    	Duration T_h = Duration.ofMinutes((long)t_h*60);
+        Instant currentInstant = timestamp.toInstant().plus(T_h);*/
+    	//ZonedDateTime currentTime = arrayTimeSeries.getStart().plus((long)t_h*60, ChronoUnit.MINUTES);
+    	var startTime = arrayTimeSeries.getStart();
+    	Duration T_h = Duration.ofSeconds((long)t_h * 3600);
+    	var currentInstant = startTime.plus(T_h);
+        return arrayTimeSeries.getValueAt(currentInstant);
+    	//return arrayTimeSeries.getValueAt(T_h);
+    	
     }
 
     public void updateValue(double t_h) {
-    	this.currentValue = this.getValue(t_h);
+    	this.currentValue = this.getValue(t_h);    	
     }
     
     public double getCurrentValue() {
     	return this.currentValue;
     }
-    
+    /*
     public double getValue(double time_h) {
+    	
     	//return this.tableFunction.get(t_h);
     	int index_n = (int)((time_h-dataStartTime_h)/dataTimeStep_h);
     	if (enableProfileLooping && index_n >= a_profile.length) {
@@ -68,15 +100,17 @@ public class J_ProfilePointer implements Serializable {
     	}
     	double currentValue_kW = this.a_profile[index_n]; 
     	return currentValue_kW;
-    }
+    }*/
        
     public double[] getAllValues() {
     	//return this.tableFunction.getValues();
-    	return this.a_profile;
+    	return arrayTimeSeries.getValues();
+    	//return this.a_profile;
     }
     
     public double getDataTimeStep_h() {
-    	return dataTimeStep_h;
+    	//return dataTimeStep_h;
+    	return ((Duration)arrayTimeSeries.getStep()).toSeconds()/3600.0;
     }
     
     public OL_ProfileUnits getProfileUnits() {
