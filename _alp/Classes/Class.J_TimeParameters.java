@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */	
 public final class J_TimeParameters {
 	////Time parameters:
-	private final double timeStep_h;
+	private final Duration timeStep;
 	//private final int startYear;
 	//private final Date startDate;
 	private final Instant startInstant;
@@ -35,7 +35,7 @@ public final class J_TimeParameters {
 	//private final int dayOfWeek1jan;
 	//private final double runStartTime_h;
 	//private final double runEndTime_h;
-	private final double simDuration_h;
+	private final Duration simDuration;
 	private final int summerWeekNumber;
 	private final int winterWeekNumber;
 	//private final double startOfSummerWeek_h;
@@ -78,25 +78,25 @@ public final class J_TimeParameters {
 	// Creator for deserialisation. (needed because of final fields!)
 	@JsonCreator
     public J_TimeParameters(
-        @JsonProperty("timeStep_h") double timeStep_h,
+        @JsonProperty("timeStep") Duration timeStep,
         @JsonProperty("startInstant") Instant startInstant,
         //@JsonProperty("hourOfYearPerMonth") double[] hourOfYearPerMonth,
         //@JsonProperty("dayOfWeek1jan") int dayOfWeek1jan,
         //@JsonProperty("runStartTime_h") double runStartTime_h,
         //@JsonProperty("runEndTime_h") double runEndTime_h,
-        @JsonProperty("simDuration_h") double simDuration_h,
+        @JsonProperty("simDuration") Duration simDuration,
         @JsonProperty("summerWeekNumber") int summerWeekNumber,
         @JsonProperty("winterWeekNumber") int winterWeekNumber
         //@JsonProperty("startOfSummerWeek_h") double startOfSummerWeek_h,
         //@JsonProperty("startOfWinterWeek_h") double startOfWinterWeek_h
     ) {
 		//this(timeStep_h, startInstant, simDuration_h, summerWeekNumber, winterWeekNumber);
-		this.timeStep_h = timeStep_h;
+		this.timeStep = timeStep;
 		this.startInstant = startInstant;
 		//this.hourOfYearPerMonth = hourOfYearPerMonth;
 		//this.runStartTime_h = runStartTime_h;
 		//this.runEndTime_h = runEndTime_h;
-		this.simDuration_h = simDuration_h;
+		this.simDuration = simDuration;
 		this.summerWeekNumber = summerWeekNumber;
 		this.winterWeekNumber = winterWeekNumber;
 		int dayOfWeek1jan = this.getDayOfWeek1jan();
@@ -106,7 +106,7 @@ public final class J_TimeParameters {
 	
 	////Time Parameter getters
 	public double getTimeStep_h() {
-	    return timeStep_h;
+	    return (double)timeStep.getSeconds()/3600.0;
 	}
 	public int getStartYear() {
 	    return startInstant.atZone(ZoneId.of("CET")).getYear();
@@ -125,11 +125,11 @@ public final class J_TimeParameters {
 	}
 	    
 	public double getRunEndTime_h() {
-	    return this.getRunStartTime_h() + this.simDuration_h;
+	    return this.getRunStartTime_h() + this.getRunDuration_h();
 	}
 	
 	public double getRunDuration_h() {
-		return simDuration_h;
+		return (double)simDuration.getSeconds()/3600.0;
 	}
 	
 	public int getSummerWeekNumber() {
@@ -152,7 +152,7 @@ public final class J_TimeParameters {
 	@Override
 	public String toString() {
 	    return "J_TimeParameters{" +
-	            "timeStep_h=" + timeStep_h +
+	            "timeStep=" + this.timeStep +
 	            ", startInstant=" + this.startInstant +
 	            //", hourOfYearPerMonth=" + java.util.Arrays.toString(hourOfYearPerMonth) +
 	            ", dayOfWeek1jan=" + this.getDayOfWeek1jan() +
