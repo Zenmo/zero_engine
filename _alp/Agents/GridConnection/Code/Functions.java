@@ -567,8 +567,11 @@ if (j_ea instanceof I_Vehicle vehicle) {
 	}
 } else if  (j_ea instanceof J_EAProfile) {
 	c_profileAssets.remove((J_EAProfile)j_ea);
-} else if (j_ea instanceof J_EAChargingSession) {
-	c_chargingSessions.remove(j_ea);
+} else if (j_ea instanceof J_EAChargingSession chargeSession) {
+	c_chargingSessions.remove(chargeSession);
+	if(p_chargePoint.isRegistered(chargeSession)){
+		p_chargePoint.deregisterChargingRequest(chargeSession);
+	}
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -1101,8 +1104,10 @@ switch (chargingType) {
 		managementClass = J_ChargingManagementSimple.class;
 		break;
 	case PRICE:
-		managementClass = J_ChargingManagementPrice.class;
-		//managementClass = J_ChargingManagementPriceScheduled.class;
+		managementClass = J_ChargingManagementPrice.class;		
+		break;
+	case PRICE_MARKET_FEEDBACK:
+		managementClass = J_ChargingManagementPriceScheduled.class;
 		break;
 	case BALANCE_LOCAL:
 		managementClass = J_ChargingManagementLocalBalancing.class;
