@@ -2,7 +2,16 @@
  * J_HeatingFunctionLibrary
  */	
 public abstract class J_HeatingFunctionLibrary {
-
+	public static double heatingDaysAvgTempTreshold_degC = 18;
+	public static double heatLossByWindowVentilationMultiplier = 5;
+	/*
+	public void setHeatingDaysSetpoint_degC(double value) {
+		this.heatingDaysSetpoint_degC = value;
+	}
+	public double getHeatingDaysSetpoint_degC() {
+		return this.heatingDaysSetpoint_degC;
+	}*/
+	
 	public static double  managePTAndHotWaterHeatBuffer(J_EAStorageHeat hotWaterBuffer, List<J_EAProduction> ptAssets, double hotWaterDemand_kW, J_TimeVariables timeVariables, GridConnection gc){
     	//Calculate the pt production
     	double ptProduction_kW = 0;
@@ -67,6 +76,15 @@ public abstract class J_HeatingFunctionLibrary {
 		
     	return hotWaterDemandFromHeatingAsset_kW;
     }
+	
+	public static void setWindowVentilation_fr( J_EABuilding dwelling, double windowOpenSetpoint_degc) {
+		double additionalVentilation_fr = 0;
+		
+		if( dwelling.getCurrentTemperature() > windowOpenSetpoint_degc && dwelling.getAmbientTemperature_degC() < dwelling.getCurrentTemperature() ) {
+			additionalVentilation_fr = heatLossByWindowVentilationMultiplier;
+		}
+		dwelling.setAdditionalVentilation_fr(additionalVentilation_fr);
+	}
 }
  
  
