@@ -83,7 +83,8 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
     	List<I_ChargingRequest> currentChargingRequests = chargePoint.getCurrentActiveChargingRequests();
        	for (I_ChargingRequest chargingRequest : currentChargingRequests) {
        		if (!previousChargingRequests.contains(chargingRequest)) { // Schedule new charging session!
-       			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+       			//double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+       			double chargeNeedForNextTrip_kWh = chargingRequest.getStorageCapacity_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
        			double maxChargePower_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);
        			// Get session duration
        			double duration_h = chargingRequest.getLeaveTime_h() - t_h;
@@ -94,7 +95,7 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
        			}
        			// Get price curve for duration
        			double[] priceCurve = Arrays.copyOfRange(gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getAllValues(), roundToInt(t_h/timeParameters.getTimeStep_h()), length+roundToInt(t_h/timeParameters.getTimeStep_h()));
-       			double marketFeedback_eurpMWhpkW = 20; // PLACEHOLDER VALUE!
+       			double marketFeedback_eurpMWhpkW = 40; // PLACEHOLDER VALUE!
        			Market market = new Market(priceCurve, marketFeedback_eurpMWhpkW, 0, 0, 0);
        			FlexConsumptionAsset asset = new FlexConsumptionAsset(maxChargePower_kW, 20, timeParameters.getTimeStep_h(), length*timeParameters.getTimeStep_h(), null);
        			/*if (chargeNeedForNextTrip_kWh > (maxChargePower_kW * timeParameters.getTimeStep_h()*(length) )) {
