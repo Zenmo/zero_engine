@@ -19,6 +19,12 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     private J_TimeParameters timeParameters;
     
     /**
+     * Empty constructor for serialization
+     */
+    public J_EnergyManagementDefault() {
+    }
+    
+    /**
      * Default constructor
      */
     public J_EnergyManagementDefault(GridConnection GC, J_TimeParameters timeParameters) {
