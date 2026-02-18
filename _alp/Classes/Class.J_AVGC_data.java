@@ -80,7 +80,6 @@ public class J_AVGC_data implements Serializable {
 	public double p_heatCapacitySizingConstant_JpK;
 	public double p_heatCapacitySizingSlope_JpKm2;
 	public double p_heatCapacitySizingFactor_fr;
-	public double p_buildingDefaultCooldownTimescale_hr;
 
 	//Vehicles
 	public double p_avgEVMaxChargePowerCar_kW;

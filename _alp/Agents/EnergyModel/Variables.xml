@@ -1342,10 +1342,6 @@
 	<Variable Class="Parameter">
 		<Id>1671636582218</Id>
 		<Name><![CDATA[p_tempForecastTime_h]]></Name>
-		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
 		<X>-545</X>
 		<Y>665</Y>
 		<Label>
@@ -1671,10 +1667,6 @@
 	<Variable Class="Parameter">
 		<Id>1770902558808</Id>
 		<Name><![CDATA[p_pvForecastTime_h]]></Name>
-		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
 		<X>-545</X>
 		<Y>686</Y>
 		<Label>
@@ -1703,10 +1695,6 @@
 	<Variable Class="Parameter">
 		<Id>1770902581693</Id>
 		<Name><![CDATA[p_windForecastTime_h]]></Name>
-		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
 		<X>-545</X>
 		<Y>730</Y>
 		<Label>
@@ -1735,10 +1723,6 @@
 	<Variable Class="Parameter">
 		<Id>1770902594487</Id>
 		<Name><![CDATA[p_epexForecastTime_h]]></Name>
-		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
 		<X>-545</X>
 		<Y>750</Y>
 		<Label>

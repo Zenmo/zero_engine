@@ -53,19 +53,19 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     }
 
 	@Override
-	public double calculateLoss() {
+	public double calculateLoss_kW() {
 		double heatLoss_kW = (this.lossFactor_WpK * ( this.temperature_degC - this.ambientTemperature_degC ) / 1000) * lossScalingFactor_fr;
 		return heatLoss_kW;
 	}
 
-	public double solarHeating() {
+	public double solarHeating_kW() {
 		double solarHeating_kW = this.solarAbsorptionFactor_m2 * this.solarRadiation_Wpm2 / 1000;
 		return solarHeating_kW;
 
 	}
 	
-	public double calculateAdditionalVentilationLoss() {
-		double additionalVentilationLoss_kW = this.additionalVentilationLosses_fr * calculateLoss();
+	public double calculateAdditionalVentilationLoss_kW() {
+		double additionalVentilationLoss_kW = this.additionalVentilationLosses_fr * calculateLoss_kW();
 		return additionalVentilationLoss_kW;
 	}
 	
@@ -83,16 +83,16 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		if (DoubleCompare.lessThanZero(powerFraction_fr)) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
 		}
-		double lossPower_kW = calculateLoss(); // Heat exchange with environment through convection
-		double additionalVentilationLoss_kW = calculateAdditionalVentilationLoss();
-		double solarHeating_kW = solarHeating(); // Heat influx from sunlight
+		double lossPower_kW = calculateLoss_kW(); // Heat exchange with environment through convection
+		double additionalVentilationLoss_kW = calculateAdditionalVentilationLoss_kW();
+		double solarHeating_kW = solarHeating_kW(); // Heat influx from sunlight
 		this.energyUse_kW = lossPower_kW + additionalVentilationLoss_kW - solarHeating_kW;
 		this.energyUsed_kWh += max(0, this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
 		this.ambientEnergyAbsorbed_kWh += max(0, -this.energyUse_kW * this.timeParameters.getTimeStep_h()); // Only heat gain from outside air and/or solar irradiance!
 
 		double inputPower_kW = powerFraction_fr * this.capacityHeat_kW; // positive power means lowering the buffer temperature!		
     	
-		double deltaEnergy_kWh = (solarHeating_kW - (lossPower_kW + additionalVentilationLoss_kW))* this.timeParameters.getTimeStep_h();
+		double deltaEnergy_kWh = -energyUse_kW* this.timeParameters.getTimeStep_h();
 		if (this.interiorDelayTime_h != 0.0) {
 			deltaEnergy_kWh += getInteriorHeatRelease( inputPower_kW * this.timeParameters.getTimeStep_h() );
     	}
