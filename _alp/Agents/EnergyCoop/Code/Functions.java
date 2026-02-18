@@ -177,6 +177,8 @@ fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
 fm_currentAssetFlows_kW.clear();
+fm_heatFromEnergyCarrier_kW.clear();
+fm_consumptionForHeating_kW.clear();
 v_currentPrimaryEnergyProduction_kW = 0;
 v_currentFinalEnergyConsumption_kW = 0;
 v_currentEnergyCurtailed_kW = 0;
