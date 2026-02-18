@@ -24,6 +24,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     /**
      * Default constructor
      */
+    public J_ChargingManagementSimple( ) {
+    
+    }
+    
     public J_ChargingManagementSimple( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
     	this.timeParameters = timeParameters;
@@ -38,8 +42,16 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
      * 
      */
     public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
-    	for (I_ChargingRequest chargeRequest : chargePoint.getCurrentActiveChargingRequests()) {
-    		chargePoint.charge(chargeRequest, chargePoint.getMaxChargingCapacity_kW(chargeRequest), timeVariables, gc);
+    	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
+       		double duration_h = chargingRequest.getLeaveTime_h() - timeVariables.getT_h();
+    		if (duration_h <= 0) {
+   				traceln("ChargingRequest duration negative! leaveTime_h: %s, t_h %s", chargingRequest.getLeaveTime_h(), timeVariables.getT_h());
+   				//throw new RuntimeException("ChargingRequest starting after endtime!");
+   			}
+			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+			//traceln("Charging need: %s, getEnergyNeedForNextTrip_kWh: %s", chargeNeedForNextTrip_kWh, chargingRequest.getEnergyNeedForNextTrip_kWh());
+			
+    		chargePoint.charge(chargingRequest, chargePoint.getMaxChargingCapacity_kW(chargingRequest), timeVariables, gc);
     	}
     }
     

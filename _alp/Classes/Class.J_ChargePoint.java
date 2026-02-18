@@ -1,6 +1,20 @@
 /**
  * J_ChargePoint
  */	
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // 
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 public class J_ChargePoint implements I_ChargePointRegistration{
 	
 	private boolean hasSocketRestrictions;
@@ -15,6 +29,12 @@ public class J_ChargePoint implements I_ChargePointRegistration{
 
 	private List<I_ChargingRequest> storedActiveChargingRequests = null;
 
+    /**
+     * Constructor for (de-)serialisation
+     */
+	public J_ChargePoint() {
+	};
+	
 	/**
      * Default constructor
      * No restrictions on sockets
@@ -96,7 +116,7 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     
 	public double getChargeDeadline_h(I_ChargingRequest chargingRequest) {
 		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
-		double chargeTimeMargin_h = 0.5; // Margin to be ready with charging before start of next trip
+		double chargeTimeMargin_h = 0.25;//5; // Margin to be ready with charging before start of next trip
 		double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getMaxChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
 		return chargeDeadline_h;    		
@@ -163,6 +183,7 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     public void storeStatesAndReset() {
     	this.storedActiveChargingRequests = new ArrayList<>(this.currentActiveChargingRequests);
     	this.currentActiveChargingRequests.clear();
+    	//traceln("ChargePoint sessions cleared!");
     }
     
     public void restoreStates() {

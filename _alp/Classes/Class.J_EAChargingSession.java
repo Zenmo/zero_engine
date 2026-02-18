@@ -36,8 +36,14 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 	private int storedNextSessionIndex;	
 	
     /**
-     * Default constructor
+     * Constructor for (de-)serialisation
      */
+	public J_EAChargingSession() {
+	}
+	
+    /**
+     * Default constructor initializing the fields
+     */	
 	public J_EAChargingSession(I_AssetOwner owner, List<J_ChargingSessionData> chargingSessionDataList, int socketNb, J_TimeParameters timeParameters) {
 		this.setOwner(owner);	
 		this.timeParameters = timeParameters;
@@ -90,7 +96,7 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 	public void manageCurrentChargingSession(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration, GridConnection GC) {
 		
 		if (this.currentChargingSessionData != null && timeVariables.getT_h() >= this.currentChargingSessionData.getLeaveTime_h()) { // End session
-			if (this.getRemainingChargeDemand_kWh() > 0.001 ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.getRemainingChargeDemand_kWh()); }
+			if (DoubleCompare.greaterThanZero(this.getRemainingChargeDemand_kWh()) ) { traceln("!!Chargesession ended but charge demand not fullfilled!! Remaining demand: %s kWh", this.getRemainingChargeDemand_kWh()); }
 			this.energyUsed_kWh += this.currentSessionChargingBalance_kWh; //Add all netto energy charged to the vehicle as final consumption
 			this.energyUse_kW += this.currentSessionChargingBalance_kWh/this.timeParameters.getTimeStep_h(); //Add all netto energy charged to the vehicle as final consumption
 			GC.f_updateFlexAssetFlows(this, 0.0, timeVariables); //Call needed to transfer energyUse_kW to add flows
