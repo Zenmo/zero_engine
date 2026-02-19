@@ -62,29 +62,39 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	
     	double heatingAssetPower_kW = 0;
 
-    	if(this.building != null) {
-        	double buildingHeatingDemand_kW = 0;
+    	if(this.building != null) {    		
+    		double buildingHeatingDemand_kW = 0;
 	    	double buildingTemp_degC = building.getCurrentTemperature();
 	    	double timeOfDay_h = timeVariables.getTimeOfDay_h();
-	    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
-	    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) {
-	    			// Nighttime and building temperature too low
-	    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();
-	    		}
-	    		else {
-	    			// Nighttime and building temperature acceptable
-	    		}
+	    	J_HeatingFunctionLibrary.setWindowVentilation_fr(this.building, heatingPreferences.getWindowOpenSetpoint_degc() ); 
+	    	
+	    	//Stookdagen approximation > boven 18 graden is niet verwarmen
+	    	double avgTemp24h_degC = gc.energyModel.pf_ambientTemperature_degC.getForecast();
+	    	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
+	    		buildingHeatingDemand_kW = max(0, heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();	
 	    	}
+	    	///On heating days
 	    	else {
-	    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
-	    			// Daytime and building temperature too low
-	    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();
-	    		}
-	    		else {
-	    			// Daytime and building temperature acceptable
-	    		}
+		    	if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+		    		
+		    		if (buildingTemp_degC < heatingPreferences.getNightTimeSetPoint_degC()) {
+		    			// Nighttime and building temperature too low
+		    			buildingHeatingDemand_kW = (heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();
+		    		}
+		    		else {
+		    			// Nighttime and building temperature acceptable
+		    		}
+		    	}
+		    	else {
+		    		if (buildingTemp_degC < heatingPreferences.getDayTimeSetPoint_degC()) {
+		    			// Daytime and building temperature too low
+		    			buildingHeatingDemand_kW = (heatingPreferences.getDayTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();
+		    		}
+		    		else {
+		    			// Daytime and building temperature acceptable
+		    		}
+		    	}
 	    	}
-			
 	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
 			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
 	    	gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);

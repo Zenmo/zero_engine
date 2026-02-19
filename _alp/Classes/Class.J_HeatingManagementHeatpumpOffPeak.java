@@ -45,7 +45,7 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     private double startTimeOfReducedHeatingInterval_hr = 16; // Hour of the day
     private double endTimeOfReducedHeatingInterval_hr = 21; // Hour of the day -> CAN NOT BE THE SAME AS THE START TIME
     private double reducedHeatingIntervalLength_hr = (endTimeOfReducedHeatingInterval_hr - startTimeOfReducedHeatingInterval_hr + 24) % 24;     
-    
+    private double avgTemp24h_degC = 10; // 10 degrees is a 'safe' starting point, will not trigger no-heating-day.
     
     //Stored
     private double storedI_state_hDegC;
@@ -99,28 +99,39 @@ public class J_HeatingManagementHeatpumpOffPeak implements I_HeatingManagement {
     		currentHeatDemand_kW += hotWaterDemand_kW;
     	}
     	
-    	//Determine if time is in reduced Heating interval
-		boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
-		boolean timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) < preHeatDuration_hr;
-
-		double startTimePreheatTime_hr = startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr;
-		
-    	//Get the current temperature setpoint dependend on day/night time and noheat/preheat interval settings
-    	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
-    	if(timeIsInPreheatInterval) { // During preheat interval, raise the setpoint temperature step by step, to prevent overreaction by the controller
-    		currentSetpoint_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC;
-    	}
-    	else if(timeIsInReducedHeatingInterval) {
-    		currentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC(); // -> prevents fast response during interval if min comfort is breached
-    		if(startTimeOfReducedHeatingInterval_hr == timeOfDay_h) {
-    			I_state_hDegC = 0; //Reset I state at the start of no heating interval to reset the controller, so no heating power at all.
-    			this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
-    		}
-    	}
-    	else if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
-    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
-    	}
+    	J_HeatingFunctionLibrary.setWindowVentilation_fr(this.building, heatingPreferences.getWindowOpenSetpoint_degc() ); 
     	
+    	//Stookdagen approximation > boven 18 graden is niet verwarmen
+    	if (timeVariables.getTimeOfDay_h() == 0.0) {
+    		this.avgTemp24h_degC = gc.energyModel.pf_ambientTemperature_degC.getForecast();
+    	}
+    	double currentSetpoint_degC;
+    	if(this.avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) { // If avg temperature is high enough, keep setpoint at nighttime setpoint.
+    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
+    	} else {   	
+	    	
+	    	//Determine if time is in reduced Heating interval
+			boolean timeIsInReducedHeatingInterval = ((timeOfDay_h - startTimeOfReducedHeatingInterval_hr + 24) % 24) < reducedHeatingIntervalLength_hr;
+			boolean timeIsInPreheatInterval = ((timeOfDay_h - (startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr) + 24) % 24) < preHeatDuration_hr;
+	
+			double startTimePreheatTime_hr = startTimeOfReducedHeatingInterval_hr - preHeatDuration_hr;
+			
+	    	//Get the current temperature setpoint dependend on day/night time and noheat/preheat interval settings
+	    	currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
+	    	if(timeIsInPreheatInterval) { // During preheat interval, raise the setpoint temperature step by step, to prevent overreaction by the controller
+	    		currentSetpoint_degC = this.requiredTemperatureAtStartOfReducedHeatingInterval_degC;
+	    	}
+	    	else if(timeIsInReducedHeatingInterval) {
+	    		currentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC(); // -> prevents fast response during interval if min comfort is breached
+	    		if(startTimeOfReducedHeatingInterval_hr == timeOfDay_h) {
+	    			I_state_hDegC = 0; //Reset I state at the start of no heating interval to reset the controller, so no heating power at all.
+	    			this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
+	    		}
+	    	}
+	    	else if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
+	    		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
+	    	}
+    	}
     	
     	//Smooth the setpoint signal
     	this.filteredCurrentSetpoint_degC += 1/(this.setpointFilterTimeScale_h / timeParameters.getTimeStep_h()) * (currentSetpoint_degC - this.filteredCurrentSetpoint_degC);

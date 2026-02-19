@@ -654,8 +654,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1718883144081</Id>
 		<Name><![CDATA[v_electricityYieldForecast_fr]]></Name>
-		<X>-600</X>
-		<Y>660</Y>
+		<X>-330</X>
+		<Y>665</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1341,13 +1341,9 @@
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1671636582218</Id>
-		<Name><![CDATA[p_forecastTime_h]]></Name>
-		<Description><![CDATA[Model timestep in uren. Kan in experimenten aangepast worden naar wens.
-
-@since: Sprint 6
-@author: Gillis]]></Description>
-		<X>-850</X>
-		<Y>770</Y>
+		<Name><![CDATA[p_tempForecastTime_h]]></Name>
+		<X>-545</X>
+		<Y>665</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1360,7 +1356,8 @@
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[18]]></Code>
+				<Code><![CDATA[24
+]]></Code>
 			</DefaultValue>
 			<ParameterEditor>
 				<Id>1671636582216</Id>
@@ -1667,6 +1664,90 @@
 			</ParameterEditor>
 		</Properties>
 	</Variable>
+	<Variable Class="Parameter">
+		<Id>1770902558808</Id>
+		<Name><![CDATA[p_pvForecastTime_h]]></Name>
+		<X>-545</X>
+		<Y>686</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1770902558806</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1770902581693</Id>
+		<Name><![CDATA[p_windForecastTime_h]]></Name>
+		<X>-545</X>
+		<Y>730</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1770902581691</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
+	<Variable Class="Parameter">
+		<Id>1770902594487</Id>
+		<Name><![CDATA[p_epexForecastTime_h]]></Name>
+		<X>-545</X>
+		<Y>750</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+			<Type><![CDATA[double]]></Type>
+			<UnitType>NONE</UnitType>
+			<SdArray>false</SdArray>
+			<DefaultValue Class="CodeValue">
+				<Code><![CDATA[18]]></Code>
+			</DefaultValue>
+			<ParameterEditor>
+				<Id>1770902594485</Id>
+				<EditorContolType>TEXT_BOX</EditorContolType>
+				<MinSliderValue>0</MinSliderValue>
+				<MaxSliderValue>100</MaxSliderValue>
+				<DelimeterType>NO_DELIMETER</DelimeterType>
+			</ParameterEditor>
+		</Properties>
+	</Variable>
 	<Variable Class="CollectionVariable">
 		<Id>1663238323139</Id>
 		<Name><![CDATA[c_connectionOwners]]></Name>
@@ -1963,7 +2044,7 @@
 		<Id>1727779411251</Id>
 		<Name><![CDATA[c_forecasts]]></Name>
 		<X>-850</X>
-		<Y>650</Y>
+		<Y>645</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1981,7 +2062,7 @@
 		<Id>1749650197321</Id>
 		<Name><![CDATA[c_chargerProfiles]]></Name>
 		<X>-850</X>
-		<Y>600</Y>
+		<Y>595</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
