@@ -35,15 +35,21 @@ public class J_LiveData {
 
     public void clearLiveDatasets() {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
-    		dsm_liveDemand_kW.get(EC).reset();
+    		if (dsm_liveDemand_kW.get(EC) != null ) {
+    			dsm_liveDemand_kW.get(EC).reset();
+    		}
     	}
     	
     	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
-    		dsm_liveSupply_kW.get(EC).reset();
+    		if (dsm_liveSupply_kW.get(EC) != null ) {
+    			dsm_liveSupply_kW.get(EC).reset();
+    		}
     	}
     	
     	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
-			dsm_liveAssetFlows_kW.get(AC).reset();
+    		if (dsm_liveAssetFlows_kW.get(AC) != null ) {
+    			dsm_liveAssetFlows_kW.get(AC).reset();
+    		}
     	}
 
     	data_totalDemand_kW.reset();
