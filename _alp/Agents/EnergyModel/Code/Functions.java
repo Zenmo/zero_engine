@@ -205,19 +205,19 @@ f_runAggregators();
 
 double f_initializeForecasts()
 {/*ALCODESTART::1671636439933*/
-pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_ambientTemperature_degC = new J_ProfileForecaster(null, pp_ambientTemperature_degC, p_tempForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_ambientTemperature_degC);
 
-pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_PVProduction35DegSouth_fr = new J_ProfileForecaster(null, pp_PVProduction35DegSouth_fr, p_pvForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_PVProduction35DegSouth_fr);
 
-pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_PVProduction15DegEastWest_fr = new J_ProfileForecaster(null, pp_PVProduction15DegEastWest_fr, p_pvForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_PVProduction15DegEastWest_fr);
 
-pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_windProduction_fr = new J_ProfileForecaster(null, pp_windProduction_fr, p_windForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_windProduction_fr);
 
-pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_forecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_epexForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
 
 /*ALCODEEND*/}
@@ -232,6 +232,9 @@ traceln(" ");
 
 double startTime1 = System.currentTimeMillis();
 
+int v_timeStepsElapsed_live = v_timeStepsElapsed;
+v_timeStepsElapsed=0;
+p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
 //// Store and reset model states
 for (J_EA EA : c_energyAssets) {
@@ -302,10 +305,6 @@ for (EnergyCoop EC : pop_energyCoops) {
 	EC.f_resetStates();
 
 }
-
-
-int v_timeStepsElapsed_live = v_timeStepsElapsed;
-v_timeStepsElapsed=0;
 
 c_profiles.forEach(p -> p.updateValue(p_timeParameters.getRunStartTime_h()));
 c_forecasts.forEach(p -> p.initializeForecast(p_timeParameters.getRunStartTime_h())); 
@@ -1059,6 +1058,8 @@ fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
 fm_currentBalanceFlows_kW = new J_FlowsMap();
 fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
+fm_consumptionForHeating_kW = new J_FlowsMap();
 
 // Reconstruct the LiveData class in the EnergyCoops
 for (EnergyCoop ec : pop_energyCoops) {
@@ -1076,6 +1077,9 @@ for (EnergyCoop ec : pop_energyCoops) {
 	ec.fm_currentConsumptionFlows_kW = new J_FlowsMap();
 	ec.fm_currentBalanceFlows_kW = new J_FlowsMap();
 	ec.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+	ec.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
+	ec.fm_consumptionForHeating_kW = new J_FlowsMap();
+	ec.f_startAfterDeserialisation(p_timeParameters);
 }
 
 // Reconstruct the LiveData class in the GridConnections and add EnergyCarriers
@@ -1096,7 +1100,8 @@ for (GridConnection gc : allGridConnections) {
 	gc.fm_currentConsumptionFlows_kW = new J_FlowsMap();
 	gc.fm_currentBalanceFlows_kW = new J_FlowsMap();
 	gc.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-	
+	gc.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
+	gc.fm_consumptionForHeating_kW = new J_FlowsMap();
 	/*for (J_EA j_ea : gc.c_energyAssets) {
 		gc.f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
 	}*/

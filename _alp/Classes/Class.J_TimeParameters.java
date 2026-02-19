@@ -1,5 +1,21 @@
 import java.time.LocalDate;
 import java.time.DayOfWeek;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonAutoDetect(
+    fieldVisibility = Visibility.ANY,    // also stores full profiles to file. Maybe arrange a way to 'skip' this?
+    getterVisibility = Visibility.NONE,
+    isGetterVisibility = Visibility.NONE,
+    setterVisibility = Visibility.NONE,
+    creatorVisibility = Visibility.NONE
+)
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
+
 /**
  * J_TimeParameters
  */	
@@ -36,6 +52,33 @@ public final class J_TimeParameters {
 		this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
 		this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));
 	}
+	
+	// Creator for deserialisation. (needed because of final fields!)
+	@JsonCreator
+    public J_TimeParameters(
+        @JsonProperty("timeStep_h") double timeStep_h,
+        @JsonProperty("startYear") int startYear,
+        @JsonProperty("hourOfYearPerMonth") double[] hourOfYearPerMonth,
+        @JsonProperty("dayOfWeek1jan") int dayOfWeek1jan,
+        @JsonProperty("runStartTime_h") double runStartTime_h,
+        @JsonProperty("runEndTime_h") double runEndTime_h,
+        @JsonProperty("summerWeekNumber") int summerWeekNumber,
+        @JsonProperty("winterWeekNumber") int winterWeekNumber,
+        @JsonProperty("startOfSummerWeek_h") double startOfSummerWeek_h,
+        @JsonProperty("startOfWinterWeek_h") double startOfWinterWeek_h
+    ) {
+		this(timeStep_h, startYear, hourOfYearPerMonth, runStartTime_h, runEndTime_h, summerWeekNumber, winterWeekNumber);
+		/*this.timeStep_h = timeStep_h;
+		this.startYear = startYear;
+		this.hourOfYearPerMonth = hourOfYearPerMonth;
+		this.runStartTime_h = runStartTime_h;
+		this.runEndTime_h = runEndTime_h;
+		this.summerWeekNumber = summerWeekNumber;
+		this.winterWeekNumber = winterWeekNumber;
+		this.dayOfWeek1jan = DayOfWeek.from(LocalDate.of(startYear, 1, 1)).getValue();
+		this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
+		this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));*/
+    }
 	
 	////Time Parameter getters
 	public double getTimeStep_h() {
