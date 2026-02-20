@@ -1206,6 +1206,22 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 					<Name><![CDATA[EXCLUDE_PV]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1771606559294</Id>
+				<Name><![CDATA[OL_ManagementType]]></Name>
+				<Option>
+					<Id>1771606559297</Id>
+					<Name><![CDATA[HEATING]]></Name>
+				</Option>
+				<Option>
+					<Id>1771606559295</Id>
+					<Name><![CDATA[CHARGING]]></Name>
+				</Option>
+				<Option>
+					<Id>1771606559296</Id>
+					<Name><![CDATA[BATTERY]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>

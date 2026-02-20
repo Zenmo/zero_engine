@@ -940,8 +940,8 @@ while (c_heatingAssets.size() > 0) {
 
 OL_GridConnectionHeatingType f_getCurrentHeatingType()
 {/*ALCODESTART::1754051705071*/
-if (p_heatingManagement != null) {
-	return p_heatingManagement.getCurrentHeatingType();
+if (p_energyManagement != null) {
+	return p_energyManagement.getCurrentHeatingType();
 }
 else {
 	return OL_GridConnectionHeatingType.NONE;
@@ -1205,8 +1205,8 @@ this.p_heatingManagement.setHeatingPreferences(heatingPreferences);
 
 OL_ChargingAttitude f_getCurrentChargingType()
 {/*ALCODESTART::1762853347370*/
-if (p_chargingManagement != null) {
-	return p_chargingManagement.getCurrentChargingType();
+if (p_energyManagement != null) {
+	return p_energyManagement.getCurrentChargingType();
 }
 else {
 	return OL_ChargingAttitude.NONE;

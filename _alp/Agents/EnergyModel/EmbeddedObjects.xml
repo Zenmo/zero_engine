@@ -2384,9 +2384,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_nbCompaniesTotal]]></Name>
 			</Parameter>
 			<Parameter>
