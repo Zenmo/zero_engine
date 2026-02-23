@@ -13,15 +13,15 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 public interface I_EnergyManagement extends I_AssetManagement
 {
-	Map<Class<? extends I_AssetManagement>, I_AssetManagement> subManagements = new HashMap();
-	List<Class<? extends I_AssetManagement>> supportedSubManagements = new ArrayList<>();
+	Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> subManagements = new HashMap();
+	List<Class<? extends I_SubAssetManagement>> supportedSubManagements = new ArrayList<>();
 	
 	//Manage EMS (Called by GC)
 	public void manageFlexAssets(J_TimeVariables timeVariables);
 
 	
 	//Set child managements
-    default <T extends I_AssetManagement> void setSubManagement(Class<T> subManagementType, T subManagementInstance) {
+    default <T extends I_SubAssetManagement> void setSubManagement(Class<T> subManagementType, T subManagementInstance) {
     	//Check if setSubManagement is actually supported by this EnergyManagement class
     	if (supportedSubManagements.stream().noneMatch(supported -> supported.isAssignableFrom(subManagementType))) {
     	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");

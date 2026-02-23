@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
 
-public interface I_ChargingManagement extends I_AssetManagement
+public interface I_ChargingManagement extends I_SubAssetManagement
 {
 	void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables);
 	

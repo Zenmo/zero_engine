@@ -10,13 +10,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    use = JsonTypeInfo.Id.CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "type"  // 👈 this will be the field name in your JSON
-	)
+)
 
-public interface I_AssetManagement
-{	
-	//Store current state of live sim, and reset to initial state for rapid run
-    void storeStatesAndReset();
-    
-    //Restore state to correct state of live sim after rapid run
-    void restoreStates();
+/**
+ * I_SubAssetManagement
+ */	
+public interface I_SubAssetManagement extends I_AssetManagement{
+
 }

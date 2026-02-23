@@ -2000,6 +2000,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
 				<Folder>1762850586274</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1771839929029</Id>
+				<Name><![CDATA[I_SubAssetManagement]]></Name>
+				<Folder>1762850551601</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
