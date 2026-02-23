@@ -18,10 +18,11 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     private GridConnection GC;
     private J_TimeParameters timeParameters;
     
-	Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> subManagements = new HashMap();
+	Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> activeSubManagements = new HashMap();
 	List<Class<? extends I_SubAssetManagement>> supportedSubManagements = 
 												new ArrayList<>(Arrays.asList(
-													I_HeatingManagement.class, 
+													//J_HeatingManagementSimple.class, 
+													I_HeatingManagement.class,
 													I_ChargingManagement.class, 
 													I_BatteryManagement.class
 												));
@@ -62,18 +63,23 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     
     
 	//Specific child management activation
-	public void activateV2GChargingMode(boolean enableV2G, J_TimeParameters timeParameters,	J_TimeVariables timeVariables) {
+	public void setV2GActive(boolean enableV2G) {
 		if(this.getSubManagement(I_ChargingManagement.class) != null) {
 			this.getSubManagement(I_ChargingManagement.class).setV2GActive(enableV2G);
-			if (enableV2G){
-				this.GC.f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW, timeParameters, timeVariables);
-			}
 		}
 	}
-	
+    public boolean getV2GActive() {
+		if(this.getSubManagement(I_ChargingManagement.class) != null) {
+			return this.getSubManagement(I_ChargingManagement.class).getV2GActive();
+		}
+		else {
+			return false;
+		}
+    }
 	
 	//Get child management types
 	public OL_GridConnectionHeatingType getCurrentHeatingType() {
+
 		if(this.getSubManagement(I_HeatingManagement.class) != null) {
 			return this.getSubManagement(I_HeatingManagement.class).getCurrentHeatingType();
 		}
@@ -90,11 +96,21 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 		}
 	}
 	
+	
+	//Get active and supported sub management classes
+	public Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> getActiveSubManagements(){
+		return this.activeSubManagements;
+	}
+	public List<Class<? extends I_SubAssetManagement>> getSupportedSubManagements(){
+		return this.supportedSubManagements;
+	}
+    
+	
     ////Store and reset states
 	public void storeStatesAndReset() {
-		subManagements.values().forEach(subManagement -> subManagement.storeStatesAndReset());
+		activeSubManagements.values().forEach(subManagement -> subManagement.storeStatesAndReset());
 	}
 	public void restoreStates() {
-		subManagements.values().forEach(subManagement -> subManagement.restoreStates());
+		activeSubManagements.values().forEach(subManagement -> subManagement.restoreStates());
 	}
 }

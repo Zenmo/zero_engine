@@ -13,32 +13,36 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 public interface I_EnergyManagement extends I_AssetManagement
 {
-	Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> subManagements = new HashMap();
-	List<Class<? extends I_SubAssetManagement>> supportedSubManagements = new ArrayList<>();
-	
+
+	// Must be implemented by the class (the class should contain these maps and Lists!!)
+	public Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> getActiveSubManagements();
+	public List<Class<? extends I_SubAssetManagement>> getSupportedSubManagements();
+    
 	//Manage EMS (Called by GC)
 	public void manageFlexAssets(J_TimeVariables timeVariables);
 
 	
-	//Set child managements
+	//Set sub managements
     default <T extends I_SubAssetManagement> void setSubManagement(Class<T> subManagementType, T subManagementInstance) {
     	//Check if setSubManagement is actually supported by this EnergyManagement class
-    	if (supportedSubManagements.stream().noneMatch(supported -> supported.isAssignableFrom(subManagementType))) {
+    	if (getSupportedSubManagements().stream().noneMatch(supported -> supported.isAssignableFrom(subManagementType))) {
     	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");
     	}
-        subManagements.put(subManagementType, subManagementInstance);
+    	getActiveSubManagements().put(subManagementType, subManagementInstance);
     }
     
-	//Get child managements (return null if not present)
+	//Get subManagements (return null if not present)
     default <T> T getSubManagement(Class<T> subManagementType) {//Inputs can be I_HeatingManagement, I_ChargingManagement, etc.
-    	if (supportedSubManagements.stream().noneMatch(supported -> supported.isAssignableFrom(subManagementType))) {
-    	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");
+    	//Check if getSubManagement is actually supported by this EnergyManagement class
+    	if (getSupportedSubManagements().stream().noneMatch(supported -> subManagementType.isAssignableFrom(supported))) {
+    	    throw new RuntimeException("Trying to get an unsupported sub asset management type for an EMS.");
     	}
-        return subManagementType.cast(subManagements.get(subManagementType));
+        return subManagementType.cast(getActiveSubManagements().get(subManagementType));
     }
     
-	//Specific management activation
-	public void activateV2GChargingMode(boolean enableV2G, J_TimeParameters timeParameters,	J_TimeVariables timeVariables);	
+	//Specific sub management activation
+	public void setV2GActive(boolean enableV2G);	
+	public boolean getV2GActive();
 	
 	//Get specific types
 	public OL_GridConnectionHeatingType getCurrentHeatingType();

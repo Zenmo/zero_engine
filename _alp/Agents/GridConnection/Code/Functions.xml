@@ -125,8 +125,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1671095995172</Id>
 		<Name><![CDATA[f_manageEVCharging]]></Name>
-		<X>930</X>
-		<Y>400</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1020</X>
+		<Y>920</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -511,8 +512,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753099764237</Id>
 		<Name><![CDATA[f_manageHeating]]></Name>
-		<X>930</X>
-		<Y>380</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1020</X>
+		<Y>900</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -531,8 +533,9 @@
 		<ReturnType>double</ReturnType>
 		<Id>1752570332887</Id>
 		<Name><![CDATA[f_manageBattery]]></Name>
-		<X>930</X>
-		<Y>360</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1020</X>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -576,7 +579,7 @@
 		<Id>1753969724598</Id>
 		<Name><![CDATA[f_removeAllHeatingAssets]]></Name>
 		<X>620</X>
-		<Y>230</Y>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -591,8 +594,8 @@
 		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
 		<Id>1754051705071</Id>
 		<Name><![CDATA[f_getCurrentHeatingType]]></Name>
-		<X>630</X>
-		<Y>190</Y>
+		<X>620</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -608,8 +611,8 @@
 		<Id>1754393382442</Id>
 		<Name><![CDATA[f_addHeatManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
-		<X>630</X>
-		<Y>150</Y>
+		<X>620</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -746,7 +749,7 @@
 		<Name><![CDATA[f_addChargingManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>640</X>
-		<Y>520</Y>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -793,8 +796,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762851936576</Id>
 		<Name><![CDATA[f_setChargingManagement]]></Name>
-		<X>650</X>
-		<Y>500</Y>
+		<X>640</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -813,8 +816,8 @@
 		<ReturnType>boolean</ReturnType>
 		<Id>1762852865038</Id>
 		<Name><![CDATA[f_getHeatingTypeIsGhost]]></Name>
-		<X>630</X>
-		<Y>210</Y>
+		<X>620</X>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -829,8 +832,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762853013265</Id>
 		<Name><![CDATA[f_setHeatingPreferences]]></Name>
-		<X>640</X>
-		<Y>170</Y>
+		<X>630</X>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -850,7 +853,7 @@
 		<Id>1762853347370</Id>
 		<Name><![CDATA[f_getCurrentChargingType]]></Name>
 		<X>650</X>
-		<Y>540</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -866,7 +869,7 @@
 		<Id>1762853561122</Id>
 		<Name><![CDATA[f_getV2GActive]]></Name>
 		<X>650</X>
-		<Y>560</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -882,7 +885,7 @@
 		<Id>1762853894937</Id>
 		<Name><![CDATA[f_getBatteryManagement]]></Name>
 		<X>650</X>
-		<Y>850</Y>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -897,8 +900,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762855655470</Id>
 		<Name><![CDATA[f_setHeatingManagement]]></Name>
-		<X>630</X>
-		<Y>130</Y>
+		<X>620</X>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -918,7 +921,7 @@
 		<Id>1762855733010</Id>
 		<Name><![CDATA[f_setBatteryManagement]]></Name>
 		<X>650</X>
-		<Y>830</Y>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -938,7 +941,7 @@
 		<Id>1762940915048</Id>
 		<Name><![CDATA[f_getChargingManagement]]></Name>
 		<X>650</X>
-		<Y>580</Y>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -954,7 +957,7 @@
 		<Id>1762940962079</Id>
 		<Name><![CDATA[f_getHeatingManagement]]></Name>
 		<X>620</X>
-		<Y>250</Y>
+		<Y>230</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -970,7 +973,7 @@
 		<Id>1765551413839</Id>
 		<Name><![CDATA[f_getChargePoint]]></Name>
 		<X>660</X>
-		<Y>640</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -986,7 +989,7 @@
 		<Id>1765551488579</Id>
 		<Name><![CDATA[f_setChargePoint]]></Name>
 		<X>660</X>
-		<Y>620</Y>
+		<Y>580</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

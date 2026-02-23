@@ -486,8 +486,9 @@
 		<Id>1762852227489</Id>
 		<Name><![CDATA[p_batteryManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<X>640</X>
-		<Y>810</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1020</X>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -506,8 +507,9 @@
 		<Id>1762852413970</Id>
 		<Name><![CDATA[p_chargingManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<X>640</X>
-		<Y>480</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1020</X>
+		<Y>820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -526,8 +528,9 @@
 		<Id>1762852443276</Id>
 		<Name><![CDATA[p_heatingManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<X>620</X>
-		<Y>110</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1020</X>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -584,7 +587,7 @@
 		<Id>1765551371538</Id>
 		<Name><![CDATA[p_chargePoint]]></Name>
 		<X>640</X>
-		<Y>600</Y>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -828,7 +831,7 @@
 		<Id>1684919785784</Id>
 		<Name><![CDATA[p_gasBuffer]]></Name>
 		<X>620</X>
-		<Y>870</Y>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -853,7 +856,7 @@
 		<Id>1692878211840</Id>
 		<Name><![CDATA[p_cookingTracker]]></Name>
 		<X>620</X>
-		<Y>380</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -903,7 +906,7 @@
 		<Id>1692973005119</Id>
 		<Name><![CDATA[p_DHWAsset]]></Name>
 		<X>620</X>
-		<Y>320</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1325,7 +1328,7 @@
 		<Id>1659962626909</Id>
 		<Name><![CDATA[c_consumptionAssets]]></Name>
 		<X>600</X>
-		<Y>300</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1343,7 +1346,7 @@
 		<Id>1659962626911</Id>
 		<Name><![CDATA[c_productionAssets]]></Name>
 		<X>600</X>
-		<Y>340</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1361,7 +1364,7 @@
 		<Id>1659962626913</Id>
 		<Name><![CDATA[c_conversionAssets]]></Name>
 		<X>600</X>
-		<Y>360</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1379,7 +1382,7 @@
 		<Id>1667746389220</Id>
 		<Name><![CDATA[c_vehicleAssets]]></Name>
 		<X>600</X>
-		<Y>420</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1397,7 +1400,7 @@
 		<Id>1669115948280</Id>
 		<Name><![CDATA[c_petroleumFuelVehicles]]></Name>
 		<X>620</X>
-		<Y>670</Y>
+		<Y>630</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1415,7 +1418,7 @@
 		<Id>1692864624612</Id>
 		<Name><![CDATA[c_tripTrackers]]></Name>
 		<X>620</X>
-		<Y>440</Y>
+		<Y>420</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1433,7 +1436,7 @@
 		<Id>1700044359363</Id>
 		<Name><![CDATA[c_profileAssets]]></Name>
 		<X>600</X>
-		<Y>278</Y>
+		<Y>258</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1469,7 +1472,7 @@
 		<Id>1711012701187</Id>
 		<Name><![CDATA[c_hydrogenVehicles]]></Name>
 		<X>620</X>
-		<Y>690</Y>
+		<Y>650</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1505,7 +1508,7 @@
 		<Id>1750258408126</Id>
 		<Name><![CDATA[c_chargingSessions]]></Name>
 		<X>600</X>
-		<Y>400</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1542,7 +1545,7 @@
 		<Id>1754581015887</Id>
 		<Name><![CDATA[c_electricVehicles]]></Name>
 		<X>620</X>
-		<Y>460</Y>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

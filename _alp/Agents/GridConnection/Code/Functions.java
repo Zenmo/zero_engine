@@ -177,12 +177,13 @@ c_energyAssets.add(j_ea);
 
 if(j_ea instanceof J_EAFlex && p_energyManagement == null){
 	f_setEnergyManagement(new J_EnergyManagementDefault(this, timeParameters));
+	energyModel.f_registerAssetManagement(this.p_energyManagement);
 }
 
 if (j_ea instanceof I_HeatingAsset) {
 	c_heatingAssets.add((J_EAConversion)j_ea);
-	if (p_heatingManagement != null) {
-		p_heatingManagement.notInitialized();
+	if (f_getHeatingManagement() != null) {
+		f_getHeatingManagement().notInitialized();
 	}
 }
 
@@ -198,7 +199,7 @@ if (j_ea instanceof I_Vehicle vehicle) {
 			traceln("Warning! f_connectToJ_EA found a vehicle with unknown energy carrier.");
 		}
 	} else if (vehicle instanceof J_EAEV ev) {
-		if(p_chargingManagement == null){
+		if(f_getChargingManagement() == null){
 			f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 		}
 		if(p_chargePoint == null){
@@ -206,7 +207,7 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		}
 		c_electricVehicles.add(ev);
 		energyModel.c_EVs.add(ev);	
-		ev.setV2GActive(p_chargingManagement.getV2GActive());
+		ev.setV2GActive(f_getV2GActive());
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
@@ -268,8 +269,8 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 	}
 	else if (productionAsset.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-		if (p_heatingManagement != null) {
-			p_heatingManagement.notInitialized();
+		if (f_getHeatingManagement() != null) {
+			f_getHeatingManagement().notInitialized();
 		}
 	}
 } else if (j_ea instanceof J_EAConversion conversionAsset) {
@@ -291,14 +292,14 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		energyModel.c_ambientDependentAssets.add(j_ea);
 		if (j_ea instanceof J_EABuilding buildingAsset) {
 			p_BuildingThermalAsset = buildingAsset;
-			if (p_heatingManagement != null) {
-				p_heatingManagement.notInitialized();
+			if (f_getHeatingManagement() != null) {
+				f_getHeatingManagement().notInitialized();
 			}
 		}
 		else {
 			p_heatBuffer = (J_EAStorageHeat)j_ea;
-			if (p_heatingManagement != null) {
-				p_heatingManagement.notInitialized();
+			if (f_getHeatingManagement() != null) {
+				f_getHeatingManagement().notInitialized();
 			}
 		}
 	} else if (j_ea instanceof J_EAStorageGas gasStorage) {
@@ -316,14 +317,14 @@ if (j_ea instanceof I_Vehicle vehicle) {
 } else if  (j_ea instanceof J_EAProfile profileAsset) {
 	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAChargingSession chargingSession) {
-	if(p_chargingManagement == null){
+	if(f_getChargingManagement() == null){
 		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
 	if(p_chargePoint == null){
 		p_chargePoint = new J_ChargePoint(true, true);
 	}
 	c_chargingSessions.add(chargingSession);
-	chargingSession.setV2GActive(p_chargingManagement.getV2GActive());
+	chargingSession.setV2GActive(f_getV2GActive());
 } else {
 	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
 		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
@@ -533,8 +534,8 @@ if (j_ea instanceof I_Vehicle vehicle) {
 	else{
 		// Heating Assets
 		c_heatingAssets.remove(j_ea);
-		if (p_heatingManagement != null) {
-			p_heatingManagement.notInitialized();
+		if (f_getHeatingManagement() != null) {
+			f_getHeatingManagement().notInitialized();
 		}
 		// Special Heating Assets
 		if (j_ea instanceof J_EAConversionHeatPump) {
@@ -549,14 +550,14 @@ if (j_ea instanceof I_Vehicle vehicle) {
 		energyModel.c_ambientDependentAssets.remove(j_ea);
 		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
 			p_BuildingThermalAsset = null;
-			if (p_heatingManagement != null) {
-				p_heatingManagement.notInitialized();
+			if (f_getHeatingManagement() != null) {
+				f_getHeatingManagement().notInitialized();
 			}
 		}
 		else {
 			p_heatBuffer = null;
-			if (p_heatingManagement != null) {
-				p_heatingManagement.notInitialized();
+			if (f_getHeatingManagement() != null) {
+				f_getHeatingManagement().notInitialized();
 			}
 		}
 	} else if (j_ea instanceof J_EAStorageGas) {
@@ -950,21 +951,11 @@ else {
 
 double f_addHeatManagement(OL_GridConnectionHeatingType heatingType,boolean isGhost)
 {/*ALCODESTART::1754393382442*/
-//Remove existing asset management from energyModel
-if(this.p_heatingManagement != null){
-	energyModel.f_removeAssetManagement(this.p_heatingManagement);
-}
-
-
 if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
 }
 if (isGhost) {
-	this.p_heatingManagement = new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType );
-	//Add new asset management to energyModel
-	if(this.p_heatingManagement != null){
-		energyModel.f_registerAssetManagement(this.p_heatingManagement);
-	}
+	this.p_energyManagement.setSubManagement(I_HeatingManagement.class, new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
 	return;
 }
 if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
@@ -988,16 +979,11 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
-J_HeatingPreferences existingHeatingPreferences = this.p_heatingManagement != null ? this.p_heatingManagement.getHeatingPreferences() : null; //Store the existing heating preferences
+J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
 
-this.p_heatingManagement = heatingManagement;
-this.p_heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
+heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
+this.p_energyManagement.setSubManagement(I_HeatingManagement.class, heatingManagement);
 
-
-//Add new asset management to energyModel
-if(this.p_heatingManagement != null){
-	energyModel.f_registerAssetManagement(this.p_heatingManagement);
-}
 /*ALCODEEND*/}
 
 EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
@@ -1075,7 +1061,7 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 double f_activateV2GChargingMode(boolean enableV2G,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
-	p_chargingManagement.setV2GActive(enableV2G);
+	p_energyManagement.setV2GActive(enableV2G);
 	if (enableV2G){
 		f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW, timeParameters, timeVariables);
 	}
@@ -1084,11 +1070,6 @@ if(energyModel.b_isInitialized){
 
 double f_addChargingManagement(OL_ChargingAttitude chargingType)
 {/*ALCODESTART::1755702594182*/
-//Remove old asset management from energyModel
-if(this.p_chargingManagement != null){
-	energyModel.f_removeAssetManagement(this.p_chargingManagement);
-}
-
 if (chargingType == null) {
 	if (c_electricVehicles.size()>0){
 		throw new RuntimeException("Charging strategy needed when electric vehicles are present!");
@@ -1131,12 +1112,8 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
-p_chargingManagement = chargingManagement;
+this.p_energyManagement.setSubManagement(I_ChargingManagement.class, chargingManagement);
 
-//Add new asset management to energyModel
-if(this.p_chargingManagement != null){
-	energyModel.f_registerAssetManagement(this.p_chargingManagement);
-}
 /*ALCODEEND*/}
 
 double f_addEnergyCarriersAndAssetCategoriesFromEA(J_EA j_ea,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
@@ -1180,27 +1157,18 @@ if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.conta
 
 double f_setChargingManagement(I_ChargingManagement chargingManagement)
 {/*ALCODESTART::1762851936576*/
-//Remove old asset management from energyModel
-if(this.p_chargingManagement != null){
-	energyModel.f_removeAssetManagement(this.p_chargingManagement);
-}
+this.p_energyManagement.setSubManagement(I_ChargingManagement.class, chargingManagement);
 
-p_chargingManagement = chargingManagement;
-
-//Remove old asset management from energyModel
-if(this.p_chargingManagement != null){
-	energyModel.f_registerAssetManagement(this.p_chargingManagement);
-}
 /*ALCODEEND*/}
 
 boolean f_getHeatingTypeIsGhost()
 {/*ALCODESTART::1762852865038*/
-return p_heatingManagement instanceof J_HeatingManagementGhost;
+return f_getHeatingManagement() instanceof J_HeatingManagementGhost;
 /*ALCODEEND*/}
 
 double f_setHeatingPreferences(J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1762853013265*/
-this.p_heatingManagement.setHeatingPreferences(heatingPreferences);
+f_getHeatingManagement().setHeatingPreferences(heatingPreferences);
 /*ALCODEEND*/}
 
 OL_ChargingAttitude f_getCurrentChargingType()
@@ -1215,57 +1183,34 @@ else {
 
 boolean f_getV2GActive()
 {/*ALCODESTART::1762853561122*/
-if (p_chargingManagement != null) {
-	return p_chargingManagement.getV2GActive();
-}
-else {
-	return false;
-}
+return this.p_energyManagement.getV2GActive();
 /*ALCODEEND*/}
 
 I_BatteryManagement f_getBatteryManagement()
 {/*ALCODESTART::1762853894937*/
-return p_batteryManagement;
+return this.p_energyManagement.getSubManagement(I_BatteryManagement.class);
 /*ALCODEEND*/}
 
 double f_setHeatingManagement(I_HeatingManagement heatingManagement)
 {/*ALCODESTART::1762855655470*/
-//Remove old asset management from energyModel
-if(this.p_heatingManagement != null){
-	energyModel.f_removeAssetManagement(this.p_heatingManagement);
-}
+this.p_energyManagement.setSubManagement(I_HeatingManagement.class, heatingManagement);
 
-p_heatingManagement = heatingManagement;
-
-//Remove old asset management from energyModel
-if(this.p_heatingManagement != null){
-	energyModel.f_registerAssetManagement(this.p_heatingManagement);
-}
 /*ALCODEEND*/}
 
 double f_setBatteryManagement(I_BatteryManagement batteryManagement)
 {/*ALCODESTART::1762855733010*/
-//Remove old asset management from energyModel
-if(this.p_batteryManagement != null){
-	energyModel.f_removeAssetManagement(this.p_batteryManagement);
-}
+this.p_energyManagement.setSubManagement(I_BatteryManagement.class, batteryManagement);
 
-p_batteryManagement = batteryManagement;
-
-//Remove old asset management from energyModel
-if(this.p_batteryManagement != null){
-	energyModel.f_registerAssetManagement(this.p_batteryManagement);
-}
 /*ALCODEEND*/}
 
 I_ChargingManagement f_getChargingManagement()
 {/*ALCODESTART::1762940915048*/
-return p_chargingManagement;
+return this.p_energyManagement.getSubManagement(I_ChargingManagement.class);
 /*ALCODEEND*/}
 
 I_HeatingManagement f_getHeatingManagement()
 {/*ALCODESTART::1762940962079*/
-return p_heatingManagement;
+return this.p_energyManagement.getSubManagement(I_HeatingManagement.class);
 /*ALCODEEND*/}
 
 J_ChargePoint f_getChargePoint()
