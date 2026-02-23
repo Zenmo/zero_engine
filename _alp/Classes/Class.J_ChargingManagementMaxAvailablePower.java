@@ -27,7 +27,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     
     }
     
-    public J_ChargingManagementMaxAvailablePower( GridConnection g, J_TimeParameters timeParametersc) {
+    public J_ChargingManagementMaxAvailablePower( GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
     	this.timeParameters = timeParameters;
     }

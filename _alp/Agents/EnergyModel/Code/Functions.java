@@ -823,8 +823,9 @@ if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
 	
 	DataSet dsDemand = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 	
-	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	double endTime = p_timeVariables.getAnyLogicTime_h();
+	double startTime = max(0, p_timeVariables.getAnyLogicTime_h() - 168);
+
 	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 		dsDemand.add( t, 0);
 	}
@@ -857,8 +858,10 @@ if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
 	v_liveData.activeProductionEnergyCarriers.add(EC);
 	
 	DataSet dsSupply = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
-	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+
+	double endTime = p_timeVariables.getAnyLogicTime_h();
+	double startTime = max(0, p_timeVariables.getAnyLogicTime_h() - 168);
+
 	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 		dsSupply.add( t, 0);
 	}
@@ -1062,50 +1065,13 @@ fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
 fm_consumptionForHeating_kW = new J_FlowsMap();
 
 // Reconstruct the LiveData class in the EnergyCoops
-for (EnergyCoop ec : pop_energyCoops) {
-	/*ec.v_liveData = new J_LiveData(ec);
-	ec.v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	ec.v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	ec.v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	
-	ec.v_liveData.connectionMetaData = ec.v_liveConnectionMetaData;
-	ec.v_liveData.assetsMetaData = ec.v_liveAssetsMetaData;
-	*/
-	ec.v_liveData.resetLiveDatasets(p_timeParameters);
-
-	ec.fm_currentProductionFlows_kW = new J_FlowsMap();
-	ec.fm_currentConsumptionFlows_kW = new J_FlowsMap();
-	ec.fm_currentBalanceFlows_kW = new J_FlowsMap();
-	ec.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-	ec.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
-	ec.fm_consumptionForHeating_kW = new J_FlowsMap();
-	ec.f_startAfterDeserialisation(p_timeParameters);
-}
+pop_energyCoops.forEach(ec -> ec.f_startAfterDeserialisation(p_timeParameters));
 
 // Reconstruct the LiveData class in the GridConnections and add EnergyCarriers
 List<GridConnection> allGridConnections = new ArrayList<>(c_gridConnections);
 allGridConnections.addAll(c_pausedGridConnections);
-for (GridConnection gc : allGridConnections) {
-	/*gc.v_liveData = new J_LiveData(gc);
-	gc.v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	gc.v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	gc.v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-	
-	gc.v_liveData.connectionMetaData = gc.v_liveConnectionMetaData;
-	gc.v_liveData.assetsMetaData = gc.v_liveAssetsMetaData;
-	*/
-	gc.v_liveData.resetLiveDatasets(p_timeParameters);
-	
-	gc.fm_currentProductionFlows_kW = new J_FlowsMap();
-	gc.fm_currentConsumptionFlows_kW = new J_FlowsMap();
-	gc.fm_currentBalanceFlows_kW = new J_FlowsMap();
-	gc.fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-	gc.fm_heatFromEnergyCarrier_kW = new J_FlowsMap();
-	gc.fm_consumptionForHeating_kW = new J_FlowsMap();
-	/*for (J_EA j_ea : gc.c_energyAssets) {
-		gc.f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea);
-	}*/
-}
+
+allGridConnections.forEach(gc -> gc.f_startAfterDeserialisation(p_timeParameters, p_timeVariables));
 
 // Initialize time and date
 //v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
@@ -1197,8 +1163,9 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 	
 	DataSet dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
 	
-	double startTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-	double endTime = v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
+	double endTime = p_timeVariables.getAnyLogicTime_h();
+	double startTime = max(0, p_timeVariables.getAnyLogicTime_h() - 168);
+
 	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
 		dsAsset.add( t, 0);
 	}
