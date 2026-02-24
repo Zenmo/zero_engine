@@ -199,7 +199,7 @@ if (j_ea instanceof I_Vehicle vehicle) {
 			traceln("Warning! f_connectToJ_EA found a vehicle with unknown energy carrier.");
 		}
 	} else if (vehicle instanceof J_EAEV ev) {
-		if(f_getChargingManagement() == null){
+		if(p_energyManagement.getAssetManagementIsPresent(I_ChargingManagement.class)){
 			f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 		}
 		if(p_chargePoint == null){
@@ -317,7 +317,7 @@ if (j_ea instanceof I_Vehicle vehicle) {
 } else if  (j_ea instanceof J_EAProfile profileAsset) {
 	c_profileAssets.add(profileAsset);
 } else if (j_ea instanceof J_EAChargingSession chargingSession) {
-	if(f_getChargingManagement() == null){
+	if(p_energyManagement.getAssetManagementIsPresent(I_ChargingManagement.class)){
 		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
 	}
 	if(p_chargePoint == null){
@@ -955,7 +955,7 @@ if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
 }
 if (isGhost) {
-	this.p_energyManagement.setSubManagement(I_HeatingManagement.class, new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
+	this.p_energyManagement.setSubManagement(new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
 	return;
 }
 if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
@@ -982,7 +982,7 @@ catch (Exception e) {
 J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
 
 heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
-this.p_energyManagement.setSubManagement(I_HeatingManagement.class, heatingManagement);
+this.p_energyManagement.setSubManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
@@ -1112,7 +1112,7 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
-this.p_energyManagement.setSubManagement(I_ChargingManagement.class, chargingManagement);
+this.p_energyManagement.setSubManagement(chargingManagement);
 
 /*ALCODEEND*/}
 
@@ -1157,7 +1157,7 @@ if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.conta
 
 double f_setChargingManagement(I_ChargingManagement chargingManagement)
 {/*ALCODESTART::1762851936576*/
-this.p_energyManagement.setSubManagement(I_ChargingManagement.class, chargingManagement);
+this.p_energyManagement.setSubManagement(chargingManagement);
 
 /*ALCODEEND*/}
 
@@ -1193,13 +1193,13 @@ return this.p_energyManagement.getSubManagement(I_BatteryManagement.class);
 
 double f_setHeatingManagement(I_HeatingManagement heatingManagement)
 {/*ALCODESTART::1762855655470*/
-this.p_energyManagement.setSubManagement(I_HeatingManagement.class, heatingManagement);
+this.p_energyManagement.setSubManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
 double f_setBatteryManagement(I_BatteryManagement batteryManagement)
 {/*ALCODESTART::1762855733010*/
-this.p_energyManagement.setSubManagement(I_BatteryManagement.class, batteryManagement);
+this.p_energyManagement.setSubManagement(batteryManagement);
 
 /*ALCODEEND*/}
 
@@ -1252,5 +1252,16 @@ if(this.p_energyManagement != null){
 I_EnergyManagement f_getEnergyManagement()
 {/*ALCODESTART::1770213430210*/
 return this.p_energyManagement;
+/*ALCODEEND*/}
+
+double f_setSubManagement(I_SubAssetManagement subManagement)
+{/*ALCODESTART::1771923187813*/
+this.p_energyManagement.setSubManagement(subManagement);
+       
+/*ALCODEEND*/}
+
+<T> T f_getSubManagement(Class<T>  subManagementInterfaceType)
+{/*ALCODESTART::1771926150430*/
+return this.p_energyManagement.getSubManagement(subManagementInterfaceType);
 /*ALCODEEND*/}
 

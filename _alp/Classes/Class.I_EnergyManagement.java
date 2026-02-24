@@ -14,16 +14,21 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public interface I_EnergyManagement extends I_AssetManagement
 {
 
-	// Must be implemented by the class (the class should contain these maps and Lists!!)
-	public Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> getActiveSubManagements();
-	public List<Class<? extends I_SubAssetManagement>> getSupportedSubManagements();
-    
+	// Must be implemented by the class (the class should contain these Lists and Map!!)
+	public List<Class<? extends I_SubAssetManagement>> getInherentAssetManagements();//Inherent asset management that the EMS handles itself
+	public List<Class<? extends I_SubAssetManagement>> getSupportedSubManagements(); // Supported submanagements that can support the EMS code
+    public Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> getActiveSubManagements(); //Submanagements that support the EMS code
+
 	//Manage EMS (Called by GC)
 	public void manageFlexAssets(J_TimeVariables timeVariables);
 
 	
 	//Set sub managements
-    default <T extends I_SubAssetManagement> void setSubManagement(Class<T> subManagementType, T subManagementInstance) {
+    default void setSubManagement(I_SubAssetManagement subManagementInstance) {
+    	
+    	//Get the submanagement (interface) type (I_ChargingManagement, I_HeatingManagement, etc.)
+    	Class<? extends I_SubAssetManagement> subManagementType = subManagementInstance.getSubManagementInterfaceType();
+    	
     	//Check if setSubManagement is actually supported by this EnergyManagement class
     	if (getSupportedSubManagements().stream().noneMatch(supported -> supported.isAssignableFrom(subManagementType))) {
     	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");
@@ -39,6 +44,12 @@ public interface I_EnergyManagement extends I_AssetManagement
     	}
         return subManagementType.cast(getActiveSubManagements().get(subManagementType));
     }
+    
+    //Check of certain AssetManagement is present in the EMS (Inherent or through added submanagement)
+    default <T> boolean getAssetManagementIsPresent(Class<T> subManagementType) {
+    	return getInherentAssetManagements().contains(subManagementType) || getActiveSubManagements().get(subManagementType) != null;
+    }
+    
     
 	//Specific sub management activation
 	public void setV2GActive(boolean enableV2G);	

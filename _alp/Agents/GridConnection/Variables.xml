@@ -487,8 +487,8 @@
 		<Name><![CDATA[p_batteryManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1020</X>
-		<Y>850</Y>
+		<X>620</X>
+		<Y>1070</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -508,8 +508,8 @@
 		<Name><![CDATA[p_chargingManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1020</X>
-		<Y>820</Y>
+		<X>620</X>
+		<Y>1040</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -529,8 +529,8 @@
 		<Name><![CDATA[p_heatingManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1020</X>
-		<Y>790</Y>
+		<X>620</X>
+		<Y>1010</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

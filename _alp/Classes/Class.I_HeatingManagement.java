@@ -9,6 +9,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 public interface I_HeatingManagement extends I_SubAssetManagement{
+	
+	//Get the subManagementInterface type
+	default Class<? extends I_SubAssetManagement> getSubManagementInterfaceType(){
+		return I_HeatingManagement.class;
+	}
+	
 	void manageHeating(J_TimeVariables timeVariables);
 	// Initiliaze throws an exception when the configuration of assets is not a valid combination
 	void initializeAssets();

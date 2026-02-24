@@ -16,5 +16,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * I_SubAssetManagement
  */	
 public interface I_SubAssetManagement extends I_AssetManagement{
-
+	
+	
+	//Get the subManagementInterface type (I_ChargingManagement.class, I_Heatingmanagement.class, etc.)
+	Class<? extends I_SubAssetManagement> getSubManagementInterfaceType();
+	
 }

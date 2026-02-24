@@ -18,7 +18,7 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     private GridConnection GC;
     private J_TimeParameters timeParameters;
     
-	Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> activeSubManagements = new HashMap();
+	List<Class<? extends I_SubAssetManagement>> inherentAssetManagements = new ArrayList<>(); //Inherent asset management that the EMS handles itself
 	List<Class<? extends I_SubAssetManagement>> supportedSubManagements = 
 												new ArrayList<>(Arrays.asList(
 													//J_HeatingManagementSimple.class, 
@@ -26,7 +26,7 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 													I_ChargingManagement.class, 
 													I_BatteryManagement.class
 												));
-			
+	Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> activeSubManagements = new HashMap();			
 	    
     
     /**
@@ -97,14 +97,16 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 	}
 	
 	
-	//Get active and supported sub management classes
-	public Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> getActiveSubManagements(){
-		return this.activeSubManagements;
+	//Get inherent, supported and active sub management classes
+	public List<Class<? extends I_SubAssetManagement>> getInherentAssetManagements(){
+		return this.inherentAssetManagements;
 	}
 	public List<Class<? extends I_SubAssetManagement>> getSupportedSubManagements(){
 		return this.supportedSubManagements;
 	}
-    
+	public Map<Class<? extends I_SubAssetManagement>, I_SubAssetManagement> getActiveSubManagements(){
+		return this.activeSubManagements;
+	}    
 	
     ////Store and reset states
 	public void storeStatesAndReset() {
