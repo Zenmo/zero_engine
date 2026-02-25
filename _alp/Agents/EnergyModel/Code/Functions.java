@@ -240,9 +240,6 @@ p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 for (J_EA EA : c_energyAssets) {
 	EA.storeStatesAndReset();		
 }
-for (I_AssetManagement AM : c_assetManagement) {
-	AM.storeStatesAndReset();		
-}
 
 
 for (GridConnection GC : c_gridConnections) {
@@ -385,9 +382,6 @@ p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
-}
-for (I_AssetManagement AM : c_assetManagement) {
-	AM.restoreStates();		
 }
 
 /*for (GridNode GN : pop_gridNodes) {
@@ -1322,18 +1316,6 @@ copyOfGridConnectionList.removeAll(Arrays.asList(pop_gridConnections)); // Remov
 
 return copyOfGridConnectionList;
 
-/*ALCODEEND*/}
-
-double f_registerAssetManagement(I_AssetManagement newAssetManagement)
-{/*ALCODESTART::1762791721564*/
-//Should only be called by GC
-c_assetManagement.add(newAssetManagement);
-/*ALCODEEND*/}
-
-double f_removeAssetManagement(I_AssetManagement assetManagement)
-{/*ALCODESTART::1762791721568*/
-//Should only be called by GC
-c_assetManagement.remove(assetManagement);
 /*ALCODEEND*/}
 
 double f_initializeTimeDates()

@@ -142,6 +142,11 @@ v_rapidRunData.resetAccumulators(v_liveData.activeEnergyCarriers, v_liveData.act
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 
+//Store states and reset EMS
+if(p_energyManagement != null){
+	p_energyManagement.storeStatesAndReset();
+}
+
 //Store states and reset charge point
 if(p_chargePoint != null){
 	p_chargePoint.storeStatesAndReset();
@@ -177,7 +182,6 @@ c_energyAssets.add(j_ea);
 
 if(j_ea instanceof J_EAFlex && p_energyManagement == null){
 	f_setEnergyManagement(new J_EnergyManagementDefault(this, timeParameters));
-	energyModel.f_registerAssetManagement(this.p_energyManagement);
 }
 
 if (j_ea instanceof I_HeatingAsset) {
@@ -589,6 +593,11 @@ double f_resetStatesAfterRapidRun()
 {/*ALCODESTART::1717068094093*/
 //Reset specificGC states after rapid run
 f_resetSpecificGCStatesAfterRapidRun();
+
+//Restore states in EMS
+if(p_energyManagement != null){
+	p_energyManagement.restoreStates();
+}
 
 //Restore states in charge point
 if(p_chargePoint != null){
@@ -1236,17 +1245,7 @@ f_addFlows(fp, j_ea);
 
 double f_setEnergyManagement(I_EnergyManagement energyManagement)
 {/*ALCODESTART::1770207133902*/
-//Remove old asset management from energyModel
-if(this.p_energyManagement != null){
-	energyModel.f_removeAssetManagement(this.p_energyManagement);
-}
-
 this.p_energyManagement = energyManagement;
-
-//Remove old asset management from energyModel
-if(this.p_energyManagement != null){
-	energyModel.f_registerAssetManagement(this.p_energyManagement);
-}
 /*ALCODEEND*/}
 
 I_EnergyManagement f_getEnergyManagement()

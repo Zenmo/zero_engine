@@ -605,6 +605,7 @@
 	<Variable Class="PlainVariable">
 		<Id>1769782285919</Id>
 		<Name><![CDATA[p_energyManagement]]></Name>
+		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
 		<X>930</X>
 		<Y>300</Y>
 		<Label>

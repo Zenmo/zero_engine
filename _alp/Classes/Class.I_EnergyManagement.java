@@ -46,10 +46,14 @@ public interface I_EnergyManagement extends I_AssetManagement
     }
     
     //Check of certain AssetManagement is present in the EMS (Inherent or through added submanagement)
-    default <T> boolean getAssetManagementIsPresent(Class<T> subManagementType) {
+    default <T> boolean isAssetManagementPresent(Class<T> subManagementType) {
     	return getInherentAssetManagements().contains(subManagementType) || getActiveSubManagements().get(subManagementType) != null;
     }
-    
+
+    //Check of certain Assets can potentially be managed by the EMS (Inherent or through added submanagement)
+    default <T> boolean isAssetManagementSupported(Class<T> subManagementType) {
+    	return getInherentAssetManagements().contains(subManagementType) || getActiveSubManagements().get(subManagementType) != null;
+    }
     
 	//Specific sub management activation
 	public void setV2GActive(boolean enableV2G);	
