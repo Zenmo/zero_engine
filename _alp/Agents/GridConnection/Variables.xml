@@ -483,69 +483,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1762852227489</Id>
-		<Name><![CDATA[p_batteryManagement]]></Name>
-		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>620</X>
-		<Y>1070</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="private"
-              StaticVariable="false">
-			<Type><![CDATA[I_BatteryManagement]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1762852413970</Id>
-		<Name><![CDATA[p_chargingManagement]]></Name>
-		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>620</X>
-		<Y>1040</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="private"
-              StaticVariable="false">
-			<Type><![CDATA[I_ChargingManagement]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1762852443276</Id>
-		<Name><![CDATA[p_heatingManagement]]></Name>
-		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>620</X>
-		<Y>1010</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="private"
-              StaticVariable="false">
-			<Type><![CDATA[I_HeatingManagement]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1764770171693</Id>
 		<Name><![CDATA[fm_consumptionForHeating_kW]]></Name>
 		<X>30</X>
@@ -606,8 +543,8 @@
 		<Id>1769782285919</Id>
 		<Name><![CDATA[p_energyManagement]]></Name>
 		<Description><![CDATA[Is variable to be able to make it private, but functions as a parameter -> doesnt change during rapid run.]]></Description>
-		<X>970</X>
-		<Y>420</Y>
+		<X>980</X>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

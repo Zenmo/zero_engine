@@ -153,19 +153,6 @@ if(p_chargePoint != null){
 }
 /*ALCODEEND*/}
 
-double f_manageEVCharging(J_TimeVariables timeVariables)
-{/*ALCODESTART::1671095995172*/
-if(c_electricVehicles.size() + c_chargingSessions.size() > 0 ){
-	if (p_chargingManagement == null) {
-		throw new RuntimeException("Tried to charge EV without algorithm in GC!: " + p_gridConnectionID);
-		//traceln("Tried to charge EV without algorithm in GC!: %s" ,p_gridConnectionID);
-	} else {
-		p_chargingManagement.manageCharging(p_chargePoint, timeVariables);
-	}
-}
-
-/*ALCODEEND*/}
-
 double f_setOperatingSwitches()
 {/*ALCODESTART::1677512714652*/
 if( this instanceof GCDistrictHeating gc) { // Temporarily disabled while transfering to class-based energy assets!
@@ -643,25 +630,6 @@ v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.a
 
 /*ALCODEEND*/}
 
-double f_manageHeating(J_TimeVariables timeVariables)
-{/*ALCODESTART::1753099764237*/
-if (p_heatingManagement != null) {
-	p_heatingManagement.manageHeating(timeVariables);
-}
-/*ALCODEEND*/}
-
-double f_manageBattery(J_TimeVariables timeVariables)
-{/*ALCODESTART::1752570332887*/
-if (p_batteryAsset != null) {
-	if (p_batteryAsset.getStorageCapacity_kWh() > 0 && p_batteryAsset.getCapacityElectric_kW() > 0) {
-		if (p_batteryManagement == null) {
-			throw new RuntimeException("Tried to operate battery without algorithm in GC: " + p_gridConnectionID);
-		}
-		p_batteryManagement.manageBattery(timeVariables);
-	}
-}
-/*ALCODEEND*/}
-
 double f_startAfterDeserialisation(J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1753348699140*/
 fm_currentProductionFlows_kW = new J_FlowsMap();
@@ -712,7 +680,7 @@ if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
 }
 if (isGhost) {
-	this.p_energyManagement.setExternalAssetManagement(new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
+	f_setExternalAssetManagement(new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
 	return;
 }
 if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
@@ -739,7 +707,7 @@ catch (Exception e) {
 J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
 
 heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
-this.p_energyManagement.setExternalAssetManagement(heatingManagement);
+f_setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
@@ -914,7 +882,7 @@ if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.conta
 
 double f_setChargingManagement(I_ChargingManagement chargingManagement)
 {/*ALCODESTART::1762851936576*/
-this.p_energyManagement.setExternalAssetManagement(chargingManagement);
+f_setExternalAssetManagement(chargingManagement);
 
 /*ALCODEEND*/}
 
@@ -940,7 +908,12 @@ else {
 
 boolean f_getV2GActive()
 {/*ALCODESTART::1762853561122*/
-return this.p_energyManagement.getV2GActive();
+if (p_energyManagement != null) {
+	return this.p_energyManagement.getV2GActive();
+}
+else {
+	return false;
+}
 /*ALCODEEND*/}
 
 I_BatteryManagement f_getBatteryManagement()
@@ -950,7 +923,7 @@ return f_getExternalAssetManagement(I_BatteryManagement.class);
 
 double f_setHeatingManagement(I_HeatingManagement heatingManagement)
 {/*ALCODESTART::1762855655470*/
-this.p_energyManagement.setExternalAssetManagement(heatingManagement);
+f_setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
@@ -1023,12 +996,6 @@ else{
 double f_connectToJ_EAFlex(J_EAFlex j_ea,J_TimeParameters timeParameters)
 {/*ALCODESTART::1772105340588*/
 c_flexAssets.add(j_ea);
-
-//Temporary always add default EMS
-if(p_energyManagement == null){
-	f_setEnergyManagement(new J_EnergyManagementDefault(this, timeParameters));
-}
-
 
 if (j_ea instanceof J_EAEV ev) {
 	if(p_chargePoint == null){
@@ -1349,5 +1316,12 @@ else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){ // J_EAEV t
 	tripTracker.prepareNextActivity(energyModel.p_timeVariables.getT_h()*60, p_chargePoint);
 }
 c_tripTrackers.add( tripTracker );
+/*ALCODEEND*/}
+
+double f_removeExternalAssetManagement(Class<? extends I_AssetManagement> assetManagementInterfaceType)
+{/*ALCODESTART::1772129162585*/
+if(this.p_energyManagement != null){
+	this.p_energyManagement.removeExternalAssetManagement(assetManagementInterfaceType);
+}
 /*ALCODEEND*/}
 

@@ -26,6 +26,10 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 	//Set sub managements
     default void setExternalAssetManagement(I_AssetManagement assetManagementInstance) {
     	
+    	if(assetManagementInstance == null) {
+    		throw new RuntimeException("Can't call setExternalAssetManagement() with input 'null'. -> If you are trying to remove something, use removeExternalAssetManagement() instead.");
+    	}
+    	
     	//Get the assetmanagement (interface) type (I_ChargingManagement, I_HeatingManagement, etc.)
     	Class<? extends I_AssetManagement> assetManagementType = assetManagementInstance.getAssetManagementInterfaceType();
     	
@@ -34,6 +38,12 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
     	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");
     	}
     	getActiveExternalAssetManagements().put(assetManagementType, assetManagementInstance);
+    }
+    
+    default void removeExternalAssetManagement(Class<? extends I_AssetManagement> assetManagementType) {
+    	if(assetManagementType.cast(getActiveExternalAssetManagements().get(assetManagementType)) != null) {
+    		getActiveExternalAssetManagements().remove(assetManagementType);
+    	}
     }
     
 	//Get assetManagements (return null if not present)
