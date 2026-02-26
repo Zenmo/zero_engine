@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 	    creatorVisibility = Visibility.NONE
 	)
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
-public abstract class J_ActivityTracker implements Serializable {
+public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
 	protected EnergyModel energyModel;
 
 	// Tripdata
@@ -36,12 +36,12 @@ public abstract class J_ActivityTracker implements Serializable {
     public J_ActivityTracker(EnergyModel main, int rowIndex, double time_min) {
     }
     
-    public void storeAndResetState() {
+    public void storeStatesAndReset() {
     	v_eventIndexStored = v_eventIndex;
     	v_eventIndex = 0;
     }
     
-    public void restoreState() {
+    public void restoreStates() {
     	v_eventIndex = v_eventIndexStored;
 	}
     
@@ -50,11 +50,4 @@ public abstract class J_ActivityTracker implements Serializable {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 } 

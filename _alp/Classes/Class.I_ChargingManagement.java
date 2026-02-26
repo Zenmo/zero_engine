@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
 
-public interface I_ChargingManagement extends I_SubAssetManagement	{
+public interface I_ChargingManagement extends I_AssetManagement	{
 
 	//Get the subManagementInterface type
-	default Class<? extends I_SubAssetManagement> getSubManagementInterfaceType(){
+	default Class<? extends I_AssetManagement> getAssetManagementInterfaceType(){
 		return I_ChargingManagement.class;
 	}
 	

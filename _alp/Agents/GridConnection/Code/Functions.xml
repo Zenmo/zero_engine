@@ -5,8 +5,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1658500398176</Id>
 		<Name><![CDATA[f_connectToParents]]></Name>
-		<X>911</X>
-		<Y>190</Y>
+		<X>951</X>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -21,8 +21,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1660212665961</Id>
 		<Name><![CDATA[f_connectionMetering]]></Name>
-		<X>925</X>
-		<Y>520</Y>
+		<X>965</X>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -45,8 +45,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1664961435385</Id>
 		<Name><![CDATA[f_operateFlexAssets]]></Name>
-		<X>910</X>
-		<Y>280</Y>
+		<X>950</X>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -65,8 +65,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1668528273163</Id>
 		<Name><![CDATA[f_calculateEnergyBalance]]></Name>
-		<X>890</X>
-		<Y>240</Y>
+		<X>930</X>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -89,8 +89,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1668528300576</Id>
 		<Name><![CDATA[f_operateFixedAssets]]></Name>
-		<X>910</X>
-		<Y>260</Y>
+		<X>950</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -109,8 +109,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1668983912731</Id>
 		<Name><![CDATA[f_resetStates]]></Name>
-		<X>905</X>
-		<Y>650</Y>
+		<X>945</X>
+		<Y>770</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -146,8 +146,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1677512714652</Id>
 		<Name><![CDATA[f_setOperatingSwitches]]></Name>
-		<X>910</X>
-		<Y>210</Y>
+		<X>950</X>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -155,38 +155,14 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1692799608559</Id>
-		<Name><![CDATA[f_connectToJ_EA_default]]></Name>
-		<X>930</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[j_ea]]></Name>
-			<Type><![CDATA[J_EA]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1693307881182</Id>
+		<Id>1692799608559</Id>
 		<Name><![CDATA[f_connectToJ_EA]]></Name>
-		<X>910</X>
+		<X>970</X>
 		<Y>100</Y>
 		<Label>
 			<X>10</X>
@@ -210,7 +186,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1698854861644</Id>
 		<Name><![CDATA[f_initialize]]></Name>
-		<X>900</X>
+		<X>940</X>
 		<Y>50</Y>
 		<Label>
 			<X>10</X>
@@ -230,8 +206,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1702373771433</Id>
 		<Name><![CDATA[f_addFlows]]></Name>
-		<X>960</X>
-		<Y>440</Y>
+		<X>1000</X>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -252,30 +228,10 @@
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1714646521271</Id>
-		<Name><![CDATA[f_removeTheJ_EA]]></Name>
-		<X>910</X>
-		<Y>140</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[j_ea]]></Name>
-			<Type><![CDATA[J_EA]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="protected" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1714646913998</Id>
-		<Name><![CDATA[f_removeTheJ_EA_default]]></Name>
-		<X>930</X>
-		<Y>160</Y>
+		<Name><![CDATA[f_removeTheJ_EA]]></Name>
+		<X>970</X>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -294,8 +250,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1717060111619</Id>
 		<Name><![CDATA[f_resetSpecificGCStates]]></Name>
-		<X>925</X>
-		<Y>670</Y>
+		<X>965</X>
+		<Y>790</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -309,8 +265,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1717068094093</Id>
 		<Name><![CDATA[f_resetStatesAfterRapidRun]]></Name>
-		<X>905</X>
-		<Y>690</Y>
+		<X>945</X>
+		<Y>810</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -325,8 +281,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1717068167776</Id>
 		<Name><![CDATA[f_resetSpecificGCStatesAfterRapidRun]]></Name>
-		<X>925</X>
-		<Y>710</Y>
+		<X>965</X>
+		<Y>830</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -341,8 +297,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1720442672576</Id>
 		<Name><![CDATA[f_curtailment]]></Name>
-		<X>925</X>
-		<Y>490</Y>
+		<X>965</X>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -358,8 +314,8 @@
 		<Id>1720430481154</Id>
 		<Name><![CDATA[f_nfatoUpdateConnectionCapacity]]></Name>
 		<Description><![CDATA[Updates the Connection Capacity of the GC depending on the time of day / day of week.]]></Description>
-		<X>905</X>
-		<Y>600</Y>
+		<X>945</X>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -379,8 +335,8 @@
 		<Id>1720431721926</Id>
 		<Name><![CDATA[f_nfatoSetConnectionCapacity]]></Name>
 		<Description><![CDATA[When changing the NFATO settings this function sets the GC capacity to the correct value. When reset is true the capacity is restored back to its original value.]]></Description>
-		<X>905</X>
-		<Y>620</Y>
+		<X>945</X>
+		<Y>740</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -403,8 +359,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722512642645</Id>
 		<Name><![CDATA[f_removeFlows]]></Name>
-		<X>1075</X>
-		<Y>440</Y>
+		<X>1115</X>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -427,8 +383,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722518225504</Id>
 		<Name><![CDATA[f_fillLiveDataSets]]></Name>
-		<X>945</X>
-		<Y>560</Y>
+		<X>985</X>
+		<Y>680</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -447,8 +403,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722518905501</Id>
 		<Name><![CDATA[f_rapidRunDataLogging]]></Name>
-		<X>945</X>
-		<Y>540</Y>
+		<X>985</X>
+		<Y>660</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -492,7 +448,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1730728785333</Id>
 		<Name><![CDATA[f_initializeDataSets]]></Name>
-		<X>910</X>
+		<X>950</X>
 		<Y>70</Y>
 		<Label>
 			<X>10</X>
@@ -554,7 +510,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753348699140</Id>
 		<Name><![CDATA[f_startAfterDeserialisation]]></Name>
-		<X>1030</X>
+		<X>1070</X>
 		<Y>50</Y>
 		<Label>
 			<X>10</X>
@@ -578,8 +534,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753969724598</Id>
 		<Name><![CDATA[f_removeAllHeatingAssets]]></Name>
-		<X>620</X>
-		<Y>210</Y>
+		<X>645</X>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -594,8 +550,8 @@
 		<ReturnType>OL_GridConnectionHeatingType</ReturnType>
 		<Id>1754051705071</Id>
 		<Name><![CDATA[f_getCurrentHeatingType]]></Name>
-		<X>620</X>
-		<Y>170</Y>
+		<X>645</X>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -611,8 +567,8 @@
 		<Id>1754393382442</Id>
 		<Name><![CDATA[f_addHeatManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
-		<X>620</X>
-		<Y>130</Y>
+		<X>645</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -748,8 +704,8 @@
 		<Id>1755702594182</Id>
 		<Name><![CDATA[f_addChargingManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
-		<X>640</X>
-		<Y>480</Y>
+		<X>666</X>
+		<Y>541</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -796,8 +752,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762851936576</Id>
 		<Name><![CDATA[f_setChargingManagement]]></Name>
-		<X>640</X>
-		<Y>460</Y>
+		<X>666</X>
+		<Y>521</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -816,8 +772,8 @@
 		<ReturnType>boolean</ReturnType>
 		<Id>1762852865038</Id>
 		<Name><![CDATA[f_getHeatingTypeIsGhost]]></Name>
-		<X>620</X>
-		<Y>190</Y>
+		<X>645</X>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -832,8 +788,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762853013265</Id>
 		<Name><![CDATA[f_setHeatingPreferences]]></Name>
-		<X>630</X>
-		<Y>150</Y>
+		<X>655</X>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -852,8 +808,8 @@
 		<ReturnType>OL_ChargingAttitude</ReturnType>
 		<Id>1762853347370</Id>
 		<Name><![CDATA[f_getCurrentChargingType]]></Name>
-		<X>650</X>
-		<Y>500</Y>
+		<X>676</X>
+		<Y>561</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -868,8 +824,8 @@
 		<ReturnType>boolean</ReturnType>
 		<Id>1762853561122</Id>
 		<Name><![CDATA[f_getV2GActive]]></Name>
-		<X>650</X>
-		<Y>520</Y>
+		<X>676</X>
+		<Y>581</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -884,8 +840,8 @@
 		<ReturnType>I_BatteryManagement</ReturnType>
 		<Id>1762853894937</Id>
 		<Name><![CDATA[f_getBatteryManagement]]></Name>
-		<X>650</X>
-		<Y>830</Y>
+		<X>676</X>
+		<Y>811</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -900,8 +856,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762855655470</Id>
 		<Name><![CDATA[f_setHeatingManagement]]></Name>
-		<X>620</X>
-		<Y>110</Y>
+		<X>645</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -920,8 +876,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1762855733010</Id>
 		<Name><![CDATA[f_setBatteryManagement]]></Name>
-		<X>650</X>
-		<Y>810</Y>
+		<X>676</X>
+		<Y>791</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -940,8 +896,8 @@
 		<ReturnType>I_ChargingManagement</ReturnType>
 		<Id>1762940915048</Id>
 		<Name><![CDATA[f_getChargingManagement]]></Name>
-		<X>650</X>
-		<Y>540</Y>
+		<X>676</X>
+		<Y>601</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -956,8 +912,8 @@
 		<ReturnType>I_HeatingManagement</ReturnType>
 		<Id>1762940962079</Id>
 		<Name><![CDATA[f_getHeatingManagement]]></Name>
-		<X>620</X>
-		<Y>230</Y>
+		<X>645</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -972,8 +928,8 @@
 		<ReturnType>J_ChargePoint</ReturnType>
 		<Id>1765551413839</Id>
 		<Name><![CDATA[f_getChargePoint]]></Name>
-		<X>660</X>
-		<Y>600</Y>
+		<X>686</X>
+		<Y>661</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -988,8 +944,8 @@
 		<ReturnType>J_ChargePoint</ReturnType>
 		<Id>1765551488579</Id>
 		<Name><![CDATA[f_setChargePoint]]></Name>
-		<X>660</X>
-		<Y>580</Y>
+		<X>686</X>
+		<Y>641</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1025,8 +981,8 @@
 		<Id>1769426110933</Id>
 		<Name><![CDATA[f_updateFlexAssetFlows]]></Name>
 		<Description><![CDATA[This function replaces the old way of calling f_updateAllFlows directly, in order for the GC to manage its bookkeeping.]]></Description>
-		<X>945</X>
-		<Y>420</Y>
+		<X>985</X>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1053,8 +1009,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1770207133902</Id>
 		<Name><![CDATA[f_setEnergyManagement]]></Name>
-		<X>950</X>
-		<Y>320</Y>
+		<X>990</X>
+		<Y>440</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1073,8 +1029,8 @@
 		<ReturnType>I_EnergyManagement</ReturnType>
 		<Id>1770213430210</Id>
 		<Name><![CDATA[f_getEnergyManagement]]></Name>
-		<X>950</X>
-		<Y>340</Y>
+		<X>990</X>
+		<Y>460</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1088,9 +1044,9 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1771923187813</Id>
-		<Name><![CDATA[f_setSubManagement]]></Name>
-		<X>960</X>
-		<Y>360</Y>
+		<Name><![CDATA[f_setExternalAssetManagement]]></Name>
+		<X>1000</X>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1099,8 +1055,8 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[subManagement]]></Name>
-			<Type><![CDATA[I_SubAssetManagement]]></Type>
+			<Name><![CDATA[externalAssetManagement]]></Name>
+			<Type><![CDATA[I_AssetManagement]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -1108,9 +1064,9 @@
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>&lt;T&gt; T</ReturnType>
 		<Id>1771926150430</Id>
-		<Name><![CDATA[f_getSubManagement]]></Name>
-		<X>960</X>
-		<Y>380</Y>
+		<Name><![CDATA[f_getExternalAssetManagement]]></Name>
+		<X>1000</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1119,8 +1075,164 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[subManagementInterfaceType]]></Name>
+			<Name><![CDATA[assetManagementInterfaceType]]></Name>
 			<Type><![CDATA[Class<T> ]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1772105340588</Id>
+		<Name><![CDATA[f_connectToJ_EAFlex]]></Name>
+		<X>990</X>
+		<Y>140</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EAFlex]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>J_ActivityTrackerTrips</ReturnType>
+		<Id>1772105953445</Id>
+		<Name><![CDATA[f_getNewTripTracker]]></Name>
+		<X>1040</X>
+		<Y>180</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[assetType]]></Name>
+			<Type><![CDATA[OL_EnergyAssetType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[vehicle]]></Name>
+			<Type><![CDATA[I_Vehicle]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1772106633559</Id>
+		<Name><![CDATA[f_connectToJ_EAFixed]]></Name>
+		<X>990</X>
+		<Y>120</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EAFixed]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1772109826148</Id>
+		<Name><![CDATA[f_checkConfiguration]]></Name>
+		<X>950</X>
+		<Y>870</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1772110066396</Id>
+		<Name><![CDATA[f_removeTheJ_EAFixed]]></Name>
+		<X>990</X>
+		<Y>230</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EAFixed]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1772110082431</Id>
+		<Name><![CDATA[f_removeTheJ_EAFlex]]></Name>
+		<X>990</X>
+		<Y>250</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[j_ea]]></Name>
+			<Type><![CDATA[J_EAFlex]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>J_ActivityTrackerTrips</ReturnType>
+		<Id>1772119363003</Id>
+		<Name><![CDATA[f_connectTripTracker]]></Name>
+		<X>1010</X>
+		<Y>160</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[vehicle]]></Name>
+			<Type><![CDATA[I_Vehicle]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

@@ -209,13 +209,6 @@ if( p_householdEV != null && p_chargingAttitudeVehicles == OL_ChargingAttitude.C
 
 /*ALCODEEND*/}
 
-double f_connectTo_J_EA_House(J_EA j_ea)
-{/*ALCODESTART::1693300820997*/
-if (j_ea instanceof J_EAAirco) {
-	p_airco = (J_EAAirco)j_ea;
-}
-/*ALCODEEND*/}
-
 double f_manageCookingTracker(J_TimeVariables timeVariables)
 {/*ALCODESTART::1726334759211*/
 // Add heat from cooking assets to house
@@ -270,13 +263,6 @@ if( p_airco != null ) {
 		}
 	}
 	p_airco.f_updateAllFlows( 1.0, timeVariables );
-}
-/*ALCODEEND*/}
-
-double f_removeTheJ_EA_house(J_EA j_ea)
-{/*ALCODESTART::1749722407831*/
-if (j_ea instanceof J_EAAirco) {
-	p_airco = null;
 }
 /*ALCODEEND*/}
 

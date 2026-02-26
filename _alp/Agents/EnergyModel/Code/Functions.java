@@ -258,13 +258,13 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	
 	GC.c_tripTrackers.forEach(tt->{
-		tt.storeAndResetState();
+		tt.storeStatesAndReset();
 		tt.setStartIndex(p_timeVariables, GC.f_getChargePoint());
 		//tt.prepareNextActivity(p_runStartTime_h*60, GC.f_getChargePoint());
 		});
 	if (GC instanceof GCHouse) {
 		if (((GCHouse)GC).p_cookingTracker != null) {
-			((GCHouse)GC).p_cookingTracker.storeAndResetState();
+			((GCHouse)GC).p_cookingTracker.storeStatesAndReset();
 		}
 	}
 }
@@ -391,13 +391,13 @@ for (J_EA EA : c_energyAssets) {
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->{
-		tt.restoreState();
+		tt.restoreStates();
 		//tt.prepareNextActivity((t_h-p_runStartTime_h)*60, GC.f_getChargePoint());
 		});	
 	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
 	if (GC instanceof GCHouse) {
 		if (((GCHouse)GC).p_cookingTracker != null) {
-			((GCHouse)GC).p_cookingTracker.restoreState();
+			((GCHouse)GC).p_cookingTracker.restoreStates();
 		}
 	}	
 }
@@ -1350,6 +1350,12 @@ traceln("Startdate: %s", startDate);
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
 
+
+/*ALCODEEND*/}
+
+double f_checkConfiguration()
+{/*ALCODESTART::1772104199229*/
+c_gridConnections.forEach(gc -> gc.f_checkConfiguration());
 
 /*ALCODEEND*/}
 

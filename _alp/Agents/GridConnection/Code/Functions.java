@@ -173,174 +173,27 @@ if( this instanceof GCDistrictHeating gc) { // Temporarily disabled while transf
 }
 /*ALCODEEND*/}
 
-double f_connectToJ_EA_default(J_EA j_ea,J_TimeParameters timeParameters)
+double f_connectToJ_EA(J_EA j_ea,J_TimeParameters timeParameters)
 {/*ALCODESTART::1692799608559*/
 f_addEnergyCarriersAndAssetCategoriesFromEA(j_ea, timeParameters, energyModel.p_timeVariables);
 
 energyModel.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
-if(j_ea instanceof J_EAFlex && p_energyManagement == null){
-	f_setEnergyManagement(new J_EnergyManagementDefault(this, timeParameters));
+//If EMS is present: set checked boolean to false. Also for fixed assets: (heating management looks at those as well).
+if (p_energyManagement != null) {
+	p_energyManagement.setChecked(false);
 }
-
-if (j_ea instanceof I_HeatingAsset) {
-	c_heatingAssets.add((J_EAConversion)j_ea);
-	if (f_getHeatingManagement() != null) {
-		f_getHeatingManagement().notInitialized();
-	}
-}
-
-if (j_ea instanceof I_Vehicle vehicle) {
-	if (vehicle instanceof J_EAFuelVehicle fuelVehicle) {
-		if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.PETROLEUM_FUEL) {
-			c_petroleumFuelVehicles.add(fuelVehicle);
-		}
-		else if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.HYDROGEN) {
-			c_hydrogenVehicles.add(fuelVehicle);		
-		}
-		else {
-			traceln("Warning! f_connectToJ_EA found a vehicle with unknown energy carrier.");
-		}
-	} else if (vehicle instanceof J_EAEV ev) {
-		if(p_energyManagement.getAssetManagementIsPresent(I_ChargingManagement.class)){
-			f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
-		}
-		if(p_chargePoint == null){
-			p_chargePoint = new J_ChargePoint(true, true);
-		}
-		c_electricVehicles.add(ev);
-		energyModel.c_EVs.add(ev);	
-		ev.setV2GActive(f_getV2GActive());
-	}
-	c_vehicleAssets.add(vehicle);		
-	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
-	
-	// TODO: Needs a refactor, this code that creates a triptracker is very different from the rest of the functionality of this function. However the trip CSVs make it awkward to place it in the constructor of the asset.
-	if (tripTracker == null) { // Only provide tripTracker when vehicle doesn't have it yet!
-		OL_EnergyAssetType assetType = ((J_EA)vehicle).getEAType();
-		if (assetType == OL_EnergyAssetType.ELECTRIC_TRUCK || assetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || assetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
-			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
-		} else if (assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || assetType == OL_EnergyAssetType.ELECTRIC_VAN || assetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
-			int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
-			tripTracker.setAnnualDistance_km(30_000);
-		} else {
-			//traceln("Adding passenger vehicle to gridconnection %s", this);
-			int rowIndex = uniform_discr(0, 200);
-			while (rowIndex == 28 || rowIndex == 42 || rowIndex == 150) { // 445, 457, 483, 540, 563 all impossible triptrackers for vehicles with 116 kWh and 0.16 kWhpkm
-				rowIndex = uniform_discr(0, 200);
-			}
-			tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_householdTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
-			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_householdTripsExcel, 18, energyModel.t_h*60, vehicle);
-			//int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-			//tripTracker = new J_ActivityTrackerTrips(energyModel, energyModel.p_truckTripsExcel, 2, energyModel.t_h*60, vehicle);
-		}
 		
-		vehicle.setTripTracker(tripTracker);
-	}
-	else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){ // J_EAEV that already has triptracker, but still needs to prepare next trip to determine chargedeadline.
-		tripTracker.prepareNextActivity(energyModel.p_timeVariables.getT_h()*60, p_chargePoint);
-	}
-	c_tripTrackers.add( tripTracker );
-	//v_vehicleIndex ++;
-} else if (j_ea instanceof J_EAConsumption consumptionAsset) {
-	c_consumptionAssets.add(consumptionAsset);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = consumptionAsset;	
-	}
-} else if (j_ea instanceof J_EAProduction productionAsset) {
-	//c_productionAssets.add((J_EAProduction)j_ea);
-	c_productionAssets.add(productionAsset);
-
-	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		double capacity_kW = productionAsset.getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
-		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
-		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-	}
-	else if (productionAsset.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		double capacity_kW = productionAsset.getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
-		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
-		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
-	}
-	else if (productionAsset.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-		if (f_getHeatingManagement() != null) {
-			f_getHeatingManagement().notInitialized();
-		}
-	}
-} else if (j_ea instanceof J_EAConversion conversionAsset) {
-	c_conversionAssets.add(conversionAsset);
-	if ( conversionAsset.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		if (p_cookingTracker == null) {
-			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternCsv, rowIndex, (energyModel.p_timeVariables.getAnyLogicTime_h())*60, (J_EAConversion)j_ea );			
-		} else {
-			p_cookingTracker.HOB = (J_EAConversion)j_ea;
-		}
-	} else if (j_ea instanceof J_EAConversionHeatPump) {
-		energyModel.c_ambientDependentAssets.add(j_ea);
-	}
-} else if  (j_ea instanceof J_EAStorage storageAsset) {
-	c_storageAssets.add(storageAsset);
-	energyModel.c_storageAssets.add(storageAsset);
-	if (j_ea instanceof J_EAStorageHeat) {
-		energyModel.c_ambientDependentAssets.add(j_ea);
-		if (j_ea instanceof J_EABuilding buildingAsset) {
-			p_BuildingThermalAsset = buildingAsset;
-			if (f_getHeatingManagement() != null) {
-				f_getHeatingManagement().notInitialized();
-			}
-		}
-		else {
-			p_heatBuffer = (J_EAStorageHeat)j_ea;
-			if (f_getHeatingManagement() != null) {
-				f_getHeatingManagement().notInitialized();
-			}
-		}
-	} else if (j_ea instanceof J_EAStorageGas gasStorage) {
-		p_gasBuffer = gasStorage;
-	} else if (j_ea instanceof J_EAStorageElectric battery) {
-		p_batteryAsset = battery;
-		double capacity_MWh = battery.getStorageCapacity_kWh()/1000;
-		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
-		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
-		
-	}
-} else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
-	c_profileAssets.add(tractor);
-} else if  (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
-} else if (j_ea instanceof J_EAChargingSession chargingSession) {
-	if(p_energyManagement.getAssetManagementIsPresent(I_ChargingManagement.class)){
-		f_addChargingManagement(OL_ChargingAttitude.SIMPLE);
-	}
-	if(p_chargePoint == null){
-		p_chargePoint = new J_ChargePoint(true, true);
-	}
-	c_chargingSessions.add(chargingSession);
-	chargingSession.setV2GActive(f_getV2GActive());
-} else {
-	if (!(this instanceof GCHouse && j_ea instanceof J_EAAirco)) {
-		traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
-	} 
+if(j_ea instanceof J_EAFixed j_eaFixed){
+	f_connectToJ_EAFixed(j_eaFixed, timeParameters);
 }
-
-/*ALCODEEND*/}
-
-double f_connectToJ_EA(J_EA j_ea,J_TimeParameters timeParameters)
-{/*ALCODESTART::1693307881182*/
-f_connectToJ_EA_default(j_ea, timeParameters);
-// Abstract method to be used call GC-subtype specific functions
+else if(j_ea instanceof J_EAFlex j_eaFlex){
+	f_connectToJ_EAFlex(j_eaFlex, timeParameters);
+}
+else{
+	throw new RuntimeException("Trying to connect a J_EA to a GC that is neither J_EAFixed or J_EAFlex!");
+}
 /*ALCODEEND*/}
 
 double f_initialize(J_TimeParameters timeParameters)
@@ -459,129 +312,24 @@ fm_currentAssetFlows_kW.addFlows(flowPacket.assetFlowsMap);
 /*ALCODEEND*/}
 
 double f_removeTheJ_EA(J_EA j_ea)
-{/*ALCODESTART::1714646521271*/
-f_removeTheJ_EA_default(j_ea);
-// Abstract method to be used call GC-subtype specific functions
-/*ALCODEEND*/}
-
-double f_removeTheJ_EA_default(J_EA j_ea)
 {/*ALCODESTART::1714646913998*/
 c_energyAssets.remove(j_ea);
 energyModel.c_energyAssets.remove(j_ea);
 
-if (j_ea instanceof I_Vehicle vehicle) {
-	if (vehicle instanceof J_EAFuelVehicle fuelVehicle) {
-		if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.PETROLEUM_FUEL) {
-			c_petroleumFuelVehicles.remove( vehicle );
-		}
-		else if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.HYDROGEN) {
-			c_hydrogenVehicles.remove(vehicle);
-		}
-		else {
-			traceln("Warning! f_removeTheJ_EA found a vehicle with unknown energy carrier.");			
-		}
-	} else if (vehicle instanceof J_EAEV ev) {
-		c_electricVehicles.remove(ev);
-		energyModel.c_EVs.remove(ev);
-		if(p_chargePoint.isRegistered(ev)){
-			p_chargePoint.deregisterChargingRequest(ev);
-		}
-	}
-	c_vehicleAssets.remove(vehicle);
-		
-	J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
-	c_tripTrackers.remove( tripTracker );
-	vehicle.setTripTracker(null);
-
-} else if (j_ea instanceof J_EAConsumption) {
-	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = null;	
-	}
-	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-	}
-	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-	}
-} else if (j_ea instanceof J_EAProduction) {
-	c_productionAssets.remove((J_EAProduction)j_ea);
-
-	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
-		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
-		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
-		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
-		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
-		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-	}
-} else if (j_ea instanceof J_EAConversion) {
-	c_conversionAssets.remove((J_EAConversion)j_ea);
-	// Non Heating Assets
-	if (j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-	}
-	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		p_cookingTracker = null;
-	} else if (j_ea instanceof J_EAConversionElectrolyser) {
-	}
-	else{
-		// Heating Assets
-		c_heatingAssets.remove(j_ea);
-		if (f_getHeatingManagement() != null) {
-			f_getHeatingManagement().notInitialized();
-		}
-		// Special Heating Assets
-		if (j_ea instanceof J_EAConversionHeatPump) {
-			energyModel.c_ambientDependentAssets.remove(j_ea);
-		} else if (j_ea instanceof J_EAConversionGasCHP) {
-		}
-	}
-} else if  (j_ea instanceof J_EAStorage) {
-	c_storageAssets.remove((J_EAStorage)j_ea);
-	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
-	if (j_ea instanceof J_EAStorageHeat) {
-		energyModel.c_ambientDependentAssets.remove(j_ea);
-		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
-			p_BuildingThermalAsset = null;
-			if (f_getHeatingManagement() != null) {
-				f_getHeatingManagement().notInitialized();
-			}
-		}
-		else {
-			p_heatBuffer = null;
-			if (f_getHeatingManagement() != null) {
-				f_getHeatingManagement().notInitialized();
-			}
-		}
-	} else if (j_ea instanceof J_EAStorageGas) {
-		p_gasBuffer = null;
-	} else if (j_ea instanceof J_EAStorageElectric) {
-		p_batteryAsset = null;
-		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
-		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
-	}
-} else if  (j_ea instanceof J_EAProfile) {
-	c_profileAssets.remove((J_EAProfile)j_ea);
-} else if (j_ea instanceof J_EAChargingSession chargeSession) {
-	c_chargingSessions.remove(chargeSession);
-	if(p_chargePoint.isRegistered(chargeSession)){
-		p_chargePoint.deregisterChargingRequest(chargeSession);
-	}
-} else {
-	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
+//If EMS is present: set checked boolean to false. Also for fixed assets: (heating management looks at those as well).		
+if (p_energyManagement != null) {
+	p_energyManagement.setChecked(false);
 }
 
+if(j_ea instanceof J_EAFixed j_eaFixed){
+	f_removeTheJ_EAFixed(j_eaFixed);
+}
+else if(j_ea instanceof J_EAFlex j_eaFlex){
+	f_removeTheJ_EAFlex(j_eaFlex);
+}
+else{
+	throw new RuntimeException("Trying to remove a J_EA from a GC that is neither J_EAFixed or J_EAFlex!");
+}
 /*ALCODEEND*/}
 
 double f_resetSpecificGCStates()
@@ -964,7 +712,7 @@ if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
 }
 if (isGhost) {
-	this.p_energyManagement.setSubManagement(new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
+	this.p_energyManagement.setExternalAssetManagement(new J_HeatingManagementGhost( this, energyModel.p_timeParameters, heatingType ));
 	return;
 }
 if (heatingType == OL_GridConnectionHeatingType.CUSTOM) {
@@ -991,7 +739,7 @@ catch (Exception e) {
 J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
 
 heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
-this.p_energyManagement.setSubManagement(heatingManagement);
+this.p_energyManagement.setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
@@ -1121,7 +869,7 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
-this.p_energyManagement.setSubManagement(chargingManagement);
+f_setExternalAssetManagement(chargingManagement);
 
 /*ALCODEEND*/}
 
@@ -1166,7 +914,7 @@ if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.conta
 
 double f_setChargingManagement(I_ChargingManagement chargingManagement)
 {/*ALCODESTART::1762851936576*/
-this.p_energyManagement.setSubManagement(chargingManagement);
+this.p_energyManagement.setExternalAssetManagement(chargingManagement);
 
 /*ALCODEEND*/}
 
@@ -1197,29 +945,29 @@ return this.p_energyManagement.getV2GActive();
 
 I_BatteryManagement f_getBatteryManagement()
 {/*ALCODESTART::1762853894937*/
-return this.p_energyManagement.getSubManagement(I_BatteryManagement.class);
+return f_getExternalAssetManagement(I_BatteryManagement.class);
 /*ALCODEEND*/}
 
 double f_setHeatingManagement(I_HeatingManagement heatingManagement)
 {/*ALCODESTART::1762855655470*/
-this.p_energyManagement.setSubManagement(heatingManagement);
+this.p_energyManagement.setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
 double f_setBatteryManagement(I_BatteryManagement batteryManagement)
 {/*ALCODESTART::1762855733010*/
-this.p_energyManagement.setSubManagement(batteryManagement);
+f_setExternalAssetManagement(batteryManagement);
 
 /*ALCODEEND*/}
 
 I_ChargingManagement f_getChargingManagement()
 {/*ALCODESTART::1762940915048*/
-return this.p_energyManagement.getSubManagement(I_ChargingManagement.class);
+return f_getExternalAssetManagement(I_ChargingManagement.class);
 /*ALCODEEND*/}
 
 I_HeatingManagement f_getHeatingManagement()
 {/*ALCODESTART::1762940962079*/
-return this.p_energyManagement.getSubManagement(I_HeatingManagement.class);
+return f_getExternalAssetManagement(I_HeatingManagement.class);
 /*ALCODEEND*/}
 
 J_ChargePoint f_getChargePoint()
@@ -1253,14 +1001,353 @@ I_EnergyManagement f_getEnergyManagement()
 return this.p_energyManagement;
 /*ALCODEEND*/}
 
-double f_setSubManagement(I_SubAssetManagement subManagement)
+double f_setExternalAssetManagement(I_AssetManagement externalAssetManagement)
 {/*ALCODESTART::1771923187813*/
-this.p_energyManagement.setSubManagement(subManagement);
-       
+if(p_energyManagement == null){
+	p_energyManagement = new J_EnergyManagementDefault(this, energyModel.p_timeParameters);
+}
+this.p_energyManagement.setExternalAssetManagement(externalAssetManagement);
+    
 /*ALCODEEND*/}
 
-<T> T f_getSubManagement(Class<T>  subManagementInterfaceType)
+<T> T f_getExternalAssetManagement(Class<T>  assetManagementInterfaceType)
 {/*ALCODESTART::1771926150430*/
-return this.p_energyManagement.getSubManagement(subManagementInterfaceType);
+if(this.p_energyManagement != null){
+	return this.p_energyManagement.getExternalAssetManagement(assetManagementInterfaceType);
+}
+else{
+	return null;
+}
+/*ALCODEEND*/}
+
+double f_connectToJ_EAFlex(J_EAFlex j_ea,J_TimeParameters timeParameters)
+{/*ALCODESTART::1772105340588*/
+c_flexAssets.add(j_ea);
+
+//Temporary always add default EMS
+if(p_energyManagement == null){
+	f_setEnergyManagement(new J_EnergyManagementDefault(this, timeParameters));
+}
+
+
+if (j_ea instanceof J_EAEV ev) {
+	if(p_chargePoint == null){
+		p_chargePoint = new J_ChargePoint(true, true);
+	}
+	c_vehicleAssets.add(ev);
+	c_electricVehicles.add(ev);
+	energyModel.c_EVs.add(ev);	
+	ev.setV2GActive(f_getV2GActive());
+		
+	//Connect triptracker that belongs to the EV
+	f_connectTripTracker(ev, timeParameters);
+	
+}
+else if (j_ea instanceof J_EAChargingSession chargingSession) {
+	if(p_chargePoint == null){
+		p_chargePoint = new J_ChargePoint(true, true);
+	}
+	c_chargingSessions.add(chargingSession);
+	chargingSession.setV2GActive(f_getV2GActive());
+}
+else if (j_ea instanceof J_EAConversion conversionAsset) {
+	c_conversionAssets.add(conversionAsset);
+	
+	//Check if heating asset		
+	if (conversionAsset instanceof I_HeatingAsset) {
+		c_heatingAssets.add(conversionAsset);
+		if (j_ea instanceof J_EAConversionHeatPump) {
+			energyModel.c_ambientDependentAssets.add(j_ea);
+		}
+	}
+	else if ( conversionAsset.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+		if (p_cookingTracker == null) {
+			int rowIndex = uniform_discr(2, 300); 
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternCsv, rowIndex, (energyModel.p_timeVariables.getAnyLogicTime_h())*60, (J_EAConversion)j_ea );			
+		} 
+		else {
+			p_cookingTracker.HOB = (J_EAConversion)j_ea;
+		}
+	} 
+
+} 
+else if  (j_ea instanceof J_EAStorage storageAsset) {
+	c_storageAssets.add(storageAsset);
+	energyModel.c_storageAssets.add(storageAsset);
+	if (j_ea instanceof J_EAStorageHeat) {
+		energyModel.c_ambientDependentAssets.add(j_ea);
+		if (j_ea instanceof J_EABuilding buildingAsset) {
+			p_BuildingThermalAsset = buildingAsset;
+		}
+		else {
+			p_heatBuffer = (J_EAStorageHeat)j_ea;
+		}
+	} 
+	else if (j_ea instanceof J_EAStorageGas gasStorage) {
+		p_gasBuffer = gasStorage;
+	} 
+	else if (j_ea instanceof J_EAStorageElectric battery) {
+		p_batteryAsset = battery;
+		double capacity_MWh = battery.getStorageCapacity_kWh()/1000;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
+		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
+	}
+}
+else if  (j_ea instanceof J_EAAirco aircoAsset) {
+	p_airco = aircoAsset;
+}
+else{
+	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFlex asset!");
+}
+/*ALCODEEND*/}
+
+J_ActivityTrackerTrips f_getNewTripTracker(OL_EnergyAssetType assetType,I_Vehicle vehicle,J_TimeParameters timeParameters)
+{/*ALCODESTART::1772105953445*/
+J_ActivityTrackerTrips tripTracker;
+if (assetType == OL_EnergyAssetType.ELECTRIC_TRUCK || assetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || assetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
+	int rowIndex = uniform_discr(1, 7);	//Truck trip CSV has 7 valid rows.
+	tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
+} else if (assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || assetType == OL_EnergyAssetType.ELECTRIC_VAN || assetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
+	int rowIndex = uniform_discr(1, 7); //Truck trip CSV (used for vans) has 7 valid rows.
+	tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
+	tripTracker.setAnnualDistance_km(30_000); //Wat gebeurt hier???
+} else if(assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || assetType == OL_EnergyAssetType.ELECTRIC_VEHICLE || assetType == OL_EnergyAssetType.HYDROGEN_VEHICLE) {
+	int rowIndex = uniform_discr(0, 200); //Car trip CSV has 200+ valid rows.
+	while (rowIndex == 28 || rowIndex == 42 || rowIndex == 150) { // 28, 42, 150, 445, 457, 483, 540, 563 all impossible triptrackers for vehicles with 116 kWh and 0.16 kWhpkm
+		rowIndex = uniform_discr(0, 200);
+	}
+	tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_householdTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
+}
+else{
+	throw new RuntimeException("Trying to get a new trip tracker for an unsupported vehicle type");
+}
+
+return tripTracker;
+/*ALCODEEND*/}
+
+double f_connectToJ_EAFixed(J_EAFixed j_ea,J_TimeParameters timeParameters)
+{/*ALCODESTART::1772106633559*/
+c_fixedAssets.add(j_ea);
+
+if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
+	c_vehicleAssets.add(fuelVehicle);
+	
+	if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.PETROLEUM_FUEL) {
+		c_petroleumFuelVehicles.add(fuelVehicle);
+	}
+	else if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.HYDROGEN) {
+		c_hydrogenVehicles.add(fuelVehicle);		
+	}
+	else {
+		traceln("Warning! f_connectToJ_EAFixed found a fuelVehicle with unknown energy carrier.");
+	}
+	
+	//Connect triptracker that belongs to the vehicle
+	f_connectTripTracker(fuelVehicle, timeParameters);
+}
+else if (j_ea instanceof J_EAConsumption consumptionAsset) {
+	c_consumptionAssets.add(consumptionAsset);	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+		p_DHWAsset = consumptionAsset;	
+	}
+} 
+else if (j_ea instanceof J_EAProduction productionAsset) {
+	c_productionAssets.add(productionAsset);
+
+	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		double capacity_kW = productionAsset.getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
+		}
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
+		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
+	}
+	else if (productionAsset.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		double capacity_kW = productionAsset.getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
+		}
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
+		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
+	}
+	else if (productionAsset.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+
+	}
+}
+else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
+	c_profileAssets.add(tractor);
+} 
+else if  (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
+}
+else{
+	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFixed asset!");
+}
+/*ALCODEEND*/}
+
+double f_checkConfiguration()
+{/*ALCODESTART::1772109826148*/
+if(c_flexAssets.size() > 0){
+	if(p_energyManagement != null){
+		p_energyManagement.checkConfiguration(c_flexAssets);
+	}
+	else{
+		throw new RuntimeException("GC: " + p_gridConnectionID + " has flex assets, without an EMS");
+	}
+}
+
+/*ALCODEEND*/}
+
+double f_removeTheJ_EAFixed(J_EAFixed j_ea)
+{/*ALCODESTART::1772110066396*/
+c_fixedAssets.remove(j_ea);
+
+
+if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
+	c_vehicleAssets.remove(fuelVehicle);
+	
+	if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.PETROLEUM_FUEL) {
+		c_petroleumFuelVehicles.remove( fuelVehicle );
+	}
+	else if (fuelVehicle.getEnergyCarrierConsumed() == OL_EnergyCarriers.HYDROGEN) {
+		c_hydrogenVehicles.remove(fuelVehicle);
+	}
+	else {
+		traceln("Warning! f_removeTheJ_EAFixed found a fuelVehicle with unknown energy carrier.");			
+	}
+
+	J_ActivityTrackerTrips tripTracker = fuelVehicle.getTripTracker();
+	c_tripTrackers.remove( tripTracker );
+	fuelVehicle.setTripTracker(null);
+}
+else if (j_ea instanceof J_EAConsumption) {
+	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
+	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
+		p_DHWAsset = null;	
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
+	
+	}
+	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
+	
+	}
+}
+else if (j_ea instanceof J_EAProduction) {
+	c_productionAssets.remove((J_EAProduction)j_ea);
+
+	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
+		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
+		}
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
+		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+		v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
+		if ( p_parentNodeElectric != null ) {
+			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
+		}
+		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
+		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
+	}
+	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+	
+	}
+}
+else if  (j_ea instanceof J_EAProfile) {
+	c_profileAssets.remove((J_EAProfile)j_ea);
+}
+/*ALCODEEND*/}
+
+double f_removeTheJ_EAFlex(J_EAFlex j_ea)
+{/*ALCODESTART::1772110082431*/
+c_flexAssets.remove(j_ea);
+
+if (j_ea instanceof J_EAEV ev) {
+	c_vehicleAssets.remove(ev);
+	c_electricVehicles.remove(ev);
+	energyModel.c_EVs.remove(ev);
+	if(p_chargePoint.isRegistered(ev)){
+		p_chargePoint.deregisterChargingRequest(ev);
+	}
+	J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
+	c_tripTrackers.remove( tripTracker );
+	ev.setTripTracker(null);
+}
+else if (j_ea instanceof J_EAChargingSession chargeSession) {
+	c_chargingSessions.remove(chargeSession);
+	if(p_chargePoint.isRegistered(chargeSession)){
+		p_chargePoint.deregisterChargingRequest(chargeSession);
+	}
+}
+else if (j_ea instanceof J_EAConversion) {
+	c_conversionAssets.remove((J_EAConversion)j_ea);
+	
+	//Check if heating asset		
+	if (j_ea instanceof I_HeatingAsset) {
+		c_heatingAssets.remove(j_ea);
+
+		// Special Heating Assets
+		if (j_ea instanceof J_EAConversionHeatPump) {
+			energyModel.c_ambientDependentAssets.remove(j_ea);
+		} 
+		else if (j_ea instanceof J_EAConversionGasCHP) {
+		
+		}	
+	}
+	else if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+		p_cookingTracker = null;
+	} 
+	else if (j_ea instanceof J_EAConversionElectrolyser) {
+	
+	}
+} 
+else if  (j_ea instanceof J_EAStorage) {
+	c_storageAssets.remove((J_EAStorage)j_ea);
+	energyModel.c_storageAssets.remove((J_EAStorage)j_ea);
+	if (j_ea instanceof J_EAStorageHeat) {
+		energyModel.c_ambientDependentAssets.remove(j_ea);
+		if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {	
+			p_BuildingThermalAsset = null;
+		}
+		else {
+			p_heatBuffer = null;
+		}
+	} 
+	else if (j_ea instanceof J_EAStorageGas) {
+		p_gasBuffer = null;
+	} 
+	else if (j_ea instanceof J_EAStorageElectric) {
+		p_batteryAsset = null;
+		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
+	}
+}
+else if (j_ea instanceof J_EAAirco) {
+	p_airco = null;
+}
+/*ALCODEEND*/}
+
+J_ActivityTrackerTrips f_connectTripTracker(I_Vehicle vehicle,J_TimeParameters timeParameters)
+{/*ALCODESTART::1772119363003*/
+J_ActivityTrackerTrips tripTracker = vehicle.getTripTracker();
+
+// TODO: Needs a refactor, this code that creates a triptracker is very different from the rest of the functionality of connect to j_ea. However the trip CSVs make it awkward to place it in the constructor of the asset.
+if (tripTracker == null) { // Only provide new tripTracker when vehicle doesn't have it yet!
+	OL_EnergyAssetType assetType = ((J_EA)vehicle).getEAType();
+	tripTracker = f_getNewTripTracker(assetType, vehicle, timeParameters);
+	vehicle.setTripTracker(tripTracker);
+}
+else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){ // J_EAEV that already has triptracker, but still needs to prepare next trip to determine chargedeadline.
+	tripTracker.prepareNextActivity(energyModel.p_timeVariables.getT_h()*60, p_chargePoint);
+}
+c_tripTrackers.add( tripTracker );
 /*ALCODEEND*/}
 
