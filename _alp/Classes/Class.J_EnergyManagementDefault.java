@@ -128,4 +128,17 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 	public void restoreStates() {
 		activeExternalAssetManagements.values().forEach(subManagement -> subManagement.restoreStates());
 	}
+	
+	@Override
+	public String toString() {
+		String outputString = "J_EnergyManagementDefault: \n" + "Active internal managements: \n";
+		for(Class<? extends I_AssetManagement> internalAssetManagement : this.internalAssetManagements) {
+			outputString += "-" + internalAssetManagement + "\n";
+		}
+		outputString += "\n" + "Active external managements: \n";
+		for(I_AssetManagement activeExternalAssetManagement : this.activeExternalAssetManagements.values()) {
+			outputString += "-" + activeExternalAssetManagement.toString() + "\n";
+		}		
+		return outputString;
+	}
 }

@@ -2221,12 +2221,6 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isInitialCharger]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingProfileName]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2246,15 +2240,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gisregion]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_nbOfChargers]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_maxChargingPower_kW]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingVehicleType]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_isInitialCharger]]></Name>

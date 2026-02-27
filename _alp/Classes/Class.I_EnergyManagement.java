@@ -131,5 +131,4 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 	//Get specific types
 	public OL_GridConnectionHeatingType getCurrentHeatingType();
 	public OL_ChargingAttitude getCurrentChargingType();
-	
 }
