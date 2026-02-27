@@ -839,6 +839,9 @@ catch (Exception e) {
 
 f_setExternalAssetManagement(chargingManagement);
 
+if(p_chargePoint == null){
+	p_chargePoint = new J_ChargePoint(true, true);
+}
 /*ALCODEEND*/}
 
 double f_addEnergyCarriersAndAssetCategoriesFromEA(J_EA j_ea,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
@@ -884,6 +887,9 @@ double f_setChargingManagement(I_ChargingManagement chargingManagement)
 {/*ALCODESTART::1762851936576*/
 f_setExternalAssetManagement(chargingManagement);
 
+if(p_chargePoint == null){
+	p_chargePoint = new J_ChargePoint(true, true);
+}
 /*ALCODEEND*/}
 
 boolean f_getHeatingTypeIsGhost()
