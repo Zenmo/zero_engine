@@ -1261,10 +1261,6 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Name><![CDATA[SerialisationMixins]]></Name>
 			</Folder>
 			<Folder>
-				<Id>1762850602203</Id>
-				<Name><![CDATA[unused]]></Name>
-			</Folder>
-			<Folder>
 				<Id>1764938574089</Id>
 				<Name><![CDATA[Globals]]></Name>
 				<ParentId>1752680962144</ParentId>

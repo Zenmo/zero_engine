@@ -70,10 +70,12 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
     ////Checks
     //Check configuration: Should be called whenever a management or asset has been removed/added/changed.
     default public void checkConfiguration(List<J_EAFlex> flexAssetsGCList) {
+    	
     	//Check if all active flex assets are managed by the EMS
     	List<J_EAFlex> flexAssets = new ArrayList<>(flexAssetsGCList);
+
     	while (flexAssets.size()>0){ //While loop to prevent checking the same J_EAFlex type multiple times.
-			for(J_EAFlex asset : flexAssets) {
+    		for(J_EAFlex asset : flexAssets) {
 				if(asset instanceof J_EAEV || asset instanceof J_EAChargingSession){
 					if(!isAssetManagementActive(I_ChargingManagement.class)) {
 						throw new RuntimeException("An " + asset.getEAType() + " is found at GC that has an EMS that does not have active charging management.");
@@ -81,14 +83,14 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					flexAssets.removeAll(findAll(flexAssets, vehicle -> vehicle instanceof J_EAEV || vehicle instanceof J_EAChargingSession));
 					break;
 				}
-				else if(asset instanceof I_HeatingAsset){
+				else if(asset instanceof I_HeatingAsset || asset instanceof J_EAStorageHeat){
 					if(!isAssetManagementActive(I_HeatingManagement.class)) {
 						throw new RuntimeException("A heating asset is found at GC that has an EMS that does not have active heating management.");
 					}
 					if(getExternalAssetManagement(I_HeatingManagement.class) != null) {
 						getExternalAssetManagement(I_HeatingManagement.class).initializeAssets();
 					}
-					flexAssets.removeAll(findAll(flexAssets, heatAsset -> heatAsset instanceof I_HeatingAsset));
+					flexAssets.removeAll(findAll(flexAssets, heatAsset -> heatAsset instanceof I_HeatingAsset || heatAsset instanceof J_EAStorageHeat));
 					break;
 				}
 				else if(asset instanceof J_EAStorageElectric){
@@ -99,14 +101,14 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					break;
 				}
 				else {
+	
 					traceln("Asset found that is not managed by I_AssetManagement, can not be checked.");//Temporary soft error till all managements are trough I_AssetManagement
 					flexAssets.remove(asset);
 					break;
 				}
-
 			}
-			
     	}
+    	
     	//This EMS class specific Checks
     	checkConfigurationEMSSpecific(new ArrayList<>(flexAssetsGCList));
     	

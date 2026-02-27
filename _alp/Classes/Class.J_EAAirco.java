@@ -1,7 +1,7 @@
 /**
  * Airco
  */	
-public class J_EAAirco extends zero_engine.J_EAFlex implements Serializable {
+public class J_EAAirco extends zero_engine.J_EAFlex {
 	
 	double capacityElectric_kW;
 	int remainingONtimesteps = 0;
@@ -37,11 +37,4 @@ public class J_EAAirco extends zero_engine.J_EAFlex implements Serializable {
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }
