@@ -7,7 +7,7 @@ public class J_EAConversionIronBurner extends zero_engine.J_EAConversion impleme
 	protected double outputHeatCapacity_kW;
 	protected double outputElectricCapacity_kW;
 	protected List<OL_EnergyCarriers> energyCarriersProduced = new ArrayList<>();
-    
+
 	/**
      * Default constructor
      */
@@ -20,7 +20,7 @@ public class J_EAConversionIronBurner extends zero_engine.J_EAConversion impleme
      */
     public J_EAConversionIronBurner(I_AssetOwner owner, double outputElectricCapacity_kW, double outputHeatCapacity_kW, double efficiency, J_TimeParameters timeParameters, double outputTemperature_degC ) {
 	    if (outputElectricCapacity_kW < 0 || outputHeatCapacity_kW < 0 || (outputElectricCapacity_kW == 0 && outputHeatCapacity_kW == 0)) {
-	    	throw new RuntimeException("Impossible capacities for J_EAConversionGasCHP1. outputElectricCapacity_kW: " + outputElectricCapacity_kW + ", outputHeatCapacity_kW: " + outputHeatCapacity_kW);
+	    	throw new RuntimeException("Impossible capacities for J_EAConversionIronBurner, outputElectricCapacity_kW: " + outputElectricCapacity_kW + ", outputHeatCapacity_kW: " + outputHeatCapacity_kW);
 	    }
     	this.setOwner(owner);
 	    this.timeParameters = timeParameters;
@@ -44,7 +44,9 @@ public class J_EAConversionIronBurner extends zero_engine.J_EAConversion impleme
 
 	@Override
     public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
-    	double electricityProduction_kW = this.outputElectricCapacity_kW * powerFraction_fr;
+    	
+		
+		double electricityProduction_kW = this.outputElectricCapacity_kW * powerFraction_fr;
 		double heatProduction_kW = this.outputHeatCapacity_kW * powerFraction_fr;
 		double ironPowderConsumption_kW = this.inputCapacity_kW * powerFraction_fr;
 		
