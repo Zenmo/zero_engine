@@ -2242,12 +2242,6 @@
 				<Name><![CDATA[p_gisregion]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isInitialCharger]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingProfileName]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 			<Parameter>

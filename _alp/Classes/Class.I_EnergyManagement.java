@@ -38,16 +38,22 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
     	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");
     	}
     	getActiveExternalAssetManagements().put(assetManagementType, assetManagementInstance);
+    	
+    	//Recheck configuration
+    	setChecked(false); 
     }
     
     default void removeExternalAssetManagement(Class<? extends I_AssetManagement> assetManagementType) {
     	if(assetManagementType.cast(getActiveExternalAssetManagements().get(assetManagementType)) != null) {
     		getActiveExternalAssetManagements().remove(assetManagementType);
+        	
+    		//Recheck configuration
+        	setChecked(false); 
     	}
     }
-    
+
 	//Get assetManagements (return null if not present)
-    default <T> T getExternalAssetManagement(Class<T> assetManagementType) {//Inputs can be I_HeatingManagement, I_ChargingManagement, etc.
+    default <T extends I_AssetManagement> T getExternalAssetManagement(Class<T> assetManagementType) {//Inputs can be I_HeatingManagement, I_ChargingManagement, etc.
     	//Check if getAssetManagement is actually supported by this EnergyManagement class if not -> return null automatically.
     	if (getSupportedExternalAssetManagements().stream().noneMatch(supported -> assetManagementType.isAssignableFrom(supported))) {
     	    return null;
@@ -101,7 +107,6 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					break;
 				}
 				else {
-	
 					traceln("Asset found that is not managed by I_AssetManagement, can not be checked.");//Temporary soft error till all managements are trough I_AssetManagement
 					flexAssets.remove(asset);
 					break;

@@ -999,7 +999,7 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>&lt;T&gt; T</ReturnType>
+		<ReturnType>&lt;T extends I_AssetManagement&gt; T</ReturnType>
 		<Id>1771926150430</Id>
 		<Name><![CDATA[f_getExternalAssetManagement]]></Name>
 		<X>1010</X>

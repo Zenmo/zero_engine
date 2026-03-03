@@ -84,7 +84,6 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 	
 	//Get child management types
 	public OL_GridConnectionHeatingType getCurrentHeatingType() {
-
 		if(this.getExternalAssetManagement(I_HeatingManagement.class) != null) {
 			return this.getExternalAssetManagement(I_HeatingManagement.class).getCurrentHeatingType();
 		}

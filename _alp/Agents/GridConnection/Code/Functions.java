@@ -989,7 +989,7 @@ this.p_energyManagement.setExternalAssetManagement(externalAssetManagement);
     
 /*ALCODEEND*/}
 
-<T> T f_getExternalAssetManagement(Class<T>  assetManagementInterfaceType)
+<T extends I_AssetManagement> T f_getExternalAssetManagement(Class<T>  assetManagementInterfaceType)
 {/*ALCODESTART::1771926150430*/
 if(this.p_energyManagement != null){
 	return this.p_energyManagement.getExternalAssetManagement(assetManagementInterfaceType);
