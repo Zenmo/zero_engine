@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010504"
+                   AnyLogicVersion="8.9.7.202512121156"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -1206,6 +1206,26 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 					<Name><![CDATA[EXCLUDE_PV]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1772554719495</Id>
+				<Name><![CDATA[OL_GridOperator]]></Name>
+				<Option>
+					<Id>1772554719496</Id>
+					<Name><![CDATA[ENEXIS]]></Name>
+				</Option>
+				<Option>
+					<Id>1772554719497</Id>
+					<Name><![CDATA[STEDIN]]></Name>
+				</Option>
+				<Option>
+					<Id>1772554719498</Id>
+					<Name><![CDATA[LIANDER]]></Name>
+				</Option>
+				<Option>
+					<Id>1772554719499</Id>
+					<Name><![CDATA[WESTLAND_INFRA]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
@@ -1968,6 +1988,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1770648718773</Id>
 				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
 				<Folder>1762850586274</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1772554413488</Id>
+				<Name><![CDATA[J_AVGC_Economic_data]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

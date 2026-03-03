@@ -116,7 +116,8 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgAnnualTravelDistanceTruck_km;
 	public double p_minAnnualTravelDistanceSurveyVehicle_km;
 	
-
+	
+	public J_AVGC_Economic_data economicAVGC = new J_AVGC_Economic_data();
 	
 	////Constants
 	public double p_gas_kWhpm3;
@@ -138,6 +139,7 @@ public class J_AVGC_data implements Serializable {
      * Default constructor
      */
     public J_AVGC_data() {
+    	
     }
 
 	@Override
