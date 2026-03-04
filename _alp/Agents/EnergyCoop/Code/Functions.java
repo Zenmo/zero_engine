@@ -220,9 +220,6 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_batteryStoredEnergy_kWh += EC.v_batteryStoredEnergy_kWh;
 		v_currentPrimaryEnergyProductionHeatpumps_kW += EC.v_currentPrimaryEnergyProductionHeatpumps_kW;
 		v_currentOwnElectricityProduction_kW += EC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-		
-		// Asset flows
-		//v_assetFlows.addFlows(EC.v_assetFlows);
 	}
 }
 
