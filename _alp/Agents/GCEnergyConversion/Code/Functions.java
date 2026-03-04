@@ -42,98 +42,6 @@ if (ElektrolyserAsset.getElectricCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_operateFlexAssets_overwriteOUD()
-{/*ALCODESTART::1707149769851*/
-for( J_EA v : c_conversionAssets ){
-	if (v instanceof J_EAConversionElektrolyser) {
-		f_manageElektrolyser((J_EAConversionElektrolyser)v);
-	}
-	if (v instanceof J_EAConversionCurtailer) {
-		// Must go last! 
-	} /*else {		
-		v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-		v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
-		v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
-		v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
-		v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
-		v_currentPowerPetroleumFuel_kW += v.petroleumFuelConsumption_kW;
-	} */
-}
-
-// Determine EV charging
-f_manageCharging();
-//v_currentPowerElectricity_kW += v_evChargingPowerElectric_kW;
-
-// Operate battery
-if (p_batteryAsset != null){
-	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
-	if( p_batteryOperationMode == OL_BatteryOperationMode.BALANCE) {
-		f_batteryManagementBalanceCoop( v_batterySOC_fr );
-	}
-	else {
-		f_batteryManagementPrice( v_batterySOC_fr );
-	}
-	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	//v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	//v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
-}
-
-// Operate curtailer. Must be the last asset to run!!
-
-if (p_curtailer != null){
-	f_manageCurtailer(p_curtailer);
-	//v_currentPowerElectricity_kW += p_curtailer.electricityConsumption_kW;
-}
-/*ALCODEEND*/}
-
-double f_batteryManagementBalanceCoop()
-{/*ALCODESTART::1707149801187*/
-if ((p_batteryAsset).getStorageCapacity_kWh() != 0){
-	if( p_owner != null ) {
-		if( p_owner.p_coopParent instanceof EnergyCoop ) {
-			//traceln("Hello?");
-//			v_previousPowerElectricity_kW = p_batteryAsset.v_powerFraction_fr * p_batteryAsset.j_ea.getElectricCapacity_kW();
-			v_previousPowerElectricity_kW = p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY);
-			//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
-			double currentCoopElectricitySurplus_kW = p_owner.p_coopParent.v_electricitySurplus_kW + v_previousPowerElectricity_kW;
-			//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( currentCoopElectricitySurplus_kW - v_electricityPriceLowPassed_eurpkWh );
-			
-			double CoopConnectionCapacity_kW = 0.9*p_owner.p_coopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay
-			double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
-			double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
-			double SOC_setp_fr = 0.5;			
-			if (energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW > 10000) {
-				SOC_setp_fr = 0.95 - 0.95 * energyModel.pf_windProduction_fr.getForecast() - 0.9*energyModel.pf_PVProduction35DegSouth_fr.getForecast();
-				//traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
-			} else {
-				SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(energyModel.t_h-10)/24))*(1-0.8*energyModel.pf_windProduction_fr.getForecast()); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-			}
-			double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getCapacityElectric_kW(); // How strongly to aim for SOC setpoint
-			double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
-			double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
-			double chargeSetpoint_kW = 0;
-			chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - p_batteryAsset.getCurrentStateOfCharge_fr()) * FeedbackGain_kWpSOC;
-			chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-			p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getCapacityElectric_kW())); // Convert to powerFraction and limit power
-			//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
-		}
-	}
-}
-/*ALCODEEND*/}
-
-double f_manageCurtailer(J_EAConversionCurtailer CurtailerAsset)
-{/*ALCODESTART::1707149873038*/
-//traceln("Hello! " + CurtailerAsset.j_ea.getElectricCapacity_kW());
-if (CurtailerAsset.getElectricCapacity_kW()>0) {
-	double curtailerSetpointElectric_kW = -min(0,v_currentPowerElectricity_kW + p_connectionCapacity_kW);
-	CurtailerAsset.f_updateAllFlows(curtailerSetpointElectric_kW/CurtailerAsset.getElectricCapacity_kW());
-	
-	/*if ( curtailerSetpointElectric_kW > 0 ) {
-		traceln("Windfarm is curtailing " + curtailerSetpointElectric_kW + " kW!");
-	}*/
-}
-/*ALCODEEND*/}
-
 double f_manageElectrolyser(J_EAConversionElectrolyser ElectrolyserAsset,J_TimeVariables timeVariables)
 {/*ALCODESTART::1708089250229*/
 // TODO: add timeParameters to this function?
@@ -213,13 +121,6 @@ for( J_EA v : c_conversionAssets ){
 		f_manageElectrolyser((J_EAConversionElectrolyser)v, timeVariables);
 	}
 }
-
-// Determine EV charging
-f_manageEVCharging(timeVariables);
-
-// Operate battery
-f_manageBattery(timeVariables);
-
 /*ALCODEEND*/}
 
 double f_electrolyserRegime(double elektrolyserSetpointElectric_kW,double excessElectricPower_kW,J_EAConversionElectrolyser ElectrolyserAsset,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
@@ -565,5 +466,47 @@ switch (ElectrolyserAsset.getState()){
 	break;
 }
 
+/*ALCODEEND*/}
+
+double f_manageFuelCell_OLD_Utility()
+{/*ALCODESTART::1770636052220*/
+// Arbitrarely i'm deciding not to use more than 95% of the GC & GN capacity.
+double capacityLimit_fr = 0.95;
+if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > v_liveConnectionMetaData.contractedDeliveryCapacity_kW * capacityLimit_fr || fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) > p_parentNodeElectric.p_capacity_kW * capacityLimit_fr) {
+	J_EAConversionFuelCell fuelCellAsset = (J_EAConversionFuelCell) findFirst(c_conversionAssets, j_ea -> j_ea.getEAType() == OL_EnergyAssetType.FUEL_CELL);
+	if (fuelCellAsset == null) {
+		traceln("No fuel cell asset found");
+	}
+	else {
+		double powerNeeded_kW = max(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedDeliveryCapacity_kW * capacityLimit_fr,  fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - p_parentNodeElectric.p_capacity_kW * capacityLimit_fr);
+		// For now i've assumed the only fuel cells being used are with a capacity of 1 MW and efficieny of 50%.
+		double efficiency = fuelCellAsset.getEta_r();
+		double ratioOfCapacity = powerNeeded_kW / (fuelCellAsset.getOutputCapacity_kW()*efficiency);
+		
+		// Check the amount of Hydrogen that has been generated so far
+		// Only works because there is a single energy conversion site
+		if (energyModel.EnergyConversionSites.get(0).v_hydrogenInStorage_kWh > 0 ) {
+			// Calling operate directly instead of updateAllFlows, so that it's not bounded
+			//Pair<J_FlowsMap, Double> flowsPair = fuelCellAsset.operate(ratioOfCapacity);
+			fuelCellAsset.f_updateAllFlows(ratioOfCapacity);
+			//traceln("fuel cell operated: " + Arrays.toString(arr));
+			
+			// Since not calling updateAllFlows, have to manually do this
+			//double energyUse_kW = - flowsMap.values().stream().mapToDouble(Double::doubleValue).sum();
+			//f_addFlows(flowsMap, flowsPair.getSecond(), fuelCellAsset);
+			
+			// updating other variables
+			//v_currentPowerHydrogen_kW += arr[0];
+			//v_hydrogenInStorage_kWh -= arr[6] * energyModel.p_timeStep_h;
+			energyModel.EnergyConversionSites.get(0).v_hydrogenInStorage_kWh -= fuelCellAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeStep_h;
+			if (energyModel.v_isRapidRun) {
+				v_totalHydrogenUsed_MWh += fuelCellAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN) * energyModel.p_timeStep_h / 1000;
+				if (fuelCellAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN) > v_maxHydrogenPower_kW) {
+					v_maxHydrogenPower_kW = fuelCellAsset.getLastFlows().get(OL_EnergyCarriers.HYDROGEN);
+				}
+			}
+		}
+	}
+}
 /*ALCODEEND*/}
 

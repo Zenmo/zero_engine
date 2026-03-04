@@ -2097,22 +2097,4 @@ I_HeatingManagement x = c_defaultHeatingStrategies.get(t).getDeclaredConstructor
 			<ValueElementClass>Class&lt;? extends I_HeatingManagement&gt;</ValueElementClass>
 		</Properties>
 	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1762791167547</Id>
-		<Name><![CDATA[c_assetManagement]]></Name>
-		<X>400</X>
-		<Y>286</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="private" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>I_AssetManagement</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
 </Variables>

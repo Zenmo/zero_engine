@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010504"
+                   AnyLogicVersion="8.9.7.202512121156"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -1206,6 +1206,22 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 					<Name><![CDATA[EXCLUDE_PV]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1771606559294</Id>
+				<Name><![CDATA[OL_ManagementType]]></Name>
+				<Option>
+					<Id>1771606559297</Id>
+					<Name><![CDATA[HEATING]]></Name>
+				</Option>
+				<Option>
+					<Id>1771606559295</Id>
+					<Name><![CDATA[CHARGING]]></Name>
+				</Option>
+				<Option>
+					<Id>1771606559296</Id>
+					<Name><![CDATA[BATTERY]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
@@ -1245,43 +1261,53 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Name><![CDATA[SerialisationMixins]]></Name>
 			</Folder>
 			<Folder>
-				<Id>1762850551601</Id>
-				<Name><![CDATA[AssetManagementClasses]]></Name>
-			</Folder>
-			<Folder>
-				<Id>1762850578079</Id>
-				<Name><![CDATA[HeatingManagement]]></Name>
-				<ParentId>1762850551601</ParentId>
-			</Folder>
-			<Folder>
-				<Id>1762850586274</Id>
-				<Name><![CDATA[ChargingManagement]]></Name>
-				<ParentId>1762850551601</ParentId>
-			</Folder>
-			<Folder>
-				<Id>1762850602203</Id>
-				<Name><![CDATA[unused]]></Name>
-				<ParentId>1762850578079</ParentId>
-			</Folder>
-			<Folder>
-				<Id>1762850659543</Id>
-				<Name><![CDATA[BatteryManagement]]></Name>
-				<ParentId>1762850551601</ParentId>
-			</Folder>
-			<Folder>
-				<Id>1762850958928</Id>
-				<Name><![CDATA[AggregatorManagement]]></Name>
-				<ParentId>1762850551601</ParentId>
-			</Folder>
-			<Folder>
-				<Id>1762850978631</Id>
-				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
-				<ParentId>1762850958928</ParentId>
-			</Folder>
-			<Folder>
 				<Id>1764938574089</Id>
 				<Name><![CDATA[Globals]]></Name>
 				<ParentId>1752680962144</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100250031</Id>
+				<Name><![CDATA[ManagementClasses]]></Name>
+			</Folder>
+			<Folder>
+				<Id>1772100318398</Id>
+				<Name><![CDATA[AssetManagement]]></Name>
+				<ParentId>1772100250031</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100322546</Id>
+				<Name><![CDATA[BatteryManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100326457</Id>
+				<Name><![CDATA[ChargingManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100328968</Id>
+				<Name><![CDATA[HeatingManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100333519</Id>
+				<Name><![CDATA[AggregatorManagement]]></Name>
+				<ParentId>1772100250031</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100335412</Id>
+				<Name><![CDATA[EnergyManagement]]></Name>
+				<ParentId>1772100250031</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100445402</Id>
+				<Name><![CDATA[UnusedHeatingManagement]]></Name>
+				<ParentId>1772100328968</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1772100488693</Id>
+				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
+				<ParentId>1772100333519</ParentId>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1641,75 +1667,75 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1752677257516</Id>
 				<Name><![CDATA[I_BatteryManagement]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752677992581</Id>
 				<Name><![CDATA[J_ChargingManagementSimple]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678003039</Id>
 				<Name><![CDATA[J_BatteryManagementPrice]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678015847</Id>
 				<Name><![CDATA[J_BatteryManagementPeakShaving]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1752678031327</Id>
 				<Name><![CDATA[J_BatteryManagementPeakShavingForecast]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753169766770</Id>
 				<Name><![CDATA[J_BatteryManagementOff]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753088398654</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingSimple]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1762850602203</Folder>
+				<Folder>1772100445402</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753090559114</Id>
 				<Name><![CDATA[J_HeatingManagementProfileSimple]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1762850602203</Folder>
+				<Folder>1772100445402</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753100278618</Id>
 				<Name><![CDATA[J_HeatingManagementProfileHybridHeatPump]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753102129145</Id>
 				<Name><![CDATA[J_HeatingManagementDistrictHeating]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753172542012</Id>
 				<Name><![CDATA[J_HeatingManagementNeighborhood]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753167599716</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingHybridHeatPump]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1762850602203</Folder>
+				<Folder>1772100445402</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753795104493</Id>
 				<Name><![CDATA[I_HeatingManagement]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753972840287</Id>
 				<Name><![CDATA[J_HeatingManagementGhost]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753106536266</Id>
@@ -1720,7 +1746,7 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1753199813037</Id>
 				<Name><![CDATA[J_BatteryManagementSelfConsumptionGridNode]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1753277071863</Id>
@@ -1776,18 +1802,18 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1754405220949</Id>
 				<Name><![CDATA[J_HeatingManagementBuildingWithPTBufferSimple]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1762850602203</Folder>
+				<Folder>1772100445402</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1754412462104</Id>
 				<Name><![CDATA[J_HeatingManagementProfileWithPTBufferSimple]]></Name>
 				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1762850602203</Folder>
+				<Folder>1772100445402</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1754413726650</Id>
 				<Name><![CDATA[J_HeatingManagementSimple]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1754578019724</Id>
@@ -1797,72 +1823,72 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1755154798365</Id>
 				<Name><![CDATA[I_ChargingManagement]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1755155286577</Id>
 				<Name><![CDATA[J_BatteryManagementSelfConsumption]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1755518393955</Id>
 				<Name><![CDATA[J_ChargingManagementMaxAvailablePower]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1755521265097</Id>
 				<Name><![CDATA[J_ChargingManagementPriceScheduled]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1755521425611</Id>
 				<Name><![CDATA[J_ChargingManagementLocalBalancing]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756208281968</Id>
 				<Name><![CDATA[J_BatteryManagementExternalSetpoint]]></Name>
-				<Folder>1762850659543</Folder>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756210846035</Id>
 				<Name><![CDATA[I_AggregatorBatteryManagement]]></Name>
-				<Folder>1762850978631</Folder>
+				<Folder>1772100488693</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756211095187</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementOff]]></Name>
-				<Folder>1762850978631</Folder>
+				<Folder>1772100488693</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756212442478</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize]]></Name>
-				<Folder>1762850978631</Folder>
+				<Folder>1772100488693</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756213000574</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate]]></Name>
-				<Folder>1762850978631</Folder>
+				<Folder>1772100488693</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756213864971</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH]]></Name>
-				<Folder>1762850978631</Folder>
+				<Folder>1772100488693</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1758192949084</Id>
 				<Name><![CDATA[J_ChargingManagementOffPeak]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1760367525817</Id>
 				<Name><![CDATA[J_HeatingManagementPIcontrol]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1760603137612</Id>
 				<Name><![CDATA[J_HeatingManagementHeatpumpOffPeak]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1760616857566</Id>
@@ -1872,22 +1898,22 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1762529771307</Id>
 				<Name><![CDATA[I_AssetManagement]]></Name>
-				<Folder>1762850551601</Folder>
+				<Folder>1772100318398</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1763394890431</Id>
 				<Name><![CDATA[J_HeatingManagementPIcontrolHybridHeatpump]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1763557451043</Id>
 				<Name><![CDATA[J_HeatingFunctionLibrary]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1764337491572</Id>
 				<Name><![CDATA[I_ChargingRequest]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1764936717326</Id>
@@ -1902,17 +1928,17 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1765383541339</Id>
 				<Name><![CDATA[J_ChargePoint]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1765537283263</Id>
 				<Name><![CDATA[J_ChargingManagementGridBalancing]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1765878809347</Id>
 				<Name><![CDATA[I_ChargePointRegistration]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1765901157331</Id>
@@ -1952,12 +1978,22 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1769089556772</Id>
 				<Name><![CDATA[J_HeatingManagementCHP]]></Name>
-				<Folder>1762850578079</Folder>
+				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1769163992129</Id>
 				<Name><![CDATA[J_EAChargingSession]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769779168982</Id>
+				<Name><![CDATA[I_EnergyManagement]]></Name>
+				<Folder>1772100335412</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1769779330692</Id>
+				<Name><![CDATA[J_EnergyManagementDefault]]></Name>
+				<Folder>1772100335412</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1770210283060</Id>
@@ -1967,7 +2003,16 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1770648718773</Id>
 				<Name><![CDATA[J_ChargingManagementPrice]]></Name>
-				<Folder>1762850586274</Folder>
+				<Folder>1772100326457</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1772013198482</Id>
+				<Name><![CDATA[I_StoreStatesAndReset]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1772098769739</Id>
+				<Name><![CDATA[I_AggregatorManagement]]></Name>
+				<Folder>1772100333519</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

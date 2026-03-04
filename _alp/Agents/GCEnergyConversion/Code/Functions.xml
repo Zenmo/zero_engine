@@ -24,65 +24,6 @@
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1707149769851</Id>
-		<Name><![CDATA[f_operateFlexAssets_overwriteOUD]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1610</X>
-		<Y>-20</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1707149801187</Id>
-		<Name><![CDATA[f_batteryManagementBalanceCoop]]></Name>
-		<Description><![CDATA[Regeling voor balancering van Coop-load.
-
-@author: Gillis Hommen
-@since: 28-12-2022]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1230</X>
-		<Y>180</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1707149873038</Id>
-		<Name><![CDATA[f_manageCurtailer]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1350</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[CurtailerAsset]]></Name>
-			<Type><![CDATA[J_EAConversionCurtailer]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1708089250229</Id>
 		<Name><![CDATA[f_manageElectrolyser]]></Name>
 		<X>1610</X>
@@ -110,7 +51,7 @@
 		<Id>1708089644411</Id>
 		<Name><![CDATA[f_operateFlexAssets_override]]></Name>
 		<X>910</X>
-		<Y>220</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -242,10 +183,10 @@
 		<ReturnType>double</ReturnType>
 		<Id>1717066943639</Id>
 		<Name><![CDATA[f_resetSpecificGCStates_override]]></Name>
-		<X>1230</X>
-		<Y>570</Y>
+		<X>925</X>
+		<Y>670</Y>
 		<Label>
-			<X>10</X>
+			<X>11</X>
 			<Y>0</Y>
 		</Label>
 		<PublicFlag>false</PublicFlag>
@@ -258,8 +199,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1717068271650</Id>
 		<Name><![CDATA[f_resetSpecificGCStatesAfterRapidRun_override]]></Name>
-		<X>1250</X>
-		<Y>590</Y>
+		<X>925</X>
+		<Y>710</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -291,6 +232,23 @@
 			<Name><![CDATA[ElectrolyserAsset]]></Name>
 			<Type><![CDATA[J_EAConversionElectrolyser]]></Type>
 		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1770636052220</Id>
+		<Name><![CDATA[f_manageFuelCell_OLD_Utility]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2360</X>
+		<Y>100</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 </Functions>
