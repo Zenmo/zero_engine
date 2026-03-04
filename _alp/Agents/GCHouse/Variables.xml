@@ -278,8 +278,8 @@
 	<Variable Class="Parameter">
 		<Id>1726685123865</Id>
 		<Name><![CDATA[p_cookingMethod]]></Name>
-		<X>250</X>
-		<Y>540</Y>
+		<X>50</X>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -306,8 +306,8 @@
 	<Variable Class="Parameter">
 		<Id>1749653249111</Id>
 		<Name><![CDATA[p_airco]]></Name>
-		<X>600</X>
-		<Y>580</Y>
+		<X>420</X>
+		<Y>540</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

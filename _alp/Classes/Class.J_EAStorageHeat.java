@@ -65,7 +65,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		registerEnergyAsset(timeParameters);
     }
 
-	public double calculateLoss() {
+	public double calculateLoss_kW() {
 		if(ambientTempType != OL_AmbientTempType.FIXED && !this.updateAmbientTemperatureHasBeenCalled) {
 			new RuntimeException("Ambient temperature has not been updated for the heat storage asset, make sure to call the updateAmbientTemperature() method while using a heat storage");
 		}
@@ -82,7 +82,7 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 		
-		double lossPower_kW = calculateLoss(); // Heat lost to the environment; this call also updates energyUse_kW and the 'state of charge' (temperature).
+		double lossPower_kW = calculateLoss_kW(); // Heat lost to the environment; this call also updates energyUse_kW and the 'state of charge' (temperature).
 		this.energyUse_kW = lossPower_kW;
 		energyUsed_kWh += max(0,energyUse_kW * timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
 		
@@ -193,6 +193,10 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 	
 	public double getLossFactor_WpK() {
 		return lossFactor_WpK;
+	}
+	
+	public double getAmbientTemperature_degC() {
+		return ambientTemperature_degC;
 	}
 	
 	public OL_AmbientTempType getAmbientTempType() {

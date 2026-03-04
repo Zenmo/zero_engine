@@ -551,7 +551,6 @@
 		<ReturnType>double</ReturnType>
 		<Id>1753348699140</Id>
 		<Name><![CDATA[f_startAfterDeserialisation]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1030</X>
 		<Y>50</Y>
 		<Label>
@@ -561,6 +560,14 @@
 		<PublicFlag>false</PublicFlag>
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -642,6 +649,10 @@
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -665,6 +676,10 @@
 		<Parameter>
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -690,6 +705,10 @@
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
@@ -713,6 +732,10 @@
 		<Parameter>
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -758,6 +781,10 @@
 		<Parameter>
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

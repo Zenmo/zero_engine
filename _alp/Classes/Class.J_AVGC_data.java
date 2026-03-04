@@ -13,6 +13,7 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgHousePVInstallationPower_kWp;
 	public double p_avgHouseConnectionCapacity_kW;
 	public OL_GridConnectionHeatingType p_avgHouseHeatingMethod;
+	public OL_HouseholdCookingMethod p_avgHouseCookingMethod;
 	public double p_avgNrOfCarsPerHouse;
 	public double p_ratioEVHousePersonalCars;
 	public double p_ratioHouseInstalledPV;

@@ -451,7 +451,7 @@
 		<Id>1671703651141</Id>
 		<Name><![CDATA[text10]]></Name>
 		<X>-533</X>
-		<Y>622</Y>
+		<Y>617</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -660,7 +660,7 @@
 		<Id>1729238050157</Id>
 		<Name><![CDATA[line_selectedEnergyCarriers]]></Name>
 		<X>-620</X>
-		<Y>640</Y>
+		<Y>635</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -767,7 +767,7 @@ energyDataViewer.viewArea.navigateTo();</ActionCode>
 		<Id>1749205921716</Id>
 		<Name><![CDATA[txt_Forecasters]]></Name>
 		<X>-860</X>
-		<Y>622</Y>
+		<Y>617</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>

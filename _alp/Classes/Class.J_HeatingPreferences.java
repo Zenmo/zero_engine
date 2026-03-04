@@ -10,6 +10,7 @@ public class J_HeatingPreferences {
     private double startOfNightTime_h = 23;
     private double dayTimeSetPoint_degC = 20;
     private double nightTimeSetPoint_degC = 18;
+    private double windowOpenSetpoint_degC = 25;
     
     private double maxComfortTemperature_degC = dayTimeSetPoint_degC + 3;
     private double minComfortTemperature_degC = dayTimeSetPoint_degC - 2;
@@ -17,7 +18,7 @@ public class J_HeatingPreferences {
     public J_HeatingPreferences() {
     }
     
-    public J_HeatingPreferences(double startOfDayTime_h, double startOfNightTime_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double maxComfortTemperature_degC, double minComfortTemperature_degC) {
+    public J_HeatingPreferences(double startOfDayTime_h, double startOfNightTime_h, double dayTimeSetPoint_degC, double nightTimeSetPoint_degC, double maxComfortTemperature_degC, double minComfortTemperature_degC, double windowOpenSetpoint_degC) {
     	
         this.startOfDayTime_h = startOfDayTime_h;
         this.startOfNightTime_h = startOfNightTime_h;
@@ -25,6 +26,7 @@ public class J_HeatingPreferences {
         this.nightTimeSetPoint_degC = nightTimeSetPoint_degC;
         this.maxComfortTemperature_degC = maxComfortTemperature_degC;
         this.minComfortTemperature_degC = minComfortTemperature_degC;
+        this.windowOpenSetpoint_degC = windowOpenSetpoint_degC;
     }
     
     //Setters
@@ -66,6 +68,9 @@ public class J_HeatingPreferences {
     public double getMinComfortTemperature_degC() {
     	return this.minComfortTemperature_degC;
     }
+    public double getWindowOpenSetpoint_degc() {
+    	return this.windowOpenSetpoint_degC;
+    }
     
 	public double getCurrentPreferedTemperatureSetpoint_degC(double timeOfDay_h) {
 		if (timeOfDay_h < getStartOfDayTime_h() || timeOfDay_h >= getStartOfNightTime_h()) {
@@ -84,7 +89,8 @@ public class J_HeatingPreferences {
         ", DayTimeSetPoint_degC = " + this.dayTimeSetPoint_degC + 
         ", NightTimeSetPoint_degC = " + this.nightTimeSetPoint_degC + 
         ", MaxComfortTemperature_degC = " + this.maxComfortTemperature_degC + 
-        ", MinComfortTemperature_degC = " + this.minComfortTemperature_degC;
+        ", MinComfortTemperature_degC = " + this.minComfortTemperature_degC +
+        ", WindowOpenSetpoint_degC = " + this.windowOpenSetpoint_degC;
 	}
 
 }
