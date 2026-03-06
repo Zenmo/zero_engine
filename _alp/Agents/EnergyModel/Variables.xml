@@ -1273,7 +1273,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1772641796572</Id>
-		<Name><![CDATA[pf_CO2EmissionFactorElectricityImport_kgpkWh1]]></Name>
+		<Name><![CDATA[pf_CO2EmissionFactorElectricityImport_kgpkWh]]></Name>
 		<X>-850</X>
 		<Y>800</Y>
 		<Label>
@@ -1287,7 +1287,7 @@
               Constant="false"
               AccessType="public"
               StaticVariable="false">
-			<Type><![CDATA[J_ProfilePointer]]></Type>
+			<Type><![CDATA[J_ProfileForecaster]]></Type>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
