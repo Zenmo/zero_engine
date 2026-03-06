@@ -62,9 +62,6 @@ if ( v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalI
 	v_electricityYieldForecast_fr = (pf_PVProduction35DegSouth_fr.getForecast() * v_liveAssetsMetaData.totalInstalledPVPower_kW + pf_windProduction_fr.getForecast() * v_liveAssetsMetaData.totalInstalledWindPower_kW) / (v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW);
 }
 
-// And price forecast! 
-//v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
-
 for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_updateForecasts();
 }
@@ -219,6 +216,9 @@ c_forecasts.add(pf_windProduction_fr);
 
 pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_epexForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
+
+pf_CO2EmissionFactorElectricityImport_kgpkWh = new J_ProfileForecaster(null, pp_CO2EmissionFactorElectricityImport_kgpkWh, p_CO2EmissionFactorForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
+c_forecasts.add(pf_CO2EmissionFactorElectricityImport_kgpkWh);
 
 /*ALCODEEND*/}
 

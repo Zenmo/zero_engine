@@ -820,6 +820,10 @@
 					<Id>1769674053743</Id>
 					<Name><![CDATA[KW]]></Name>
 				</Option>
+				<Option>
+					<Id>1772717876628</Id>
+					<Name><![CDATA[CO2EMISSION_KGPKWH]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1722411204920</Id>
