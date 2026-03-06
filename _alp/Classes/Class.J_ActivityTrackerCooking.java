@@ -5,7 +5,7 @@
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
-public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker implements Serializable {
+public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
 	private ArrayList<Double> powerFractions_fr = new ArrayList<>();
 	public J_EAConversion HOB;
 	public double powerFraction_fr=0;
@@ -141,7 +141,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     }
     
     @Override
-    public void storeAndResetState() {
+    public void storeStatesAndReset() {
     	v_eventIndexStored = v_eventIndex;
     	storedStarttimes_min = new ArrayList<>(starttimes_min);
     	storedEndtimes_min = new ArrayList<>(endtimes_min);    	
@@ -151,7 +151,7 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
     }
     
     @Override
-    public void restoreState() {
+    public void restoreStates() {
     	v_eventIndex = v_eventIndexStored;
 		starttimes_min = new ArrayList<>(storedStarttimes_min);
 		endtimes_min = new ArrayList<>(storedEndtimes_min);
@@ -161,11 +161,4 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker impl
 	public String toString() {
 		return super.toString();
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

@@ -12,14 +12,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
 
-public interface I_AssetManagement
+public interface I_AssetManagement extends I_StoreStatesAndReset
 {	
-	//Get agent that contains the management
-	Agent getParentAgent();
+	//Get the AssetManagementInterface type (I_ChargingManagement.class, I_Heatingmanagement.class, etc.)
+	Class<? extends I_AssetManagement> getAssetManagementInterfaceType();
 	
-	//Store current state of live sim, and reset to initial state for rapid run
-    void storeStatesAndReset();
-    
-    //Restore state to correct state of live sim after rapid run
-    void restoreStates();
 }

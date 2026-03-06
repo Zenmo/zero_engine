@@ -1,7 +1,7 @@
 /**
  * J_EAStorageHeat
  */
-public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializable {
+public class J_EAStorageHeat extends zero_engine.J_EAStorage {
 
 	public OL_EnergyCarriers storageMedium = OL_EnergyCarriers.HEAT;
 	private double storageCapacity_kWh;
@@ -82,24 +82,24 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 		
+
 		double lossPower_kW = calculateLoss_kW(); // Heat lost to the environment; this call also updates energyUse_kW and the 'state of charge' (temperature).
 		this.energyUse_kW = lossPower_kW;
 		energyUsed_kWh += max(0,energyUse_kW * timeParameters.getTimeStep_h()); // Only heat loss! Not heat gain when outside is hotter than inside!
 		
+		//Calculate requested input power
 		double inputPower_kW = powerFraction_fr * capacityHeat_kW; // positive power means adding heat to the buffer
+		
+    	// Limit input power to usable SoC range (0-1) (Only limits power requests and input, not losses!)
+		double usableEnergyInStorage_kWh = (stateOfCharge_fr * storageCapacity_kWh) - (lossPower_kW*timeParameters.getTimeStep_h());
+		inputPower_kW = - min( -inputPower_kW, usableEnergyInStorage_kWh/timeParameters.getTimeStep_h() ); // Prevent negative charge
+		inputPower_kW = min(inputPower_kW, (storageCapacity_kWh - usableEnergyInStorage_kWh)/timeParameters.getTimeStep_h() ); // Prevent overcharge
+		
+    	//Accounting of (dis)charged heat
 		double heatDischarged_kW = max(-inputPower_kW, 0);
 		double heatCharged_kW = max(inputPower_kW, 0);
 		heatDischarged_kWh += heatDischarged_kW * timeParameters.getTimeStep_h();
 		heatCharged_kWh += heatCharged_kW * timeParameters.getTimeStep_h();
-		
-		//Don't cap, but give warnings when out of range!
-		/*double potentialTempDelta_degC = (inputPower_kW-lossPower_kW) * timestep_h / (heatCapacity_JpK / (3.6E6) ); // Calculate potential deltaT for check if capping of input is needed
-		if(inputPower_kW > 0 && temperature_degC + potentialTempDelta_degC > maxTemperature_degC) { // If it will go over max temp: cap the input power
-			inputPower_kW = lossPower_kW + (maxTemperature_degC - temperature_degC) * (heatCapacity_JpK / (3.6E6) )/timestep_h;
-		}
-		else if(inputPower_kW < 0 && temperature_degC + potentialTempDelta_degC < minTemperature_degC) {//If it will go under min temp: cap the (negative) input power
-			inputPower_kW = (minTemperature_degC - temperature_degC) * (heatCapacity_JpK / (3.6E6) )/timestep_h;
-		}*/
 		
     	double deltaEnergy_kWh = (inputPower_kW-lossPower_kW) * timeParameters.getTimeStep_h(); // to check the request with the energy currently in storage   	
 		updateStateOfCharge( deltaEnergy_kWh );
@@ -215,10 +215,5 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage implements Serializ
 		this.updateAmbientTemperatureHasBeenCalled = true;
 		ambientTemperature_degC = currentAmbientTemperature_degC;
 	}
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }
 
