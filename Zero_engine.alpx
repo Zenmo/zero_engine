@@ -1321,6 +1321,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
 				<ParentId>1772100333519</ParentId>
 			</Folder>
+			<Folder>
+				<Id>1773159972858</Id>
+				<Name><![CDATA[GridOperator data]]></Name>
+				<ParentId>1752680962144</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -2030,6 +2035,26 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1772554413488</Id>
 				<Name><![CDATA[J_AVGC_Economic_data]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773160024504</Id>
+				<Name><![CDATA[J_GridOperatorDataStedin]]></Name>
+				<Folder>1773159972858</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773160041129</Id>
+				<Name><![CDATA[J_GridOperatorDataEnexis]]></Name>
+				<Folder>1773159972858</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773160062934</Id>
+				<Name><![CDATA[J_GridOperatorDataLiander]]></Name>
+				<Folder>1773159972858</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773160079701</Id>
+				<Name><![CDATA[I_GridOperatorData]]></Name>
+				<Folder>1773159972858</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
