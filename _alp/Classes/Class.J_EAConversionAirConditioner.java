@@ -5,7 +5,6 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 
     private double COP_r;
 	protected OL_AmbientTempType ambientTempType;
-	protected double ambientTemperature_degC;
 	public double totalElectricityConsumed_kWh =0;
 	public J_EABuilding building;
 	//public double p_baseTemperatureReference;
@@ -22,13 +21,15 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
     /**
      * Constructor initializing the fields
      */
-    public J_EAConversionAirConditioner(I_AssetOwner owner, double inputElectricCapacity_kW, double eta_r, J_TimeParameters timeParameters, J_EABuilding building, OL_AmbientTempType ambientTempType ) {
+    public J_EAConversionAirConditioner(I_AssetOwner owner, double inputElectricCapacity_kW, J_TimeParameters timeParameters, J_EABuilding building) {
+    	this.energyAssetType = OL_EnergyAssetType.AIR_CONDITIONER;
+    	
 		this.setOwner(owner);
 	    this.timeParameters = timeParameters;
 		this.inputCapacity_kW = inputElectricCapacity_kW;
-	    this.eta_r = eta_r;
+	    //this.eta_r = eta_r;
 	    this.building = building;
-	    this.ambientTempType = ambientTempType;
+	    this.ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 	    this.updateAmbientTemperature( building.getAmbientTemperature_degC() ); // also updates COP
 
 	    this.energyCarrierProduced = OL_EnergyCarriers.HEAT; // in a way heat is also 'consumed'. It is extracted from the building and exhausted outside. How to account for this heatflow? You could say the AC 'produces cold', which is negative heat.
@@ -36,7 +37,7 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
     	
 	    this.activeProductionEnergyCarriers.add(this.energyCarrierProduced);   	
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
-		this.assetFlowCategory = OL_AssetFlowCategories.heatPumpElectricityConsumption_kW;
+		this.assetFlowCategory = OL_AssetFlowCategories.airConditionersElectricPower_kW;
 		registerEnergyAsset(timeParameters);
 	}
 
@@ -68,7 +69,7 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 
 	public void updateAmbientTemperature(double ambientTemperature_degC) {    	
 		double buildingTemp_degC = building.getCurrentTemperature();
-		this.COP_r = calculateCOP(this.ambientTemperature_degC, buildingTemp_degC); //this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
+		this.COP_r = calculateCOP(ambientTemperature_degC, buildingTemp_degC); //this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r; // this represents the current maximum cooling power (heat extracted from building!)
 	}
 
@@ -94,7 +95,7 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 		flowsMap.put(OL_EnergyCarriers.HEAT, coldProduction_kW); // coldProduction can be seen as the heat flowing into the asset (from the building), so from the GC-perspective it looks like heat consumption.
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW);		    
 			
-    	this.assetFlowsMap.addFlow	(OL_AssetFlowCategories.airConditionersElectricPower_kW, electricityConsumption_kW);
+    	this.assetFlowsMap.addFlow(OL_AssetFlowCategories.airConditionersElectricPower_kW, electricityConsumption_kW);
 		this.energyUsed_kWh += energyUse_kW * this.timeParameters.getTimeStep_h();
 	}
 
@@ -116,8 +117,13 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 	}
     
 	@Override
-	public String toString() {
-		return super.toString();
+	public String toString() {	
+		return  this.energyAssetType + ", "			
+				//+ this.energyCarrierConsumed + " -> " + this.energyCarrierProduced + ", "
+				+ "Electric capacity: " + this.inputCapacity_kW + " kW, " 
+				+ "with efficiency: " + this.getCOP() + ", "
+				+ "Energy used: " + this.energyUsed_kWh + ", "
+				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
 	}
 
 }
