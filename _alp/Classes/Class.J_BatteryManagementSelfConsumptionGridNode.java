@@ -37,10 +37,12 @@ public class J_BatteryManagementSelfConsumptionGridNode implements I_BatteryMana
      * If there is more consumption than production it will discharge the battery to make up for the difference untill the battery is empty.
      */
     public void manageBattery(J_TimeVariables timeVariables) {
-    	double nodePreviousLoad_kW = gc.p_parentNodeElectric.v_currentLoad_kW;
-    	double chargeSetpoint_kW = -(nodePreviousLoad_kW - gc.p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY));
-
-    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+    	if(gc.p_batteryAsset != null && gc.p_batteryAsset.getStorageCapacity_kWh() > 0) {
+	    	double nodePreviousLoad_kW = gc.p_parentNodeElectric.v_currentLoad_kW;
+	    	double chargeSetpoint_kW = -(nodePreviousLoad_kW - gc.p_batteryAsset.getLastFlows().get(OL_EnergyCarriers.ELECTRICITY));
+	
+	    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+    	}
     }
     
     

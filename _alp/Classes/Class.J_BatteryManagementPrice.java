@@ -56,37 +56,38 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
      * It has a boolean flag wether or not to take the GC's connection capacity into account.
      */
     public void manageBattery(J_TimeVariables timeVariables) {
-	    // Get the national EPEX price
-	    double currentElectricityPriceCharge_eurpkWh = gc.energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;
-	
-	    // Base the WTP on a moving average price and the SOC
-	    electricityPriceLowPassed_eurpkWh += lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - electricityPriceLowPassed_eurpkWh );
-	    
-	    double SOC_setpoint_fr = 0.5;
-	    double SOC_deficit_fr = SOC_setpoint_fr - gc.p_batteryAsset.getCurrentStateOfCharge_fr(); // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
-	
-	    // Define WTP price for charging and discharging!
-	    double WTP_charge_eurpkWh = electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-	    double WTP_discharge_eurpkWh = electricityPriceLowPassed_eurpkWh + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
-	
-	    // Choose charging power based on prices and desired SOC level
-	    double chargeSetpoint_kW = 0;
-	    if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) {
-	    	chargeSetpoint_kW = gc.p_batteryAsset.getCapacityElectric_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
-	    }
-	    else if (WTP_discharge_eurpkWh < currentElectricityPriceCharge_eurpkWh) {
-	    	chargeSetpoint_kW = -gc.p_batteryAsset.getCapacityElectric_kW()*(currentElectricityPriceCharge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
-	    }
-	
-	    // limit charging power to available connection capacity
-	    if( stayWithinConnectionLimits ) {
-	    	double availableChargePower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
-	    	double availableDischargePower_kW = gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW + gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max discharging power within grid capacity
-	    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-	    }
-	
-    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
-
+    	if(gc.p_batteryAsset != null && gc.p_batteryAsset.getStorageCapacity_kWh() > 0) {
+		    // Get the national EPEX price
+		    double currentElectricityPriceCharge_eurpkWh = gc.energyModel.nationalEnergyMarket.f_getNationalElectricityPrice_eurpMWh()/1000;
+		
+		    // Base the WTP on a moving average price and the SOC
+		    electricityPriceLowPassed_eurpkWh += lowPassFactor_fr * ( currentElectricityPriceCharge_eurpkWh - electricityPriceLowPassed_eurpkWh );
+		    
+		    double SOC_setpoint_fr = 0.5;
+		    double SOC_deficit_fr = SOC_setpoint_fr - gc.p_batteryAsset.getCurrentStateOfCharge_fr(); // How far away from desired SOC? SOC too LOW is a POSITIVE deficit
+		
+		    // Define WTP price for charging and discharging!
+		    double WTP_charge_eurpkWh = electricityPriceLowPassed_eurpkWh - chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+		    double WTP_discharge_eurpkWh = electricityPriceLowPassed_eurpkWh + chargeDischarge_offset_eurpkWh + SOC_deficit_fr * WTPfeedbackGain_eurpSOC;
+		
+		    // Choose charging power based on prices and desired SOC level
+		    double chargeSetpoint_kW = 0;
+		    if ( WTP_charge_eurpkWh > currentElectricityPriceCharge_eurpkWh ) {
+		    	chargeSetpoint_kW = gc.p_batteryAsset.getCapacityElectric_kW()*(WTP_charge_eurpkWh - currentElectricityPriceCharge_eurpkWh)*priceGain_kWhpeur;
+		    }
+		    else if (WTP_discharge_eurpkWh < currentElectricityPriceCharge_eurpkWh) {
+		    	chargeSetpoint_kW = -gc.p_batteryAsset.getCapacityElectric_kW()*(currentElectricityPriceCharge_eurpkWh - WTP_discharge_eurpkWh)*priceGain_kWhpeur;
+		    }
+		
+		    // limit charging power to available connection capacity
+		    if( stayWithinConnectionLimits ) {
+		    	double availableChargePower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
+		    	double availableDischargePower_kW = gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW + gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max discharging power within grid capacity
+		    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+		    }
+		
+	    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+    	}
     }
     
     

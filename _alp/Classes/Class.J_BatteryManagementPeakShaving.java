@@ -54,24 +54,25 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
      * so that it can take the connection capacity of the GC into account and prevent any peaks when they occur.
      */
     public void manageBattery(J_TimeVariables timeVariables) {
-    	if (this.target == null) {
-        	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, 0.0, timeVariables);
-    		return;
-    	}
-    	double feedbackGain_kWpSOC = feedbackGain_fr * gc.p_batteryAsset.getCapacityElectric_kW();
-    	double chargeSetpoint_kW = (SOC_setpoint_fr - gc.p_batteryAsset.getCurrentStateOfCharge_fr()) * feedbackGain_kWpSOC;
-    	
-    	// Try to stay within the target connection capacity
-    	double v_allowedDeliveryCapacity_kW = getDeliveryCapacity_kW();
-    	double v_allowedFeedinCapacity_kW = getFeedinCapacity_kW();
-    	double balanceElectricity_kW = getBalanceElectricity_kW();
-    	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - balanceElectricity_kW; // Max battery charging power within safety margins
-    	double availableDischargePower_kW = v_allowedFeedinCapacity_kW + balanceElectricity_kW; // Max discharging power within safety margins
-
-    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-    	
-    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
-
+    	if(gc.p_batteryAsset != null && gc.p_batteryAsset.getStorageCapacity_kWh() > 0) {
+	    	if (this.target == null) {
+	        	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, 0.0, timeVariables);
+	    		return;
+	    	}
+	    	double feedbackGain_kWpSOC = feedbackGain_fr * gc.p_batteryAsset.getCapacityElectric_kW();
+	    	double chargeSetpoint_kW = (SOC_setpoint_fr - gc.p_batteryAsset.getCurrentStateOfCharge_fr()) * feedbackGain_kWpSOC;
+	    	
+	    	// Try to stay within the target connection capacity
+	    	double v_allowedDeliveryCapacity_kW = getDeliveryCapacity_kW();
+	    	double v_allowedFeedinCapacity_kW = getFeedinCapacity_kW();
+	    	double balanceElectricity_kW = getBalanceElectricity_kW();
+	    	double availableChargePower_kW = v_allowedDeliveryCapacity_kW - balanceElectricity_kW; // Max battery charging power within safety margins
+	    	double availableDischargePower_kW = v_allowedFeedinCapacity_kW + balanceElectricity_kW; // Max discharging power within safety margins
+	
+	    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	    	
+	    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+	    }
     }
   
     public void setTarget( Agent agent ) {

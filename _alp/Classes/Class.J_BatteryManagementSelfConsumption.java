@@ -37,7 +37,9 @@ public class J_BatteryManagementSelfConsumption implements I_BatteryManagement {
      * If there is more consumption than production it will discharge the battery to make up for the difference untill the battery is empty.
      */
     public void manageBattery(J_TimeVariables timeVariables) {
-    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+    	if(gc.p_batteryAsset != null && gc.p_batteryAsset.getStorageCapacity_kWh() > 0) {
+    		gc.f_updateFlexAssetFlows(gc.p_batteryAsset, -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
+    	}
     }
 
     
