@@ -44,15 +44,17 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 	
 	
 	public void manageBattery(J_TimeVariables timeVariables) {
-		if (this.target == null) {
-	    	parentGC.f_updateFlexAssetFlows(parentGC.p_batteryAsset, 0.0, timeVariables);
-    		return;
+    	if(parentGC.p_batteryAsset != null && parentGC.p_batteryAsset.getStorageCapacity_kWh() > 0) {
+			if (this.target == null) {
+		    	parentGC.f_updateFlexAssetFlows(parentGC.p_batteryAsset, 0.0, timeVariables);
+	    		return;
+	    	}
+			int index = roundToInt(timeVariables.getTimeOfDay_h()/timeParameters.getTimeStep_h());
+			if(index == 0){
+				this.batteryChargingSchedule_kW = this.calculateBatteryChargingSchedule(timeVariables);
+			}
+			parentGC.f_updateFlexAssetFlows(parentGC.p_batteryAsset, this.batteryChargingSchedule_kW[index] / parentGC.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
     	}
-		int index = roundToInt(timeVariables.getTimeOfDay_h()/timeParameters.getTimeStep_h());
-		if(index == 0){
-			this.batteryChargingSchedule_kW = this.calculateBatteryChargingSchedule(timeVariables);
-		}
-		parentGC.f_updateFlexAssetFlows(parentGC.p_batteryAsset, this.batteryChargingSchedule_kW[index] / parentGC.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
     }
 	
 	
