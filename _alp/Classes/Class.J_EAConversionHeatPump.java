@@ -158,6 +158,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    double COP_r = 8.74 - 0.190 * deltaT + 0.00126 * deltaT*deltaT;
 	    return COP_r;
 	}
+	
 	/*
 	@Override
 	public String toString() {
