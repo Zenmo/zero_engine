@@ -105,8 +105,9 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgHydrogenConsumptionVan_kWhpkm;
 	public double p_avgHydrogenConsumptionTruck_kWhpkm;
 	
-	public double p_avgVehiclesPerCharger_Chargepoint;
-	public double p_avgVehiclesPerCharger_Centre;
+	public int p_defaultNrOfVehiclesPerChargerSocket;
+	public int p_defaultNrOfSocketsPerCharger;
+	
 	public double p_v1gProbability;
 	public double p_v2gProbability;
 	

@@ -240,9 +240,6 @@ p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 for (J_EA EA : c_energyAssets) {
 	EA.storeStatesAndReset();		
 }
-for (I_AssetManagement AM : c_assetManagement) {
-	AM.storeStatesAndReset();		
-}
 
 
 for (GridConnection GC : c_gridConnections) {
@@ -261,13 +258,13 @@ for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
 	
 	GC.c_tripTrackers.forEach(tt->{
-		tt.storeAndResetState();
+		tt.storeStatesAndReset();
 		tt.setStartIndex(p_timeVariables, GC.f_getChargePoint());
 		//tt.prepareNextActivity(p_runStartTime_h*60, GC.f_getChargePoint());
 		});
 	if (GC instanceof GCHouse) {
 		if (((GCHouse)GC).p_cookingTracker != null) {
-			((GCHouse)GC).p_cookingTracker.storeAndResetState();
+			((GCHouse)GC).p_cookingTracker.storeStatesAndReset();
 		}
 	}
 }
@@ -386,9 +383,6 @@ p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
-for (I_AssetManagement AM : c_assetManagement) {
-	AM.restoreStates();		
-}
 
 /*for (GridNode GN : pop_gridNodes) {
 	//Has no reset states
@@ -397,13 +391,13 @@ for (I_AssetManagement AM : c_assetManagement) {
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
 	GC.c_tripTrackers.forEach(tt->{
-		tt.restoreState();
+		tt.restoreStates();
 		//tt.prepareNextActivity((t_h-p_runStartTime_h)*60, GC.f_getChargePoint());
 		});	
 	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
 	if (GC instanceof GCHouse) {
 		if (((GCHouse)GC).p_cookingTracker != null) {
-			((GCHouse)GC).p_cookingTracker.restoreState();
+			((GCHouse)GC).p_cookingTracker.restoreStates();
 		}
 	}	
 }
@@ -1324,18 +1318,6 @@ return copyOfGridConnectionList;
 
 /*ALCODEEND*/}
 
-double f_registerAssetManagement(I_AssetManagement newAssetManagement)
-{/*ALCODESTART::1762791721564*/
-//Should only be called by GC
-c_assetManagement.add(newAssetManagement);
-/*ALCODEEND*/}
-
-double f_removeAssetManagement(I_AssetManagement assetManagement)
-{/*ALCODESTART::1762791721568*/
-//Should only be called by GC
-c_assetManagement.remove(assetManagement);
-/*ALCODEEND*/}
-
 double f_initializeTimeDates()
 {/*ALCODESTART::1767178014622*/
 // Initialize time and date
@@ -1368,6 +1350,12 @@ traceln("Startdate: %s", startDate);
 //startDate.set
 getExperiment().getEngine().setStartDate(startDate); 
 
+
+/*ALCODEEND*/}
+
+double f_checkConfiguration()
+{/*ALCODESTART::1772104199229*/
+c_gridConnections.forEach(gc -> gc.f_checkConfiguration());
 
 /*ALCODEEND*/}
 

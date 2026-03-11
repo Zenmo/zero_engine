@@ -226,6 +226,9 @@
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -979,9 +982,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_airco]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1158,6 +1158,9 @@
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1295,6 +1298,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1488,6 +1494,9 @@
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">
@@ -1622,6 +1631,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -1760,6 +1772,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2206,12 +2221,6 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isInitialCharger]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingProfileName]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2227,46 +2236,19 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_isInitialCharger1]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingProfileName1]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[chargingSessionSocket1]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[chargingSessionSocket2]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargerAsset]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_isChargingCentre]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gisregion]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_nbOfChargers]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_maxChargingPower_kW]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingVehicleType]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_isInitialCharger]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_chargingProfileName]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[v_isActive]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
@@ -2390,9 +2372,6 @@
 				<Name><![CDATA[p_curtailmentMode]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2400,9 +2379,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_nbCompaniesTotal]]></Name>
@@ -2439,6 +2415,9 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_energyLabel]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_airco]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

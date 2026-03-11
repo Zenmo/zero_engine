@@ -2,7 +2,6 @@
 <ActiveObjectClass>
 	<Id>1666956363819</Id>
 	<Name><![CDATA[GCGridBattery]]></Name>
-	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677823817</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
@@ -86,6 +85,9 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_energyLabel]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_airco]]></Name>
 		</Parameter>
 	</Parameters>
 	<Generic>false</Generic>
@@ -180,7 +182,6 @@
 	<CurrentLevel>1666956363818</CurrentLevel>
 	<ConnectionsId>1666956363814</ConnectionsId>
 	<Variables xmlns:al="http://anylogic.com"/>
-	<Functions xmlns:al="http://anylogic.com"/>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1666956363814</Id>

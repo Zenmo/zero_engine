@@ -38,11 +38,17 @@ public class J_EAConversionHeatDeliverySet extends zero_engine.J_EAConversion im
 	    
 		registerEnergyAsset(timeParameters);
 	}
+    
+    @Override
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+		this.energyUse_kW = powerFraction_fr * this.inputCapacity_kW * (1 - this.eta_r);
+		this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
+    	this.flowsMap.put(this.energyCarrierConsumed, powerFraction_fr * this.inputCapacity_kW);
+    	this.flowsMap.addFlow(this.energyCarrierProduced, -powerFraction_fr * this.outputCapacity_kW); // We don't put here, in case the energy carrier is the same
+    	if (this.assetFlowCategory != null) {
+    		this.assetFlowsMap.put(this.assetFlowCategory, powerFraction_fr * this.inputCapacity_kW);
+    	}
+	}
 
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }
 

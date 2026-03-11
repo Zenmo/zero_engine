@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
-public class J_ActivityTrackerTrips extends J_ActivityTracker implements Serializable {
+public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	
 	private J_TimeParameters timeParameters;
 	
@@ -230,7 +230,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	}
 
 	@Override
-    public void storeAndResetState() {
+    public void storeStatesAndReset() {
     	v_eventIndexStored = v_eventIndex;
     	//v_energyNeedForNextTripStored_kWh = v_energyNeedForNextTrip_kWh;
     	v_idleTimeToNextTripStored_min = v_idleTimeToNextTrip_min;
@@ -240,7 +240,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     }
 	
     @Override
-    public void restoreState() {
+    public void restoreStates() {
     	v_eventIndex = v_eventIndexStored;
 	    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
 		v_idleTimeToNextTrip_min = v_idleTimeToNextTripStored_min;
@@ -252,11 +252,4 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 			ev.setEnergyNeedForNextTrip_kWh(v_energyNeedForNextTrip_kWh);
 		}*/
 	}
-    
-    
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
 }

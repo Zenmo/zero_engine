@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * I_AggregatorBatteryManagement
  */	
 
-public interface I_AggregatorBatteryManagement  extends I_AssetManagement
+public interface I_AggregatorBatteryManagement  extends I_AggregatorManagement
 {
 	void manageExternalSetpoints();
 }

@@ -1,171 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Variables>
 	<Variable Class="PlainVariable">
-		<Id>1722514794122</Id>
-		<Name><![CDATA[v_amountOfGasBurners_services_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514798317</Id>
-		<Name><![CDATA[v_amountOfHybridHeatpump_services_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514800696</Id>
-		<Name><![CDATA[v_amountOfElectricHeatpumps_services_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514802997</Id>
-		<Name><![CDATA[v_amountOfDistrictHeating_services_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>140</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514805108</Id>
-		<Name><![CDATA[v_amountOfGasBurners_houses_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>220</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514809527</Id>
-		<Name><![CDATA[v_amountOfHybridHeatpump_houses_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514811890</Id>
-		<Name><![CDATA[v_amountOfElectricHeatpumps_houses_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>260</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1722514815083</Id>
-		<Name><![CDATA[v_amountOfDistrictHeating_houses_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>280</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1724397994084</Id>
 		<Name><![CDATA[v_nbCurrentHouseholdsWithBattery]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2300</X>
-		<Y>450</Y>
+		<X>2590</X>
+		<Y>80</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -181,193 +21,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1732636587634</Id>
-		<Name><![CDATA[v_amountOfGasBurners_industry_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>60</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636587636</Id>
-		<Name><![CDATA[v_amountOfHybridHeatpump_industry_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636587638</Id>
-		<Name><![CDATA[v_amountOfElectricHeatpumps_industry_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636587640</Id>
-		<Name><![CDATA[v_amountOfDistrictHeating_industry_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>120</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636587642</Id>
-		<Name><![CDATA[v_amountOfHydrogenUseForHeating_industry_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>160</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636647667</Id>
-		<Name><![CDATA[v_amountOfGasBurners_agriculture_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>220</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636647669</Id>
-		<Name><![CDATA[v_amountOfHybridHeatpump_agriculture_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636647671</Id>
-		<Name><![CDATA[v_amountOfElectricHeatpumps_agriculture_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>260</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1732636647673</Id>
-		<Name><![CDATA[v_amountOfDistrictHeating_agriculture_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2170</X>
-		<Y>280</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1733992320729</Id>
 		<Name><![CDATA[v_SOC_setp_fr_offset_balance]]></Name>
-		<X>1680</X>
-		<Y>490</Y>
+		<X>1970</X>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -388,8 +45,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1733992537947</Id>
 		<Name><![CDATA[v_FeedbackGain_kWpSOC_factor_balance]]></Name>
-		<X>1680</X>
-		<Y>510</Y>
+		<X>1970</X>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -410,8 +67,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1733992922419</Id>
 		<Name><![CDATA[v_SOC_setp_fr_price]]></Name>
-		<X>2120</X>
-		<Y>490</Y>
+		<X>2410</X>
+		<Y>120</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -432,8 +89,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1733993584071</Id>
 		<Name><![CDATA[v_priceGain_kWhpeur]]></Name>
-		<X>2120</X>
-		<Y>510</Y>
+		<X>2410</X>
+		<Y>140</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -454,8 +111,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1734716021367</Id>
 		<Name><![CDATA[v_batteryMoneyMade_euro]]></Name>
-		<X>1250</X>
-		<Y>630</Y>
+		<X>1330</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -474,50 +131,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
-		<Id>1738663322715</Id>
-		<Name><![CDATA[v_amountOfLowTempHeatgrid_services_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>160</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1738663467936</Id>
-		<Name><![CDATA[v_amountOfLowTempHeatgrid_houses_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>300</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
 		<Id>1752589060012</Id>
 		<Name><![CDATA[v_currentLoadLowPassed_kW]]></Name>
-		<X>1270</X>
-		<Y>450</Y>
+		<X>1330</X>
+		<Y>530</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -530,43 +147,13 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1722588367044</Id>
-		<Name><![CDATA[p_thresholdCOP_hybridHeatpump]]></Name>
-		<Description><![CDATA[Threshold for when the gas burner needs to kick in in a hybrid heatpump system]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1720</X>
-		<Y>360</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[3.5]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1722588367042</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
 		<Id>1729069223731</Id>
 		<Name><![CDATA[p_nbCompaniesTotal]]></Name>
-		<X>1680</X>
-		<Y>840</Y>
+		<X>1360</X>
+		<Y>820</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -590,8 +177,8 @@
 	<Variable Class="Parameter">
 		<Id>1729069237070</Id>
 		<Name><![CDATA[p_nbHouseholds]]></Name>
-		<X>1680</X>
-		<Y>820</Y>
+		<X>1360</X>
+		<Y>800</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -615,8 +202,8 @@
 	<Variable Class="Parameter">
 		<Id>1730911077796</Id>
 		<Name><![CDATA[p_municipalityCode]]></Name>
-		<X>1680</X>
-		<Y>930</Y>
+		<X>1360</X>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -640,8 +227,8 @@
 	<Variable Class="Parameter">
 		<Id>1732637253709</Id>
 		<Name><![CDATA[p_nbServices]]></Name>
-		<X>1700</X>
-		<Y>860</Y>
+		<X>1380</X>
+		<Y>840</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -665,8 +252,8 @@
 	<Variable Class="Parameter">
 		<Id>1732637257024</Id>
 		<Name><![CDATA[p_nbIndustry]]></Name>
-		<X>1700</X>
-		<Y>880</Y>
+		<X>1380</X>
+		<Y>860</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -690,8 +277,8 @@
 	<Variable Class="Parameter">
 		<Id>1732637259177</Id>
 		<Name><![CDATA[p_nbAgriculture]]></Name>
-		<X>1700</X>
-		<Y>900</Y>
+		<X>1380</X>
+		<Y>880</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -715,8 +302,8 @@
 	<Variable Class="Parameter">
 		<Id>1736870299796</Id>
 		<Name><![CDATA[p_ignoreGridCapacityBattery]]></Name>
-		<X>1680</X>
-		<Y>540</Y>
+		<X>1970</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -744,7 +331,7 @@
 		<Id>1736933490243</Id>
 		<Name><![CDATA[p_chpAsset]]></Name>
 		<X>600</X>
-		<Y>430</Y>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -763,25 +350,6 @@
 				<MaxSliderValue>100</MaxSliderValue>
 				<DelimeterType>NO_DELIMETER</DelimeterType>
 			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1722589144737</Id>
-		<Name><![CDATA[c_heatDemandEA]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1690</X>
-		<Y>390</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>LinkedHashMap</CollectionClass>
-			<ElementClass>String</ElementClass>
-			<ValueElementClass>J_EAConsumption</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>

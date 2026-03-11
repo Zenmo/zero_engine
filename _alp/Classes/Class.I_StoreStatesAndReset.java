@@ -1,3 +1,6 @@
+//This interface contains store states and reset required functions. 
+//It should be implemented by all classes that should be reset before rapid run, 
+//and restored back to the live state after the rapid run.
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -11,20 +14,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    property = "type"  // 👈 this will be the field name in your JSON
 	)
 
-public interface I_ChargingManagement extends I_AssetManagement	{
-
-	//Get the subManagementInterface type
-	default Class<? extends I_AssetManagement> getAssetManagementInterfaceType(){
-		return I_ChargingManagement.class;
-	}
-	
-	void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables);
-	
-	public OL_ChargingAttitude getCurrentChargingType();
-	
-	public void setV2GActive(boolean activateV2G);
-	public boolean getV2GActive();
+public interface I_StoreStatesAndReset
+{
+		//Store current state of live sim, and reset to initial state for rapid run
+	    void storeStatesAndReset();
+	    
+	    //Restore state to correct state of live sim after rapid run
+	    void restoreStates();
 }
-
-
-
