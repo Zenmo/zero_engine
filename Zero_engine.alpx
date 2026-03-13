@@ -1234,6 +1234,21 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 					<Name><![CDATA[WESTLAND_INFRA]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1773327283452</Id>
+				<Name><![CDATA[OL_ConnectionSizeType]]></Name>
+				<Description><![CDATA[SMALL_CONNECTION (kleinverbruik, <= 3x80)
+LARGE_CONNECTION (grootverbruik, > 3x80)
+]]></Description>
+				<Option>
+					<Id>1773327283453</Id>
+					<Name><![CDATA[SMALL_CONNECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1773327283454</Id>
+					<Name><![CDATA[LARGE_CONNECTION]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
@@ -1320,11 +1335,6 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1772100488693</Id>
 				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
 				<ParentId>1772100333519</ParentId>
-			</Folder>
-			<Folder>
-				<Id>1773159972858</Id>
-				<Name><![CDATA[GridOperator data]]></Name>
-				<ParentId>1752680962144</ParentId>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -2037,24 +2047,13 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1773160024504</Id>
-				<Name><![CDATA[J_GridOperatorDataStedin]]></Name>
-				<Folder>1773159972858</Folder>
-			</JavaClass>
-			<JavaClass>
-				<Id>1773160041129</Id>
-				<Name><![CDATA[J_GridOperatorDataEnexis]]></Name>
-				<Folder>1773159972858</Folder>
-			</JavaClass>
-			<JavaClass>
-				<Id>1773160062934</Id>
-				<Name><![CDATA[J_GridOperatorDataLiander]]></Name>
-				<Folder>1773159972858</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1773160079701</Id>
 				<Name><![CDATA[I_GridOperatorData]]></Name>
-				<Folder>1773159972858</Folder>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773332207914</Id>
+				<Name><![CDATA[J_GridCapacitySharingManager]]></Name>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

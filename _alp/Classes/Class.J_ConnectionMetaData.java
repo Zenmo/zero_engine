@@ -1,16 +1,18 @@
 /**
  * J_ConnectionMetaData
  */	
-public class J_ConnectionMetaData implements Serializable {
+public class J_ConnectionMetaData {
 
-	public Agent parentAgent;
+	private Agent parentAgent;
 
-	public Double contractedDeliveryCapacity_kW  = 0.0;
-	public Double contractedFeedinCapacity_kW  = 0.0;
-	public Double physicalCapacity_kW  = 0.0;
-	public Boolean contractedDeliveryCapacityKnown  = false;
-	public Boolean contractedFeedinCapacityKnown  = false;
-	public Boolean physicalCapacityKnown  = false;
+	private Double contractedDeliveryCapacity_kW  = 0.0;
+	private Double contractedFeedinCapacity_kW  = 0.0;
+	private Double physicalCapacity_kW  = 0.0;
+	private Boolean contractedDeliveryCapacityKnown  = false;
+	private Boolean contractedFeedinCapacityKnown  = false;
+	private Boolean physicalCapacityKnown  = false;
+	
+	private OL_ConnectionSizeType connectionSizeType;
 	
     /**
      * Default constructor
@@ -21,15 +23,62 @@ public class J_ConnectionMetaData implements Serializable {
 	
     public J_ConnectionMetaData( Agent parentAgent) {
     	this.parentAgent = parentAgent;
-    	if (parentAgent instanceof GridConnection) {
-    		
-    	}
-    	//public double getDeliveryCapacity_kW(){return p_contractedDeliveryCapacity_kW;}
-    	//public double getFeedinCapacity_kW(){return p_contractedFeedinCapacity_kW;}
-    	//public boolean getDeliveryCapacityKnown(){return b_isRealDeliveryCapacityAvailable;}
-    	//public boolean getFeedinCapacityKnown(){return b_isRealFeedinCapacityAvailable;}
     }
+    
+    //Setter functions
+	public void setCapacities_kW(double contractedDeliveryCapacity_kW, double contractedFeedinCapacity_kW, double physicalCapacity_kW){
+		this.contractedDeliveryCapacity_kW = contractedDeliveryCapacity_kW;
+		this.contractedFeedinCapacity_kW = contractedFeedinCapacity_kW;
+		this.physicalCapacity_kW = physicalCapacity_kW;
+		
+		if(physicalCapacity_kW > (3*80*230/1000.0)) { //Set connection size type aswell: 3*80 -> Large connection (grootverbruik), else small connection (kleinverbruik)
+			this.connectionSizeType = OL_ConnectionSizeType.LARGE_CONNECTION;
+		}
+		else {
+			this.connectionSizeType  = OL_ConnectionSizeType.SMALL_CONNECTION;
+		}
+		
+		if(contractedDeliveryCapacity_kW > physicalCapacity_kW || contractedFeedinCapacity_kW > physicalCapacity_kW) {
+			throw new RuntimeException("Set connection limits (Delivery = " + contractedDeliveryCapacity_kW + "), (Feedin = " + contractedFeedinCapacity_kW + "), "
+									   + "(physical = " + physicalCapacity_kW + ") is not possible. Contract capacities can never be higher than physical.");
+		}
+	}
+	
+	public void setCapacitiesKnown(boolean contractedDeliveryCapacityKnown, boolean contractedFeedinCapacityKnown, boolean physicalCapacityKnown) {
+		this.contractedDeliveryCapacityKnown = contractedDeliveryCapacityKnown;
+		this.contractedFeedinCapacityKnown = contractedFeedinCapacityKnown;
+		this.physicalCapacityKnown = physicalCapacityKnown;
+	}
 
+	public void setContractedDeliveryCapacityKnown(boolean contractedDeliveryCapacityKnown){this.contractedDeliveryCapacityKnown = contractedDeliveryCapacityKnown;}
+	public void setContractedFeedinCapacityKnown(boolean contractedFeedinCapacityKnown){this.contractedFeedinCapacityKnown = contractedFeedinCapacityKnown;}    
+	public void setPhysicalCapacityKnown(boolean physicalCapacityKnown){this.physicalCapacityKnown = physicalCapacityKnown;}  
+	
+	//Getters
+	public double getContractedDeliveryCapacity_kW(){return this.contractedDeliveryCapacity_kW;} 
+	public double getContractedFeedinCapacity_kW(){return this.contractedFeedinCapacity_kW;} 
+	public double getPhysicalCapacity_kW(){return this.physicalCapacity_kW;}    
+	public boolean getContractedDeliveryCapacityKnown(){
+		if(this.connectionSizeType == OL_ConnectionSizeType.SMALL_CONNECTION) {
+			return this.physicalCapacityKnown;
+		}
+		else {
+			return this.contractedDeliveryCapacityKnown;
+		}
+	}
+	public boolean getContractedFeedinCapacityKnown(){
+		if(this.connectionSizeType == OL_ConnectionSizeType.SMALL_CONNECTION) {
+			return this.physicalCapacityKnown;
+		}
+		else {
+			return this.contractedFeedinCapacityKnown;
+		}
+	}
+	public boolean getPhysicalCapacityKnown(){return this.physicalCapacityKnown;}      
+	public OL_ConnectionSizeType getConnectionSizeType(){return this.connectionSizeType;} 
+	
+	
+	//Clone functionality
     public J_ConnectionMetaData getClone() {
     	J_ConnectionMetaData clone = new J_ConnectionMetaData(this.parentAgent);
     	clone.contractedDeliveryCapacity_kW = this.contractedDeliveryCapacity_kW.doubleValue();
@@ -42,6 +91,9 @@ public class J_ConnectionMetaData implements Serializable {
     	if (this.physicalCapacityKnown!=null) {
     		clone.physicalCapacityKnown = this.physicalCapacityKnown.booleanValue();
     	}
+    	if (connectionSizeType!=null) {
+    		clone.connectionSizeType = this.connectionSizeType;
+    	}    	
     	return clone;
     }
     
@@ -54,12 +106,4 @@ public class J_ConnectionMetaData implements Serializable {
                ", ContractedFeedinCapacityKnown: " + contractedFeedinCapacityKnown + 
                ", PhysicalCapacityKnown: " + physicalCapacityKnown;
     }
-
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }
