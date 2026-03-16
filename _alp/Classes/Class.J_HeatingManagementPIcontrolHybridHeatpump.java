@@ -27,6 +27,7 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 	private J_EABuilding building;	
 	private J_EAConversionHeatPump heatPumpAsset;
 	private J_EAConversionGasBurner gasBurnerAsset;
+    private J_EAConversionAirConditioner AC;
 	private J_HeatingPreferences heatingPreferences;
 	private J_EAStorageHeat hotWaterBuffer;
 	private List<J_EAProduction> ptAssets;
@@ -36,6 +37,8 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     private double P_gain_kWpDegC = 1*1;
     private double I_gain_kWphDegC = 0.1*2;
     private double I_state_hDegC = 0;
+    private double I_state_AC_hDegC = 0;
+    private boolean AC_active = false;
     
     //Temperature setpoint low pass filter
     private double filteredCurrentSetpoint_degC;
@@ -43,7 +46,9 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     
     //Stored parameters
     private double storedI_state_hDegC;
+    private double storedI_state_AC_hDegC;
     private double storedFilteredCurrentSetpoint_degC;
+    private boolean AC_active_stored = false;
     
     /**
      * Default constructor
@@ -81,8 +86,17 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	double currentSetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();     	
     	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
+    		if (this.AC != null && buildingTemp_degC > heatingPreferences.getMaxComfortTemperature_degC() && !AC_active ) {
+    			//traceln("Enabling airconditioner!");
+    			AC_active = true;
+    		}
     	} else if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
+    		if (AC_active) {
+    			//traceln("Disabling airconditioner!");
+    			AC_active = false;
+    			I_state_AC_hDegC = 0;
+    		}
     	}
     	
     	//Smooth the setpoint signal
@@ -112,10 +126,31 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     		heatIntoBuilding_kW = max(0, gasBurnerAssetPower_kW - otherHeatDemand_kW);  
     	}
     	
+    	double coolingPower_kW = 0;
+    	
+    	if (AC_active) { 
+    		double deltaT_cooling_degC = (building.getCurrentTemperature() - heatingPreferences.getMaxComfortTemperature_degC());
+    		if (deltaT_cooling_degC < -1) {
+    			this.AC_active=false;
+    			//traceln("Building temp more than 1 degree below maxcomfort, turning off AC!");
+    		} else {
+	        	I_state_AC_hDegC = max(0,I_state_AC_hDegC + deltaT_cooling_degC * timeParameters.getTimeStep_h()); // max(0,...) to prevent buildup of negative integrator during warm periods.
+	        	coolingPower_kW = min(AC.getOutputCapacity_kW(),max(0,(deltaT_cooling_degC * P_gain_kWpDegC * 2 + I_state_AC_hDegC * I_gain_kWphDegC))); // max(0,...), so only cooling allowed, no heating.
+	        	/*if (coolingPower_kW > 0) {
+	        		traceln("Airconditioner active! Cooling power: %s kW", coolingPower_kW);
+	        		traceln("Current building temperature: %s deg C", buildingTemp_degC);
+	        		traceln("MaxComfortTemp: %s", heatingPreferences.getMaxComfortTemperature_degC());
+	        	}*/
+    		}
+        	gc.f_updateFlexAssetFlows(AC, coolingPower_kW / AC.getOutputCapacity_kW(), timeVariables);
+        	
+    	} 
+    	
     	//Updat flows with found asset powers
     	gc.f_updateFlexAssetFlows(heatPumpAsset, heatpumpAssetPower_kW / heatPumpAsset.getOutputCapacity_kW(), timeVariables);
     	gc.f_updateFlexAssetFlows(gasBurnerAsset, gasBurnerAssetPower_kW / gasBurnerAsset.getOutputCapacity_kW(), timeVariables);
-    	gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);
+    	//gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);
+		gc.f_updateFlexAssetFlows(building, (heatIntoBuilding_kW-coolingPower_kW) / building.getCapacityHeat_kW(), timeVariables);
     }
     
     
@@ -166,6 +201,15 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     	if(this.heatingPreferences == null) {
     		heatingPreferences = new J_HeatingPreferences();
     	}
+    	if ( gc instanceof GCHouse house) {
+    		if (house.p_airco!=null) {
+    			this.AC = house.p_airco;
+    			traceln("AC detected in PI heating management!");
+    		} else {
+    			this.AC = null;
+    		}
+    	}
+    	
 		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     	this.isInitialized = true;
     }
@@ -199,12 +243,17 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     //Store and reset states
 	public void storeStatesAndReset() {
 	    this.storedI_state_hDegC = this.I_state_hDegC;
-	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
+	    this.storedI_state_AC_hDegC = this.I_state_AC_hDegC;
 		this.I_state_hDegC = 0;
+		this.I_state_AC_hDegC = 0;
+		this.AC_active_stored = this.AC_active;
+	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
 		this.filteredCurrentSetpoint_degC = 0;
 	}
 	public void restoreStates() {
 		this.I_state_hDegC = this.storedI_state_hDegC;
+		this.I_state_AC_hDegC = this.storedI_state_AC_hDegC;
+		this.AC_active = this.AC_active_stored;
 	    this.filteredCurrentSetpoint_degC = this.storedFilteredCurrentSetpoint_degC;
 	}
 	

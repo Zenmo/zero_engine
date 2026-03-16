@@ -51,6 +51,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     private double storedI_state_hDegC;
     private double storedI_state_AC_hDegC;
     private double storedFilteredCurrentSetpoint_degC;
+    private boolean AC_active_stored = false;
     /**
      * Default constructor
      */
@@ -103,7 +104,6 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     		if (this.AC != null && buildingTemp_degC > heatingPreferences.getMaxComfortTemperature_degC() && !AC_active ) {
     			//traceln("Enabling airconditioner!");
     			AC_active = true;
-
     		}
     	} else {
     		if (timeOfDay_h < heatingPreferences.getStartOfDayTime_h() || timeOfDay_h >= heatingPreferences.getStartOfNightTime_h()) {
@@ -126,25 +126,30 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	buildingHeatingDemand_kW = max(0,deltaT_degC * P_gain_kWpDegC + I_state_hDegC * I_gain_kWphDegC);
     	
     	
-    	double assetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + currentHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
-    	gc.f_updateFlexAssetFlows(heatingAsset, assetPower_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
+    	double heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + currentHeatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.
+    	gc.f_updateFlexAssetFlows(heatingAsset, heatingAssetPower_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
 
     	double coolingPower_kW = 0;
     	
     	if (AC_active) { 
     		double deltaT_cooling_degC = (building.getCurrentTemperature() - heatingPreferences.getMaxComfortTemperature_degC());
-        	I_state_AC_hDegC = max(0,I_state_AC_hDegC + deltaT_cooling_degC * timeParameters.getTimeStep_h()); // max(0,...) to prevent buildup of negative integrator during warm periods.
-        	coolingPower_kW = min(AC.getOutputCapacity_kW(),max(0,(deltaT_cooling_degC * P_gain_kWpDegC * 2 + I_state_AC_hDegC * I_gain_kWphDegC))); // max(0,...), so only cooling allowed, no heating.
-        	if (coolingPower_kW > 0) {
-        		traceln("Airconditioner active! Cooling power: %s kW", coolingPower_kW);
-        		traceln("Current building temperature: %s deg C", buildingTemp_degC);
-        		//traceln("MaxComfortTemp: %s", heatingPreferences.getMaxComfortTemperature_degC());
-        	}
+    		if (deltaT_cooling_degC < -1) {
+    			this.AC_active=false;
+    			//traceln("Building temp more than 1 degree below maxcomfort, turning off AC!");
+    		} else {
+	        	I_state_AC_hDegC = max(0,I_state_AC_hDegC + deltaT_cooling_degC * timeParameters.getTimeStep_h()); // max(0,...) to prevent buildup of negative integrator during warm periods.
+	        	coolingPower_kW = min(AC.getOutputCapacity_kW(),max(0,(deltaT_cooling_degC * P_gain_kWpDegC * 2 + I_state_AC_hDegC * I_gain_kWphDegC))); // max(0,...), so only cooling allowed, no heating.
+	        	/*if (coolingPower_kW > 0) {
+	        		traceln("Airconditioner active! Cooling power: %s kW", coolingPower_kW);
+	        		traceln("Current building temperature: %s deg C", buildingTemp_degC);
+	        		traceln("MaxComfortTemp: %s", heatingPreferences.getMaxComfortTemperature_degC());
+	        	}*/
+    		}
         	gc.f_updateFlexAssetFlows(AC, coolingPower_kW / AC.getOutputCapacity_kW(), timeVariables);
         	
     	} 
     	
-		double heatIntoBuilding_kW = max(0, assetPower_kW - currentHeatDemand_kW);    			
+		double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - currentHeatDemand_kW);    			
 	    	
 		gc.f_updateFlexAssetFlows(building, (heatIntoBuilding_kW-coolingPower_kW) / building.getCapacityHeat_kW(), timeVariables);
 
@@ -233,23 +238,26 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
-    
-    
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
     }
     
-    
     //Store and reset states
 	public void storeStatesAndReset() {
 	    this.storedI_state_hDegC = this.I_state_hDegC;
-	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
+	    this.storedI_state_AC_hDegC = this.I_state_AC_hDegC;
 		this.I_state_hDegC = 0;
+		this.I_state_AC_hDegC = 0;
+		this.AC_active_stored = this.AC_active;
+	    this.storedFilteredCurrentSetpoint_degC = this.filteredCurrentSetpoint_degC;
 		this.filteredCurrentSetpoint_degC = 0;
+
 	}
 	public void restoreStates() {
 		this.I_state_hDegC = this.storedI_state_hDegC;
+		this.I_state_AC_hDegC = this.storedI_state_AC_hDegC;
+		this.AC_active = this.AC_active_stored;
 	    this.filteredCurrentSetpoint_degC = this.storedFilteredCurrentSetpoint_degC;
 	}
 	

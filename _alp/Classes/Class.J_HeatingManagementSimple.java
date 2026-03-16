@@ -28,11 +28,23 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 
 	private J_EABuilding building;	
     private J_EAConversion heatingAsset;
+    private J_EAConversionAirConditioner AC;
     private J_HeatingPreferences heatingPreferences;
 	private J_EAStorageHeat hotWaterBuffer;
 	private List<J_EAProduction> ptAssets;
     private boolean hasPT = false;
-
+    
+    // PI control gains for AC
+    private double P_gain_kWpDegC = 1*1;
+    private double I_gain_kWphDegC = 0.1*2;
+    //private double I_state_hDegC = 0;
+    private double I_state_AC_hDegC = 0;
+    private boolean AC_active = false;
+    
+    //Stored parameters
+    private double storedI_state_AC_hDegC;
+    private boolean AC_active_stored = false;
+    
 	/**
      * Default constructor
      */
@@ -72,6 +84,10 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 	    	double avgTemp24h_degC = gc.energyModel.pf_ambientTemperature_degC.getForecast();
 	    	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
 	    		buildingHeatingDemand_kW = max(0, heatingPreferences.getNightTimeSetPoint_degC() - buildingTemp_degC) * this.building.heatCapacity_JpK / 3.6e6 / timeParameters.getTimeStep_h();	
+	    		if (this.AC != null && !AC_active && buildingTemp_degC > heatingPreferences.getMaxComfortTemperature_degC()  ) {
+	    			//traceln("Enabling airconditioner!");
+	    			AC_active = true;
+	    		}
 	    	}
 	    	///On heating days
 	    	else {
@@ -94,10 +110,36 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 		    			// Daytime and building temperature acceptable
 		    		}
 		    	}
+	    		if (AC_active) {
+	    			//traceln("Disabling airconditioner!");
+	    			AC_active = false;
+	    			I_state_AC_hDegC = 0;
+	    		}
 	    	}
 	    	heatingAssetPower_kW = min(heatingAsset.getOutputCapacity_kW(),buildingHeatingDemand_kW + heatDemand_kW); // minimum not strictly needed as asset will limit power by itself. Could be used later if we notice demand is higher than capacity of heating asset.			
 			double heatIntoBuilding_kW = max(0, heatingAssetPower_kW - heatDemand_kW); // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
-	    	gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);
+	    	
+	    	double coolingPower_kW = 0;
+	    	
+	    	if (AC_active) { 
+	    		double deltaT_cooling_degC = (building.getCurrentTemperature() - heatingPreferences.getMaxComfortTemperature_degC());
+	    		if (deltaT_cooling_degC < -1) {
+	    			this.AC_active=false;
+	    			//traceln("Building temp more than 1 degree below maxcomfort, turning off AC!");
+	    		} else {
+		        	I_state_AC_hDegC = max(0,I_state_AC_hDegC + deltaT_cooling_degC * timeParameters.getTimeStep_h()); // max(0,...) to prevent buildup of negative integrator during warm periods.
+		        	coolingPower_kW = min(AC.getOutputCapacity_kW(),max(0,(deltaT_cooling_degC * P_gain_kWpDegC * 2 + I_state_AC_hDegC * I_gain_kWphDegC))); // max(0,...), so only cooling allowed, no heating.
+		        	if (coolingPower_kW > 0) {
+		        		//traceln("Airconditioner active! Cooling power: %s kW, building temp: %s, maxComfortTemp: %s", coolingPower_kW, buildingTemp_degC, heatingPreferences.getMaxComfortTemperature_degC());
+		        		//traceln("Current building temperature: %s deg C", buildingTemp_degC);
+		        		//traceln("MaxComfortTemp: %s", heatingPreferences.getMaxComfortTemperature_degC());
+		        	}
+	    		}
+	        	gc.f_updateFlexAssetFlows(AC, coolingPower_kW / AC.getOutputCapacity_kW(), timeVariables);	        	
+	    	} 
+			
+			//gc.f_updateFlexAssetFlows(building, heatIntoBuilding_kW / building.getCapacityHeat_kW(), timeVariables);
+			gc.f_updateFlexAssetFlows(building, (heatIntoBuilding_kW-coolingPower_kW) / building.getCapacityHeat_kW(), timeVariables);
 
     	} else {    	    	
     		heatingAssetPower_kW = heatDemand_kW; // Will lead to energy(heat) imbalance when heatDemand_kW is larger than heating asset capacity.
@@ -158,6 +200,17 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     	} else {
     		throw new RuntimeException(this.getClass() + " Unsupported heating asset!");    		
     	}
+    	if ( gc instanceof GCHouse house) {
+    		if (house.p_airco!=null) {
+    			if (this.building == null) {
+    				throw new RuntimeException("AirConditioner can only be used in combination with J_EABuilding thermal model, but no J_EABuilding present on gridconnection!");
+    			}
+    			this.AC = house.p_airco;
+    			traceln("AC detected in simple heating management!");
+    		} else {
+    			this.AC = null;
+    		}
+    	}
 
     	this.isInitialized = true;
     }
@@ -191,10 +244,13 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     }
     
 	public void storeStatesAndReset() {
-		//Nothing to store/reset
+	    this.storedI_state_AC_hDegC = this.I_state_AC_hDegC;
+		this.I_state_AC_hDegC = 0;
+		this.AC_active_stored = this.AC_active;
 	}
 	public void restoreStates() {
-		//Nothing to store/reset
+		this.I_state_AC_hDegC = this.storedI_state_AC_hDegC;
+		this.AC_active = this.AC_active_stored;
 	}
 	
 	@Override
