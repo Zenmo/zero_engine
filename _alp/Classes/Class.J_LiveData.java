@@ -124,8 +124,8 @@ public class J_LiveData {
     	this.data_totalSupply_kW.add(AnyLogicTime_h, v_currentPrimaryEnergyProduction_kW);
 
     	//Live capacity datasets
-    	this.data_gridCapacityDemand_kW.add(AnyLogicTime_h, connectionMetaData.contractedDeliveryCapacity_kW);
-    	this.data_gridCapacitySupply_kW.add(AnyLogicTime_h, -connectionMetaData.contractedFeedinCapacity_kW);
+    	this.data_gridCapacityDemand_kW.add(AnyLogicTime_h, connectionMetaData.getContractedDeliveryCapacity_kW());
+    	this.data_gridCapacitySupply_kW.add(AnyLogicTime_h, -connectionMetaData.getContractedFeedinCapacity_kW());
 
     	//// Gather specific electricity flows from corresponding energy assets
 		//for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {

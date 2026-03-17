@@ -39,7 +39,7 @@ public class J_ChargingManagementMaxAvailablePower implements I_ChargingManageme
     public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
     	double t_h = timeVariables.getT_h();
 
-    	double remainingChargingPower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(ELECTRICITY);
+    	double remainingChargingPower_kW = gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() - gc.fm_currentBalanceFlows_kW.get(ELECTRICITY);
     	if (gc.p_batteryAsset!=null) {
     		remainingChargingPower_kW += gc.p_batteryAsset.getCapacityAvailable_kW();
     	}

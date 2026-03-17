@@ -113,11 +113,11 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     private double getDeliveryCapacity_kW() {
 	    	switch (targetType) {
 			case GRIDCONNECTION:
-	    		return gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+	    		return gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
 			case GRIDNODE:
 	    		return ((GridNode)target).p_capacity_kW;
 			case ENERGYCOOP:
-	    		return ((EnergyCoop)target).v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+	    		return ((EnergyCoop)target).v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
 	    	default:
 	    		throw new RuntimeException("Was not able to find the delivery capacity of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
 		}
@@ -126,11 +126,11 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     private double getFeedinCapacity_kW() {
     	switch (targetType) {
 			case GRIDCONNECTION:
-	    		return gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+	    		return gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
 			case GRIDNODE:
 	    		return ((GridNode)target).p_capacity_kW;
 			case ENERGYCOOP:
-	    		return ((EnergyCoop)target).v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+	    		return ((EnergyCoop)target).v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
 	    	default:
 	    		throw new RuntimeException("Was not able to find the feedin capacity of the target of the battery in GridConnection: " + gc.p_gridConnectionID);
 		}

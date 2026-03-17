@@ -86,16 +86,16 @@ if (data.getRapidRunData() != null) {
 double f_updateVariables(I_EnergyData data)
 {/*ALCODESTART::1741792546535*/
 //Grid capacity
-v_gridCapacityDelivery_kW = data.getLiveData().connectionMetaData.contractedDeliveryCapacity_kW;
-v_gridCapacityFeedIn_kW = data.getLiveData().connectionMetaData.contractedFeedinCapacity_kW;
+v_gridCapacityDelivery_kW = data.getLiveData().connectionMetaData.getContractedDeliveryCapacity_kW();
+v_gridCapacityFeedIn_kW = data.getLiveData().connectionMetaData.getContractedFeedinCapacity_kW();
 
-v_gridCapacityDelivery_kW_rapidRun = data.getRapidRunData().connectionMetaData.contractedDeliveryCapacity_kW;
-v_gridCapacityFeedIn_kW_rapidRun = data.getRapidRunData().connectionMetaData.contractedFeedinCapacity_kW;
+v_gridCapacityDelivery_kW_rapidRun = data.getRapidRunData().connectionMetaData.getContractedDeliveryCapacity_kW();
+v_gridCapacityFeedIn_kW_rapidRun = data.getRapidRunData().connectionMetaData.getContractedFeedinCapacity_kW();
 //area.v_gridCapacityDelivery_groupcontract_kW = GC.p_contractedDeliveryCapacity_kW;
 //area.v_gridCapacityFeedin_groupcontract_kW = GC.p_contractedFeedinCapacity_kW;
 
-b_isRealDeliveryCapacityAvailable = data.getLiveData().connectionMetaData.contractedDeliveryCapacityKnown;
-b_isRealFeedinCapacityAvailable = data.getLiveData().connectionMetaData.contractedFeedinCapacityKnown;
+b_isRealDeliveryCapacityAvailable = data.getLiveData().connectionMetaData.getContractedDeliveryCapacityKnown();
+b_isRealFeedinCapacityAvailable = data.getLiveData().connectionMetaData.getContractedFeedinCapacityKnown();
 
 //Installed Asset variables
 v_batteryStorageCapacityInstalled_MWh = data.getLiveData().assetsMetaData.totalInstalledBatteryStorageCapacity_MWh;

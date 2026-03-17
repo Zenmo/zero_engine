@@ -64,72 +64,7 @@
 		<Id>1720442507543</Id>
 		<Name><![CDATA[v_enableCurtailment]]></Name>
 		<X>270</X>
-		<Y>240</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[boolean]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1720435316099</Id>
-		<Name><![CDATA[v_nfatoWeekendDeliveryCapacity_kW]]></Name>
-		<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-		<X>270</X>
-		<Y>170</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double[]]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new double[24]]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1720435335143</Id>
-		<Name><![CDATA[v_nfatoWeekDeliveryCapacity_kW]]></Name>
-		<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-		<X>270</X>
 		<Y>150</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double[]]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new double[24]]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1720520594279</Id>
-		<Name><![CDATA[v_enableNFato]]></Name>
-		<X>270</X>
-		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -171,7 +106,7 @@
 		<Id>1721821764640</Id>
 		<Name><![CDATA[v_hasQuarterHourlyValues]]></Name>
 		<X>270</X>
-		<Y>280</Y>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -184,52 +119,6 @@
               AccessType="public"
               StaticVariable="false">
 			<Type><![CDATA[boolean]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1725968910310</Id>
-		<Name><![CDATA[v_nfatoWeekendFeedinCapacity_kW]]></Name>
-		<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-		<X>270</X>
-		<Y>210</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double[]]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new double[24]]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1725968910312</Id>
-		<Name><![CDATA[v_nfatoWeekFeedinCapacity_kW]]></Name>
-		<Description><![CDATA[Capacities for Non-Firm ATO per hour of the day ]]></Description>
-		<X>270</X>
-		<Y>190</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double[]]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[new double[24]]]></Code>
-			</InitialValue>
 		</Properties>
 	</Variable>
 	<Variable Class="PlainVariable">
@@ -1177,7 +1066,7 @@
 		<Id>1753366605959</Id>
 		<Name><![CDATA[v_isActive]]></Name>
 		<X>270</X>
-		<Y>310</Y>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -565,34 +565,42 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 
 double f_initialize(J_TimeParameters timeParameters)
 {/*ALCODESTART::1669042410671*/
-v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
-v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+double cumulativeContractedDeliveryCapacity_kW = 0;
+double cumulativeContractedFeedinCapacity_kW = 0;
+boolean cumulativeContractedDeliveryCapacityKnown = true;
+boolean cumulativeContractedFeedinCapacityKnown = true;
+
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.assetsMetaData.activeAssetFlows.clear();
-v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
-v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
+v_liveConnectionMetaData.setCapacities_kW(0, 0, 0);
 
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
 	if(GC.v_isActive){
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+		cumulativeContractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+		cumulativeContractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
 		v_liveData.activeEnergyCarriers.addAll(GC.v_liveData.activeEnergyCarriers);
 		v_liveData.activeProductionEnergyCarriers.addAll(GC.v_liveData.activeProductionEnergyCarriers);
 		v_liveData.activeConsumptionEnergyCarriers.addAll(GC.v_liveData.activeConsumptionEnergyCarriers);
 		v_liveData.assetsMetaData.activeAssetFlows.addAll(GC.v_liveData.assetsMetaData.activeAssetFlows);
 	
-		if(!GC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
-			v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		if(!GC.v_liveConnectionMetaData.getContractedDeliveryCapacityKnown()){
+			cumulativeContractedDeliveryCapacityKnown = false;
 		}
 	
-		if(!GC.v_liveConnectionMetaData.contractedFeedinCapacityKnown){
-			v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		if(!GC.v_liveConnectionMetaData.getContractedFeedinCapacityKnown()){
+			cumulativeContractedFeedinCapacityKnown = false;
 		} 
 	}
 }
+//For coops this value does not make sense, but is mandatory for the model currently so just get the max of the 2 contracted.
+double physicalCapacity_kW = max(cumulativeContractedDeliveryCapacity_kW, cumulativeContractedFeedinCapacity_kW);
+
+//Set connection values
+v_liveConnectionMetaData.setCapacities_kW(cumulativeContractedDeliveryCapacity_kW, cumulativeContractedFeedinCapacity_kW, physicalCapacity_kW);
+v_liveConnectionMetaData.setCapacitiesKnown(cumulativeContractedDeliveryCapacityKnown, cumulativeContractedFeedinCapacityKnown, false);
 
 
 acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);

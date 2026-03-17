@@ -81,8 +81,8 @@ public class J_BatteryManagementPrice implements I_BatteryManagement {
 		
 		    // limit charging power to available connection capacity
 		    if( stayWithinConnectionLimits ) {
-		    	double availableChargePower_kW = gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
-		    	double availableDischargePower_kW = gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW + gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max discharging power within grid capacity
+		    	double availableChargePower_kW = gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max battery charging power within grid capacity
+		    	double availableDischargePower_kW = gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW() + gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); // Max discharging power within grid capacity
 		    	chargeSetpoint_kW = min(max(chargeSetpoint_kW, -availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
 		    }
 		

@@ -554,8 +554,8 @@ public class J_RapidRunData {
     		acc_summerWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     		acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-    		acc_summerWeekDeliveryCapacity_kW.addStep( connectionMetaData.physicalCapacity_kW );
-    		acc_summerWeekFeedinCapacity_kW.addStep( -connectionMetaData.physicalCapacity_kW );
+    		acc_summerWeekDeliveryCapacity_kW.addStep( connectionMetaData.getPhysicalCapacity_kW() );
+    		acc_summerWeekFeedinCapacity_kW.addStep( -connectionMetaData.getPhysicalCapacity_kW() );
     		
     		//AssetFlows
     	    for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
@@ -591,8 +591,8 @@ public class J_RapidRunData {
     		acc_winterWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     		acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-    		acc_winterWeekDeliveryCapacity_kW.addStep( connectionMetaData.physicalCapacity_kW );
-    		acc_winterWeekFeedinCapacity_kW.addStep( -connectionMetaData.physicalCapacity_kW );
+    		acc_winterWeekDeliveryCapacity_kW.addStep( connectionMetaData.getPhysicalCapacity_kW() );
+    		acc_winterWeekFeedinCapacity_kW.addStep( -connectionMetaData.getPhysicalCapacity_kW() );
     		//AssetFlows
     	    for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
     	    	this.am_assetFlowsWinterWeek_kW.get(AC).addStep ( fm_currentAssetFlows_kW.get(AC)  );
@@ -636,7 +636,7 @@ public class J_RapidRunData {
     	double totalOverloadDurationDelivery_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-        	if(electricityBalance_kW > connectionMetaData.contractedDeliveryCapacity_kW){
+        	if(electricityBalance_kW > connectionMetaData.getContractedDeliveryCapacity_kW()){
         		totalOverloadDurationDelivery_hr += signalResolution_h;
         	}
     	}
@@ -647,7 +647,7 @@ public class J_RapidRunData {
     	double totalOverloadDurationFeedin_hr = 0.0;
     	double signalResolution_h = am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getSignalResolution_h();
     	for (double electricityBalance_kW : am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW()) {
-        	if(electricityBalance_kW < -connectionMetaData.contractedFeedinCapacity_kW){
+        	if(electricityBalance_kW < -connectionMetaData.getContractedFeedinCapacity_kW()){
         		totalOverloadDurationFeedin_hr += signalResolution_h;
         	}
     	}
@@ -727,7 +727,7 @@ public class J_RapidRunData {
     	// Check if capacity is known
     	Double possibleGrowthFactor_fr;
     	Double requiredBatteryCapacity_kWh;
-    	if (connectionMetaData.contractedDeliveryCapacityKnown) {
+    	if (connectionMetaData.getContractedDeliveryCapacityKnown()) {
     		// Find day with max capacity utilisation	
     		ZeroAccumulator acc_dailyAvgElectricityConsumption_kW = am_dailyAverageConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
     		ZeroAccumulator acc_dailyAvgElectricityProduction_kW = am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY);
@@ -740,7 +740,7 @@ public class J_RapidRunData {
     		}
     		//traceln("Max day: %s, average power %s kW", maxDay, dailyAvgs_kW[maxDay]);
     		// Maximum growth is when dailyAvg delivery would be equal to contracted delivery capacity.
-    		possibleGrowthFactor_fr = connectionMetaData.contractedDeliveryCapacity_kW / dailyAvgs_kW[maxDay];
+    		possibleGrowthFactor_fr = connectionMetaData.getContractedDeliveryCapacity_kW() / dailyAvgs_kW[maxDay];
     		if ( possibleGrowthFactor_fr < 1.0) {
     			//traceln("Already overutilising contracted delivery capacity over one day!! Probably an infeasible results...Growth factor: %s", possibleGrowthFactor_fr);
     			requiredBatteryCapacity_kWh = 0.0;

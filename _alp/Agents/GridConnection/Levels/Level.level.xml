@@ -459,7 +459,7 @@
 			<Id>1658477089941</Id>
 			<Expression>my_dataset6</Expression>
 			<Color>-65536</Color>
-			<Expression2>v_liveConnectionMetaData.contractedDeliveryCapacity_kW</Expression2>
+			<Expression2>v_liveConnectionMetaData.getContractedDeliveryCapacity_kW()</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
@@ -469,7 +469,7 @@
 			<Id>1658477089940</Id>
 			<Expression>my_dataset7</Expression>
 			<Color>-65536</Color>
-			<Expression2>- v_liveConnectionMetaData.contractedFeedinCapacity_kW</Expression2>
+			<Expression2>- v_liveConnectionMetaData.getContractedFeedinCapacity_kW()</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

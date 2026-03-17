@@ -534,12 +534,8 @@ Collections.reverse(c_gridNodeExecutionList);
 
 
 //Set cumulative toplevel grid values as energyModel values
-v_liveConnectionMetaData.physicalCapacity_kW = topLevelElectricGridCapacity_kW;
-v_liveConnectionMetaData.contractedDeliveryCapacity_kW = topLevelElectricGridCapacity_kW;
-v_liveConnectionMetaData.contractedFeedinCapacity_kW = topLevelElectricGridCapacity_kW;
-v_liveConnectionMetaData.physicalCapacityKnown = topLevelGridCapacitiesKnown;
-v_liveConnectionMetaData.contractedDeliveryCapacityKnown = topLevelGridCapacitiesKnown;
-v_liveConnectionMetaData.contractedFeedinCapacityKnown = topLevelGridCapacitiesKnown;
+v_liveConnectionMetaData.setCapacities_kW(topLevelElectricGridCapacity_kW, topLevelElectricGridCapacity_kW, topLevelElectricGridCapacity_kW);
+v_liveConnectionMetaData.setCapacitiesKnown(topLevelGridCapacitiesKnown, topLevelGridCapacitiesKnown, topLevelGridCapacitiesKnown);
 
 //traceln("Grid Node execution list: %s", c_gridNodeExecutionList );
 /*ALCODEEND*/}
@@ -629,9 +625,9 @@ for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_initializeGridnode();
 }
 
-v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = false;
-v_liveData.connectionMetaData.contractedFeedinCapacityKnown = false;
-v_liveData.connectionMetaData.physicalCapacityKnown = false;
+v_liveData.connectionMetaData.setContractedDeliveryCapacityKnown(false);
+v_liveData.connectionMetaData.setContractedFeedinCapacityKnown(false);
+v_liveData.connectionMetaData.setPhysicalCapacityKnown(false);
 
 f_initializeForecasts();
 
@@ -657,7 +653,7 @@ return c_connectionOwners;
 
 double f_getTopLevelGridCapacity_kW()
 {/*ALCODESTART::1716899946694*/
-return v_liveConnectionMetaData.physicalCapacity_kW;
+return v_liveConnectionMetaData.getPhysicalCapacity_kW();
 /*ALCODEEND*/}
 
 ArrayList<J_EA> f_getEnergyAssets()
