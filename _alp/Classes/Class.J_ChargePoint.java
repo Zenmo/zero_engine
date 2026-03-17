@@ -70,7 +70,8 @@ public class J_ChargePoint implements I_ChargePointRegistration{
 		if (charge_kW < 0 && !this.V2GCapable) {
 			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable");
 		}
-		J_FlowPacket flowPacket = chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getVehicleChargingCapacity_kW(), timeVariables);
+		double powerFraction_fr = DoubleCompare.equalsZero(chargingRequest.getVehicleChargingCapacity_kW()) ? 0.0 : charge_kW / chargingRequest.getVehicleChargingCapacity_kW();
+		J_FlowPacket flowPacket = chargingRequest.f_updateAllFlows( powerFraction_fr, timeVariables);
 		parentGC.f_addFlows(flowPacket, (J_EA)chargingRequest);
     }
     

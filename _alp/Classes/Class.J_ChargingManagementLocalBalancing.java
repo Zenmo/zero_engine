@@ -61,7 +61,8 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 			if ( t_h >= chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
 				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
 			} else {
-				double flexGain_r = 1.0; // how strongly to 'follow' currentBalanceBeforeEV_kW
+				double flexGain_r_manual = 0.8;
+				double flexGain_r = flexGain_r_manual/max(1,(double)chargePoint.getCurrentNumberOfChargeRequests()); // how strongly to 'follow' currentBalanceBeforeEV_kW
 				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
     			if ( this.V2GActive && chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
 					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));

@@ -48,10 +48,10 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
    				traceln("ChargingRequest duration negative! leaveTime_h: %s, t_h %s", chargingRequest.getLeaveTime_h(), timeVariables.getT_h());
    				//throw new RuntimeException("ChargingRequest starting after endtime!");
    			}
-			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
+			//double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
 			//traceln("Charging need: %s, getEnergyNeedForNextTrip_kWh: %s", chargeNeedForNextTrip_kWh, chargingRequest.getEnergyNeedForNextTrip_kWh());
 			
-    		chargePoint.charge(chargingRequest, chargePoint.getMaxChargingCapacity_kW(chargingRequest), timeVariables, gc);
+    		chargePoint.charge(chargingRequest, max(0,chargePoint.getMaxChargingCapacity_kW(chargingRequest)), timeVariables, gc);
     	}
     }
     

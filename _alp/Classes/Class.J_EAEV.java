@@ -63,6 +63,9 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, energyConsumption_kWhpkm));
 	    	
 	    }
+	    if (this.vehicleScaling < 0 ) {
+	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Vehicle scaling negative!"));	    	
+	    }
 	    this.activeProductionEnergyCarriers.add(this.storageMedium);   	
 		this.activeConsumptionEnergyCarriers.add(this.storageMedium);
 		
@@ -142,12 +145,12 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			//mileage_km += tripDist_km;
 			double consumption_fr = (tripDist_km * energyConsumption_kWhpkm) / (storageCapacity_kWh);
 			//traceln("J_EAEV.endTrip(), trip consumption: %s [pct of SoC], specific consumption kWh/km: %s", 100*consumption_fr, energyConsumption_kWhpkm);
-			stateOfCharge_fr -= (tripDist_km * vehicleScaling * energyConsumption_kWhpkm) / (storageCapacity_kWh * vehicleScaling);
+			stateOfCharge_fr -= (tripDist_km * energyConsumption_kWhpkm) / (storageCapacity_kWh);
 
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / this.timeParameters.getTimeStep_h();
 			if (stateOfCharge_fr < 0) {
-				traceln("EV of type: " + this.energyAssetType + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%");
+				traceln("EV of type: " + this.energyAssetType + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%, vehicle scaling: " + this.vehicleScaling);
 			}
 			this.available = true;
 			return true;
@@ -156,6 +159,9 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	
 	// Methods from I_Vehicle
 	public void setVehicleScaling(double vehicleScaling) {
+		if (vehicleScaling < 0) {
+			throw new RuntimeException("J_EAEV with negative vehicle scaling not allowed!");
+		}
     	this.vehicleScaling = vehicleScaling;
     }
     
@@ -221,7 +227,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	}
 	
 	public double getChargingTimeToFull_MIN() {
-		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh * vehicleScaling) - (storageCapacity_kWh * vehicleScaling) * stateOfCharge_fr) / (capacityElectric_kW * vehicleScaling) ) ;
+		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh) - (storageCapacity_kWh) * stateOfCharge_fr) / (capacityElectric_kW) ) ;
 		return chargingTime_min;
 	}
  	

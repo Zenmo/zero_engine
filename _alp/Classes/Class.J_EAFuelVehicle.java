@@ -23,7 +23,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
     	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, energyAssetType, tripTracker, energyCarrier, true );
     }
     public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
-	    if (energyCarrier == OL_EnergyCarriers.HEAT) {
+	    if (energyCarrier == OL_EnergyCarriers.HEAT || energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 	    	throw new RuntimeException("Invalid choice of energy carrier for J_EAFuelVehicle");
 	    }
 		this.setOwner(owner);
