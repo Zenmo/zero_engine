@@ -1239,7 +1239,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[J_EAAirco]]></Type>
+			<Type><![CDATA[J_EAConversionAirConditioner]]></Type>
 			<UnitType>NONE</UnitType>
 			<SdArray>false</SdArray>
 			<ParameterEditor>

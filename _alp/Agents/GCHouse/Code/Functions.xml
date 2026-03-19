@@ -104,6 +104,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1749648447119</Id>
 		<Name><![CDATA[f_manageAirco]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1160</X>
 		<Y>240</Y>
 		<Label>
