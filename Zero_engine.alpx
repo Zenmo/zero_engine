@@ -725,6 +725,10 @@
 					<Name><![CDATA[PEAK_SHAVING_FORECAST]]></Name>
 				</Option>
 				<Option>
+					<Id>1773842689011</Id>
+					<Name><![CDATA[LOCAL_BALANCING]]></Name>
+				</Option>
+				<Option>
 					<Id>1752585822134</Id>
 					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
@@ -2001,6 +2005,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1772098769739</Id>
 				<Name><![CDATA[I_AggregatorManagement]]></Name>
 				<Folder>1772100333519</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773841546071</Id>
+				<Name><![CDATA[J_BatteryManagementLocalBalancing]]></Name>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
