@@ -111,6 +111,8 @@ public class J_AccumulatorMap <E extends Enum<E>> implements Serializable {
 		for (var EC : accumulatorMap.enumSet) {
 			if (!this.enumSet.contains(EC)) {
 				// make a new one?
+				traceln("this enumSet: " + this.enumSet);
+				traceln("other enumSet: " + accumulatorMap.enumSet);
 				throw new RuntimeException("Tried to add two AccumulatorMaps without matching keys.");
 			}
 			this.get(EC).add(accumulatorMap.get(EC));
