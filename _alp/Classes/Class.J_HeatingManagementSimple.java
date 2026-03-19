@@ -206,9 +206,10 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
     				throw new RuntimeException("AirConditioner can only be used in combination with J_EABuilding thermal model, but no J_EABuilding present on gridconnection!");
     			}
     			this.AC = house.p_airco;
-    			traceln("AC detected in simple heating management!");
     		} else {
     			this.AC = null;
+    			this.AC_active = false;
+    			this.I_state_AC_hDegC = 0;
     		}
     	}
 

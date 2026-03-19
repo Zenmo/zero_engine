@@ -1043,7 +1043,6 @@ else if (j_ea instanceof J_EAConversion conversionAsset) {
 		}
 	} 
 	else if (j_ea instanceof J_EAConversionAirConditioner aircoAsset) {
-		traceln("Connecting airco to GC!");
 		p_airco = aircoAsset;
 		energyModel.c_ambientDependentAssets.add(aircoAsset);
 	}

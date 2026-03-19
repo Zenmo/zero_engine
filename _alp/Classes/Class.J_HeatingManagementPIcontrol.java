@@ -102,7 +102,6 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	if(avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
     		currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     		if (this.AC != null && buildingTemp_degC > heatingPreferences.getMaxComfortTemperature_degC() && !AC_active ) {
-    			//traceln("Enabling airconditioner!");
     			AC_active = true;
     		}
     	} else {
@@ -110,7 +109,6 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     			currentSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
     		}
     		if (AC_active) {
-    			//traceln("Disabling airconditioner!");
     			AC_active = false;
     			I_state_AC_hDegC = 0;
     		}
@@ -205,9 +203,10 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	if ( gc instanceof GCHouse house) {
     		if (house.p_airco!=null) {
     			this.AC = house.p_airco;
-    			traceln("AC detected in PI heating management!");
     		} else {
     			this.AC = null;
+    			this.AC_active = false;
+    			this.I_state_AC_hDegC = 0;
     		}
     	}
     			
