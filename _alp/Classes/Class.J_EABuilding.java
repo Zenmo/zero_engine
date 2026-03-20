@@ -8,7 +8,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
 	private double additionalVentilationLosses_fr = 0;
-	
+	private double coldExtracted_kWh = 0;
 	//Slider scaling factor
 	private double lossScalingFactor_fr = 1;
 	
@@ -80,9 +80,9 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	@Override
 	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
 		
-		if (DoubleCompare.lessThanZero(powerFraction_fr)) {
+		/*if (DoubleCompare.lessThanZero(powerFraction_fr)) {
 			throw new RuntimeException("Cooling of the J_EABuilding is not yet supported.");
-		}
+		}*/
 		double lossPower_kW = calculateLoss_kW(); // Heat exchange with environment through convection
 		double additionalVentilationLoss_kW = calculateAdditionalVentilationLoss_kW();
 		double solarHeating_kW = solarHeating_kW(); // Heat influx from sunlight
@@ -101,7 +101,8 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		}
 		updateStateOfCharge( deltaEnergy_kWh );
 		
-		this.heatCharged_kWh += inputPower_kW * this.timeParameters.getTimeStep_h();
+		this.heatCharged_kWh += max(0,inputPower_kW * this.timeParameters.getTimeStep_h());
+		this.coldExtracted_kWh +=max(0,-inputPower_kW * this.timeParameters.getTimeStep_h());
 		
 		this.flowsMap.put(OL_EnergyCarriers.HEAT, inputPower_kW);
 
