@@ -54,12 +54,12 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
     		powerFractions_fr.add(ratio);
     	}
     	
-    	while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
-    		starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );  // Source data is always just one day, repeating every day.
-    		endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 ); // Source data is always just one day, repeating every day.
-    		v_eventIndex++;
-    		if ( v_eventIndex > starttimes_min.size() - 1 ) {
-    			v_eventIndex = 0;
+    	while ( starttimes_min.get(eventIndex) - time_min < 0) {
+    		starttimes_min.set( eventIndex, starttimes_min.get(eventIndex) + 1440 );  // Source data is always just one day, repeating every day.
+    		endtimes_min.set( eventIndex, endtimes_min.get(eventIndex) + 1440 ); // Source data is always just one day, repeating every day.
+    		eventIndex++;
+    		if ( eventIndex > starttimes_min.size() - 1 ) {
+    			eventIndex = 0;
     		}
     	}
     	
@@ -73,62 +73,62 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
     public void manageActivities(J_TimeVariables timeVariables) {
     	double time_min = timeVariables.getAnyLogicTime_h() * 60;
     	//traceln("Cooking tracker current time: " + time_min);
-    	//traceln("Event index: " + v_eventIndex);
+    	//traceln("Event index: " + eventIndex);
     	//traceln("startTimes: " + starttimes_min);
     	//traceln("endTimes: " + endtimes_min);
     	//traceln("powerFractions_fr: "  + powerFractions_fr);
     	
     	if (cooking) {
-	    	if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
+	    	if (time_min >= endtimes_min.get(eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
 
 	    		//main.v_activeCookingSessions.decrementAndGet();
 	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
 				// factor to compensate for the fact that you might not be cooking for the entire timestep.
-				double fr = (time_min - this.endtimes_min.get(this.v_eventIndex)) / this.timeStep_min;
-				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);
+				double fr = (time_min - this.endtimes_min.get(this.eventIndex)) / this.timeStep_min;
+				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);
 	    		
-				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
-				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
-				v_eventIndex++;
-				if ( v_eventIndex >= starttimes_min.size() ) {
-					v_eventIndex = 0;
+				starttimes_min.set( eventIndex, starttimes_min.get(eventIndex) + 1440 );
+				endtimes_min.set( eventIndex, endtimes_min.get(eventIndex) + 1440 );
+				eventIndex++;
+				if ( eventIndex >= starttimes_min.size() ) {
+					eventIndex = 0;
 				}
 				cooking=false;
 				
-				if (time_min >= starttimes_min.get(v_eventIndex)) {
+				if (time_min >= starttimes_min.get(eventIndex)) {
 					// factor to compensate for the fact that you might not be cooking for the entire timestep.
-					fr = (time_min - this.starttimes_min.get(this.v_eventIndex)) / this.timeStep_min;
-					this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);	    		
+					fr = (time_min - this.starttimes_min.get(this.eventIndex)) / this.timeStep_min;
+					this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);	    		
 					//main.v_activeCookingSessions.incrementAndGet();
 					cooking=true;
-					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, v_eventIndex");
+					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, eventIndex");
 				}
 	    	}
 	    	else {
-	    		this.powerFraction_fr = this.starttimes_min.get(this.v_eventIndex);
+	    		this.powerFraction_fr = this.starttimes_min.get(this.eventIndex);
 	    	}
-    	} else if (time_min >= starttimes_min.get(v_eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
-    		/*if (endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) > 100) {
-			traceln("Cooking event longer than 100 minutes!! Rowindex %s, eventIndex %s.", rowIndex, v_eventIndex);
+    	} else if (time_min >= starttimes_min.get(eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
+    		/*if (endtimes_min.get(eventIndex) - starttimes_min.get(eventIndex) > 100) {
+			traceln("Cooking event longer than 100 minutes!! Rowindex %s, eventIndex %s.", rowIndex, eventIndex);
 			}*/
     		
 			// factor to compensate for the fact that you might not be cooking for the entire timestep.
-			double fr = (time_min - this.starttimes_min.get(this.v_eventIndex)) / this.timeStep_min;
-			this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);	    		
+			double fr = (time_min - this.starttimes_min.get(this.eventIndex)) / this.timeStep_min;
+			this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);	    		
 			//main.v_activeCookingSessions.incrementAndGet();
 			cooking=true;
-			if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session in the same timestep? Still need to fix energy use for this case!! 
+			if (time_min >= endtimes_min.get(eventIndex) ) { // end cooking session in the same timestep? Still need to fix energy use for this case!! 
 	    	
 	    		//main.v_activeCookingSessions.decrementAndGet();
 	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
-				fr = (this.endtimes_min.get(this.v_eventIndex) - this.starttimes_min.get(this.v_eventIndex)) / this.timeStep_min;	    		
-				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.v_eventIndex);	    		
+				fr = (this.endtimes_min.get(this.eventIndex) - this.starttimes_min.get(this.eventIndex)) / this.timeStep_min;	    		
+				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);	    		
 	    		
-				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
-				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
-				v_eventIndex++;
-				if ( v_eventIndex >= starttimes_min.size() ) {
-					v_eventIndex = 0;
+				starttimes_min.set( eventIndex, starttimes_min.get(eventIndex) + 1440 );
+				endtimes_min.set( eventIndex, endtimes_min.get(eventIndex) + 1440 );
+				eventIndex++;
+				if ( eventIndex >= starttimes_min.size() ) {
+					eventIndex = 0;
 				}
 				cooking=false;
 			}
@@ -142,17 +142,17 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
     
     @Override
     public void storeStatesAndReset() {
-    	v_eventIndexStored = v_eventIndex;
+    	eventIndexStored = eventIndex;
     	storedStarttimes_min = new ArrayList<>(starttimes_min);
     	storedEndtimes_min = new ArrayList<>(endtimes_min);    	
 		starttimes_min = new ArrayList<>(initalStarttimes_min);
 		endtimes_min = new ArrayList<>(initalEndtimes_min);
-    	v_eventIndex = 0;
+    	eventIndex = 0;
     }
     
     @Override
     public void restoreStates() {
-    	v_eventIndex = v_eventIndexStored;
+    	eventIndex = eventIndexStored;
 		starttimes_min = new ArrayList<>(storedStarttimes_min);
 		endtimes_min = new ArrayList<>(storedEndtimes_min);
 	}
