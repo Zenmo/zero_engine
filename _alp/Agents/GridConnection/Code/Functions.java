@@ -981,9 +981,13 @@ else if (j_ea instanceof J_EAConversion conversionAsset) {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
 	} 
+	else if (j_ea instanceof J_EAConversionAirConditioner aircoAsset) {
+		p_airco = aircoAsset;
+		energyModel.c_ambientDependentAssets.add(aircoAsset);
+	}
 
 } 
-else if  (j_ea instanceof J_EAStorage storageAsset) {
+else if (j_ea instanceof J_EAStorage storageAsset) {
 	c_storageAssets.add(storageAsset);
 	energyModel.c_storageAssets.add(storageAsset);
 	if (j_ea instanceof J_EAStorageHeat) {
@@ -1005,11 +1009,7 @@ else if  (j_ea instanceof J_EAStorage storageAsset) {
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 	}
-}
-else if  (j_ea instanceof J_EAAirco aircoAsset) {
-	p_airco = aircoAsset;
-}
-else{
+} else {
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFlex asset!");
 }
 /*ALCODEEND*/}
@@ -1220,6 +1220,10 @@ else if (j_ea instanceof J_EAConversion) {
 	else if (j_ea instanceof J_EAConversionElectrolyser) {
 	
 	}
+	else if (j_ea instanceof J_EAConversionAirConditioner) {
+		p_airco = null;
+		energyModel.c_ambientDependentAssets.remove(j_ea);
+	}
 } 
 else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
@@ -1242,7 +1246,7 @@ else if  (j_ea instanceof J_EAStorage) {
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 	}
 }
-else if (j_ea instanceof J_EAAirco) {
+else if (j_ea instanceof J_EAConversionAirConditioner) {
 	p_airco = null;
 }
 /*ALCODEEND*/}

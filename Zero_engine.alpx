@@ -361,6 +361,10 @@
 					<Id>1770131381146</Id>
 					<Name><![CDATA[DIESEL_GENERATOR]]></Name>
 				</Option>
+				<Option>
+					<Id>1773156171459</Id>
+					<Name><![CDATA[AIR_CONDITIONER]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659525715752</Id>
@@ -996,6 +1000,10 @@
 				<Option>
 					<Id>1753968826413</Id>
 					<Name><![CDATA[heatPumpElectricityConsumption_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1773140446104</Id>
+					<Name><![CDATA[airConditionersElectricPower_kW]]></Name>
 				</Option>
 				<Option>
 					<Id>1753968826414</Id>
@@ -1689,6 +1697,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<JavaClass>
 				<Id>1749648342034</Id>
 				<Name><![CDATA[J_EAAirco]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -2054,6 +2063,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1773938776746</Id>
 				<Name><![CDATA[I_GridOperatorTariffs]]></Name>
 				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773139549641</Id>
+				<Name><![CDATA[J_EAConversionAirConditioner]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
