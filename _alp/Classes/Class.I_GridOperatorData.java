@@ -1,8 +1,0 @@
-public interface I_GridOperatorData
-{
-	double getYearlyPhysicalCapacityCost_eur(J_ConnectionMetaData connectionMetaData);
-	double getYearlyContractDeliveryCapacityCost_eur(J_ConnectionMetaData connectionMetaData);
-	double getYearlyContractFeedinCapacityCost_eur(J_ConnectionMetaData connectionMetaData);
-	double getMonthlyPeakCost_eur(J_ConnectionMetaData connectionMetaData, double monthlyPeak_kW);
-	double getTransportCost_eur(J_ConnectionMetaData connectionMetaData, double transportedElectricity_kWh);
-}

@@ -2047,13 +2047,13 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Folder>1752680962144</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1773160079701</Id>
-				<Name><![CDATA[I_GridOperatorData]]></Name>
-				<Folder>1752680962144</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1773332207914</Id>
 				<Name><![CDATA[J_GridCapacitySharingManager]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773938776746</Id>
+				<Name><![CDATA[I_GridOperatorTariffs]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

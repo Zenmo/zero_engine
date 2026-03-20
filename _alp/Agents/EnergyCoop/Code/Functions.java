@@ -1540,6 +1540,7 @@ EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_live
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeConsumptionEnergyCarriers);
 EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeProductionEnergyCarriers);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.copyOf(v_liveAssetsMetaData.activeAssetFlows);
+
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
 for(GridConnection GC : c_memberGridConnections){
