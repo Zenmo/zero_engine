@@ -51,8 +51,17 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
-    	// v_currentLoad_kW is the GN load of the previous timestep
-    	double heatTransferToNetwork_kW = max(0, gc.p_parentNodeHeat.v_currentLoad_kW + previousHeatFeedin_kW);
+    	
+    	// Calculate current timestep demand by summing flows from all lower-level connections
+    	double currentDemand_kW = 0;
+    	for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
+    	    if (childGC != gc) {
+    	        currentDemand_kW += childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	    }
+    	}
+    	
+    	double heatTransferToNetwork_kW = max(0, currentDemand_kW);
+    	
     	if (heatTransferToNetwork_kW > heatingAsset.getOutputCapacity_kW()) {
     		throw new RuntimeException("Heating asset in " + this.getClass() + " does not have sufficient capacity.");
     	}
