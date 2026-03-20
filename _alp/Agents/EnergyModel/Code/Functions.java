@@ -237,11 +237,6 @@ v_timeStepsElapsed=0;
 p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
 //// Store and reset model states
-for (J_EA EA : c_energyAssets) {
-	EA.storeStatesAndReset();		
-}
-
-
 for (GridConnection GC : c_gridConnections) {
 	
 	if (GC.v_rapidRunData != null) {
@@ -255,21 +250,12 @@ for (GridConnection GC : c_gridConnections) {
 	GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
 	GC.v_rapidRunData.initializeAccumulators(GC.v_liveData.activeEnergyCarriers, GC.v_liveData.activeConsumptionEnergyCarriers, GC.v_liveData.activeProductionEnergyCarriers, GC.v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();
 		
-	GC.f_resetStates();
+	// f_resetStates resets the accumulators in rapidrundata, so must be after copying the previous run data		
+	GC.f_resetStates(p_timeVariables); 
 	
-	GC.c_tripTrackers.forEach(tt->{
-		tt.storeStatesAndReset();
-		tt.setStartIndex(p_timeVariables, GC.f_getChargePoint());
-		//tt.prepareNextActivity(p_runStartTime_h*60, GC.f_getChargePoint());
-		});
-	if (GC instanceof GCHouse) {
-		if (((GCHouse)GC).p_cookingTracker != null) {
-			((GCHouse)GC).p_cookingTracker.storeStatesAndReset();
-		}
-	}
 }
 for (GridConnection GC : c_subGridConnections) {
-	GC.f_resetStates();
+	GC.f_resetStates(p_timeVariables);
 }
 
 for (GridNode GN : pop_gridNodes) {
@@ -285,19 +271,11 @@ for (EnergyCoop EC : pop_energyCoops) {
 		if (b_storePreviousRapidRunData) {
 			EC.v_previousRunData = EC.v_rapidRunData;
 		}
-		/*EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
-		EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
-		if(EC.v_rapidRunData.getStoreTotalAssetFlows() == false){
-			EC.v_rapidRunData.setStoreTotalAssetFlows(true);
-			EC.v_rapidRunData.initializeAccumulators(p_runEndTime_h - p_runStartTime_h, p_timeStep_h, EC.v_liveData.activeEnergyCarriers, EC.v_liveData.activeConsumptionEnergyCarriers, EC.v_liveData.activeProductionEnergyCarriers, EC.v_liveAssetsMetaData.activeAssetFlows);
-		}*/
 	} 
 	EC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
 	EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
-	//if(EC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 	EC.v_rapidRunData.setStoreTotalAssetFlows(true);
-	//}	
 	EC.v_rapidRunData.initializeAccumulators(EC.v_liveData.activeEnergyCarriers, EC.v_liveData.activeConsumptionEnergyCarriers, EC.v_liveData.activeProductionEnergyCarriers, EC.v_liveAssetsMetaData.activeAssetFlows);
 	EC.f_resetStates();
 
@@ -379,27 +357,8 @@ traceln("---FINISHED YEAR MODEL RUN----");
 v_timeStepsElapsed = v_timeStepsElapsed_live;
 p_timeVariables.updateTimeVariables(v_timeStepsElapsed, p_timeParameters);
 
-
-for (J_EA EA : c_energyAssets) {
-	EA.restoreStates();		
-}
-
-/*for (GridNode GN : pop_gridNodes) {
-	//Has no reset states
-}*/
-
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStatesAfterRapidRun();
-	GC.c_tripTrackers.forEach(tt->{
-		tt.restoreStates();
-		//tt.prepareNextActivity((t_h-p_runStartTime_h)*60, GC.f_getChargePoint());
-		});	
-	//GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity((t_h-p_runStartTime_h)*60));
-	if (GC instanceof GCHouse) {
-		if (((GCHouse)GC).p_cookingTracker != null) {
-			((GCHouse)GC).p_cookingTracker.restoreStates();
-		}
-	}	
 }
 
 v_isRapidRun = false;

@@ -24,8 +24,8 @@ public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
 	protected ArrayList<Double> endtimes_min = new ArrayList<>();
 	//private ArrayList<Double> eventMagnitude = new ArrayList<>();
     public int nbActivities = 0;
-	public int v_eventIndex = 0;
-	protected int v_eventIndexStored =0;
+	public int eventIndex = 0;
+	protected int eventIndexStored =0;
 	
     /**
      * Default constructor
@@ -37,12 +37,12 @@ public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
     }
     
     public void storeStatesAndReset() {
-    	v_eventIndexStored = v_eventIndex;
-    	v_eventIndex = 0;
+    	eventIndexStored = eventIndex;
+    	eventIndex = 0;
     }
     
     public void restoreStates() {
-    	v_eventIndex = v_eventIndexStored;
+    	eventIndex = eventIndexStored;
 	}
     
 
