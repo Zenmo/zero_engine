@@ -57,7 +57,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 					heatingAssets.put(gc.p_gridConnectionID, (I_HeatingAsset)heatingAsset);
 				}
 				else {
-					throw new RuntimeException("J_BatteryManagementPeakShavingForecast does not support other flex assets");
+					throw new RuntimeException("J_BatteryManagementPeakShavingForecast does not support other flex assets, multiple flex assets found in GC: " + gc.p_gridConnectionID);
 				}
 			}
 		}
@@ -110,25 +110,26 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 
 		for (GridConnection gc : c_targetGridConnections) {
 			I_HeatingAsset heatingAsset = this.heatingAssets.get(gc.p_gridConnectionID);
-			for (J_EAProfile profile : heatProfiles.get(gc.p_gridConnectionID)) {
-				for (int i = 0; i < nettoBalanceTotal_kW.length; i++) {
-					double t = timeAtStartForecast_h + i * timeParameters.getTimeStep_h();
-					double efficiency = 1.0;
-					if (heatingAsset instanceof J_EAConversionElectricHeater electricHeater) {
-						efficiency = electricHeater.getEta_r();
+			if (heatingAsset != null && ((J_EA)heatingAsset).activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.ELECTRICITY)) {
+				for (J_EAProfile profile : heatProfiles.get(gc.p_gridConnectionID)) {
+					for (int i = 0; i < nettoBalanceTotal_kW.length; i++) {
+						double t = timeAtStartForecast_h + i * timeParameters.getTimeStep_h();
+						double efficiency = 1.0;
+						if (heatingAsset instanceof J_EAConversionElectricHeater electricHeater) {
+							efficiency = electricHeater.getEta_r();
+						}
+						else if (heatingAsset instanceof J_EAConversionHeatPump heatPump) {
+							// TODO: Fix this for other ambientTempTypes
+							efficiency = heatPump.calculateCOP(heatPump.getOutputTemperature_degC(), ambientTemperatures.getValue(t));
+						}
+						else {
+							throw new RuntimeException("Unknown heating asset type in J_BatteryManagementPeakShavingForecast, GC with ID: " + gc.p_gridConnectionID + " has a heating asset of type: " + heatingAsset.getClass());
+						}
+						nettoBalanceTotal_kW[i] += profile.profilePointer.getValue((i + indexAtStartForecast)*timeParameters.getTimeStep_h()) / efficiency;
 					}
-					else if (heatingAsset instanceof J_EAConversionHeatPump heatPump) {
-						// TODO: Fix this for other ambientTempTypes
-						efficiency = heatPump.calculateCOP(heatPump.getOutputTemperature_degC(), ambientTemperatures.getValue(t));
-					}
-					else {
-						throw new RuntimeException("Unknown heating asset type in J_BatteryManagementPeakShavingForecast");
-					}
-					nettoBalanceTotal_kW[i] += profile.profilePointer.getValue((i + indexAtStartForecast)*timeParameters.getTimeStep_h()) / efficiency;
 				}
 			}
-		}	
-			
+		}		
 		return nettoBalanceTotal_kW;
 	}
 	
