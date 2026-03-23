@@ -96,31 +96,10 @@ f_connectionMetering(timeVariables, isRapidRun);
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
-// Maybe we want one collection for all J_EAFixed?
-
-for (J_EAFixed j_ea : c_petroleumFuelVehicles) {
+for (J_EAFixed j_ea : c_fixedAssets) {
 	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
 	f_addFlows(flowPacket, j_ea);
 }
-for (J_EAFixed j_ea : c_hydrogenVehicles) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_consumptionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_productionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_profileAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-
-
-
 /*ALCODEEND*/}
 
 double f_resetStates()

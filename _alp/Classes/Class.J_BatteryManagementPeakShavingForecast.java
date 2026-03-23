@@ -21,6 +21,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     private Agent target = parentGC;
     private OL_ResultScope targetType = OL_ResultScope.GRIDCONNECTION;
     List<GridConnection> c_targetGridConnections = new ArrayList<GridConnection>();
+	Map<String, I_HeatingAsset> heatingAssets = new HashMap<>(); // Maps GridConnectionID to heatingAsset
     private J_TimeParameters timeParameters;
 	
     //Stored
@@ -41,7 +42,25 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     	}
     }
 	
-	
+	public void initializeAssets() {
+		// check if there are no flex assets
+		heatingAssets.clear();
+		for (GridConnection gc : c_targetGridConnections) {
+			J_EAFlex heatingAsset = null;
+			for (J_EAFlex flexAsset : gc.c_flexAssets) {
+				if (flexAsset == parentGC.p_batteryAsset) {
+					continue;
+				}
+				else if (flexAsset instanceof I_HeatingAsset && heatingAsset == null ) {
+					heatingAsset = flexAsset;
+					heatingAssets.put(gc.p_gridConnectionID, (I_HeatingAsset)heatingAsset);
+				}
+				else {
+					throw new RuntimeException("J_BatteryManagementPeakShavingForecast does not support other flex assets");
+				}
+			}
+		}
+	}
 	
 	public void manageBattery(J_TimeVariables timeVariables) {
     	if(parentGC.p_batteryAsset != null && parentGC.p_batteryAsset.getStorageCapacity_kWh() > 0) {
@@ -57,11 +76,9 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
     	}
     }
 	
-	
-	
 	private double[] getNettoBalanceForecast_kW(J_TimeVariables timeVariables) {	
 		
-		double[] nettoBalanceTotal_kW = new double[96];
+		double[] nettoBalanceTotal_kW = new double[roundToInt(24/timeParameters.getTimeStep_h())];
 		double energyModel_time_h = timeVariables.getT_h();
 
 		//For simulation that cross the year end
@@ -79,6 +96,7 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		List<J_EAProduction> productionAssetProfiles = new ArrayList<J_EAProduction>(); // Production profiles
 		
 		for (GridConnection GC : c_targetGridConnections){		
+		
 			elecConsumptionProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.fixedConsumptionElectric_kW));
 			elecHeatPumpProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.heatPumpElectricityConsumption_kW));
 			elecEVProfiles.addAll(findAll(GC.c_profileAssets, profile -> profile.assetFlowCategory == OL_AssetFlowCategories.evChargingPower_kW));
@@ -89,6 +107,44 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 			genericBuildingProfiles.addAll(findAll(GC.c_consumptionAssets, cons -> cons.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND));
 			productionAssetProfiles.addAll(findAll(GC.c_productionAssets, prod -> prod.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC || prod.energyAssetType == OL_EnergyAssetType.WINDMILL));
 		}
+		
+		// works for J_EAProfiles and J_EAConsumptions of energycarrier electricity?
+		// productions need a different sign?
+		// heat profiles need to still scale with COP or w/e, what if if GC uses electric heater instead of heatpump?
+		List<List<J_EAProfile>> electricityProfiles = new ArrayList<>();
+		electricityProfiles.add(elecConsumptionProfiles);
+		electricityProfiles.add(elecHeatPumpProfiles);
+		electricityProfiles.add(elecEVProfiles);
+		electricityProfiles.add(genericBuildingProfiles);
+		electricityProfiles.add(productionAssetProfiles);
+
+		for (List<J_EAProfile> profilesList : electricityProfiles) {
+			for (J_EAProfile profile : profilesList) {
+				double scalar = profile.getProfileScaling_fr()*profile.getProfileUnitScaler_fr();
+				if (profile instanceof J_EAProduction) {
+					scalar *= -1;
+				}
+				for (int i = startTimeDayIndex; i < endTimeDayIndex; i++) {
+					nettoBalanceTotal_kW[i] += scalar * profile.profilePointer.getValue(i*timeParameters.getTimeStep_h());
+				}		
+			}	
+		}
+		
+		
+		for (List<J_EAProfile> profilesList : electricityProfiles) {
+			for (J_EAProfile profile : profilesList) {
+				for (int i = startTimeDayIndex; i < endTimeDayIndex; i++) {
+					// calculate COP/Eta
+					double outputTemperature_degC = parentGC.energyModel.avgc_data.p_avgOutputTemperatureElectricHeatpump_degC;
+			    	double baseTemperature_degC = parentGC.energyModel.pp_ambientTemperature_degC.getValue(time);
+			    	
+					nettoBalanceTotal_kW[i] += scalar * profile.profilePointer.getValue(i*timeParameters.getTimeStep_h());
+				}		
+			}	
+		}
+		
+		
+		///////////////////////////////////////
 		
 		for(J_EAProfile elecConsumptionProfile : elecConsumptionProfiles) {
 			if(elecConsumptionProfile != null){
