@@ -141,12 +141,16 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		return this.ambientTempType;
 	}
 	
-	private double calculateCOP(double outputTemperature_degC, double baseTemperature_degC) {
+	public double calculateCOP(double outputTemperature_degC, double baseTemperature_degC) {
 		double deltaT = max(1,this.outputTemperature_degC - this.baseTemperature_degC); // Limit deltaT to at least 1 degree.
 	    double COP_r = 8.74 - 0.190 * deltaT + 0.00126 * deltaT*deltaT;
 	    return COP_r;
 	}
+
 	
+	public double getOutputTemperature_degC() {
+		return this.outputTemperature_degC;
+	}
 	/*
 	@Override
 	public String toString() {
