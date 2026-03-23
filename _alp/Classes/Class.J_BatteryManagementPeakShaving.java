@@ -109,6 +109,11 @@ public class J_BatteryManagementPeakShaving implements I_BatteryManagement {
     	return this.targetType;
     }
     
+    @Override
+    public boolean operatesOnGridNodeLevel() {
+    	return this.targetType != null && this.targetType != OL_ResultScope.GRIDCONNECTION;
+    }
+    
     // TODO: Make an interface with at least these 3 functions and make the agents implement it.
     private double getDeliveryCapacity_kW() {
 	    	switch (targetType) {

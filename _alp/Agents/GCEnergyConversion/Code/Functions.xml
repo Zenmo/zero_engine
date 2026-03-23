@@ -63,6 +63,10 @@
 			<Name><![CDATA[timeVariables]]></Name>
 			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[onGridNodeLevel]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">

@@ -1,6 +1,6 @@
 @Override
-public void f_operateFlexAssets(J_TimeVariables timeVariables){
-	f_operateFlexAssets_override(timeVariables);
+public void f_operateFlexAssets(J_TimeVariables timeVariables, boolean onGridNodeLevel){
+	f_operateFlexAssets_override(timeVariables, onGridNodeLevel);
 }
 
 @Override

@@ -52,46 +52,11 @@ if (isRapidRun){
 
 /*ALCODEEND*/}
 
-double f_operateFlexAssets(J_TimeVariables timeVariables)
+double f_operateFlexAssets(J_TimeVariables timeVariables,boolean onGridNodeLevel)
 {/*ALCODESTART::1664961435385*/
 if(p_energyManagement != null){
-	p_energyManagement.manageFlexAssets(timeVariables);
+	p_energyManagement.manageFlexAssets(timeVariables, onGridNodeLevel);
 }
-/*ALCODEEND*/}
-
-double f_calculateEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)
-{/*ALCODESTART::1668528273163*/
-v_previousPowerElectricity_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-
-fm_currentProductionFlows_kW.clear();
-fm_currentConsumptionFlows_kW.clear();
-fm_currentBalanceFlows_kW.clear();
-fm_currentAssetFlows_kW.clear();
-
-fm_heatFromEnergyCarrier_kW.clear();
-fm_consumptionForHeating_kW.clear();
-
-v_currentPrimaryEnergyProduction_kW = 0;
-v_currentFinalEnergyConsumption_kW = 0;
-
-v_currentEnergyCurtailed_kW = 0;
-v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-v_batteryStoredEnergy_kWh = 0;
-
-if (v_enableNFato) {
-	f_nfatoUpdateConnectionCapacity(timeVariables);
-}
-
-c_tripTrackers.forEach(t -> t.manageActivities(timeVariables, p_chargePoint));
-c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint, this));
-
-f_operateFixedAssets(timeVariables);
-f_operateFlexAssets(timeVariables);
-
-f_curtailment();
-
-f_connectionMetering(timeVariables, isRapidRun);
 /*ALCODEEND*/}
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
@@ -1333,5 +1298,49 @@ double f_removeExternalAssetManagement(Class<? extends I_AssetManagement> assetM
 if(this.p_energyManagement != null){
 	this.p_energyManagement.removeExternalAssetManagement(assetManagementInterfaceType);
 }
+/*ALCODEEND*/}
+
+double f_calculateFixedEnergyBalance(J_TimeVariables timeVariables)
+{/*ALCODESTART::1774264671154*/
+v_previousPowerElectricity_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
+v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+
+fm_currentProductionFlows_kW.clear();
+fm_currentConsumptionFlows_kW.clear();
+fm_currentBalanceFlows_kW.clear();
+fm_currentAssetFlows_kW.clear();
+
+fm_heatFromEnergyCarrier_kW.clear();
+fm_consumptionForHeating_kW.clear();
+
+v_currentPrimaryEnergyProduction_kW = 0;
+v_currentFinalEnergyConsumption_kW = 0;
+
+v_currentEnergyCurtailed_kW = 0;
+v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
+v_batteryStoredEnergy_kWh = 0;
+
+if (v_enableNFato) {
+	f_nfatoUpdateConnectionCapacity(timeVariables);
+}
+
+c_tripTrackers.forEach(t -> t.manageActivities(timeVariables, p_chargePoint));
+c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint, this));
+
+f_operateFixedAssets(timeVariables);
+/*ALCODEEND*/}
+
+double f_calculateNodeLevelFlexEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)
+{/*ALCODESTART::1774264685262*/
+f_operateFlexAssets(timeVariables, true); //true: is on GridNode level; false: is NOT on GridNode level
+
+f_curtailment();
+
+f_connectionMetering(timeVariables, isRapidRun);
+/*ALCODEEND*/}
+
+double f_calculateConnectionLevelFlexEnergyBalance(J_TimeVariables timeVariables)
+{/*ALCODESTART::1774268237084*/
+f_operateFlexAssets(timeVariables, false); //true: is on GridNode level; false: is NOT on GridNode level
 /*ALCODEEND*/}
 

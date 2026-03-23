@@ -231,6 +231,15 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 
 	
 	
+    public OL_ResultScope getTargetType() {
+    	return this.targetType;
+    }
+    
+    @Override
+    public boolean operatesOnGridNodeLevel() {
+    	return this.targetType != null && this.targetType != OL_ResultScope.GRIDCONNECTION;
+    }
+
     //Get parentagent
     public Agent getParentAgent() {
     	return this.parentGC;
