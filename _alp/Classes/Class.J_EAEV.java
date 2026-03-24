@@ -4,7 +4,7 @@
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 //@JsonTypeName("J_EAEV")
-public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
+public class J_EAEV extends J_EAStorageElectric implements I_Vehicle, I_ChargingRequest {
  
 	private boolean available = true;
 	private boolean availableStored = true;
@@ -12,12 +12,12 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	private double vehicleScaling;
 	private J_ActivityTrackerTrips tripTracker;
 	
-	public OL_EnergyCarriers storageMedium = OL_EnergyCarriers.ELECTRICITY;
-	private double stateOfCharge_fr;
-	private double initialstateOfCharge_fr;
-	private double stateOfChargeStored_r;
-	protected double capacityElectric_kW;
-	private double storageCapacity_kWh;
+	//public OL_EnergyCarriers storageMedium = OL_EnergyCarriers.ELECTRICITY;
+	//private double stateOfCharge_fr;
+	//private double initialstateOfCharge_fr;
+	//private double stateOfChargeStored_r;
+	//protected double capacityElectric_kW;
+	//private double storageCapacity_kWh;
  
 	private boolean V2GCapable = true; // For now default true: Add to constructor, where constructor calls: setV2GCapable(boolean isV2GCapable) to adjust min rato of capacity accordingly
 	private boolean V2GActive = false;
@@ -28,8 +28,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	//public OL_EVChargingNeed chargingNeed;
 	private double energyChargedOutsideModelArea_kWh = 0;
 	private double energyChargedOutsideModelAreaStored_kWh;
-	private double charged_kWh = 0;
-	private double discharged_kWh = 0;
+	//private double charged_kWh = 0;
+	//private double discharged_kWh = 0;
     /**
      * Default constructor
      */
@@ -46,7 +46,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
     public J_EAEV(I_AssetOwner owner, double capacityElectricity_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters, double energyConsumption_kWhpkm, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, boolean available) {    
 		this.setOwner(owner);
 		this.timeParameters = timeParameters;
-		this.capacityElectric_kW = capacityElectricity_kW; // for EV, this is max charging power.
+		this.setCapacityElectric_kW(capacityElectricity_kW); // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.initialstateOfCharge_fr = stateOfCharge_fr;
 		this.stateOfCharge_fr = initialstateOfCharge_fr;
@@ -59,8 +59,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	    	tripTracker.vehicle=this;	    	
 	    }
 	    // Validation checks
-	    if (capacityElectric_kW <= 0 || storageCapacity_kWh <= 0 || energyConsumption_kWhpkm <= 0) {
-	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, energyConsumption_kWhpkm %s", this, capacityElectric_kW, storageCapacity_kWh, energyConsumption_kWhpkm));
+	    if (this.getCapacityElectric_kW() <= 0 || storageCapacity_kWh <= 0 || energyConsumption_kWhpkm <= 0) {
+	    	throw new RuntimeException(String.format("Exception: J_EAEV in invalid state! Energy Asset: %s, capacityElectric_kW: %s, storageCapacity_kWh: %s, energyConsumption_kWhpkm %s", this, this.getCapacityElectric_kW(), storageCapacity_kWh, energyConsumption_kWhpkm));
 	    	
 	    }
 	    if (this.vehicleScaling < 0 ) {
@@ -83,8 +83,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 		if (!available) {
 			throw new RuntimeException("Trying to charge EV that is not available for charging!");
 		}
-		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.capacityElectric_kW * vehicleScaling; // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
-    	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
+		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.getCapacityElectric_kW(); // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
+    	double chargePower_kW = vehicleScaling * max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh / this.timeParameters.getTimeStep_h()), -stateOfCharge_fr * storageCapacity_kWh  / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
     	
     	//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
 		double electricityProduction_kW = max(-chargePower_kW, 0);
@@ -107,12 +107,13 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 		}
 	}
  
-	public void updateStateOfCharge( double power_kW ) {
+	@Override
+	protected void updateStateOfCharge( double power_kW ) {
 		if(vehicleScaling > 0){
 			stateOfCharge_fr += ( power_kW * this.timeParameters.getTimeStep_h() ) / (storageCapacity_kWh * vehicleScaling);
 		}
 		else {
-			stateOfCharge_fr = 0;
+			//stateOfCharge_fr = 0; // Why is this needed? Is it a kind of reset?
 		}
 	}
 	public void updateChargingHistory(double electricityProduced_kW, double electricityConsumed_kW) {
@@ -143,12 +144,13 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			return true;
 		} else {
 			//mileage_km += tripDist_km;
-			double consumption_fr = (tripDist_km * energyConsumption_kWhpkm) / (storageCapacity_kWh);
+			//double consumption_fr = (tripDist_km * energyConsumption_kWhpkm) / (storageCapacity_kWh);
 			//traceln("J_EAEV.endTrip(), trip consumption: %s [pct of SoC], specific consumption kWh/km: %s", 100*consumption_fr, energyConsumption_kWhpkm);
-			stateOfCharge_fr -= (tripDist_km * energyConsumption_kWhpkm) / (storageCapacity_kWh);
+			double tripEnergyConsumption_kWh = tripDist_km * this.getEnergyConsumption_kWhpkm();
 
-			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
-			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / this.timeParameters.getTimeStep_h();
+			energyUsed_kWh += tripEnergyConsumption_kWh;
+			energyUse_kW += tripEnergyConsumption_kWh / this.timeParameters.getTimeStep_h();
+			this.updateStateOfCharge(-tripEnergyConsumption_kWh / this.timeParameters.getTimeStep_h());
 			if (stateOfCharge_fr < 0) {
 				traceln("EV of type: " + this.energyAssetType + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%, vehicle scaling: " + this.vehicleScaling);
 			}
@@ -170,7 +172,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	}
 	
 	public void setEnergyNeedForNextTrip_kWh(double energyNeedForNextTrip_kWh) {
-		this.energyNeedForNextTrip_kWh = energyNeedForNextTrip_kWh;
+		this.energyNeedForNextTrip_kWh = energyNeedForNextTrip_kWh; // Already corrected for vehicleScaling!
 	}
 	
 	public J_ActivityTrackerTrips getTripTracker() {
@@ -186,12 +188,12 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	}
 	
 	public double getEnergyConsumption_kWhpkm() {
-		return this.energyConsumption_kWhpkm;
+		return this.energyConsumption_kWhpkm * this.vehicleScaling; // What about vehicleScaling?
 	}
 	
 	// Methods from I_ChargingRequest
 	public double getLeaveTime_h() {
-		return getNextTripStartTime_h();
+		return this.getNextTripStartTime_h();
 	}	
 	
 	public double getNextTripStartTime_h() {
@@ -211,11 +213,11 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	}
 		
 	public double getVehicleChargingCapacity_kW() {
-		return this.capacityElectric_kW * this.vehicleScaling;
+		return this.getCapacityElectric_kW() * this.vehicleScaling;
 	}
 
 	public double getEnergyNeedForNextTrip_kWh() {
-		return this.energyNeedForNextTrip_kWh * this.vehicleScaling;
+		return this.energyNeedForNextTrip_kWh;
 	}
 	
 	public double getRemainingChargeDemand_kWh() {
@@ -227,7 +229,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	}
 	
 	public double getChargingTimeToFull_MIN() {
-		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh) - (storageCapacity_kWh) * stateOfCharge_fr) / (capacityElectric_kW) ) ;
+		double chargingTime_min = ceil( 60 * ((storageCapacity_kWh) - (storageCapacity_kWh) * stateOfCharge_fr) / (this.getCapacityElectric_kW()) ) ;
 		return chargingTime_min;
 	}
  	

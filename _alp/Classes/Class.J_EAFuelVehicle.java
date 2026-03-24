@@ -116,7 +116,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	}
 	
 	public double getEnergyConsumption_kWhpkm() {
-		return this.energyConsumption_kWhpkm;
+		return this.energyConsumption_kWhpkm * this.vehicleScaling;
 	}
 	
 	public OL_EnergyCarriers getEnergyCarrierConsumed() {

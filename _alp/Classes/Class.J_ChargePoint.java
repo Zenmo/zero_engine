@@ -63,8 +63,6 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     	this.addSocketRestrictions(socketCapacitiesList_kW);
     }
     
-    
-    
     //Charge chargingRequest trough socket
     public void charge( I_ChargingRequest chargingRequest, double charge_kW, J_TimeVariables timeVariables, GridConnection parentGC ) { //GC is TEMPORARY FIX
 		if (charge_kW < 0 && !this.V2GCapable) {
@@ -116,8 +114,8 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     }
     
 	public double getChargeDeadline_h(I_ChargingRequest chargingRequest) {
-		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
-		double chargeTimeMargin_h = 0.25;//5; // Margin to be ready with charging before start of next trip
+		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh(); // 
+		double chargeTimeMargin_h = 0.25;//0.25;//5; // Margin to be ready with charging before start of next trip
 		double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getMaxChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
 		return chargeDeadline_h;    		

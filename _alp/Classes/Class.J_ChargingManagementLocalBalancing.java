@@ -54,19 +54,24 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	
        	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
 			//double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
-			double chargeNeedForNextTrip_kWh = chargingRequest.getStorageCapacity_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
-			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
-			double avgPowerDemandTillTrip_kW = chargeNeedForNextTrip_kWh / (chargingRequest.getLeaveTime_h() - t_h);
+			double chargeNeedForNextTrip_kWh = chargingRequest.getStorageCapacity_kWh() - chargingRequest.getCurrentSOC_kWh(); // try to charge completely.
+			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session. (this relates to minimum SoC need for next trip, not to a full battery!)
+			/*if (remainingFlexTime_h<0 ) {
+				traceln("Negative remainingFlexTime_h! %s", remainingFlexTime_h);
+			}*/
+			double avgPowerDemandTillTrip_kW = chargeNeedForNextTrip_kWh / (chargingRequest.getLeaveTime_h() - t_h); // Avg power needed to achieve full battery
 			double chargeSetpoint_kW = 0;    			
-			if ( t_h >= chargePoint.getChargeDeadline_h(chargingRequest) && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
+			if ( remainingFlexTime_h <= 0.25 ) { //&& chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);
+
 			} else {
-				double flexGain_r_manual = 0.8; // 'Optimal' value depends on the relative magnitude of the peaks/dips in the GCdemand-before-EV compared to the total charging volume. Too high flexgain could quickly 'drain' flexiblity, too small would mean that peaks/valleys are not filled as much as possible.
-				double flexGain_r = flexGain_r_manual/max(1,(double)chargePoint.getCurrentNumberOfChargeRequests()); // how strongly to 'follow' currentBalanceBeforeEV_kW
+				double flexGain_r_manual = 0.5; // 'Optimal' value depends on the relative magnitude of the peaks/dips in the GCdemand-before-EV compared to the total charging volume. Too high flexgain could quickly 'drain' flexiblity, too small would mean that peaks/valleys are not filled as much as possible.
+				int currentNbActiveChargingSessions = chargePoint.getCurrentNumberOfChargeRequests();
+				double flexGain_r = flexGain_r_manual/(double)max(1,currentNbActiveChargingSessions); // how strongly to 'follow' currentBalanceBeforeEV_kW
 				//traceln("Charging local balancing; flexgain: %s, numberOfChargeRequests: %s", flexGain_r, chargePoint.getCurrentNumberOfChargeRequests());
-				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1,remainingFlexTime_h*flexGain_r)));			    				
+				chargeSetpoint_kW = max(0, avgPowerDemandTillTrip_kW + (GCdemandLowPassed_kW - currentBalanceBeforeEV_kW) * (min(1/(double)currentNbActiveChargingSessions,remainingFlexTime_h*flexGain_r))); // limit 'local-balance-term' to 1/currentNbActiveChargingSessions to prevent overcompensation from multiple chargeSessions.		    				
     			if ( this.V2GActive && chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss flexibility
-					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1,remainingFlexTime_h*flexGain_r)));
+					chargeSetpoint_kW = min(0, avgPowerDemandTillTrip_kW - (currentBalanceBeforeEV_kW - GCdemandLowPassed_kW) * (min(1/(double)currentNbActiveChargingSessions,remainingFlexTime_h*flexGain_r)));
 				}    
 			}
 	    	//Send the chargepower setpoint to the chargepoint			
