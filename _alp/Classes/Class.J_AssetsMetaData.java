@@ -21,6 +21,8 @@ public class J_AssetsMetaData {
 	public Double PVPotential_kW = 0.0;
 	public Double windPotential_kW = 0.0;
 	
+	public Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW = new HashMap<>();
+	
 	/**
      * Default constructor
      */
@@ -60,6 +62,13 @@ public class J_AssetsMetaData {
     	return clone;
     }
     
+    public Set<OL_EnergyAssetType> getActiveAssets() {
+    	return map_activeAssetsCapacity_kW.keySet();
+    }
+    
+    public double getActiveAssetCapacity_kW(OL_EnergyAssetType assetType) {
+    	return map_activeAssetsCapacity_kW.get(assetType) != null ? map_activeAssetsCapacity_kW.get(assetType) : 0;
+    }
     
 	@Override
 	public String toString() {
