@@ -61,14 +61,24 @@ double f_sumLoads()
 v_currentLoad_kW = 0;
 
 // determine the net energy flows from all subconnections by nodetype
-
 for( GridNode GN : c_connectedGridNodes ) {
 	v_currentLoad_kW += GN.v_currentLoad_kW;
 }
 
 for( GridConnection GC : c_connectedGridConnections) {
 	v_currentLoad_kW += GC.fm_currentBalanceFlows_kW.get(p_energyCarrier);
+	if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
+		//traceln("Input op GN " + GC.fm_currentBalanceFlows_kW.get(p_energyCarrier));
+	}
 }
+
+if (p_energyCarrier == OL_EnergyCarriers.HEAT){
+	//traceln("GridNode ID " + p_gridNodeID);
+	v_currentLoss_kW = f_calculateHeatNodeLoss();
+} else{
+	v_currentLoss_kW = 0.0;
+}
+v_currentLoad_kW += v_currentLoss_kW;
 
 
 /*if( p_energyType == OL_EnergyCarriers.ELECTRICITY ){
@@ -294,6 +304,10 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT) & b_transportBufferValid ) { // 
 }
 */
 //traceln("GridNode " + p_gridNodeID + " update at time " + time(HOUR));
+if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
+//double eta = f_calculateHeatNodeLoss(OL_GridNodeType.LT);
+}
+
 f_nodeMetering(timeVariables, timeParameters, isRapidRun);
 
 f_getCurrentChargingInformation(timeParameters);
@@ -597,27 +611,47 @@ double f_getCurrentChargingPowerBalancingThisGN_kW()
 return v_currentChargingPowerBalancingThisGN_kW;
 /*ALCODEEND*/}
 
-double f_calculateHeatNodeLoss(OL_GridNodeType districtHeatingType)
+double f_calculateHeatNodeLoss()
 {/*ALCODESTART::1772806940601*/
-double eta = 1;
+double heatLoss_kW = 0;
+double heatLoss_kW_p_m = 1;
 
-switch(districtHeatingType){
-	case HT:
-		eta = 0.1;
-		break;
-	case MT:
-		eta = 0.2;
-		break;
-	case LT:
-		eta = 0.3;
-		break;
-	case LT5thgen:
-		eta = 0.4;
-		break;
-	default:
-		throw new RuntimeException("This is a heat node. Check your grid node type!");
+GridNode parentGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(p_parentNodeID));
+
+if (parentGN == null || parentGN.p_parentNodeID == null){
+	return heatLoss_kW;
 }
 
-return eta;
+else{
+	double latDist_m = getDistanceGIS(p_latitude, p_longitude, parentGN.p_latitude, p_longitude);
+	double longDist_m = getDistanceGIS(parentGN.p_latitude, p_longitude, parentGN.p_latitude, parentGN.p_longitude);
+
+	double totalDist_m = latDist_m + longDist_m;
+	
+	/*traceln( "Parent gridNodeID GN = " + parentGN.p_gridNodeID);
+	traceln( "Current gridNodeID = " + p_gridNodeID);
+	traceln( "Total = " + totalDist_m + " m");
+	
+	/*switch(districtHeatingType){
+		case HT:
+			eta = 0.1;
+			break;
+		case MT:
+			eta = 0.2;
+			break;
+		case LT:
+			eta = 0.3;
+			break;
+		case LT5thgen:
+			eta = 0.4;
+			break;
+		default:
+			throw new RuntimeException("This is a heat node. Check your grid node type!");
+	}
+	return eta;*/
+	heatLoss_kW = totalDist_m * heatLoss_kW_p_m;
+	return heatLoss_kW;
+}
+
 /*ALCODEEND*/}
 
