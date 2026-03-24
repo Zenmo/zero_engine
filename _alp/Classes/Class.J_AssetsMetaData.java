@@ -21,7 +21,7 @@ public class J_AssetsMetaData {
 	public Double PVPotential_kW = 0.0;
 	public Double windPotential_kW = 0.0;
 	
-	public Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW = new HashMap<>();
+	public Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW;
 	
 	/**
      * Default constructor
@@ -62,6 +62,43 @@ public class J_AssetsMetaData {
     	return clone;
     }
     
+    public void saveActiveAssetAndCapacities(ArrayList<GridConnection> gcList) {
+    	if(map_activeAssetsCapacity_kW != null) {
+    		throw new RuntimeException("Trying to save active assets, in assetMetaData, for the second time. Not allowed.");
+    	}
+    	map_activeAssetsCapacity_kW = new HashMap<>();
+    	for(GridConnection GC : gcList){
+    		if (GC.v_isActive) {
+	    		for (J_EA ea : GC.c_energyAssets) {
+	    			if (ea.getEAType()!=null) {
+	    				double capacityEA_kW = map_activeAssetsCapacity_kW.get(ea.getEAType()) != null ? map_activeAssetsCapacity_kW.get(ea.getEAType()) : 0;
+	    				switch(ea.getEAType()) {
+	    					case PHOTOVOLTAIC:
+	    					case WINDMILL:
+	    						capacityEA_kW = ((J_EAProduction)ea).getCapacityElectric_kW();
+	    						break;
+	    					case PHOTOTHERMAL:
+	    						capacityEA_kW = ((J_EAProduction)ea).getCapacityHeat_kW();
+	    						break;
+	    					case GAS_BURNER:
+	    					case HEAT_PUMP_AIR:
+	    					case ELECTROLYSER:
+	    						capacityEA_kW = ((J_EAConversion)ea).getInputCapacity_kW();
+	    						break;
+	    					case DIESEL_GENERATOR:
+	    					case METHANE_GENERATOR:
+	    						capacityEA_kW = ((J_EAConversion)ea).getOutputCapacity_kW();
+	    						break;
+	    					case STORAGE_ELECTRIC:
+	    						capacityEA_kW = ((J_EAStorageElectric)ea).getCapacityElectric_kW();
+	    						break;
+	    				}
+	    				map_activeAssetsCapacity_kW.put(ea.getEAType(), capacityEA_kW);
+	    			}
+	    		}
+    		}
+    	}
+    }
     public Set<OL_EnergyAssetType> getActiveAssets() {
     	return map_activeAssetsCapacity_kW.keySet();
     }

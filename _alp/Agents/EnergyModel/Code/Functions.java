@@ -252,6 +252,7 @@ for (GridConnection GC : c_gridConnections) {
 	// TODO: Fix Boolean store assets here?
 	GC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();
+	GC.v_rapidRunData.assetsMetaData.saveActiveAssetAndCapacities(new ArrayList<>(List.of(GC)));
 	GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
 	GC.v_rapidRunData.initializeAccumulators(GC.v_liveData.activeEnergyCarriers, GC.v_liveData.activeConsumptionEnergyCarriers, GC.v_liveData.activeProductionEnergyCarriers, GC.v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();
 		
@@ -294,6 +295,7 @@ for (EnergyCoop EC : pop_energyCoops) {
 	} 
 	EC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
+	EC.v_rapidRunData.assetsMetaData.saveActiveAssetAndCapacities(EC.f_getAllChildMemberGridConnections());
 	EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
 	//if(EC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 	EC.v_rapidRunData.setStoreTotalAssetFlows(true);
@@ -310,7 +312,8 @@ if (v_rapidRunData != null && b_storePreviousRapidRunData) {
 	v_previousRunData = v_rapidRunData;
 }
 v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
-v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();	
+v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
+v_rapidRunData.assetsMetaData.saveActiveAssetAndCapacities(c_gridConnections);	
 v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 v_rapidRunData.initializeAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers, v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();	
 f_resetAnnualValues();
