@@ -208,6 +208,15 @@ for (GridConnection gc : c_subGridConnections) {
 	gc.f_calculateNodeLevelFlexEnergyBalance(p_timeVariables, v_isRapidRun);
 }
 
+// Add GridNode losses to the global balance and consumption
+for (GridNode n : c_gridNodeExecutionList) {
+	if (n.v_currentLoss_kW > 0) {
+		fm_currentBalanceFlows_kW.addFlow(n.p_energyCarrier, n.v_currentLoss_kW);
+		fm_currentConsumptionFlows_kW.addFlow(n.p_energyCarrier, n.v_currentLoss_kW);
+		v_currentFinalEnergyConsumption_kW += n.v_currentLoss_kW;
+	}
+}
+
 v_currentEnergyImport_kW = 0.0;
 v_currentEnergyExport_kW = 0.0;
 for (OL_EnergyCarriers EC : v_liveData.activeEnergyCarriers) {
