@@ -600,7 +600,6 @@ return v_currentChargingPowerBalancingThisGN_kW;
 double f_calculateHeatNodeLoss()
 {/*ALCODESTART::1774342127057*/
 double heatLoss_kW = 0;
-double heatLoss_kW_p_m = 1;
 
 GridNode parentGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(p_parentNodeID));
 
@@ -610,28 +609,12 @@ if (parentGN == null || parentGN.p_parentNodeID == null){
 
 else{
 	double totalDist_m = f_calculateManhattanDistance_m(p_latitude, p_longitude, parentGN.p_latitude, parentGN.p_longitude);
+	double heatLoss_kW_p_m = f_getDHLossFactor_kW_p_m(p_nodeType);
 	
-	/*traceln( "Parent gridNodeID GN = " + parentGN.p_gridNodeID);
-	traceln( "Current gridNodeID = " + p_gridNodeID);
-	traceln( "Total = " + totalDist_m + " m");
+	//traceln( "Parent gridNodeID GN = " + parentGN.p_gridNodeID);
+	//traceln( "Current gridNodeID = " + p_gridNodeID);
+	//traceln( "Total = " + totalDist_m + " m");
 	
-	/*switch(districtHeatingType){
-		case HT:
-			eta = 0.1;
-			break;
-		case MT:
-			eta = 0.2;
-			break;
-		case LT:
-			eta = 0.3;
-			break;
-		case LT5thgen:
-			eta = 0.4;
-			break;
-		default:
-			throw new RuntimeException("This is a heat node. Check your grid node type!");
-	}
-	return eta;*/
 	heatLoss_kW = totalDist_m * heatLoss_kW_p_m;
 	return heatLoss_kW;
 }
@@ -645,6 +628,31 @@ double longDist_m = getDistanceGIS(p_latitude2, p_longitude1, p_latitude2, p_lon
 
 double totalDist_m = latDist_m + longDist_m;
 
-return totalDist_m
+return totalDist_m;
+/*ALCODEEND*/}
+
+double f_getDHLossFactor_kW_p_m(OL_GridNodeType districtHeatingType)
+{/*ALCODESTART::1774344954248*/
+double heatLoss_kW_p_m = 0;
+
+switch(districtHeatingType){
+	case HT:
+		heatLoss_kW_p_m = 0.4;
+		break;
+	case MT:
+		heatLoss_kW_p_m = 0.3;
+		break;
+	case LT:
+		heatLoss_kW_p_m = 0.2;
+		break;
+	case LT5thgen:
+		heatLoss_kW_p_m = 0.1;
+		break;
+	default:
+		throw new RuntimeException("This is a heat node. Check your grid node type!");
+}
+
+return heatLoss_kW_p_m;
+
 /*ALCODEEND*/}
 

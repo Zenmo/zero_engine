@@ -1284,7 +1284,7 @@ geupdate vanuit
 		<Id>1774342127059</Id>
 		<Name><![CDATA[v_currentLoss_kW]]></Name>
 		<X>800</X>
-		<Y>480</Y>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
