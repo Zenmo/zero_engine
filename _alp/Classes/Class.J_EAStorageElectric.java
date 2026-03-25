@@ -7,7 +7,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	
 	protected double etaCharge_r; // charging efficiency
 	protected double etaDischarge_r;
-	private double capacityElectric_kW;
+	protected double capacityElectric_kW;
 	
     /**
      * Default constructor

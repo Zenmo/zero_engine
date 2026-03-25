@@ -122,6 +122,7 @@ public class J_EAEV extends J_EAStorageElectric implements I_Vehicle, I_Charging
 	}
 	
 	public boolean startTrip(J_TimeVariables timeVariables) {
+		//traceln("Start trip!");
 		if (available) {
 			((GridConnection)this.getOwner()).f_updateFlexAssetFlows(this , 0.0, timeVariables);
 			this.available = false;
@@ -135,7 +136,7 @@ public class J_EAEV extends J_EAStorageElectric implements I_Vehicle, I_Charging
 	}	
  
 	public boolean endTrip(double tripDist_km) {
-	
+		//traceln("End trip!");
 		if(available) {
 			traceln("Trip not ended because EV never left!");
 			return false;

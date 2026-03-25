@@ -21,6 +21,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	public double distanceScaling_fr = 1.0;
 	public double currentTripTimesteps_n;
 	private double currentTripStartTime_h;
+	private double currentTripEndTime_h;
 	//private double upcomingEventEndTime_h;
 	//private double nextEventStartTime_h;
 
@@ -69,6 +70,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
    private void setNextTrip(double t_h) {
 	   v_eventIndex++; // v_eventIndex can go beyond size of activity lists, use modulo operators to wrap-around trip data.
 	   currentTripStartTime_h = getStartTime_h(v_eventIndex, t_h);
+	   currentTripEndTime_h = getEndTime_h(v_eventIndex, t_h);
    }
    private double getStartTime_h(int eventIndex, double t_h) {
      	double time_hOfWeek = getTimeSinceWeekStart_h(t_h);
@@ -144,7 +146,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     				chargePointRegistration.deregisterChargingRequest(EV);
     			}
 
-            	if (timeVariables.getT_h() >= this.getEndTime_h(v_eventIndex, timeVariables.getT_h()) && (timeVariables.getT_h()-timeParameters.getTimeStep_h() * 60) < this.getEndTime_h(v_eventIndex, timeVariables.getT_h())) { // is the trip also ending this timestep?
+            	//if (timeVariables.getT_h() >= this.getEndTime_h(v_eventIndex, timeVariables.getT_h()) && (timeVariables.getT_h()-timeParameters.getTimeStep_h() * 60) < this.getEndTime_h(v_eventIndex, timeVariables.getT_h())) { // is the trip also ending this timestep?
+                if (timeVariables.getT_h() >= this.currentTripEndTime_h && (timeVariables.getT_h()-timeParameters.getTimeStep_h() * 60) < this.currentTripEndTime_h) { // is the trip also ending this timestep?
             		vehicle.endTrip(this.getTripDistance(v_eventIndex));
             		setNextTrip(timeVariables.getT_h());//v_eventIndex++;		
         			prepareNextActivity(timeVariables, chargePointRegistration);
@@ -155,7 +158,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     			fuelVehicle.progressTrip(this.getTripDistance(v_eventIndex) / currentTripTimesteps_n);
     		}
 
-    		if (timeVariables.getT_h() >= this.getEndTime_h(v_eventIndex, timeVariables.getT_h()) && (timeVariables.getT_h()-timeParameters.getTimeStep_h() * 60) < this.getEndTime_h(v_eventIndex, timeVariables.getT_h())) { // is a trip ending this timestep?
+    		if (timeVariables.getT_h() >= this.currentTripEndTime_h && (timeVariables.getT_h()-timeParameters.getTimeStep_h() * 60) < this.currentTripEndTime_h) { // is a trip ending this timestep?
     			vehicle.endTrip(this.getTripDistance(v_eventIndex));
     			setNextTrip(timeVariables.getT_h());//v_eventIndex++;		
     			prepareNextActivity(timeVariables, chargePointRegistration);
