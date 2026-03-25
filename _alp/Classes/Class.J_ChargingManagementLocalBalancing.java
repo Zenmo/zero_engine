@@ -65,7 +65,7 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
 				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);
 
 			} else {
-				double flexGain_r_manual = 0.5; // 'Optimal' value depends on the relative magnitude of the peaks/dips in the GCdemand-before-EV compared to the total charging volume. Too high flexgain could quickly 'drain' flexiblity, too small would mean that peaks/valleys are not filled as much as possible.
+				double flexGain_r_manual = 0.2; // 'Optimal' value depends on the relative magnitude of the peaks/dips in the GCdemand-before-EV compared to the total charging volume. Too high flexgain could quickly 'drain' flexiblity, too small would mean that peaks/valleys are not filled as much as possible.
 				int currentNbActiveChargingSessions = chargePoint.getCurrentNumberOfChargeRequests();
 				double flexGain_r = flexGain_r_manual/(double)max(1,currentNbActiveChargingSessions); // how strongly to 'follow' currentBalanceBeforeEV_kW
 				//traceln("Charging local balancing; flexgain: %s, numberOfChargeRequests: %s", flexGain_r, chargePoint.getCurrentNumberOfChargeRequests());
