@@ -19,7 +19,8 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.GAS_BURNER,
 		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP, 
-		OL_GridConnectionHeatingType.HYDROGENBURNER
+		OL_GridConnectionHeatingType.HYDROGENBURNER,
+		OL_GridConnectionHeatingType.IRON_BURNER
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
 	private J_EAConversion heatingAsset;
@@ -51,11 +52,17 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
-    	// v_currentLoad_kW is the GN load of the previous timestep
-    	double heatTransferToNetwork_kW = max(0, gc.p_parentNodeHeat.v_currentLoad_kW + previousHeatFeedin_kW);
-    	if (heatTransferToNetwork_kW > heatingAsset.getOutputCapacity_kW()) {
-    		throw new RuntimeException("Heating asset in " + this.getClass() + " does not have sufficient capacity.");
-    	}
+    	// Calculate current timestep demand by summing flows from all lower-level connections
+    	 
+    	double currentDemand_kW = 0;
+ 
+    	for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
+     	    if (childGC != gc) {
+     	        currentDemand_kW += childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+     	    }
+     	}
+ 
+    	double heatTransferToNetwork_kW = max(0, currentDemand_kW);
     	gc.f_updateFlexAssetFlows(heatingAsset, heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
 
     	previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);

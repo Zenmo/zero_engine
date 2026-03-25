@@ -614,7 +614,7 @@ return v_currentChargingPowerBalancingThisGN_kW;
 double f_calculateHeatNodeLoss()
 {/*ALCODESTART::1772806940601*/
 double heatLoss_kW = 0;
-double heatLoss_kW_p_m = 1;
+double heatLoss_kW_p_m = 0.001;
 
 GridNode parentGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(p_parentNodeID));
 
