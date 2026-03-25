@@ -60,9 +60,9 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
 			//traceln("Charging need: %s, getEnergyNeedForNextTrip_kWh: %s", chargeNeedForNextTrip_kWh, chargingRequest.getEnergyNeedForNextTrip_kWh());
 			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
-			if (remainingFlexTime_h <= -0.25 && chargeNeedForNextTrip_kWh > 0.0) {
+			/*if (remainingFlexTime_h <= -0.25 && chargeNeedForNextTrip_kWh > 0.0) {
 				traceln("Vehicle scaling: %s, chargeNeedForNextTrip_kWh: %s kWh, remainingFlexTime_h: %s", ((J_EAEV)chargingRequest).getVehicleScaling_fr(), chargeNeedForNextTrip_kWh, remainingFlexTime_h);
-			}
+			}*/
 			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
 			double chargeSetpoint_kW = 0;    			
 			if ( remainingFlexTime_h <= 0 && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power

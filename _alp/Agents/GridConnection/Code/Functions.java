@@ -1323,7 +1323,7 @@ if (tripTracker == null) { // Only provide new tripTracker when vehicle doesn't 
 	vehicle.setTripTracker(tripTracker);
 }
 else if( vehicle.getAvailability() && vehicle instanceof J_EAEV ev){ // J_EAEV that already has triptracker, but still needs to prepare next trip to determine chargedeadline.
-	tripTracker.prepareNextActivity(energyModel.p_timeVariables, p_chargePoint);
+	tripTracker.prepareNextActivity(energyModel.p_timeVariables.getT_h(), p_chargePoint);
 }
 c_tripTrackers.add( tripTracker );
 /*ALCODEEND*/}
