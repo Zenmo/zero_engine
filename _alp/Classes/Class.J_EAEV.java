@@ -175,6 +175,10 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 		return this.available;
 	}
 	
+	public void setAvailability(boolean available) {
+    	this.available = available;
+    }
+	
 	public double getVehicleScaling_fr() {
 		return this.vehicleScaling;
 	}

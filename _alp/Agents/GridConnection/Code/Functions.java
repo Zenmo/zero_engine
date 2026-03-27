@@ -628,15 +628,11 @@ else {
 	
 	//Fast forward time dependent energy assets (if present)
 	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(timeVariables.getT_h(), p_chargePoint));
+	c_vehicleAssets.forEach(vehicle -> vehicle.setAvailability(true));
 	if (p_chargePoint != null) {
 	    c_tripTrackers.forEach(tt -> {
-	        if (tt.vehicle instanceof J_EAEV ev) {
-	            if (!ev.getAvailability()) {
-	                return; // EV is on a trip: do not touch chargePoint registration or tripTracker state
-	            }
-	            if (p_chargePoint.isRegistered(ev)) {
-	                p_chargePoint.deregisterChargingRequest(ev);
-	            }
+	        if (tt.vehicle instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
+	            p_chargePoint.deregisterChargingRequest(ev);
 	        }
 	        tt.setStartIndex(timeVariables, f_getChargePoint());
 	    });
