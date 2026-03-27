@@ -183,7 +183,6 @@ for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to
 	v_currentEnergyCurtailed_kW += gc.v_currentEnergyCurtailed_kW;
 	v_batteryStoredEnergy_kWh += gc.v_batteryStoredEnergy_kWh;
 	v_currentPrimaryEnergyProductionHeatpumps_kW += gc.v_currentPrimaryEnergyProductionHeatpumps_kW;
-		
 }
 
 for (GridConnection gc : c_subGridConnections) {
