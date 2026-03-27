@@ -19,6 +19,7 @@ public class J_AssetsMetaData {
 	
 	public Double initialPV_kW = 0.0;
 	public Double PVPotential_kW = 0.0;
+	public OL_PVOrientation PVOrientation = OL_PVOrientation.SOUTH; //Default orientation of PV system
 	public Double windPotential_kW = 0.0;
 	
 	public Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW;
@@ -58,6 +59,7 @@ public class J_AssetsMetaData {
     	clone.totalInstalledWindPower_kW = this.totalInstalledWindPower_kW.doubleValue();
     	clone.totalInstalledBatteryStorageCapacity_MWh = this.totalInstalledBatteryStorageCapacity_MWh.doubleValue();
     	clone.PVPotential_kW = this.PVPotential_kW.doubleValue();
+    	clone.PVOrientation = this.PVOrientation;
     	clone.windPotential_kW = this.windPotential_kW.doubleValue();
     	return clone;
     }
