@@ -147,7 +147,7 @@ public class J_RapidRunData {
     	this.activeEnergyCarriers = EnumSet.copyOf(v_activeEnergyCarriers);
     	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
-
+    	this.assetsMetaData.activeAssetFlows = EnumSet.copyOf(activeAssetFlows);
 	    //========== TOTAL ACCUMULATORS ==========//
 		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 24.0, simDuration_h );
 	    am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
