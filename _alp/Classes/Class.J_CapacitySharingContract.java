@@ -1,8 +1,7 @@
 /**
- * J_GridCapacitySharingManager
+ * J_CapacitySharingContract
  */	
-public class J_GridCapacitySharingManager {
-	
+public class J_CapacitySharingContract {
 	GridConnection receivingGC;
 	GridConnection sendingGC;
 	
@@ -19,7 +18,7 @@ public class J_GridCapacitySharingManager {
     /**
      * Default constructor
      */
-    public J_GridCapacitySharingManager(GridConnection receivingGC, GridConnection sendingGC, double[] capacitySharingWeekdayDeliveryCapacity_kW, 
+    public J_CapacitySharingContract(GridConnection receivingGC, GridConnection sendingGC, double[] capacitySharingWeekdayDeliveryCapacity_kW, 
     		double[] capacitySharingWeekenddayDeliveryCapacity_kW, double[] capacitySharingWeekdayFeedinCapacity_kW, 
     		double[] capacitySharingWeekenddayFeedinCapacity_kW, J_TimeVariables timeVariables) {
     	
@@ -29,8 +28,8 @@ public class J_GridCapacitySharingManager {
     	this.receivingGC = receivingGC;
     	this.sendingGC = sendingGC;
     	
-    	receivingGC.v_liveConnectionMetaData.addSharedCapacityManager(this);
-    	sendingGC.v_liveConnectionMetaData.addSharedCapacityManager(this);
+    	receivingGC.v_liveConnectionMetaData.addCapacitySharingContract(this);
+    	sendingGC.v_liveConnectionMetaData.addCapacitySharingContract(this);
     	
     	this.capacitySharingWeekdayDeliveryCapacity_kW = capacitySharingWeekdayDeliveryCapacity_kW;
     	this.capacitySharingWeekenddayDeliveryCapacity_kW = capacitySharingWeekenddayDeliveryCapacity_kW;
@@ -41,7 +40,7 @@ public class J_GridCapacitySharingManager {
     }
     
     public void update(GridConnection callerGC, J_TimeVariables timeVariables) {
-    	if(callerGC == sendingGC) {
+    	if(callerGC == sendingGC) { //Update is called from both GC, but these values only need to be calculated once.
 		    int hourOfDay = roundToInt(floor(timeVariables.getTimeOfDay_h()));
 	    	if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY || timeVariables.getDayOfWeek() == OL_Days.SUNDAY) {
 	    		this.currentSharedDeliveryCapacity_kW = capacitySharingWeekenddayDeliveryCapacity_kW[hourOfDay];
@@ -53,7 +52,6 @@ public class J_GridCapacitySharingManager {
 	    	}
     	}
     }
-    
     
     public double getCurrentSharedDeliveryCapacity_kW(GridConnection requestingGC) {
     	int receiveOrSendDirectionFactor = requestingGC == receivingGC ? 1 : -1;
@@ -82,5 +80,4 @@ public class J_GridCapacitySharingManager {
 	public String toString() {
 		return super.toString();
 	}
-
 }

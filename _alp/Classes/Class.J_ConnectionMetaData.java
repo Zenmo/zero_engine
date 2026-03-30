@@ -5,17 +5,17 @@ public class J_ConnectionMetaData {
 
 	private Agent parentAgent;
 
-	private Double contractedDeliveryCapacity_kW  = 0.0;
-	private Double contractedFeedinCapacity_kW  = 0.0;
-	private Double physicalCapacity_kW  = 0.0;
-	private Boolean contractedDeliveryCapacityKnown  = false;
-	private Boolean contractedFeedinCapacityKnown  = false;
-	private Boolean physicalCapacityKnown  = false;
+	private double contractedDeliveryCapacity_kW;
+	private double contractedFeedinCapacity_kW;
+	private double physicalCapacity_kW;
+	private boolean contractedDeliveryCapacityKnown;
+	private boolean contractedFeedinCapacityKnown;
+	private boolean physicalCapacityKnown;
 	
 	private OL_ConnectionSizeType connectionSizeType;
 	
 	//Capacity sharing
-	private List<J_GridCapacitySharingManager> capacitySharingManagers = new ArrayList();
+	private List<J_CapacitySharingContract> capacitySharingContracts = new ArrayList();
 	
     /**
      * Default constructor
@@ -61,22 +61,8 @@ public class J_ConnectionMetaData {
 	public double getContractedDeliveryCapacity_kW(){return this.contractedDeliveryCapacity_kW + getCurrentSharedDeliveryCapacity_kW();} 
 	public double getContractedFeedinCapacity_kW(){return this.contractedFeedinCapacity_kW + getCurrentSharedFeedinCapacity_kW();} 
 	public double getPhysicalCapacity_kW(){return this.physicalCapacity_kW;}    
-	public boolean getContractedDeliveryCapacityKnown(){
-		if(this.connectionSizeType == OL_ConnectionSizeType.SMALL_CONNECTION) {
-			return this.physicalCapacityKnown;
-		}
-		else {
-			return this.contractedDeliveryCapacityKnown;
-		}
-	}
-	public boolean getContractedFeedinCapacityKnown(){
-		if(this.connectionSizeType == OL_ConnectionSizeType.SMALL_CONNECTION) {
-			return this.physicalCapacityKnown;
-		}
-		else {
-			return this.contractedFeedinCapacityKnown;
-		}
-	}
+	public boolean getContractedDeliveryCapacityKnown(){return this.contractedDeliveryCapacityKnown;};
+	public boolean getContractedFeedinCapacityKnown(){return this.contractedFeedinCapacityKnown;};
 	public boolean getPhysicalCapacityKnown(){return this.physicalCapacityKnown;}      
 	public OL_ConnectionSizeType getConnectionSizeType(){return this.connectionSizeType;} 
 	
@@ -84,16 +70,12 @@ public class J_ConnectionMetaData {
 	//Clone functionality
     public J_ConnectionMetaData getClone() {
     	J_ConnectionMetaData clone = new J_ConnectionMetaData(this.parentAgent);
-    	clone.contractedDeliveryCapacity_kW = this.contractedDeliveryCapacity_kW.doubleValue();
-    	clone.contractedFeedinCapacity_kW = this.contractedFeedinCapacity_kW.doubleValue();
-    	if (this.physicalCapacity_kW!=null) {
-    		clone.physicalCapacity_kW = this.physicalCapacity_kW.doubleValue();
-    	}
-    	clone.contractedDeliveryCapacityKnown = this.contractedDeliveryCapacityKnown.booleanValue();
-    	clone.contractedFeedinCapacityKnown = this.contractedFeedinCapacityKnown.booleanValue();
-    	if (this.physicalCapacityKnown!=null) {
-    		clone.physicalCapacityKnown = this.physicalCapacityKnown.booleanValue();
-    	}
+    	clone.contractedDeliveryCapacity_kW = this.contractedDeliveryCapacity_kW;
+    	clone.contractedFeedinCapacity_kW = this.contractedFeedinCapacity_kW;
+    	clone.physicalCapacity_kW = this.physicalCapacity_kW;
+    	clone.contractedDeliveryCapacityKnown = this.contractedDeliveryCapacityKnown;
+    	clone.contractedFeedinCapacityKnown = this.contractedFeedinCapacityKnown;
+    	clone.physicalCapacityKnown = this.physicalCapacityKnown;
     	if (connectionSizeType!=null) {
     		clone.connectionSizeType = this.connectionSizeType;
     	}
@@ -103,43 +85,43 @@ public class J_ConnectionMetaData {
     
     //Update capacity sharing contract
     public void updateGridCapacitySharingManager(J_TimeVariables timeVariables) {
-    	capacitySharingManagers.forEach(csm -> csm.update((GridConnection)parentAgent, timeVariables));
+    	capacitySharingContracts.forEach(csc -> csc.update((GridConnection)parentAgent, timeVariables));
     }
     
     //Get shared capacity
     public double getCurrentSharedDeliveryCapacity_kW() {
-    	return sum(capacitySharingManagers, csm -> csm.getCurrentSharedDeliveryCapacity_kW((GridConnection)parentAgent));
+    	return sum(capacitySharingContracts, csc -> csc.getCurrentSharedDeliveryCapacity_kW((GridConnection)parentAgent));
     }
     public double getCurrentSharedFeedinCapacity_kW() {
-    	return sum(capacitySharingManagers, csm -> csm.getCurrentSharedFeedinCapacity_kW((GridConnection)parentAgent));
+    	return sum(capacitySharingContracts, csc -> csc.getCurrentSharedFeedinCapacity_kW((GridConnection)parentAgent));
     }
     
     //Has capacity sharing check
     public boolean hasCapacitySharingContract() {
-    	return capacitySharingManagers.size() > 0;
+    	return capacitySharingContracts.size() > 0;
     }
    
     //Add capacity sharing
-    public void addSharedCapacityManager(J_GridCapacitySharingManager capacitySharingContract) {
-    	this.capacitySharingManagers.add(capacitySharingContract);
+    public void addCapacitySharingContract(J_CapacitySharingContract capacitySharingContract) {
+    	this.capacitySharingContracts.add(capacitySharingContract);
     }
     //Clear shared capacity managers
     public void clearSharedCapacityManagers() {
-    	capacitySharingManagers.clear();
+    	capacitySharingContracts.clear();
     }
     
     //Capacity sharing at certain time
     public double getSharedDeliveryCapacityAtHourOfWeekDay_kW(int hourOfDay) {
-    	return sum(capacitySharingManagers, csm -> csm.getSharedDeliveryCapacityAtHourOfWeekDay_kW(hourOfDay));
+    	return sum(capacitySharingContracts, csc -> csc.getSharedDeliveryCapacityAtHourOfWeekDay_kW(hourOfDay));
     }
     public double getSharedDeliveryCapacityAtHourOfWeekendDay_kW(int hourOfDay) {
-    	return sum(capacitySharingManagers, csm -> csm.getSharedDeliveryCapacityAtHourOfWeekendDay_kW(hourOfDay));
+    	return sum(capacitySharingContracts, csc -> csc.getSharedDeliveryCapacityAtHourOfWeekendDay_kW(hourOfDay));
     }
     public double getSharedFeedinCapacityAtHourOfWeekDay_kW(int hourOfDay) {
-    	return sum(capacitySharingManagers, csm -> csm.getSharedFeedinCapacityAtHourOfWeekDay_kW(hourOfDay));
+    	return sum(capacitySharingContracts, csc -> csc.getSharedFeedinCapacityAtHourOfWeekDay_kW(hourOfDay));
     }
     public double getSharedFeedinCapacityAtHourOfWeekendDay_kW(int hourOfDay) {
-    	return sum(capacitySharingManagers, csm -> csm.getSharedFeedinCapacityAtHourOfWeekendDay_kW(hourOfDay));
+    	return sum(capacitySharingContracts, csc -> csc.getSharedFeedinCapacityAtHourOfWeekendDay_kW(hourOfDay));
     }   
     
     

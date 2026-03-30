@@ -1,7 +1,7 @@
 /**
  * J_AVGC_data
  */	
-public class J_AVGC_data implements Serializable {
+public class J_AVGC_data {
 	
 	////Averages
 	
@@ -119,7 +119,7 @@ public class J_AVGC_data implements Serializable {
 	
 	public Map<OL_EnergyCarriers, Double> map_avgCO2EmissionOfEnergyCarrier_kgpkWh;
 	
-	public J_AVGC_Economic_data economicAVGC = new J_AVGC_Economic_data();
+	public J_AVGC_Economic_data economicAVGC;
 	
 	////Constants
 	public double p_gas_kWhpm3;
@@ -133,8 +133,6 @@ public class J_AVGC_data implements Serializable {
 	public double p_hydrogenDensity_kg_Nm3;
 	public double p_oxygenDensity_kg_Nm3;
 	public double p_oxygenProduction_kgO2pkgH2;
-	
-
 	
 	
 	/**

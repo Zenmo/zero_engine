@@ -200,20 +200,6 @@ if (v_liveConnectionMetaData.getPhysicalCapacity_kW() < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted feed in capacity!");
 }
 
-/*
-if(v_isActive){
-	if (v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() == 0.0 && v_liveConnectionMetaData.getContractedFeedinCapacity_kW() == 0.0 && v_liveConnectionMetaData.getPhysicalCapacity_kW() == 0.0) { // If no contracted or physical capacity is given, throw error.
-		throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has 0.0 physical and contracted capacity! Not a valid state of for this agent");
-	} 
-	else {
-		if (v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() == 0.0 && v_liveConnectionMetaData.getContractedFeedinCapacity_kW() == 0.0) { // If no contracted capacity is given, use physical capacity
-			double physicalCapacity_kW = v_liveConnectionMetaData.getPhysicalCapacity_kW();
-			v_liveConnectionMetaData.setCapacities_kW(physicalCapacity_kW, physicalCapacity_kW, physicalCapacity_kW);
-		}
-	}
-}
-*/
-
 if ( c_connectedGISObjects.size()>0) {
 	if(p_longitude == 0){ p_longitude = c_connectedGISObjects.get(0).p_longitude;}; // Get longitude of first building (only used to get nearest trafo)
 	if(p_latitude == 0){ p_latitude = c_connectedGISObjects.get(0).p_latitude;}; // Get latitude of first building (only used to get nearest trafo)

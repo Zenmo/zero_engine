@@ -99,7 +99,7 @@ if (isRapidRun){
 	if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 		acc_annualElectricityBalance_kW.addStep( v_currentLoad_kW);
 	}
-	else if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+	else if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
 		acc_annualHeatBalance_kW.addStep( v_currentLoad_kW);
 	}	
 	

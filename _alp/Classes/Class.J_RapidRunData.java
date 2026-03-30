@@ -554,8 +554,8 @@ public class J_RapidRunData {
     		acc_summerWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     		acc_summerWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-    		acc_summerWeekDeliveryCapacity_kW.addStep( connectionMetaData.getPhysicalCapacity_kW() );
-    		acc_summerWeekFeedinCapacity_kW.addStep( -connectionMetaData.getPhysicalCapacity_kW() );
+    		acc_summerWeekDeliveryCapacity_kW.addStep( connectionMetaData.getContractedDeliveryCapacity_kW());
+    		acc_summerWeekFeedinCapacity_kW.addStep( -connectionMetaData.getContractedFeedinCapacity_kW() );
     		
     		//AssetFlows
     	    for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
@@ -591,8 +591,8 @@ public class J_RapidRunData {
     		acc_winterWeekEnergyCurtailed_kW.addStep(v_currentEnergyCurtailed_kW);
     		acc_winterWeekPrimaryEnergyProductionHeatpumps_kW.addStep(v_currentPrimaryEnergyProductionHeatpumps_kW);	
 
-    		acc_winterWeekDeliveryCapacity_kW.addStep( connectionMetaData.getPhysicalCapacity_kW() );
-    		acc_winterWeekFeedinCapacity_kW.addStep( -connectionMetaData.getPhysicalCapacity_kW() );
+    		acc_winterWeekDeliveryCapacity_kW.addStep( connectionMetaData.getContractedDeliveryCapacity_kW() );
+    		acc_winterWeekFeedinCapacity_kW.addStep( -connectionMetaData.getContractedFeedinCapacity_kW() );
     		//AssetFlows
     	    for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
     	    	this.am_assetFlowsWinterWeek_kW.get(AC).addStep ( fm_currentAssetFlows_kW.get(AC)  );
