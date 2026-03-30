@@ -567,6 +567,15 @@ else {
 	
 	//Fast forward time dependent energy assets (if present)
 	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(timeVariables.getT_h(), p_chargePoint));
+	c_vehicleAssets.forEach(vehicle -> vehicle.setAvailability(true));
+	if (p_chargePoint != null) {
+	    c_tripTrackers.forEach(tt -> {
+	        if (tt.vehicle instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
+	            p_chargePoint.deregisterChargingRequest(ev);
+	        }
+	        tt.setStartIndex(timeVariables, f_getChargePoint());
+	    });
+	}
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
