@@ -22,8 +22,6 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     private double priceFilterDiffGain_r;
 
     private boolean V2GActive = false;
-    
-    //Stored
     private double storedElectricityPriceLowPassed_eurpkWh;
     
     /**
@@ -41,38 +39,26 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
     public OL_ChargingAttitude getCurrentChargingType() {
     	return activeChargingType;
     }
-    /**
-     * One of the simplest charging algorithms.
-     * 
-     */
+
     public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
     	double t_h = timeVariables.getT_h();
-
-    	//double currentElectricityPriceConsumption_eurpkWh = gc.p_owner.f_getElectricityPrice(gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW);
     	double currentElectricityPriceConsumption_eurpkWh = gc.energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() * 0.001;
     	electricityPriceLowPassed_eurpkWh += (currentElectricityPriceConsumption_eurpkWh-electricityPriceLowPassed_eurpkWh) * priceFilterDiffGain_r ;
        	for (I_ChargingRequest chargingRequest : chargePoint.getCurrentActiveChargingRequests()) {
        		double timeToCharge_h = chargingRequest.getLeaveTime_h() - t_h;
     		if (timeToCharge_h <= 0) {
    				traceln("ChargingRequest starting after endtime! Skipping session! Duration_h: %s", timeToCharge_h);
-   				//throw new RuntimeException("ChargingRequest starting after endtime!");
    			}
 			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
-			//traceln("Charging need: %s, getEnergyNeedForNextTrip_kWh: %s", chargeNeedForNextTrip_kWh, chargingRequest.getEnergyNeedForNextTrip_kWh());
 			double remainingFlexTime_h = chargePoint.getChargeDeadline_h(chargingRequest) - t_h; // measure of flexiblity left in current charging session.
-			/*if (remainingFlexTime_h <= -0.25 && chargeNeedForNextTrip_kWh > 0.0) {
-				traceln("Vehicle scaling: %s, chargeNeedForNextTrip_kWh: %s kWh, remainingFlexTime_h: %s", ((J_EAEV)chargingRequest).getVehicleScaling_fr(), chargeNeedForNextTrip_kWh, remainingFlexTime_h);
-			}*/
 			double WTPoffset_eurpkW = 0.01; // Drops willingness to pay price for charging, combined with remainingFlexTime_h.
 			double chargeSetpoint_kW = 0;    			
 			if ( remainingFlexTime_h <= 0 && chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
 				chargeSetpoint_kW = chargePoint.getMaxChargingCapacity_kW(chargingRequest);	
 			} else {
 				double WTPCharging_eurpkWh = electricityPriceLowPassed_eurpkWh - WTPoffset_eurpkW * remainingFlexTime_h;  //+ urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / ev.getCapacityElectric_kW() ); // Scale WTP based on flexibility expressed in terms of power-fraction
-				//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); 
 				double priceGain_r = 0.5; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
 				chargeSetpoint_kW = max(0, chargePoint.getMaxChargingCapacity_kW(chargingRequest) * (WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_r);			
-				//if ( chargeNeedForNextTrip_kWh < -ev.getCapacityElectric_kW()*gc.energyModel.p_timeStep_h && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
     			if ( this.V2GActive && chargePoint.getV2GCapable() && chargingRequest.getV2GCapable() && remainingFlexTime_h > 1 && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price
 	    			double V2G_WTS_offset_eurpkWh = 0.02; // Price must be at least this amount above the moving average to decide to discharge EV battery.
 					double WTSV2G_eurpkWh = V2G_WTS_offset_eurpkWh + electricityPriceLowPassed_eurpkWh; // Scale WillingnessToSell based on flexibility expressed in terms of power-fraction
@@ -94,15 +80,10 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 		return this.V2GActive;
 	}
 	
-	
-	
-	
-    //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
     }
     
-    //Store and reset states
 	public void storeStatesAndReset() {
 		this.storedElectricityPriceLowPassed_eurpkWh = this.electricityPriceLowPassed_eurpkWh;
 		this.electricityPriceLowPassed_eurpkWh = this.initialValueElectricityPriceLowPassed_eurpkWh;
@@ -110,7 +91,6 @@ public class J_ChargingManagementPrice implements I_ChargingManagement {
 	public void restoreStates() {
 		this.electricityPriceLowPassed_eurpkWh = this.storedElectricityPriceLowPassed_eurpkWh;
 	}
-	
 	
     @Override
  	public String toString() {
