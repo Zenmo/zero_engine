@@ -3,10 +3,10 @@
  */
 public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	
-	private OL_EnergyCarriers storageMedium = OL_EnergyCarriers.ELECTRICITY;
+	protected OL_EnergyCarriers storageMedium = OL_EnergyCarriers.ELECTRICITY;
 	
-	private double etaCharge_r; // charging efficiency
-	private double etaDischarge_r;
+	protected double etaCharge_r; // charging efficiency
+	protected double etaDischarge_r;
 	protected double capacityElectric_kW;
 	
     /**
