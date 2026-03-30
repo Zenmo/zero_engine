@@ -79,6 +79,10 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	    	return true;
 		}
     }
+    
+    public void setAvailability(boolean available) {
+    	this.available = available;
+    }
 
 	public boolean progressTrip(double marginalTripDist_km) {
 		if( available) {
