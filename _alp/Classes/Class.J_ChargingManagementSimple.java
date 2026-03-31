@@ -38,7 +38,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
     }
     
     /**
-     * One of the simplest charging algorithms.
+     * One of the simplest charging algorithms. Charges at full power untill the battery is full or the next trip starts.
      * 
      */
     public void manageCharging(J_ChargePoint chargePoint, J_TimeVariables timeVariables) {
@@ -46,11 +46,7 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
        		double duration_h = chargingRequest.getLeaveTime_h() - timeVariables.getT_h();
     		if (duration_h <= 0) {
    				traceln("ChargingRequest duration negative! leaveTime_h: %s, t_h %s", chargingRequest.getLeaveTime_h(), timeVariables.getT_h());
-   				//throw new RuntimeException("ChargingRequest starting after endtime!");
-   			}
-			double chargeNeedForNextTrip_kWh = chargingRequest.getEnergyNeedForNextTrip_kWh() - chargingRequest.getCurrentSOC_kWh(); // Can be negative if recharging is not needed for next trip!
-			//traceln("Charging need: %s, getEnergyNeedForNextTrip_kWh: %s", chargeNeedForNextTrip_kWh, chargingRequest.getEnergyNeedForNextTrip_kWh());
-			
+   			}		
     		chargePoint.charge(chargingRequest, chargePoint.getMaxChargingCapacity_kW(chargingRequest), timeVariables, gc);
     	}
     }

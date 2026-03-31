@@ -63,14 +63,13 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     	this.addSocketRestrictions(socketCapacitiesList_kW);
     }
     
-    
-    
     //Charge chargingRequest trough socket
     public void charge( I_ChargingRequest chargingRequest, double charge_kW, J_TimeVariables timeVariables, GridConnection parentGC ) { //GC is TEMPORARY FIX
 		if (charge_kW < 0 && !this.V2GCapable) {
 			throw new RuntimeException("Trying to do V2G trough a ChargePoint that is not V2GCapable");
 		}
-		J_FlowPacket flowPacket = chargingRequest.f_updateAllFlows( charge_kW / chargingRequest.getVehicleChargingCapacity_kW(), timeVariables);
+		double powerFraction_fr = DoubleCompare.equalsZero(chargingRequest.getVehicleChargingCapacity_kW()) ? 0.0 : charge_kW / chargingRequest.getVehicleChargingCapacity_kW();
+		J_FlowPacket flowPacket = chargingRequest.f_updateAllFlows( powerFraction_fr, timeVariables);
 		parentGC.f_addFlows(flowPacket, (J_EA)chargingRequest);
     }
     
@@ -115,8 +114,8 @@ public class J_ChargePoint implements I_ChargePointRegistration{
     }
     
 	public double getChargeDeadline_h(I_ChargingRequest chargingRequest) {
-		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh();
-		double chargeTimeMargin_h = 0.25;//5; // Margin to be ready with charging before start of next trip
+		double chargeNeedForNextTrip_kWh = chargingRequest.getRemainingChargeDemand_kWh(); // 
+		double chargeTimeMargin_h = 0.25;// Margin to be ready with charging before start of next trip
 		double nextTripStartTime_h = chargingRequest.getLeaveTime_h();
 		double chargeDeadline_h = nextTripStartTime_h - (chargeNeedForNextTrip_kWh / this.getMaxChargingCapacity_kW(chargingRequest)) - chargeTimeMargin_h;
 		return chargeDeadline_h;    		

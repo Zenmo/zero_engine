@@ -102,33 +102,42 @@ for (J_EAFixed j_ea : c_fixedAssets) {
 }
 /*ALCODEEND*/}
 
-double f_resetStates()
+double f_resetStates(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668983912731*/
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
 fm_heatFromEnergyCarrier_kW.clear();
 fm_consumptionForHeating_kW.clear();
-//fm_currentAssetFlows_kW.clear(); // Why not this one??
+//fm_currentAssetFlows_kW.clear(); // Why not this one?? (I'd have to check, but all these fm's are reset at calculateEnergyBalance, so they possibly could all be removed, ~Luc 20/03/26)
 
 v_previousPowerElectricity_kW = 0;
 v_previousPowerHeat_kW = 0;
-//v_electricityPriceLowPassed_eurpkWh = 0;
-//v_currentElectricityPriceConsumption_eurpkWh  = 0;
 
 v_rapidRunData.resetAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
 
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 
-//Store states and reset EMS
+// Reset other classes
 if(p_energyManagement != null){
 	p_energyManagement.storeStatesAndReset();
 }
 
-//Store states and reset charge point
 if(p_chargePoint != null){
 	p_chargePoint.storeStatesAndReset();
+}
+
+c_energyAssets.forEach(ea -> ea.storeStatesAndReset());
+
+c_tripTrackers.forEach(tt -> {
+	tt.storeStatesAndReset();
+	tt.setStartIndex(timeVariables, f_getChargePoint());
+	}
+);
+	
+if (p_cookingTracker != null) {
+	p_cookingTracker.storeStatesAndReset();
 }
 /*ALCODEEND*/}
 
@@ -300,7 +309,7 @@ else{
 
 double f_resetSpecificGCStates()
 {/*ALCODESTART::1717060111619*/
-
+// to be overwritten by child GCs!
 /*ALCODEEND*/}
 
 double f_resetStatesAfterRapidRun()
@@ -308,17 +317,22 @@ double f_resetStatesAfterRapidRun()
 //Reset specificGC states after rapid run
 f_resetSpecificGCStatesAfterRapidRun();
 
-//Restore states in EMS
+//Restore other classes
 if(p_energyManagement != null){
 	p_energyManagement.restoreStates();
 }
 
-//Restore states in charge point
 if(p_chargePoint != null){
 	p_chargePoint.restoreStates();
 }
 
+c_energyAssets.forEach(ea -> ea.restoreStates());
 
+c_tripTrackers.forEach(tt-> tt.restoreStates());
+	
+if (p_cookingTracker != null) {
+	p_cookingTracker.restoreStates();
+}
 /*ALCODEEND*/}
 
 double f_resetSpecificGCStatesAfterRapidRun()
@@ -593,6 +607,15 @@ else {
 	
 	//Fast forward time dependent energy assets (if present)
 	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(timeVariables.getT_h(), p_chargePoint));
+	c_vehicleAssets.forEach(vehicle -> vehicle.setAvailability(true));
+	if (p_chargePoint != null) {
+	    c_tripTrackers.forEach(tt -> {
+	        if (tt.vehicle instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
+	            p_chargePoint.deregisterChargingRequest(ev);
+	        }
+	        tt.setStartIndex(timeVariables, f_getChargePoint());
+	    });
+	}
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();

@@ -175,12 +175,16 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 		return this.available;
 	}
 	
+	public void setAvailability(boolean available) {
+    	this.available = available;
+    }
+	
 	public double getVehicleScaling_fr() {
 		return this.vehicleScaling;
 	}
 	
 	public double getEnergyConsumption_kWhpkm() {
-		return this.energyConsumption_kWhpkm;
+		return this.energyConsumption_kWhpkm * this.vehicleScaling;
 	}
 	
 	// Methods from I_ChargingRequest
@@ -209,7 +213,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	}
 
 	public double getEnergyNeedForNextTrip_kWh() {
-		return this.energyNeedForNextTrip_kWh * this.vehicleScaling;
+		return this.energyNeedForNextTrip_kWh;
 	}
 	
 	public double getRemainingChargeDemand_kWh() {
