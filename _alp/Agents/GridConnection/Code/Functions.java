@@ -89,8 +89,6 @@ c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, 
 f_operateFixedAssets(timeVariables);
 f_operateFlexAssets(timeVariables);
 
-f_curtailment();
-
 f_connectionMetering(timeVariables, isRapidRun);
 /*ALCODEEND*/}
 
@@ -1355,6 +1353,16 @@ double f_removeExternalAssetManagement(Class<? extends I_AssetManagement> assetM
 {/*ALCODESTART::1772129162585*/
 if(this.p_energyManagement != null){
 	this.p_energyManagement.removeExternalAssetManagement(assetManagementInterfaceType);
+}
+/*ALCODEEND*/}
+
+boolean f_isAssetManagementActive(Class<? extends I_AssetManagement>  assetManagementInterfaceType)
+{/*ALCODESTART::1774965224446*/
+if(this.p_energyManagement != null){
+	return this.p_energyManagement.isAssetManagementActive(assetManagementInterfaceType);
+}
+else{
+	return false;
 }
 /*ALCODEEND*/}
 

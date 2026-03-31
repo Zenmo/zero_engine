@@ -1575,13 +1575,6 @@ gcList.forEach(gc -> gc.c_parentCoops.add(this));
 
 /*ALCODEEND*/}
 
-double f_aggregatorBatteryManagement_EnergyCoop()
-{/*ALCODESTART::1756207893357*/
-if(p_aggregatorBatteryManagement != null){
-	p_aggregatorBatteryManagement.manageExternalSetpoints();
-}
-/*ALCODEEND*/}
-
 double f_removeMemberGCs(List<GridConnection> gcList,J_TimeParameters timeParameters)
 {/*ALCODESTART::1756301338833*/
 c_memberGridConnections.removeAll(gcList);
@@ -1594,10 +1587,11 @@ gcList.forEach(gc -> gc.c_parentCoops.remove(this));
 f_initializeCustomCoop(newMemberGridConnectionsList, timeParameters);
 /*ALCODEEND*/}
 
-double f_aggregatorManagement_EnergyCoop()
+double f_operateAggregatorEnergyManagement(J_TimeVariables timeVariables)
 {/*ALCODESTART::1756207893363*/
-//Run battery setpoint management
-f_aggregatorBatteryManagement_EnergyCoop();
+if(p_aggregatorEnergyManagement != null){
+	p_aggregatorEnergyManagement.operateAggregatorEnergyManagement(timeVariables);
+}
 /*ALCODEEND*/}
 
 double f_collectGridConnectionOriginalRapidRunData()
@@ -1757,6 +1751,42 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			v_cumulativeIndividualPeakFeedinOriginal_kW += EC.v_cumulativeIndividualPeakFeedinOriginal_kW;
 		}
 	}
+}
+/*ALCODEEND*/}
+
+double f_setAggregatorEnergyManagement(I_AggregatorEnergyManagement aggregatorEnergyManagement)
+{/*ALCODESTART::1774957430435*/
+this.p_aggregatorEnergyManagement = aggregatorEnergyManagement;
+/*ALCODEEND*/}
+
+I_AggregatorEnergyManagement f_getAggregatorEnergyManagement()
+{/*ALCODESTART::1774957430437*/
+return this.p_aggregatorEnergyManagement;
+/*ALCODEEND*/}
+
+double f_setExternalAggregatorAssetManagement(I_AggregatorAssetManagement externalAggregatorAssetManagement)
+{/*ALCODESTART::1774957430439*/
+if(this.p_aggregatorEnergyManagement == null){
+	this.p_aggregatorEnergyManagement = new J_AggregatorEnergyManagementDefault(this, energyModel.p_timeParameters);
+}
+this.p_aggregatorEnergyManagement.setExternalAggregatorAssetManagement(externalAggregatorAssetManagement);
+    
+/*ALCODEEND*/}
+
+<T extends I_AggregatorAssetManagement> T f_getExternalAggregatorAssetManagement(Class<T>  aggregatorAssetManagementInterfaceType)
+{/*ALCODESTART::1774957430441*/
+if(this.p_aggregatorEnergyManagement != null){
+	return this.p_aggregatorEnergyManagement.getExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
+}
+else{
+	return null;
+}
+/*ALCODEEND*/}
+
+double f_removeExternalAggregatorAssetManagement(Class<? extends I_AggregatorAssetManagement> aggregatorAssetManagementInterfaceType)
+{/*ALCODESTART::1774957430443*/
+if(this.p_aggregatorEnergyManagement != null){
+	this.p_aggregatorEnergyManagement.removeExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
 }
 /*ALCODEEND*/}
 

@@ -1158,7 +1158,7 @@ double f_runAggregators()
 
 //Run energy coop aggrator
 for (EnergyCoop EC : pop_energyCoops) {
-	EC.f_aggregatorManagement_EnergyCoop();
+	EC.f_operateAggregatorEnergyManagement(p_timeVariables);
 }
 /*ALCODEEND*/}
 
