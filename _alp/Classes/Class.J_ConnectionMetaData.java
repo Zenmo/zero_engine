@@ -30,20 +30,38 @@ public class J_ConnectionMetaData {
     
     //Setter functions
 	public void setCapacities_kW(double contractedDeliveryCapacity_kW, double contractedFeedinCapacity_kW, double physicalCapacity_kW){
+		
+		//Calculate delta for coop capacity adjustment
+		double deltaContractedDeliveryCapacity_kW = contractedDeliveryCapacity_kW - this.contractedDeliveryCapacity_kW;
+		double deltaContractedFeedinCapacity_kW = contractedFeedinCapacity_kW - this.contractedFeedinCapacity_kW;
+		
+		//Set new capacities
 		this.contractedDeliveryCapacity_kW = contractedDeliveryCapacity_kW;
 		this.contractedFeedinCapacity_kW = contractedFeedinCapacity_kW;
 		this.physicalCapacity_kW = physicalCapacity_kW;
 		
-		if(physicalCapacity_kW > (3*80*230/1000.0)) { //Set connection size type aswell: 3*80 -> Large connection (grootverbruik), else small connection (kleinverbruik)
+		//Set connection size type aswell: 3*80 -> Large connection (grootverbruik), else small connection (kleinverbruik)
+		if(physicalCapacity_kW > (3*80*230/1000.0)) { 
 			this.connectionSizeType = OL_ConnectionSizeType.LARGE_CONNECTION;
 		}
 		else {
 			this.connectionSizeType  = OL_ConnectionSizeType.SMALL_CONNECTION;
 		}
 		
+		//Check if contracted  capacity is never larger than physical: not allowed.
 		if(contractedDeliveryCapacity_kW > physicalCapacity_kW || contractedFeedinCapacity_kW > physicalCapacity_kW) {
 			throw new RuntimeException("Set connection limits (Delivery = " + contractedDeliveryCapacity_kW + "), (Feedin = " + contractedFeedinCapacity_kW + "), "
 									   + "(physical = " + physicalCapacity_kW + ") is not possible. Contract capacities can never be higher than physical.");
+		}
+		
+		//For GridConnection only: Also adjust the cumulative contracted capacity values for the parent coops.
+		if(parentAgent instanceof GridConnection GC) {
+			for(EnergyCoop coop : GC.c_parentCoops) {
+				double coopNewContractedDeliveryCapacity_kW = coop.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() + deltaContractedDeliveryCapacity_kW;
+				double coopNewContractedFeedinCapacity_kW = coop.v_liveConnectionMetaData.getContractedFeedinCapacity_kW() + deltaContractedFeedinCapacity_kW;
+				double coopNewPhysicalCapacity_kW = max(coopNewContractedDeliveryCapacity_kW, coopNewContractedFeedinCapacity_kW);
+				coop.v_liveConnectionMetaData.setCapacities_kW(coopNewContractedDeliveryCapacity_kW, coopNewContractedFeedinCapacity_kW, coopNewPhysicalCapacity_kW);
+			}
 		}
 	}
 	
