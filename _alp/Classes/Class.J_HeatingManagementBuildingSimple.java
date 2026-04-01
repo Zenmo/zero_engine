@@ -100,9 +100,8 @@ public class J_HeatingManagementBuildingSimple implements I_HeatingManagement {
     	if (building == null) {
     		throw new RuntimeException(this.getClass() + " requires a building asset.");
     	}
-    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
-    	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-    	if (heatProfile != null || heatConsumption != null) {
+    	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
+    	if (heatProfile != null) {
     		throw new RuntimeException(this.getClass() + " does not support HEAT_DEMAND profiles.");
     	}
     	if (gc.c_heatingAssets.size() == 0) {
