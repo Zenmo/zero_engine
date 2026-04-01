@@ -55,9 +55,8 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     	if(gc.p_BuildingThermalAsset != null) {
     		throw new RuntimeException(this.getClass() + " does not make sense to use this heating management with heatbuffer.");
     	}
-    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
-    	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-    	if (heatProfile == null && heatConsumption == null) {
+    	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT && x.getEAType() != OL_EnergyAssetType.HOT_WATER_CONSUMPTION);
+    	if (heatProfile == null) {
     		throw new RuntimeException(this.getClass() + " requires a heat demand profile/consumption asset.");
     	}
     	if (gc.c_heatingAssets.size() != 1) {

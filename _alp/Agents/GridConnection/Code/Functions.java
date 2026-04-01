@@ -96,31 +96,10 @@ f_connectionMetering(timeVariables, isRapidRun);
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
-// Maybe we want one collection for all J_EAFixed?
-
-for (J_EAFixed j_ea : c_petroleumFuelVehicles) {
+for (J_EAFixed j_ea : c_fixedAssets) {
 	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
 	f_addFlows(flowPacket, j_ea);
 }
-for (J_EAFixed j_ea : c_hydrogenVehicles) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_consumptionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_productionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_profileAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-
-
-
 /*ALCODEEND*/}
 
 double f_resetStates(J_TimeVariables timeVariables)
@@ -1126,6 +1105,10 @@ double f_connectToJ_EAFixed(J_EAFixed j_ea,J_TimeParameters timeParameters)
 {/*ALCODESTART::1772106633559*/
 c_fixedAssets.add(j_ea);
 
+if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
+}
+
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.add(fuelVehicle);
 	
@@ -1175,9 +1158,9 @@ else if (j_ea instanceof J_EAProduction productionAsset) {
 }
 else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
-} 
-else if  (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
+}
+else if (j_ea instanceof J_EAProfile) {
+	return;
 }
 else{
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFixed asset!");
@@ -1201,6 +1184,9 @@ double f_removeTheJ_EAFixed(J_EAFixed j_ea)
 {/*ALCODESTART::1772110066396*/
 c_fixedAssets.remove(j_ea);
 
+if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.remove(profileAsset);
+}
 
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.remove(fuelVehicle);
@@ -1256,9 +1242,6 @@ else if (j_ea instanceof J_EAProduction) {
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
 	
 	}
-}
-else if  (j_ea instanceof J_EAProfile) {
-	c_profileAssets.remove((J_EAProfile)j_ea);
 }
 /*ALCODEEND*/}
 
