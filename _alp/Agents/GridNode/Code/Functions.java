@@ -69,7 +69,7 @@ for( GridNode GN : c_connectedGridNodes ) {
 		double heatLoss_kW = 0;
 		GridNode parentGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(GN.p_parentNodeID));
 		if (parentGN != null && parentGN.p_parentNodeID != null){
-			heatLoss_kW = GN.f_calculateHeatNodeLoss_kW(p_latitude, p_longitude, parentGN.p_latitude, parentGN.p_longitude);
+			heatLoss_kW = GN.f_calculateHeatNodeLoss_kW(p_latitude, p_longitude, parentGN.p_latitude, parentGN.p_longitude, true);
 		}
 		v_currentLoad_kW += heatLoss_kW;
 		v_currentLoss_kW += heatLoss_kW;
@@ -79,7 +79,7 @@ for( GridNode GN : c_connectedGridNodes ) {
 for( GridConnection GC : c_connectedGridConnections) {
 	v_currentLoad_kW += GC.fm_currentBalanceFlows_kW.get(p_energyCarrier);
 	if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
-		double heatLoss_kW = f_calculateHeatNodeLoss_kW(GC.p_latitude, GC.p_longitude, p_latitude, p_longitude);
+		double heatLoss_kW = f_calculateHeatNodeLoss_kW(GC.p_latitude, GC.p_longitude, p_latitude, p_longitude, false);
 		v_currentLoad_kW += heatLoss_kW;
 		v_currentLoss_kW += heatLoss_kW;
 	}
@@ -612,10 +612,10 @@ double f_getCurrentChargingPowerBalancingThisGN_kW()
 return v_currentChargingPowerBalancingThisGN_kW;
 /*ALCODEEND*/}
 
-double f_calculateHeatNodeLoss_kW(double p_latitude,double p_longitude,double p_latitudeParent,double p_longitudeParent)
+double f_calculateHeatNodeLoss_kW(double p_latitude,double p_longitude,double p_latitudeParent,double p_longitudeParent,boolean isTransportLoss)
 {/*ALCODESTART::1774342127057*/
+double heatLossFactor_kW_p_m = f_getDHLossFactor_kW_p_m(p_nodeType, isTransportLoss);
 double totalDist_m = f_calculateManhattanDistance_m(p_latitude, p_longitude, p_latitudeParent, p_longitudeParent);
-double heatLossFactor_kW_p_m = f_getDHLossFactor_kW_p_m(p_nodeType);
 double heatLoss_kW = totalDist_m * heatLossFactor_kW_p_m;
 
 return heatLoss_kW;
@@ -631,25 +631,45 @@ double totalDist_m = latDist_m + longDist_m;
 return totalDist_m;
 /*ALCODEEND*/}
 
-double f_getDHLossFactor_kW_p_m(OL_GridNodeType districtHeatingType)
+double f_getDHLossFactor_kW_p_m(OL_GridNodeType districtHeatingType,boolean isTransportLoss)
 {/*ALCODESTART::1774344954248*/
 double heatLossFactor_kW_p_m = 0;
 
-switch(districtHeatingType){
-	case HT:
-		heatLossFactor_kW_p_m = 0.000004;
-		break;
-	case MT:
-		heatLossFactor_kW_p_m = 0.000003;
-		break;
-	case LT:
-		heatLossFactor_kW_p_m = 0.000002;
-		break;
-	case LT5thgen:
-		heatLossFactor_kW_p_m = 0.000001;
-		break;
-	default:
-		throw new RuntimeException("This is a heat node. Check your grid node type!");
+if(isTransportLoss){
+	switch(districtHeatingType){
+		case HT:
+			heatLossFactor_kW_p_m = 0.0263;
+			break;
+		case MT:
+			heatLossFactor_kW_p_m = 0.0197;
+			break;
+		case LT:
+			heatLossFactor_kW_p_m = 0.0110;
+			break;
+		case LT5thgen:
+			heatLossFactor_kW_p_m = 0.0011;
+			break;
+		default:
+			throw new RuntimeException("This is a heat node. Check your grid node type!");
+	}
+}
+else{
+	switch(districtHeatingType){
+		case HT:
+			heatLossFactor_kW_p_m = 0.0077;
+			break;
+		case MT:
+			heatLossFactor_kW_p_m = 0.0058;
+			break;
+		case LT:
+			heatLossFactor_kW_p_m = 0.0032;
+			break;
+		case LT5thgen:
+			heatLossFactor_kW_p_m = 0.00032;
+			break;
+		default:
+			throw new RuntimeException("This is a heat node. Check your grid node type!");
+	}
 }
 
 return heatLossFactor_kW_p_m;

@@ -523,6 +523,10 @@
 			<Name><![CDATA[p_longitudeParent]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[isTransportLoss]]></Name>
+			<Type><![CDATA[boolean]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -574,6 +578,10 @@
 		<Parameter>
 			<Name><![CDATA[districtHeatingType]]></Name>
 			<Type><![CDATA[OL_GridNodeType]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[isTransportLoss]]></Name>
+			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
