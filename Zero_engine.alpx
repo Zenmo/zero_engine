@@ -1248,6 +1248,9 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<OptionList>
 				<Id>1773399744566</Id>
 				<Name><![CDATA[OL_PVOrientation]]></Name>
+				<Description><![CDATA[- SOUTH:
+- EASTWEST:
+- CUSTOM: If a custom profile pv profile has been created, this orientation is used.]]></Description>
 				<Option>
 					<Id>1773399746367</Id>
 					<Name><![CDATA[SOUTH]]></Name>
@@ -1255,6 +1258,10 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Option>
 					<Id>1773399757973</Id>
 					<Name><![CDATA[EASTWEST]]></Name>
+				</Option>
+				<Option>
+					<Id>1775123373514</Id>
+					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
 		</OptionLists>
