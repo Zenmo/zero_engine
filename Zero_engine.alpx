@@ -2066,11 +2066,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[I_StoreStatesAndReset]]></Name>
 			</JavaClass>
 			<JavaClass>
-				<Id>1772098769739</Id>
-				<Name><![CDATA[I_AggregatorManagement]]></Name>
-				<Folder>1772100333519</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1772554413488</Id>
 				<Name><![CDATA[J_AVGC_Economic_data]]></Name>
 				<Folder>1752680962144</Folder>
