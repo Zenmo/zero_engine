@@ -34,11 +34,11 @@ public class J_CurtailManagementContractCapacity implements I_CurtailManagement 
 	//Manage curtailment
 	public void manageCurtailment(J_TimeVariables timeVariables) {
 		// Keep feedin power within contract capacity
-		if (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
+		if (gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW()) { // overproduction!
 			for (J_EAProduction j_ea : gc.c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW);
+				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW());
 				gc.f_removeFlows(flowPacket, j_ea);
-				if (!(gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
+				if (!(gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW())) {
 					break;
 				}
 			}
