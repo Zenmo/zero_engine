@@ -834,22 +834,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1722411204920</Id>
-				<Name><![CDATA[OL_CurtailmentMode]]></Name>
-				<Option>
-					<Id>1722411204921</Id>
-					<Name><![CDATA[CAPACITY]]></Name>
-				</Option>
-				<Option>
-					<Id>1722411204922</Id>
-					<Name><![CDATA[MARKETPRICE]]></Name>
-				</Option>
-				<Option>
-					<Id>1742810522883</Id>
-					<Name><![CDATA[NODALPRICING]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1726685111559</Id>
 				<Name><![CDATA[OL_HouseholdCookingMethod]]></Name>
 				<Option>

@@ -338,56 +338,6 @@ double f_resetSpecificGCStatesAfterRapidRun()
 // to be overwritten by child GCs!
 /*ALCODEEND*/}
 
-double f_curtailment()
-{/*ALCODESTART::1720442672576*/
-//Electricity
-if (v_enableCurtailment) {
-	switch(p_curtailmentMode) {
-		case CAPACITY:
-		// Keep feedin power within connection capacity
-		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
-			for (J_EAProduction j_ea : c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-				f_removeFlows(flowPacket, j_ea);
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
-					break;
-				}
-			}
-		}
-		break;
-		case MARKETPRICE:
-		if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
-			if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
-				for (J_EAProduction j_ea : c_productionAssets) {
-					J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-					f_removeFlows(flowPacket, j_ea);
-					if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
-						break;
-					}
-				}
-			}
-		}
-		break;
-		case NODALPRICING:
-		// Prevent feedin when nodal price is negative
-		double priceTreshold_eur = -0.0;
-		if( p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
-		
-			double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
-			for (J_EAProduction j_ea : c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-				f_removeFlows(flowPacket, j_ea);
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
-					break;
-				}
-			}
-		}
-		break;
-		default:
-	}
-}
-/*ALCODEEND*/}
-
 double f_nfatoUpdateConnectionCapacity(J_TimeVariables timeVariables)
 {/*ALCODESTART::1720430481154*/
 double timeOfDay = timeVariables.getT_h() % 24;
