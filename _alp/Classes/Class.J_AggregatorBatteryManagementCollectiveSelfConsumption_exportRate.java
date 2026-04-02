@@ -28,7 +28,7 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
     	this.energyCoop = energyCoop;
     }
     
-    public void manageExternalSetpoints() {
+    public void manageExternalBatterySetpoints(J_TimeVariables timeVariables) {
     	//Get all members that have a battery that is put on the external setpoint mode
     	List<GridConnection> memberedGCWithSetpointBatteries = findAll(energyCoop.f_getMemberGridConnectionsCollectionPointer(), GC -> GC.p_batteryAsset != null && GC.f_getBatteryManagement() != null && GC.f_getBatteryManagement() instanceof J_BatteryManagementExternalSetpoint);
 
@@ -129,11 +129,4 @@ public class J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate i
 		return super.toString();
 	}
 
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }
-
