@@ -838,22 +838,6 @@
 				</Option>
 			</OptionList>
 			<OptionList>
-				<Id>1722411204920</Id>
-				<Name><![CDATA[OL_CurtailmentMode]]></Name>
-				<Option>
-					<Id>1722411204921</Id>
-					<Name><![CDATA[CAPACITY]]></Name>
-				</Option>
-				<Option>
-					<Id>1722411204922</Id>
-					<Name><![CDATA[MARKETPRICE]]></Name>
-				</Option>
-				<Option>
-					<Id>1742810522883</Id>
-					<Name><![CDATA[NODALPRICING]]></Name>
-				</Option>
-			</OptionList>
-			<OptionList>
 				<Id>1726685111559</Id>
 				<Name><![CDATA[OL_HouseholdCookingMethod]]></Name>
 				<Option>
@@ -1356,9 +1340,34 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<ParentId>1772100328968</ParentId>
 			</Folder>
 			<Folder>
-				<Id>1772100488693</Id>
-				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
+				<Id>1774957755174</Id>
+				<Name><![CDATA[AggregatorEnergyManagement]]></Name>
 				<ParentId>1772100333519</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1774957776815</Id>
+				<Name><![CDATA[AggregatorAssetManagement]]></Name>
+				<ParentId>1772100333519</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1774957797642</Id>
+				<Name><![CDATA[AggregatorBatteryManagement]]></Name>
+				<ParentId>1774957776815</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1774959568850</Id>
+				<Name><![CDATA[AggregatorHeatingManagement]]></Name>
+				<ParentId>1774957776815</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1774959583939</Id>
+				<Name><![CDATA[AggregatorChargingManagement]]></Name>
+				<ParentId>1774957776815</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1774960311910</Id>
+				<Name><![CDATA[CurtailManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -1903,29 +1912,24 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Folder>1772100322546</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1756210846035</Id>
-				<Name><![CDATA[I_AggregatorBatteryManagement]]></Name>
-				<Folder>1772100488693</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1756211095187</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementOff]]></Name>
-				<Folder>1772100488693</Folder>
+				<Folder>1774957797642</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756212442478</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_batterySize]]></Name>
-				<Folder>1772100488693</Folder>
+				<Folder>1774957797642</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756213000574</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRate]]></Name>
-				<Folder>1772100488693</Folder>
+				<Folder>1774957797642</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1756213864971</Id>
 				<Name><![CDATA[J_AggregatorBatteryManagementCollectiveSelfConsumption_exportRateGH]]></Name>
-				<Folder>1772100488693</Folder>
+				<Folder>1774957797642</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1758192949084</Id>
@@ -2089,6 +2093,62 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<JavaClass>
 				<Id>1774877343744</Id>
 				<Name><![CDATA[J_CapacitySharingContract]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774957587021</Id>
+				<Name><![CDATA[I_AggregatorEnergyManagement]]></Name>
+				<Folder>1774957755174</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774957849700</Id>
+				<Name><![CDATA[I_AggregatorAssetManagement]]></Name>
+				<Folder>1774957776815</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774957900719</Id>
+				<Name><![CDATA[I_AggregatorBatteryManagement]]></Name>
+				<Folder>1774957797642</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774959021082</Id>
+				<Name><![CDATA[J_AggregatorEnergyManagementDefault]]></Name>
+				<Folder>1774957755174</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774959609764</Id>
+				<Name><![CDATA[I_AggregatorChargingManagement]]></Name>
+				<Folder>1774959583939</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774959621092</Id>
+				<Name><![CDATA[I_AggregatorHeatingManagement]]></Name>
+				<Folder>1774959568850</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774960734304</Id>
+				<Name><![CDATA[J_CurtailManagementNodalPricing]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Folder>1774960311910</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774960922174</Id>
+				<Name><![CDATA[I_CurtailManagement]]></Name>
+				<Folder>1774960311910</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774961188583</Id>
+				<Name><![CDATA[J_CurtailManagementContractCapacity]]></Name>
+				<Folder>1774960311910</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774961428077</Id>
+				<Name><![CDATA[J_CurtailManagementPrice]]></Name>
+				<Folder>1774960311910</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774966264594</Id>
+				<Name><![CDATA[J_BatteryManagementProfile]]></Name>
+				<Folder>1772100322546</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
