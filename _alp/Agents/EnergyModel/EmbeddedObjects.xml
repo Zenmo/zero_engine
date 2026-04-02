@@ -1459,9 +1459,6 @@
 				<Name><![CDATA[p_purposeBAG]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_curtailmentMode]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_address]]></Name>
 			</Parameter>
 			<Parameter>

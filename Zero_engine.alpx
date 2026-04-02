@@ -2069,6 +2069,7 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 			<JavaClass>
 				<Id>1774960734304</Id>
 				<Name><![CDATA[J_CurtailManagementNodalPricing]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1774960311910</Folder>
 			</JavaClass>
 			<JavaClass>

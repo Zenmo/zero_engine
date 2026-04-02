@@ -47,6 +47,7 @@ public class J_CurtailManagementNodalPricing implements I_CurtailManagement {
 				}
 			}
 		}
+		throw new RuntimeException("RECHECK THIS CURTAILMANAGEMENT behaviour BEFORE USING!");
 	}
 	
     ////Store and reset states
