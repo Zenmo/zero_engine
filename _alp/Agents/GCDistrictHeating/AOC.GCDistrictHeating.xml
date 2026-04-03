@@ -70,9 +70,6 @@
 			<Name><![CDATA[p_annotation]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_curtailmentMode]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_address]]></Name>
 		</Parameter>
 		<Parameter>

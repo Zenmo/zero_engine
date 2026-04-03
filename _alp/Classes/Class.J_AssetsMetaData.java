@@ -17,9 +17,10 @@ public class J_AssetsMetaData {
 	public Double totalInstalledWindPower_kW = 0.0;
 	public Double totalInstalledBatteryStorageCapacity_MWh = 0.0;
 	
-	public Double initialPV_kW = 0.0;
-	public Double PVPotential_kW = 0.0;
-	public Double windPotential_kW = 0.0;
+	public Double initialPV_kW;
+	public Double PVPotential_kW;
+	public OL_PVOrientation PVOrientation; //Default orientation of PV system
+	public Double windPotential_kW;
 	
 	/**
      * Default constructor
@@ -42,7 +43,7 @@ public class J_AssetsMetaData {
 	    			}
 	    		}
     		}
-    	}    	
+    	}
     	if (activeAssetFlows.contains(OL_AssetFlowCategories.batteriesChargingPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW); }
     	if (activeAssetFlows.contains(OL_AssetFlowCategories.V2GPower_kW)) { activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW); }
     	
@@ -55,8 +56,10 @@ public class J_AssetsMetaData {
     	clone.totalInstalledPVPower_kW = this.totalInstalledPVPower_kW.doubleValue();
     	clone.totalInstalledWindPower_kW = this.totalInstalledWindPower_kW.doubleValue();
     	clone.totalInstalledBatteryStorageCapacity_MWh = this.totalInstalledBatteryStorageCapacity_MWh.doubleValue();
-    	clone.PVPotential_kW = this.PVPotential_kW.doubleValue();
-    	clone.windPotential_kW = this.windPotential_kW.doubleValue();
+    	clone.initialPV_kW = this.initialPV_kW != null ? this.initialPV_kW.doubleValue() : null;
+    	clone.PVPotential_kW = this.PVPotential_kW != null ? this.PVPotential_kW.doubleValue() : null;
+    	clone.PVOrientation = this.PVOrientation != null ? this.PVOrientation : null;
+    	clone.windPotential_kW = this.windPotential_kW != null ? this.windPotential_kW.doubleValue() : null;
     	return clone;
     }
     

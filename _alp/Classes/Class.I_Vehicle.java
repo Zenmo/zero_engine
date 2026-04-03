@@ -20,6 +20,7 @@ public interface I_Vehicle
     
     void setVehicleScaling(double vehicleScaling);    
 	void setTripTracker(J_ActivityTrackerTrips tracker);
+	void setAvailability(boolean available);
 	
 	J_ActivityTrackerTrips getTripTracker();
 	boolean getAvailability();

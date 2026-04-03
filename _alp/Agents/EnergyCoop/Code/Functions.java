@@ -1529,12 +1529,13 @@ double f_createAndInitializeRapidRunDataClass(J_TimeParameters timeParameters)
 {/*ALCODESTART::1754666678297*/
 //Create rapid run data class used to collect rapid run data of other gc
 v_rapidRunData = new J_RapidRunData(timeParameters, true);
-v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
-   
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeEnergyCarriers);
-EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeConsumptionEnergyCarriers);
-EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeProductionEnergyCarriers);
-EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.copyOf(v_liveAssetsMetaData.activeAssetFlows);
+v_rapidRunData.assetsMetaData = new J_AssetsMetaData(this);
+
+EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
+
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
 for(GridConnection GC : c_memberGridConnections){
@@ -1542,8 +1543,7 @@ for(GridConnection GC : c_memberGridConnections){
 		activeEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeEnergyCarriers);
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeProductionEnergyCarriers);
-		
-		v_rapidRunData.assetsMetaData.activeAssetFlows.addAll(GC.v_rapidRunData.assetsMetaData.activeAssetFlows);
+		activeAssetFlows_rapidRun.addAll(GC.v_rapidRunData.assetsMetaData.activeAssetFlows);
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1559,7 +1559,6 @@ v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
 v_rapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
-
 /*ALCODEEND*/}
 
 ArrayList<GridConnection> f_getMemberGridConnectionsCollectionPointer()
@@ -1576,13 +1575,6 @@ gcList.forEach(gc -> gc.c_parentCoops.add(this));
 
 /*ALCODEEND*/}
 
-double f_aggregatorBatteryManagement_EnergyCoop()
-{/*ALCODESTART::1756207893357*/
-if(p_aggregatorBatteryManagement != null){
-	p_aggregatorBatteryManagement.manageExternalSetpoints();
-}
-/*ALCODEEND*/}
-
 double f_removeMemberGCs(List<GridConnection> gcList,J_TimeParameters timeParameters)
 {/*ALCODESTART::1756301338833*/
 c_memberGridConnections.removeAll(gcList);
@@ -1595,10 +1587,11 @@ gcList.forEach(gc -> gc.c_parentCoops.remove(this));
 f_initializeCustomCoop(newMemberGridConnectionsList, timeParameters);
 /*ALCODEEND*/}
 
-double f_aggregatorManagement_EnergyCoop()
+double f_operateAggregatorEnergyManagement(J_TimeVariables timeVariables)
 {/*ALCODESTART::1756207893363*/
-//Run battery setpoint management
-f_aggregatorBatteryManagement_EnergyCoop();
+if(p_aggregatorEnergyManagement != null){
+	p_aggregatorEnergyManagement.operateAggregatorEnergyManagement(timeVariables);
+}
 /*ALCODEEND*/}
 
 double f_collectGridConnectionOriginalRapidRunData()
@@ -1702,12 +1695,13 @@ double f_createAndInitializeOriginalRapidRunDataClass( J_TimeParameters timePara
 {/*ALCODESTART::1759144507499*/
 //Create rapid run data class used to collect rapid run data of other gc
 v_originalRapidRunData = new J_RapidRunData(timeParameters, true);
-v_originalRapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
+v_originalRapidRunData.assetsMetaData = new J_AssetsMetaData(this);
    
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeEnergyCarriers);
-EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeConsumptionEnergyCarriers);
-EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.copyOf(v_liveData.activeProductionEnergyCarriers);
-EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.copyOf(v_liveAssetsMetaData.activeAssetFlows);
+EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
+
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data  ????
 boolean storeTotalAssetFlows = true;
 for(GridConnection GC : c_memberGridConnections){
@@ -1715,8 +1709,7 @@ for(GridConnection GC : c_memberGridConnections){
 		activeEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeEnergyCarriers);
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeProductionEnergyCarriers);
-		
-		v_originalRapidRunData.assetsMetaData.activeAssetFlows.addAll(GC.v_originalRapidRunData.assetsMetaData.activeAssetFlows);
+		activeAssetFlows_rapidRun.addAll(GC.v_originalRapidRunData.assetsMetaData.activeAssetFlows);
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1732,7 +1725,6 @@ v_originalRapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
 v_originalRapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
-
 /*ALCODEEND*/}
 
 double f_getOriginalCumulativeIndividualGCValues()
@@ -1759,6 +1751,42 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			v_cumulativeIndividualPeakFeedinOriginal_kW += EC.v_cumulativeIndividualPeakFeedinOriginal_kW;
 		}
 	}
+}
+/*ALCODEEND*/}
+
+double f_setAggregatorEnergyManagement(I_AggregatorEnergyManagement aggregatorEnergyManagement)
+{/*ALCODESTART::1774957430435*/
+this.p_aggregatorEnergyManagement = aggregatorEnergyManagement;
+/*ALCODEEND*/}
+
+I_AggregatorEnergyManagement f_getAggregatorEnergyManagement()
+{/*ALCODESTART::1774957430437*/
+return this.p_aggregatorEnergyManagement;
+/*ALCODEEND*/}
+
+double f_setExternalAggregatorAssetManagement(I_AggregatorAssetManagement externalAggregatorAssetManagement)
+{/*ALCODESTART::1774957430439*/
+if(this.p_aggregatorEnergyManagement == null){
+	this.p_aggregatorEnergyManagement = new J_AggregatorEnergyManagementDefault(this, energyModel.p_timeParameters);
+}
+this.p_aggregatorEnergyManagement.setExternalAggregatorAssetManagement(externalAggregatorAssetManagement);
+    
+/*ALCODEEND*/}
+
+<T extends I_AggregatorAssetManagement> T f_getExternalAggregatorAssetManagement(Class<T>  aggregatorAssetManagementInterfaceType)
+{/*ALCODESTART::1774957430441*/
+if(this.p_aggregatorEnergyManagement != null){
+	return this.p_aggregatorEnergyManagement.getExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
+}
+else{
+	return null;
+}
+/*ALCODEEND*/}
+
+double f_removeExternalAggregatorAssetManagement(Class<? extends I_AggregatorAssetManagement> aggregatorAssetManagementInterfaceType)
+{/*ALCODESTART::1774957430443*/
+if(this.p_aggregatorEnergyManagement != null){
+	this.p_aggregatorEnergyManagement.removeExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
 }
 /*ALCODEEND*/}
 

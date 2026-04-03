@@ -89,14 +89,14 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					flexAssets.removeAll(findAll(flexAssets, vehicle -> vehicle instanceof J_EAEV || vehicle instanceof J_EAChargingSession));
 					break;
 				}
-				else if(asset instanceof I_HeatingAsset || asset instanceof J_EAStorageHeat){
+				else if(asset instanceof I_HeatingAsset || asset instanceof J_EAStorageHeat || asset instanceof J_EAConversionAirConditioner){
 					if(!isAssetManagementActive(I_HeatingManagement.class)) {
 						throw new RuntimeException("A heating asset is found at GC that has an EMS that does not have active heating management.");
 					}
 					if(getExternalAssetManagement(I_HeatingManagement.class) != null) {
 						getExternalAssetManagement(I_HeatingManagement.class).initializeAssets();
 					}
-					flexAssets.removeAll(findAll(flexAssets, heatAsset -> heatAsset instanceof I_HeatingAsset || heatAsset instanceof J_EAStorageHeat));
+					flexAssets.removeAll(findAll(flexAssets, heatAsset -> heatAsset instanceof I_HeatingAsset || heatAsset instanceof J_EAStorageHeat || heatAsset instanceof J_EAConversionAirConditioner));
 					break;
 				}
 				else if(asset instanceof J_EAStorageElectric){

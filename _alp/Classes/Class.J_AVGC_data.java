@@ -56,8 +56,8 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgPVPower_kWpm2;
 	public double p_avgAnnualProductionPV_kWhpWp;
 	public double p_avgRatioRoofPotentialPV;
-
 	public double p_avgSolarFieldPower_kWppha;
+	public OL_PVOrientation p_defaultPVOrientation;
 	
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;

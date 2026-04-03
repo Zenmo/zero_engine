@@ -89,67 +89,53 @@ c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, 
 f_operateFixedAssets(timeVariables);
 f_operateFlexAssets(timeVariables);
 
-f_curtailment();
-
 f_connectionMetering(timeVariables, isRapidRun);
 /*ALCODEEND*/}
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
-// Maybe we want one collection for all J_EAFixed?
-
-for (J_EAFixed j_ea : c_petroleumFuelVehicles) {
+for (J_EAFixed j_ea : c_fixedAssets) {
 	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
 	f_addFlows(flowPacket, j_ea);
 }
-for (J_EAFixed j_ea : c_hydrogenVehicles) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_consumptionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_productionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_profileAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-
-
-
 /*ALCODEEND*/}
 
-double f_resetStates()
+double f_resetStates(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668983912731*/
 fm_currentProductionFlows_kW.clear();
 fm_currentConsumptionFlows_kW.clear();
 fm_currentBalanceFlows_kW.clear();
 fm_heatFromEnergyCarrier_kW.clear();
 fm_consumptionForHeating_kW.clear();
-//fm_currentAssetFlows_kW.clear(); // Why not this one??
+//fm_currentAssetFlows_kW.clear(); // Why not this one?? (I'd have to check, but all these fm's are reset at calculateEnergyBalance, so they possibly could all be removed, ~Luc 20/03/26)
 
 v_previousPowerElectricity_kW = 0;
 v_previousPowerHeat_kW = 0;
-//v_electricityPriceLowPassed_eurpkWh = 0;
-//v_currentElectricityPriceConsumption_eurpkWh  = 0;
 
 v_rapidRunData.resetAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers); //f_initializeAccumulators();
 
 //Reset specific variables/collections in specific GC types (GCProduction, GConversion, etc.)
 f_resetSpecificGCStates();
 
-//Store states and reset EMS
+// Reset other classes
 if(p_energyManagement != null){
 	p_energyManagement.storeStatesAndReset();
 }
 
-//Store states and reset charge point
 if(p_chargePoint != null){
 	p_chargePoint.storeStatesAndReset();
+}
+
+c_energyAssets.forEach(ea -> ea.storeStatesAndReset());
+
+c_tripTrackers.forEach(tt -> {
+	tt.storeStatesAndReset();
+	tt.setStartIndex(timeVariables, f_getChargePoint());
+	}
+);
+	
+if (p_cookingTracker != null) {
+	p_cookingTracker.storeStatesAndReset();
 }
 /*ALCODEEND*/}
 
@@ -321,7 +307,7 @@ else{
 
 double f_resetSpecificGCStates()
 {/*ALCODESTART::1717060111619*/
-
+// to be overwritten by child GCs!
 /*ALCODEEND*/}
 
 double f_resetStatesAfterRapidRun()
@@ -329,72 +315,27 @@ double f_resetStatesAfterRapidRun()
 //Reset specificGC states after rapid run
 f_resetSpecificGCStatesAfterRapidRun();
 
-//Restore states in EMS
+//Restore other classes
 if(p_energyManagement != null){
 	p_energyManagement.restoreStates();
 }
 
-//Restore states in charge point
 if(p_chargePoint != null){
 	p_chargePoint.restoreStates();
 }
 
+c_energyAssets.forEach(ea -> ea.restoreStates());
 
+c_tripTrackers.forEach(tt-> tt.restoreStates());
+	
+if (p_cookingTracker != null) {
+	p_cookingTracker.restoreStates();
+}
 /*ALCODEEND*/}
 
 double f_resetSpecificGCStatesAfterRapidRun()
 {/*ALCODESTART::1717068167776*/
 // to be overwritten by child GCs!
-/*ALCODEEND*/}
-
-double f_curtailment()
-{/*ALCODESTART::1720442672576*/
-//Electricity
-if (v_enableCurtailment) {
-	switch(p_curtailmentMode) {
-		case CAPACITY:
-		// Keep feedin power within connection capacity
-		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
-			for (J_EAProduction j_ea : c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-				f_removeFlows(flowPacket, j_ea);
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
-					break;
-				}
-			}
-		}
-		break;
-		case MARKETPRICE:
-		if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
-			if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
-				for (J_EAProduction j_ea : c_productionAssets) {
-					J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-					f_removeFlows(flowPacket, j_ea);
-					if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
-						break;
-					}
-				}
-			}
-		}
-		break;
-		case NODALPRICING:
-		// Prevent feedin when nodal price is negative
-		double priceTreshold_eur = -0.0;
-		if( p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
-		
-			double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
-			for (J_EAProduction j_ea : c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-				f_removeFlows(flowPacket, j_ea);
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
-					break;
-				}
-			}
-		}
-		break;
-		default:
-	}
-}
 /*ALCODEEND*/}
 
 double f_nfatoUpdateConnectionCapacity(J_TimeVariables timeVariables)
@@ -614,6 +555,15 @@ else {
 	
 	//Fast forward time dependent energy assets (if present)
 	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(timeVariables.getT_h(), p_chargePoint));
+	c_vehicleAssets.forEach(vehicle -> vehicle.setAvailability(true));
+	if (p_chargePoint != null) {
+	    c_tripTrackers.forEach(tt -> {
+	        if (tt.vehicle instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
+	            p_chargePoint.deregisterChargingRequest(ev);
+	        }
+	        tt.setStartIndex(timeVariables, f_getChargePoint());
+	    });
+	}
 		
 	//Initialize/reset dataset maps to 0
 	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
@@ -1042,9 +992,13 @@ else if (j_ea instanceof J_EAConversion conversionAsset) {
 			p_cookingTracker.HOB = (J_EAConversion)j_ea;
 		}
 	} 
+	else if (j_ea instanceof J_EAConversionAirConditioner aircoAsset) {
+		p_airco = aircoAsset;
+		energyModel.c_ambientDependentAssets.add(aircoAsset);
+	}
 
 } 
-else if  (j_ea instanceof J_EAStorage storageAsset) {
+else if (j_ea instanceof J_EAStorage storageAsset) {
 	c_storageAssets.add(storageAsset);
 	energyModel.c_storageAssets.add(storageAsset);
 	if (j_ea instanceof J_EAStorageHeat) {
@@ -1066,11 +1020,7 @@ else if  (j_ea instanceof J_EAStorage storageAsset) {
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 	}
-}
-else if  (j_ea instanceof J_EAAirco aircoAsset) {
-	p_airco = aircoAsset;
-}
-else{
+} else {
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFlex asset!");
 }
 /*ALCODEEND*/}
@@ -1102,6 +1052,10 @@ return tripTracker;
 double f_connectToJ_EAFixed(J_EAFixed j_ea,J_TimeParameters timeParameters)
 {/*ALCODESTART::1772106633559*/
 c_fixedAssets.add(j_ea);
+
+if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
+}
 
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.add(fuelVehicle);
@@ -1152,9 +1106,9 @@ else if (j_ea instanceof J_EAProduction productionAsset) {
 }
 else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
-} 
-else if  (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
+}
+else if (j_ea instanceof J_EAProfile) {
+	return;
 }
 else{
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFixed asset!");
@@ -1178,6 +1132,9 @@ double f_removeTheJ_EAFixed(J_EAFixed j_ea)
 {/*ALCODESTART::1772110066396*/
 c_fixedAssets.remove(j_ea);
 
+if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.remove(profileAsset);
+}
 
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.remove(fuelVehicle);
@@ -1234,9 +1191,6 @@ else if (j_ea instanceof J_EAProduction) {
 	
 	}
 }
-else if  (j_ea instanceof J_EAProfile) {
-	c_profileAssets.remove((J_EAProfile)j_ea);
-}
 /*ALCODEEND*/}
 
 double f_removeTheJ_EAFlex(J_EAFlex j_ea)
@@ -1281,6 +1235,10 @@ else if (j_ea instanceof J_EAConversion) {
 	else if (j_ea instanceof J_EAConversionElectrolyser) {
 	
 	}
+	else if (j_ea instanceof J_EAConversionAirConditioner) {
+		p_airco = null;
+		energyModel.c_ambientDependentAssets.remove(j_ea);
+	}
 } 
 else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.remove((J_EAStorage)j_ea);
@@ -1303,7 +1261,7 @@ else if  (j_ea instanceof J_EAStorage) {
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 	}
 }
-else if (j_ea instanceof J_EAAirco) {
+else if (j_ea instanceof J_EAConversionAirConditioner) {
 	p_airco = null;
 }
 /*ALCODEEND*/}
@@ -1328,6 +1286,16 @@ double f_removeExternalAssetManagement(Class<? extends I_AssetManagement> assetM
 {/*ALCODESTART::1772129162585*/
 if(this.p_energyManagement != null){
 	this.p_energyManagement.removeExternalAssetManagement(assetManagementInterfaceType);
+}
+/*ALCODEEND*/}
+
+boolean f_isAssetManagementActive(Class<? extends I_AssetManagement>  assetManagementInterfaceType)
+{/*ALCODESTART::1774965224446*/
+if(this.p_energyManagement != null){
+	return this.p_energyManagement.isAssetManagementActive(assetManagementInterfaceType);
+}
+else{
+	return false;
 }
 /*ALCODEEND*/}
 
