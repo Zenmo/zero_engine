@@ -33,10 +33,10 @@ public class J_CurtailManagementExternalSetpoint implements I_CurtailManagement 
     
 	//Manage curtailment
 	public void manageCurtailment(J_TimeVariables timeVariables) {
-		//Follow curtailment setpoint
+		//Follow external curtailment setpoint
 		if(curtailmentSetpoint_kW > 0) {
 			for (J_EAProduction j_ea : gc.c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - curtailmentSetpoint_kW);
+				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, curtailmentSetpoint_kW);
 				gc.f_removeFlows(flowPacket, j_ea);
 				
 				curtailmentSetpoint_kW -= flowPacket.energyUse_kW; // Remove curtailed energy use from curtailment setpoint.
@@ -48,6 +48,8 @@ public class J_CurtailManagementExternalSetpoint implements I_CurtailManagement 
 		if(curtailmentSetpoint_kW > 0) {
 			traceln("WARNING: External curtailment setpoint has been set too high! The full requested curtailment could not be executed, as the curtailable energy was lower");
 		}
+		
+		//Reset curtailment setpoint_kW
 		curtailmentSetpoint_kW = 0;
 	}
 	
@@ -57,6 +59,7 @@ public class J_CurtailManagementExternalSetpoint implements I_CurtailManagement 
 	
     ////Store and reset states
 	public void storeStatesAndReset() {
+		curtailmentSetpoint_kW = 0;
 		//Nothing to store and reset
 	}
 	public void restoreStates() {
@@ -65,6 +68,6 @@ public class J_CurtailManagementExternalSetpoint implements I_CurtailManagement 
 	
 	@Override
 	public String toString() {
-		return super.toString();
+		return "J_CurtailManagementExternalSetpoint: Current setpoint_kW = " + curtailmentSetpoint_kW;
 	}
 }
