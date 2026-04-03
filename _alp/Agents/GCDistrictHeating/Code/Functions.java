@@ -434,3 +434,53 @@ else{
 p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
 /*ALCODEEND*/}
 
+double f_initializeHeatBuffer(double capacity_kWh,double initialHeat_kWh,double min_kWh,double max_kWh,double lossPerHour_fr)
+{/*ALCODESTART::1775215818027*/
+p_bufferCapacity_kWh = capacity_kWh;
+v_bufferHeat_kWh = initialHeat_kWh;
+p_bufferMin_kWh = min_kWh;
+p_bufferMax_kWh = max_kWh;
+p_bufferLossPerHour_fr = lossPerHour_fr;
+/*ALCODEEND*/}
+
+double f_deliverHeatFromBuffer(double requestedHeat_kWh)
+{/*ALCODESTART::1775216030584*/
+double deliveredHeat_kWh = min(requestedHeat_kWh, v_bufferHeat_kWh);
+v_bufferHeat_kWh -= deliveredHeat_kWh;
+return deliveredHeat_kWh;
+/*ALCODEEND*/}
+
+double f_applyBufferLosses(double dt_h)
+{/*ALCODESTART::1775216119370*/
+double losses_kWh = v_bufferHeat_kWh * p_bufferLossPerHour_fr * dt_h;
+losses_kWh = min(losses_kWh, v_bufferHeat_kWh);
+v_bufferHeat_kWh -= losses_kWh;
+/*ALCODEEND*/}
+
+double f_controlIronBurner()
+{/*ALCODESTART::1775216252599*/
+if (v_bufferHeat_kWh <= p_bufferMin_kWh){
+	v_ironBurnerOn = true;
+	}
+	else if (v_bufferHeat_kWh >= p_bufferMax_kWh){
+	v_ironBurnerOn = false;
+}
+	
+/*ALCODEEND*/}
+
+double f_chargeBufferFromIronBurner(J_EAConversionIronBurner heatingAsset,double dt_h,J_TimeVariables timeVariables)
+{/*ALCODESTART::1775216344313*/
+double chargePower_kW = v_ironBurnerOn ? heatingAsset.getOutputHeatCapacity_kW():0;
+double chargeEnergy_kWh = chargePower_kW * dt_h;
+chargeEnergy_kWh = min(chargeEnergy_kWh, p_bufferCapacity_kWh - v_bufferHeat_kWh);
+
+v_bufferHeat_kWh += chargeEnergy_kWh;
+
+double load_fr = 0;
+if (heatingAsset.getOutputHeatCapacity_kW() > 0){
+	load_fr = chargePower_kW/ heatingAsset.getOutputHeatCapacity_kW();
+	}
+	
+	f_updateFlexAssetFlows(heatingAsset, load_fr, timeVariables);
+/*ALCODEEND*/}
+

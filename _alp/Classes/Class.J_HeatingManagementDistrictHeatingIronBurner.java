@@ -59,9 +59,16 @@ public class J_HeatingManagementDistrictHeatingIronBurner implements I_HeatingMa
      	    }
      	}
  
-    	double heatTransferToNetwork_kW = max(0, currentDemand_kW);
-    	gc.f_updateFlexAssetFlows(heatingAsset, heatTransferToNetwork_kW / heatingAsset.getOutputHeatCapacity_kW(), timeVariables);
-
+    	double dt_h = timeParameters.getTimeStep_h();
+    	double requestedHeat_kWh = currentDemand_kW * dt_h;
+    	
+    	double deliveredHeat_kWh = ((GCDistrictHeating)gc).f_deliverHeatFromBuffer(requestedHeat_kWh);
+    	double unmetHeat_kWh = requestedHeat_kWh - deliveredHeat_kWh;
+    	
+    	((GCDistrictHeating)gc).f_applyBufferLosses(dt_h);
+    	((GCDistrictHeating)gc).f_controlIronBurner();
+    	((GCDistrictHeating)gc).f_chargeBufferFromIronBurner(heatingAsset, dt_h, timeVariables);
+    	
     	previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     }
     
