@@ -117,7 +117,9 @@ public class J_AVGC_data {
 	public double p_avgAnnualTravelDistanceTruck_km;
 	public double p_minAnnualTravelDistanceSurveyVehicle_km;
 	
-	public Map<OL_EnergyCarriers, Double> map_avgCO2EmissionOfEnergyCarrier_kgpkWh;
+	//Emissions
+	public Map<OL_EnergyCarriers, Double> map_avgDirectCO2EmissionOfEnergyCarrier_kgpkWh;
+	public Map<OL_EnergyCarriers, Double> map_avgLifeCycleCO2EmissionOfEnergyCarrier_kgpkWh;
 	
 	public J_AVGC_Economic_data economicAVGC;
 	

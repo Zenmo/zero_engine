@@ -907,8 +907,27 @@
 			</OptionList>
 			<OptionList>
 				<Id>1729686050861</Id>
-				<Name><![CDATA[OL_EAFlowKeys]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_EnergyTaxesBracket]]></Name>
+				<Option>
+					<Id>1775472521110</Id>
+					<Name><![CDATA[BRACKET_1]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472537371</Id>
+					<Name><![CDATA[BRACKET_2]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472541751</Id>
+					<Name><![CDATA[BRACKET_3]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472543944</Id>
+					<Name><![CDATA[BRACKET_4]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472545916</Id>
+					<Name><![CDATA[BRACKET_5]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1741598206262</Id>
