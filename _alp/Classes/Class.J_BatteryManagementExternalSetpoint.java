@@ -74,11 +74,4 @@ public class J_BatteryManagementExternalSetpoint implements I_BatteryManagement 
 	public String toString() {
 		return "J_BatteryManagementExternalSetpoint with currentChargeSetpoint_kW " + this.currentChargeSetpoint_kW + " kW";
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

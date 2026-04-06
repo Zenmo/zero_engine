@@ -2176,6 +2176,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[J_CurtailManagementExternalSetpoint]]></Name>
 				<Folder>1774960311910</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1775491279697</Id>
+				<Name><![CDATA[J_ChargingManagementExternalSetpoint]]></Name>
+				<Folder>1772100326457</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
