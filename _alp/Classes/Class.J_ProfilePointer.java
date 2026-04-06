@@ -72,7 +72,7 @@ public class J_ProfilePointer implements Serializable {
        
     public double[] getAllValues() {
     	//return this.tableFunction.getValues();
-    	return this.a_profile;
+    	return this.a_profile.clone();
     }
     
     public double getDataTimeStep_h() {
