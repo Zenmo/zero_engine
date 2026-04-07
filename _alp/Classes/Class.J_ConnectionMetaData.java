@@ -151,11 +151,13 @@ public class J_ConnectionMetaData {
     
     @Override
     public String toString() {
-        return "ContractedDeliveryCapacity_kW: " + contractedDeliveryCapacity_kW + 
-               ", ContractedFeedinCapacity_kW: " + contractedFeedinCapacity_kW + 
-               ", PhysicalCapacity_kW: " + physicalCapacity_kW + 
-               ", ContractedDeliveryCapacityKnown: " + contractedDeliveryCapacityKnown + 
-               ", ContractedFeedinCapacityKnown: " + contractedFeedinCapacityKnown + 
-               ", PhysicalCapacityKnown: " + physicalCapacityKnown;
+        return "ContractedDeliveryCapacity_kW: " + contractedDeliveryCapacity_kW + "\n" + 
+               "ContractedFeedinCapacity_kW: " + contractedFeedinCapacity_kW + "\n" + 
+               "PhysicalCapacity_kW: " + physicalCapacity_kW + "\n" + 
+               "ContractedDeliveryCapacityKnown: " + contractedDeliveryCapacityKnown + "\n" + 
+               "ContractedFeedinCapacityKnown: " + contractedFeedinCapacityKnown + "\n" + 
+               "PhysicalCapacityKnown: " + physicalCapacityKnown + "\n" + 
+               "ConnectionSizeType: " + connectionSizeType + "\n" + 
+               "CapacitySharingContracts: " + capacitySharingContracts.size();
     }
 }
