@@ -832,6 +832,10 @@
 					<Id>1769674053743</Id>
 					<Name><![CDATA[KW]]></Name>
 				</Option>
+				<Option>
+					<Id>1772717876628</Id>
+					<Name><![CDATA[CO2EMISSION_KGPKWH]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1726685111559</Id>
@@ -903,8 +907,27 @@
 			</OptionList>
 			<OptionList>
 				<Id>1729686050861</Id>
-				<Name><![CDATA[OL_EAFlowKeys]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
+				<Name><![CDATA[OL_EnergyTaxesBracket]]></Name>
+				<Option>
+					<Id>1775472521110</Id>
+					<Name><![CDATA[BRACKET_1]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472537371</Id>
+					<Name><![CDATA[BRACKET_2]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472541751</Id>
+					<Name><![CDATA[BRACKET_3]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472543944</Id>
+					<Name><![CDATA[BRACKET_4]]></Name>
+				</Option>
+				<Option>
+					<Id>1775472545916</Id>
+					<Name><![CDATA[BRACKET_5]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1741598206262</Id>
@@ -1204,6 +1227,41 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Option>
 					<Id>1769684176470</Id>
 					<Name><![CDATA[EXCLUDE_PV]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1772554719495</Id>
+				<Name><![CDATA[OL_GridOperator]]></Name>
+				<Option>
+					<Id>1772554719496</Id>
+					<Name><![CDATA[ENEXIS]]></Name>
+				</Option>
+				<Option>
+					<Id>1772554719497</Id>
+					<Name><![CDATA[STEDIN]]></Name>
+				</Option>
+				<Option>
+					<Id>1772554719498</Id>
+					<Name><![CDATA[LIANDER]]></Name>
+				</Option>
+				<Option>
+					<Id>1772554719499</Id>
+					<Name><![CDATA[WESTLAND_INFRA]]></Name>
+				</Option>
+			</OptionList>
+			<OptionList>
+				<Id>1773327283452</Id>
+				<Name><![CDATA[OL_ConnectionSizeType]]></Name>
+				<Description><![CDATA[SMALL_CONNECTION (kleinverbruik, <= 3x80)
+LARGE_CONNECTION (grootverbruik, > 3x80)
+]]></Description>
+				<Option>
+					<Id>1773327283453</Id>
+					<Name><![CDATA[SMALL_CONNECTION]]></Name>
+				</Option>
+				<Option>
+					<Id>1773327283454</Id>
+					<Name><![CDATA[LARGE_CONNECTION]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -2034,6 +2092,16 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Name><![CDATA[I_StoreStatesAndReset]]></Name>
 			</JavaClass>
 			<JavaClass>
+				<Id>1772554413488</Id>
+				<Name><![CDATA[J_AVGC_Economic_data]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1773938776746</Id>
+				<Name><![CDATA[I_GridOperatorTariffs]]></Name>
+				<Folder>1752680962144</Folder>
+			</JavaClass>
+			<JavaClass>
 				<Id>1773841546071</Id>
 				<Name><![CDATA[J_BatteryManagementLocalBalancing]]></Name>
 				<Folder>1772100322546</Folder>
@@ -2042,6 +2110,10 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1773139549641</Id>
 				<Name><![CDATA[J_EAConversionAirConditioner]]></Name>
 				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1774877343744</Id>
+				<Name><![CDATA[J_CapacitySharingContract]]></Name>
 			</JavaClass>
 			<JavaClass>
 				<Id>1774957587021</Id>
@@ -2103,6 +2175,11 @@ EXCLUDE_PV => Use PV profile to preprocess gridnode profile to create a more acc
 				<Id>1775044296610</Id>
 				<Name><![CDATA[J_CurtailManagementExternalSetpoint]]></Name>
 				<Folder>1774960311910</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1775491279697</Id>
+				<Name><![CDATA[J_ChargingManagementExternalSetpoint]]></Name>
+				<Folder>1772100326457</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
