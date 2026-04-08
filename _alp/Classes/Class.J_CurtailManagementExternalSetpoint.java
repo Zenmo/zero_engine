@@ -39,7 +39,7 @@ public class J_CurtailManagementExternalSetpoint implements I_CurtailManagement 
 				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, curtailmentSetpoint_kW);
 				gc.f_removeFlows(flowPacket, j_ea);
 				
-				curtailmentSetpoint_kW -= flowPacket.energyUse_kW; // Remove curtailed energy use from curtailment setpoint.
+				curtailmentSetpoint_kW += flowPacket.energyUse_kW; // Remove curtailed energy use from curtailment setpoint. (Curtailed flowpacket energyuse is a negative value!).
 				if (curtailmentSetpoint_kW <= 0) {
 					break;
 				}
