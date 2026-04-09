@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512121156"
+                   AnyLogicVersion="8.9.7.202512010504"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -431,6 +431,10 @@
 					<Id>1768317127860</Id>
 					<Name><![CDATA[TYPE_2]]></Name>
 				</Option>
+				<Option>
+					<Id>1775667132125</Id>
+					<Name><![CDATA[UNKNOWN]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659711659517</Id>
@@ -852,6 +856,10 @@
 					<Id>1726685111562</Id>
 					<Name><![CDATA[NONE]]></Name>
 				</Option>
+				<Option>
+					<Id>1775729955459</Id>
+					<Name><![CDATA[UNKNOWN]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1729161119459</Id>
@@ -1163,6 +1171,10 @@
 				<Option>
 					<Id>1768309931760</Id>
 					<Name><![CDATA[TYPE_6]]></Name>
+				</Option>
+				<Option>
+					<Id>1775667123723</Id>
+					<Name><![CDATA[UNKNOWN]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
