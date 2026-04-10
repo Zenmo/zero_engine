@@ -131,11 +131,4 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 				+ "with efficiency: " + this.eta_r + ", "
 				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
 	}
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
-
 }                         
