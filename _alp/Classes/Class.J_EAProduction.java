@@ -147,8 +147,8 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
     		return 0;
     	}*/
     	
-    	double currentProduction_kW = max(0,-this.lastFlowsMap.get(curtailedEnergyCarrier));
-    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW)); // Can only curtail what was produced in the first place.
+    	double currentProduction_kW = max(0,-this.lastFlowsMap.get(curtailedEnergyCarrier)); // positive
+    	double curtailmentPower_kW = max(0,min(currentProduction_kW, curtailmentAmount_kW)); // positive // Can only curtail what was produced in the first place.
     	energyUsed_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h(); // energyUsed_kWh is negative for production assets. Curtailment makes it 'less negative', so a positive number is added to energyUsed_kWh.
     	this.totalEnergyCurtailed_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h();
     	J_FlowsMap curtailmentFlow = new J_FlowsMap();
