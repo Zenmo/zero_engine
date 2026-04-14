@@ -3,8 +3,9 @@
 	<Variable Class="PlainVariable">
 		<Id>1707149728754</Id>
 		<Name><![CDATA[v_hydrogenProductionDeficit_kWh]]></Name>
-		<X>1610</X>
-		<Y>350</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -32,8 +33,9 @@ Standby.
 Idle.
 Functional. 
 FullCapacity.]]></Description>
-		<X>1610</X>
-		<Y>440</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -55,8 +57,9 @@ FullCapacity.]]></Description>
 		<Id>1708448456203</Id>
 		<Name><![CDATA[v_producedOxygen_kg]]></Name>
 		<Description><![CDATA[value of the produced oxygen at the current time step. ]]></Description>
-		<X>1610</X>
-		<Y>490</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>570</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -74,8 +77,9 @@ FullCapacity.]]></Description>
 	<Variable Class="PlainVariable">
 		<Id>1708949135932</Id>
 		<Name><![CDATA[v_totalDownTimeElectrolyser_hr]]></Name>
-		<X>1610</X>
-		<Y>300</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -96,8 +100,9 @@ FullCapacity.]]></Description>
 	<Variable Class="PlainVariable">
 		<Id>1708949154946</Id>
 		<Name><![CDATA[v_totalEnergyLossIdle_kWh]]></Name>
-		<X>1610</X>
-		<Y>320</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -118,8 +123,9 @@ FullCapacity.]]></Description>
 	<Variable Class="PlainVariable">
 		<Id>1709045630640</Id>
 		<Name><![CDATA[v_fuelcellRegime]]></Name>
-		<X>2010</X>
-		<Y>400</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>480</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -137,8 +143,9 @@ FullCapacity.]]></Description>
 	<Variable Class="PlainVariable">
 		<Id>1709045655596</Id>
 		<Name><![CDATA[v_totalDownTimeFC_hr]]></Name>
-		<X>2010</X>
-		<Y>440</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -156,8 +163,9 @@ FullCapacity.]]></Description>
 	<Variable Class="PlainVariable">
 		<Id>1715597878431</Id>
 		<Name><![CDATA[v_electricityPriceMaxForProfit_eurpkWh]]></Name>
-		<X>1610</X>
-		<Y>410</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>490</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -179,8 +187,9 @@ FullCapacity.]]></Description>
 		<Id>1715607690911</Id>
 		<Name><![CDATA[v_gridNodeCongestionLimit_kW]]></Name>
 		<Description><![CDATA[Congestion limit  of the grid node. If this limit is reached, electrolyser should not be functional.]]></Description>
-		<X>1610</X>
-		<Y>250</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>330</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -201,8 +210,9 @@ FullCapacity.]]></Description>
 	<Variable Class="PlainVariable">
 		<Id>1720522233689</Id>
 		<Name><![CDATA[v_hydrogenInStorage_kWh]]></Name>
-		<X>1610</X>
-		<Y>470</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>550</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -224,8 +234,8 @@ FullCapacity.]]></Description>
 		<Id>1770636052222</Id>
 		<Name><![CDATA[v_totalHydrogenUsed_MWh]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2360</X>
-		<Y>140</Y>
+		<X>2750</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -244,8 +254,8 @@ FullCapacity.]]></Description>
 		<Id>1770636052224</Id>
 		<Name><![CDATA[v_enableFuelCell]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2360</X>
-		<Y>120</Y>
+		<X>2750</X>
+		<Y>200</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -264,8 +274,8 @@ FullCapacity.]]></Description>
 		<Id>1770636052226</Id>
 		<Name><![CDATA[v_maxHydrogenPower_kW]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2360</X>
-		<Y>160</Y>
+		<X>2750</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -283,8 +293,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1707860525999</Id>
 		<Name><![CDATA[p_conversionEfficiency]]></Name>
-		<X>1610</X>
-		<Y>160</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -308,8 +319,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1707860642684</Id>
 		<Name><![CDATA[p_productionNominal_Nm3]]></Name>
-		<X>1610</X>
-		<Y>230</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -333,8 +345,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216547</Id>
 		<Name><![CDATA[p_conversionEfficiencyFC]]></Name>
-		<X>2010</X>
-		<Y>160</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>240</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -359,8 +372,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216581</Id>
 		<Name><![CDATA[p_productionNominalFC_Nm3]]></Name>
-		<X>2010</X>
-		<Y>180</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -385,8 +399,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216603</Id>
 		<Name><![CDATA[p_productionMinimumFC_Nm3]]></Name>
-		<X>2010</X>
-		<Y>200</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -411,8 +426,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216633</Id>
 		<Name><![CDATA[p_powerNominalFC_kW]]></Name>
-		<X>2010</X>
-		<Y>220</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -437,8 +453,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216658</Id>
 		<Name><![CDATA[p_energyProductionNominalFC_kWh_Nm3]]></Name>
-		<X>2010</X>
-		<Y>240</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -463,8 +480,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216687</Id>
 		<Name><![CDATA[p_inputPressureFC_Bar]]></Name>
-		<X>2010</X>
-		<Y>260</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -490,8 +508,9 @@ FullCapacity.]]></Description>
 		<Id>1709045216711</Id>
 		<Name><![CDATA[p_loadChangeTimeMinMaxFC_s]]></Name>
 		<Description><![CDATA[The time it takes for the electrolyser to shift from minimum to maximum production in seconds]]></Description>
-		<X>2010</X>
-		<Y>280</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -516,8 +535,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216759</Id>
 		<Name><![CDATA[p_startUpTimeIdleFC_s]]></Name>
-		<X>2010</X>
-		<Y>320</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -542,8 +562,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216780</Id>
 		<Name><![CDATA[p_startUpTimeShutdownFC_s]]></Name>
-		<X>2010</X>
-		<Y>300</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -568,8 +589,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1709045216801</Id>
 		<Name><![CDATA[p_electricityPriceMinForProfitFC_eurpkWh]]></Name>
-		<X>2010</X>
-		<Y>370</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2400</X>
+		<Y>450</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -598,8 +620,9 @@ FullCapacity.]]></Description>
 		<Id>1709733732105</Id>
 		<Name><![CDATA[p_minProductionRatio]]></Name>
 		<Description><![CDATA[ratio of the nominal power of the electrolyser for minimum production]]></Description>
-		<X>1610</X>
-		<Y>140</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>220</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -623,8 +646,9 @@ FullCapacity.]]></Description>
 	<Variable Class="Parameter">
 		<Id>1717070647695</Id>
 		<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
-		<X>1600</X>
-		<Y>560</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1990</X>
+		<Y>640</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -651,8 +675,9 @@ FullCapacity.]]></Description>
 	<Variable Class="CollectionVariable">
 		<Id>1716916299738</Id>
 		<Name><![CDATA[c_forecast_RES_kW]]></Name>
-		<X>1610</X>
-		<Y>180</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>260</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -669,8 +694,9 @@ FullCapacity.]]></Description>
 	<Variable Class="CollectionVariable">
 		<Id>1716993724806</Id>
 		<Name><![CDATA[c_forecast_gridNodePowerFlow_kW]]></Name>
-		<X>1610</X>
-		<Y>200</Y>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>2000</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

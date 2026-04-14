@@ -750,19 +750,11 @@
 				<Name><![CDATA[OL_ElectrolyserOperationMode]]></Name>
 				<Option>
 					<Id>1668693549847</Id>
-					<Name><![CDATA[BALANCE]]></Name>
+					<Name><![CDATA[POWER_SURPLUS]]></Name>
 				</Option>
 				<Option>
 					<Id>1668693554313</Id>
 					<Name><![CDATA[PRICE]]></Name>
-				</Option>
-				<Option>
-					<Id>1717061998153</Id>
-					<Name><![CDATA[BALANCE_PASTWEEK]]></Name>
-				</Option>
-				<Option>
-					<Id>1717140116168</Id>
-					<Name><![CDATA[ALWAYS_IDLE]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1417,7 +1409,12 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			</Folder>
 			<Folder>
 				<Id>1775728951678</Id>
-				<Name><![CDATA[New Folder]]></Name>
+				<Name><![CDATA[ElectrolyserManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1776078970513</Id>
+				<Name><![CDATA[BackupGeneratorManagement]]></Name>
 				<ParentId>1772100318398</ParentId>
 			</Folder>
 		</Folders>
@@ -2181,6 +2178,36 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1775491279697</Id>
 				<Name><![CDATA[J_ChargingManagementExternalSetpoint]]></Name>
 				<Folder>1772100326457</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776078551110</Id>
+				<Name><![CDATA[J_ElectrolyserManagementPowerSurplus]]></Name>
+				<Folder>1775728951678</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776078590999</Id>
+				<Name><![CDATA[I_ElectrolyserManagement]]></Name>
+				<Folder>1775728951678</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776078958990</Id>
+				<Name><![CDATA[J_ElectrolyserManagementPrice]]></Name>
+				<Folder>1775728951678</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776079040123</Id>
+				<Name><![CDATA[I_BackupGeneratorManagement]]></Name>
+				<Folder>1776078970513</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776079237990</Id>
+				<Name><![CDATA[J_BackupGeneratorManagementContractCapacity]]></Name>
+				<Folder>1776078970513</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776164691536</Id>
+				<Name><![CDATA[J_EnergyManagementElectrolyser]]></Name>
+				<Folder>1772100335412</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

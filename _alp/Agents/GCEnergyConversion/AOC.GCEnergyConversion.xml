@@ -2,7 +2,6 @@
 <ActiveObjectClass>
 	<Id>1663773857868</Id>
 	<Name><![CDATA[GCEnergyConversion]]></Name>
-	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677823817</Folder>
 	<Import><![CDATA[import java.util.*;]]></Import>
 	<ExtendsReference>
@@ -27,9 +26,6 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_batteryAsset]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_electrolyserOperationMode]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_heatBuffer]]></Name>
@@ -186,8 +182,9 @@
 		<DataSet>
 			<Id>1717063231444</Id>
 			<Name><![CDATA[data_liveWeekElectrolyserPower_kW]]></Name>
-			<X>1610</X>
-			<Y>390</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>2000</X>
+			<Y>470</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -215,8 +212,9 @@
 		<DataSet>
 			<Id>1717069403489</Id>
 			<Name><![CDATA[data_liveWeekGridNoderPowerFlow_kW]]></Name>
-			<X>1600</X>
-			<Y>540</Y>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<X>1990</X>
+			<Y>620</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -303,7 +301,6 @@
 			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 			<Z>0</Z>
 			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
-			<Presentation xmlns:al="http://anylogic.com"/>
 		</Level>
 	</Presentation>
 </ActiveObjectClass>

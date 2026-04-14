@@ -114,15 +114,6 @@ if (ElectrolyserAsset.getInputCapacity_kW()>0) {
 }
 /*ALCODEEND*/}
 
-double f_operateFlexAssets_override(J_TimeVariables timeVariables)
-{/*ALCODESTART::1708089644411*/
-for( J_EA v : c_conversionAssets ){
-	if (v instanceof J_EAConversionElectrolyser) {
-		f_manageElectrolyser((J_EAConversionElectrolyser)v, timeVariables);
-	}
-}
-/*ALCODEEND*/}
-
 double f_electrolyserRegime(double elektrolyserSetpointElectric_kW,double excessElectricPower_kW,J_EAConversionElectrolyser ElectrolyserAsset,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1708447959640*/
 double solar_forecast_kW;
@@ -397,33 +388,6 @@ switch (ElectrolyserAsset.getState()){
 	break;
 }
 
-/*ALCODEEND*/}
-
-double f_resetSpecificGCStates_override()
-{/*ALCODESTART::1717066943639*/
-//Reset variables 
-v_totalDownTimeElectrolyser_hr = 0;
-v_totalEnergyLossIdle_kWh = 0;
-v_producedOxygen_kg = 0;
-v_hydrogenInStorage_kWh = 0;
-
-
-/*ALCODEEND*/}
-
-double f_resetSpecificGCStatesAfterRapidRun_override()
-{/*ALCODESTART::1717068271650*/
-//Rest forecast collections
-c_forecast_RES_kW.clear();
-c_forecast_gridNodePowerFlow_kW.clear();
-
-
-//Reset dataset
-data_liveWeekElectrolyserPower_kW.reset();
-data_liveWeekGridNoderPowerFlow_kW.reset();
-
-//Reset variables
-v_hydrogenProductionDeficit_kWh = 0;
-v_hydrogenInStorage_kWh = 0;
 /*ALCODEEND*/}
 
 double f_electrolyserRegimeControl_AlwaysIdle(double currentGridNodePowerFlow_kW,J_EAConversionElectrolyser ElectrolyserAsset)

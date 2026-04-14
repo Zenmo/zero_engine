@@ -583,34 +583,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1671459091954</Id>
-		<Name><![CDATA[p_electrolyserOperationMode]]></Name>
-		<X>270</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[OL_ElectrolyserOperationMode]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[OL_ElectrolyserOperationMode.BALANCE]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1671459091952</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1676449763319</Id>
 		<Name><![CDATA[p_heatBuffer]]></Name>
 		<X>646</X>
