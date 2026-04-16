@@ -72,11 +72,11 @@ public class J_BatteryManagementLocalBalancing implements I_BatteryManagement {
     }
   
     private double getDeliveryCapacity_kW() {
-    	return gc.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
+    	return gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
     }
     
     private double getFeedinCapacity_kW() {
-	    return gc.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+	    return gc.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
     }
     
     private double getBalanceElectricity_kW() {
