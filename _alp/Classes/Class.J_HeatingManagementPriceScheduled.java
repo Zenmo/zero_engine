@@ -147,6 +147,16 @@ public class J_HeatingManagementPriceScheduled implements I_HeatingManagement {
     }
     
     @Override
+    public void storeStatesAndReset() {
+    	
+    }
+    
+    @Override
+    public void restoreStates() {
+    	
+    }
+    
+    @Override
 	public String toString() {
 		return super.toString();
 	}
