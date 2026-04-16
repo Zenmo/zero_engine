@@ -8,16 +8,16 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
 
 	//Management specific
 	private Agent target;
-	private List<Double> c_forecast_RES_kW = new ArrayList<>();
-	private List<Double> c_forecast_gridNodePowerFlow_kW = new ArrayList<>();
-	private DataSet data_liveWeekGridNodePowerFlow_kW = new DataSet(672);
-	private DataSet data_liveWeekElectrolyserPower_kW = new DataSet(672);
+	private List<Double> forecastRES_kW = new ArrayList<>();
+	private List<Double> forecastTargetPowerFlows_kW = new ArrayList<>();
+	private DataSet lastWeekTargetPowerFlows_kW = new DataSet(672);
 	
 	private boolean b_forecast_lastWeekBased = false; // EMS functionality option: Determine forcast based on last weeks power.
 	
 	//Storing
-	private DataSet storedData_liveWeekGridNodePowerFlow_kW;
-	private DataSet storedData_liveWeekElectrolyserPower_kW;
+	private List<Double> storedForecastRES_kW = new ArrayList<>();
+	private List<Double> storedForecastTargetPowerFlows_kW = new ArrayList<>();
+	private DataSet storedLastWeekTargetPowerFlows_kW; 
 	
 	/**
      * Empty constructor for serialization
@@ -44,97 +44,97 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     
     public void manageElectrolyser(J_TimeVariables timeVariables) {
     	J_EAConversionElectrolyser electrolyserAsset = (J_EAConversionElectrolyser)findFirst(gc.c_conversionAssets, asset -> asset.getEAType() == OL_EnergyAssetType.ELECTROLYSER);
-    	double targetDeliveryCapacityLimit_kW = getTargetDeliveryCapacityLimit_kW();
-    	
+
     	//Consider GC its own limits
-    	double v_allowedDeliveryCapacity_kW = gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
-    	double availableElectricPower_kW = max(0, v_allowedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
+    	double allowedDeliveryCapacity_kW = gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+    	double availableElectricPower_kW = max(0, allowedDeliveryCapacity_kW - gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
     	
+    	//Define forecast time
     	double forecast_time_h = electrolyserAsset.getStartUpTimeStandby_h()+ 2*timeParameters.getTimeStep_h();
 
-    	//Get current limitation values
+    	//Get current target values
     	J_FlowsMap flowsMap = electrolyserAsset.getLastFlows();
     	double previousElectrolyserConsumption_kW = max(0,flowsMap.get(OL_EnergyCarriers.ELECTRICITY));
-    	double currentGridNodePowerFlow_kW = gc.p_parentNodeElectric.v_currentLoad_kW - previousElectrolyserConsumption_kW;
-    	data_liveWeekGridNodePowerFlow_kW.add(timeVariables.getT_h(), gc.p_parentNodeElectric.v_currentLoad_kW);
+    	double currentTargetPowerFlow_kW = getTargetCurrentPowerFlow_kW() - previousElectrolyserConsumption_kW;
+    	lastWeekTargetPowerFlows_kW.add(timeVariables.getT_h(), currentTargetPowerFlow_kW);
     	
     	//Set the electrolyser state
-    	electrolyserStateControl_Surplus(electrolyserAsset, currentGridNodePowerFlow_kW, forecast_time_h, timeParameters, timeVariables);
+    	if(electrolyserAsset.usesElectrolyserStates()) {
+    		electrolyserStateControl_Surplus(electrolyserAsset, currentTargetPowerFlow_kW, forecast_time_h, timeParameters, timeVariables);
+    	}
     	
     	//Determine electrolyser setpoint based on electrolyser state
     	double electrolyserSetpointElectric_kW = 0;
-    	switch (electrolyserAsset.getState()){
-    		case SHUTDOWN:
-    		case STANDBY: 
-    			electrolyserSetpointElectric_kW = 0;
-    			break;
-    		case POWER_UP:
-    		case IDLE: 
-    			electrolyserSetpointElectric_kW = electrolyserAsset.getIdlePowerLoadRatio_r()*electrolyserAsset.getInputCapacity_kW();
-    			break;
-    		case FUNCTIONAL:
-    			electrolyserSetpointElectric_kW = electrolyserAsset.getInputCapacity_kW()*electrolyserAsset.getMininumProductionRatio_r();
-    			break;
-    		case FULLCAPACITY:
-    			electrolyserSetpointElectric_kW = min(electrolyserAsset.getInputCapacity_kW(), abs(targetDeliveryCapacityLimit_kW - currentGridNodePowerFlow_kW));
-    			break;
+    	if(electrolyserAsset.usesElectrolyserStates()) {
+	    	switch (electrolyserAsset.getState()){
+	    		case SHUTDOWN:
+	    		case STANDBY: 
+	    			electrolyserSetpointElectric_kW = 0;
+	    			break;
+	    		case POWER_UP:
+	    		case IDLE: 
+	    			electrolyserSetpointElectric_kW = electrolyserAsset.getIdlePowerLoadRatio_r()*electrolyserAsset.getInputCapacity_kW();
+	    			break;
+	    		case FUNCTIONAL:
+	    			electrolyserSetpointElectric_kW = electrolyserAsset.getInputCapacity_kW()*electrolyserAsset.getMininumProductionRatio_r();
+	    			break;
+	    		case FULLCAPACITY:
+	    			electrolyserSetpointElectric_kW = min(electrolyserAsset.getInputCapacity_kW(), abs(-currentTargetPowerFlow_kW));
+	    			break;
+	    	}
+    	}
+    	else {
+    		electrolyserSetpointElectric_kW = min(electrolyserAsset.getInputCapacity_kW(), abs(-currentTargetPowerFlow_kW));
     	}
     	
     	//Limit the electrolyser setpoint
     	electrolyserSetpointElectric_kW = min(availableElectricPower_kW, electrolyserSetpointElectric_kW);
-    	
-    	//Store Electrolyser power in dataset
-    	data_liveWeekElectrolyserPower_kW.add(timeVariables.getT_h(), electrolyserSetpointElectric_kW);
     	
     	gc.f_updateFlexAssetFlows(electrolyserAsset, electrolyserSetpointElectric_kW/electrolyserAsset.getInputCapacity_kW(), timeVariables);
     }
     
     
     
-    private void electrolyserStateControl_Surplus(J_EAConversionElectrolyser electrolyserAsset, double currentGridNodePowerFlow_kW, double forecast_time_h, J_TimeParameters timeParameters, J_TimeVariables timeVariables){
+    private void electrolyserStateControl_Surplus(J_EAConversionElectrolyser electrolyserAsset, double currentTargetPowerFlow_kW, double forecast_time_h, J_TimeParameters timeParameters, J_TimeVariables timeVariables){
     	double solar_forecast_kW;
     	double wind_forecast_kW;
-    	double targetDeliveryCapacityLimit_kW = getTargetDeliveryCapacityLimit_kW();
-    	
+
     	//Initialize limitation values
-    	if (c_forecast_RES_kW.size() == 0){
-    			
+    	if (forecastRES_kW.size() == 0){
     		for(int i = timeVariables.getTimeStepsElapsed(); i < timeVariables.getTimeStepsElapsed() + roundToInt(forecast_time_h/timeParameters.getTimeStep_h()); i++){
     			solar_forecast_kW = - gc.energyModel.pp_PVProduction35DegSouth_fr.getValue(timeVariables.getT_h() + i*timeParameters.getTimeStep_h()) * getTargetTotalInstalledPVPower_kW();
     			wind_forecast_kW = - gc.energyModel.pp_windProduction_fr.getValue(timeVariables.getT_h() + i*timeParameters.getTimeStep_h()) * getTargetTotalInstalledWindPower_kW();
-    			c_forecast_RES_kW.add(solar_forecast_kW + wind_forecast_kW);
-    			c_forecast_gridNodePowerFlow_kW.add(currentGridNodePowerFlow_kW - c_forecast_RES_kW.get(0) + solar_forecast_kW + wind_forecast_kW);
+    			forecastRES_kW.add(solar_forecast_kW + wind_forecast_kW);
+    			forecastTargetPowerFlows_kW.add(currentTargetPowerFlow_kW - forecastRES_kW.get(0) + solar_forecast_kW + wind_forecast_kW);
     		}
     	}
-
-    	//Get future limitation values
-    	else if(timeVariables.getTimeStepsElapsed() < (8760-forecast_time_h)/timeParameters.getTimeStep_h()){
+    	else if(timeVariables.getTimeStepsElapsed() < (8760-forecast_time_h)/timeParameters.getTimeStep_h()){//Get future limitation values
     		
     		//Get current RES production
-    		double currentRESProduction_kW = c_forecast_RES_kW.get(0);
+    		double currentRESProduction_kW = forecastRES_kW.get(0);
     		
     		//Update forecast array RES
-    		c_forecast_RES_kW.remove(0);
+    		forecastRES_kW.remove(0);
     		
     		solar_forecast_kW = - gc.energyModel.pp_PVProduction35DegSouth_fr.getValue(timeVariables.getT_h() + forecast_time_h) * getTargetTotalInstalledPVPower_kW();
     		wind_forecast_kW = - gc.energyModel.pp_windProduction_fr.getValue(timeVariables.getT_h() + forecast_time_h) * getTargetTotalInstalledWindPower_kW();
     		
-    		c_forecast_RES_kW.add(solar_forecast_kW + wind_forecast_kW); 
+    		forecastRES_kW.add(solar_forecast_kW + wind_forecast_kW); 
     		
-    		//Update forecast array Grid node power flow
-    		c_forecast_gridNodePowerFlow_kW.remove(0);
+    		//Update forecast array Target power flow
+    		forecastTargetPowerFlows_kW.remove(0);
     		
-    		//Get past grid node power flow and weather (last week) if last week forecast prediction is selected.
-    		if (b_forecast_lastWeekBased && data_liveWeekElectrolyserPower_kW.size() > 672 - roundToInt(forecast_time_h/timeParameters.getTimeStep_h())){ // Use last week to create the forecast	
+    		//Get past target power flow and weather (last week) if last week forecast prediction is selected.
+    		if (b_forecast_lastWeekBased && lastWeekTargetPowerFlows_kW.size() > 672 - roundToInt(forecast_time_h/timeParameters.getTimeStep_h())){ // Use last week to create the forecast	
     		
-    			double lastWeekGridNodePowerFlow_kW = data_liveWeekGridNodePowerFlow_kW.getY(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())) - data_liveWeekElectrolyserPower_kW.getY(roundToInt(forecast_time_h/timeParameters.getTimeStep_h()));
+    			double lastWeekTargetPowerFlow_kW = lastWeekTargetPowerFlows_kW.getY(roundToInt(forecast_time_h/timeParameters.getTimeStep_h()));
     			double solar_lastWeek_kW = - gc.energyModel.pp_PVProduction35DegSouth_fr.getValue(timeVariables.getT_h() + forecast_time_h - 168) * getTargetTotalInstalledPVPower_kW();
     			double wind_lastWeek_kW = - gc.energyModel.pp_windProduction_fr.getValue(timeVariables.getT_h() + forecast_time_h - 168) * getTargetTotalInstalledWindPower_kW();
     				
-    			c_forecast_gridNodePowerFlow_kW.add(lastWeekGridNodePowerFlow_kW - solar_lastWeek_kW - wind_lastWeek_kW + solar_forecast_kW + wind_forecast_kW);
+    			forecastTargetPowerFlows_kW.add(lastWeekTargetPowerFlow_kW - solar_lastWeek_kW - wind_lastWeek_kW + solar_forecast_kW + wind_forecast_kW);
     		}
     		else{//use current power flow to predict forecast
-    			c_forecast_gridNodePowerFlow_kW.add(currentGridNodePowerFlow_kW - currentRESProduction_kW + c_forecast_RES_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-1));
+    			forecastTargetPowerFlows_kW.add(currentTargetPowerFlow_kW - currentRESProduction_kW + forecastRES_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-1));
     		}
     	}
 
@@ -146,7 +146,7 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     			break;
     		case STANDBY: // Ready to be powered on, but no electricity consumption.
     			//Check if electrolyser will be able to be functional at least two time steps when powering up, if so: power_up = true.
-    			if (c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-2) < targetDeliveryCapacityLimit_kW && c_forecast_gridNodePowerFlow_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-1) < targetDeliveryCapacityLimit_kW){
+    			if (forecastTargetPowerFlows_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-2) < 0 && forecastTargetPowerFlows_kW.get(roundToInt(forecast_time_h/timeParameters.getTimeStep_h())-1) < 0){
     				electrolyserAsset.setElectrolyserState(OL_ElectrolyserState.POWER_UP);
     				electrolyserAsset.setRemainingPowerUpDuration_timesteps(roundToInt(electrolyserAsset.getStartUpTimeStandby_h()/timeParameters.getTimeStep_h()));
     			}
@@ -157,13 +157,13 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     			}
     			break;
     		case IDLE: // Ready to start producing hydrogen, heated up, so consuming electricity, but not producing hydrogen yet.
-    			if ( currentGridNodePowerFlow_kW < targetDeliveryCapacityLimit_kW ){
+    			if ( currentTargetPowerFlow_kW < 0 ){
     				electrolyserAsset.setElectrolyserState(OL_ElectrolyserState.FUNCTIONAL);
     			}
     			else{
     				boolean power_down = true;
-    				for(int i = 0; i < c_forecast_gridNodePowerFlow_kW.size() - 2; i++){
-    					if (c_forecast_gridNodePowerFlow_kW.get(i) < targetDeliveryCapacityLimit_kW){
+    				for(int i = 0; i < forecastTargetPowerFlows_kW.size() - 2; i++){
+    					if (forecastTargetPowerFlows_kW.get(i) < 0){
     						power_down = false;
     					}
     				}
@@ -175,7 +175,7 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     			}
     		break;
     		case FUNCTIONAL: // Producing hydrogen at minimum possible amount (to make sure system is working correctly, no leaks).
-    			if ( currentGridNodePowerFlow_kW < targetDeliveryCapacityLimit_kW ){
+    			if ( currentTargetPowerFlow_kW < 0 ){
     				electrolyserAsset.setElectrolyserState(OL_ElectrolyserState.FULLCAPACITY);
     			}
     			else{
@@ -183,10 +183,10 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     			}
     			break;
     		case FULLCAPACITY:	// Producing hydrogen as much as possible.
-    			if ( currentGridNodePowerFlow_kW < targetDeliveryCapacityLimit_kW ){
-    				electrolyserAsset.setElectrolyserState(OL_ElectrolyserState.FULLCAPACITY);
+    			if ( currentTargetPowerFlow_kW < 0 ){
+    				// Stay at full capacity
     			}
-    			else{
+    			else{ // Skip FUNCTIONAL — go directly to IDLE when surplus is gone
     				electrolyserAsset.setElectrolyserState(OL_ElectrolyserState.IDLE);
     			}
     			break;
@@ -201,8 +201,8 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     	if ( this.target == null) {
     		return 0;
     	}
-    	else if (this.target instanceof GridConnection targetGC) {
-    		return targetGC.v_liveAssetsMetaData.totalInstalledPVPower_kW;
+    	else if (this.target == this.gc) {
+    		return gc.v_liveAssetsMetaData.totalInstalledPVPower_kW;
     	}
     	else if (this.target instanceof GridNode targetGN) {
     		return targetGN.v_totalInstalledPVPower_kW;
@@ -218,8 +218,8 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     	if ( this.target == null) {
     		return 0;
     	}
-    	else if (this.target instanceof GridConnection targetGC) {
-    		return targetGC.v_liveAssetsMetaData.totalInstalledWindPower_kW;
+    	else if (this.target == this.gc) {
+    		return gc.v_liveAssetsMetaData.totalInstalledWindPower_kW;
     	}
     	else if (this.target instanceof GridNode targetGN) {
     		return targetGN.v_totalInstalledWindPower_kW;
@@ -231,18 +231,18 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     		throw new RuntimeException("Target found for J_ElectrolyserManagementPowerSurplus that is not supported ( " + this.target + " )!");
     	}
     }
-    public double getTargetDeliveryCapacityLimit_kW() {
+    public double getTargetCurrentPowerFlow_kW() {
     	if ( this.target == null) {
     		return 0;
     	}
-    	else if (this.target instanceof GridConnection targetGC) {
-    		return targetGC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+    	else if (this.target == this.gc) {
+    		return gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
     	}
     	else if (this.target instanceof GridNode targetGN) {
-    		return targetGN.p_capacity_kW;
+    		return targetGN.v_currentLoad_kW;
     	}
     	else if (this.target instanceof EnergyCoop targetCoop) {
-    		return targetCoop.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+    		return targetCoop.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
     	}
     	else {
     		throw new RuntimeException("Target found for J_ElectrolyserManagementPowerSurplus that is not supported ( " + this.target + " )!");
@@ -251,19 +251,23 @@ public class J_ElectrolyserManagementPowerSurplus implements I_ElectrolyserManag
     
     ////Store and reset states
 	public void storeStatesAndReset() {
-		this.storedData_liveWeekGridNodePowerFlow_kW = data_liveWeekGridNodePowerFlow_kW;
-		this.storedData_liveWeekElectrolyserPower_kW = data_liveWeekElectrolyserPower_kW;
-		this.data_liveWeekGridNodePowerFlow_kW = new DataSet(672);
-		this.data_liveWeekElectrolyserPower_kW = new DataSet(672);
+		this.storedForecastRES_kW = this.forecastRES_kW;
+		this.storedForecastTargetPowerFlows_kW = this.forecastTargetPowerFlows_kW;
+		this.storedLastWeekTargetPowerFlows_kW = this.lastWeekTargetPowerFlows_kW;
+		this.forecastRES_kW = new ArrayList<>();
+		this.forecastTargetPowerFlows_kW = new ArrayList<>();
+		this.lastWeekTargetPowerFlows_kW = new DataSet(672);
 	}
 	public void restoreStates() {
-		this.data_liveWeekGridNodePowerFlow_kW = storedData_liveWeekGridNodePowerFlow_kW;
-		this.data_liveWeekElectrolyserPower_kW = storedData_liveWeekElectrolyserPower_kW;
+		this.forecastRES_kW = storedForecastRES_kW;
+		this.forecastTargetPowerFlows_kW = this.storedForecastTargetPowerFlows_kW;
+		this.lastWeekTargetPowerFlows_kW = this.storedLastWeekTargetPowerFlows_kW;
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString();
+		return "J_ElectrolyserManagementPowerSurplus: \n" +
+				"Target: " + this.target + "\n" +
+				"b_forecast_lastWeekBased: " + this.b_forecast_lastWeekBased;
 	}
-	
 }

@@ -51,9 +51,6 @@
 			<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[p_GISPoint]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_owner]]></Name>
 		</Parameter>
 		<Parameter>

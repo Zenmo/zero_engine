@@ -191,9 +191,6 @@
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
 			</Parameter>
 			<Parameter>
@@ -943,9 +940,6 @@
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
 			</Parameter>
 			<Parameter>
@@ -967,9 +961,6 @@
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_buildYear]]></Name>
 			</Parameter>
 			<Parameter>
@@ -980,12 +971,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_cookingMethod]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_airco]]></Name>
@@ -1097,9 +1082,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
@@ -1240,9 +1222,6 @@
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1375,9 +1354,6 @@
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
 			</Parameter>
 			<Parameter>
@@ -1397,48 +1373,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_parentNodeElectric]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_conversionEfficiency]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_productionNominal_Nm3]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_conversionEfficiencyFC]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_productionNominalFC_Nm3]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_productionMinimumFC_Nm3]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_powerNominalFC_kW]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_energyProductionNominalFC_kWh_Nm3]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_inputPressureFC_Bar]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_loadChangeTimeMinMaxFC_s]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_startUpTimeIdleFC_s]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_startUpTimeShutdownFC_s]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_electricityPriceMinForProfitFC_eurpkWh]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_minProductionRatio]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[b_forecast_lastWeekBased]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_purposeBAG]]></Name>
@@ -1559,9 +1493,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
@@ -1691,9 +1622,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
@@ -2158,9 +2086,6 @@
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
 			</Parameter>
 			<Parameter>
@@ -2295,9 +2220,6 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_GISPoint]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_owner]]></Name>
