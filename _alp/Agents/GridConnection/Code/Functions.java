@@ -980,6 +980,9 @@ c_fixedAssets.add(j_ea);
 
 if (j_ea instanceof J_EAProfile profileAsset) {
 	c_profileAssets.add(profileAsset);
+	if (j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
+		p_DHWAsset = profileAsset;	
+	}
 }
 
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
@@ -1000,9 +1003,6 @@ if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 }
 else if (j_ea instanceof J_EAConsumption consumptionAsset) {
 	c_consumptionAssets.add(consumptionAsset);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = consumptionAsset;	
-	}
 } 
 else if (j_ea instanceof J_EAProduction productionAsset) {
 	c_productionAssets.add(productionAsset);
@@ -1059,6 +1059,9 @@ c_fixedAssets.remove(j_ea);
 
 if (j_ea instanceof J_EAProfile profileAsset) {
 	c_profileAssets.remove(profileAsset);
+	if (j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
+		p_DHWAsset = null;	
+	}
 }
 
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
@@ -1080,9 +1083,6 @@ if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 }
 else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = null;	
-	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
 	
 	}
