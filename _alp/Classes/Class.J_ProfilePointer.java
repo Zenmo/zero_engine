@@ -35,7 +35,7 @@ public class J_ProfilePointer implements Serializable {
 	
     public J_ProfilePointer(String name, double[] profile, double dataTimeStep_h, double dataStartTime_h, OL_ProfileUnits profileUnits) {
     	if (profileUnits == null) {
-    		throw new RuntimeException("Attemtping to create J_ProfilePointer with null profileUnits!");
+    		throw new RuntimeException("Attempting to create J_ProfilePointer with null profileUnits!");
     	}
     	this.name = name;
     	this.a_profile = profile;

@@ -2,8 +2,7 @@
 <Presentation>
 	<TimePlot>
 		<Id>1674899851745</Id>
-		<Name><![CDATA[HeatpumpPlot]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<Name><![CDATA[DHWPlot]]></Name>
 		<X>1970</X>
 		<Y>110</Y>
 		<Label>
@@ -14,7 +13,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<AutoUpdate>false</AutoUpdate>
+		<AutoUpdate>true</AutoUpdate>
 		<RecurrenceProperties>
 			<Id>1751011893401</Id>
 			<OccurrenceAtTime>true</OccurrenceAtTime>
@@ -24,8 +23,8 @@
 				<Unit Class="TimeUnits">HOUR</Unit>
 			</OccurrenceTime>
 			<RecurrenceCode Class="CodeUnitValue">
-				<Code><![CDATA[1]]></Code>
-				<Unit Class="TimeUnits">HOUR</Unit>
+				<Code><![CDATA[15]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
 			</RecurrenceCode>
 		</RecurrenceProperties>
 		<EmbeddedIcon>false</EmbeddedIcon>
@@ -61,19 +60,19 @@
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
-			<Title>Heatpump daily consumption kWh </Title>
+			<Title>DHW consumption (L/15min)</Title>
 			<Id>1658477089955</Id>
 			<Expression>d_heatpumpDailyConsumption</Expression>
 			<Color>-2987746</Color>
-			<Expression2>0</Expression2>
-			<Expression2Flag>false</Expression2Flag>
+			<Expression2>p_DHWAsset.getProfilePointer().getCurrentValue()//*3600/((60-10)*4.184)</Expression2>
+			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
 		</DatasetExpression>
-		<SamplesToKeep>25</SamplesToKeep>
-		<TimeWindowExpression>25</TimeWindowExpression>
+		<SamplesToKeep>288</SamplesToKeep>
+		<TimeWindowExpression>3</TimeWindowExpression>
 		<FillAreaUnderLine>false</FillAreaUnderLine>
-		<LabelFormat>dd_MM</LabelFormat>
+		<LabelFormat>dd_MM_HH</LabelFormat>
 	</TimePlot>
 	<Line>
 		<Id>1726301544269</Id>
