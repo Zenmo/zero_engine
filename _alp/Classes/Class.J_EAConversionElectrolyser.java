@@ -60,12 +60,7 @@ public class J_EAConversionElectrolyser extends zero_engine.J_EAConversion imple
 	    this.startUpTimeIdle_h = startUpTimeIdle_h;
 	    this.useElectrolyserStates = true;
 	}
-    
-    @Override
-    public J_FlowPacket f_updateAllFlows( double powerFraction_fr, J_TimeVariables timeVariables) {
-		return super.f_updateAllFlows(min(1, max(0,powerFraction_fr)), timeVariables );
-    }
-    
+       
     @Override
     public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
 		double electricityConsumption_kW = inputCapacity_kW * powerFraction_fr;

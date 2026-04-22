@@ -121,9 +121,8 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					break;
 				}
 				else {
-					traceln("Asset found that is not managed by I_AssetManagement, can not be checked.");//Temporary soft error till all managements are trough I_AssetManagement
-					flexAssets.remove(asset);
-					break;
+					throw new RuntimeException("Asset found that is not managed by I_AssetManagement, can not be checked.");
+					//If you create a custom EMS, who does support other assets, override this method!
 				}
 			}
     	}

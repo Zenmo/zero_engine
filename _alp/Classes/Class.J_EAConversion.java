@@ -25,7 +25,7 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
     	}
     	if(inputAssetFlowCategory != null) {
     		this.inputAssetFlowCategory = inputAssetFlowCategory;
-    		this.assetFlowCategory = outputAssetFlowCategory;
+    		this.assetFlowCategory = inputAssetFlowCategory;
     	}
     	else if(outputAssetFlowCategory != null) {
     		this.outputAssetFlowCategory = outputAssetFlowCategory;

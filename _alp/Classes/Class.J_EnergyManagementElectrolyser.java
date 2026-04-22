@@ -97,6 +97,7 @@ public class J_EnergyManagementElectrolyser implements I_EnergyManagement{
 		public void checkConfigurationEMSSpecific(List<J_EAFlex> flexAssetsGCList) {
 			
 		}
+		
 		public void setChecked(boolean isChecked) {
 			this.isChecked = isChecked;
 		}

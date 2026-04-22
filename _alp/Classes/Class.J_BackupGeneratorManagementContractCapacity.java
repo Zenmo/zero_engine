@@ -47,10 +47,18 @@ public class J_BackupGeneratorManagementContractCapacity implements I_BackupGene
 	
 	@Override
 	public String toString() {
-		return "J_BackupGeneratorManagementContractCapacity: /n" +
-				"Currently controlling backupGenerator: " + findFirst(gc.c_conversionAssets, asset -> asset.getEAType() == OL_EnergyAssetType.DIESEL_GENERATOR || 
+		List<J_EAConversion> backupGenerators = findAll(gc.c_conversionAssets, asset -> asset.getEAType() == OL_EnergyAssetType.DIESEL_GENERATOR || 
 	    		   asset.getEAType() == OL_EnergyAssetType.METHANE_GENERATOR ||
 	    		   asset.getEAType() == OL_EnergyAssetType.FUEL_CELL);
+		StringBuilder backupGeneratorsString = new StringBuilder();
+		for(J_EAConversion backupGenerator : backupGenerators) {
+			backupGeneratorsString.append(System.lineSeparator());
+			backupGeneratorsString.append(backupGenerator.toString());
+		}
+		
+		return "J_BackupGeneratorManagementContractCapacity: " + System.lineSeparator() +
+				"Currently controlling backupGenerators: " + 
+				backupGeneratorsString.toString();
 	}
 
 }
