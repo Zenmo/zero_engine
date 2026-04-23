@@ -490,10 +490,9 @@ else {
 	    });
 	}
 		
-	//Initialize/reset dataset maps to 0
-	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-	double endTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	v_liveData.resetLiveDatasets(energyModel.p_timeParameters);
+	//Initialize datasets for all EC and AssetFlowCategories and clear all.
+	f_initializeDataSets(energyModel.p_timeParameters);
+	v_liveData.clearLiveDatasets();
 }
 /*ALCODEEND*/}
 
