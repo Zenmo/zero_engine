@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
-public class J_ProfilePointer implements Serializable {
+public class J_ProfilePointer{
 	public String name = "";
 	private double currentValue = 0;
 	private OL_ProfileUnits profileUnits;
@@ -87,5 +87,4 @@ public class J_ProfilePointer implements Serializable {
 	public String toString() {
 		return "profile: " + this.name + " current value: " + this.currentValue; 
 	}
-
 }
