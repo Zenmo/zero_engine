@@ -1290,6 +1290,28 @@
 			<Type><![CDATA[J_ProfileForecaster]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1776962977624</Id>
+		<Name><![CDATA[map_DHWprofiles]]></Name>
+		<X>-850</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Map<Integer,List<J_ProfilePointer>>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new HashMap<>()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1658752734133</Id>
 		<Name><![CDATA[b_parallelizeConnectionOwners]]></Name>
@@ -2138,24 +2160,6 @@ I_HeatingManagement x = c_defaultHeatingStrategies.get(t).getDeclaredConstructor
 			<CollectionClass>LinkedHashMap</CollectionClass>
 			<ElementClass>Triple&lt;OL_GridConnectionHeatingType, Boolean, Boolean&gt;</ElementClass>
 			<ValueElementClass>Class&lt;? extends I_HeatingManagement&gt;</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1776443060232</Id>
-		<Name><![CDATA[c_DHWprofiles]]></Name>
-		<X>-850</X>
-		<Y>630</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>J_ProfilePointer</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
 		</Properties>
 	</Variable>
 </Variables>
