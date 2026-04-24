@@ -1540,6 +1540,8 @@ EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_Ene
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
+Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets_rapidRun = new HashMap<>();
+Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW_rapidRun = new HashMap<>();
 
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
@@ -1549,6 +1551,8 @@ for(GridConnection GC : c_memberGridConnections){
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeProductionEnergyCarriers);
 		activeAssetFlows_rapidRun.addAll(GC.v_rapidRunData.assetsMetaData.activeAssetFlows);
+		GC.v_rapidRunData.assetsMetaData.getNumberOfActiveAssetsMap().forEach((key, value) -> map_numberOfActiveAssets_rapidRun.merge(key, value, Double::sum));
+		GC.v_rapidRunData.assetsMetaData.getActiveAssetsCapacityMap().forEach((key, value) -> map_activeAssetsCapacity_kW_rapidRun.merge(key, value, Double::sum));
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1564,6 +1568,9 @@ v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
 v_rapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
+
+//Initialize the asset maps
+v_rapidRunData.assetsMetaData.setActiveAssetsInfoMaps(map_numberOfActiveAssets_rapidRun, map_activeAssetsCapacity_kW_rapidRun);
 /*ALCODEEND*/}
 
 ArrayList<GridConnection> f_getMemberGridConnectionsCollectionPointer()
@@ -1706,6 +1713,8 @@ EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_Ene
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
+Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets_rapidRun = new HashMap<>();
+Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW_rapidRun = new HashMap<>();
 
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data  ????
 boolean storeTotalAssetFlows = true;
@@ -1715,6 +1724,8 @@ for(GridConnection GC : c_memberGridConnections){
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeProductionEnergyCarriers);
 		activeAssetFlows_rapidRun.addAll(GC.v_originalRapidRunData.assetsMetaData.activeAssetFlows);
+		GC.v_rapidRunData.assetsMetaData.getNumberOfActiveAssetsMap().forEach((key, value) -> map_numberOfActiveAssets_rapidRun.merge(key, value, Double::sum));
+		GC.v_rapidRunData.assetsMetaData.getActiveAssetsCapacityMap().forEach((key, value) -> map_activeAssetsCapacity_kW_rapidRun.merge(key, value, Double::sum));
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1730,6 +1741,9 @@ v_originalRapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
 v_originalRapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
+
+//Initialize the asset maps
+v_rapidRunData.assetsMetaData.setActiveAssetsInfoMaps(map_numberOfActiveAssets_rapidRun, map_activeAssetsCapacity_kW_rapidRun);
 /*ALCODEEND*/}
 
 double f_getOriginalCumulativeIndividualGCValues()
