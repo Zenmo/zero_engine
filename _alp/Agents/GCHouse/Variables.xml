@@ -1,235 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Variables>
-	<Variable Class="PlainVariable">
-		<Id>1674899648649</Id>
-		<Name><![CDATA[v_hpPreviousConsumptionLevel]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2010</X>
-		<Y>80</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1674900257329</Id>
-		<Name><![CDATA[v_dailyHPConsumption_kWh]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2010</X>
-		<Y>100</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1677597726836</Id>
-		<Name><![CDATA[v_copHeatpump]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2020</X>
-		<Y>390</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1690363061408</Id>
-		<Name><![CDATA[v_electricHobConsumption_kWh]]></Name>
-		<Description><![CDATA[This is part of the v_fixedConsumptionElectric_kW, thus variable only exists for additional information]]></Description>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>150</X>
-		<Y>1520</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[0]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1704447485797</Id>
-		<Name><![CDATA[v_gasHeatingCost_eurpkWh_TEMPORARY]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>660</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1704447485799</Id>
-		<Name><![CDATA[v_eHeatingCost_eurpkWh_TEMPORARY]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>640</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1704447555064</Id>
-		<Name><![CDATA[v_tempSetpoint_degC]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>600</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[19]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1704447555073</Id>
-		<Name><![CDATA[v_heatingOn_time]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>540</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[8]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="PlainVariable">
-		<Id>1704447555075</Id>
-		<Name><![CDATA[v_heatingOff_time]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>560</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true"
-              Constant="false"
-              AccessType="public"
-              StaticVariable="false">
-			<Type><![CDATA[double]]></Type>
-			<InitialValue Class="CodeValue">
-				<Code><![CDATA[23]]></Code>
-			</InitialValue>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1678703448389</Id>
-		<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2020</X>
-		<Y>-10</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[2.0]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1678703448387</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
 	<Variable Class="Parameter">
 		<Id>1717323052486</Id>
 		<Name><![CDATA[p_buildYear]]></Name>
-		<X>50</X>
-		<Y>540</Y>
+		<X>270</X>
+		<Y>370</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -253,8 +28,8 @@
 	<Variable Class="Parameter">
 		<Id>1722350833847</Id>
 		<Name><![CDATA[p_eigenOprit]]></Name>
-		<X>50</X>
-		<Y>560</Y>
+		<X>270</X>
+		<Y>390</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -278,8 +53,8 @@
 	<Variable Class="Parameter">
 		<Id>1726685123865</Id>
 		<Name><![CDATA[p_cookingMethod]]></Name>
-		<X>50</X>
-		<Y>600</Y>
+		<X>270</X>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -304,68 +79,10 @@
 		</Properties>
 	</Variable>
 	<Variable Class="Parameter">
-		<Id>1753354062572</Id>
-		<Name><![CDATA[v_dayTempSetpoint_degC]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>518</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[18]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1753354062570</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
-		<Id>1753354182380</Id>
-		<Name><![CDATA[v_nightTempSetpoint_degC]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>2050</X>
-		<Y>500</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-			<Type><![CDATA[double]]></Type>
-			<UnitType>NONE</UnitType>
-			<SdArray>false</SdArray>
-			<DefaultValue Class="CodeValue">
-				<Code><![CDATA[18]]></Code>
-			</DefaultValue>
-			<ParameterEditor>
-				<Id>1753354182378</Id>
-				<EditorContolType>TEXT_BOX</EditorContolType>
-				<MinSliderValue>0</MinSliderValue>
-				<MaxSliderValue>100</MaxSliderValue>
-				<DelimeterType>NO_DELIMETER</DelimeterType>
-			</ParameterEditor>
-		</Properties>
-	</Variable>
-	<Variable Class="Parameter">
 		<Id>1768324597791</Id>
 		<Name><![CDATA[p_PBLParameters]]></Name>
-		<X>50</X>
-		<Y>580</Y>
+		<X>270</X>
+		<Y>410</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

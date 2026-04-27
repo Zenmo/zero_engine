@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010504"
+                   AnyLogicVersion="8.9.7.202512121156"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -364,6 +364,10 @@
 				<Option>
 					<Id>1773156171459</Id>
 					<Name><![CDATA[AIR_CONDITIONER]]></Name>
+				</Option>
+				<Option>
+					<Id>1775829212102</Id>
+					<Name><![CDATA[HYDROGEN_STORAGE]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -746,19 +750,11 @@
 				<Name><![CDATA[OL_ElectrolyserOperationMode]]></Name>
 				<Option>
 					<Id>1668693549847</Id>
-					<Name><![CDATA[BALANCE]]></Name>
+					<Name><![CDATA[POWER_SURPLUS]]></Name>
 				</Option>
 				<Option>
 					<Id>1668693554313</Id>
 					<Name><![CDATA[PRICE]]></Name>
-				</Option>
-				<Option>
-					<Id>1717061998153</Id>
-					<Name><![CDATA[BALANCE_PASTWEEK]]></Name>
-				</Option>
-				<Option>
-					<Id>1717140116168</Id>
-					<Name><![CDATA[ALWAYS_IDLE]]></Name>
 				</Option>
 			</OptionList>
 			<OptionList>
@@ -1084,6 +1080,10 @@
 					<Id>1770132010080</Id>
 					<Name><![CDATA[methaneGeneratorProductionElectric_kW]]></Name>
 				</Option>
+				<Option>
+					<Id>1775831709298</Id>
+					<Name><![CDATA[hydrogenFuelCellProductionElectric_kW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1762354709855</Id>
@@ -1407,6 +1407,16 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[CurtailManagement]]></Name>
 				<ParentId>1772100318398</ParentId>
 			</Folder>
+			<Folder>
+				<Id>1775728951678</Id>
+				<Name><![CDATA[ElectrolyserManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1776078970513</Id>
+				<Name><![CDATA[BackupGeneratorManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -1588,18 +1598,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Folder>1752737189062</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1668600448637</Id>
-				<Name><![CDATA[J_EAHydrogenVehicle]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
-				<Id>1671107396262</Id>
-				<Name><![CDATA[J_EAConversionElektrolyser]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1671522756085</Id>
 				<Name><![CDATA[J_EAConversionGasCHP]]></Name>
 				<Folder>1752677832758</Folder>
@@ -1642,12 +1640,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Folder>1752681639768</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1692862773194</Id>
-				<Name><![CDATA[J_EAVehicle]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1692876125447</Id>
 				<Name><![CDATA[J_ActivityTrackerCooking]]></Name>
 				<Folder>1752681639768</Folder>
@@ -1655,12 +1647,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<JavaClass>
 				<Id>1707991094535</Id>
 				<Name><![CDATA[J_EAConversionElectrolyser]]></Name>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
-				<Id>1707992650964</Id>
-				<Name><![CDATA[J_EAConversionFuelCell]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
@@ -2197,6 +2183,36 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1775491279697</Id>
 				<Name><![CDATA[J_ChargingManagementExternalSetpoint]]></Name>
 				<Folder>1772100326457</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776078551110</Id>
+				<Name><![CDATA[J_ElectrolyserManagementPowerSurplus]]></Name>
+				<Folder>1775728951678</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776078590999</Id>
+				<Name><![CDATA[I_ElectrolyserManagement]]></Name>
+				<Folder>1775728951678</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776078958990</Id>
+				<Name><![CDATA[J_ElectrolyserManagementPrice]]></Name>
+				<Folder>1775728951678</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776079040123</Id>
+				<Name><![CDATA[I_BackupGeneratorManagement]]></Name>
+				<Folder>1776078970513</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776079237990</Id>
+				<Name><![CDATA[J_BackupGeneratorManagementContractCapacity]]></Name>
+				<Folder>1776078970513</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1776164691536</Id>
+				<Name><![CDATA[J_EnergyManagementElectrolyser]]></Name>
+				<Folder>1772100335412</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

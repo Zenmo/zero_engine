@@ -5,9 +5,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	
 	protected OL_EnergyCarriers storageMedium = OL_EnergyCarriers.ELECTRICITY;
 	
-	protected double etaCharge_r; // charging efficiency
-	protected double etaDischarge_r;
-	protected double capacityElectric_kW;
+	//protected double etaCharge_r; // charging efficiency
+	//protected double etaDischarge_r;
+	//protected double capacityElectric_kW;
 	
     /**
      * Default constructor
@@ -18,13 +18,13 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAStorageElectric(I_AssetOwner owner, double capacityElectric_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters ) {
+    public J_EAStorageElectric(I_AssetOwner owner, double chargeCapacity_kW, double storageCapacity_kWh, double stateOfCharge_fr, J_TimeParameters timeParameters ) {
 		this.setOwner(owner);
 		this.timeParameters = timeParameters;
-		this.capacityElectric_kW = capacityElectric_kW;
+		this.chargeCapacity_kW = chargeCapacity_kW;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-		this.initialstateOfCharge_fr = stateOfCharge_fr;
-		this.stateOfCharge_fr = this.initialstateOfCharge_fr;
+		this.initialStateOfCharge_fr = stateOfCharge_fr;
+		this.stateOfCharge_fr = this.initialStateOfCharge_fr;
 		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
 		double eta_r=0.9; // Default cycle efficiency of 90%. Add this as an argument to constructor?
 		this.etaCharge_r = Math.sqrt(eta_r);
@@ -37,7 +37,7 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
     
 	@Override
 	public void operate(double ratioOfChargeCapacity_r, J_TimeVariables timeVariables) {
-    	double inputPower_kW = ratioOfChargeCapacity_r * capacityElectric_kW; // Electric power going into battery, before losses.
+    	double inputPower_kW = ratioOfChargeCapacity_r * chargeCapacity_kW; // Electric power going into battery, before losses.
     	double deltaEnergy_kWh;   // The change in energy stored in the battery this timestep ('internal' energy)
     	
     	// charging/discharging losses
@@ -70,10 +70,9 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 		charged_kWh += electricityConsumption_kW * timeParameters.getTimeStep_h(); // Not the change-in-SoC, but the energy flowing into the battery before losses.
 		
 		updateStateOfCharge( deltaEnergy_kWh );
-		//traceln("Battery SoC: %s", stateOfCharge_fr);
+
 		flowsMap.put(OL_EnergyCarriers.ELECTRICITY, electricityConsumption_kW-electricityProduction_kW);		
-		//assetFlowsMap.put(this.assetFlowCategory, electricityConsumption_kW-electricityProduction_kW);		
-		
+
 		// Split charging and discharing power 'at the source'!
 		assetFlowsMap.put(OL_AssetFlowCategories.batteriesChargingPower_kW, electricityConsumption_kW);
 		assetFlowsMap.put(OL_AssetFlowCategories.batteriesDischargingPower_kW, electricityProduction_kW);
@@ -89,27 +88,11 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 			this.etaDischarge_r = Math.sqrt(eta_r);
 		}		
 	}
-
-	@Override
-	public String toString() {
-		return 
-			"type = " + this.getClass().toString() + " " +
-			"stateOfCharge_fr = " + this.stateOfCharge_fr+" "+
-			"storageCapacity_kWh = " + this.storageCapacity_kWh +" "+
-			"capacityElectric_kW = " + this.capacityElectric_kW +" "+
-			"discharged_kWh " + this.discharged_kWh+" "+
-			"charged_kWh " + this.charged_kWh+" ";
-	}
-
-	@Override
-	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
-		stateOfCharge_fr += deltaEnergy_kWh / storageCapacity_kWh;
-	}
-
+	
 	public double getCapacityAvailable_kW() {
 		double availableCapacity_kW;
-		if ( stateOfCharge_fr * storageCapacity_kWh  > capacityElectric_kW * timeParameters.getTimeStep_h()) {
-			availableCapacity_kW = capacityElectric_kW;
+		if ( stateOfCharge_fr * storageCapacity_kWh  > chargeCapacity_kW * timeParameters.getTimeStep_h()) {
+			availableCapacity_kW = chargeCapacity_kW;
 		}
 		else {
 			availableCapacity_kW =  stateOfCharge_fr * storageCapacity_kWh / timeParameters.getTimeStep_h(); // Allow to drain completely
@@ -118,15 +101,15 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	}
 	
 	public double getMaxChargePower_kW() { // Always a positive number!
-		return min(capacityElectric_kW, (1-stateOfCharge_fr) * storageCapacity_kWh / timeParameters.getTimeStep_h() / etaCharge_r);
+		return min(chargeCapacity_kW, (1-stateOfCharge_fr) * storageCapacity_kWh / timeParameters.getTimeStep_h() / etaCharge_r);
 	}
 	
 	public double getMaxDischargePower_kW() { // Always a positive number!
-		return min(capacityElectric_kW, stateOfCharge_fr * storageCapacity_kWh / timeParameters.getTimeStep_h() * etaDischarge_r);
+		return min(chargeCapacity_kW, stateOfCharge_fr * storageCapacity_kWh / timeParameters.getTimeStep_h() * etaDischarge_r);
 	}
 	
 	public double getCapacityElectric_kW() {
-		return this.capacityElectric_kW;
+		return this.chargeCapacity_kW;
 	}
 
 	public double getTotalChargeAmount_kWh() {
@@ -153,6 +136,17 @@ public class J_EAStorageElectric extends J_EAStorage implements Serializable {
 	}
 
 	public void setCapacityElectric_kW(double capacityElectric_kW) {
-		this.capacityElectric_kW = capacityElectric_kW;
+		this.chargeCapacity_kW = capacityElectric_kW;
+	}
+	
+	@Override
+	public String toString() {
+		return 
+			"type = " + this.getClass().toString() + "\n" +
+			"stateOfCharge_fr = " + this.stateOfCharge_fr + "\n" +
+			"storageCapacity_kWh = " + this.storageCapacity_kWh + "\n" +
+			"chargeCapacity_kW = " + this.chargeCapacity_kW + "\n" +
+			"discharged_kWh " + this.discharged_kWh + "\n"+
+			"charged_kWh " + this.charged_kWh + "\n";
 	}
 }
