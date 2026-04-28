@@ -65,16 +65,16 @@ public abstract class J_HeatingFunctionLibrary {
 		}
 		
 		//Heating asset should always try to fill the heat buffer as fast as possible.
-		double hotWaterDemandFromHeatingAsset_kW = min(availableHeatingPower_kWth, hotWaterDemand_kW + (hotWaterBuffer.getStorageCapacity_kWh() - hotWaterBuffer.getCurrentStateOfCharge_kWh()));
+		double hotWaterDemandFromHeatingAsset_kW = min(availableHeatingPower_kWth, hotWaterDemand_kW + (hotWaterBuffer.getStorageCapacity_kWh() - hotWaterBuffer.getCurrentStateOfCharge_kWh()) / timeStep_h);
 		double heatIntoBuffer_kW =  hotWaterDemandFromHeatingAsset_kW - hotWaterDemand_kW;
 				
 
 		double powerFraction_fr = heatIntoBuffer_kW / hotWaterBuffer.getCapacityHeat_kW();
     	gc.f_updateFlexAssetFlows(hotWaterBuffer, powerFraction_fr, timeVariables);
 
-
+    	double actualHeatIntoBuffer_kW = hotWaterBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
 		
-    	return hotWaterDemandFromHeatingAsset_kW;
+    	return hotWaterDemand_kW+actualHeatIntoBuffer_kW;//return hotWaterDemandFromHeatingAsset_kW;
     }
 	
 	public static void setWindowVentilation_fr( J_EABuilding dwelling, double windowOpenSetpoint_degc) {
