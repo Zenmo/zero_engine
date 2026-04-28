@@ -1417,6 +1417,10 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[BackupGeneratorManagement]]></Name>
 				<ParentId>1772100318398</ParentId>
 			</Folder>
+			<Folder>
+				<Id>1777276374071</Id>
+				<Name><![CDATA[ISIE EMS]]></Name>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -2213,6 +2217,36 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1776164691536</Id>
 				<Name><![CDATA[J_EnergyManagementElectrolyser]]></Name>
 				<Folder>1772100335412</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1777276416626</Id>
+				<Name><![CDATA[J_FlexAssetScheduler]]></Name>
+				<Folder>1777276374071</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1777276677057</Id>
+				<Name><![CDATA[J_VirtualFlexAsset]]></Name>
+				<Folder>1777276374071</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1777276687785</Id>
+				<Name><![CDATA[J_VirtualBattery]]></Name>
+				<Folder>1777276374071</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1777277384857</Id>
+				<Name><![CDATA[J_Market]]></Name>
+				<Folder>1777276374071</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1777277897961</Id>
+				<Name><![CDATA[J_ISIE_EMS]]></Name>
+				<Folder>1777276374071</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1777277962177</Id>
+				<Name><![CDATA[J_BatteryScheduler]]></Name>
+				<Folder>1777276374071</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

@@ -3,6 +3,7 @@
  */	
 import java.util.ArrayList;
 import java.util.ListIterator;
+import org.apache.commons.lang3.tuple.Triple;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -211,6 +212,44 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     
     public double getNextEventStartTime_h() {
     	return nextEventStartTime_h;
+    }
+    
+    /*
+     * This method returns a list of trips,
+     * for each trip it lists the starttime, endtime (in hours) and the trip distance (in kms)
+     * The starting and endtime are relative to the current time.
+     */
+    public List<Triple<Double, Double, Double>> getTripsNext24Hours( J_TimeVariables timeVariables ) {
+    	// TODO: Make this work for 48 hours, in which case the deadline can be in a new week of the starttimes list
+    	List<Triple<Double, Double, Double>> trips = new ArrayList<>();
+    	
+    	double currentTime_min = timeVariables.getT_h() * 60;
+    	double currentTimeSinceWeekStart_min = getTimeSinceWeekStart(currentTime_min);
+    	double cutoffTime_min = currentTimeSinceWeekStart_min + 24*60;
+    	
+    	int localEventIndex = this.eventIndex;
+		
+		if (  starttimes_min.get(localEventIndex) < currentTimeSinceWeekStart_min) {
+			return trips;
+		}
+		
+    	while (true) {
+    		if (localEventIndex >= starttimes_min.size()) {
+    			break;
+    		}
+    		double startTime_min = starttimes_min.get(localEventIndex);
+    		if (startTime_min > cutoffTime_min ) {
+    			break;
+    		}
+    		double endTime_min = endtimes_min.get(localEventIndex);
+    		double distance_km = distances_km.get(localEventIndex);
+
+    		trips.add( Triple.of((startTime_min-currentTimeSinceWeekStart_min)/60.0, (endTime_min-currentTimeSinceWeekStart_min)/60.0, distance_km) );
+    		
+    		localEventIndex++;
+    	}
+    	
+    	return trips;
     }
     
 	@Override
