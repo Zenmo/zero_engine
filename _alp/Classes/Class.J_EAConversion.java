@@ -7,9 +7,6 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	protected double eta_r;
 	protected double inputCapacity_kW;
 	protected double outputCapacity_kW;
-	
-	private OL_AssetFlowCategories inputAssetFlowCategory;
-	private OL_AssetFlowCategories outputAssetFlowCategory;
 	/**
      * Default constructor
      */
@@ -17,20 +14,10 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	}
     
 	/**
-     * Constructor initializing the fields, and setting assetFlowCategory (Assetflowcategory is filled with OUTPUT product of the conversion!)
+     * Constructor initializing the fields, and setting assetFlowCatagory (Assetflowcatagory is filled with OUTPUT product of the conversion!)
      */
-    public J_EAConversion(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, OL_AssetFlowCategories inputAssetFlowCategory, OL_AssetFlowCategories outputAssetFlowCategory,  J_TimeParameters timeParameters) {   	
-    	if(inputAssetFlowCategory != null && outputAssetFlowCategory != null) {
-    		throw new RuntimeException("Trying to assign 2 assetflow categories to a J_EAConversion, this is not allowed (YET)!!. Only an Input OR an output Assetflow is supported.");
-    	}
-    	if(inputAssetFlowCategory != null) {
-    		this.inputAssetFlowCategory = inputAssetFlowCategory;
-    		this.assetFlowCategory = inputAssetFlowCategory;
-    	}
-    	else if(outputAssetFlowCategory != null) {
-    		this.outputAssetFlowCategory = outputAssetFlowCategory;
-    		this.assetFlowCategory = outputAssetFlowCategory;
-    	}
+    public J_EAConversion(I_AssetOwner owner, OL_EnergyAssetType energyAssetType, double outputCapacity_kW, double efficiency_r, OL_EnergyCarriers energyCarrierProduced, OL_EnergyCarriers energyCarrierConsumed, OL_AssetFlowCategories assetFlowCatagory, J_TimeParameters timeParameters) {   	
+    	this.assetFlowCategory = assetFlowCatagory;
     	construct(owner, energyAssetType, outputCapacity_kW, efficiency_r, energyCarrierProduced, energyCarrierConsumed, timeParameters);
     }
 
@@ -79,12 +66,7 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
     	this.flowsMap.put(this.energyCarrierConsumed, powerFraction_fr * this.inputCapacity_kW);
     	this.flowsMap.addFlow(this.energyCarrierProduced, -powerFraction_fr * this.outputCapacity_kW); // We don't put here, in case the energy carrier is the same
     	if (this.assetFlowCategory != null) {
-    		if(this.inputAssetFlowCategory != null) {
-    			this.assetFlowsMap.put(this.assetFlowCategory, powerFraction_fr * this.inputCapacity_kW);    			
-    		}
-    		else if(this.outputAssetFlowCategory != null) {
-    			this.assetFlowsMap.put(this.assetFlowCategory, powerFraction_fr * this.outputCapacity_kW);
-    		}
+    		this.assetFlowsMap.put(this.assetFlowCategory, powerFraction_fr * this.outputCapacity_kW);
     	}
 	}
 	

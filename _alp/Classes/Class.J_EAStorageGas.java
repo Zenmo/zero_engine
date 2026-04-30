@@ -1,7 +1,7 @@
 /**
  * J_EAStorageGas
  */
-public class J_EAStorageGas extends zero_engine.J_EAStorage {
+public class J_EAStorageGas extends zero_engine.J_EAStorage implements Serializable {
 
 	private OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.METHANE;
 	private double lossFactor_r = 0;
@@ -83,5 +83,12 @@ public class J_EAStorageGas extends zero_engine.J_EAStorage {
 	public double getTotalDischargeAmount_kWh() {
 		return discharged_kWh;
 	}
+
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */
+	private static final long serialVersionUID = 1L;
 } 
  

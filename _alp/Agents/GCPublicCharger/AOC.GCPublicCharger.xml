@@ -27,6 +27,9 @@
 			<Name><![CDATA[p_batteryAsset]]></Name>
 		</Parameter>
 		<Parameter>
+			<Name><![CDATA[p_electrolyserOperationMode]]></Name>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[p_heatBuffer]]></Name>
 		</Parameter>
 		<Parameter>
@@ -49,6 +52,9 @@
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_GISPoint]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_owner]]></Name>

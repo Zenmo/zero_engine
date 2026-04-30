@@ -1,7 +1,7 @@
 /**
  * J_ProfileForecaster
  */	
-public class J_ProfileForecaster{
+public class J_ProfileForecaster implements Serializable {
 	
 	public String name = "";
 	public J_ProfilePointer profilePointer;
@@ -56,4 +56,11 @@ public class J_ProfileForecaster{
 	public String toString() {
 		return "forecast name: " + this.name + ", current forecast: " + this.currentForecast;
 	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
 }

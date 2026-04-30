@@ -62,6 +62,9 @@ if ( v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalI
 	v_electricityYieldForecast_fr = (pf_PVProduction35DegSouth_fr.getForecast() * v_liveAssetsMetaData.totalInstalledPVPower_kW + pf_windProduction_fr.getForecast() * v_liveAssetsMetaData.totalInstalledWindPower_kW) / (v_liveAssetsMetaData.totalInstalledPVPower_kW + v_liveAssetsMetaData.totalInstalledWindPower_kW);
 }
 
+// And price forecast! 
+//v_epexForecast_eurpkWh = 0.001*pf_dayAheadElectricityPricing_eurpMWh.getForecast();
+
 for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_updateForecasts();
 }
@@ -216,9 +219,6 @@ c_forecasts.add(pf_windProduction_fr);
 pf_dayAheadElectricityPricing_eurpMWh = new J_ProfileForecaster(null, pp_dayAheadElectricityPricing_eurpMWh, p_epexForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
 c_forecasts.add(pf_dayAheadElectricityPricing_eurpMWh);
 
-pf_CO2EmissionFactorElectricityImport_kgpkWh = new J_ProfileForecaster(null, pp_CO2EmissionFactorElectricityImport_kgpkWh, p_CO2EmissionFactorForecastTime_h, p_timeVariables.getT_h(), p_timeParameters.getTimeStep_h());
-c_forecasts.add(pf_CO2EmissionFactorElectricityImport_kgpkWh);
-
 /*ALCODEEND*/}
 
 double f_runRapidSimulation()
@@ -246,7 +246,6 @@ for (GridConnection GC : c_gridConnections) {
 	// TODO: Fix Boolean store assets here?
 	GC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	GC.v_rapidRunData.assetsMetaData = GC.v_liveAssetsMetaData.getClone();
-	GC.v_rapidRunData.assetsMetaData.saveActiveAssetAndCapacities(new ArrayList<>(List.of(GC)));
 	GC.v_rapidRunData.connectionMetaData = GC.v_liveConnectionMetaData.getClone();
 	GC.v_rapidRunData.initializeAccumulators(GC.v_liveData.activeEnergyCarriers, GC.v_liveData.activeConsumptionEnergyCarriers, GC.v_liveData.activeProductionEnergyCarriers, GC.v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();
 		
@@ -274,7 +273,6 @@ for (EnergyCoop EC : pop_energyCoops) {
 	} 
 	EC.v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
 	EC.v_rapidRunData.assetsMetaData = EC.v_liveAssetsMetaData.getClone();
-	EC.v_rapidRunData.assetsMetaData.saveActiveAssetAndCapacities(EC.f_getAllChildMemberGridConnections());
 	EC.v_rapidRunData.connectionMetaData = EC.v_liveConnectionMetaData.getClone();
 	EC.v_rapidRunData.setStoreTotalAssetFlows(true);
 	EC.v_rapidRunData.initializeAccumulators(EC.v_liveData.activeEnergyCarriers, EC.v_liveData.activeConsumptionEnergyCarriers, EC.v_liveData.activeProductionEnergyCarriers, EC.v_liveAssetsMetaData.activeAssetFlows);
@@ -289,8 +287,7 @@ if (v_rapidRunData != null && b_storePreviousRapidRunData) {
 	v_previousRunData = v_rapidRunData;
 }
 v_rapidRunData = new J_RapidRunData(p_timeParameters, true);
-v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();
-v_rapidRunData.assetsMetaData.saveActiveAssetAndCapacities(c_gridConnections);	
+v_rapidRunData.assetsMetaData = v_liveAssetsMetaData.getClone();	
 v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 v_rapidRunData.initializeAccumulators(v_liveData.activeEnergyCarriers, v_liveData.activeConsumptionEnergyCarriers, v_liveData.activeProductionEnergyCarriers, v_liveAssetsMetaData.activeAssetFlows); //f_initializeAccumulators();	
 f_resetAnnualValues();
@@ -495,8 +492,12 @@ Collections.reverse(c_gridNodeExecutionList);
 
 
 //Set cumulative toplevel grid values as energyModel values
-v_liveConnectionMetaData.setCapacities_kW(topLevelElectricGridCapacity_kW, topLevelElectricGridCapacity_kW, topLevelElectricGridCapacity_kW);
-v_liveConnectionMetaData.setCapacitiesKnown(topLevelGridCapacitiesKnown, topLevelGridCapacitiesKnown, topLevelGridCapacitiesKnown);
+v_liveConnectionMetaData.physicalCapacity_kW = topLevelElectricGridCapacity_kW;
+v_liveConnectionMetaData.contractedDeliveryCapacity_kW = topLevelElectricGridCapacity_kW;
+v_liveConnectionMetaData.contractedFeedinCapacity_kW = topLevelElectricGridCapacity_kW;
+v_liveConnectionMetaData.physicalCapacityKnown = topLevelGridCapacitiesKnown;
+v_liveConnectionMetaData.contractedDeliveryCapacityKnown = topLevelGridCapacitiesKnown;
+v_liveConnectionMetaData.contractedFeedinCapacityKnown = topLevelGridCapacitiesKnown;
 
 //traceln("Grid Node execution list: %s", c_gridNodeExecutionList );
 /*ALCODEEND*/}
@@ -586,9 +587,9 @@ for (GridNode GN : c_gridNodeExecutionList) {
 	GN.f_initializeGridnode();
 }
 
-v_liveData.connectionMetaData.setContractedDeliveryCapacityKnown(false);
-v_liveData.connectionMetaData.setContractedFeedinCapacityKnown(false);
-v_liveData.connectionMetaData.setPhysicalCapacityKnown(false);
+v_liveData.connectionMetaData.contractedDeliveryCapacityKnown = false;
+v_liveData.connectionMetaData.contractedFeedinCapacityKnown = false;
+v_liveData.connectionMetaData.physicalCapacityKnown = false;
 
 f_initializeForecasts();
 
@@ -614,7 +615,7 @@ return c_connectionOwners;
 
 double f_getTopLevelGridCapacity_kW()
 {/*ALCODESTART::1716899946694*/
-return v_liveConnectionMetaData.getPhysicalCapacity_kW();
+return v_liveConnectionMetaData.physicalCapacity_kW;
 /*ALCODEEND*/}
 
 ArrayList<J_EA> f_getEnergyAssets()

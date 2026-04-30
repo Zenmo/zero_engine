@@ -22,7 +22,7 @@ public final class J_TimeVariables {
 	private double t_h; //Current energymodel runtime: t_h = 0, corresponds to 'jan 1 0:00' of the start year 
 	private double anyLogicTime_h; // anyLogicTime is the experiment time used for DataSets/ResultsUI. t = 0 corresponds to the start of the simulation
 	private double timeOfDay_h;
-	private int timeStepsElapsed;
+	private double timeStepsElapsed;
 
 	private OL_Days dayOfWeek;
 	
@@ -73,7 +73,7 @@ public final class J_TimeVariables {
 		return dayOfWeek;
 	}
 	
-	public int getTimeStepsElapsed() {
+	public double getTimeStepsElapsed() {
 	    return timeStepsElapsed;
 	}
 

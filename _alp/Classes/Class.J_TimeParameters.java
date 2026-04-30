@@ -23,7 +23,7 @@ public final class J_TimeParameters {
 	////Time parameters:
 	private final double timeStep_h;
 	private final int startYear;
-	private final double[] monthStartHours;
+	private final double[] hourOfYearPerMonth;
 	private final int dayOfWeek1jan;
 	private final double runStartTime_h;
 	private final double runEndTime_h;
@@ -35,7 +35,7 @@ public final class J_TimeParameters {
 	public J_TimeParameters(
 		double timeStep_h,
 		int startYear,
-		double[] monthStartHours,
+		double[] hourOfYearPerMonth,
 		double runStartTime_h,
 		double runEndTime_h,
 		int summerWeekNumber,
@@ -43,7 +43,7 @@ public final class J_TimeParameters {
 	) {
 		this.timeStep_h = timeStep_h;
 		this.startYear = startYear;
-		this.monthStartHours = monthStartHours;
+		this.hourOfYearPerMonth = hourOfYearPerMonth;
 		this.runStartTime_h = runStartTime_h;
 		this.runEndTime_h = runEndTime_h;
 		this.summerWeekNumber = summerWeekNumber;
@@ -58,7 +58,7 @@ public final class J_TimeParameters {
     public J_TimeParameters(
         @JsonProperty("timeStep_h") double timeStep_h,
         @JsonProperty("startYear") int startYear,
-        @JsonProperty("monthStartHours") double[] monthStartHours,
+        @JsonProperty("hourOfYearPerMonth") double[] hourOfYearPerMonth,
         @JsonProperty("dayOfWeek1jan") int dayOfWeek1jan,
         @JsonProperty("runStartTime_h") double runStartTime_h,
         @JsonProperty("runEndTime_h") double runEndTime_h,
@@ -67,7 +67,17 @@ public final class J_TimeParameters {
         @JsonProperty("startOfSummerWeek_h") double startOfSummerWeek_h,
         @JsonProperty("startOfWinterWeek_h") double startOfWinterWeek_h
     ) {
-		this(timeStep_h, startYear, monthStartHours, runStartTime_h, runEndTime_h, summerWeekNumber, winterWeekNumber);
+		this(timeStep_h, startYear, hourOfYearPerMonth, runStartTime_h, runEndTime_h, summerWeekNumber, winterWeekNumber);
+		/*this.timeStep_h = timeStep_h;
+		this.startYear = startYear;
+		this.hourOfYearPerMonth = hourOfYearPerMonth;
+		this.runStartTime_h = runStartTime_h;
+		this.runEndTime_h = runEndTime_h;
+		this.summerWeekNumber = summerWeekNumber;
+		this.winterWeekNumber = winterWeekNumber;
+		this.dayOfWeek1jan = DayOfWeek.from(LocalDate.of(startYear, 1, 1)).getValue();
+		this.startOfSummerWeek_h = roundToInt(24 * (summerWeekNumber * 7 + (8-dayOfWeek1jan)%7));
+		this.startOfWinterWeek_h = roundToInt(24 * (winterWeekNumber * 7 + (8-dayOfWeek1jan)%7));*/
     }
 	
 	////Time Parameter getters
@@ -77,8 +87,8 @@ public final class J_TimeParameters {
 	public int getStartYear() {
 	    return startYear;
 	}
-	public double[] getMonthStartHours() {
-	    return monthStartHours;
+	public double[] getHourOfYearPerMonth() {
+	    return hourOfYearPerMonth;
 	}
 	public int getDayOfWeek1jan() {
 	    return dayOfWeek1jan;
@@ -101,16 +111,13 @@ public final class J_TimeParameters {
 	public double getStartOfWinterWeek_h() {
 	    return startOfWinterWeek_h;
 	}
-	public double getRunDuration_h() {
-		return runEndTime_h - runStartTime_h;
-	}
 	
 	@Override
 	public String toString() {
 	    return "J_TimeParameters{" +
 	            "timeStep_h=" + timeStep_h +
 	            ", startYear=" + startYear +
-	            ", monthStartHours=" + java.util.Arrays.toString(monthStartHours) +
+	            ", hourOfYearPerMonth=" + java.util.Arrays.toString(hourOfYearPerMonth) +
 	            ", dayOfWeek1jan=" + dayOfWeek1jan +
 	            ", runStartTime_h=" + runStartTime_h +
 	            ", runEndTime_h=" + runEndTime_h +

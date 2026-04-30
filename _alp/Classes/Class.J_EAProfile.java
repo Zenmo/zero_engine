@@ -2,7 +2,7 @@ import zeroPackage.ZeroMath;
 /**
  * J_EAProfile
  */
-public class J_EAProfile extends zero_engine.J_EAFixed{
+public class J_EAProfile extends zero_engine.J_EAFixed implements Serializable {
 	protected J_ProfilePointer profilePointer;
 	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
 	protected OL_EnergyCarriers energyCarrier; // = OL_EnergyCarriers.ELECTRICITY;
@@ -145,4 +145,10 @@ public class J_EAProfile extends zero_engine.J_EAFixed{
 			"owner = " + this.getOwner() +", Energy consumed = " + this.energyUsed_kWh +
 			"assetFlowCategory = " + this.assetFlowCategory + " ";
 	}
+	
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */
+	private static final long serialVersionUID = 1L;
 }
