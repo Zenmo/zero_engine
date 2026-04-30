@@ -109,6 +109,9 @@ if (isRapidRun){
 	if (p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 		acc_annualElectricityBalance_kW.addStep( v_currentLoad_kW);
 	}
+	else if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
+		acc_annualHeatBalance_kW.addStep( v_currentLoad_kW);
+	}	
 	
 	double currentImport_MWh = max(0, v_currentLoad_kW) * timeParameters.getTimeStep_h() / 1000;
 	double currentExport_MWh = max(0, -v_currentLoad_kW) * timeParameters.getTimeStep_h() / 1000;
@@ -383,6 +386,7 @@ v_weekendExcessExport_MWh = 0;
 
 // Reset Accumulators
 acc_annualElectricityBalance_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), timeParameters.getRunEndTime_h() - timeParameters.getRunStartTime_h());
+acc_annualHeatBalance_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), timeParameters.getRunEndTime_h() - timeParameters.getRunStartTime_h());
 //acc_annualElectricityBalance_kW.reset();
 /*ALCODEEND*/}
 
