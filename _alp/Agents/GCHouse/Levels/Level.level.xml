@@ -3,6 +3,7 @@
 	<TimePlot>
 		<Id>1776974067080</Id>
 		<Name><![CDATA[plot_DHW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1120</X>
 		<Y>1000</Y>
 		<Label>
