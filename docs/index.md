@@ -1,22 +1,31 @@
 # Welcome to the Zenmo Zero Model Documentation
 
+The Zenmo Zero Engine is an AnyLogic-based multi-agent simulation framework for modelling annual energy system scenarios. It calculates energy flows, manages grid operations, and tracks economic transactions across distributed energy assets.
+
  ![Zenmo Zero class diagram](classdiagram.png)
 
-* Geen expliciete simulatie van stroom en spanning; alleen vermogens (kW) en vermogensbalans
-* Netvlakken (kabels) beschouwd als ‘koperen plaat’, stations (trafo’s) hebben beperkte capaciteit. Congestie dus alleen op trafo’s
-* Warmtenetten via GridNode Heat, warmtebalans gesloten binnen het model
-* Voor andere energiedragers wordt geen infra gemodelleerd. Wel is het mogelijk om een gas of waterstof buffer te gebruiken.
+## Kernprincipes van het model
 
-Links to other md files:
-[Modelstructuur](modelstructuur.md)
-[Modeling conventions](modeling_conventions.md)
-[Rekenregels](rekenregels.md)
-[Energy assets](energy_assets.md)
-[Energieprijzen en geldstromen](prijzen_en_geldstromen.md)
-[KPI berekeningen](KPI_berekeningen.md)
-[Datasets](datasets.md)
-[Interfaces met andere modules](interfaces.md)
-[Results_ui](results_ui.md)
+* **Geen expliciete stroom/spanningssimulatie** – Alleen vermogens (kW) en vermogensbalansen worden gemodelleerd, geen load-flow berekening.
+* **’Koperen plaat’ netvlakken** – Kabels hebben geen beperkte capaciteit. Congestie wordt alleen gemodelleerd op transformatoren (GridNode).
+* **Warmtenetten** – Warmtebalansen worden gesloten via GridNode Heat. Er wordt geen warmtenet-infrastructuur (leidingen, drukken) gemodelleerd.
+* **Gas en waterstof** – Er is geen infrastructuurmodel voor gas of waterstof, maar bufferopslag (J_EAStorageGas) is wel mogelijk.
+* **Tijdresolutie** – Standaard kwartierresolutie (15 minuten); instelbaar via `p_timestep_h`.
+* **Jaarsimulatie** – De engine doorrekent een volledig jaar (8760 uur) zelfstandig, zonder gebruik van AnyLogic’s ingebouwde tijdsfuncties.
+
+## Documentatie-overzicht
+
+| Pagina | Inhoud |
+|--------|--------|
+| [Modelstructuur](modelstructuur.md) | Agënthiërarchie, simulatieverloop, agent-rollen |
+| [Modeling conventions](modeling_conventions.md) | Naamgeving, eenheden, conventie voor tijdintegratie |
+| [Rekenregels](rekenregels.md) | Energiebalans, consistentiecheck, wet van behoud van energie |
+| [Energy assets](energy_assets.md) | Overzicht van alle energy asset-typen en hun sturing |
+| [Energieprijzen en geldstromen](prijzen_en_geldstromen.md) | Marktprijsmechanisme, contracten, financiële KPIs |
+| [KPI berekeningen](KPI_berekeningen.md) | Hiërarchische KPI-berekening, datasets, array-conventie |
+| [Datasets](datasets.md) | Dataopslag, tijdreeksen, array- vs. Dataset-gebruik |
+| [Interfaces met andere modules](interfaces.md) | Koppeling met project-main model en results_ui |
+| [Results UI](results_ui.md) | Resultatenvisualisatie via zero_results_UI |
 
 ## mkDocs
 
