@@ -79,6 +79,23 @@ public class J_ProfilePointer{
     	return dataTimeStep_h;
     }
     
+    public double getDataStartTime_h() {
+    	return dataStartTime_h;
+    }
+    
+    public double[] getAllShiftedValues() {
+        double[] shiftedValues = new double[a_profile.length];
+        for (int i = 0; i < a_profile.length; i++) {
+            int index_n = (int)((i * dataTimeStep_h - dataStartTime_h) / dataTimeStep_h);
+            index_n = index_n % a_profile.length;
+            if (index_n < 0) {
+                index_n += a_profile.length;
+            }
+            shiftedValues[i] = a_profile[index_n];
+        }
+        return shiftedValues;
+    }
+    
     public OL_ProfileUnits getProfileUnits() {
     	return profileUnits;
     }

@@ -60,11 +60,11 @@
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
-			<Title>Building temp</Title>
+			<Title>DHW Consumption (kW)</Title>
 			<Id>1776974067076</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-2448096</Color>
-			<Expression2>p_DHWAsset.getProfilePointer().getCurrentValue()</Expression2>
+			<Expression2>p_DHWAsset.getProfilePointer().getCurrentValue()*p_DHWAsset.getProfileUnitScaler_fr()</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
