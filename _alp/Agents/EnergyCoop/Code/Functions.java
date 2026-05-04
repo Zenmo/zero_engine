@@ -1724,8 +1724,8 @@ for(GridConnection GC : c_memberGridConnections){
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeProductionEnergyCarriers);
 		activeAssetFlows_rapidRun.addAll(GC.v_originalRapidRunData.assetsMetaData.activeAssetFlows);
-		GC.v_rapidRunData.assetsMetaData.getNumberOfActiveAssetsMap().forEach((key, value) -> map_numberOfActiveAssets_rapidRun.merge(key, value, Double::sum));
-		GC.v_rapidRunData.assetsMetaData.getActiveAssetsCapacityMap().forEach((key, value) -> map_activeAssetsCapacity_kW_rapidRun.merge(key, value, Double::sum));
+		GC.v_originalRapidRunData.assetsMetaData.getNumberOfActiveAssetsMap().forEach((key, value) -> map_numberOfActiveAssets_rapidRun.merge(key, value, Double::sum));
+		GC.v_originalRapidRunData.assetsMetaData.getActiveAssetsCapacityMap().forEach((key, value) -> map_activeAssetsCapacity_kW_rapidRun.merge(key, value, Double::sum));
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1743,7 +1743,7 @@ v_originalRapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 v_originalRapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
 
 //Initialize the asset maps
-v_rapidRunData.assetsMetaData.setActiveAssetsInfoMaps(map_numberOfActiveAssets_rapidRun, map_activeAssetsCapacity_kW_rapidRun);
+v_originalRapidRunData.assetsMetaData.setActiveAssetsInfoMaps(map_numberOfActiveAssets_rapidRun, map_activeAssetsCapacity_kW_rapidRun);
 /*ALCODEEND*/}
 
 double f_getOriginalCumulativeIndividualGCValues()
