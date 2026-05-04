@@ -484,3 +484,41 @@ if (heatingAsset.getOutputHeatCapacity_kW() > 0){
 	f_updateFlexAssetFlows(heatingAsset, load_fr, timeVariables);
 /*ALCODEEND*/}
 
+double f_controlIronBurnerReal(double dt_h)
+{/*ALCODESTART::1777718720466*/
+// Track runtime / offtime
+    if (v_ironBurnerOn){
+        v_currentRunTime_h += dt_h;
+        v_currentOffTime_h = 0;
+        v_burnerOperatingHours_h += dt_h;
+    } else {
+        v_currentOffTime_h += dt_h;
+        v_currentRunTime_h = 0;
+    }
+
+// --- CONTROL LOGIC ---
+
+    // Turn OFF only if:
+    // - buffer is very full
+    // - AND minimum runtime satisfied
+    if (v_ironBurnerOn
+        && v_bufferHeat_kWh >= p_bufferMax_kWh
+        && v_currentRunTime_h >= p_minRunTime_h) {
+
+        v_ironBurnerOn = false;
+        v_currentOffTime_h = 0;
+    }
+
+// Turn ON only if:
+
+    // - buffer sufficiently empty
+    // - AND minimum downtime satisfied
+    else if (!v_ironBurnerOn
+        && v_bufferHeat_kWh <= p_bufferRestart_kWh
+        && v_currentOffTime_h >= p_minOffTime_h) {
+
+        v_ironBurnerOn = true;
+        v_currentRunTime_h = 0;
+    }	
+/*ALCODEEND*/}
+
