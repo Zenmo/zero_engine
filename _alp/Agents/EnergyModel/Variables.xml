@@ -1290,6 +1290,28 @@
 			<Type><![CDATA[J_ProfileForecaster]]></Type>
 		</Properties>
 	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1776962977624</Id>
+		<Name><![CDATA[map_nrOfResidentsToDHWprofiles]]></Name>
+		<X>-850</X>
+		<Y>630</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[Map<Integer,List<J_ProfilePointer>>]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[new HashMap<>()]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
 	<Variable Class="Parameter">
 		<Id>1658752734133</Id>
 		<Name><![CDATA[b_parallelizeConnectionOwners]]></Name>
@@ -2105,7 +2127,7 @@
 		<Id>1749650197321</Id>
 		<Name><![CDATA[c_chargerProfiles]]></Name>
 		<X>-850</X>
-		<Y>615</Y>
+		<Y>610</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
