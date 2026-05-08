@@ -14,12 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	</ExtendsReference>
 	<Parameters>
 		<Parameter>
-			<Name><![CDATA[p_actorID]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorType]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_actorSubgroup]]></Name>
 		</Parameter>
 		<Parameter>
