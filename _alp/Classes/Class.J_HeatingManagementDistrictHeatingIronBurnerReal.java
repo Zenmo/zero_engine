@@ -55,7 +55,8 @@ public class J_HeatingManagementDistrictHeatingIronBurnerReal implements I_Heati
  
     	for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
      	    if (childGC != gc) {
-     	        currentDemand_kW += childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+     	    	double heatFlow_kW = childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+     	    	currentDemand_kW += max(0, heatFlow_kW);
      	    }
      	}
  
@@ -64,7 +65,10 @@ public class J_HeatingManagementDistrictHeatingIronBurnerReal implements I_Heati
     	
     	GCDistrictHeating dh = (GCDistrictHeating) gc;
     	    	
-    	double deliveredHeat_kWh = ((GCDistrictHeating)gc).f_deliverHeatFromBuffer(requestedHeat_kWh);
+    	double deliveredHeat_kWh = dh.f_deliverHeatFromBuffer(requestedHeat_kWh);
+    	double deliveredHeat_kW = deliveredHeat_kWh / dt_h;
+    	
+    	gc.fm_currentBalanceFlows_kW.put(OL_EnergyCarriers.HEAT, -deliveredHeat_kW);
     	double unmetHeat_kWh = requestedHeat_kWh - deliveredHeat_kWh;
     	
     	dh.f_applyBufferLosses(dt_h);

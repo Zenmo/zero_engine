@@ -98,9 +98,8 @@
 	<TimePlot>
 		<Id>1678452019907</Id>
 		<Name><![CDATA[pl_SOC2]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>760</X>
-		<Y>840</Y>
+		<X>1160</X>
+		<Y>990</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -109,7 +108,7 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>false</ShowLabel>
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<AutoUpdate>false</AutoUpdate>
+		<AutoUpdate>true</AutoUpdate>
 		<RecurrenceProperties>
 			<Id>1751011893246</Id>
 			<OccurrenceAtTime>true</OccurrenceAtTime>
@@ -151,16 +150,16 @@
 		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
 		<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
 		<VerScaleFromExpression>0</VerScaleFromExpression>
-		<VerScaleToExpression>1</VerScaleToExpression>
-		<VerScaleType>AUTO</VerScaleType>
+		<VerScaleToExpression>200000</VerScaleToExpression>
+		<VerScaleType>FIXED</VerScaleType>
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
-			<Title>Storage temp</Title>
+			<Title>Buffer SoC</Title>
 			<Id>1678452019904</Id>
 			<Expression>my_dataset9</Expression>
 			<Color>-65536</Color>
-			<Expression2>v_bufferTemp_degC</Expression2>
+			<Expression2>v_bufferHeat_kWh</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

@@ -21,7 +21,8 @@ public class J_HeatingManagementGhost implements I_HeatingManagement {
 	private List<OL_GridConnectionHeatingType> validHeatingTypes = Arrays.asList(
 		OL_GridConnectionHeatingType.GAS_BURNER,
 		OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP,
-		OL_GridConnectionHeatingType.HYBRID_HEATPUMP
+		OL_GridConnectionHeatingType.HYBRID_HEATPUMP,
+		OL_GridConnectionHeatingType.DISTRICTHEAT
 	);
 	private OL_GridConnectionHeatingType currentHeatingType;
 	private J_HeatingPreferences heatingPreferences = null; //Null for ghost management, as it can not be changend anyway
