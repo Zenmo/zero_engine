@@ -3,6 +3,7 @@
 	<TimePlot>
 		<Id>1776974067080</Id>
 		<Name><![CDATA[plot_DHW]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1120</X>
 		<Y>1000</Y>
 		<Label>
@@ -64,7 +65,7 @@
 			<Id>1776974067076</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-2448096</Color>
-			<Expression2>p_DHWAsset.getProfilePointer().getCurrentValue()</Expression2>
+			<Expression2>p_DHWAsset.getProfilePointer().getCurrentValue()*p_DHWAsset.getProfileUnitScaler_fr()</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

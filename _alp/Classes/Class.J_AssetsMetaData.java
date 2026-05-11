@@ -135,6 +135,21 @@ public class J_AssetsMetaData {
     	return map_activeAssetsCapacity_kW.get(assetType) != null ? map_activeAssetsCapacity_kW.get(assetType) : 0;
     }
     
+    public Map<OL_EnergyAssetType, Double> getNumberOfActiveAssetsMap() {
+    	return new HashMap<>(map_numberOfActiveAssets);
+    }
+    public Map<OL_EnergyAssetType, Double> getActiveAssetsCapacityMap() {
+    	return new HashMap<>(map_activeAssetsCapacity_kW);
+    }
+    
+    public void setActiveAssetsInfoMaps(Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets, Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW) {
+    	if(this.map_activeAssetsCapacity_kW != null || this.map_numberOfActiveAssets != null) {
+    		throw new RuntimeException("Trying to save active assets, in assetMetaData, for the second time. Not allowed.");
+    	}
+    	this.map_numberOfActiveAssets = map_numberOfActiveAssets;
+    	this.map_activeAssetsCapacity_kW = map_activeAssetsCapacity_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return "totalInstalledPVPower_kW: " + totalInstalledPVPower_kW + 
