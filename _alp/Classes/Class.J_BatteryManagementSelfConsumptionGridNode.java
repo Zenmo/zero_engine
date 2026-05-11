@@ -1,5 +1,5 @@
 /**
- * J_BatteryManagementSelfConsumption1
+ * J_BatteryManagementSelfConsumptionGridNode
  */	
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
