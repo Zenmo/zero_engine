@@ -77,7 +77,7 @@
 	</TimePlot>
 	<TimePlot>
 		<Id>1777372687489</Id>
-		<Name><![CDATA[plot_DHW1]]></Name>
+		<Name><![CDATA[plot_HeatBuffer]]></Name>
 		<X>1630</X>
 		<Y>1000</Y>
 		<Label>
@@ -135,11 +135,11 @@
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
-			<Title>DHW Consumption (kW)</Title>
+			<Title>Heat Buffer (kWh)</Title>
 			<Id>1777372687486</Id>
 			<Expression>my_dataset</Expression>
 			<Color>-2448096</Color>
-			<Expression2>(p_heatBuffer != null) ? p_heatBuffer.getCurrentStateOfCharge_fr() : 0</Expression2>
+			<Expression2>(p_heatBuffer != null) ? p_heatBuffer.getCurrentStateOfCharge_kWh() : 0</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>

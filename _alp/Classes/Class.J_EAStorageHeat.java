@@ -157,6 +157,15 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage {
 		this.temperature_degC += tempDelta_degC;
 		stateOfCharge_fr = ( temperature_degC - minTemperature_degC) / (maxTemperature_degC - minTemperature_degC);
 	}
+	
+	@Override
+	public double getCurrentStateOfCharge_kWh() {
+		return this.stateOfCharge_fr * this.storageCapacity_kWh;
+	}
+	@Override
+	public double getCurrentStateOfCharge_fr() {
+		return this.stateOfCharge_fr;
+	}
 
 	public double getInitialTemperature_degC() {
 		return this.initialTemperature_degC;
