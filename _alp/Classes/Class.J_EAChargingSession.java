@@ -146,6 +146,10 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 	}
 	
 	//Get current ChargingRequest (interface) information
+	public double getSessionStartTime_h() {                         
+		return currentChargingSessionData != null ? currentChargingSessionData.getStartTime_h() : Double.MAX_VALUE;
+	}
+	
 	public double getLeaveTime_h() {
 		return this.currentChargingSessionData.getLeaveTime_h();
 	}
