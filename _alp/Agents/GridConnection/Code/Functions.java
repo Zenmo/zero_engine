@@ -1214,8 +1214,6 @@ double f_calculateNodeLevelFlexEnergyBalance(J_TimeVariables timeVariables,boole
 {/*ALCODESTART::1774264685262*/
 f_operateFlexAssets(timeVariables, true); //true: is on GridNode level; false: is NOT on GridNode level
 
-f_curtailment();
-
 f_connectionMetering(timeVariables, isRapidRun);
 /*ALCODEEND*/}
 
