@@ -29,7 +29,7 @@ public class J_AggregatorBatteryManagementOff implements I_AggregatorBatteryMana
     	this.energyCoop = energyCoop;
     }
     
-    public void manageExternalSetpoints() {
+    public void manageExternalBatterySetpoints(J_TimeVariables timeVariables) {
     	//Do nothing
     }
     

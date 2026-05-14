@@ -220,9 +220,6 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 		v_batteryStoredEnergy_kWh += EC.v_batteryStoredEnergy_kWh;
 		v_currentPrimaryEnergyProductionHeatpumps_kW += EC.v_currentPrimaryEnergyProductionHeatpumps_kW;
 		v_currentOwnElectricityProduction_kW += EC.fm_currentProductionFlows_kW.get(OL_EnergyCarriers.ELECTRICITY); 
-		
-		// Asset flows
-		//v_assetFlows.addFlows(EC.v_assetFlows);
 	}
 }
 
@@ -568,34 +565,42 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 
 double f_initialize(J_TimeParameters timeParameters)
 {/*ALCODESTART::1669042410671*/
-v_liveConnectionMetaData.contractedDeliveryCapacityKnown = true;
-v_liveConnectionMetaData.contractedFeedinCapacityKnown = true;
+double cumulativeContractedDeliveryCapacity_kW = 0;
+double cumulativeContractedFeedinCapacity_kW = 0;
+boolean cumulativeContractedDeliveryCapacityKnown = true;
+boolean cumulativeContractedFeedinCapacityKnown = true;
+
 v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 v_liveData.assetsMetaData.activeAssetFlows.clear();
-v_liveConnectionMetaData.contractedDeliveryCapacity_kW = 0.0;
-v_liveConnectionMetaData.contractedFeedinCapacity_kW = 0.0;
+v_liveConnectionMetaData.setCapacities_kW(0, 0, 0);
 
 //Get energy carriers and capacities boolean
 for(GridConnection GC:c_memberGridConnections){
 	if(GC.v_isActive){
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+		cumulativeContractedDeliveryCapacity_kW += GC.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+		cumulativeContractedFeedinCapacity_kW += GC.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
 		v_liveData.activeEnergyCarriers.addAll(GC.v_liveData.activeEnergyCarriers);
 		v_liveData.activeProductionEnergyCarriers.addAll(GC.v_liveData.activeProductionEnergyCarriers);
 		v_liveData.activeConsumptionEnergyCarriers.addAll(GC.v_liveData.activeConsumptionEnergyCarriers);
 		v_liveData.assetsMetaData.activeAssetFlows.addAll(GC.v_liveData.assetsMetaData.activeAssetFlows);
 	
-		if(!GC.v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
-			v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+		if(!GC.v_liveConnectionMetaData.getContractedDeliveryCapacityKnown()){
+			cumulativeContractedDeliveryCapacityKnown = false;
 		}
 	
-		if(!GC.v_liveConnectionMetaData.contractedFeedinCapacityKnown){
-			v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		if(!GC.v_liveConnectionMetaData.getContractedFeedinCapacityKnown()){
+			cumulativeContractedFeedinCapacityKnown = false;
 		} 
 	}
 }
+//For coops this value does not make sense, but is mandatory for the model currently so just get the max of the 2 contracted.
+double physicalCapacity_kW = max(cumulativeContractedDeliveryCapacity_kW, cumulativeContractedFeedinCapacity_kW);
+
+//Set connection values
+v_liveConnectionMetaData.setCapacities_kW(cumulativeContractedDeliveryCapacity_kW, cumulativeContractedFeedinCapacity_kW, physicalCapacity_kW);
+v_liveConnectionMetaData.setCapacitiesKnown(cumulativeContractedDeliveryCapacityKnown, cumulativeContractedFeedinCapacityKnown, false);
 
 
 acc_totalOwnElectricityProduction_kW = new ZeroAccumulator(true, timeParameters.getTimeStep_h(), 8760);
@@ -1535,6 +1540,8 @@ EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_Ene
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
+Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets_rapidRun = new HashMap<>();
+Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW_rapidRun = new HashMap<>();
 
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data
 boolean storeTotalAssetFlows = true;
@@ -1544,6 +1551,8 @@ for(GridConnection GC : c_memberGridConnections){
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_rapidRunData.activeProductionEnergyCarriers);
 		activeAssetFlows_rapidRun.addAll(GC.v_rapidRunData.assetsMetaData.activeAssetFlows);
+		GC.v_rapidRunData.assetsMetaData.getNumberOfActiveAssetsMap().forEach((key, value) -> map_numberOfActiveAssets_rapidRun.merge(key, value, Double::sum));
+		GC.v_rapidRunData.assetsMetaData.getActiveAssetsCapacityMap().forEach((key, value) -> map_activeAssetsCapacity_kW_rapidRun.merge(key, value, Double::sum));
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1559,6 +1568,9 @@ v_rapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
 v_rapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
+
+//Initialize the asset maps
+v_rapidRunData.assetsMetaData.setActiveAssetsInfoMaps(map_numberOfActiveAssets_rapidRun, map_activeAssetsCapacity_kW_rapidRun);
 /*ALCODEEND*/}
 
 ArrayList<GridConnection> f_getMemberGridConnectionsCollectionPointer()
@@ -1575,13 +1587,6 @@ gcList.forEach(gc -> gc.c_parentCoops.add(this));
 
 /*ALCODEEND*/}
 
-double f_aggregatorBatteryManagement_EnergyCoop()
-{/*ALCODESTART::1756207893357*/
-if(p_aggregatorBatteryManagement != null){
-	p_aggregatorBatteryManagement.manageExternalSetpoints();
-}
-/*ALCODEEND*/}
-
 double f_removeMemberGCs(List<GridConnection> gcList,J_TimeParameters timeParameters)
 {/*ALCODESTART::1756301338833*/
 c_memberGridConnections.removeAll(gcList);
@@ -1594,10 +1599,11 @@ gcList.forEach(gc -> gc.c_parentCoops.remove(this));
 f_initializeCustomCoop(newMemberGridConnectionsList, timeParameters);
 /*ALCODEEND*/}
 
-double f_aggregatorManagement_EnergyCoop()
+double f_operateAggregatorEnergyManagement(J_TimeVariables timeVariables)
 {/*ALCODESTART::1756207893363*/
-//Run battery setpoint management
-f_aggregatorBatteryManagement_EnergyCoop();
+if(p_aggregatorEnergyManagement != null){
+	p_aggregatorEnergyManagement.operateAggregatorEnergyManagement(timeVariables);
+}
 /*ALCODEEND*/}
 
 double f_collectGridConnectionOriginalRapidRunData()
@@ -1707,6 +1713,8 @@ EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_Ene
 EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
+Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets_rapidRun = new HashMap<>();
+Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW_rapidRun = new HashMap<>();
 
 //Need to do this, for if the sliders have changed, otherwise potential errors/missing data  ????
 boolean storeTotalAssetFlows = true;
@@ -1716,6 +1724,8 @@ for(GridConnection GC : c_memberGridConnections){
 		activeConsumptionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeConsumptionEnergyCarriers);
 		activeProductionEnergyCarriers_rapidRun.addAll(GC.v_originalRapidRunData.activeProductionEnergyCarriers);
 		activeAssetFlows_rapidRun.addAll(GC.v_originalRapidRunData.assetsMetaData.activeAssetFlows);
+		GC.v_originalRapidRunData.assetsMetaData.getNumberOfActiveAssetsMap().forEach((key, value) -> map_numberOfActiveAssets_rapidRun.merge(key, value, Double::sum));
+		GC.v_originalRapidRunData.assetsMetaData.getActiveAssetsCapacityMap().forEach((key, value) -> map_activeAssetsCapacity_kW_rapidRun.merge(key, value, Double::sum));
 		
 		if(GC.v_rapidRunData.getStoreTotalAssetFlows() == false){
 			storeTotalAssetFlows = false;
@@ -1731,6 +1741,9 @@ v_originalRapidRunData.connectionMetaData = v_liveConnectionMetaData.getClone();
 
 //Initialize the rapid run data
 v_originalRapidRunData.initializeAccumulators(activeEnergyCarriers_rapidRun, activeConsumptionEnergyCarriers_rapidRun, activeProductionEnergyCarriers_rapidRun, activeAssetFlows_rapidRun);
+
+//Initialize the asset maps
+v_originalRapidRunData.assetsMetaData.setActiveAssetsInfoMaps(map_numberOfActiveAssets_rapidRun, map_activeAssetsCapacity_kW_rapidRun);
 /*ALCODEEND*/}
 
 double f_getOriginalCumulativeIndividualGCValues()
@@ -1757,6 +1770,42 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 			v_cumulativeIndividualPeakFeedinOriginal_kW += EC.v_cumulativeIndividualPeakFeedinOriginal_kW;
 		}
 	}
+}
+/*ALCODEEND*/}
+
+double f_setAggregatorEnergyManagement(I_AggregatorEnergyManagement aggregatorEnergyManagement)
+{/*ALCODESTART::1774957430435*/
+this.p_aggregatorEnergyManagement = aggregatorEnergyManagement;
+/*ALCODEEND*/}
+
+I_AggregatorEnergyManagement f_getAggregatorEnergyManagement()
+{/*ALCODESTART::1774957430437*/
+return this.p_aggregatorEnergyManagement;
+/*ALCODEEND*/}
+
+double f_setExternalAggregatorAssetManagement(I_AggregatorAssetManagement externalAggregatorAssetManagement)
+{/*ALCODESTART::1774957430439*/
+if(this.p_aggregatorEnergyManagement == null){
+	this.p_aggregatorEnergyManagement = new J_AggregatorEnergyManagementDefault(this, energyModel.p_timeParameters);
+}
+this.p_aggregatorEnergyManagement.setExternalAggregatorAssetManagement(externalAggregatorAssetManagement);
+    
+/*ALCODEEND*/}
+
+<T extends I_AggregatorAssetManagement> T f_getExternalAggregatorAssetManagement(Class<T>  aggregatorAssetManagementInterfaceType)
+{/*ALCODESTART::1774957430441*/
+if(this.p_aggregatorEnergyManagement != null){
+	return this.p_aggregatorEnergyManagement.getExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
+}
+else{
+	return null;
+}
+/*ALCODEEND*/}
+
+double f_removeExternalAggregatorAssetManagement(Class<? extends I_AggregatorAssetManagement> aggregatorAssetManagementInterfaceType)
+{/*ALCODESTART::1774957430443*/
+if(this.p_aggregatorEnergyManagement != null){
+	this.p_aggregatorEnergyManagement.removeExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
 }
 /*ALCODEEND*/}
 

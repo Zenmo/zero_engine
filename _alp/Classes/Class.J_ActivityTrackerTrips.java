@@ -1,6 +1,9 @@
 /**
  * J_ActivityTrackerTrips
  */	
+import java.util.ArrayList;
+import java.util.ListIterator;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
@@ -175,24 +178,22 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	   } else {
 		   nextEventStartTime_h = (nextEventStartTime_min + time_min - timeSinceWeekStart_min)/60;
 	   }
-	   // traceln("Prepare next activity, trip startTime: %s hours. Time since week start: %s", nextEventStartTime_h, (timeSinceWeekStart_min)/60);
 	   idleTimeToNextTrip_min = (nextEventStartTime_min - timeSinceWeekStart_min) % (24*7*60); // Modulo 24*7*60 needed because otherwise negative values can occur when trip starts 'next week'.
 	   tripDistance_km = distanceScaling_fr * distances_km.get( eventIndex ); // Update upcoming trip distance
 	   
 	   if (vehicle instanceof J_EAEV ev) {
 		   
 		   double energyNeedForNextTrip_kWh = ev.getEnergyConsumption_kWhpkm() * tripDistance_km;
-		   if (idleTimeToNextTrip_min > 0 && (energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> idleTimeToNextTrip_min/60 * ev.capacityElectric_kW) {
+		   if (idleTimeToNextTrip_min > 0 && (energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh())> idleTimeToNextTrip_min/60 * ev.getVehicleChargingCapacity_kW()) {
 			   traceln("TripTracker reports: charging need for next trip is not feasible! Time till next trip: %s hours, chargeNeed_kWh: %s", roundToDecimal(idleTimeToNextTrip_min/60,2), roundToDecimal(energyNeedForNextTrip_kWh-ev.getCurrentSOC_kWh(),2));
 		   }
-		   //v_energyNeedForNextTrip_kWh = min(v_energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());  // added 10kWh margin 'just in case'. This is actually realistic; people will charge their cars a bit more than strictly needed for the next trip, if possible.
 		   // Check if more charging is needed for next trip!
 		   double nextTripDist_km = 0;
 		   double nextTripStartTime_min = 0;
 		   
 		   if ( eventIndex == starttimes_min.size() - 1 ) {
-			   nextTripDist_km = 0;//distances_km.get( 0 );
-			   nextTripStartTime_min = endtimes_min.get(eventIndex);
+			   nextTripDist_km = distances_km.get( 0 );
+			   nextTripStartTime_min = endtimes_min.get( 0 );
 		   } else {		
 			   nextTripDist_km = distanceScaling_fr*distances_km.get( eventIndex+1 );
 			   nextTripStartTime_min = starttimes_min.get( eventIndex+1 );
@@ -201,13 +202,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 		   
 		   energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
 		   energyNeedForNextTrip_kWh = min(energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());
-		   //traceln("TripTracker, energyNeedForNextTrip: %s", v_energyNeedForNextTrip_kWh);
 		   ev.setEnergyNeedForNextTrip_kWh(energyNeedForNextTrip_kWh);
-		   /*if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {
-				traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (idleTimeToNextTrip_min/60) + " kW");
-				traceln("RowIndex: " + rowIndex + " tripDistance: " + tripDistance_km + " km, time to next trip: " + idleTimeToNextTrip_min + " minutes");
-			} */
-		   
+	   
 		   //Register EV at the chargepoint
 		   chargePointRegistration.registerChargingRequest(ev);
 	   }

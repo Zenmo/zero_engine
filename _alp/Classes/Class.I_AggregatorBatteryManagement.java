@@ -10,11 +10,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 	    property = "type"  // 👈 this will be the field name in your JSON 👈
 	)
 
-/**
- * I_AggregatorBatteryManagement
- */	
-
-public interface I_AggregatorBatteryManagement  extends I_AggregatorManagement
+public interface I_AggregatorBatteryManagement  extends I_AggregatorAssetManagement
 {
-	void manageExternalSetpoints();
+	//Get the subManagementInterface type
+	default Class<? extends I_AggregatorAssetManagement> getAggregatorAssetManagementInterfaceType(){
+		return I_AggregatorBatteryManagement.class;
+	}
+	
+	void manageExternalBatterySetpoints(J_TimeVariables timeVariables);
 }

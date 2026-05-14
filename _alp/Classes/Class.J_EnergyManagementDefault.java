@@ -24,7 +24,9 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 													//J_HeatingManagementSimple.class, 
 													I_HeatingManagement.class,
 													I_ChargingManagement.class, 
-													I_BatteryManagement.class
+													I_BatteryManagement.class,
+													I_BackupGeneratorManagement.class,
+													I_CurtailManagement.class
 												));
 	Map<Class<? extends I_AssetManagement>, I_AssetManagement> activeExternalAssetManagements = new HashMap();			
 	
@@ -69,6 +71,16 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     		if (this.getExternalAssetManagement(I_BatteryManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
     			this.getExternalAssetManagement(I_BatteryManagement.class).manageBattery(timeVariables);
     		}
+    	}
+    	
+    	//4. Call BackupGenerator management
+    	if(this.getExternalAssetManagement(I_BackupGeneratorManagement.class) != null) {
+    		this.getExternalAssetManagement(I_BackupGeneratorManagement.class).manageBackupGenerator(timeVariables);
+    	}
+    	
+    	//5. Call curtailment management
+    	if(this.getExternalAssetManagement(I_CurtailManagement.class) != null) {
+    		this.getExternalAssetManagement(I_CurtailManagement.class).manageCurtailment(timeVariables);
     	}
     }
     

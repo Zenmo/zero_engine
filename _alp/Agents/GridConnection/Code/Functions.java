@@ -61,31 +61,10 @@ if(p_energyManagement != null){
 
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
-// Maybe we want one collection for all J_EAFixed?
-
-for (J_EAFixed j_ea : c_petroleumFuelVehicles) {
+for (J_EAFixed j_ea : c_fixedAssets) {
 	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
 	f_addFlows(flowPacket, j_ea);
 }
-for (J_EAFixed j_ea : c_hydrogenVehicles) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_consumptionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_productionAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-for (J_EAFixed j_ea : c_profileAssets) {
-	J_FlowPacket flowPacket = j_ea.f_updateAllFlows(timeVariables);
-	f_addFlows(flowPacket, j_ea);
-}
-
-
-
 /*ALCODEEND*/}
 
 double f_resetStates(J_TimeVariables timeVariables)
@@ -159,38 +138,23 @@ else{
 
 double f_initialize(J_TimeParameters timeParameters)
 {/*ALCODESTART::1698854861644*/
-if (v_liveConnectionMetaData.physicalCapacity_kW < 0) {
+if (v_liveConnectionMetaData.getPhysicalCapacity_kW() < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative physical connection capacity!");
-} else if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW < 0) {
+} else if (v_liveConnectionMetaData.getContractedDeliveryCapacity_kW() < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted delivery capacity!");
-} else if (v_liveConnectionMetaData.contractedFeedinCapacity_kW < 0) {
+} else if (v_liveConnectionMetaData.getContractedFeedinCapacity_kW() < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative contracted feed in capacity!");
 }
 
-if(v_isActive){
-	if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0.0 && v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0.0 && v_liveConnectionMetaData.physicalCapacity_kW == 0.0) { // If no contracted or physical capacity is given, throw error.
-	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has 0.0 physical and contracted capacity! Not a valid state of for this agent");
-	} else {
-		if (v_liveConnectionMetaData.contractedDeliveryCapacity_kW == 0.0 && v_liveConnectionMetaData.contractedFeedinCapacity_kW == 0.0) { // If no contracted capacity is given, use physical capacity
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW = v_liveConnectionMetaData.physicalCapacity_kW;
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW = v_liveConnectionMetaData.physicalCapacity_kW;
-		} else if ( v_liveConnectionMetaData.physicalCapacity_kW == 0 ) { // if no physical capacity is given, use max of delivery and feedin contracted capacities
-			v_liveConnectionMetaData.physicalCapacity_kW = max(v_liveConnectionMetaData.contractedDeliveryCapacity_kW, v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-		}
-	}
-}
-
-if ( c_connectedGISObjects.size()>0) { // can this go into initialisation function?
-	//p_floorSurfaceArea_m2 = totalSurfaceAreaGC_m2;
-	p_longitude = c_connectedGISObjects.get(0).p_longitude; // Get longitude of first building (only used to get nearest trafo)
-	p_latitude = c_connectedGISObjects.get(0).p_latitude; // Get latitude of first building (only used to get nearest trafo)
+if ( c_connectedGISObjects.size()>0) {
+	if(p_longitude == 0){ p_longitude = c_connectedGISObjects.get(0).p_longitude;}; // Get longitude of first building (only used to get nearest trafo)
+	if(p_latitude == 0){ p_latitude = c_connectedGISObjects.get(0).p_latitude;}; // Get latitude of first building (only used to get nearest trafo)
 	setLatLon(p_latitude, p_longitude);  
 			
 	//If GC has no assigned trafo_id --> Assign to nearest trafo
 	if (p_parentNodeElectricID == null){
 		//Set nearest agent as trafo
 		GridNode nearestLVStation = getNearestAgent(energyModel.c_gridNodesNotTopLevel);
-		//nearestLVStation.c_electricityGridConnections.add(companyGC); // this should be taken care of in GC.f_initialize()!
 		if (nearestLVStation!=null) {
 			p_parentNodeElectricID = nearestLVStation.p_gridNodeID;
 		}
@@ -228,9 +192,6 @@ f_setOperatingSwitches();
 
 // Initializing Live Data Class
 v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
-//v_liveData.activeConsumptionEnergyCarriers = v_activeConsumptionEnergyCarriers;
-//v_liveData.activeProductionEnergyCarriers = v_activeProductionEnergyCarriers;
-//v_liveData.activeEnergyCarriers = v_activeEnergyCarriers;
 
 f_initializeDataSets(timeParameters);
 
@@ -326,115 +287,6 @@ double f_resetSpecificGCStatesAfterRapidRun()
 // to be overwritten by child GCs!
 /*ALCODEEND*/}
 
-double f_curtailment()
-{/*ALCODESTART::1720442672576*/
-//Electricity
-if (v_enableCurtailment) {
-	switch(p_curtailmentMode) {
-		case CAPACITY:
-		// Keep feedin power within connection capacity
-		if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW) { // overproduction!
-			for (J_EAProduction j_ea : c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) - v_liveConnectionMetaData.contractedFeedinCapacity_kW);
-				f_removeFlows(flowPacket, j_ea);
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < - v_liveConnectionMetaData.contractedFeedinCapacity_kW)) {
-					break;
-				}
-			}
-		}
-		break;
-		case MARKETPRICE:
-		if(energyModel.pp_dayAheadElectricityPricing_eurpMWh.getCurrentValue() < 0.0) {
-			if (fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0) { // Feedin, bring to zero!
-				for (J_EAProduction j_ea : c_productionAssets) {
-					J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-					f_removeFlows(flowPacket, j_ea);
-					if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < 0.0)) {
-						break;
-					}
-				}
-			}
-		}
-		break;
-		case NODALPRICING:
-		// Prevent feedin when nodal price is negative
-		double priceTreshold_eur = -0.0;
-		if( p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh < priceTreshold_eur) {
-		
-			double v_currentPowerElectricitySetpoint_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) * max(0,1+(p_parentNodeElectric.v_currentTotalNodalPrice_eurpkWh-priceTreshold_eur)*5);
-			for (J_EAProduction j_ea : c_productionAssets) {
-				J_FlowPacket flowPacket = j_ea.curtailEnergyCarrierProduction(OL_EnergyCarriers.ELECTRICITY, v_currentPowerElectricitySetpoint_kW - fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY));
-				f_removeFlows(flowPacket, j_ea);
-				if (!(fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY) < v_currentPowerElectricitySetpoint_kW)) {
-					break;
-				}
-			}
-		}
-		break;
-		default:
-	}
-}
-/*ALCODEEND*/}
-
-double f_nfatoUpdateConnectionCapacity(J_TimeVariables timeVariables)
-{/*ALCODESTART::1720430481154*/
-double timeOfDay = timeVariables.getT_h() % 24;
-int hourOfDay = (int) timeOfDay;
-
-if (timeOfDay == hourOfDay) {
-	int previousHour = ((hourOfDay - 1) % 24 + 24) % 24; // modulo twice because of java's convention with negative numbers
-	if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY || timeVariables.getDayOfWeek() == OL_Days.SUNDAY) {
-		if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
-			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
-			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
-		}
-		else {
-			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekendDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
-			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekendFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
-		}
-	}
-	else {
-		if (timeVariables.getDayOfWeek() == OL_Days.MONDAY && hourOfDay == 0) { // Sunday night we need to subtract the previous weekend capacity
-			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekendDeliveryCapacity_kW[previousHour];
-			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekendFeedinCapacity_kW[previousHour];
-		}
-		else {
-			v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_nfatoWeekDeliveryCapacity_kW[hourOfDay] - v_nfatoWeekDeliveryCapacity_kW[previousHour];
-			v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_nfatoWeekFeedinCapacity_kW[hourOfDay] - v_nfatoWeekFeedinCapacity_kW[previousHour];
-		}
-	}
-}
-/*ALCODEEND*/}
-
-double f_nfatoSetConnectionCapacity(boolean reset,J_TimeVariables timeVariables)
-{/*ALCODESTART::1720431721926*/
-int mult = reset == true ? -1 : 1; // When reset is true we need to subtract the capacity, else we add
-
-double timeOfDay = timeVariables.getTimeOfDay_h();
-int hourOfDay = (int)timeOfDay;
-
-if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY || timeVariables.getDayOfWeek() == OL_Days.SUNDAY) {
-	if (timeVariables.getDayOfWeek() == OL_Days.SATURDAY && hourOfDay == 0) { // Friday night we need to subtract the previous week capacity
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
-	}
-	else {
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
-	}
-}
-else {
-	if (timeVariables.getDayOfWeek() == OL_Days.MONDAY && hourOfDay == 0) { // Sunday night we need to subtract the previous week capacity
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekendDeliveryCapacity_kW[hourOfDay];
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekendFeedinCapacity_kW[hourOfDay];
-	}
-	else {
-		v_liveConnectionMetaData.contractedDeliveryCapacity_kW += mult * v_nfatoWeekDeliveryCapacity_kW[hourOfDay];
-		v_liveConnectionMetaData.contractedFeedinCapacity_kW += mult * v_nfatoWeekFeedinCapacity_kW[hourOfDay];
-	}
-}
-/*ALCODEEND*/}
-
 double f_removeFlows(J_FlowPacket flowPacket,J_EA caller)
 {/*ALCODESTART::1722512642645*/
 for (OL_EnergyCarriers EC : flowPacket.flowsMap.keySet()) {
@@ -528,12 +380,13 @@ if (!setActive) {
 		coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW -= v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
-		coop.v_liveConnectionMetaData.contractedDeliveryCapacity_kW -= v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-		coop.v_liveConnectionMetaData.contractedFeedinCapacity_kW -= v_liveConnectionMetaData.contractedFeedinCapacity_kW;
+		double coopContractDeliveryCapacity_kW = coop.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+		double coopContractFeedinCapacity_kW = coop.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
+		coopContractDeliveryCapacity_kW -= v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+		coopContractFeedinCapacity_kW -= v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
+		double coopPhysicalCapacity_kW = max(coopContractDeliveryCapacity_kW, coopContractFeedinCapacity_kW);
+		coop.v_liveConnectionMetaData.setCapacities_kW(coopContractDeliveryCapacity_kW, coopContractFeedinCapacity_kW, coopPhysicalCapacity_kW);
 	}
-	
-	// Reset Connection Capacity to default
-	f_nfatoSetConnectionCapacity(true, timeVariables);
 	
 	// Is setting all of these to zero overkill?
 	fm_currentProductionFlows_kW.clear();
@@ -562,9 +415,6 @@ else {
 		obj.gisRegion.setVisible(true);
 	}
 	
-	// Set Connection Capacity according to NFATO
-	f_nfatoSetConnectionCapacity(false, timeVariables);
-	
 	v_isActive = setActive; // v_isActive must be true before calling updateActiveAssetData!
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
 	v_liveAssetsMetaData.activeAssetFlows.forEach(x->energyModel.f_addAssetFlow(x));
@@ -581,23 +431,37 @@ else {
 		coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += v_liveAssetsMetaData.totalInstalledPVPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += v_liveAssetsMetaData.totalInstalledWindPower_kW;
 		coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh;
-		coop.v_liveConnectionMetaData.contractedDeliveryCapacity_kW += v_liveConnectionMetaData.contractedDeliveryCapacity_kW;
-		coop.v_liveConnectionMetaData.contractedFeedinCapacity_kW += v_liveConnectionMetaData.contractedFeedinCapacity_kW;
-		if(!v_liveConnectionMetaData.contractedDeliveryCapacityKnown){
-			coop.v_liveConnectionMetaData.contractedDeliveryCapacityKnown = false;
+
+		double coopContractDeliveryCapacity_kW = coop.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+		double coopContractFeedinCapacity_kW = coop.v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
+		coopContractDeliveryCapacity_kW += v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();
+		coopContractFeedinCapacity_kW += v_liveConnectionMetaData.getContractedFeedinCapacity_kW();
+		double coopPhysicalCapacity_kW = max(coopContractDeliveryCapacity_kW, coopContractFeedinCapacity_kW);
+		coop.v_liveConnectionMetaData.setCapacities_kW(coopContractDeliveryCapacity_kW, coopContractFeedinCapacity_kW, coopPhysicalCapacity_kW);
+		
+		if(!v_liveConnectionMetaData.getContractedDeliveryCapacityKnown()){
+			coop.v_liveConnectionMetaData.setContractedDeliveryCapacityKnown(false);
 		}
-		if(!v_liveConnectionMetaData.contractedFeedinCapacityKnown){
-			coop.v_liveConnectionMetaData.contractedFeedinCapacityKnown = false;
+		if(!v_liveConnectionMetaData.getContractedFeedinCapacityKnown()){
+			coop.v_liveConnectionMetaData.setContractedFeedinCapacityKnown(false);
 		} 
 	}
 	
 	//Fast forward time dependent energy assets (if present)
 	c_chargingSessions.forEach(cs -> cs.fastForwardCharingSessions(timeVariables.getT_h(), p_chargePoint));
+	c_vehicleAssets.forEach(vehicle -> vehicle.setAvailability(true));
+	if (p_chargePoint != null) {
+	    c_tripTrackers.forEach(tt -> {
+	        if (tt.vehicle instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
+	            p_chargePoint.deregisterChargingRequest(ev);
+	        }
+	        tt.setStartIndex(timeVariables, f_getChargePoint());
+	    });
+	}
 		
-	//Initialize/reset dataset maps to 0
-	double startTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMin();
-	double endTime = energyModel.v_liveData.dsm_liveDemand_kW.get(OL_EnergyCarriers.ELECTRICITY).getXMax();
-	v_liveData.resetLiveDatasets(energyModel.p_timeParameters);
+	//Initialize datasets for all EC and AssetFlowCategories and clear all.
+	f_initializeDataSets(energyModel.p_timeParameters);
+	v_liveData.clearLiveDatasets();
 }
 /*ALCODEEND*/}
 
@@ -1082,6 +946,13 @@ double f_connectToJ_EAFixed(J_EAFixed j_ea,J_TimeParameters timeParameters)
 {/*ALCODESTART::1772106633559*/
 c_fixedAssets.add(j_ea);
 
+if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
+	if (j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
+		p_DHWAsset = profileAsset;	
+	}
+}
+
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.add(fuelVehicle);
 	
@@ -1100,9 +971,6 @@ if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 }
 else if (j_ea instanceof J_EAConsumption consumptionAsset) {
 	c_consumptionAssets.add(consumptionAsset);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = consumptionAsset;	
-	}
 } 
 else if (j_ea instanceof J_EAProduction productionAsset) {
 	c_productionAssets.add(productionAsset);
@@ -1131,9 +999,9 @@ else if (j_ea instanceof J_EAProduction productionAsset) {
 }
 else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
 	c_profileAssets.add(tractor);
-} 
-else if  (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
+}
+else if (j_ea instanceof J_EAProfile) {
+	return;
 }
 else{
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFixed asset!");
@@ -1157,6 +1025,12 @@ double f_removeTheJ_EAFixed(J_EAFixed j_ea)
 {/*ALCODESTART::1772110066396*/
 c_fixedAssets.remove(j_ea);
 
+if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.remove(profileAsset);
+	if (j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
+		p_DHWAsset = null;	
+	}
+}
 
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.remove(fuelVehicle);
@@ -1177,9 +1051,6 @@ if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 }
 else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
-	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-		p_DHWAsset = null;	
-	}
 	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
 	
 	}
@@ -1212,9 +1083,6 @@ else if (j_ea instanceof J_EAProduction) {
 	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
 	
 	}
-}
-else if  (j_ea instanceof J_EAProfile) {
-	c_profileAssets.remove((J_EAProfile)j_ea);
 }
 /*ALCODEEND*/}
 
@@ -1334,9 +1202,7 @@ v_currentEnergyCurtailed_kW = 0;
 v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
 
-if (v_enableNFato) {
-	f_nfatoUpdateConnectionCapacity(timeVariables);
-}
+v_liveConnectionMetaData.updateGridCapacitySharingManager(timeVariables);
 
 c_tripTrackers.forEach(t -> t.manageActivities(timeVariables, p_chargePoint));
 c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint, this));
@@ -1356,5 +1222,15 @@ f_connectionMetering(timeVariables, isRapidRun);
 double f_calculateConnectionLevelFlexEnergyBalance(J_TimeVariables timeVariables)
 {/*ALCODESTART::1774268237084*/
 f_operateFlexAssets(timeVariables, false); //true: is on GridNode level; false: is NOT on GridNode level
+/*ALCODEEND*/}
+
+boolean f_isAssetManagementActive(Class<? extends I_AssetManagement>  assetManagementInterfaceType)
+{/*ALCODESTART::1774965224446*/
+if(this.p_energyManagement != null){
+	return this.p_energyManagement.isAssetManagementActive(assetManagementInterfaceType);
+}
+else{
+	return false;
+}
 /*ALCODEEND*/}
 

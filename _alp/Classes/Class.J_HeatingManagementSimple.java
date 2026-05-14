@@ -173,9 +173,8 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
         		heatingPreferences = new J_HeatingPreferences();
         	}
     	}
-    	J_EAConsumption heatConsumption = findFirst(gc.c_consumptionAssets, x -> x.getEAType() == OL_EnergyAssetType.HEAT_DEMAND);
     	J_EAProfile heatProfile = findFirst(gc.c_profileAssets, x -> x.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
-    	if (heatProfile == null && heatConsumption == null && this.building == null) {
+    	if (heatProfile == null && this.building == null) {
     		throw new RuntimeException(this.getClass() + " requires a heat demand asset.");
     	}
     	if (gc.c_heatingAssets.size() == 0) {

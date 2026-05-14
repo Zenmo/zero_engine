@@ -106,10 +106,23 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					flexAssets.removeAll(findAll(flexAssets, battery -> battery instanceof J_EAStorageElectric));
 					break;
 				}
-				else {
-					traceln("Asset found that is not managed by I_AssetManagement, can not be checked.");//Temporary soft error till all managements are trough I_AssetManagement
-					flexAssets.remove(asset);
+				else if(asset instanceof J_EAConversionElectrolyser){
+					if(!isAssetManagementActive(I_ElectrolyserManagement.class)) {
+						throw new RuntimeException("An electrolyser is found at a GC that has an EMS that does not have active electrolyser management.");
+					}
+					flexAssets.removeAll(findAll(flexAssets, electrolyser -> electrolyser instanceof J_EAConversionElectrolyser));
 					break;
+				}
+				else if(asset.getEAType() == OL_EnergyAssetType.DIESEL_GENERATOR || asset.getEAType() == OL_EnergyAssetType.METHANE_GENERATOR || asset.getEAType() == OL_EnergyAssetType.FUEL_CELL){
+					if(!isAssetManagementActive(I_BackupGeneratorManagement.class)) {
+						throw new RuntimeException("A backup generator is found at a GC that has an EMS that does not have active Backup Generator management.");
+					}
+					flexAssets.removeAll(findAll(flexAssets, generator -> generator.getEAType() == OL_EnergyAssetType.DIESEL_GENERATOR || generator.getEAType() == OL_EnergyAssetType.METHANE_GENERATOR || generator.getEAType() == OL_EnergyAssetType.FUEL_CELL));
+					break;
+				}
+				else {
+					throw new RuntimeException("Asset found that is not managed by I_AssetManagement, can not be checked.");
+					//If you create a custom EMS, who does support other assets, override this method!
 				}
 			}
     	}

@@ -1,7 +1,7 @@
 /**
  * J_AVGC_data
  */	
-public class J_AVGC_data implements Serializable {
+public class J_AVGC_data {
 	
 	////Averages
 	
@@ -56,8 +56,8 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgPVPower_kWpm2;
 	public double p_avgAnnualProductionPV_kWhpWp;
 	public double p_avgRatioRoofPotentialPV;
-
 	public double p_avgSolarFieldPower_kWppha;
+	public OL_PVOrientation p_defaultPVOrientation;
 	
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;
@@ -117,7 +117,11 @@ public class J_AVGC_data implements Serializable {
 	public double p_avgAnnualTravelDistanceTruck_km;
 	public double p_minAnnualTravelDistanceSurveyVehicle_km;
 	
-
+	//Emissions
+	public Map<OL_EnergyCarriers, Double> map_avgDirectCO2EmissionOfEnergyCarrier_kgpkWh;
+	public Map<OL_EnergyCarriers, Double> map_avgLifeCycleCO2EmissionOfEnergyCarrier_kgpkWh;
+	
+	public J_AVGC_Economic_data economicAVGC;
 	
 	////Constants
 	public double p_gas_kWhpm3;
@@ -132,13 +136,12 @@ public class J_AVGC_data implements Serializable {
 	public double p_oxygenDensity_kg_Nm3;
 	public double p_oxygenProduction_kgO2pkgH2;
 	
-
-	
 	
 	/**
      * Default constructor
      */
     public J_AVGC_data() {
+    	
     }
 
 	@Override
