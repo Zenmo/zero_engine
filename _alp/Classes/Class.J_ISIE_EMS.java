@@ -60,7 +60,7 @@ public class J_ISIE_EMS implements I_EnergyManagement {
 	private I_Vehicle ev; // sometimes assumed to be of type J_EAEV
 	private List<J_VirtualFlexAsset> virtual_evs = new ArrayList<>();
 	private J_EAConversionHeatPump hp;
-	private J_VirtualFlexAsset virtual_hp;
+	private List<J_VirtualFlexAsset> virtual_hps = new ArrayList<>();
 	private J_EAStorageElectric battery;
 	private J_VirtualBattery virtual_battery;
 	
@@ -127,9 +127,13 @@ public class J_ISIE_EMS implements I_EnergyManagement {
     		}
     	}
     	
-    	this.GC.f_updateFlexAssetFlows( this.hp, virtual_hp.profile_kW[currentTimeStepOfDay] / this.hp.getInputCapacity_kW(), timeVariables );
-    	double heatIntoBuilding_kW = virtual_hp.profile_kW[currentTimeStepOfDay] * this.hp.getCOP();
-    	this.GC.f_updateFlexAssetFlows( this.building, heatIntoBuilding_kW / this.building.getCapacityHeat_kW(), timeVariables );
+    	for (J_VirtualFlexAsset virtual_hp : this.virtual_hps) {
+    		if (virtual_hp.allowedOperatingTimes[currentTimeStepOfDay]) {
+    			this.GC.f_updateFlexAssetFlows( this.hp, virtual_hp.profile_kW[currentTimeStepOfDay] / this.hp.getInputCapacity_kW(), timeVariables );
+    	    	double heatIntoBuilding_kW = virtual_hp.profile_kW[currentTimeStepOfDay] * this.hp.getCOP();
+    	    	this.GC.f_updateFlexAssetFlows( this.building, heatIntoBuilding_kW / this.building.getCapacityHeat_kW(), timeVariables );
+    		}
+    	}
 
 		if (this.battery != null) {
 			this.GC.f_updateFlexAssetFlows( this.battery, virtual_battery.profile_kW[currentTimeStepOfDay] / this.battery.getCapacityElectric_kW(), timeVariables );
@@ -212,18 +216,56 @@ public class J_ISIE_EMS implements I_EnergyManagement {
     		endTimeLastTrip_h = endTime_h;
     	}
     	
+    	
+    	this.virtual_hps.clear();
+    	
     	// We estimate the heat demand of the thermal building and give the heatpump the entire day to fulfill this demand.
-    	double workHP_kWh = this.calculateDailyWorkHeatPump_kWh(timeVariables);    	
-    	double maxPowerHP_kW = this.hp.getInputCapacity_kW();
-	    this.virtual_hp = new J_VirtualFlexAsset( maxPowerHP_kW, this.POWERSTEPS_NR, this.timeParameters.getTimeStep_h(), length_h, null );
+    	// Morning HP
+    	// Afternoon HP
+    	// Evening HP
+    	double dayStartTime_h = this.heatingPreferences.getStartOfDayTime_h();
+    	double nightStartTime_h = this.heatingPreferences.getStartOfNightTime_h();
+    	
+    	double averageMorningTemperature_degC = calculateAverageAmbientTemperature_degC(0.0, dayStartTime_h, timeVariables);
+    	double averageAfternoonTemperature_degC = calculateAverageAmbientTemperature_degC(dayStartTime_h, nightStartTime_h, timeVariables);
+    	double averageEveningTemperature_degC = calculateAverageAmbientTemperature_degC(nightStartTime_h, 24.0, timeVariables);
+    	
+    	double setpointIndoorTemperatureDayTime_DegC = this.heatingPreferences.getDayTimeSetPoint_degC();
+    	double setpointIndoorTemperatureNightTime_DegC = this.heatingPreferences.getNightTimeSetPoint_degC();
+    	
+        double morningHPWork_kWh = calculateElectricityDemandForSpaceHeating_kWh( this.building.getCurrentTemperature(), setpointIndoorTemperatureNightTime_DegC, averageMorningTemperature_degC, dayStartTime_h );
+        double afternoonHPWork_kWh = calculateElectricityDemandForSpaceHeating_kWh( setpointIndoorTemperatureNightTime_DegC, setpointIndoorTemperatureDayTime_DegC, averageAfternoonTemperature_degC, nightStartTime_h - dayStartTime_h );
+        double eveningHPWork_kWh = calculateElectricityDemandForSpaceHeating_kWh( setpointIndoorTemperatureDayTime_DegC, setpointIndoorTemperatureNightTime_DegC, averageEveningTemperature_degC, 24.0 - nightStartTime_h );
 
+    	double maxPowerHP_kW = this.hp.getInputCapacity_kW();
+
+    	boolean[] allowedOperatingTimesMorning = getAllowedOperatingTimesArray(length_h, 0.0, dayStartTime_h);
+    	boolean[] allowedOperatingTimesAfternoon = getAllowedOperatingTimesArray(length_h, dayStartTime_h, nightStartTime_h);
+    	boolean[] allowedOperatingTimesEvening = getAllowedOperatingTimesArray(length_h, nightStartTime_h, 24.0);
+    	
+    	J_VirtualFlexAsset morningHP = new J_VirtualFlexAsset( maxPowerHP_kW, this.POWERSTEPS_NR, this.timeParameters.getTimeStep_h(), length_h, allowedOperatingTimesMorning );
+    	J_VirtualFlexAsset afternoonHP = new J_VirtualFlexAsset( maxPowerHP_kW, this.POWERSTEPS_NR, this.timeParameters.getTimeStep_h(), length_h, allowedOperatingTimesAfternoon );
+    	J_VirtualFlexAsset eveningHP = new J_VirtualFlexAsset( maxPowerHP_kW, this.POWERSTEPS_NR, this.timeParameters.getTimeStep_h(), length_h, allowedOperatingTimesEvening );
+
+    	this.virtual_hps.add(morningHP);
+    	this.virtual_hps.add(afternoonHP);
+    	this.virtual_hps.add(eveningHP);
+    	
 		double marketFeedbackHP_eurpMWhpkW = this.NATIONAL_PRICE_ELASTICITY_EURPMWHPGW * this.NATIONAL_HEATPUMP_POWER_GW / maxPowerHP_kW;
-		market = new J_Market(dailyPriceCurve_eurpMWh, marketFeedbackHP_eurpMWhpkW, this.SELFCONSUMPTIONSAVING_EURPMWH, this.congestionDeadzone_kW, this.CONGESTIONFACTOR_EURPMWHPKW);
-		
+	
 		// Create a schedule for the asset and update the total load & price curve with market feedback.
-		dailyLoad_kW = J_FlexAssetScheduler.scheduleWrapper(dailyLoad_kW, this.virtual_hp, workHP_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
+		market = new J_Market(dailyPriceCurve_eurpMWh, marketFeedbackHP_eurpMWhpkW, this.SELFCONSUMPTIONSAVING_EURPMWH, this.congestionDeadzone_kW, this.CONGESTIONFACTOR_EURPMWHPKW);		
+		dailyLoad_kW = J_FlexAssetScheduler.scheduleWrapper(dailyLoad_kW, morningHP, morningHPWork_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
 		dailyPriceCurve_eurpMWh = market.getDailyPriceCurve_eurpMWh();
 		
+		market = new J_Market(dailyPriceCurve_eurpMWh, marketFeedbackHP_eurpMWhpkW, this.SELFCONSUMPTIONSAVING_EURPMWH, this.congestionDeadzone_kW, this.CONGESTIONFACTOR_EURPMWHPKW);		
+		dailyLoad_kW = J_FlexAssetScheduler.scheduleWrapper(dailyLoad_kW, afternoonHP, afternoonHPWork_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
+		dailyPriceCurve_eurpMWh = market.getDailyPriceCurve_eurpMWh();
+		
+		market = new J_Market(dailyPriceCurve_eurpMWh, marketFeedbackHP_eurpMWhpkW, this.SELFCONSUMPTIONSAVING_EURPMWH, this.congestionDeadzone_kW, this.CONGESTIONFACTOR_EURPMWHPKW);		
+		dailyLoad_kW = J_FlexAssetScheduler.scheduleWrapper(dailyLoad_kW, eveningHP, eveningHPWork_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
+		dailyPriceCurve_eurpMWh = market.getDailyPriceCurve_eurpMWh();
+				
     	
     	// Battery
 		if (this.battery != null) {
@@ -254,6 +296,47 @@ public class J_ISIE_EMS implements I_EnergyManagement {
 		
     }
     
+    private boolean[] getAllowedOperatingTimesArray( double length_h, double startTime_h, double endTime_h) {
+    	int timeSteps = roundToInt(length_h / this.timeParameters.getTimeStep_h());
+    	boolean[] allowedOperatingTimes = new boolean[timeSteps];
+		Arrays.fill(allowedOperatingTimes, true);
+		for (int i = 0; i < timeSteps; i++) {
+			if (i*this.timeParameters.getTimeStep_h() < startTime_h) {
+				allowedOperatingTimes[i] = false;
+			}
+			if ( i*this.timeParameters.getTimeStep_h() >= endTime_h) {
+				allowedOperatingTimes[i] = false;
+			}
+		}
+    	return allowedOperatingTimes;		
+    }
+    
+    private double calculateAverageAmbientTemperature_degC(double startTime_h, double endTime_h, J_TimeVariables timeVariables) {
+    	
+    	double averageTemperature_degC = 0;
+    	for (double t = timeVariables.getT_h() + startTime_h; t < timeVariables.getT_h() + endTime_h; t += this.timeParameters.getTimeStep_h()) {
+    		averageTemperature_degC += this.pp_ambientTemperature_degC.getValue(t);
+    	}
+    	averageTemperature_degC /= ((endTime_h - startTime_h) / this.timeParameters.getTimeStep_h());
+    	
+    	return averageTemperature_degC;
+    }
+    
+    /*
+     * For a given current indoor temperature this method calculates the average heat demand for the next timespan_h hours to achieve an indoor setpoint temperature for some average outdoor temperature
+     */
+    private double calculateElectricityDemandForSpaceHeating_kWh( double currentIndoorTemperature_degC, double setpointIndoorTemperature_degC, double averageAmbientTemperature_degC, double timespan_h) {
+   	
+    	double lossFactor_WpK = this.building.getLossFactor_WpK();
+    	double lossScalingFactor_fr = this.building.getLossScalingFactor_fr();
+    	double averageCOP = this.hp.calculateCOP(this.hp.getOutputTemperature_degC(), averageAmbientTemperature_degC);
+
+		double heatLoss_kW = (lossFactor_WpK * (  setpointIndoorTemperature_degC - averageAmbientTemperature_degC ) / 1000) * lossScalingFactor_fr;
+		double heatDelta_kWh = this.building.getHeatCapacity_JpK() / 3.6e6 * ( setpointIndoorTemperature_degC - currentIndoorTemperature_degC);
+		   	
+    	return max(0, timespan_h * heatLoss_kW + heatDelta_kWh) / averageCOP;
+    }
+    
     /*
      * Helper method to calculate the daily (electric) demand of the heatpump. This is a very rough approximation and will need to be improved.
      * Currently this method ignores:
@@ -262,7 +345,28 @@ public class J_ISIE_EMS implements I_EnergyManagement {
      * 3. Different losses to the outside during the day,
      * 4. Solar irradiance.
      */
-    private double calculateDailyWorkHeatPump_kWh(J_TimeVariables timeVariables) {
+    //private double calculateDailyWorkHeatPump_kWh(J_TimeVariables timeVariables) {
+    	// First improvement. Split the heat demand into 3 parts. 
+    	// 00:00 - Start of Day
+    	// Start of Day - Start of Night
+    	// Start of Night - 24:00
+    	
+    	/*
+    	double dayStartTime_h = this.heatingPreferences.getStartOfDayTime_h();
+    	double nightStartTime_h = this.heatingPreferences.getStartOfNightTime_h();
+
+    	double averageMorningTemperature_degC = calculateAverageAmbientTemperature_degC(0.0, dayStartTime_h, timeVariables);
+    	double averageAfternoonTemperature_degC = calculateAverageAmbientTemperature_degC(dayStartTime_h, nightStartTime_h, timeVariables);
+    	double averageEveningTemperature_degC = calculateAverageAmbientTemperature_degC(nightStartTime_h, 24.0, timeVariables);
+    	*/
+    	
+    	// We will create 3 seperate virtual assets and we calculate/estimate the heat demand for each.
+    	// For the first asset we can look at the current temperature, for the second and third we assume the previous schedule achieves the setpoint.
+    	
+
+    	
+    	
+    	/*
     	// The forecasting time is hardcoded in the energyModel ! 
     	double averageAmbientTemperature_degC = this.pf_ambientTemperature_degC.getForecast();
     	double currentIndoorTemperature_degC = this.building.getCurrentTemperature();
@@ -275,7 +379,8 @@ public class J_ISIE_EMS implements I_EnergyManagement {
 		double heatDelta_kWh = this.building.getHeatCapacity_JpK() / 3.6e6 * ( setpointIndoorTemperature_degC - currentIndoorTemperature_degC);
 		
     	return max(0, 24.0 * heatLoss_kW + heatDelta_kWh) / this.HP_COP_atStartOfDay;
-    }
+    	*/
+    //}
 
 	//Specific child management activation
 	public void setV2GActive(boolean enableV2G) {

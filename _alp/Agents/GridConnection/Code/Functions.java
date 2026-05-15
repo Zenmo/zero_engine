@@ -87,6 +87,8 @@ c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, 
 f_operateFixedAssets(timeVariables);
 f_operateFlexAssets(timeVariables);
 
+f_fillDebugPlots();
+
 f_connectionMetering(timeVariables, isRapidRun);
 /*ALCODEEND*/}
 
@@ -1221,5 +1223,13 @@ if(this.p_energyManagement != null){
 else{
 	return false;
 }
+/*ALCODEEND*/}
+
+double f_fillDebugPlots()
+{/*ALCODESTART::1778827741895*/
+double power = roundToDecimal(c_heatingAssets.get(0).getLastFlows().get(OL_EnergyCarriers.ELECTRICITY), 2);
+HPPower_kW.add(max(0, power));
+double temperature = roundToDecimal(p_BuildingThermalAsset.getCurrentTemperature(), 2);
+houseTemperature_degC.add(max(0, temperature));
 /*ALCODEEND*/}
 
