@@ -83,6 +83,7 @@ public class J_EAStorage extends J_EAFlex {
 		stateOfCharge_fr += deltaEnergy_kWh / storageCapacity_kWh;
 	}
 	
+	//Setters
 	public void setRoundTripEfficiency_r(double roundTripEfficiency_r) {
 		if (roundTripEfficiency_r < 0 || roundTripEfficiency_r > 1) {
 			traceln("Infeasible eta_r! Should be larger than 0 and no larger than 1! Setting eta_r=1. Input value is: %s", roundTripEfficiency_r);
@@ -94,6 +95,14 @@ public class J_EAStorage extends J_EAFlex {
 		}		
 	}
 	
+	public void setStorageCapacity_kWh(double storageCapacity_kWh) {
+		this.storageCapacity_kWh = storageCapacity_kWh;
+	}
+	public void setChargeCapacity_kW(double chargeCapacity_kW) {
+		this.chargeCapacity_kW = chargeCapacity_kW;
+	}
+	
+	//Getters
 	public double getCurrentStateOfCharge_fr() {
     	return this.stateOfCharge_fr;
 	}
