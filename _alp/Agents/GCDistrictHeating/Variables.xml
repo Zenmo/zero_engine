@@ -211,7 +211,7 @@
 	</Variable>
 	<Variable Class="PlainVariable">
 		<Id>1775217211705</Id>
-		<Name><![CDATA[p_bufferLossPerHour_fr]]></Name>
+		<Name><![CDATA[p_overallSystemHeatLoss_fr]]></Name>
 		<X>1310</X>
 		<Y>390</Y>
 		<Label>
@@ -380,6 +380,28 @@
 		<Id>1777718697321</Id>
 		<Name><![CDATA[v_burnerOperatingHours_h]]></Name>
 		<X>1640</X>
+		<Y>470</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Properties SaveInSnapshot="true"
+              Constant="false"
+              AccessType="public"
+              StaticVariable="false">
+			<Type><![CDATA[double]]></Type>
+			<InitialValue Class="CodeValue">
+				<Code><![CDATA[0]]></Code>
+			</InitialValue>
+		</Properties>
+	</Variable>
+	<Variable Class="PlainVariable">
+		<Id>1778827626370</Id>
+		<Name><![CDATA[v_currentIronBurnerOutput_kW]]></Name>
+		<X>1310</X>
 		<Y>470</Y>
 		<Label>
 			<X>10</X>

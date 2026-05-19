@@ -65,7 +65,7 @@ public class J_HeatingManagementDistrictHeatingIronBurner implements I_HeatingMa
     	double deliveredHeat_kWh = ((GCDistrictHeating)gc).f_deliverHeatFromBuffer(requestedHeat_kWh);
     	double unmetHeat_kWh = requestedHeat_kWh - deliveredHeat_kWh;
     	
-    	((GCDistrictHeating)gc).f_applyBufferLosses(dt_h);
+    	//((GCDistrictHeating)gc).f_applyBufferLosses(dt_h);
     	((GCDistrictHeating)gc).f_controlIronBurner();
     	((GCDistrictHeating)gc).f_chargeBufferFromIronBurner(heatingAsset, dt_h, timeVariables);
     	

@@ -6,6 +6,8 @@ public class J_EAConversionIronBurner extends zero_engine.J_EAConversion impleme
 	protected double outputTemperature_degC;
 	protected double outputHeatCapacity_kW;
 	protected double outputElectricCapacity_kW;
+	public double v_requestedHeatOutput_kW = 0;
+	protected double minimumOutputHeatCapacity_kW = 200;
 	protected List<OL_EnergyCarriers> energyCarriersProduced = new ArrayList<>();
 
 	/**

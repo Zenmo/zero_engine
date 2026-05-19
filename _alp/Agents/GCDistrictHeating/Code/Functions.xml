@@ -174,7 +174,7 @@
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[lossPerHour_fr]]></Name>
+			<Name><![CDATA[overallSystemHeatLoss_fr]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
@@ -204,6 +204,7 @@
 		<ReturnType>double</ReturnType>
 		<Id>1775216119370</Id>
 		<Name><![CDATA[f_applyBufferLosses]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1310</X>
 		<Y>230</Y>
 		<Label>
@@ -278,7 +279,15 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
+			<Name><![CDATA[heatingAsset]]></Name>
+			<Type><![CDATA[J_EAConversionIronBurner]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[dt_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[targetHeatProduction_kW]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>

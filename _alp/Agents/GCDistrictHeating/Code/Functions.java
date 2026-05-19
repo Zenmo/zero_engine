@@ -434,20 +434,26 @@ else{
 p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
 /*ALCODEEND*/}
 
-double f_initializeHeatBuffer(double capacity_kWh,double initialHeat_kWh,double min_kWh,double max_kWh,double lossPerHour_fr)
+double f_initializeHeatBuffer(double capacity_kWh,double initialHeat_kWh,double min_kWh,double max_kWh,double overallSystemHeatLoss_fr)
 {/*ALCODESTART::1775215818027*/
 p_bufferCapacity_kWh = capacity_kWh;
 v_bufferHeat_kWh = initialHeat_kWh;
 p_bufferMin_kWh = min_kWh;
 p_bufferMax_kWh = max_kWh;
-p_bufferLossPerHour_fr = lossPerHour_fr;
+p_overallSystemHeatLoss_fr = overallSystemHeatLoss_fr;
 /*ALCODEEND*/}
 
 double f_deliverHeatFromBuffer(double requestedHeat_kWh)
 {/*ALCODESTART::1775216030584*/
-double deliveredHeat_kWh = min(requestedHeat_kWh, v_bufferHeat_kWh);
-v_bufferHeat_kWh -= deliveredHeat_kWh;
-return deliveredHeat_kWh;
+double heatNeededFromBuffer_kWh = requestedHeat_kWh / (1 - p_overallSystemHeatLoss_fr);
+
+double heatExtractedFromBuffer_kWh = min(heatNeededFromBuffer_kWh, v_bufferHeat_kWh);
+
+v_bufferHeat_kWh -= heatExtractedFromBuffer_kWh;
+
+double usefulDeliveredHeat_kWh = heatExtractedFromBuffer_kWh * (1- p_overallSystemHeatLoss_fr);
+
+return usefulDeliveredHeat_kWh;
 /*ALCODEEND*/}
 
 double f_applyBufferLosses(double dt_h)
@@ -470,55 +476,60 @@ if (v_bufferHeat_kWh <= p_bufferMin_kWh){
 
 double f_chargeBufferFromIronBurner(J_EAConversionIronBurner heatingAsset,double dt_h,J_TimeVariables timeVariables)
 {/*ALCODESTART::1775216344313*/
-double chargePower_kW = v_ironBurnerOn ? heatingAsset.getOutputHeatCapacity_kW():0;
+double chargePower_kW = v_ironBurnerOn ? v_currentIronBurnerOutput_kW : 0;
+
 double chargeEnergy_kWh = chargePower_kW * dt_h;
+
 chargeEnergy_kWh = min(chargeEnergy_kWh, p_bufferCapacity_kWh - v_bufferHeat_kWh);
 
 v_bufferHeat_kWh += chargeEnergy_kWh;
 
-double load_fr = 0;
+double load_fr = 0.0;
+
 if (heatingAsset.getOutputHeatCapacity_kW() > 0){
-	load_fr = chargePower_kW/ heatingAsset.getOutputHeatCapacity_kW();
+	load_fr = v_currentIronBurnerOutput_kW/ heatingAsset.getOutputHeatCapacity_kW();
 	}
 	
-	f_updateFlexAssetFlows(heatingAsset, load_fr, timeVariables);
+f_updateFlexAssetFlows(heatingAsset, load_fr, timeVariables);
+	
+traceln(
+    "Buffer charging | power="
+    + chargePower_kW
+    + " kW | energy="
+    + chargeEnergy_kWh
+    + " kWh | buffer="
+    + v_bufferHeat_kWh
+    + " kWh"
+);
 /*ALCODEEND*/}
 
-double f_controlIronBurnerReal(double dt_h)
+double f_controlIronBurnerReal(J_EAConversionIronBurner heatingAsset,double dt_h,double targetHeatProduction_kW)
 {/*ALCODESTART::1777718720466*/
-// Track runtime / offtime
-    if (v_ironBurnerOn){
-        v_currentRunTime_h += dt_h;
-        v_currentOffTime_h = 0;
-        v_burnerOperatingHours_h += dt_h;
-    } else {
-        v_currentOffTime_h += dt_h;
-        v_currentRunTime_h = 0;
-    }
+double maxPower_kW = heatingAsset.getOutputHeatCapacity_kW();
+double minPower_kW = heatingAsset.minimumOutputHeatCapacity_kW;
 
-// --- CONTROL LOGIC ---
+double clampedSetpoint_kW = 0.0;
 
-    // Turn OFF only if:
-    // - buffer is very full
-    // - AND minimum runtime satisfied
-    if (v_ironBurnerOn
-        && v_bufferHeat_kWh >= p_bufferMax_kWh
-        && v_currentRunTime_h >= p_minRunTime_h) {
+if(targetHeatProduction_kW > 0){
+	clampedSetpoint_kW = max(minPower_kW, min(maxPower_kW, targetHeatProduction_kW));
+	
+	v_ironBurnerOn = true;
+	} else {
+		clampedSetpoint_kW = 0.0;
+		v_ironBurnerOn = false;
+	}
+	
+v_currentIronBurnerOutput_kW = v_ironBurnerOn ? clampedSetpoint_kW : 0.0;
 
-        v_ironBurnerOn = false;
-        v_currentOffTime_h = 0;
-    }
+heatingAsset.v_requestedHeatOutput_kW = v_currentIronBurnerOutput_kW;
 
-// Turn ON only if:
+traceln(
+    "Iron burner control"
+    + " | requested=" + targetHeatProduction_kW + " kW"
+    + " | clamped=" + clampedSetpoint_kW + " kW"
+    + " | actualOutput=" + v_currentIronBurnerOutput_kW + " kW"
+    + " | burnerOn=" + v_ironBurnerOn
+);
 
-    // - buffer sufficiently empty
-    // - AND minimum downtime satisfied
-    else if (!v_ironBurnerOn
-        && v_bufferHeat_kWh <= p_bufferRestart_kWh
-        && v_currentOffTime_h >= p_minOffTime_h) {
-
-        v_ironBurnerOn = true;
-        v_currentRunTime_h = 0;
-    }	
 /*ALCODEEND*/}
 

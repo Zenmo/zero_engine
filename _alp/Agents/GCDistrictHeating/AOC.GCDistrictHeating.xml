@@ -175,6 +175,38 @@
 	<ConnectionsId>1663773810340</ConnectionsId>
 	<Variables xmlns:al="http://anylogic.com"/>
 	<Functions xmlns:al="http://anylogic.com"/>
+	<AnalysisData>
+		<DataSet>
+			<Id>1779094066628</Id>
+			<Name><![CDATA[dataset_bufferSOC]]></Name>
+			<X>1280</X>
+			<Y>1280</Y>
+			<Label>
+				<X>15</X>
+				<Y>0</Y>
+			</Label>
+			<PublicFlag>false</PublicFlag>
+			<PresentationFlag>true</PresentationFlag>
+			<ShowLabel>true</ShowLabel>
+			<AutoUpdate>false</AutoUpdate>
+			<RecurrenceProperties>
+				<Id>1779094066626</Id>
+				<OccurrenceAtTime>true</OccurrenceAtTime>
+				<OccurrenceDate>1779177600000</OccurrenceDate>
+				<OccurrenceTime Class="CodeUnitValue">
+					<Code><![CDATA[0]]></Code>
+					<Unit Class="TimeUnits">HOUR</Unit>
+				</OccurrenceTime>
+				<RecurrenceCode Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="TimeUnits">HOUR</Unit>
+				</RecurrenceCode>
+			</RecurrenceProperties>
+			<FreezeXAxis>true</FreezeXAxis>
+			<VerticalAxisExpression>v_bufferHeat_kWh</VerticalAxisExpression>
+			<SamplesToKeep>35040</SamplesToKeep>
+		</DataSet>
+	</AnalysisData>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1663773810340</Id>

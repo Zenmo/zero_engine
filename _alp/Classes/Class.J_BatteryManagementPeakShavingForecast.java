@@ -31,7 +31,6 @@ public class J_BatteryManagementPeakShavingForecast implements I_BatteryManageme
 		
 	}
 	
-    
 	public J_BatteryManagementPeakShavingForecast( GridConnection parentGC, J_TimeParameters timeParameters ) {
     	this.parentGC = parentGC;
     	this.timeParameters = timeParameters;

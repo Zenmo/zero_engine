@@ -148,10 +148,10 @@
 		</Labels>
 		<ShowLegend>true</ShowLegend>
 		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
-		<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+		<TimeWindowUnits>WEEK</TimeWindowUnits>
 		<VerScaleFromExpression>0</VerScaleFromExpression>
-		<VerScaleToExpression>200000</VerScaleToExpression>
-		<VerScaleType>FIXED</VerScaleType>
+		<VerScaleToExpression>2000</VerScaleToExpression>
+		<VerScaleType>AUTO</VerScaleType>
 		<DrawLine>true</DrawLine>
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
@@ -165,7 +165,7 @@
 			<LineWidth>1.0</LineWidth>
 		</DatasetExpression>
 		<SamplesToKeep>1000</SamplesToKeep>
-		<TimeWindowExpression>48</TimeWindowExpression>
+		<TimeWindowExpression>1</TimeWindowExpression>
 		<FillAreaUnderLine>false</FillAreaUnderLine>
 		<LabelFormat>HH_mm</LabelFormat>
 	</TimePlot>

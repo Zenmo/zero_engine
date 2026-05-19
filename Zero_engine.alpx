@@ -2229,7 +2229,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			</JavaClass>
 			<JavaClass>
 				<Id>1777718423463</Id>
-				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurnerReal]]></Name>
+				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurner6Hour]]></Name>
 				<Folder>1772100328968</Folder>
 			</JavaClass>
 		</JavaClasses>
