@@ -20,7 +20,7 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
     public Map<Class<? extends I_AssetManagement>, I_AssetManagement> getActiveExternalAssetManagements(); //Submanagements that actively support the EMS code
 
 	//Manage EMS (Called by GC)
-	public void manageFlexAssets(J_TimeVariables timeVariables);
+	public void manageFlexAssets(J_TimeVariables timeVariables, boolean onGridNodeLevel);
 
 	
 	//Set sub managements

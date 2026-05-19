@@ -1,8 +1,8 @@
-double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables)
+double f_operateFlexAssets_overwrite(J_TimeVariables timeVariables,boolean onGridNodeLevel)
 {/*ALCODESTART::1664963959146*/
 f_manageCookingTracker(timeVariables);
 //f_manageAirco(timeVariables);
-super.f_operateFlexAssets(timeVariables);
+super.f_operateFlexAssets(timeVariables, onGridNodeLevel);
 /*ALCODEEND*/}
 
 double f_manageCookingTracker(J_TimeVariables timeVariables)

@@ -26,7 +26,7 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
 	private J_EAConversion heatingAsset;
 	private J_HeatingPreferences heatingPreferences = null; //Not needed for the GCDistrictHeating.
 	
-	private double previousHeatFeedin_kW = 0;
+	// private double previousHeatFeedin_kW = 0;
 	
 	
 	//Stored
@@ -52,20 +52,11 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
-    	// Calculate current timestep demand by summing flows from all lower-level connections
-    	 
-    	double currentDemand_kW = 0;
  
-    	for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
-     	    if (childGC != gc) {
-     	        currentDemand_kW += childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-     	    }
-     	}
- 
-    	double heatTransferToNetwork_kW = max(0, currentDemand_kW);
+    	double heatTransferToNetwork_kW = max(0, gc.p_parentNodeHeat.v_currentLoad_kW);
     	gc.f_updateFlexAssetFlows(heatingAsset, heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
 
-    	previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	//previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
     }
     
     public void initializeAssets() {
@@ -111,6 +102,11 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
+    @Override
+    public boolean operatesOnGridNodeLevel() {
+    	return true;
+    }
+    
     
     //Get parentagent
     public Agent getParentAgent() {
@@ -120,11 +116,8 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     
     //Store and reset states
 	public void storeStatesAndReset() {
-		this.storedPreviousHeatFeedin_kW = this.previousHeatFeedin_kW;
-		this.previousHeatFeedin_kW = 0;
 	}
 	public void restoreStates() {
-		this.previousHeatFeedin_kW = this.storedPreviousHeatFeedin_kW;
 	}
 	
 	@Override

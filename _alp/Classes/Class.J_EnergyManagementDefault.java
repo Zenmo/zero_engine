@@ -47,24 +47,30 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     }
     
     
-    public void manageFlexAssets(J_TimeVariables timeVariables) {
+    public void manageFlexAssets(J_TimeVariables timeVariables, boolean onGridNodeLevel) {
     	if ( !isChecked ) {
     		this.checkConfiguration(GC.c_flexAssets);
     	}
     	
     	//1. Call Heating management
     	if(this.getExternalAssetManagement(I_HeatingManagement.class) != null) {
-    		this.getExternalAssetManagement(I_HeatingManagement.class).manageHeating(timeVariables);
+    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    			this.getExternalAssetManagement(I_HeatingManagement.class).manageHeating(timeVariables);
+    		}
     	}
     	
     	//2. Call Charging management
     	if(this.getExternalAssetManagement(I_ChargingManagement.class) != null) {
-    		this.getExternalAssetManagement(I_ChargingManagement.class).manageCharging(GC.f_getChargePoint(), timeVariables);
+    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    			this.getExternalAssetManagement(I_ChargingManagement.class).manageCharging(GC.f_getChargePoint(), timeVariables);
+    		}
     	}
     	
     	//3. Call Battery management
     	if(this.getExternalAssetManagement(I_BatteryManagement.class) != null) {
-    		this.getExternalAssetManagement(I_BatteryManagement.class).manageBattery(timeVariables);
+    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    			this.getExternalAssetManagement(I_BatteryManagement.class).manageBattery(timeVariables);
+    		}
     	}
     	
     	//4. Call BackupGenerator management
@@ -74,7 +80,9 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     	
     	//5. Call curtailment management
     	if(this.getExternalAssetManagement(I_CurtailManagement.class) != null) {
-    		this.getExternalAssetManagement(I_CurtailManagement.class).manageCurtailment(timeVariables);
+    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    			this.getExternalAssetManagement(I_CurtailManagement.class).manageCurtailment(timeVariables);
+    		}
     	}
     }
     
