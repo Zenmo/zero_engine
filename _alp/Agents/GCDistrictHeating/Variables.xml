@@ -114,8 +114,8 @@
 		<Id>1678448870527</Id>
 		<Name><![CDATA[v_chpElectricityPrice]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1120</X>
-		<Y>470</Y>
+		<X>1310</X>
+		<Y>510</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -477,7 +477,7 @@
 		<Id>1688462266916</Id>
 		<Name><![CDATA[c_electricityPriceList]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1120</X>
+		<X>1310</X>
 		<Y>490</Y>
 		<Label>
 			<X>10</X>

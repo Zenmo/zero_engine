@@ -59,37 +59,6 @@ if(p_energyManagement != null){
 }
 /*ALCODEEND*/}
 
-double f_calculateEnergyBalance(J_TimeVariables timeVariables,boolean isRapidRun)
-{/*ALCODESTART::1668528273163*/
-v_previousPowerElectricity_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.ELECTRICITY);
-v_previousPowerHeat_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-
-fm_currentProductionFlows_kW.clear();
-fm_currentConsumptionFlows_kW.clear();
-fm_currentBalanceFlows_kW.clear();
-fm_currentAssetFlows_kW.clear();
-
-fm_heatFromEnergyCarrier_kW.clear();
-fm_consumptionForHeating_kW.clear();
-
-v_currentPrimaryEnergyProduction_kW = 0;
-v_currentFinalEnergyConsumption_kW = 0;
-
-v_currentEnergyCurtailed_kW = 0;
-v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
-v_batteryStoredEnergy_kWh = 0;
-
-v_liveConnectionMetaData.updateGridCapacitySharingManager(timeVariables);
-
-c_tripTrackers.forEach(t -> t.manageActivities(timeVariables, p_chargePoint));
-c_chargingSessions.forEach(cs -> cs.manageCurrentChargingSession(timeVariables, p_chargePoint, this));
-
-f_operateFixedAssets(timeVariables);
-f_operateFlexAssets(timeVariables);
-
-f_connectionMetering(timeVariables, isRapidRun);
-/*ALCODEEND*/}
-
 double f_operateFixedAssets(J_TimeVariables timeVariables)
 {/*ALCODESTART::1668528300576*/
 for (J_EAFixed j_ea : c_fixedAssets) {

@@ -67,31 +67,6 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1668528273163</Id>
-		<Name><![CDATA[f_calculateEnergyBalance]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>1280</X>
-		<Y>330</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[isRapidRun]]></Name>
-			<Type><![CDATA[boolean]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1668528300576</Id>
 		<Name><![CDATA[f_operateFixedAssets]]></Name>
 		<X>960</X>
