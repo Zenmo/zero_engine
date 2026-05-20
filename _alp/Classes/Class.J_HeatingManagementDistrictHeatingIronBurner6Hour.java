@@ -294,6 +294,8 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     
     public void notInitialized() {
     	this.isInitialized = false;
+    	this.currentIronBurnerSetpoint_kW = 0;
+        this.nextSetpointUpdateTime_h = 0;
     }
     
     public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
@@ -319,13 +321,15 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     
     
     //Store and reset states
-	public void storeStatesAndReset() {
+    public void storeStatesAndReset() {
+        this.currentIronBurnerSetpoint_kW = 0;
+        this.nextSetpointUpdateTime_h = 0;
+    }
 
-	}
-	
-	public void restoreStates() {
-
-	}
+    public void restoreStates() {
+        this.currentIronBurnerSetpoint_kW = 0;
+        this.nextSetpointUpdateTime_h = 0;
+    }
 	
 	@Override
 	public String toString() {
