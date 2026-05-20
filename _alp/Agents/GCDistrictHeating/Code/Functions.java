@@ -533,3 +533,23 @@ traceln(
 
 /*ALCODEEND*/}
 
+double getBufferSOC_fr()
+{/*ALCODESTART::1779282503421*/
+J_EAStorageHeat heatStorage = (J_EAStorageHeat) findFirst(
+    c_storageAssets,
+    j_ea -> j_ea instanceof J_EAStorageHeat
+);
+
+if (heatStorage == null) {
+    return 0;
+}
+
+double capacity_kWh = heatStorage.getStorageCapacity_kWh();
+
+if (capacity_kWh <= 0) {
+    return 0;
+}
+
+return heatStorage.getRemainingHeatStorageHeat_kWh() / capacity_kWh;
+/*ALCODEEND*/}
+
