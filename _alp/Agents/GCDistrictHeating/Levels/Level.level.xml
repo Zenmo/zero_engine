@@ -148,7 +148,7 @@
 		</Labels>
 		<ShowLegend>true</ShowLegend>
 		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
-		<TimeWindowUnits>WEEK</TimeWindowUnits>
+		<TimeWindowUnits>YEAR</TimeWindowUnits>
 		<VerScaleFromExpression>0</VerScaleFromExpression>
 		<VerScaleToExpression>2000</VerScaleToExpression>
 		<VerScaleType>AUTO</VerScaleType>
@@ -159,12 +159,12 @@
 			<Id>1678452019904</Id>
 			<Expression>my_dataset9</Expression>
 			<Color>-65536</Color>
-			<Expression2>v_bufferHeat_kWh</Expression2>
+			<Expression2>getBufferSOC_fr()</Expression2>
 			<Expression2Flag>true</Expression2Flag>
 			<PointStyle>NONE</PointStyle>
 			<LineWidth>1.0</LineWidth>
 		</DatasetExpression>
-		<SamplesToKeep>1000</SamplesToKeep>
+		<SamplesToKeep>35000</SamplesToKeep>
 		<TimeWindowExpression>1</TimeWindowExpression>
 		<FillAreaUnderLine>false</FillAreaUnderLine>
 		<LabelFormat>HH_mm</LabelFormat>

@@ -2232,6 +2232,16 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurner6Hour]]></Name>
 				<Folder>1772100328968</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1779200054340</Id>
+				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurnerMonth]]></Name>
+				<Folder>1772100328968</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1779201909358</Id>
+				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurnerWeek]]></Name>
+				<Folder>1772100328968</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
