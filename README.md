@@ -3,7 +3,7 @@
 
 This repository contains the 'engine' part of the Zenmo Zero models; the calculation model of the energy system simulation. 
 
-Documentation is hosted at [zerodocs.zenmo.com](https://zerodocs.zenmo.com)
+Documentation is hosted at [docs.lux.energy](https://docs.lux.energy)
 
 Optionally works together with:
 
