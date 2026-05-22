@@ -99,10 +99,15 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     	// 3. Determine heat demand forecast of upcoming 6 hours every 6 hours + Determine iron burner setpoint schedule
     	int index = roundToInt(timeVariables.getTimeOfDay_h()/timeParameters.getTimeStep_h());
     	int indexForecastUpdateRate = roundToInt(this.forecastUpdateTimeRate_h/timeParameters.getTimeStep_h());
-    	if(index % indexForecastUpdateRate == 0){ // every t_h % 6 == 0 => index = t_h / 0.25 => index % 24 == 0, update forecast
+    	if(roundToInt(index % indexForecastUpdateRate) == 0){ // every t_h % 6 == 0 => index = t_h / 0.25 => index % 24 == 0, update forecast
 			this.heatDemandForecast_kW = this.getForecastHeatDemand_kW(timeVariables);
 			this.ironBurnerSetpointSchedule_kW = this.calculateIronBurnerSchedule_kW(timeVariables);
 		}
+    	traceln(
+            "heatDemandForecast_kW = "
+            + heatDemandForecast_kW[roundToInt(index % indexForecastUpdateRate)]
+            + " | t=" + timeVariables.getT_h()
+        );
 		
 		// 4. Send flat schedule setpoint to iron burner
 		this.currentIronBurnerSetpoint_kW = ironBurnerSetpointSchedule_kW[roundToInt(index % indexForecastUpdateRate)];
@@ -136,11 +141,9 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     
     private double getCurrentHeatDemand_kW() {
         double currentDemand_kW = 0;
-        for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
-            if (childGC != gc) {
-                double heatFlow_kW = childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-                currentDemand_kW += max(0, heatFlow_kW);
-            }
+        for(GridNode GN : gc.p_parentNodeHeat.f_getConnectedGridNodes()) {
+        	currentDemand_kW += max(0, GN.v_currentLoad_kW);
+        	traceln("GN: " + GN.v_currentLoad_kW);
         }
         return currentDemand_kW;
     }
@@ -205,67 +208,85 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
         double timeAtStartForecast_h = timeVariables.getT_h();
         int indexAtStartForecast = roundToInt(timeAtStartForecast_h / timeParameters.getTimeStep_h());
         
-        // Ensure parent node heat is connected
-        if (gc.p_parentNodeHeat == null) {
-            return totalHeatDemandForecast_kW;
-        }
-        
         // Loop through all lower-level connected grid connections on the heating network
-        for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
-            if (childGC == gc) {
-                continue; // Skip the district heating source itself
-            }
-            
-            // 1. Identify the child's heating asset that consumes HEAT from the district network
-            J_EAConversion childHeatingAsset = null;
-            for (J_EAConversion asset : childGC.c_heatingAssets) {
-                if (asset.activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) {
-                    childHeatingAsset = asset;
-                    break;
-                }
-            }
-            
-            // Fallback: search childGC.c_flexAssets in case it's stored there
-            if (childHeatingAsset == null) {
-                for (J_EAFlex asset : childGC.c_flexAssets) {
-                    if (asset instanceof J_EAConversion && asset.activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) {
-                        childHeatingAsset = (J_EAConversion) asset;
-                        break;
-                    }
-                }
-            }
-            
-            // If the child connection doesn't have a district heating asset, it does not draw heat from the network
-            if (childHeatingAsset == null) {
-                continue;
-            }
-            
-            // Get the efficiency of the child connection's heat delivery asset
-            double efficiency = childHeatingAsset.getEta_r();
-            
-            // 2. Fetch all heat demand profiles of this child connection
-            List<J_EAProfile> heatProfiles = new ArrayList<>();
-            for (J_EAProfile profile : childGC.c_profileAssets) {
-                if (profile.energyCarrier == OL_EnergyCarriers.HEAT) {
-                    heatProfiles.add(profile);
-                }
-            }
-            
-            // 3. Forecast and sum the heat demands over the 6-hour horizon
-            for (J_EAProfile profile : heatProfiles) {
-                double scalar = profile.getProfileScaling_fr() * profile.getProfileUnitScaler_fr();
-                if (profile instanceof J_EAProduction) {
-                    scalar *= -1; // If it's a production profile, scale negatively
-                }
+        for (GridNode GN : gc.p_parentNodeHeat.f_getConnectedGridNodes()) {
+	        for (GridConnection childGC : GN.f_getAllLowerLVLConnectedGridConnections()) {
+	            if (childGC == gc) {
+	                continue; // Skip the district heating source itself
+	            }
+	            
+	            double currentNetworkDraw_kW = Math.max(0, childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+	            
+	            // 1. Identify the child's heating asset that consumes HEAT from the district network
+	            J_EAConversion childHeatingAsset = null;
+	            for (J_EAConversion asset : childGC.c_heatingAssets) {
+	                if (asset.activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) {
+	                    childHeatingAsset = asset;
+	                    break;
+	                }
+	            }
+	            
+	            // Fallback: search childGC.c_flexAssets in case it's stored there
+	            if (childHeatingAsset == null) {
+	                for (J_EAFlex asset : childGC.c_flexAssets) {
+	                    if (asset instanceof J_EAConversion && asset.activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) {
+	                        childHeatingAsset = (J_EAConversion) asset;
+	                        break;
+	                    }
+	                }
+	            }
+	            
+	            // If the child connection doesn't have a specific conversion asset but still draws heat, assume efficiency 1.0
+	            double efficiency = (childHeatingAsset != null) ? childHeatingAsset.getEta_r() : 1.0;
+	            
+	            // 2. Fetch all heat demand profiles of this child connection
+	            List<J_EAProfile> heatProfiles = new ArrayList<>();
+	            for (J_EAProfile profile : childGC.c_profileAssets) {
+	                if (profile.energyCarrier == OL_EnergyCarriers.HEAT) {
+	                    heatProfiles.add(profile);
+	                }
+	            }
+	            
+	            // 3. Determine the *current* network draw caused strictly by these static profiles
+	            double currentProfileNetworkDraw_kW = 0;
+	            for (J_EAProfile profile : heatProfiles) {
+	                double scalar = profile.getProfileScaling_fr() * profile.getProfileUnitScaler_fr();
+	                if (profile instanceof J_EAProduction) {
+	                    scalar *= -1; // If it's a production profile, scale negatively
+	                }
+	                // Evaluate profile exactly at current simulation time
+	                double t = timeVariables.getT_h();
+	                double profileValue = profile.profilePointer.getValue(t);
+	                currentProfileNetworkDraw_kW += (profileValue * scalar) / efficiency;
+	            }
+                double unprofiledBaseNetworkDraw_kW = Math.max(0, currentNetworkDraw_kW - currentProfileNetworkDraw_kW);
+	            
+                // Create a pseudo heat loss factor for the building based on the CURRENT ambient temperature
+                // Q = max(0, U * (20 - T_amb))  =>  U = Q / max(0.1, 20 - T_amb)
+                double currentAmbTemp_degC = gc.energyModel.pp_ambientTemperature_degC.getValue(timeVariables.getT_h());
+                double pseudoHeatLossFactor = unprofiledBaseNetworkDraw_kW / Math.max(0.1, 20.0 - currentAmbTemp_degC);
                 
-                for (int i = 0; i < sizeForecastHorizon; i++) {
-                    double t = (i + indexAtStartForecast) * timeParameters.getTimeStep_h();
-                    double profileValue = profile.profilePointer.getValue(t);
-                    
-                    // Add efficiency-corrected heat demand to the forecast array
-                    totalHeatDemandForecast_kW[i] += (profileValue * scalar) / efficiency;
-                }
-            }
+	            // 5. Forecast and sum the heat demands over the 6-hour horizon
+	            for (int i = 0; i < sizeForecastHorizon; i++) {
+	            	double dynamicProfileDraw_kW = 0;
+	            	double t = (i + indexAtStartForecast) * timeParameters.getTimeStep_h();
+	                for (J_EAProfile profile : heatProfiles) {
+	                    double scalar = profile.getProfileScaling_fr() * profile.getProfileUnitScaler_fr();
+	                    if (profile instanceof J_EAProduction) {
+	                        scalar *= -1; 
+	                    }
+	                    double profileValue = profile.profilePointer.getValue(t);
+	                    dynamicProfileDraw_kW += (profileValue * scalar) / efficiency;
+	                }
+	                
+	             // Predict future dynamic space heating using the future ambient temperature
+                double futureAmbTemp_degC = gc.energyModel.pp_ambientTemperature_degC.getValue(t);
+                double futureDynamicSpaceHeating_kW = pseudoHeatLossFactor * Math.max(0, 20.0 - futureAmbTemp_degC);
+	                
+	            // The total forecasted draw is the dynamically evaluated profiles plus the constant unprofiled baseline
+	            totalHeatDemandForecast_kW[i] += Math.max(0, dynamicProfileDraw_kW + futureDynamicSpaceHeating_kW);
+	        	}
+	        }
         }
         return totalHeatDemandForecast_kW;
     }
@@ -338,6 +359,11 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     
     public double getBufferSOC_fr() {
         return getBufferEnergy_kWh() / getBufferCapacity_kWh();
+    }
+    
+    @Override
+    public boolean operatesOnGridNodeLevel() {
+        return true;
     }
     
     //Get parentagent

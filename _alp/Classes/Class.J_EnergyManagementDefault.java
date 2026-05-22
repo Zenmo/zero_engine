@@ -61,26 +61,28 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     	
     	//2. Call Charging management
     	if(this.getExternalAssetManagement(I_ChargingManagement.class) != null) {
-    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    		if(this.getExternalAssetManagement(I_ChargingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
     			this.getExternalAssetManagement(I_ChargingManagement.class).manageCharging(GC.f_getChargePoint(), timeVariables);
     		}
     	}
     	
     	//3. Call Battery management
     	if(this.getExternalAssetManagement(I_BatteryManagement.class) != null) {
-    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    		if(this.getExternalAssetManagement(I_BatteryManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
     			this.getExternalAssetManagement(I_BatteryManagement.class).manageBattery(timeVariables);
     		}
     	}
     	
     	//4. Call BackupGenerator management
     	if(this.getExternalAssetManagement(I_BackupGeneratorManagement.class) != null) {
-    		this.getExternalAssetManagement(I_BackupGeneratorManagement.class).manageBackupGenerator(timeVariables);
+    		if(this.getExternalAssetManagement(I_BackupGeneratorManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    			this.getExternalAssetManagement(I_BackupGeneratorManagement.class).manageBackupGenerator(timeVariables);
+    		}
     	}
     	
     	//5. Call curtailment management
     	if(this.getExternalAssetManagement(I_CurtailManagement.class) != null) {
-    		if(this.getExternalAssetManagement(I_HeatingManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
+    		if(this.getExternalAssetManagement(I_CurtailManagement.class).operatesOnGridNodeLevel() == onGridNodeLevel) {
     			this.getExternalAssetManagement(I_CurtailManagement.class).manageCurtailment(timeVariables);
     		}
     	}
