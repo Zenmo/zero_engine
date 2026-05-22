@@ -59,26 +59,31 @@ if ( ConnectingChildNode instanceof EnergyCoop) {
 double f_sumLoads()
 {/*ALCODESTART::1660122738707*/
 v_currentLoad_kW = 0;
+v_currentLoss_kW = 0;
 
 // determine the net energy flows from all subconnections by nodetype
+
 for( GridNode GN : c_connectedGridNodes ) {
 	v_currentLoad_kW += GN.v_currentLoad_kW;
+	if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
+		double heatLoss_kW = 0;
+		//GridNode parentGN = findFirst(energyModel.pop_gridNodes, gn -> gn.p_gridNodeID.equals(GN.p_parentNodeID));
+		/*if (parentGN != null && parentGN.p_parentNodeID != null){
+			heatLoss_kW = GN.f_calculateHeatNodeLoss_kW(p_latitude, p_longitude, parentGN.p_latitude, parentGN.p_longitude, true);
+		}*/
+		v_currentLoad_kW += heatLoss_kW;
+		v_currentLoss_kW += heatLoss_kW;
+	}
 }
 
 for( GridConnection GC : c_connectedGridConnections) {
 	v_currentLoad_kW += GC.fm_currentBalanceFlows_kW.get(p_energyCarrier);
 	if (p_energyCarrier == OL_EnergyCarriers.HEAT) {
-		//traceln("Input op GN " + GC.fm_currentBalanceFlows_kW.get(p_energyCarrier));
+		double heatLoss_kW = 0; //f_calculateHeatNodeLoss_kW(GC.p_latitude, GC.p_longitude, p_latitude, p_longitude, false);
+		v_currentLoad_kW += heatLoss_kW;
+		v_currentLoss_kW += heatLoss_kW;
 	}
 }
-
-if (p_energyCarrier == OL_EnergyCarriers.HEAT){
-	//traceln("GridNode ID " + p_gridNodeID);
-	v_currentLoss_kW = f_calculateHeatNodeLoss();
-} else{
-	v_currentLoss_kW = 0.0;
-}
-v_currentLoad_kW += v_currentLoss_kW;
 
 
 /*if( p_energyType == OL_EnergyCarriers.ELECTRICITY ){

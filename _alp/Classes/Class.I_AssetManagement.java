@@ -17,4 +17,7 @@ public interface I_AssetManagement extends I_StoreStatesAndReset
 	//Get the AssetManagementInterface type (I_ChargingManagement.class, I_Heatingmanagement.class, etc.)
 	Class<? extends I_AssetManagement> getAssetManagementInterfaceType();
 	
+	default boolean operatesOnGridNodeLevel() {
+		return false;
+	}
 }

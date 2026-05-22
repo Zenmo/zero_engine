@@ -31,7 +31,7 @@ public class J_EnergyManagementElectrolyser implements I_EnergyManagement{
 	    }
 	    
 	    
-	    public void manageFlexAssets(J_TimeVariables timeVariables) {
+	    public void manageFlexAssets(J_TimeVariables timeVariables, boolean onGridNodeLevel) {
 	    	if ( !isChecked ) {
 	    		this.checkConfiguration(GC.c_flexAssets);
 	    	}
