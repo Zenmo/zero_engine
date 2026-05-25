@@ -1315,8 +1315,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1778838636832</Id>
 		<Name><![CDATA[v_heatDemandForecast_kW]]></Name>
-		<X>560</X>
-		<Y>870</Y>
+		<X>-840</X>
+		<Y>1040</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
