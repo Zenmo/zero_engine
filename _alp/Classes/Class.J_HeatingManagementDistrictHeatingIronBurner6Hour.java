@@ -100,7 +100,7 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     	int index = roundToInt(timeVariables.getTimeOfDay_h()/timeParameters.getTimeStep_h());
     	int indexForecastUpdateRate = roundToInt(this.forecastUpdateTimeRate_h/timeParameters.getTimeStep_h());
     	if(roundToInt(index % indexForecastUpdateRate) == 0){ // every t_h % 6 == 0 => index = t_h / 0.25 => index % 24 == 0, update forecast
-			this.heatDemandForecast_kW = this.getForecastHeatDemand_kW(timeVariables);
+			this.heatDemandForecast_kW = this.getForecastFromDatabaseHeatDemand_kW(timeVariables); // this.getForecastHeatDemand_kW(timeVariables); 
 			this.ironBurnerSetpointSchedule_kW = this.calculateIronBurnerSchedule_kW(timeVariables);
 		}
     	traceln(
@@ -197,6 +197,38 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
 
         return ironBurnerHeatOutputSchedule_kW;
     }	
+    
+    
+    private double[] getForecastFromDatabaseHeatDemand_kW(J_TimeVariables timeVariables) {
+    	int sizeForecastHorizon = roundToInt(this.forecastHorizon_h/timeParameters.getTimeStep_h());
+    	double[] totalHeatDemandForecast_kW = new double[sizeForecastHorizon];
+    	
+    	double timeAtStartForecast_h = timeVariables.getT_h();
+        int indexAtStartForecast = roundToInt(timeAtStartForecast_h / timeParameters.getTimeStep_h());
+    	
+    	if (gc.energyModel.v_heatDemandForecast_kW == null) {
+            throw new RuntimeException(
+                this.getClass()
+                + " requires energyModel.v_heatDemandForecast_kW, but it is null. "
+                + "Make sure f_initializeHeatDemandForecast() is called in StartUp_IronFuel_H4B before the simulation starts."
+            );
+        }
+    	
+    	for(int i = 0; i < sizeForecastHorizon; i++) {
+    		totalHeatDemandForecast_kW[i] = gc.energyModel.v_heatDemandForecast_kW[roundToInt((indexAtStartForecast + i) % 35040)];
+    		
+    	}
+
+        traceln(
+            "Initialized heat demand forecast in heating management"
+            + " | steps=" + totalHeatDemandForecast_kW.length
+            + " | firstValue=" + totalHeatDemandForecast_kW[0]
+            + " kW"
+        );
+        
+        return totalHeatDemandForecast_kW;
+    	
+    }
     
     
     
