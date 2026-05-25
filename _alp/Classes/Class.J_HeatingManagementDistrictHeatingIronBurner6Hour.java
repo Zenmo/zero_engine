@@ -28,21 +28,24 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
 	
 	private J_HeatingPreferences heatingPreferences = null; //Not needed for the GCDistrictHeating.
 	
-	//Rolling horizon control settings
+	private double currentHeatDemand_kW = 0;
 	private double currentIronBurnerSetpoint_kW = 0;
-	private double nextSetpointUpdateTime_h = 0;
 	
-	private double setpointBlockDuration_h = 6.0;
+	//Rolling horizon control settings
 	private double forecastHorizon_h = 6.0;
+	private double forecastUpdateTimeRate_h = 6.0;
+	private double[] heatDemandForecast_kW;
+	private double[] ironBurnerSetpointSchedule_kW;
 	
 	// Buffer control settings
 	private double targetBufferSOC_fr = 0.6;
 	private double lowBufferSOC_fr = 0.20;
 	private double maxBufferSOC_fr = 0.95;
 
-	private double[] heatDemandForecast_kW;
-	
-    private boolean debugMode = false;
+    private boolean debugMode = true;
+    
+    //Stored
+  	private double[] storedIronBurnerSetpointSchedule_kW;
 
 	
 	/**
@@ -69,20 +72,20 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     		this.initializeAssets();
     	}
    
-    	// 1. Calculate actual current heat demand from connected lower-level GCs
-    	double currentDemand_kW = getCurrentHeatDemand_kW();
+    	// 1. Calculate heat demand from connected lower-level GCs at current timestep t_h
+    	this.currentHeatDemand_kW = getCurrentHeatDemand_kW();
     	
         if (debugMode) {
             traceln(
                 "Before discharge"
                 + " | t=" + timeVariables.getT_h()
-                + " | demand_kW=" + currentDemand_kW
+                + " | demand_kW=" + currentHeatDemand_kW
                 + " | storage_kWh=" + getBufferEnergy_kWh()
                 + " | soc=" + getBufferSOC_fr()
             );
         }  
     	// 2. Deliver Heat from Heat Storage Asset
-    	gc.f_updateFlexAssetFlows(heatStorage, -currentDemand_kW/heatStorage.getCapacityHeat_kW(), timeVariables );
+    	gc.f_updateFlexAssetFlows(heatStorage, -this.currentHeatDemand_kW/heatStorage.getCapacityHeat_kW(), timeVariables );
     	
         if (debugMode) {
             traceln(
@@ -92,30 +95,35 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
                 + " | soc=" + getBufferSOC_fr()
             );
         }
-    	// 3. Calculate new rolling 6-hour iron burner setpoint
+        
+    	// 3. Determine heat demand forecast of upcoming 6 hours every 6 hours + Determine iron burner setpoint schedule
+    	int index = roundToInt(timeVariables.getTimeOfDay_h()/timeParameters.getTimeStep_h());
+    	int indexForecastUpdateRate = roundToInt(this.forecastUpdateTimeRate_h/timeParameters.getTimeStep_h());
+    	if(roundToInt(index % indexForecastUpdateRate) == 0){ // every t_h % 6 == 0 => index = t_h / 0.25 => index % 24 == 0, update forecast
+			this.heatDemandForecast_kW = this.getForecastFromDatabaseHeatDemand_kW(timeVariables); // this.getForecastHeatDemand_kW(timeVariables); 
+			this.ironBurnerSetpointSchedule_kW = this.calculateIronBurnerSchedule_kW(timeVariables);
+		}
+    	traceln(
+            "heatDemandForecast_kW = "
+            + heatDemandForecast_kW[roundToInt(index % indexForecastUpdateRate)]
+            + " | t=" + timeVariables.getT_h()
+        );
+		
+		// 4. Send flat schedule setpoint to iron burner
+		this.currentIronBurnerSetpoint_kW = ironBurnerSetpointSchedule_kW[roundToInt(index % indexForecastUpdateRate)];
+		gc.f_updateFlexAssetFlows(heatingAsset, currentIronBurnerSetpoint_kW/heatingAsset.getOutputHeatCapacity_kW(), timeVariables);
     	
-    	double currentTime_h = timeVariables.getT_h();
-    	
-    	if (currentTime_h >= nextSetpointUpdateTime_h) {
-    	    currentIronBurnerSetpoint_kW = calculateIronBurnerSetPoint_kW(timeVariables);
-    	    nextSetpointUpdateTime_h = currentTime_h + setpointBlockDuration_h;
-
-            traceln(
-                "New 6h iron burner setpoint = "
-                + currentIronBurnerSetpoint_kW
-                + " kW until t=" + nextSetpointUpdateTime_h
-                + " | bufferSOC=" + getBufferSOC_fr()
-            );
-    	}
-
-    	// 4. Send setpoint to iron burner 
-    	gc.f_updateFlexAssetFlows(heatingAsset, currentIronBurnerSetpoint_kW/heatingAsset.getOutputHeatCapacity_kW(), timeVariables);
+		traceln(
+            "New 6h iron burner setpoint = "
+            + currentIronBurnerSetpoint_kW
+            + " | bufferSOC=" + getBufferSOC_fr()
+        );
     	
     	// 5. Charge buffer from iron burner during this timestep
     	double burnerHeatFlow_kW = heatingAsset.getLastFlows().get(OL_EnergyCarriers.HEAT);
     	double bufferCharge_kW = max(0, -burnerHeatFlow_kW);
     	
-    	gc.f_updateFlexAssetFlows(heatStorage, bufferCharge_kW/heatStorage.getCapacityHeat_kW(), timeVariables );
+    	gc.f_updateFlexAssetFlows(heatStorage, bufferCharge_kW/heatStorage.getCapacityHeat_kW(), timeVariables);
     	
     	if (debugMode) {
              traceln(
@@ -128,132 +136,193 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     	}
     }
     
+    
+    
+    
     private double getCurrentHeatDemand_kW() {
         double currentDemand_kW = 0;
-        for (GridConnection childGC : gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections()) {
-            if (childGC != gc) {
-                double heatFlow_kW = childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-                currentDemand_kW += max(0, heatFlow_kW);
-            }
+        for(GridNode GN : gc.p_parentNodeHeat.f_getConnectedGridNodes()) {
+        	currentDemand_kW += max(0, GN.v_currentLoad_kW);
+        	traceln("GN: " + GN.v_currentLoad_kW);
         }
         return currentDemand_kW;
     }
     
-    private double calculateIronBurnerSetPoint_kW(J_TimeVariables timeVariables) {
+    private double[] calculateIronBurnerSchedule_kW(J_TimeVariables timeVariables) {
     	double dt_h = timeParameters.getTimeStep_h();
-    	int nForecastSteps = roundToInt(forecastHorizon_h / dt_h);
+    	int sizeForecastHorizon = roundToInt(this.forecastHorizon_h/timeParameters.getTimeStep_h());
     	
+    	// Calculate how much energy is required in upcoming 6 hours to meet heat demand
     	double forecastDemand_kWh = 0;
-    	
-    	for (int i = 0; i < nForecastSteps; i++) {
-    		double t_h = timeVariables.getT_h() + i * dt_h;
-    		double heatdemand_kW = getForecastHeatDemand_kW(t_h);
-    		forecastDemand_kWh += heatdemand_kW * dt_h;
-    	}
-    	
-
-        double bufferCapacity_kWh = getBufferCapacity_kWh();
+        for (int i = 0; i < sizeForecastHorizon; i++) {
+            forecastDemand_kWh += this.heatDemandForecast_kW[i] * dt_h;
+        }
+        
+    	double bufferCapacity_kWh = getBufferCapacity_kWh();
         double bufferSOC_fr = getBufferSOC_fr();
-    	
-    	double maxPower_kW = heatingAsset.getOutputHeatCapacity_kW();
-    	double minPower_kW = heatingAsset.minimumOutputHeatCapacity_kW;
-    	
-    	 // Emergency/recovery mode: prevent buffer from becoming too empty
-        if (bufferSOC_fr <= lowBufferSOC_fr) {
-            return maxPower_kW;
+        
+        double maxPower_kW = heatingAsset.getOutputHeatCapacity_kW();
+        double minPower_kW = heatingAsset.minimumOutputHeatCapacity_kW;
+        
+        double desiredPower_kW = 0;
+        if (bufferSOC_fr <= lowBufferSOC_fr) { // Emergency/recovery mode: prevent buffer from becoming too empty
+            desiredPower_kW = maxPower_kW;
+        }  
+        else if (bufferSOC_fr >= maxBufferSOC_fr) { // Full-buffer mode: stop producing extra heat
+            desiredPower_kW = 0;
         }
-
-        // Full-buffer mode: stop producing extra heat
-        if (bufferSOC_fr >= maxBufferSOC_fr) {
-            return 0;
+        else {
+        	double bufferCorrection_kWh = (targetBufferSOC_fr - bufferSOC_fr) * bufferCapacity_kWh;
+        	double requiredProduction_kWh = forecastDemand_kWh + bufferCorrection_kWh;
+        	desiredPower_kW = requiredProduction_kWh <= 0 ? 0 : max(minPower_kW, min(maxPower_kW, requiredProduction_kWh / forecastHorizon_h));
         }
-    	
-    	double bufferCorrection_kWh = (targetBufferSOC_fr - bufferSOC_fr) * bufferCapacity_kWh;
-    	
-    	double requiredProduction_kWh = forecastDemand_kWh + bufferCorrection_kWh;
-    	
-    	double desiredPower_kW = requiredProduction_kWh / forecastHorizon_h;    	
+        
+        // Create completely flat schedule for the 6-hour block
+    	double[] ironBurnerHeatOutputSchedule_kW = new double[sizeForecastHorizon];
+    	for (int i = 0; i < sizeForecastHorizon; i++) {
+    		ironBurnerHeatOutputSchedule_kW[i] = desiredPower_kW;
+    	}
 
         if (debugMode) {
             traceln(
                 "IB setpoint calculation"
                 + " | t=" + timeVariables.getT_h()
                 + " | forecastDemand_kWh=" + forecastDemand_kWh
-                + " | avgDemand_kW=" + forecastDemand_kWh / forecastHorizon_h
+                //+ " | avgDemand_kW=" + forecastDemand_kWh / forecastHorizon_h
                 + " | bufferSOC=" + bufferSOC_fr
-                + " | bufferCorrection_kWh=" + bufferCorrection_kWh
+                //+ " | bufferCorrection_kWh=" + bufferCorrection_kWh
                 + " | desiredPower_kW=" + desiredPower_kW
             );
         }
 
-        if (desiredPower_kW <= 0) {
-            return 0;
-        }
-    	
-    	return max(minPower_kW, min(maxPower_kW, desiredPower_kW));
+        return ironBurnerHeatOutputSchedule_kW;
     }	
     
-    private double getBufferCapacity_kWh() {
-        return heatStorage.getStorageCapacity_kWh();
-    }
-
-    private double getBufferEnergy_kWh() {
-        return heatStorage.getRemainingHeatStorageHeat_kWh();
-    }
-
-    public double getBufferSOC_fr() {
-
-        double bufferCapacity_kWh = getBufferCapacity_kWh();
-
-        if (bufferCapacity_kWh <= 0) {
-            return 0;
-        }
-
-        return getBufferEnergy_kWh() / bufferCapacity_kWh;
-    }
     
-    private void initializeHeatDemandForecast() {
-
-        if (gc.energyModel.v_heatDemandForecast_kW == null) {
+    private double[] getForecastFromDatabaseHeatDemand_kW(J_TimeVariables timeVariables) {
+    	int sizeForecastHorizon = roundToInt(this.forecastHorizon_h/timeParameters.getTimeStep_h());
+    	double[] totalHeatDemandForecast_kW = new double[sizeForecastHorizon];
+    	
+    	double timeAtStartForecast_h = timeVariables.getT_h();
+        int indexAtStartForecast = roundToInt(timeAtStartForecast_h / timeParameters.getTimeStep_h());
+    	
+    	if (gc.energyModel.v_heatDemandForecast_kW == null) {
             throw new RuntimeException(
                 this.getClass()
                 + " requires energyModel.v_heatDemandForecast_kW, but it is null. "
                 + "Make sure f_initializeHeatDemandForecast() is called in StartUp_IronFuel_H4B before the simulation starts."
             );
         }
-
-        heatDemandForecast_kW = gc.energyModel.v_heatDemandForecast_kW;
+    	
+    	for(int i = 0; i < sizeForecastHorizon; i++) {
+    		totalHeatDemandForecast_kW[i] = gc.energyModel.v_heatDemandForecast_kW[roundToInt((indexAtStartForecast + i) % 35040)];
+    		
+    	}
 
         traceln(
             "Initialized heat demand forecast in heating management"
-            + " | steps=" + heatDemandForecast_kW.length
-            + " | firstValue=" + heatDemandForecast_kW[0]
+            + " | steps=" + totalHeatDemandForecast_kW.length
+            + " | firstValue=" + totalHeatDemandForecast_kW[0]
             + " kW"
         );
+        
+        return totalHeatDemandForecast_kW;
+    	
     }
-    private double getForecastHeatDemand_kW(double t_h) {
+    
+    
+    
+    private double[] getForecastHeatDemand_kW(J_TimeVariables timeVariables) {
 
-        if (heatDemandForecast_kW == null) {
-            throw new RuntimeException(
-                this.getClass() + " heatDemandForecast_kW has not been initialized."
-            );
+    	int sizeForecastHorizon = roundToInt(this.forecastHorizon_h/timeParameters.getTimeStep_h());
+    	double[] totalHeatDemandForecast_kW = new double[sizeForecastHorizon];
+        
+        double timeAtStartForecast_h = timeVariables.getT_h();
+        int indexAtStartForecast = roundToInt(timeAtStartForecast_h / timeParameters.getTimeStep_h());
+        
+        // Loop through all lower-level connected grid connections on the heating network
+        for (GridNode GN : gc.p_parentNodeHeat.f_getConnectedGridNodes()) {
+	        for (GridConnection childGC : GN.f_getAllLowerLVLConnectedGridConnections()) {
+	            if (childGC == gc) {
+	                continue; // Skip the district heating source itself
+	            }
+	            
+	            double currentNetworkDraw_kW = Math.max(0, childGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+	            
+	            // 1. Identify the child's heating asset that consumes HEAT from the district network
+	            J_EAConversion childHeatingAsset = null;
+	            for (J_EAConversion asset : childGC.c_heatingAssets) {
+	                if (asset.activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) {
+	                    childHeatingAsset = asset;
+	                    break;
+	                }
+	            }
+	            
+	            // Fallback: search childGC.c_flexAssets in case it's stored there
+	            if (childHeatingAsset == null) {
+	                for (J_EAFlex asset : childGC.c_flexAssets) {
+	                    if (asset instanceof J_EAConversion && asset.activeConsumptionEnergyCarriers.contains(OL_EnergyCarriers.HEAT)) {
+	                        childHeatingAsset = (J_EAConversion) asset;
+	                        break;
+	                    }
+	                }
+	            }
+	            
+	            // If the child connection doesn't have a specific conversion asset but still draws heat, assume efficiency 1.0
+	            double efficiency = (childHeatingAsset != null) ? childHeatingAsset.getEta_r() : 1.0;
+	            
+	            // 2. Fetch all heat demand profiles of this child connection
+	            List<J_EAProfile> heatProfiles = new ArrayList<>();
+	            for (J_EAProfile profile : childGC.c_profileAssets) {
+	                if (profile.energyCarrier == OL_EnergyCarriers.HEAT) {
+	                    heatProfiles.add(profile);
+	                }
+	            }
+	            
+	            // 3. Determine the *current* network draw caused strictly by these static profiles
+	            double currentProfileNetworkDraw_kW = 0;
+	            for (J_EAProfile profile : heatProfiles) {
+	                double scalar = profile.getProfileScaling_fr() * profile.getProfileUnitScaler_fr();
+	                if (profile instanceof J_EAProduction) {
+	                    scalar *= -1; // If it's a production profile, scale negatively
+	                }
+	                // Evaluate profile exactly at current simulation time
+	                double t = timeVariables.getT_h();
+	                double profileValue = profile.profilePointer.getValue(t);
+	                currentProfileNetworkDraw_kW += (profileValue * scalar) / efficiency;
+	            }
+                double unprofiledBaseNetworkDraw_kW = Math.max(0, currentNetworkDraw_kW - currentProfileNetworkDraw_kW);
+	            
+                // Create a pseudo heat loss factor for the building based on the CURRENT ambient temperature
+                // Q = max(0, U * (20 - T_amb))  =>  U = Q / max(0.1, 20 - T_amb)
+                double currentAmbTemp_degC = gc.energyModel.pp_ambientTemperature_degC.getValue(timeVariables.getT_h());
+                double pseudoHeatLossFactor = unprofiledBaseNetworkDraw_kW / Math.max(0.1, 20.0 - currentAmbTemp_degC);
+                
+	            // 5. Forecast and sum the heat demands over the 6-hour horizon
+	            for (int i = 0; i < sizeForecastHorizon; i++) {
+	            	double dynamicProfileDraw_kW = 0;
+	            	double t = (i + indexAtStartForecast) * timeParameters.getTimeStep_h();
+	                for (J_EAProfile profile : heatProfiles) {
+	                    double scalar = profile.getProfileScaling_fr() * profile.getProfileUnitScaler_fr();
+	                    if (profile instanceof J_EAProduction) {
+	                        scalar *= -1; 
+	                    }
+	                    double profileValue = profile.profilePointer.getValue(t);
+	                    dynamicProfileDraw_kW += (profileValue * scalar) / efficiency;
+	                }
+	                
+	             // Predict future dynamic space heating using the future ambient temperature
+                double futureAmbTemp_degC = gc.energyModel.pp_ambientTemperature_degC.getValue(t);
+                double futureDynamicSpaceHeating_kW = pseudoHeatLossFactor * Math.max(0, 20.0 - futureAmbTemp_degC);
+	                
+	            // The total forecasted draw is the dynamically evaluated profiles plus the constant unprofiled baseline
+	            totalHeatDemandForecast_kW[i] += Math.max(0, dynamicProfileDraw_kW + futureDynamicSpaceHeating_kW);
+	        	}
+	        }
         }
-
-        int index = roundToInt(t_h / timeParameters.getTimeStep_h());
-
-        if (index < 0) {
-            return 0;
-        }
-
-        if (index >= heatDemandForecast_kW.length) {
-            index = heatDemandForecast_kW.length - 1;
-            traceln("You are over 1 year of simulation. The numbers are not correct anymore!!!");
-        }
-
-        double heatDemand_kW = heatDemandForecast_kW[index];
-
-        return max(0, heatDemand_kW);
+        return totalHeatDemandForecast_kW;
     }
+    
     
     public void initializeAssets() {
     	
@@ -287,15 +356,12 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
         	throw new RuntimeException(this.getClass()+ " requires heatStorage.getStorageCapacity_kWh() > 0, but found "+ this.heatStorage.getStorageCapacity_kWh());
         }
     	
-    	initializeHeatDemandForecast();
-    	
     	this.isInitialized = true;
     }
     
     public void notInitialized() {
     	this.isInitialized = false;
     	this.currentIronBurnerSetpoint_kW = 0;
-        this.nextSetpointUpdateTime_h = 0;
     }
     
     public List<OL_GridConnectionHeatingType> getValidHeatingTypes() {
@@ -314,6 +380,24 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     	return this.heatingPreferences;
     }
     
+    private double getBufferCapacity_kWh() {
+        return heatStorage.getStorageCapacity_kWh();
+    }
+
+    
+    private double getBufferEnergy_kWh() {
+        return heatStorage.getRemainingHeatStorageHeat_kWh();
+    }
+    
+    public double getBufferSOC_fr() {
+        return getBufferEnergy_kWh() / getBufferCapacity_kWh();
+    }
+    
+    @Override
+    public boolean operatesOnGridNodeLevel() {
+        return true;
+    }
+    
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
@@ -323,12 +407,13 @@ public class J_HeatingManagementDistrictHeatingIronBurner6Hour implements I_Heat
     //Store and reset states
     public void storeStatesAndReset() {
         this.currentIronBurnerSetpoint_kW = 0;
-        this.nextSetpointUpdateTime_h = 0;
+        this.storedIronBurnerSetpointSchedule_kW = ironBurnerSetpointSchedule_kW;
+		this.ironBurnerSetpointSchedule_kW = new double[ironBurnerSetpointSchedule_kW.length];
     }
 
     public void restoreStates() {
         this.currentIronBurnerSetpoint_kW = 0;
-        this.nextSetpointUpdateTime_h = 0;
+        this.ironBurnerSetpointSchedule_kW = this.storedIronBurnerSetpointSchedule_kW;
     }
 	
 	@Override

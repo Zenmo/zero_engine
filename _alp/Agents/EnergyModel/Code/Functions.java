@@ -157,11 +157,27 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
 
 if (b_parallelizeGridConnections) {
-	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun));
+	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateFixedEnergyBalance(p_timeVariables));
+	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateConnectionLevelFlexEnergyBalance(p_timeVariables));
 } 
 else {
 	for(GridConnection gc : c_gridConnections) {
-		gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
+		gc.f_calculateFixedEnergyBalance(p_timeVariables);
+		gc.f_calculateConnectionLevelFlexEnergyBalance(p_timeVariables);
+	}
+}
+
+// Intermediate sum of fixed + local flex loads on GridNodes
+for(GridNode n : c_gridNodeExecutionList) {
+	n.f_sumLoads();
+}
+
+if (b_parallelizeGridConnections) {
+	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateNodeLevelFlexEnergyBalance(p_timeVariables, v_isRapidRun));
+} 
+else {
+	for(GridConnection gc : c_gridConnections) {
+		gc.f_calculateNodeLevelFlexEnergyBalance(p_timeVariables, v_isRapidRun);
 	}
 }
 
@@ -183,7 +199,18 @@ for(GridConnection gc : c_gridConnections) { // Can't do this in parallel due to
 }
 
 for (GridConnection gc : c_subGridConnections) {
-	gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
+	gc.f_calculateFixedEnergyBalance(p_timeVariables);
+	gc.f_calculateConnectionLevelFlexEnergyBalance(p_timeVariables);
+	gc.f_calculateNodeLevelFlexEnergyBalance(p_timeVariables, v_isRapidRun);
+}
+
+// Add GridNode losses to the global balance and consumption
+for (GridNode n : c_gridNodeExecutionList) {
+	if (n.v_currentLoss_kW > 0) {
+		fm_currentBalanceFlows_kW.addFlow(n.p_energyCarrier, n.v_currentLoss_kW);
+		fm_currentConsumptionFlows_kW.addFlow(n.p_energyCarrier, n.v_currentLoss_kW);
+		v_currentFinalEnergyConsumption_kW += n.v_currentLoss_kW;
+	}
 }
 
 v_currentEnergyImport_kW = 0.0;
