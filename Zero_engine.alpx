@@ -181,6 +181,10 @@
 					<Id>1749729312023</Id>
 					<Name><![CDATA[PARKING]]></Name>
 				</Option>
+				<Option>
+					<Id>1779785585114</Id>
+					<Name><![CDATA[DIESEL_GEN]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1659118426374</Id>
