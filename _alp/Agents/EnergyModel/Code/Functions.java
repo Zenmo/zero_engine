@@ -835,7 +835,7 @@ for( J_EA e : c_ambientDependentAssets ) {
 				((J_EAStorageHeat)e).updateAmbientTemperature( pp_ambientTemperature_degC.getCurrentValue() );
 				break;
 			case BUILDING:
-				new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAStorageHeat!");
+				throw new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAStorageHeat!");
 				/*
 				GridConnection parentGC = (GridConnection)e.getParentAgent();
 				if(parentGC.p_BuildingThermalAsset == null){
@@ -845,17 +845,15 @@ for( J_EA e : c_ambientDependentAssets ) {
 					((J_EAStorageHeat)e).updateAmbientTemperature(parentGC.p_BuildingThermalAsset.getCurrentTemperature());
 				}
 				*/
-				break;
 			case HEAT_GRID:
 				// Do Nothing, keep fixed temp for now
-				//new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAStorageHeat!");
+				//throw new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAStorageHeat!");
 				break;
 			case HEAT_STORAGE:
-				new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAStorageHeat!");
-				break;
+				throw new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAStorageHeat!");
 		}	
 	}
-	if (e instanceof J_EAConversionHeatPump) {
+	if (e instanceof J_EAConversionHeatPump hp) {
 			switch(((J_EAConversionHeatPump) e).getAmbientTempType()){
 			case FIXED:
 				//Do nothing, use preset ambient temp
@@ -864,7 +862,7 @@ for( J_EA e : c_ambientDependentAssets ) {
 				((J_EAConversionHeatPump)e).updateAmbientTemperature( pp_ambientTemperature_degC.getCurrentValue() );
 				break;
 			case BUILDING:
-				new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAConversionHeatPump!");
+				throw new RuntimeException("AmbientTempType 'BUILDING' is not supported yet for J_EAConversionHeatPump!");
 				/*
 				GridConnection parentGC = (GridConnection)e.getParentAgent();
 				if(parentGC.p_BuildingThermalAsset == null){
@@ -874,13 +872,12 @@ for( J_EA e : c_ambientDependentAssets ) {
 					((J_EAConversionHeatPump)e).updateAmbientTemperature(parentGC.p_BuildingThermalAsset.getCurrentTemperature());
 				}
 				*/
-				break;
 			case HEAT_GRID:
-				new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAConversionHeatPump!");
+				// Do Nothing, keep fixed temp for now
+				//throw new RuntimeException("AmbientTempType 'HEAT_GRID' is not supported yet for J_EAConversionHeatPump!");
 				break;
 			case HEAT_STORAGE:
-				new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAConversionHeatPump!");
-				break;
+				throw new RuntimeException("AmbientTempType 'HEAT_STORAGE' is not supported yet for J_EAConversionHeatPump!");
 			}		
 	}
 	if( e instanceof J_EABuilding ) {

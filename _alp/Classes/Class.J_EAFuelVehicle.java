@@ -1,7 +1,7 @@
 /**
  * J_EAConversionPetroleumFuelVehicle
  */
-public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializable {
+public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 
 	private OL_EnergyCarriers energyCarrierConsumed;
 	private boolean available = true;
@@ -34,7 +34,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 	    this.tripTracker = tripTracker;
 	    this.available = available;
 	    if (tripTracker != null) {
-	    	tripTracker.vehicle=this;
+	    	tripTracker.setVehicle(this);
 	    }
 	    
 	    this.energyCarrierConsumed = energyCarrier;
@@ -152,11 +152,5 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle, Serializabl
 			"energyConsumption_kWhpkm =" + energyConsumption_kWhpkm + " " +
 			"vehicleScaling = " + vehicleScaling;
 	}
-
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }
 

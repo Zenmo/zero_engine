@@ -17,13 +17,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 	)
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
-	protected EnergyModel energyModel;
 
 	// Tripdata
-	protected ArrayList<Double> starttimes_min = new ArrayList<>();
-	protected ArrayList<Double> endtimes_min = new ArrayList<>();
-	//private ArrayList<Double> eventMagnitude = new ArrayList<>();
-    public int nbActivities = 0;
+	protected ArrayList<Double> startTimes_h = new ArrayList<>();
+	protected ArrayList<Double> endTimes_h = new ArrayList<>();
 	public int eventIndex = 0;
 	protected int eventIndexStored =0;
 	
@@ -33,9 +30,6 @@ public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
     public J_ActivityTracker() {
     }
     
-    public J_ActivityTracker(EnergyModel main, int rowIndex, double time_min) {
-    }
-    
     public void storeStatesAndReset() {
     	eventIndexStored = eventIndex;
     	eventIndex = 0;
@@ -43,11 +37,5 @@ public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
     
     public void restoreStates() {
     	eventIndex = eventIndexStored;
-	}
-    
-
-	@Override
-	public String toString() {
-		return super.toString();
 	}
 } 

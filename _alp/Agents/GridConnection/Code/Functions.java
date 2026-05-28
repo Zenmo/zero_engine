@@ -483,7 +483,7 @@ else {
 	c_vehicleAssets.forEach(vehicle -> vehicle.setAvailability(true));
 	if (p_chargePoint != null) {
 	    c_tripTrackers.forEach(tt -> {
-	        if (tt.vehicle instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
+	        if (tt.getVehicle() instanceof J_EAEV ev && p_chargePoint.isRegistered(ev)) {
 	            p_chargePoint.deregisterChargingRequest(ev);
 	        }
 	        tt.setStartIndex(timeVariables, f_getChargePoint());
@@ -903,20 +903,20 @@ else if (j_ea instanceof J_EAConversion conversionAsset) {
 	//Check if heating asset		
 	if (conversionAsset instanceof I_HeatingAsset) {
 		c_heatingAssets.add(conversionAsset);
-		if (j_ea instanceof J_EAConversionHeatPump) {
-			energyModel.c_ambientDependentAssets.add(j_ea);
+		if (conversionAsset instanceof J_EAConversionHeatPump) {
+			energyModel.c_ambientDependentAssets.add(conversionAsset);
 		}
 	}
-	else if ( conversionAsset.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+	else if ( conversionAsset instanceof J_EAConversionHob hob){
 		if (p_cookingTracker == null) {
 			int rowIndex = uniform_discr(2, 300); 
-			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternCsv, rowIndex, (energyModel.p_timeVariables.getAnyLogicTime_h())*60, (J_EAConversion)j_ea );			
+			p_cookingTracker = new J_ActivityTrackerCooking(energyModel.p_cookingPatternCsv, rowIndex, hob, timeParameters, energyModel.p_timeVariables);			
 		} 
 		else {
-			p_cookingTracker.HOB = (J_EAConversion)j_ea;
+			p_cookingTracker.setHob(hob);
 		}
 	} 
-	else if (j_ea instanceof J_EAConversionAirConditioner aircoAsset) {
+	else if (conversionAsset instanceof J_EAConversionAirConditioner aircoAsset) {
 		p_airco = aircoAsset;
 		energyModel.c_ambientDependentAssets.add(aircoAsset);
 	}
@@ -925,19 +925,19 @@ else if (j_ea instanceof J_EAConversion conversionAsset) {
 else if (j_ea instanceof J_EAStorage storageAsset) {
 	c_storageAssets.add(storageAsset);
 	energyModel.c_storageAssets.add(storageAsset);
-	if (j_ea instanceof J_EAStorageHeat) {
-		energyModel.c_ambientDependentAssets.add(j_ea);
-		if (j_ea instanceof J_EABuilding buildingAsset) {
+	if (storageAsset instanceof J_EAStorageHeat heatStorage) {
+		energyModel.c_ambientDependentAssets.add(heatStorage);
+		if (heatStorage instanceof J_EABuilding buildingAsset) {
 			p_BuildingThermalAsset = buildingAsset;
 		}
 		else {
-			p_heatBuffer = (J_EAStorageHeat)j_ea;
+			p_heatBuffer = heatStorage;
 		}
 	} 
-	else if (j_ea instanceof J_EAStorageGas gasStorage) {
+	else if (storageAsset instanceof J_EAStorageGas gasStorage) {
 		p_gasBuffer = gasStorage;
 	} 
-	else if (j_ea instanceof J_EAStorageElectric battery) {
+	else if (storageAsset instanceof J_EAStorageElectric battery) {
 		p_batteryAsset = battery;
 		double capacity_MWh = battery.getStorageCapacity_kWh()/1000;
 		v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
@@ -954,17 +954,17 @@ J_ActivityTrackerTrips f_getNewTripTracker(OL_EnergyAssetType assetType,I_Vehicl
 J_ActivityTrackerTrips tripTracker;
 if (assetType == OL_EnergyAssetType.ELECTRIC_TRUCK || assetType == OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK || assetType == OL_EnergyAssetType.HYDROGEN_TRUCK) {
 	int rowIndex = uniform_discr(1, 7);	//Truck trip CSV has 7 valid rows.
-	tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
+	tripTracker = new J_ActivityTrackerTrips(energyModel.p_truckTripsCsv, rowIndex, vehicle, p_chargePoint, timeParameters, energyModel.p_timeVariables);
 } else if (assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VAN || assetType == OL_EnergyAssetType.ELECTRIC_VAN || assetType == OL_EnergyAssetType.HYDROGEN_VAN) {// No mobility pattern for business vans available yet!! Falling back to truck mobility pattern
 	int rowIndex = uniform_discr(1, 7); //Truck trip CSV (used for vans) has 7 valid rows.
-	tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_truckTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
+	tripTracker = new J_ActivityTrackerTrips(energyModel.p_truckTripsCsv, rowIndex, vehicle, p_chargePoint, timeParameters, energyModel.p_timeVariables);
 	tripTracker.setAnnualDistance_km(30_000); //Wat gebeurt hier???
 } else if(assetType == OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE || assetType == OL_EnergyAssetType.ELECTRIC_VEHICLE || assetType == OL_EnergyAssetType.HYDROGEN_VEHICLE) {
 	int rowIndex = uniform_discr(0, 200); //Car trip CSV has 200+ valid rows.
 	while (rowIndex == 28 || rowIndex == 42 || rowIndex == 150) { // 28, 42, 150, 445, 457, 483, 540, 563 all impossible triptrackers for vehicles with 116 kWh and 0.16 kWhpkm
 		rowIndex = uniform_discr(0, 200);
 	}
-	tripTracker = new J_ActivityTrackerTrips(timeParameters, energyModel.p_householdTripsCsv, rowIndex, energyModel.p_timeVariables, vehicle, p_chargePoint);
+	tripTracker = new J_ActivityTrackerTrips(energyModel.p_householdTripsCsv, rowIndex, vehicle, p_chargePoint, timeParameters, energyModel.p_timeVariables);
 }
 else{
 	throw new RuntimeException("Trying to get a new trip tracker for an unsupported vehicle type");
@@ -1153,7 +1153,7 @@ else if (j_ea instanceof J_EAConversion) {
 		
 		}	
 	}
-	else if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
+	else if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_HOB || j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
 		p_cookingTracker = null;
 	} 
 	else if (j_ea instanceof J_EAConversionElectrolyser) {

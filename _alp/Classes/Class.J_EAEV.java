@@ -1,9 +1,6 @@
 /**
 * J_EAEV
 */
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
-//@JsonTypeName("J_EAEV")
 public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
  
 	private boolean available = true;
@@ -30,8 +27,9 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	private double energyChargedOutsideModelAreaStored_kWh;
 	private double charged_kWh = 0;
 	private double discharged_kWh = 0;
-    /**
-     * Default constructor
+    
+	/**
+     * Empty constructor for serialization
      */
     public J_EAEV() {
     }
@@ -56,7 +54,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	    this.tripTracker = tripTracker;
     	this.available = available;
 	    if (tripTracker != null) {
-	    	tripTracker.vehicle=this;	    	
+	    	tripTracker.setVehicle(this);	    	
 	    }
 	    // Validation checks
 	    if (capacityElectric_kW <= 0 || storageCapacity_kWh <= 0 || energyConsumption_kWhpkm <= 0) {
@@ -302,4 +300,3 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			"charged_kWh = " + roundToDecimal( charged_kWh, 2 );
 	}
 }
- 

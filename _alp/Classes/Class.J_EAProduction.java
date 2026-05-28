@@ -1,12 +1,8 @@
 /**
  * J_EAProduction
  */
-public class J_EAProduction extends zero_engine.J_EAProfile implements Serializable {
-	//protected J_ProfilePointer profilePointer;
-	//protected OL_EnergyCarriers energyCarrier = OL_EnergyCarriers.ELECTRICITY;
+public class J_EAProduction extends zero_engine.J_EAProfile{
 	protected double totalEnergyCurtailed_kWh=0;
-	//protected double outputTemperature_degC;
-	//protected double capacity_kW;
 
     /**
      * Default constructor
@@ -188,15 +184,4 @@ public class J_EAProduction extends zero_engine.J_EAProfile implements Serializa
 			"assetFlowCategory = " + this.assetFlowCategory + " " +
 			"energyProduced_kWh = " + (-this.energyUsed_kWh) +  " ";
 	}
-
-	
-	/*public double getCurrentTemperature() {
-		return outputTemperature_degC;
-	}*/
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
 }

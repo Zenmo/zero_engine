@@ -1,21 +1,17 @@
 /**
  * J_ActivityTrackerCooking
  */	
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
 	private ArrayList<Double> powerFractions_fr = new ArrayList<>();
-	public J_EAConversion HOB;
-	public double powerFraction_fr=0;
-	private int rowIndex;
+	private J_EAConversionHob hob;
+	private double powerFraction_fr=0;
 	private boolean cooking = false;
-	private double timeStep_min;
-	private ArrayList<Double> initalStarttimes_min;
-	private ArrayList<Double> initalEndtimes_min;
-	private ArrayList<Double> storedStarttimes_min;
-	private ArrayList<Double> storedEndtimes_min;
+	private J_TimeParameters timeParameters;
+	private Integer CSVRowIndex = null;
+	private ArrayList<Double> initalStartTimes_h;
+	private ArrayList<Double> initalEndTimes_h;
+	private ArrayList<Double> storedStartTimes_h;
+	private ArrayList<Double> storedEndTimes_h;
 
 	/**
      * Default constructor
@@ -23,111 +19,83 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
     public J_ActivityTrackerCooking() {
     }
 
-    public J_ActivityTrackerCooking(TextFile inputCookingActivities, int rowIndex, double time_min, J_EAConversion HOB) {
-  
-    	this.rowIndex = rowIndex;
-    	this.HOB=HOB;
-    	//int rowIndex = uniform_discr(2, 300); 
-
-    	this.timeStep_min = 60 * this.HOB.timeParameters.getTimeStep_h();
+    public J_ActivityTrackerCooking(TextFile cookingActivitiesCSV, int CSVRowIndex, J_EAConversionHob hob, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	this.CSVRowIndex = CSVRowIndex;
+    	this.hob=hob;
+    	double time_h = timeVariables.getAnyLogicTime_h();
+    	this.timeParameters = timeParameters;
     	
-    	inputCookingActivities.close();
-    	inputCookingActivities.canReadMore();
-    	inputCookingActivities.readLine(); // Skips first line
+    	cookingActivitiesCSV.close();
+    	cookingActivitiesCSV.canReadMore();
+    	cookingActivitiesCSV.readLine(); // Skips first line
     	
-    	while (roundToInt(inputCookingActivities.readDouble())!=rowIndex && inputCookingActivities.canReadMore()) { // Skip until rowIndex found
-    		inputCookingActivities.readLine(); 
-    		//String line = tripsCsv.readLine(); // Does this also skip to the next line?
-    		//traceln("Skipping line: " + line);
+    	while (roundToInt(cookingActivitiesCSV.readDouble())!=CSVRowIndex && cookingActivitiesCSV.canReadMore()) { // Skip until rowIndex found
+    		cookingActivitiesCSV.readLine(); 
     	}
-    	int currentLineNb = inputCookingActivities.getLineNumber();
-    	traceln("rowIndex %s found on line: %s", rowIndex, currentLineNb);
-    	int nbActivities = inputCookingActivities.readInt();
-    	traceln("Number of trips: %s", nbActivities);    	
+    	int currentLineNb = cookingActivitiesCSV.getLineNumber();
+    	int nbActivities = cookingActivitiesCSV.readInt();  	
    	
-    			
     	for (int i = 0; i < nbActivities; i++){
-    		starttimes_min.add(inputCookingActivities.readDouble());
-    		endtimes_min.add(inputCookingActivities.readDouble());
-    		
-    		double ratio = inputCookingActivities.readDouble() / HOB.getOutputCapacity_kW();
-    		powerFractions_fr.add(ratio);
+    		startTimes_h.add(cookingActivitiesCSV.readDouble()/60.0); // Convert data (min) to hours
+    		endTimes_h.add(cookingActivitiesCSV.readDouble()/60.0); // Convert data (min) to hours
+    		powerFractions_fr.add(cookingActivitiesCSV.readDouble() / hob.getOutputCapacity_kW());
     	}
     	
-    	while ( starttimes_min.get(eventIndex) - time_min < 0) {
-    		starttimes_min.set( eventIndex, starttimes_min.get(eventIndex) + 1440 );  // Source data is always just one day, repeating every day.
-    		endtimes_min.set( eventIndex, endtimes_min.get(eventIndex) + 1440 ); // Source data is always just one day, repeating every day.
+    	while ( startTimes_h.get(eventIndex) - time_h < 0) {
+    		startTimes_h.set( eventIndex, startTimes_h.get(eventIndex) + 24 );  // Source data is always just one day, repeating every day.
+    		endTimes_h.set( eventIndex, endTimes_h.get(eventIndex) + 24 ); // Source data is always just one day, repeating every day.
     		eventIndex++;
-    		if ( eventIndex > starttimes_min.size() - 1 ) {
+    		if ( eventIndex > startTimes_h.size() - 1 ) {
     			eventIndex = 0;
     		}
     	}
     	
-    	initalStarttimes_min = new ArrayList<>(starttimes_min);
-    	initalEndtimes_min = new ArrayList<>(endtimes_min);
-    	//traceln("Current model time in minutes: " + energyModel.t_h*60 + ", nb sessions: " + nbOfCookingSessions);
-    	//traceln("Starttimes: %s", starttimes_min);
-    	//traceln("Endtimes: %s", endtimes_min);
+    	initalStartTimes_h = new ArrayList<>(startTimes_h);
+    	initalEndTimes_h = new ArrayList<>(endTimes_h);
     }
     
     public void manageActivities(J_TimeVariables timeVariables) {
-    	double time_min = timeVariables.getAnyLogicTime_h() * 60;
-    	//traceln("Cooking tracker current time: " + time_min);
-    	//traceln("Event index: " + eventIndex);
-    	//traceln("startTimes: " + starttimes_min);
-    	//traceln("endTimes: " + endtimes_min);
-    	//traceln("powerFractions_fr: "  + powerFractions_fr);
-    	
-    	if (cooking) {
-	    	if (time_min >= endtimes_min.get(eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
+    	double time_h = timeVariables.getAnyLogicTime_h();
 
-	    		//main.v_activeCookingSessions.decrementAndGet();
-	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
+    	if (cooking) {
+	    	if (time_h >= endTimes_h.get(eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
 				// factor to compensate for the fact that you might not be cooking for the entire timestep.
-				double fr = (time_min - this.endtimes_min.get(this.eventIndex)) / this.timeStep_min;
+				double fr = (time_h - this.endTimes_h.get(this.eventIndex)) / this.timeParameters.getTimeStep_h();
 				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);
 	    		
-				starttimes_min.set( eventIndex, starttimes_min.get(eventIndex) + 1440 );
-				endtimes_min.set( eventIndex, endtimes_min.get(eventIndex) + 1440 );
+				startTimes_h.set( eventIndex, startTimes_h.get(eventIndex) + 24 );
+				endTimes_h.set( eventIndex, endTimes_h.get(eventIndex) + 24 );
 				eventIndex++;
-				if ( eventIndex >= starttimes_min.size() ) {
+				if ( eventIndex >= startTimes_h.size() ) {
 					eventIndex = 0;
 				}
 				cooking=false;
 				
-				if (time_min >= starttimes_min.get(eventIndex)) {
+				if (time_h >= startTimes_h.get(eventIndex)) {
 					// factor to compensate for the fact that you might not be cooking for the entire timestep.
-					fr = (time_min - this.starttimes_min.get(this.eventIndex)) / this.timeStep_min;
+					fr = (time_h - this.startTimes_h.get(this.eventIndex)) / this.timeParameters.getTimeStep_h();
 					this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);	    		
-					//main.v_activeCookingSessions.incrementAndGet();
 					cooking=true;
 					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, eventIndex");
 				}
 	    	}
 	    	else {
-	    		this.powerFraction_fr = this.starttimes_min.get(this.eventIndex);
+	    		this.powerFraction_fr = this.startTimes_h.get(this.eventIndex);
 	    	}
-    	} else if (time_min >= starttimes_min.get(eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
-    		/*if (endtimes_min.get(eventIndex) - starttimes_min.get(eventIndex) > 100) {
-			traceln("Cooking event longer than 100 minutes!! Rowindex %s, eventIndex %s.", rowIndex, eventIndex);
-			}*/
+    	} else if (time_h >= startTimes_h.get(eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
     		
 			// factor to compensate for the fact that you might not be cooking for the entire timestep.
-			double fr = (time_min - this.starttimes_min.get(this.eventIndex)) / this.timeStep_min;
+			double fr = (time_h - this.startTimes_h.get(this.eventIndex)) / this.timeParameters.getTimeStep_h();
 			this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);	    		
-			//main.v_activeCookingSessions.incrementAndGet();
 			cooking=true;
-			if (time_min >= endtimes_min.get(eventIndex) ) { // end cooking session in the same timestep? Still need to fix energy use for this case!! 
-	    	
-	    		//main.v_activeCookingSessions.decrementAndGet();
-	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
-				fr = (this.endtimes_min.get(this.eventIndex) - this.starttimes_min.get(this.eventIndex)) / this.timeStep_min;	    		
+			if (time_h >= endTimes_h.get(eventIndex) ) { // end cooking session in the same timestep? Still need to fix energy use for this case!! 
+				fr = (this.endTimes_h.get(this.eventIndex) - this.startTimes_h.get(this.eventIndex)) / this.timeParameters.getTimeStep_h();	    		
 				this.powerFraction_fr = fr * this.powerFractions_fr.get(this.eventIndex);	    		
 	    		
-				starttimes_min.set( eventIndex, starttimes_min.get(eventIndex) + 1440 );
-				endtimes_min.set( eventIndex, endtimes_min.get(eventIndex) + 1440 );
+				startTimes_h.set( eventIndex, startTimes_h.get(eventIndex) + 24 );
+				endTimes_h.set( eventIndex, endTimes_h.get(eventIndex) + 24 );
 				eventIndex++;
-				if ( eventIndex >= starttimes_min.size() ) {
+				if ( eventIndex >= startTimes_h.size() ) {
 					eventIndex = 0;
 				}
 				cooking=false;
@@ -136,29 +104,43 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
     	else {
     		this.powerFraction_fr = 0;
     	}
-    	//if (powerFraction_fr > 0 ) { traceln("Cooking event in progress!"); }
-    	HOB.f_updateAllFlows(powerFraction_fr, timeVariables);
+    	hob.f_updateAllFlows(powerFraction_fr, timeVariables);
     }
+    
+    
+    //Setters
+    public void setHob(J_EAConversionHob hob) {
+    	this.hob = hob;
+    }    
+    
+    
+    //Getters
+    public J_EAConversionHob getHob() {
+    	return this.hob;
+    }
+    
     
     @Override
     public void storeStatesAndReset() {
     	eventIndexStored = eventIndex;
-    	storedStarttimes_min = new ArrayList<>(starttimes_min);
-    	storedEndtimes_min = new ArrayList<>(endtimes_min);    	
-		starttimes_min = new ArrayList<>(initalStarttimes_min);
-		endtimes_min = new ArrayList<>(initalEndtimes_min);
+    	storedStartTimes_h = new ArrayList<>(startTimes_h);
+    	storedEndTimes_h = new ArrayList<>(endTimes_h);    	
+		startTimes_h = new ArrayList<>(initalStartTimes_h);
+		endTimes_h = new ArrayList<>(initalEndTimes_h);
     	eventIndex = 0;
     }
     
     @Override
     public void restoreStates() {
     	eventIndex = eventIndexStored;
-		starttimes_min = new ArrayList<>(storedStarttimes_min);
-		endtimes_min = new ArrayList<>(storedEndtimes_min);
+		startTimes_h = new ArrayList<>(storedStartTimes_h);
+		endTimes_h = new ArrayList<>(storedEndTimes_h);
 	}
     
-    @Override
+	@Override
 	public String toString() {
-		return super.toString();
+		String outputString =  "J_ActivityTrackerCooking: \n";
+		outputString += "Based on CSV data with row index: " + CSVRowIndex + "\n";	
+		return outputString;
 	}
 }

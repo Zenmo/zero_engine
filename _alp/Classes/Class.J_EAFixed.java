@@ -21,10 +21,4 @@ abstract public class J_EAFixed extends J_EA {
     }
     
 	public abstract void operate(J_TimeVariables timeVariables);
-
-
-	@Override
-	public String toString() {
-		return super.toString();
-	}
 }
