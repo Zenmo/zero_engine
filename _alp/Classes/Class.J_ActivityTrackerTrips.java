@@ -113,7 +113,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 			   if (timeSinceWeekStart_h >= endTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < endTimes_h.get(eventIndex)) { // is the trip also ending this timestep?
 				   vehicle.endTrip(tripDistance_km);
 				   setNextTrip();
-				   prepareNextActivity(time_h, chargePointRegistration);
+				   prepareNextActivity(timeVariables, chargePointRegistration);
 			   }
 		   }
 	   } else {
@@ -123,7 +123,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 		   if (timeSinceWeekStart_h >= endTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < endTimes_h.get(eventIndex)) { // is a trip ending this timestep?
 			   vehicle.endTrip(tripDistance_km);
 			   setNextTrip();
-			   prepareNextActivity(time_h, chargePointRegistration);
+			   prepareNextActivity(timeVariables, chargePointRegistration);
 			   if (timeSinceWeekStart_h >= startTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < startTimes_h.get(eventIndex) ) { // is the next trip also starting this timestep?
 				   currentTripTimesteps_n = max(1,roundToInt(((endTimes_h.get(eventIndex) - startTimes_h.get(eventIndex)) / timeParameters.getTimeStep_h())));
 				   vehicle.startTrip(timeVariables);
@@ -155,7 +155,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 			   }
 		   }
 	   }
-	   prepareNextActivity(time_h, chargePointRegistration);    	
+	   prepareNextActivity(timeVariables, chargePointRegistration);    	
    }
    
    /*
@@ -164,7 +164,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     * If the vehicle is an EV it also calculates the charging need, including possible future trips.
     * The function passes this information to the EV and registers the charging request at the chargepoint.
     */
-   public void prepareNextActivity(double time_h, I_ChargePointRegistration chargePointRegistration) {
+   public void prepareNextActivity(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration) {
+	   double time_h = timeVariables.getT_h();
+	   
 	   // Trip start/end-times are all defined as minutes since monday 00:00h
 	   double timeSinceWeekStart_h = getTimeSinceWeekStart_h(time_h);
 	   nextEventStartTime_h = startTimes_h.get(eventIndex);

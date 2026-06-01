@@ -14,7 +14,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public interface I_Vehicle
 {
 	// These methods can't have default implementations because they use the Object States.
-
+	I_AssetOwner getOwner();
+	
     boolean startTrip(J_TimeVariables timeVariables);
     boolean endTrip(double tripDist_km);
     
@@ -27,6 +28,9 @@ public interface I_Vehicle
 	double getVehicleScaling_fr();
 	double getEnergyConsumption_kWhpkm();
 	
-	//Temporary, till replaced with getVehicleType() (Car, Van, Truck, Tractor) and getFuelType() (ELE, Petrol, h2)
+	OL_VehicleType getVehicleType();
+	OL_EnergyCarriers getFuelType();
+	
+	//Temporary, till fully replaced with getVehicleType() (Car, Van, Truck, Tractor) and getFuelType() (ELE, Petrol, h2)
 	OL_EnergyAssetType getEAType();
 }

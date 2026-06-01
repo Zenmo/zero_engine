@@ -2229,10 +2229,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[J_BackupGeneratorManagementExternalSetpoint]]></Name>
 				<Folder>1776078970513</Folder>
 			</JavaClass>
-			<JavaClass>
-				<Id>1779961820984</Id>
-				<Name><![CDATA[J_CustomTripTrackerGenerator]]></Name>
-			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

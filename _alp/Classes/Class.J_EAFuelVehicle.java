@@ -9,7 +9,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 	private double energyConsumption_kWhpkm;
 	private double vehicleScaling;
 	private J_ActivityTrackerTrips tripTracker;
-	
+	private OL_VehicleType vehicleType;
 	/**
      * Default constructor
      */
@@ -19,10 +19,10 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
     /**
      * Constructor initializing the fields
      */
-    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier ) {
-    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, energyAssetType, tripTracker, energyCarrier, true );
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier ) {
+    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, true );
     }
-    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_EnergyAssetType energyAssetType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
 	    if (energyCarrier == OL_EnergyCarriers.HEAT || energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 	    	throw new RuntimeException("Invalid choice of energy carrier for J_EAFuelVehicle");
 	    }
@@ -30,7 +30,8 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 	    this.timeParameters = timeParameters;
 	    this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 	    this.vehicleScaling = vehicleScaling;
-	    this.energyAssetType = energyAssetType;
+	    this.vehicleType = vehicleType;
+	    this.setEnergyAssetType(vehicleType, energyCarrier); // Temporary, till EA type is removed!
 	    this.tripTracker = tripTracker;
 	    this.available = available;
 	    if (tripTracker != null) {
@@ -102,28 +103,28 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 	public void setVehicleScaling(double vehicleScaling) {
     	this.vehicleScaling = vehicleScaling;
     }
-    
 	public void setTripTracker(J_ActivityTrackerTrips tracker) {
 		this.tripTracker = tracker;
 	}
-	
 	public J_ActivityTrackerTrips getTripTracker() {
 		return this.tripTracker;
 	}
-	
 	public boolean getAvailability() {
 		return this.available;
 	}
-	
 	public double getVehicleScaling_fr() {
 		return this.vehicleScaling;
 	}
-	
 	public double getEnergyConsumption_kWhpkm() {
 		return this.energyConsumption_kWhpkm * this.vehicleScaling;
 	}
-	
 	public OL_EnergyCarriers getEnergyCarrierConsumed() {
+		return this.energyCarrierConsumed;
+	}
+	public OL_VehicleType getVehicleType() {
+		return this.vehicleType;
+	}
+	public OL_EnergyCarriers getFuelType() {
 		return this.energyCarrierConsumed;
 	}
 	
@@ -152,5 +153,40 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 			"energyConsumption_kWhpkm =" + energyConsumption_kWhpkm + " " +
 			"vehicleScaling = " + vehicleScaling;
 	}
+	
+	//Temporary, till OL_EnergyAssetType is removed!!!!
+	private void setEnergyAssetType(OL_VehicleType vehicleType, OL_EnergyCarriers energyCarrier) {
+		switch(vehicleType) {
+			case CAR:
+				switch(energyCarrier) {
+					case PETROLEUM_FUEL:
+						this.energyAssetType = OL_EnergyAssetType.PETROLEUM_FUEL_VEHICLE;
+						break;
+					case HYDROGEN:
+						this.energyAssetType = OL_EnergyAssetType.HYDROGEN_VEHICLE;
+						break;	
+				}
+				break;
+			case VAN:
+				switch(energyCarrier) {
+					case PETROLEUM_FUEL:
+						this.energyAssetType = OL_EnergyAssetType.PETROLEUM_FUEL_VAN;
+						break;
+					case HYDROGEN:
+						this.energyAssetType = OL_EnergyAssetType.HYDROGEN_VAN;
+						break;	
+				}
+				break;
+			case TRUCK:
+				switch(energyCarrier) {
+					case PETROLEUM_FUEL:
+						this.energyAssetType = OL_EnergyAssetType.PETROLEUM_FUEL_TRUCK;
+						break;
+					case HYDROGEN:
+						this.energyAssetType = OL_EnergyAssetType.HYDROGEN_TRUCK;
+						break;	
+				}
+				break;
+		}
+	}
 }
-
