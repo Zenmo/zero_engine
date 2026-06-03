@@ -1227,9 +1227,11 @@ else{
 
 double f_fillDebugPlots()
 {/*ALCODESTART::1778827741895*/
-double power = roundToDecimal(c_heatingAssets.get(0).getLastFlows().get(OL_EnergyCarriers.ELECTRICITY), 2);
-HPPower_kW.add(max(0, power));
-double temperature = roundToDecimal(p_BuildingThermalAsset.getCurrentTemperature(), 2);
-houseTemperature_degC.add(max(0, temperature));
+if (c_heatingAssets.size() > 0) {	
+	double power = roundToDecimal(c_heatingAssets.get(0).getLastFlows().get(OL_EnergyCarriers.ELECTRICITY), 2);
+	HPPower_kW.add(max(0, power));
+	double temperature = roundToDecimal(p_BuildingThermalAsset.getCurrentTemperature(), 2);
+	houseTemperature_degC.add(max(0, temperature));
+}
 /*ALCODEEND*/}
 

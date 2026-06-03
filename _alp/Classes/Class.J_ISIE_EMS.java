@@ -145,7 +145,7 @@ public class J_ISIE_EMS implements I_EnergyManagement {
      * 
      */
     private void createFlexAssetSchedules(J_TimeVariables timeVariables) {
-    	// TEMPORARY. might need to move the initialization of this forecasting before engine intialization to the loader?
+    	// TEMPORARY. might need to move the initialization of this forecasting before engine intialization to the loader? Then we could set this in the constructor or something
     	this.pf_ambientTemperature_degC = GC.energyModel.pf_ambientTemperature_degC;
     	
     	// Some basic parameters

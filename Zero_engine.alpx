@@ -2248,6 +2248,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[J_BatteryScheduler]]></Name>
 				<Folder>1777276374071</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1779957346988</Id>
+				<Name><![CDATA[J_ISIE_Aggregator_EMS]]></Name>
+				<Folder>1777276374071</Folder>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
