@@ -81,9 +81,14 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			throw new RuntimeException("Trying to charge EV that is not available for charging!");
 		}
 		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.capacityElectric_kW * vehicleScaling; // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
-    	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
-    	
-    	//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
+		// Limit charge power to stay within SoC 0-1
+    	double cappedSOC_fr = max(min(0, this.stateOfCharge_fr), 1);
+		double availableEnergyInBattery_kWh = cappedSOC_fr * this.getStorageCapacity_kWh();
+    	double availableRoomInBattery_kWh = cappedSOC_fr * this.getStorageCapacity_kWh();
+    	double maxPowerIn_kW = availableRoomInBattery_kWh / this.timeParameters.getTimeStep_h();
+    	double maxPowerOut_kW = availableEnergyInBattery_kWh / this.timeParameters.getTimeStep_h();
+		double chargePower_kW = max(min(chargeSetpoint_kW, maxPowerIn_kW ), -maxPowerOut_kW ); 
+
 		double electricityProduction_kW = max(-chargePower_kW, 0);
 		double electricityConsumption_kW = max(chargePower_kW, 0);
 		updateStateOfCharge( chargePower_kW );
@@ -264,7 +269,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			this.assetFlowCategory = OL_AssetFlowCategories.evChargingPower_kW;
 		}
 	}
-	
+
 	@Override
     public void storeStatesAndReset() {
 		//traceln("EV reset!");
@@ -296,10 +301,18 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	
 	@Override
 	public String toString() {
-		return
-			"SOC = " + roundToDecimal( stateOfCharge_fr, 2 ) + " " +
-			"storageCapacity_kWh = " + storageCapacity_kWh + " " +
-			"charged_kWh = " + roundToDecimal( charged_kWh, 2 );
+		StringBuilder sb = new StringBuilder();
+		sb.append("SOC = " + roundToDecimal( this.stateOfCharge_fr, 2 ));
+		sb.append(", ");
+		sb.append("storageCapacity_kWh = " + this.storageCapacity_kWh);
+		sb.append(", ");
+		sb.append("chargingCapacity_kW = " + this.capacityElectric_kW);
+		sb.append(", ");
+		sb.append("charged_kWh = " + roundToDecimal( this.charged_kWh, 2 ));
+		sb.append(", ");
+		sb.append("vehicleScaling = " + this.vehicleScaling);		
+		return sb.toString();
+
 	}
 }
  

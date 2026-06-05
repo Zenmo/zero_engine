@@ -41,6 +41,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
     public J_ISIE_Aggregator_EMS(EnergyCoop energyCoop, J_TimeParameters timeParameters) {
         	this.energyCoop = energyCoop;
         	this.timeParameters = timeParameters;
+        	this.congestionDeadzone_kW = this.CONGESTIONDEADZONE_FR * energyCoop.f_getAllChildMemberGridConnections().get(0).p_parentNodeElectric.p_capacity_kW;
     }
     
     
@@ -115,53 +116,97 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 		    	// We create a virtual consumption asset for each trip, we can't allow the asset to delay the charging need of one trip until the next
 		    	// We translate the distance to an amount of energy and the start/end time become allowedOperatingTimes
 		    	    			
-		    	double currentStorageCapacity_kWh = ev.getCurrentSOC_kWh();
+		    	double currentSOC_kWh = ev.getCurrentSOC_kWh();
+		    	//traceln("currentSOC_kWh %s", currentSOC_kWh);
 		    	double maximalStorageCapacity_kWh = ev.getStorageCapacity_kWh();
 		    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : (tripTracker.endtimes_min.get(tripTracker.eventIndex)%24) / 60.0; // assumes the current trip ends today (no trips > 24 hours exist)
+	    	    //traceln("endTimeLastTrip_h: " + endTimeLastTrip_h);
+	    	    double maxPower_kW = ev.capacityElectric_kW;
+	    		//traceln("maxPower_kW: " + maxPower_kW);
+
+	    	    if (trips.size() > 0) {
+			    	for (Triple<Double, Double, Double> trip : trips) {
+			    		double startTime_h = trip.getLeft();
+			    		double endTime_h = trip.getMiddle();
+			    		double distance_km = trip.getRight();
+			    		//traceln("startTime_h: " + startTime_h);
+			    		//traceln("endTime_h: " + endTime_h);
+			    		// TODO: BUGFIX: Take the SOC into account? at least for the first/current trip
+			    		double work_kWh = maximalStorageCapacity_kWh - currentSOC_kWh;
+			    		
+			    		//traceln("endTimeLastTrip_h: %s", endTimeLastTrip_h);
+			    		//traceln("startTime_h: %s", startTime_h);
+			    		//traceln("work_kWh: %s", work_kWh);
+			    		
+			    		// check for 'impossible trip'
+			    		double firstAvailableChargingTime_h = this.timeParameters.getTimeStep_h() * Math.ceil(endTimeLastTrip_h / this.timeParameters.getTimeStep_h());
+			    		double lastAvailableChargingTime_h = this.timeParameters.getTimeStep_h() * Math.floor(startTime_h / this.timeParameters.getTimeStep_h());
+			    		double maxWork_kWh = (lastAvailableChargingTime_h - firstAvailableChargingTime_h) * maxPower_kW;
+			    		//traceln("max possible work before trip start: %s", maxWork_kWh);
+			    		if (maxWork_kWh < work_kWh) {
+			    			//traceln("old work: " + work_kWh);
+			    			work_kWh = max(0, maxWork_kWh);
+			    			//traceln("new work: " + work_kWh);
+			    			/*
+							throw new RuntimeException("Impossible trip / loading session { "
+			    					//+ "endTimeLastTrip_h: " + endTimeLastTrip_h
+			    					+ ", firstAvailableChargingTime_h: " + firstAvailableChargingTime_h
+			    					//+ ", startTime_h: " + startTime_h
+			    					+ ", lastAvailableChargingTime_h: " + lastAvailableChargingTime_h
+			    					+ ", work_kWh: " + work_kWh
+			    					+ ", maxPower_kW: " + maxPower_kW
+			    					+ " }");
+			    			*/
+			    		}
+			    		
+			    		boolean[] allowedOperatingTimes = new boolean[timeStepsInForecast];
+			    		Arrays.fill(allowedOperatingTimes, true);
+			    		for (int i = 0; i < timeStepsInForecast; i++) {
+			    			double t = i*this.timeParameters.getTimeStep_h();
+			    			if (t < endTimeLastTrip_h) {
+			    				allowedOperatingTimes[i] = false;
+			    			}
+			    			if (t >= startTime_h) {  // >= or > ?
+			    				allowedOperatingTimes[i] = false;
+			    			}
+			    		}
+			    		//traceln("allowedOperatingTimes: " + Arrays.toString(allowedOperatingTimes));
 	
-	
-		    	for (Triple<Double, Double, Double> trip : trips) {
-		    		double startTime_h = trip.getLeft();
-		    		double endTime_h = trip.getMiddle();
-		    		double distance_km = trip.getRight();
-		    		// TODO: BUGFIX: Take the SOC into account? at least for the first/current trip
-		    		double work_kWh = distance_km * ev.getEnergyConsumption_kWhpkm();
-		    		
+			    	    J_VirtualFlexAsset trip_ev = new J_VirtualFlexAsset( maxPower_kW, this.POWERSTEPS_NR, this.timeParameters.getTimeStep_h(), this.FORECAST_TIME_H, allowedOperatingTimes );
+			    		virtual_evs.add(trip_ev);
+			    		
+			    		double marketFeedback_eurpMWhpkW = this.NATIONAL_PRICE_ELASTICITY_EURPMWHPGW * (this.NATIONAL_COMMUTER_EV_POWER_GW + this.NATIONAL_NON_COMMUTER_EV_POWER_GW) / maxPower_kW;
+			    		market = new J_Market(dailyPriceCurve_eurpMWh, marketFeedback_eurpMWhpkW, this.SELFCONSUMPTIONSAVING_EURPMWH, this.congestionDeadzone_kW, this.CONGESTIONFACTOR_EURPMWHPKW);
+			    		
+			    		// Create a schedule for the asset and update the total load & price curve with market feedback.
+			    		double[] newTotalLoad_kW = J_FlexAssetScheduler.scheduleWrapper(totalLoad_kW, trip_ev, work_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
+			    		evProfile_kW = trip_ev.profile_kW;
+			    		dailyPriceCurve_eurpMWh = market.getUpdatedDailyPriceCurve_eurpMWh(newTotalLoad_kW, evProfile_kW);
+			    		
+			    		// update parameters relevant for other trips of this gc.
+			    		currentSOC_kWh += work_kWh - distance_km * ev.getEnergyConsumption_kWhpkm();
+			    		endTimeLastTrip_h = endTime_h;
+			    	}
+	    	    }
+			    else if (ev.getAvailability()) {
+			    	// Very analogous to the if part, except if there are no trips, the whole day can be used to charge
+		    		double work_kWh = maximalStorageCapacity_kWh - currentSOC_kWh;
 		    		boolean[] allowedOperatingTimes = new boolean[timeStepsInForecast];
 		    		Arrays.fill(allowedOperatingTimes, true);
-		    		for (int i = 0; i < timeStepsInForecast; i++) {
-		    			if (i*this.timeParameters.getTimeStep_h() < endTimeLastTrip_h) {
-		    				allowedOperatingTimes[i] = false;
-		    			}
-		    			if ( i*this.timeParameters.getTimeStep_h() >= startTime_h - 2*this.timeParameters.getTimeStep_h()) {  // >= or > ?
-		    				allowedOperatingTimes[i] = false;
-		    			}
-		    		}
-		    	    double maxPower_kW = ev.capacityElectric_kW;
-		    		    	    
-		    	    // bound the work by the amount of charging time & power available
-		    		work_kWh = min(work_kWh, max(0,(endTime_h - startTime_h - this.timeParameters.getTimeStep_h())) * maxPower_kW);
-		    		    		
 		    	    J_VirtualFlexAsset trip_ev = new J_VirtualFlexAsset( maxPower_kW, this.POWERSTEPS_NR, this.timeParameters.getTimeStep_h(), this.FORECAST_TIME_H, allowedOperatingTimes );
 		    		virtual_evs.add(trip_ev);
-		    		
 		    		double marketFeedback_eurpMWhpkW = this.NATIONAL_PRICE_ELASTICITY_EURPMWHPGW * (this.NATIONAL_COMMUTER_EV_POWER_GW + this.NATIONAL_NON_COMMUTER_EV_POWER_GW) / maxPower_kW;
 		    		market = new J_Market(dailyPriceCurve_eurpMWh, marketFeedback_eurpMWhpkW, this.SELFCONSUMPTIONSAVING_EURPMWH, this.congestionDeadzone_kW, this.CONGESTIONFACTOR_EURPMWHPKW);
-		    		
-		    		// Create a schedule for the asset and update the total load & price curve with market feedback.
-		    		evProfile_kW = J_FlexAssetScheduler.scheduleWrapper(totalLoad_kW, trip_ev, work_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
-		    		dailyPriceCurve_eurpMWh = market.getDailyPriceCurve_eurpMWh();
-		    		
-		    		endTimeLastTrip_h = endTime_h;
-		    	}
-		    	
+		    		double[] newTotalLoad_kW = J_FlexAssetScheduler.scheduleWrapper(totalLoad_kW, trip_ev, work_kWh, market, this.timeParameters.getTimeStep_h(), this.SEPERATE_MARKET_AND_CONGESTION);
+		    		evProfile_kW = trip_ev.profile_kW;
+		    		dailyPriceCurve_eurpMWh = market.getUpdatedDailyPriceCurve_eurpMWh(newTotalLoad_kW, evProfile_kW);
+			    }
+	    	    
 		    	evProfilesMap.put(gc.p_gridConnectionID, evProfile_kW);
 		    	
 	        	for (int i = 0; i < totalLoad_kW.length; i++) {
 	        		totalLoad_kW[i] += evProfile_kW[i];
 	        	}
-	
-	        	//}
     		}
     	}
     	

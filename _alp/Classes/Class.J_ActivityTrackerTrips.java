@@ -244,7 +244,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     		double endTime_min = endtimes_min.get(localEventIndex);
     		double distance_km = distances_km.get(localEventIndex);
 
-    		trips.add( Triple.of((startTime_min-currentTimeSinceWeekStart_min)/60.0, (endTime_min-currentTimeSinceWeekStart_min)/60.0, distance_km) );
+    		double startTimeSinceWeekStart_h = (startTime_min-currentTimeSinceWeekStart_min)/60.0;
+    		double endTimeSinceWeekStart_h = (endTime_min-currentTimeSinceWeekStart_min)/60.0;
+    		trips.add( Triple.of(startTimeSinceWeekStart_h, endTimeSinceWeekStart_h, distance_km) );
     		
     		localEventIndex++;
     	}

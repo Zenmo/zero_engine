@@ -90,5 +90,36 @@ public class J_Market {
     public double[] getDailyPriceCurve_eurpMWh() {
     	return this.dailyPriceCurve_eurpMWh;
     }
+
+
+    public double[] getUpdatedDailyPriceCurve_eurpMWh(double[] loadProfile_kW, double[] flexProfile_kW) {
+    	double[] priceCurve_eurpMWh = new double[loadProfile_kW.length];
+
+        double[] loadProfileSign = new double[loadProfile_kW.length];
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            loadProfileSign[i] = (loadProfile_kW[i] >= congestionDeadzone_kW ? 1 : 0) - ((-loadProfile_kW[i]) >= congestionDeadzone_kW ? 1 : 0);
+        }
+
+        double[] congestionTerm_eurpMWh = new double[loadProfile_kW.length];
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            congestionTerm_eurpMWh[i] = loadProfileSign[i] * (Math.abs(loadProfile_kW[i]) - congestionDeadzone_kW + Math.abs(loadProfile_kW[i])) * congestionFactor_eurpMWhpkW;
+        }
+
+        double[] selfConsumptionTerm_eurpMWh = new double[loadProfile_kW.length];
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            selfConsumptionTerm_eurpMWh[i] = selfConsumptionSaving_eurpMWh * (loadProfile_kW[i] >= 0 ? 1 : 0);
+        }
+
+        double[] marketFeedbackTerm_eurpMWh = new double[loadProfile_kW.length];
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+            marketFeedbackTerm_eurpMWh[i] = flexProfile_kW[i] * marketFeedback_eurpMWhpkW;
+        }
+        
+        for (int i = 0; i < loadProfile_kW.length; i++) {
+        	priceCurve_eurpMWh[i] = dailyPriceCurve_eurpMWh[i] + selfConsumptionTerm_eurpMWh[i] + congestionTerm_eurpMWh[i] + marketFeedbackTerm_eurpMWh[i];
+        }
+    	return priceCurve_eurpMWh;
+    
+    }
 }
 
