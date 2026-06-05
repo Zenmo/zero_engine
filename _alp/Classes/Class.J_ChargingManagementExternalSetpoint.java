@@ -16,7 +16,7 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
 
     private GridConnection gc;
     private J_TimeParameters timeParameters;
-    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.SIMPLE;
+    private OL_ChargingAttitude activeChargingType = OL_ChargingAttitude.CUSTOM;
     private boolean V2GActive = false;
     
     private Map<I_ChargingRequest, Double> map_chargingSetpoints_kW = new HashMap<>();

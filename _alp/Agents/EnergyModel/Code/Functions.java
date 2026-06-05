@@ -114,22 +114,24 @@ v_totalBatteryChargeAmount_MWh = 0;
 v_totalBatteryEnergyUsed_MWh = 0;
 
 for(J_EA ea : c_energyAssets) { // Single loop of all assets without using c_EVs and c_storageAssets
-	if( ea instanceof J_EAStorageElectric storageElectric) {
-		v_totalBatteryDischargeAmount_MWh += storageElectric.getTotalDischargeAmount_kWh() / 1000;
-		v_totalBatteryChargeAmount_MWh += storageElectric.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryEnergyUsed_MWh += storageElectric.getEnergyUsed_kWh() / 1000;
-	}
-	
-	if( ea instanceof J_EAEV ev) {
-		v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
-		v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
-	}
-	
-	if( ea instanceof J_EAChargingSession cs) {
-		v_totalBatteryDischargeAmount_MWh += cs.getTotalDischargeAmount_kWh() / 1000;
-		v_totalBatteryChargeAmount_MWh += cs.getTotalChargeAmount_kWh() / 1000;
-		v_totalBatteryEnergyUsed_MWh += cs.getEnergyUsed_kWh() / 1000;
+	if (ea.ownerIsActive()) {
+		if( ea instanceof J_EAStorageElectric storageElectric) {
+			v_totalBatteryDischargeAmount_MWh += storageElectric.getTotalDischargeAmount_kWh() / 1000;
+			v_totalBatteryChargeAmount_MWh += storageElectric.getTotalChargeAmount_kWh() / 1000;
+			v_totalBatteryEnergyUsed_MWh += storageElectric.getEnergyUsed_kWh() / 1000;
+		}
+		
+		if( ea instanceof J_EAEV ev) {
+			v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
+			v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
+			v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
+		}
+		
+		if( ea instanceof J_EAChargingSession cs) {
+			v_totalBatteryDischargeAmount_MWh += cs.getTotalDischargeAmount_kWh() / 1000;
+			v_totalBatteryChargeAmount_MWh += cs.getTotalChargeAmount_kWh() / 1000;
+			v_totalBatteryEnergyUsed_MWh += cs.getEnergyUsed_kWh() / 1000;
+		}
 	}
 }
 
@@ -554,7 +556,7 @@ startDate.setHours(0);
 startDate.setMinutes(0);
 traceln("Startdate: %s", startDate);
 //startDate.set
-getExperiment().getEngine().setStartDate(startDate); 
+getEngine().setStartDate(startDate); 
 */
 
 //traceln("Day of the week on january 1st %s: %s, int value: %s", p_year, DayOfWeek.from(localDate).name(), v_dayOfWeek1jan);
@@ -1055,7 +1057,7 @@ startDate.setHours(0);
 startDate.setMinutes(0);
 traceln("Startdate: %s", startDate);
 //startDate.set
-getExperiment().getEngine().setStartDate(startDate); 
+getEngine().setStartDate(startDate); 
 */
 
 f_initializeForecasts();
@@ -1163,7 +1165,7 @@ for (EnergyCoop EC : pop_energyCoops) {
 
 Date f_getDate()
 {/*ALCODESTART::1758012535712*/
-Date startDate = getExperiment().getEngine().getStartDate();
+Date startDate = getEngine().getStartDate();
 long startDateUnixTime_ms = startDate.getTime();
 long runtime_ms = (long) (v_timeStepsElapsed * p_timeParameters.getTimeStep_h() * 60 * 60 * 1000);
 Date date = new Date();
@@ -1223,7 +1225,7 @@ startDate.setHours(0);
 startDate.setMinutes(0);
 traceln("Startdate: %s", startDate);
 //startDate.set
-getExperiment().getEngine().setStartDate(startDate); 
+getEngine().setStartDate(startDate); 
 
 
 
@@ -1305,7 +1307,7 @@ startDate.setHours(0);
 startDate.setMinutes(0);
 traceln("Startdate: %s", startDate);
 //startDate.set
-getExperiment().getEngine().setStartDate(startDate); 
+getEngine().setStartDate(startDate); 
 
 
 /*ALCODEEND*/}

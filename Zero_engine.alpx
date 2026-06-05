@@ -150,6 +150,10 @@
 					<Name><![CDATA[ELECTROLYSER]]></Name>
 				</Option>
 				<Option>
+					<Id>1778231196368</Id>
+					<Name><![CDATA[DIESEL_GEN]]></Name>
+				</Option>
+				<Option>
 					<Id>1659118344195</Id>
 					<Name><![CDATA[ANTI_LAYER]]></Name>
 				</Option>
@@ -760,6 +764,7 @@
 			<OptionList>
 				<Id>1675025163072</Id>
 				<Name><![CDATA[OL_ConnectionOwnerType]]></Name>
+				<ExcludeFromBuild>true</ExcludeFromBuild>
 				<Option>
 					<Id>1675025163073</Id>
 					<Name><![CDATA[COMPANY]]></Name>
@@ -2252,6 +2257,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1779957346988</Id>
 				<Name><![CDATA[J_ISIE_Aggregator_EMS]]></Name>
 				<Folder>1777276374071</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1778239873010</Id>
+				<Name><![CDATA[J_BackupGeneratorManagementExternalSetpoint]]></Name>
+				<Folder>1776078970513</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

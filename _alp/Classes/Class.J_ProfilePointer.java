@@ -35,7 +35,7 @@ public class J_ProfilePointer{
 	
     public J_ProfilePointer(String name, double[] profile, double dataTimeStep_h, double dataStartTime_h, OL_ProfileUnits profileUnits) {
     	if (profileUnits == null) {
-    		throw new RuntimeException("Attemtping to create J_ProfilePointer with null profileUnits!");
+    		throw new RuntimeException("Attempting to create J_ProfilePointer with null profileUnits!");
     	}
     	this.name = name;
     	this.a_profile = profile;
@@ -77,6 +77,23 @@ public class J_ProfilePointer{
     
     public double getDataTimeStep_h() {
     	return dataTimeStep_h;
+    }
+    
+    public double getDataStartTime_h() {
+    	return dataStartTime_h;
+    }
+    
+    public double[] getAllShiftedValues() {
+        double[] shiftedValues = new double[a_profile.length];
+        for (int i = 0; i < a_profile.length; i++) {
+            int index_n = (int)((i * dataTimeStep_h - dataStartTime_h) / dataTimeStep_h);
+            index_n = index_n % a_profile.length;
+            if (index_n < 0) {
+                index_n += a_profile.length;
+            }
+            shiftedValues[i] = a_profile[index_n];
+        }
+        return shiftedValues;
     }
     
     public OL_ProfileUnits getProfileUnits() {
