@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010504"
+                   AnyLogicVersion="8.9.7.202512121156"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -2234,7 +2234,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			</JavaClass>
 			<JavaClass>
 				<Id>1779200054340</Id>
-				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurnerMonth]]></Name>
+				<Name><![CDATA[J_HeatingManagementDistrictHeatingIronBurner6HourSUMMERWINTER]]></Name>
 				<Folder>1772100328968</Folder>
 			</JavaClass>
 			<JavaClass>

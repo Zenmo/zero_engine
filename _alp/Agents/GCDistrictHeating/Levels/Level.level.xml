@@ -148,7 +148,7 @@
 		</Labels>
 		<ShowLegend>true</ShowLegend>
 		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
-		<TimeWindowUnits>YEAR</TimeWindowUnits>
+		<TimeWindowUnits>MONTH</TimeWindowUnits>
 		<VerScaleFromExpression>0</VerScaleFromExpression>
 		<VerScaleToExpression>2000</VerScaleToExpression>
 		<VerScaleType>AUTO</VerScaleType>
@@ -165,9 +165,9 @@
 			<LineWidth>1.0</LineWidth>
 		</DatasetExpression>
 		<SamplesToKeep>35000</SamplesToKeep>
-		<TimeWindowExpression>1</TimeWindowExpression>
+		<TimeWindowExpression>3</TimeWindowExpression>
 		<FillAreaUnderLine>false</FillAreaUnderLine>
-		<LabelFormat>HH_mm</LabelFormat>
+		<LabelFormat>w</LabelFormat>
 	</TimePlot>
 	<TimePlot>
 		<Id>1779465198723</Id>
