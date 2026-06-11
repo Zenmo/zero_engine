@@ -12,7 +12,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	
 	private J_TimeParameters timeParameters;
 	
-	private ArrayList<Double> distances_km = new ArrayList<>();
+	private List<TripRecord> tripRecords = new ArrayList<>();
 	private Integer CSVRowIndex = null;
 	private I_Vehicle vehicle;
 	private double idleTimeToNextTrip_h;
@@ -47,9 +47,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     	int nbActivities = tripsCSV.readInt();
  
        	for (int i = 0; i < nbActivities; i++){
-    		startTimes_h.add(tripsCSV.readDouble()/60.0); // Data is in min -> convert to hours
-    		endTimes_h.add(tripsCSV.readDouble()/60.0); // Data is in min -> convert to hours
-    		distances_km.add(tripsCSV.readDouble());
+       		this.tripRecords.add(new TripRecord(tripsCSV.readDouble()/60.0, tripsCSV.readDouble()/60.0, tripsCSV.readDouble()));
     	}
 
       	// 'forward' to next activity
@@ -59,18 +57,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     /**
      * Constructor using defined trips as input
      */
-    public J_ActivityTrackerTrips(List<Double> startTimes_h, List<Double> endTimes_h, List<Double> distances_km, I_Vehicle vehicle, I_ChargePointRegistration chargePointRegistration, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    public J_ActivityTrackerTrips(List<TripRecord> tripRecords, I_Vehicle vehicle, I_ChargePointRegistration chargePointRegistration, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
       	this.timeParameters = timeParameters;
     	this.vehicle = vehicle;
-    	
-    	//Check
-    	if(startTimes_h.size() != endTimes_h.size() && startTimes_h.size() != distances_km.size()) {
-    		throw new RuntimeException("Trying to create a custom J_ActivityTrackerTrips, with unequal amount of startTimes (" + startTimes_h.size() + "), endTimes (" + endTimes_h.size()+ "), and/or distances_km (" + distances_km.size() + ").");
-    	}
-    	
-		this.startTimes_h.addAll(startTimes_h);
-		this.endTimes_h.addAll(endTimes_h);
-		this.distances_km.addAll(distances_km);
+       	this.tripRecords.addAll(tripRecords);
 
       	// 'forward' to next activity
        	setStartIndex(timeVariables, chargePointRegistration);    
@@ -83,7 +73,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
     
    private void setNextTrip() {
 	   eventIndex++;
-	   if ( eventIndex > startTimes_h.size() - 1 ) {	
+	   if ( eventIndex > tripRecords.size() - 1 ) {	
 	   		eventIndex = 0;
 	   }
    }
@@ -103,14 +93,14 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	   double time_h = timeVariables.getT_h();
 	   double timeSinceWeekStart_h = getTimeSinceWeekStart_h(time_h); //  Trip start/end-times are all defined as minutes since monday 00:00h, trips are looped indefinitely
 	   if (vehicle.getAvailability()) { // at start of timestep! check for multiple 'events' in timestep!
-		   if ( timeSinceWeekStart_h >= startTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < startTimes_h.get(eventIndex)) { // is a trip starting this timestep?
-			   currentTripTimesteps_n = max(1,roundToInt(((endTimes_h.get(eventIndex) - startTimes_h.get(eventIndex)) / (timeParameters.getTimeStep_h()))));
+		   if ( timeSinceWeekStart_h >= tripRecords.get(eventIndex).startTime_h() && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < tripRecords.get(eventIndex).startTime_h()) { // is a trip starting this timestep?
+			   currentTripTimesteps_n = max(1,roundToInt(((tripRecords.get(eventIndex).endTime_h() - tripRecords.get(eventIndex).startTime_h()) / (timeParameters.getTimeStep_h()))));
 			   
 			   vehicle.startTrip(timeVariables);
 			   if(vehicle instanceof J_EAEV EV) {
 				   chargePointRegistration.deregisterChargingRequest(EV);
 			   }
-			   if (timeSinceWeekStart_h >= endTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < endTimes_h.get(eventIndex)) { // is the trip also ending this timestep?
+			   if (timeSinceWeekStart_h >= tripRecords.get(eventIndex).endTime_h() && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < tripRecords.get(eventIndex).endTime_h()) { // is the trip also ending this timestep?
 				   vehicle.endTrip(tripDistance_km);
 				   setNextTrip();
 				   prepareNextActivity(timeVariables, chargePointRegistration);
@@ -120,12 +110,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 		   if (vehicle instanceof J_EAFuelVehicle fuelVehicle) {
 			   fuelVehicle.progressTrip(tripDistance_km / currentTripTimesteps_n);
 		   }
-		   if (timeSinceWeekStart_h >= endTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < endTimes_h.get(eventIndex)) { // is a trip ending this timestep?
+		   if (timeSinceWeekStart_h >= tripRecords.get(eventIndex).endTime_h() && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < tripRecords.get(eventIndex).endTime_h()) { // is a trip ending this timestep?
 			   vehicle.endTrip(tripDistance_km);
 			   setNextTrip();
 			   prepareNextActivity(timeVariables, chargePointRegistration);
-			   if (timeSinceWeekStart_h >= startTimes_h.get(eventIndex) && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < startTimes_h.get(eventIndex) ) { // is the next trip also starting this timestep?
-				   currentTripTimesteps_n = max(1,roundToInt(((endTimes_h.get(eventIndex) - startTimes_h.get(eventIndex)) / timeParameters.getTimeStep_h())));
+			   if (timeSinceWeekStart_h >= tripRecords.get(eventIndex).startTime_h() && (timeSinceWeekStart_h-timeParameters.getTimeStep_h()) < tripRecords.get(eventIndex).startTime_h() ) { // is the next trip also starting this timestep?
+				   currentTripTimesteps_n = max(1,roundToInt(((tripRecords.get(eventIndex).endTime_h() - tripRecords.get(eventIndex).startTime_h()) / timeParameters.getTimeStep_h())));
 				   vehicle.startTrip(timeVariables);
 				   if(vehicle instanceof J_EAEV EV) {
 					   chargePointRegistration.deregisterChargingRequest(EV);
@@ -143,10 +133,10 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	   double time_h = timeVariables.getT_h();
 	   double timeSinceWeekStart_h = getTimeSinceWeekStart_h(time_h);
 	   boolean looped = false;
-	   while ( startTimes_h.get(eventIndex) < (timeSinceWeekStart_h ) ) { // If this occurs 'during' a trip, that trip is ignored, it is not executed.
+	   while ( tripRecords.get(eventIndex).startTime_h() < (timeSinceWeekStart_h ) ) { // If this occurs 'during' a trip, that trip is ignored, it is not executed.
 		   setNextTrip(); // Skip to the next trip.
 		   
-		   if (eventIndex == startTimes_h.size()-1 ) { 
+		   if (eventIndex == tripRecords.size()-1 ) { 
 			   if (looped) {
 				   setNextTrip(); // Increments eventIndex, reverts to first trip of week when 'overflowing'
 				   break;
@@ -169,7 +159,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	   
 	   // Trip start/end-times are all defined as minutes since monday 00:00h
 	   double timeSinceWeekStart_h = getTimeSinceWeekStart_h(time_h);
-	   nextEventStartTime_h = startTimes_h.get(eventIndex);
+	   nextEventStartTime_h = tripRecords.get(eventIndex).startTime_h();
 	   
 	   if (eventIndex == 0 && timeSinceWeekStart_h > nextEventStartTime_h) { // Next week's trip!
 		   nextEventStartTime_h = (nextEventStartTime_h + time_h - timeSinceWeekStart_h) + 168;
@@ -177,7 +167,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 		   nextEventStartTime_h = (nextEventStartTime_h + time_h - timeSinceWeekStart_h);
 	   }
 	   idleTimeToNextTrip_h = (nextEventStartTime_h - timeSinceWeekStart_h) % (24*7); // Modulo 24*7 needed because otherwise negative values can occur when trip starts 'next week'.
-	   tripDistance_km = distanceScaling_fr * distances_km.get( eventIndex ); // Update upcoming trip distance
+	   tripDistance_km = distanceScaling_fr * tripRecords.get(eventIndex).distance_km(); // Update upcoming trip distance
 	   
 	   if (vehicle instanceof J_EAEV ev) {
 		   
@@ -189,14 +179,14 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 		   double nextTripDist_km = 0;
 		   double nextTripStartTime_h = 0;
 		   
-		   if ( eventIndex == startTimes_h.size() - 1 ) {
-			   nextTripDist_km = distances_km.get( 0 );
-			   nextTripStartTime_h = endTimes_h.get( 0 );
+		   if ( eventIndex == tripRecords.size() - 1 ) {
+			   nextTripDist_km = tripRecords.get(0).distance_km();
+			   nextTripStartTime_h = tripRecords.get(0).endTime_h();
 		   } else {		
-			   nextTripDist_km = distanceScaling_fr*distances_km.get( eventIndex+1 );
-			   nextTripStartTime_h = startTimes_h.get( eventIndex+1 );
+			   nextTripDist_km = distanceScaling_fr*tripRecords.get(eventIndex+1).distance_km();
+			   nextTripStartTime_h = tripRecords.get(eventIndex+1).startTime_h();
 		   }
-		   double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.getEnergyConsumption_kWhpkm() - (nextTripStartTime_h - endTimes_h.get(eventIndex))*ev.getVehicleChargingCapacity_kW());
+		   double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * ev.getEnergyConsumption_kWhpkm() - (nextTripStartTime_h - tripRecords.get(eventIndex).endTime_h())*ev.getVehicleChargingCapacity_kW());
 		   
 		   energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
 		   energyNeedForNextTrip_kWh = min(energyNeedForNextTrip_kWh+10,ev.getStorageCapacity_kWh());
@@ -219,11 +209,15 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	   double currentAnnualDistance_km = getAnnualDistance_km();
 	   double scalingFactor_f = desiredAnnualDistance_km / currentAnnualDistance_km;
 	   
-       ListIterator<Double> iterator = distances_km.listIterator();                                                              
-	   for (int i = 0; i<distances_km.size(); i++) {
-		     iterator.next();
-		     iterator.set(distances_km.get(i)*scalingFactor_f);
-	   }
+	    ListIterator<TripRecord> iterator = tripRecords.listIterator();
+	    while (iterator.hasNext()) {
+	        TripRecord record = iterator.next();
+	        iterator.set(new TripRecord(
+	            record.startTime_h(),
+	            record.endTime_h(),
+	            record.distance_km() * scalingFactor_f
+	        ));
+	    }
    }
    //Getters
    public I_Vehicle getVehicle() {
@@ -237,11 +231,13 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	   return this.distanceScaling_fr;
    }
    public double getAnnualDistance_km() {
-	   double currentAnnualDistance_km = 52 * distances_km.stream().mapToDouble(a -> a).sum(); // assumed trip-data is one week long!! Hence the 52, for 52 weeks in a year.
-	   return currentAnnualDistance_km;
+	    double currentAnnualDistance_km = 52 * tripRecords.stream().mapToDouble(TripRecord::distance_km).sum(); // assumed trip-data is one week long!! Hence the 52, for 52 weeks in a year.
+	    return currentAnnualDistance_km;
    }
    
-
+   public static record TripRecord(double startTime_h, double endTime_h, double distance_km) {
+   }
+   
    @Override
    public void storeStatesAndReset() {
 	   eventIndexStored = eventIndex;
@@ -253,9 +249,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
    @Override
    public void restoreStates() {
 	   eventIndex = eventIndexStored;
-	   nextEventStartTime_h = startTimes_h.get(eventIndex);
+	   nextEventStartTime_h = tripRecords.get(eventIndex).startTime_h();
 	   idleTimeToNextTrip_h = idleTimeToNextTripStored_h;
-	   tripDistance_km = distanceScaling_fr * distances_km.get( eventIndex ); // Update upcoming trip distance
+	   tripDistance_km = distanceScaling_fr * tripRecords.get(eventIndex).distance_km(); // Update upcoming trip distance
    }
 
    @Override

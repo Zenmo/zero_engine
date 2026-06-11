@@ -12,7 +12,10 @@ public class J_ActivityTrackerCooking extends zero_engine.J_ActivityTracker {
 	private ArrayList<Double> initalEndTimes_h;
 	private ArrayList<Double> storedStartTimes_h;
 	private ArrayList<Double> storedEndTimes_h;
-
+	
+	protected ArrayList<Double> startTimes_h = new ArrayList<>();
+	protected ArrayList<Double> endTimes_h = new ArrayList<>();
+	
 	/**
      * Default constructor
      */

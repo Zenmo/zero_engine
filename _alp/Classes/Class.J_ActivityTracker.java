@@ -18,9 +18,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 public abstract class J_ActivityTracker implements I_StoreStatesAndReset {
 
-	// Tripdata
-	protected ArrayList<Double> startTimes_h = new ArrayList<>();
-	protected ArrayList<Double> endTimes_h = new ArrayList<>();
 	public int eventIndex = 0;
 	protected int eventIndexStored =0;
 	
