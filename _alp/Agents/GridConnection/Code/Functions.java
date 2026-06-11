@@ -185,7 +185,7 @@ if ( c_connectedGISObjects.size()>0) {
 	//If GC has no assigned trafo_id --> Assign to nearest trafo
 	if (p_parentNodeElectricID == null){
 		//Set nearest agent as trafo
-		GridNode nearestLVStation = getNearestAgent(energyModel.c_gridNodesNotTopLevel);
+		GridNode nearestLVStation = getNearestAgent(energyModel.f_getNonRootGridNodes());
 		if (nearestLVStation!=null) {
 			p_parentNodeElectricID = nearestLVStation.p_gridNodeID;
 		}
