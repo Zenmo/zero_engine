@@ -17,25 +17,6 @@ import javax.management.RuntimeErrorException;
 //@JsonIgnoreProperties({"va_gridConnection","_origin_VA","_pl_powerFlows_autoUpdateEvent_xjal","_SOC_plot_autoUpdateEvent_xjal"})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")]]></Import>
 	<Implements>I_EnergyData, I_AssetOwner</Implements>
-	<StartupCode><![CDATA[energyModel.c_gridConnections.add(this);
-
-
-v_liveData = new J_LiveData();
-v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-v_liveData.activeConsumptionEnergyCarriers= EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
-v_liveConnectionMetaData = new J_ConnectionMetaData(this);
-v_liveAssetsMetaData = new J_AssetsMetaData(this);
-v_liveData.connectionMetaData = v_liveConnectionMetaData;
-v_liveData.assetsMetaData = v_liveAssetsMetaData;
-
-fm_currentProductionFlows_kW = new J_FlowsMap();
-fm_currentConsumptionFlows_kW = new J_FlowsMap();
-fm_currentBalanceFlows_kW = new J_FlowsMap();
-fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-
-fm_consumptionForHeating_kW = new J_FlowsMap();
-fm_heatFromEnergyCarrier_kW = new J_FlowsMap();]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1658499438201</Id>
