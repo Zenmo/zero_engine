@@ -120,6 +120,13 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 					flexAssets.removeAll(findAll(flexAssets, generator -> generator.getEAType() == OL_EnergyAssetType.DIESEL_GENERATOR || generator.getEAType() == OL_EnergyAssetType.METHANE_GENERATOR || generator.getEAType() == OL_EnergyAssetType.FUEL_CELL));
 					break;
 				}
+				else if(asset instanceof J_EAFlexProfile) {
+					if(isAssetManagementActive(I_FlexProfileManagement.class)) {
+						throw new RuntimeException("A J_EAFlexProfile is found at a GC that has an EMS that does not have an active FlexProfileManagement.");
+					}
+					flexAssets.removeAll(findAll(flexAssets, flexProfile -> flexProfile instanceof J_EAFlexProfile));
+					break;
+				}
 				else {
 					throw new RuntimeException("Asset found that is not managed by I_AssetManagement, can not be checked.");
 					//If you create a custom EMS, who does support other assets, override this method!

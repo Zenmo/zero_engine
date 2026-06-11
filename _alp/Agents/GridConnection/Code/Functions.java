@@ -944,7 +944,11 @@ else if (j_ea instanceof J_EAStorage storageAsset) {
 		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh);
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh += capacity_MWh;
 	}
-} else {
+} 
+else if(j_ea instanceof J_EAFlexProfile flexProfileAsset){
+	c_flexProfileAssets.add(flexProfileAsset);
+}
+else {
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFlex asset!");
 }
 /*ALCODEEND*/}
@@ -1185,8 +1189,8 @@ else if  (j_ea instanceof J_EAStorage) {
 		energyModel.v_liveAssetsMetaData.totalInstalledBatteryStorageCapacity_MWh -= ((J_EAStorageElectric)j_ea).getStorageCapacity_kWh()/1000;
 	}
 }
-else if (j_ea instanceof J_EAConversionAirConditioner) {
-	p_airco = null;
+else if(j_ea instanceof J_EAFlexProfile flexProfileAsset){
+	c_flexProfileAssets.remove(flexProfileAsset);
 }
 /*ALCODEEND*/}
 
