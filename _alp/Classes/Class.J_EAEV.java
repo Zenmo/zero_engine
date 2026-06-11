@@ -80,7 +80,9 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 			throw new RuntimeException("Trying to charge EV that is not available for charging!");
 		}
 		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.capacityElectric_kW * vehicleScaling; // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
-    	double chargePower_kW = max(min(chargeSetpoint_kW, (1 - stateOfCharge_fr) * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()), -stateOfCharge_fr * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
+    	
+		double boundedSOC_fr = min(1, max(0, stateOfCharge_fr));
+		double chargePower_kW = max(min(chargeSetpoint_kW, (1 - boundedSOC_fr) * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()), -boundedSOC_fr * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
     	
     	//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
 		double electricityProduction_kW = max(-chargePower_kW, 0);

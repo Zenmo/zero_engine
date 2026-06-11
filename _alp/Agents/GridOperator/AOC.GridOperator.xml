@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1660731380915</Id>
 	<Name><![CDATA[GridOperator]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677829820</Folder>
 	<ExtendsReference>
 		<PackageName>zero_engine</PackageName>
@@ -21,7 +22,6 @@
 			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
 	</Parameters>
-	<StartupCode><![CDATA[energyModel.c_actors.add(this);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660731380913</Id>

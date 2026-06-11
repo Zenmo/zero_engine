@@ -77,7 +77,7 @@ for(GridNode n : c_gridNodeExecutionList) {
 	n.f_calculateEnergyBalance(p_timeVariables, p_timeParameters, v_isRapidRun);
 }
 
-for(GridNode n : c_gridNodesTopLevel) {
+for(GridNode n : f_getRootGridNodes()) {
 	if (n.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 		v_currentElectricityImport_kW += max(0, n.v_currentLoad_kW );
 		v_currentElectricityExport_kW += max(0, -n.v_currentLoad_kW );
@@ -468,8 +468,6 @@ for( GridNode GN : pop_gridNodes ) {
 // First clear lists (needed after deserialisation)
 c_gridNodeExecutionList.clear();
 c_gridNodeExecutionListReverse.clear();
-c_gridNodesTopLevel.clear();
-c_gridNodesNotTopLevel.clear();
 	
 // Then build execution order list
 for( GridNode GN : pop_gridNodes ) {
@@ -477,7 +475,6 @@ for( GridNode GN : pop_gridNodes ) {
 	//if (GN.p_parentNodeID == null) {
 	if (parentNode == null) {
 		f_gridNodeRecursiveAdd(GN);
-		c_gridNodesTopLevel.add(GN);
 		if(GN.p_energyCarrier == OL_EnergyCarriers.ELECTRICITY){
 			topLevelElectricGridCapacity_kW +=GN.p_capacity_kW;
 			if(!GN.p_realCapacityAvailable){
@@ -485,7 +482,6 @@ for( GridNode GN : pop_gridNodes ) {
 			}
 		}
 	} else {
-		c_gridNodesNotTopLevel.add(GN);	
 		if (GN.p_gridNodeID.equals(parentNode.p_parentNodeID)) {
 			traceln("Throwing exception because of circular dependency between gridNodes! GridNode %s and parentNode %s", GN.p_gridNodeID, parentNode.p_gridNodeID);
 			throw new RuntimeException("Exception: circular GridNode dependency, only tree-topology supported");
@@ -624,14 +620,17 @@ ArrayList<J_EA> f_getEnergyAssets()
 return c_energyAssets;
 /*ALCODEEND*/}
 
-ArrayList<GridNode> f_getGridNodesTopLevel()
-{/*ALCODESTART::1718289616227*/
-return this.c_gridNodesTopLevel;
-/*ALCODEEND*/}
-
-ArrayList<GridNode> f_getGridNodesNotTopLevel()
+List<GridNode> f_getNonRootGridNodes()
 {/*ALCODESTART::1718289761647*/
-return this.c_gridNodesNotTopLevel;
+var topGridNodes = new ArrayList<GridNode>();
+
+for (var gridNode: this.pop_gridNodes) {
+    if (gridNode.p_parentNodeID != null) {
+        topGridNodes.add(gridNode);
+    }
+}
+
+return Collections.unmodifiableList(topGridNodes);
 /*ALCODEEND*/}
 
 double f_initializePause()
@@ -1313,5 +1312,18 @@ double f_checkConfiguration()
 {/*ALCODESTART::1772104199229*/
 c_gridConnections.forEach(gc -> gc.f_checkConfiguration());
 
+/*ALCODEEND*/}
+
+List<GridNode> f_getRootGridNodes()
+{/*ALCODESTART::1781165095077*/
+var topGridNodes = new ArrayList<GridNode>();
+
+for (var gridNode: this.pop_gridNodes) {
+    if (gridNode.p_parentNodeID == null) {
+        topGridNodes.add(gridNode);
+    }
+}
+
+return Collections.unmodifiableList(topGridNodes);
 /*ALCODEEND*/}
 

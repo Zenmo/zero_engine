@@ -16,3 +16,15 @@ public static void forceSetOwner(Agent agent, AgentArrayList pop) throws Excepti
     c.setAccessible(true);
     c.toString();*/
 }
+
+@Override
+public void onCreate() {
+    super.onCreate();
+    
+    v_liveData = new J_LiveData();
+    v_liveData.activeEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+    v_liveData.activeProductionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+    v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+    v_liveData.connectionMetaData = v_liveConnectionMetaData;
+    v_liveData.assetsMetaData = v_liveAssetsMetaData;
+}
