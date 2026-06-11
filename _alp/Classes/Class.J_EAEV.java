@@ -82,7 +82,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 		}
 		double chargeSetpoint_kW = ratioOfChargeCapacity_r * this.capacityElectric_kW * vehicleScaling; // capped between -1 and 1. (does already happen in f_updateAllFlows()!)
     	
-		double boundedSOC_fr = max(1, min(0, stateOfCharge_fr));
+		double boundedSOC_fr = min(1, max(0, stateOfCharge_fr));
 		double chargePower_kW = max(min(chargeSetpoint_kW, (1 - boundedSOC_fr) * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()), -boundedSOC_fr * storageCapacity_kWh * vehicleScaling / this.timeParameters.getTimeStep_h()); // Limit charge power to stay within SoC 0-100
     	
     	//traceln("state of charge: " + stateOfCharge_fr * storageCapacity_kWh + ", charged: " + discharge_kW / 4+ " kWh, charging power kW: " + discharge_kW);
