@@ -1832,42 +1832,6 @@
 		</Properties>
 	</Variable>
 	<Variable Class="CollectionVariable">
-		<Id>1663251681035</Id>
-		<Name><![CDATA[c_gridNodesTopLevel]]></Name>
-		<X>399</X>
-		<Y>108</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GridNode</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
-		<Id>1663252052482</Id>
-		<Name><![CDATA[c_gridNodesNotTopLevel]]></Name>
-		<X>399</X>
-		<Y>128</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Properties SaveInSnapshot="true" AccessType="default" StaticVariable="false">
-			<CollectionClass>ArrayList</CollectionClass>
-			<ElementClass>GridNode</ElementClass>
-			<ValueElementClass>String</ValueElementClass>
-		</Properties>
-	</Variable>
-	<Variable Class="CollectionVariable">
 		<Id>1663312177330</Id>
 		<Name><![CDATA[c_gridConnections]]></Name>
 		<X>90</X>

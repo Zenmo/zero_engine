@@ -298,25 +298,9 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>ArrayList&lt;GridNode&gt;</ReturnType>
-		<Id>1718289616227</Id>
-		<Name><![CDATA[f_getGridNodesTopLevel]]></Name>
-		<X>1640</X>
-		<Y>720</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-		<ReturnType>ArrayList&lt;GridNode&gt;</ReturnType>
+		<ReturnType>List&lt;GridNode&gt;</ReturnType>
 		<Id>1718289761647</Id>
-		<Name><![CDATA[f_getGridNodesNotTopLevel]]></Name>
+		<Name><![CDATA[f_getNonRootGridNodes]]></Name>
 		<X>1640</X>
 		<Y>740</Y>
 		<Label>
@@ -774,6 +758,22 @@
 		<Name><![CDATA[f_checkConfiguration]]></Name>
 		<X>1640</X>
 		<Y>170</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>List&lt;GridNode&gt;</ReturnType>
+		<Id>1781165095077</Id>
+		<Name><![CDATA[f_getRootGridNodes]]></Name>
+		<X>1640</X>
+		<Y>720</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
