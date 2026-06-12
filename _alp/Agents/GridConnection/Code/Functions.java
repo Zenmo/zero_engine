@@ -187,7 +187,7 @@ if ( c_connectedGISObjects.size()>0) {
 	//If GC has no assigned trafo_id --> Assign to nearest trafo
 	if (p_parentNodeElectricID == null){
 		//Set nearest agent as trafo
-		GridNode nearestLVStation = getNearestAgent(energyModel.c_gridNodesNotTopLevel);
+		GridNode nearestLVStation = getNearestAgent(energyModel.f_getNonRootGridNodes());
 		if (nearestLVStation!=null) {
 			p_parentNodeElectricID = nearestLVStation.p_gridNodeID;
 		}
@@ -550,7 +550,7 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_addHeatManagement(OL_GridConnectionHeatingType heatingType,boolean isGhost)
+double f_addHeatManagement(OL_GridConnectionHeatingType heatingType,boolean isGhost,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1754393382442*/
 if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
@@ -580,9 +580,9 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
-J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
+//J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
 
-heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
+heatingManagement.setHeatingPreferences(heatingPreferences); // Reasign the existing heating preferences
 f_setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
@@ -1233,5 +1233,13 @@ if (c_heatingAssets.size() > 0) {
 	double temperature = roundToDecimal(p_BuildingThermalAsset.getCurrentTemperature(), 2);
 	houseTemperature_degC.add(max(0, temperature));
 }
+/*ALCODEEND*/}
+
+J_HeatingPreferences f_getHeatingPreferences()
+{/*ALCODESTART::1781165937788*/
+if (f_getHeatingManagement() != null) {
+	return f_getHeatingManagement().getHeatingPreferences();
+}
+return null;
 /*ALCODEEND*/}
 
