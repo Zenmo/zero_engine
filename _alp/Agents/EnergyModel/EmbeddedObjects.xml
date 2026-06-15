@@ -341,12 +341,6 @@
 		</GenericParameterSubstitute>
 		<Parameters>
 			<Parameter>
-				<Name><![CDATA[p_actorID]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_actorType]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_actorSubgroup]]></Name>
 			</Parameter>
 			<Parameter>
@@ -359,31 +353,7 @@
 				<Name><![CDATA[p_actorContractList]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_capacityTariffApplicable]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_capacityPrice_eur]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_capacityLevel_kW]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_congestionTariffApplicable]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_electricitySupplier]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_nfatoStart_h]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_nfatoEnd_h]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_nfatoLvl_kW]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_gridOperator]]></Name>
@@ -398,16 +368,7 @@
 				<Name><![CDATA[p_heatSupplier]]></Name>
 			</Parameter>
 			<Parameter>
-				<Name><![CDATA[p_connectionOwnerType]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[p_connectionOwnerIndexNr]]></Name>
-			</Parameter>
-			<Parameter>
 				<Name><![CDATA[p_detailedCompany]]></Name>
-			</Parameter>
-			<Parameter>
-				<Name><![CDATA[b_hasPrivateUI]]></Name>
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[p_energySupplierID]]></Name>
@@ -420,6 +381,12 @@
 			</Parameter>
 			<Parameter>
 				<Name><![CDATA[b_dataIsAccessible]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorID]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_actorType]]></Name>
 			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>

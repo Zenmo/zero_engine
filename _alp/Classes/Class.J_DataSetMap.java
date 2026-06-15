@@ -28,7 +28,16 @@ public class J_DataSetMap <E extends Enum<E>> implements Serializable {
     }
     
     public DataSet get(E key) {
-		return datasetArray[key.ordinal()];
+    	var dataset = datasetArray[key.ordinal()];
+    	if (dataset == null) {
+    		throw new RuntimeException(
+    				String.format(
+    						"This dataset has not been initialized for option %s",
+    						key
+					)
+			);
+    	}
+    	return dataset;
 	}
     	
 

@@ -2,6 +2,7 @@
 <ActiveObjectClass>
 	<Id>1660224852394</Id>
 	<Name><![CDATA[ConnectionOwner]]></Name>
+	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677829820</Folder>
 	<Import><![CDATA[//import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,20 +15,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	</ExtendsReference>
 	<Parameters>
 		<Parameter>
-			<Name><![CDATA[p_actorID]]></Name>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[p_actorType]]></Name>
-		</Parameter>
-		<Parameter>
 			<Name><![CDATA[p_actorSubgroup]]></Name>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[p_actorGroup]]></Name>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_actorID]]></Name>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[p_actorType]]></Name>
+		</Parameter>
 	</Parameters>
-	<StartupCode><![CDATA[energyModel.c_actors.add(this);
-energyModel.c_connectionOwners.add(this);]]></StartupCode>
 	<Generic>false</Generic>
 	<GenericParameter>
 		<Id>1660224852392</Id>
