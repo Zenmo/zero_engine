@@ -20,6 +20,9 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
     public J_FlexProfileManagementHeatprofileHeatpump(GridConnection gc, J_TimeParameters timeParameters) {
     	this.gc = gc;
     	this.timeParameters = timeParameters;
+    	this.flexProfileSetpointArray_fr = new double[roundToInt(forecastingDuration_h/timeParameters.getTimeStep_h())];
+    	Arrays.fill(flexProfileSetpointArray_fr, 1.0);
+    	this.currentFlexProfileSetpointArrayIndex = 0; // Is not in sync with real t_h, but doesnt matter, forecast will reset at right time and override.
     }
     
     public void manageFlexProfiles(J_TimeVariables timeVariables) {
@@ -30,6 +33,7 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
     	List<J_EAFlexProfile> flexibleHeatProfiles = findAll(gc.c_flexProfileAssets, flexProfile -> flexProfile.getEnergyCarrier() == OL_EnergyCarriers.HEAT);
     	
     	gc.f_updateFlexAssetFlows(flexibleHeatProfiles.get(0), flexProfileSetpointArray_fr[currentFlexProfileSetpointArrayIndex], timeVariables);
+    	currentFlexProfileSetpointArrayIndex++;
     }
     
     
@@ -73,7 +77,9 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
 		
 		//HIER BEN JE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		
-		
+		//Tester
+    	Arrays.fill(flexProfileSetpointArray_fr, 1.0);
+    	
 		//Store new array
 		this.currentFlexProfileSetpointArrayIndex = 0;
 		this.flexProfileSetpointArray_fr = newFlexProfileSetpointArray;

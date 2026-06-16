@@ -172,7 +172,6 @@
 	</ScaleRuler>
 	<CurrentLevel>1717956409513</CurrentLevel>
 	<ConnectionsId>1717956409507</ConnectionsId>
-	<Variables xmlns:al="http://anylogic.com"/>
 	<AgentLinks>
 		<AgentLink>
 			<Id>1717956409507</Id>
@@ -234,7 +233,6 @@
 			<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 			<Z>0</Z>
 			<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
-			<Presentation xmlns:al="http://anylogic.com"/>
 		</Level>
 	</Presentation>
 </ActiveObjectClass>

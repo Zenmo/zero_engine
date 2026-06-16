@@ -1235,11 +1235,22 @@ if(!v_isActive) {
 	return nettoBalance_kW;
 }
 
+//Default profiles
 for(J_EAProfile electricityProfile : findAll(c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY)) {
 	nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, electricityProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
 }
 
+//Find the default controlled flex profiles (Maybe add this to flex asset forecasting?)
+List<J_EAFlexProfile> defaultControlledHeatFlexProfiles = new ArrayList<>();
+if(f_getExternalAssetManagement(I_FlexProfileManagement.class) instanceof J_FlexProfileManagementDefault){
+	for(J_EAFlexProfile electricityFlexProfile : findAll(c_flexProfileAssets, flexProfile -> flexProfile.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY)) {
+		nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, electricityFlexProfile.getDefaultForecast_kW(forecastStartTime_h, forecastEndTime_h));
+	}
+	defaultControlledHeatFlexProfiles = findAll(c_flexProfileAssets, flexProfile -> flexProfile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && flexProfile.getEAType() != PHOTOTHERMAL);
+}
+
 List<J_EAProfile> heatProfiles = findAll(c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && profile.getEAType() != PHOTOTHERMAL);
+
 // -> Need to subtract photo thermal from hot water demand and throw away the remaining pt (?), and what about a (hot water) buffer ? 
 // -> May need a seperate 'hotwater' electricity consumption forecaster, that keeps buffer and pt in mind.
 //if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP || f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATER) && !f_getHeatingTypeIsGhost()) {
@@ -1250,7 +1261,10 @@ if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHea
 	for(J_EAProfile heatProfile : heatProfiles){
 		heatPower_kW = LUXMath.addArrays(heatPower_kW, heatProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
 	}
-	
+	for(J_EAFlexProfile defaultControlledHeatFlexProfile : defaultControlledHeatFlexProfiles){
+		heatPower_kW = LUXMath.addArrays(heatPower_kW, defaultControlledHeatFlexProfile.getDefaultForecast_kW(forecastStartTime_h, forecastEndTime_h));
+	}
+
 	//Calculate the actual power the heating asset would use (by calculating the efficiency) and add to nettoBalance_kW
 	J_EAConversion heatingAsset = c_heatingAssets.get(0);
 	double[] invEfficiency = new double[numberOfTimeSteps];
