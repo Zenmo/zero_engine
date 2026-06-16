@@ -1,14 +1,13 @@
 /**
  * J_EABuilding
  */
-//import com.fasterxml.jackson.annotation.JsonTypeName;
-//@JsonTypeName("J_EABuilding")
-public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Serializable {
+public class J_EABuilding extends zero_engine.J_EAStorageHeat{
 
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2 = 0;
 	private double additionalVentilationLosses_fr = 0;
 	private double coldExtracted_kWh = 0;
+	
 	//Slider scaling factor
 	private double lossScalingFactor_fr = 1;
 	
@@ -23,7 +22,7 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	private int exteriorReleaseScheduleIndex;	
 	
     /**
-     * Default constructor
+     * Empty constructor for serialization
      */
     public J_EABuilding() {
     }
@@ -112,16 +111,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 	}
 
 	@Override
-	public String toString() {
-		return
-			this.getClass().toString() + " " +
-			"energyUsed_kWh (heat losses) = " + this.energyUsed_kWh + "kWh, " +
-			"temp = " + this.temperature_degC + ", " +
-			"lossFactor_WpK = " + this.lossFactor_WpK + ", "+
-			"heatCapacity_JpK = " + this.heatCapacity_JpK;
-	}
-
-	@Override
 	protected void updateStateOfCharge( double deltaEnergy_kWh ) {
 		double tempDelta_degC = deltaEnergy_kWh / (this.heatCapacity_JpK / 3.6E6 );
 		this.temperature_degC += tempDelta_degC;
@@ -153,35 +142,6 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
 		return this.lossScalingFactor_fr;
 	}
 	
-	@Override
-    public void storeStatesAndReset() {
-    	// Each energy asset that has some states should overwrite this function!
-		this.energyUsedStored_kWh = this.energyUsed_kWh;
-		this.ambientEnergyAbsorbedStored_kWh = this.ambientEnergyAbsorbed_kWh;
-		this.energyUsed_kWh = 0.0;
-		this.ambientEnergyAbsorbed_kWh = 0.0;
-		this.temperatureStored_degC = this.temperature_degC;
-		this.temperature_degC = this.initialTemperature_degC;
-		if (this.interiorReleaseSchedule_kWh != null) {
-			this.interiorReleaseScheduleStored_kWh = this.interiorReleaseSchedule_kWh;
-			Arrays.fill(this.interiorReleaseSchedule_kWh, 0.0);
-		}
-		if (this.exteriorReleaseSchedule_kWh != null) {
-			this.exteriorReleaseScheduleStored_kWh = this.exteriorReleaseSchedule_kWh;
-			Arrays.fill(this.exteriorReleaseSchedule_kWh, 0.0);
-		}
-		clear();
-    }
-    
-	@Override
-    public void restoreStates() {
-    	// Each energy asset that has some states should overwrite this function!
-		this.energyUsed_kWh = this.energyUsedStored_kWh;
-		this.ambientEnergyAbsorbed_kWh = this.ambientEnergyAbsorbedStored_kWh;
-		this.temperature_degC = this.temperatureStored_degC;
-		this.interiorReleaseSchedule_kWh = this.interiorReleaseScheduleStored_kWh;
-		this.exteriorReleaseSchedule_kWh = this.exteriorReleaseScheduleStored_kWh;		
-    }
 	
 	@Override
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
@@ -272,10 +232,44 @@ public class J_EABuilding extends zero_engine.J_EAStorageHeat implements Seriali
     		return false;
     	}
     }
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */
-	private static final long serialVersionUID = 1L;
+    
+    @Override
+    public void storeStatesAndReset() {
+    	// Each energy asset that has some states should overwrite this function!
+		this.energyUsedStored_kWh = this.energyUsed_kWh;
+		this.ambientEnergyAbsorbedStored_kWh = this.ambientEnergyAbsorbed_kWh;
+		this.energyUsed_kWh = 0.0;
+		this.ambientEnergyAbsorbed_kWh = 0.0;
+		this.temperatureStored_degC = this.temperature_degC;
+		this.temperature_degC = this.initialTemperature_degC;
+		if (this.interiorReleaseSchedule_kWh != null) {
+			this.interiorReleaseScheduleStored_kWh = this.interiorReleaseSchedule_kWh;
+			Arrays.fill(this.interiorReleaseSchedule_kWh, 0.0);
+		}
+		if (this.exteriorReleaseSchedule_kWh != null) {
+			this.exteriorReleaseScheduleStored_kWh = this.exteriorReleaseSchedule_kWh;
+			Arrays.fill(this.exteriorReleaseSchedule_kWh, 0.0);
+		}
+		clear();
+    }
+    
+	@Override
+    public void restoreStates() {
+    	// Each energy asset that has some states should overwrite this function!
+		this.energyUsed_kWh = this.energyUsedStored_kWh;
+		this.ambientEnergyAbsorbed_kWh = this.ambientEnergyAbsorbedStored_kWh;
+		this.temperature_degC = this.temperatureStored_degC;
+		this.interiorReleaseSchedule_kWh = this.interiorReleaseScheduleStored_kWh;
+		this.exteriorReleaseSchedule_kWh = this.exteriorReleaseScheduleStored_kWh;		
+    }
+	
+	@Override
+	public String toString() {
+		return
+			"J_EABuilding: \n" +
+			"energyUsed_kWh (heat losses) = " + this.energyUsed_kWh + "kWh \n" +
+			"temp = " + this.temperature_degC + " \n" +
+			"lossFactor_WpK = " + this.lossFactor_WpK + " \n"+
+			"heatCapacity_JpK = " + this.heatCapacity_JpK;
+	}
 }
-

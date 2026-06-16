@@ -105,6 +105,59 @@ public final class J_TimeParameters {
 		return runEndTime_h - runStartTime_h;
 	}
 	
+	//Static methods
+	public static OL_Days getDayFromDayIndex(int dayIndex){
+		switch(dayIndex) {
+		    case 0:
+		        return OL_Days.MONDAY;
+		    case 1:
+		        return OL_Days.TUESDAY;
+		    case 2:
+		        return OL_Days.WEDNESDAY;
+		    case 3:
+		        return OL_Days.THURSDAY;
+		    case 4:
+		        return OL_Days.FRIDAY;
+		    case 5:
+		        return OL_Days.SATURDAY;
+		    case 6:
+		        return OL_Days.SUNDAY;
+		    default:
+		    	throw new RuntimeException("Day found that should not exist.");
+		}
+	}
+	public static int getDayIndexFromDay(OL_Days day){
+		switch(day) {
+		    case MONDAY:
+		        return 0;
+		    case TUESDAY:
+		        return 1;
+		    case WEDNESDAY:
+		        return 2;
+		    case THURSDAY:
+		        return 3;
+		    case FRIDAY:
+		        return 4;
+		    case SATURDAY:
+		        return 5;
+		    case SUNDAY:
+		        return 6;
+		    default:
+		    	throw new RuntimeException("Day found that should not exist.");
+		}
+	}
+	public static List<OL_Days> getOrderedDaysList(){
+		return List.of(
+			    OL_Days.MONDAY,
+			    OL_Days.TUESDAY,
+			    OL_Days.WEDNESDAY,
+			    OL_Days.THURSDAY,
+			    OL_Days.FRIDAY,
+			    OL_Days.SATURDAY,
+			    OL_Days.SUNDAY
+			);
+	}
+	
 	@Override
 	public String toString() {
 	    return "J_TimeParameters{" +

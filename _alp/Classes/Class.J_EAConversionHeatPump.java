@@ -1,7 +1,7 @@
 /**
  * J_EAConversionHeatPump
  */
-public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implements Serializable, I_HeatingAsset {
+public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implements I_HeatingAsset {
 	private double COP_r;
 	private double belowZeroHeatpumpEtaReductionFactor;
 	protected double outputTemperature_degC;
@@ -13,12 +13,10 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	public double p_baseTemperatureReference;
 
     /**
-     * Default constructor
+     * Empty constructor for serialization
      */
     public J_EAConversionHeatPump() {
     }
-
-    //Agent parentAgent, double outputCapacity_kW, double efficiency_r, double timestep_h, double outputTemperature_degC) {
 
     /**
      * Constructor initializing the fields
@@ -33,8 +31,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	    this.ambientTempType = ambientTempType;
 	    this.updateAmbientTemperature( this.baseTemperature_degC );
 
-	    //this.COP_r = eta_r * ( 273.15 + outputTemperature_degC ) / ( outputTemperature_degC - baseTemperature_degC );
-	   // traceln("Carnot-based Heatpump COP with parameter eta_r is no longer used! Replaced by empirical COP-curve.");
 	    this.COP_r = calculateCOP(this.outputTemperature_degC, this.baseTemperature_degC);
 	    
 	    this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
@@ -55,32 +51,26 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 		if ( this.baseTemperature_degC > this.outputTemperature_degC) {
 			traceln("**** EXCEPTION **** Heatpump baseTemperature ( " + this.baseTemperature_degC + ") > outputTemperature ( " + this.outputTemperature_degC + ") ");
 		}
-		//this.COP_r = this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
-	    this.COP_r = calculateCOP(this.outputTemperature_degC, this.baseTemperature_degC); //8.74 - 0.190 * deltaT + 0.00126 * deltaT * deltaT;
+
+	    this.COP_r = calculateCOP(this.outputTemperature_degC, this.baseTemperature_degC);
 		
 		// water heatpump should take sourceAsset power transfer limitations into account (e.g. residual heat). Ugly but effectively limiting heat power output.
     	
 		if( this.sourceAssetHeatPower_kW > 0) {
 	    	this.outputCapacity_kW = min( this.outputCapacity_kW, this.sourceAssetHeatPower_kW / (1 - (1 / COP_r )));
-	    	//traceln("Water water heatpump heat capacity limited from source! =" + this.capacityHeat_kW);
 		} 
 		else {
 				this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r; 
-				//traceln("heatpump updating temp: " + baseTemperature_degC);
 				if( baseTemperature_degC < 0 ) {
 					this.COP_r = this.COP_r / this.belowZeroHeatpumpEtaReductionFactor;
 				}
 		}
-    	//traceln("J_EAConversionHeatpump capacityHeat_kW = "+ this.capacityHeat_kW + ", sourceAssetHeatPower_kW " + this.sourceAssetHeatPower_kW );
-    
 	}
 
 	public void updateAmbientTemperature(double baseTemperature_degC) {
 		// water heatpump should take sourceAsset power transfer limitations into account (e.g. residual heat). Ugly but effectively limiting heat power output.
-    	
-		//traceln("J_EAHeatpump capacityHeat_kW = " + this.capacityHeat_kW + ", baseTemperature = "+ baseTemperature_degC + ", outputtemperature = "+ outputTemperature_degC);
 		updateParameters(baseTemperature_degC, this.outputTemperature_degC);
-		this.COP_r = calculateCOP(this.outputTemperature_degC, this.baseTemperature_degC); //this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
+		this.COP_r = calculateCOP(this.outputTemperature_degC, this.baseTemperature_degC);
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r;
 	}
 
@@ -90,7 +80,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	}
 	
 	public double getCOP() {
-		//traceln("Heatpump output temperature: " + this.outputTemperature_degC);
 		return this.COP_r;
 	}
 	
@@ -110,7 +99,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
     		heatConsumption_kW = heatProduction_kW - electricityConsumption_kW;
     		//update effective energy production of source asset!
     		this.p_linkedSourceEnergyAsset.v_powerFraction_fr += ( heatConsumption_kW / ((J_EAProduction)this.p_linkedSourceEnergyAsset).getCapacityHeat_kW() );
-//    		this.ownerAsset.p_linkedSourceEnergyAsset.j_ea.heatProduction_kW += this.heatConsumption_kW;
+    		this.ownerAsset.p_linkedSourceEnergyAsset.j_ea.heatProduction_kW += this.heatConsumption_kW;
        	}
        	*/
     	if (this.ambientTempType == OL_AmbientTempType.HEAT_GRID ) {
@@ -129,7 +118,6 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 
 	public void setSourceAssetHeatPower(double sourceAssetHeatPower_kW) {
 		this.sourceAssetHeatPower_kW = sourceAssetHeatPower_kW;
-		//traceln("sourceAssetHeatPower_kW is set to: "+sourceAssetHeatPower_kW);
 	}
 	
 	public void setBaseTemperature_degC( double baseTemperature_degC) {
@@ -142,6 +130,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	}
 	
 	public double calculateCOP(double outputTemperature_degC, double baseTemperature_degC) {
+		//double COP_r = this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
 		double deltaT = max(1,this.outputTemperature_degC - this.baseTemperature_degC); // Limit deltaT to at least 1 degree.
 	    double COP_r = 8.74 - 0.190 * deltaT + 0.00126 * deltaT*deltaT;
 	    return COP_r;
@@ -151,21 +140,17 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	public double getOutputTemperature_degC() {
 		return this.outputTemperature_degC;
 	}
-	/*
+
 	@Override
 	public String toString() {
 		return
-			"type = " + this.getClass().toString() + " " +
-			"parentAgent = " + parentAgent +" " +
-			"capacityElectricity_kW = " + capacityElectric_kW +" "+
-			"capacityHeat_kW = " + capacityHeat_kW +" "+
-			"baseTemperature_degC = " + baseTemperature_degC + " "+
-			"ambientTempType = " + ambientTempType + " "+
-			"sourceAssetHeatPower_kW = " + sourceAssetHeatPower_kW + " " +
-			"outputTemperature_degC = " + outputTemperature_degC +" "+
-			"energyUsed_kWh = " + energyUsed_kWh + " "+
-			"heatProduced_kWh = " + heatProduced_kWh + " "+
-			"heatConsumed_kWh = " + heatConsumed_kWh + " ";
-	}
-	*/	
+			"J_EAConversionHeatPump: \n" +
+			"capacityElectricity_kW = " + inputCapacity_kW + "\n"+
+			"capacityHeat_kW = " + outputCapacity_kW +"\n"+
+			"baseTemperature_degC = " + baseTemperature_degC + "\n"+
+			"ambientTempType = " + ambientTempType + "\n"+
+			"sourceAssetHeatPower_kW = " + sourceAssetHeatPower_kW + "\n"+
+			"outputTemperature_degC = " + outputTemperature_degC +" \n"+
+			"energyUsed_kWh = " + energyUsed_kWh;
+	}	
 }

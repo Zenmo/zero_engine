@@ -8,10 +8,9 @@ public class J_EAConversionGasCHP extends zero_engine.J_EAConversion implements 
 	protected double outputElectricCapacity_kW;
 	protected List<OL_EnergyCarriers> energyCarriersProduced = new ArrayList<>();
     
-	/**
-     * Default constructor
+    /**
+     * Empty constructor for serialization
      */
-	
     public J_EAConversionGasCHP() {
     }
 
