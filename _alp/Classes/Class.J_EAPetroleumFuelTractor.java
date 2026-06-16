@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class J_EAPetroleumFuelTractor extends J_EAProfile implements Serializable {
+public class J_EAPetroleumFuelTractor extends J_EAProfile{
     final static double PETROLEUM_FUEL_ENERGY_DENSITY_KWH_PER_L = 9.7;
     
     final double[] petroleumFuelConsumptionPerWeek_L;

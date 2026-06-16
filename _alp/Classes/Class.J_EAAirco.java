@@ -5,17 +5,23 @@ public class J_EAAirco extends zero_engine.J_EAFlex {
 	
 	double capacityElectric_kW;
 	int remainingONtimesteps = 0;
+	/**
+	 * Empty constructor for serialization
+	 */
+	 public J_EAAirco() {
+	 }
+	
     /**
-     * Default constructor
+     * Constructor initializing the fields
      */
-    public J_EAAirco(I_AssetOwner owner, double capacityElectric_kW, J_TimeParameters timeParameters) {
+	 public J_EAAirco(I_AssetOwner owner, double capacityElectric_kW, J_TimeParameters timeParameters) {
 		this.setOwner(owner);
-    	this.timeParameters = timeParameters;	
-    	this.capacityElectric_kW = capacityElectric_kW;
+		this.timeParameters = timeParameters;	
+		this.capacityElectric_kW = capacityElectric_kW;
 		this.activeConsumptionEnergyCarriers.add(OL_EnergyCarriers.ELECTRICITY);
 		//this.assetFlowCategory = OL_AssetFlowCategories.AIRCO; // bestaat nog niet!
 		this.registerEnergyAsset(timeParameters);
-    }
+	 }
     
     
 	@Override

@@ -11,7 +11,7 @@ double f_manageCookingTracker(J_TimeVariables timeVariables)
 if (p_cookingTracker != null) { // check for presence of cooking asset
 	p_cookingTracker.manageActivities(timeVariables); // also calls f_updateAllFlows in HOB asset	
 	
-	double residualHeatGasPit_kW = -p_cookingTracker.HOB.getLastFlows().get(OL_EnergyCarriers.HEAT);
+	double residualHeatGasPit_kW = -p_cookingTracker.getHob().getLastFlows().get(OL_EnergyCarriers.HEAT);
 	throw new RuntimeException("Cooking trackers and HOBs are not properly integrated with current heating management!");
 	/*if (p_BuildingThermalAsset != null) {
 		p_BuildingThermalAsset.v_powerFraction_fr += residualHeatGasPit_kW / p_BuildingThermalAsset.getCapacityHeat_kW(); // Does this work out correctly with new heatingManagement structure??

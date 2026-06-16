@@ -5,8 +5,8 @@ public class J_EAConversionGasBurner extends zero_engine.J_EAConversion implemen
 
 	protected double outputTemperature_degC;
 
-	/**
-     * Default constructor
+    /**
+     * Empty constructor for serialization
      */
     public J_EAConversionGasBurner() {
     }
