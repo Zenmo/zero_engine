@@ -15,13 +15,17 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	private List<TripRecord> tripRecords = new ArrayList<>();
 	private Integer CSVRowIndex = null;
 	private I_Vehicle vehicle;
+
+	private double nextEventStartTime_h;
 	private double idleTimeToNextTrip_h;
-	private double idleTimeToNextTripStored_h;
 	private double tripDistance_km;
 	private double distanceScaling_fr = 1.0;
 	private double currentTripTimesteps_n;
-	private double nextEventStartTime_h;
+
 	
+	//Stored variables
+	private double nextEventStartTimeStored_h;
+	private double idleTimeToNextTripStored_h;
     /**
      * Empty constructor for serialization
      */
@@ -157,7 +161,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
    public void prepareNextActivity(J_TimeVariables timeVariables, I_ChargePointRegistration chargePointRegistration) {
 	   double time_h = timeVariables.getT_h();
 	   
-	   // Trip start/end-times are all defined as minutes since monday 00:00h
+	   // Trip start/end-times are all defined as hours since monday 00:00h
 	   double timeSinceWeekStart_h = getTimeSinceWeekStart_h(time_h);
 	   nextEventStartTime_h = tripRecords.get(eventIndex).startTime_h();
 	   
@@ -241,6 +245,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
    @Override
    public void storeStatesAndReset() {
 	   eventIndexStored = eventIndex;
+	   nextEventStartTimeStored_h = nextEventStartTime_h;
 	   idleTimeToNextTripStored_h = idleTimeToNextTrip_h;
 	   idleTimeToNextTrip_h = 0;
 	   // Don't forget to call setStartIndex !
@@ -249,7 +254,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
    @Override
    public void restoreStates() {
 	   eventIndex = eventIndexStored;
-	   nextEventStartTime_h = tripRecords.get(eventIndex).startTime_h();
+	   nextEventStartTime_h = nextEventStartTimeStored_h;
 	   idleTimeToNextTrip_h = idleTimeToNextTripStored_h;
 	   tripDistance_km = distanceScaling_fr * tripRecords.get(eventIndex).distance_km(); // Update upcoming trip distance
    }

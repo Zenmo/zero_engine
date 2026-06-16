@@ -22,7 +22,6 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 	// Should this be in here?	
 	private double energyNeedForNextTrip_kWh;
 	private double energyNeedForNextTripStored_kWh;
-	//public OL_EVChargingNeed chargingNeed;
 	private double energyChargedOutsideModelArea_kWh = 0;
 	private double energyChargedOutsideModelAreaStored_kWh;
 	private double charged_kWh = 0;
