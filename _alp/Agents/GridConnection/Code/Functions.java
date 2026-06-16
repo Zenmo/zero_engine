@@ -981,13 +981,6 @@ double f_connectToJ_EAFixed(J_EAFixed j_ea,J_TimeParameters timeParameters)
 {/*ALCODESTART::1772106633559*/
 c_fixedAssets.add(j_ea);
 
-if (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.add(profileAsset);
-	if (j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
-		p_DHWAsset = profileAsset;	
-	}
-}
-
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.add(fuelVehicle);
 	
@@ -1004,39 +997,42 @@ if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	//Connect triptracker that belongs to the vehicle
 	f_connectTripTracker(fuelVehicle, timeParameters);
 }
-else if (j_ea instanceof J_EAConsumption consumptionAsset) {
-	c_consumptionAssets.add(consumptionAsset);	
-} 
-else if (j_ea instanceof J_EAProduction productionAsset) {
-	c_productionAssets.add(productionAsset);
-
-	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		double capacity_kW = productionAsset.getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
+else if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.add(profileAsset);
+	if (profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
+		p_DHWAsset = profileAsset;	
+	}
+	if (profileAsset instanceof J_EAConsumption consumptionAsset) {
+		c_consumptionAssets.add(consumptionAsset);	
+	} 
+	else if (profileAsset instanceof J_EAProduction productionAsset) {
+		c_productionAssets.add(productionAsset);
+	
+		if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+			double capacity_kW = productionAsset.getCapacityElectric_kW();
+			v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
+			if ( p_parentNodeElectric != null ) {
+				p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, true);
+			}
+			c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
+			energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
 		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW);
-		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW += capacity_kW;
-	}
-	else if (productionAsset.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		double capacity_kW = productionAsset.getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
+		else if (productionAsset.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+			double capacity_kW = productionAsset.getCapacityElectric_kW();
+			v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
+			if ( p_parentNodeElectric != null ) {
+				p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, true);
+			}
+			c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
+			energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
 		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW);
-		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW += capacity_kW;
+		else if (productionAsset.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+	
+		}
 	}
-	else if (productionAsset.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
+	else if (profileAsset instanceof J_EAPetroleumFuelTractor tractor) {
 
 	}
-}
-else if (j_ea instanceof J_EAPetroleumFuelTractor tractor) {
-	c_profileAssets.add(tractor);
-}
-else if (j_ea instanceof J_EAProfile) {
-	return;
 }
 else{
 	throw new RuntimeException("Trying to connect GC with unrecognized J_EAFixed asset!");
@@ -1060,13 +1056,6 @@ double f_removeTheJ_EAFixed(J_EAFixed j_ea)
 {/*ALCODESTART::1772110066396*/
 c_fixedAssets.remove(j_ea);
 
-if (j_ea instanceof J_EAProfile profileAsset) {
-	c_profileAssets.remove(profileAsset);
-	if (j_ea.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
-		p_DHWAsset = null;	
-	}
-}
-
 if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_vehicleAssets.remove(fuelVehicle);
 	
@@ -1084,39 +1073,36 @@ if (j_ea instanceof J_EAFuelVehicle fuelVehicle) {
 	c_tripTrackers.remove( tripTracker );
 	fuelVehicle.setTripTracker(null);
 }
-else if (j_ea instanceof J_EAConsumption) {
-	c_consumptionAssets.remove((J_EAConsumption)j_ea);	
-	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRICITY_DEMAND ) {
-	
+else if (j_ea instanceof J_EAProfile profileAsset) {
+	c_profileAssets.remove(profileAsset);
+	if (profileAsset.getAssetFlowCategory() == OL_AssetFlowCategories.hotWaterConsumption_kW) {
+		p_DHWAsset = null;	
 	}
-	if( j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB ) {
-	
+	if (profileAsset instanceof J_EAConsumption consumptionAsset) {
+		c_consumptionAssets.remove(consumptionAsset);
 	}
-}
-else if (j_ea instanceof J_EAProduction) {
-	c_productionAssets.remove((J_EAProduction)j_ea);
-
-	if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
-		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
+	else if (profileAsset instanceof J_EAProduction productionAsset) {
+		c_productionAssets.remove(productionAsset);
+	
+		if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
+			J_EAProduction otherPV = findFirst(c_productionAssets, x -> x.getEAType() == OL_EnergyAssetType.PHOTOVOLTAIC);
+			double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+			v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
+			if ( p_parentNodeElectric != null ) {
+				p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, capacity_kW, false);
+			}
+			c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
+			energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
 		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
-		energyModel.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW;
-	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
-		double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
-		v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-		if ( p_parentNodeElectric != null ) {
-			p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
+		else if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+			double capacity_kW = ((J_EAProduction)j_ea).getCapacityElectric_kW();
+			v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
+			if ( p_parentNodeElectric != null ) {
+				p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.WINDMILL, capacity_kW, false);
+			}
+			c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
+			energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
 		}
-		c_parentCoops.forEach( coop -> coop.v_liveAssetsMetaData.totalInstalledPVPower_kW -= capacity_kW);		
-		energyModel.v_liveAssetsMetaData.totalInstalledWindPower_kW -= capacity_kW;
-	}
-	else if (j_ea.energyAssetType == OL_EnergyAssetType.PHOTOTHERMAL){
-	
 	}
 }
 /*ALCODEEND*/}
@@ -1225,5 +1211,80 @@ if(this.p_energyManagement != null){
 else{
 	return false;
 }
+/*ALCODEEND*/}
+
+double[] f_getFixedAssetForecast(double timeOfIntervalStart,double timeOfIntervalEnd,OL_EnergyCarriers energyCarrier,J_TimeParameters timeParameters)
+{/*ALCODESTART::1781519426247*/
+switch(energyCarrier){
+	case ELECTRICITY:
+		return f_getFixedAssetForecast_Electricity(timeOfIntervalStart, timeOfIntervalEnd, timeParameters);
+	case HEAT:
+		return f_getFixedAssetForecast_Heat(timeOfIntervalStart, timeOfIntervalEnd, timeParameters);
+	default:
+		throw new RuntimeException("Trying to get the fixed asset balance interval for an unsupported energy carrier!");
+}
+/*ALCODEEND*/}
+
+double[] f_getFixedAssetForecast_Electricity(double forecastStartTime_h,double forecastEndTime_h,J_TimeParameters timeParameters)
+{/*ALCODESTART::1781525344609*/
+double timeWindow_h = forecastEndTime_h-forecastStartTime_h;
+int numberOfTimeSteps = roundToInt(timeWindow_h/timeParameters.getTimeStep_h());
+double[] nettoBalance_kW = new double[numberOfTimeSteps];
+
+if(!v_isActive) {
+	return nettoBalance_kW;
+}
+
+for(J_EAProfile electricityProfile : findAll(c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY)) {
+	nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, electricityProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
+}
+
+List<J_EAProfile> heatProfiles = findAll(c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && profile.getEAType() != PHOTOTHERMAL);
+// -> Need to subtract photo thermal from hot water demand and throw away the remaining pt (?), and what about a (hot water) buffer ? 
+// -> May need a seperate 'hotwater' electricity consumption forecaster, that keeps buffer and pt in mind.
+//if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP || f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATER) && !f_getHeatingTypeIsGhost()) {
+if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP || c_heatingAssets.get(0) instanceof J_EAConversionElectricHeater) && !f_getHeatingTypeIsGhost()) {
+	
+	double[] heatPower_kW = new double[numberOfTimeSteps];
+	//Calculate heat profile
+	for(J_EAProfile heatProfile : heatProfiles){
+		heatPower_kW = LUXMath.addArrays(heatPower_kW, heatProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
+	}
+	
+	//Calculate the actual power the heating asset would use (by calculating the efficiency) and add to nettoBalance_kW
+	J_EAConversion heatingAsset = c_heatingAssets.get(0);
+	double[] invEfficiency = new double[numberOfTimeSteps];
+	if (heatingAsset instanceof J_EAConversionElectricHeater electricHeater) {
+		Arrays.fill(invEfficiency, 1.0 / electricHeater.getEta_r());
+	}
+	else if (heatingAsset instanceof J_EAConversionHeatPump heatPump) {
+		//Todo -> Make work for other ambient temp types!
+		J_ProfilePointer ambientTemperatures = this.energyModel.pp_ambientTemperature_degC;
+		for (int i = 0; i < numberOfTimeSteps; i++) {
+			invEfficiency[i] = 1.0/heatPump.calculateCOP(heatPump.getOutputTemperature_degC(), ambientTemperatures.getValue(forecastStartTime_h + i * timeParameters.getTimeStep_h()));
+		}
+	}
+	nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, LUXMath.multiplyArrays(heatPower_kW, invEfficiency));
+}
+return nettoBalance_kW;
+/*ALCODEEND*/}
+
+double[] f_getFixedAssetForecast_Heat(double timeOfIntervalStart,double timeOfIntervalEnd,J_TimeParameters timeParameters)
+{/*ALCODESTART::1781525346198*/
+double p_timeStep_h = energyModel.p_timeParameters.getTimeStep_h();
+double timeWindow_h = timeOfIntervalEnd-timeOfIntervalStart;
+
+double[] nettoBalance_kW = new double[roundToInt(timeWindow_h/p_timeStep_h)];
+
+if(!v_isActive) {
+	return nettoBalance_kW;
+}
+
+//Add heat profiles
+for(J_EAProfile heatProfile : findAll(c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT)){
+	//nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, heatProfile.getProfilePointer().get)
+}
+
+return nettoBalance_kW;
 /*ALCODEEND*/}
 

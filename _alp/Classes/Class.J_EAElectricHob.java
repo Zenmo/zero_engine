@@ -1,7 +1,7 @@
 /**
  * J_EAElectricHob
  */	
-public class J_EAElectricHob extends J_EAConversion implements Serializable {
+public class J_EAElectricHob extends J_EAConversion{
 
 	//protected double outputTemperature_degC;
 
@@ -46,11 +46,4 @@ public class J_EAElectricHob extends J_EAConversion implements Serializable {
 			"eta_r = " + this.eta_r+ ", " +
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh;
 	}
-	
-	/**
-	 * This number is here for model snapshot storing purpose<br>
-	 * It needs to be changed when this class gets changed
-	 */ 
-	private static final long serialVersionUID = 1L;
-
 }

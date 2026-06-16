@@ -2239,6 +2239,10 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[J_FlexProfileManagementHeatprofileHeatpump]]></Name>
 				<Folder>1781186973946</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1781523461253</Id>
+				<Name><![CDATA[LUXMath]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>

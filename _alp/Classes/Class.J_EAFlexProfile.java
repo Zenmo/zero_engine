@@ -124,6 +124,17 @@ public class J_EAFlexProfile extends J_EAFlex{
     	return this.energyCarrier;
     }
     
+    public double[] getDefaultForecast_kW(double forecastStartTime_h, double forecastEndTime_h) {
+    	double timeWindow_h = forecastEndTime_h-forecastStartTime_h;
+    	int numberOfTimeSteps = roundToInt(timeWindow_h/timeParameters.getTimeStep_h());
+    	double[] forecast_kW = new double[numberOfTimeSteps];
+		double scalar = this.signScaler_r * getProfileUnitScaler_fr() * getProfileScaling_fr();
+		for (int i = 0; i < numberOfTimeSteps; i++) {
+			forecast_kW[i] += scalar * profilePointer.getValue(forecastStartTime_h + i*timeParameters.getTimeStep_h());
+		}
+    	return forecast_kW;
+    }
+    
 	@Override
 	public String toString() {
 		return
