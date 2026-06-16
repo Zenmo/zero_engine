@@ -275,7 +275,7 @@
 				</Option>
 				<Option>
 					<Id>1676463395259</Id>
-					<Name><![CDATA[GAS_PIT]]></Name>
+					<Name><![CDATA[GAS_HOB]]></Name>
 				</Option>
 				<Option>
 					<Id>1676894965662</Id>
@@ -1300,6 +1300,22 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 					<Name><![CDATA[CUSTOM]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1779959996975</Id>
+				<Name><![CDATA[OL_HeatpumpType]]></Name>
+				<Option>
+					<Id>1779959996976</Id>
+					<Name><![CDATA[WATER_WATER]]></Name>
+				</Option>
+				<Option>
+					<Id>1779959996977</Id>
+					<Name><![CDATA[AIR_WATER]]></Name>
+				</Option>
+				<Option>
+					<Id>1779959996978</Id>
+					<Name><![CDATA[GROUND_WATER]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
@@ -1523,12 +1539,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
-				<Id>1659117174457</Id>
-				<Name><![CDATA[J_EAConversionBiogasMethane]]></Name>
-				<ExcludeFromBuild>true</ExcludeFromBuild>
-				<Folder>1752677832758</Folder>
-			</JavaClass>
-			<JavaClass>
 				<Id>1659117174458</Id>
 				<Name><![CDATA[J_EAProfile]]></Name>
 				<Folder>1752677832758</Folder>
@@ -1614,7 +1624,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			</JavaClass>
 			<JavaClass>
 				<Id>1673445448881</Id>
-				<Name><![CDATA[J_EAElectricHob]]></Name>
+				<Name><![CDATA[J_EAConversionHob]]></Name>
 				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>

@@ -5,7 +5,7 @@ public class J_EAConsumption extends J_EAProfile{
 
 	private double yearlyDemand_kWh;
 	/**
-     * Default constructor
+     * Empty constructor for serialization
      */
     public J_EAConsumption() {
     }

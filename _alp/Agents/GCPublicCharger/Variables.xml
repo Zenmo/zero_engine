@@ -29,6 +29,7 @@
 	<Variable Class="Parameter">
 		<Id>1750335661857</Id>
 		<Name><![CDATA[p_isChargingCentre]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
 		<X>1630</X>
 		<Y>150</Y>
 		<Label>

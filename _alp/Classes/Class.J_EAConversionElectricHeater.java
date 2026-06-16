@@ -1,13 +1,19 @@
 /**
  * J_EAConversionElectricHeater
  */
-public class J_EAConversionElectricHeater extends J_EAConversion implements Serializable, I_HeatingAsset {
+public class J_EAConversionElectricHeater extends J_EAConversion implements I_HeatingAsset {
 
 	protected double outputTemperature_degC;
+	
     /**
-     * Default constructor
+     * Empty constructor for serialization
      */
-
+	public J_EAConversionElectricHeater() {
+	}
+	
+    /**
+     * Default constructor initializing the fields
+     */
     public J_EAConversionElectricHeater(I_AssetOwner owner, double outputHeatCapacity_kW, double efficiency_r, J_TimeParameters timeParameters, double outputTemperature_degC) {
 	    this.setOwner(owner);
 	    this.timeParameters = timeParameters;	    

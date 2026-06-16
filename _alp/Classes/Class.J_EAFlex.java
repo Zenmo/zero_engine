@@ -22,9 +22,4 @@ abstract public class J_EAFlex extends J_EA {
     }
     
 	public abstract void operate(double powerFraction_fr, J_TimeVariables timeVariables);
-
-	@Override
-	public String toString() {
-		return super.toString();
-	}
 }

@@ -1,7 +1,7 @@
 /**
  * J_EAConversion
  */
-public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable {
+public class J_EAConversion extends zero_engine.J_EAFlex{
 	protected OL_EnergyCarriers energyCarrierProduced;
 	protected OL_EnergyCarriers energyCarrierConsumed;
 	protected double eta_r;
@@ -10,8 +10,9 @@ public class J_EAConversion extends zero_engine.J_EAFlex implements Serializable
 	
 	private OL_AssetFlowCategories inputAssetFlowCategory;
 	private OL_AssetFlowCategories outputAssetFlowCategory;
+    
 	/**
-     * Default constructor
+     * Empty constructor for serialization
      */
 	public J_EAConversion() {
 	}

@@ -7,10 +7,9 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 	protected OL_AmbientTempType ambientTempType;
 	public double totalElectricityConsumed_kWh =0;
 	public J_EABuilding building;
-	//public double p_baseTemperatureReference;
 	
     /**
-     * Default constructor
+     * Empty constructor for serialization
      */
     public J_EAConversionAirConditioner() {
     }
@@ -26,7 +25,6 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 		this.setOwner(owner);
 	    this.timeParameters = timeParameters;
 		this.inputCapacity_kW = inputElectricCapacity_kW;
-	    //this.eta_r = eta_r;
 	    this.building = building;
 	    this.ambientTempType = OL_AmbientTempType.AMBIENT_AIR;
 	    this.updateAmbientTemperature( building.getAmbientTemperature_degC() ); // also updates COP
@@ -42,12 +40,11 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 
 	public void updateAmbientTemperature(double ambientTemperature_degC) {    	
 		double buildingTemp_degC = building.getCurrentTemperature();
-		this.COP_r = calculateCOP(ambientTemperature_degC, buildingTemp_degC); //this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
+		this.COP_r = calculateCOP(ambientTemperature_degC, buildingTemp_degC);
 	    this.outputCapacity_kW = this.inputCapacity_kW * this.COP_r; // this represents the current maximum cooling power (heat extracted from building!)
 	}
 	
 	public double getCOP() {
-		//traceln("Heatpump output temperature: " + this.outputTemperature_degC);
 		return this.COP_r;
 	}
 	
@@ -72,6 +69,7 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 	}
 	
 	private double calculateCOP(double ambientTemperature_degC, double buildingTemperature_degC) { // This is the cooling COP, defined as the extracted heat power divided by the input electric power.
+		//double COP_r = this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );		
 		double deltaT = max(0,ambientTemperature_degC - buildingTemperature_degC); // Limit deltaT to 0-or-higher, meaning outside temp is equal or higher than inside temp. In reality, it can happen that an AC runs with a lower outside temp, but we 'cap' the COP this way. 
 	    double COP_r = 5 - 0.10 * deltaT + 0.00126 * deltaT*deltaT; // 'expert judgement'-curve, not based on manufacturer or measurement data but on 'typical' efficiencies found online.
 	    return COP_r; // Ratio of cooling power (extracted heat) to input electric power.
@@ -86,5 +84,4 @@ public class J_EAConversionAirConditioner extends J_EAConversion {
 				+ "Energy used: " + this.energyUsed_kWh + ", "
 				+ "Current output: " + -this.getLastFlows().get(this.energyCarrierProduced) + " kW";
 	}
-
 }
