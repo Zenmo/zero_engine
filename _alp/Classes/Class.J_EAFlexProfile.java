@@ -7,7 +7,7 @@ import zeroPackage.ZeroMath;
 public class J_EAFlexProfile extends J_EAFlex{
 	protected J_ProfilePointer profilePointer;
 	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
-	protected OL_EnergyCarriers energyCarrier; // = OL_EnergyCarriers.ELECTRICITY;
+	protected OL_EnergyCarriers energyCarrier; //
 	protected double lostLoad_kWh = 0;
 	protected double profileScaling_fr = 1.0; // This factor can be used to change the magnitude of the profile in this asset, for example when an energy-saving slider is operated.
 	protected double signScaler_r = 1.0;
