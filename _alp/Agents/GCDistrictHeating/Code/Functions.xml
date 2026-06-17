@@ -298,7 +298,55 @@
 		<Id>1779282503421</Id>
 		<Name><![CDATA[getBufferSOC_fr]]></Name>
 		<X>1220</X>
-		<Y>1260</Y>
+		<Y>1600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781511302536</Id>
+		<Name><![CDATA[getIronBurnerOutput_kW]]></Name>
+		<X>1220</X>
+		<Y>1560</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781512919237</Id>
+		<Name><![CDATA[getCurrentHeatDemand_kW]]></Name>
+		<X>1220</X>
+		<Y>1640</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781681975138</Id>
+		<Name><![CDATA[getCurrentronBurnerOutput_kW]]></Name>
+		<X>1220</X>
+		<Y>1520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

@@ -111,8 +111,8 @@
 		<AutoUpdate>true</AutoUpdate>
 		<RecurrenceProperties>
 			<Id>1751011893246</Id>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1668499200000</OccurrenceDate>
+			<OccurrenceAtTime>false</OccurrenceAtTime>
+			<OccurrenceDate>1705276800000</OccurrenceDate>
 			<OccurrenceTime Class="CodeUnitValue">
 				<Code><![CDATA[0]]></Code>
 				<Unit Class="TimeUnits">HOUR</Unit>
@@ -148,7 +148,7 @@
 		</Labels>
 		<ShowLegend>true</ShowLegend>
 		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
-		<TimeWindowUnits>MONTH</TimeWindowUnits>
+		<TimeWindowUnits>HOUR</TimeWindowUnits>
 		<VerScaleFromExpression>0</VerScaleFromExpression>
 		<VerScaleToExpression>2000</VerScaleToExpression>
 		<VerScaleType>AUTO</VerScaleType>
@@ -165,15 +165,15 @@
 			<LineWidth>1.0</LineWidth>
 		</DatasetExpression>
 		<SamplesToKeep>35000</SamplesToKeep>
-		<TimeWindowExpression>3</TimeWindowExpression>
+		<TimeWindowExpression>168</TimeWindowExpression>
 		<FillAreaUnderLine>false</FillAreaUnderLine>
 		<LabelFormat>w</LabelFormat>
 	</TimePlot>
 	<TimePlot>
-		<Id>1779465198723</Id>
-		<Name><![CDATA[pl_SOC3]]></Name>
-		<X>1650</X>
-		<Y>990</Y>
+		<Id>1781512598205</Id>
+		<Name><![CDATA[pl_SOC5]]></Name>
+		<X>1160</X>
+		<Y>1220</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -184,9 +184,9 @@
 		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 		<AutoUpdate>true</AutoUpdate>
 		<RecurrenceProperties>
-			<Id>1779465198721</Id>
-			<OccurrenceAtTime>true</OccurrenceAtTime>
-			<OccurrenceDate>1668499200000</OccurrenceDate>
+			<Id>1781512598203</Id>
+			<OccurrenceAtTime>false</OccurrenceAtTime>
+			<OccurrenceDate>1705276800000</OccurrenceDate>
 			<OccurrenceTime Class="CodeUnitValue">
 				<Code><![CDATA[0]]></Code>
 				<Unit Class="TimeUnits">HOUR</Unit>
@@ -222,7 +222,91 @@
 		</Labels>
 		<ShowLegend>true</ShowLegend>
 		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
-		<TimeWindowUnits>DAY</TimeWindowUnits>
+		<TimeWindowUnits>HOUR</TimeWindowUnits>
+		<VerScaleFromExpression>0</VerScaleFromExpression>
+		<VerScaleToExpression>2000</VerScaleToExpression>
+		<VerScaleType>FIXED</VerScaleType>
+		<DrawLine>true</DrawLine>
+		<Interpolation>LINEAR</Interpolation>
+		<DatasetExpression>
+			<Title>Iron Burner Output</Title>
+			<Id>1781512598202</Id>
+			<Expression>my_dataset9</Expression>
+			<Color>-14774017</Color>
+			<Expression2>getCurrentronBurnerOutput_kW()</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<DatasetExpression>
+			<Title>Current Heat Demand</Title>
+			<Id>1781512991904</Id>
+			<Expression>my_dataset10</Expression>
+			<Color>-3137392</Color>
+			<Expression2>getCurrentHeatDemand_kW()</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<SamplesToKeep>35000</SamplesToKeep>
+		<TimeWindowExpression>168</TimeWindowExpression>
+		<FillAreaUnderLine>false</FillAreaUnderLine>
+		<LabelFormat>w</LabelFormat>
+	</TimePlot>
+	<TimePlot>
+		<Id>1781513372634</Id>
+		<Name><![CDATA[pl_SOC3]]></Name>
+		<X>1680</X>
+		<Y>1000</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<AutoUpdate>true</AutoUpdate>
+		<RecurrenceProperties>
+			<Id>1781513372632</Id>
+			<OccurrenceAtTime>false</OccurrenceAtTime>
+			<OccurrenceDate>1720224000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[15]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Width>500</Width>
+		<Height>280</Height>
+		<BackgroundColor/>
+		<BorderColor/>
+		<ChartArea>
+			<XOffset>50</XOffset>
+			<YOffset>30</YOffset>
+			<Width>420</Width>
+			<Height>160</Height>
+			<BackgroundColor>-1</BackgroundColor>
+			<BorderColor>-16777216</BorderColor>
+			<GridColor>-12566464</GridColor>
+		</ChartArea>
+		<Legend>
+			<Place>SOUTH</Place>
+			<TextColor>-16777216</TextColor>
+			<Size>60</Size>
+		</Legend>
+		<Labels>
+			<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+			<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+			<TextColor>-12566464</TextColor>
+		</Labels>
+		<ShowLegend>true</ShowLegend>
+		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
+		<TimeWindowUnits>HOUR</TimeWindowUnits>
 		<VerScaleFromExpression>0</VerScaleFromExpression>
 		<VerScaleToExpression>2000</VerScaleToExpression>
 		<VerScaleType>AUTO</VerScaleType>
@@ -230,7 +314,7 @@
 		<Interpolation>LINEAR</Interpolation>
 		<DatasetExpression>
 			<Title>Buffer SoC</Title>
-			<Id>1779465198720</Id>
+			<Id>1781513372631</Id>
 			<Expression>my_dataset9</Expression>
 			<Color>-65536</Color>
 			<Expression2>getBufferSOC_fr()</Expression2>
@@ -239,8 +323,92 @@
 			<LineWidth>1.0</LineWidth>
 		</DatasetExpression>
 		<SamplesToKeep>35000</SamplesToKeep>
-		<TimeWindowExpression>3</TimeWindowExpression>
+		<TimeWindowExpression>168</TimeWindowExpression>
 		<FillAreaUnderLine>false</FillAreaUnderLine>
-		<LabelFormat>HH_mm</LabelFormat>
+		<LabelFormat>w</LabelFormat>
+	</TimePlot>
+	<TimePlot>
+		<Id>1781513372660</Id>
+		<Name><![CDATA[pl_SOC6]]></Name>
+		<X>1680</X>
+		<Y>1230</Y>
+		<Label>
+			<X>0</X>
+			<Y>-10</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>false</ShowLabel>
+		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+		<AutoUpdate>true</AutoUpdate>
+		<RecurrenceProperties>
+			<Id>1781513372658</Id>
+			<OccurrenceAtTime>false</OccurrenceAtTime>
+			<OccurrenceDate>1720224000000</OccurrenceDate>
+			<OccurrenceTime Class="CodeUnitValue">
+				<Code><![CDATA[0]]></Code>
+				<Unit Class="TimeUnits">HOUR</Unit>
+			</OccurrenceTime>
+			<RecurrenceCode Class="CodeUnitValue">
+				<Code><![CDATA[15]]></Code>
+				<Unit Class="TimeUnits">MINUTE</Unit>
+			</RecurrenceCode>
+		</RecurrenceProperties>
+		<EmbeddedIcon>false</EmbeddedIcon>
+		<Width>500</Width>
+		<Height>280</Height>
+		<BackgroundColor/>
+		<BorderColor/>
+		<ChartArea>
+			<XOffset>50</XOffset>
+			<YOffset>30</YOffset>
+			<Width>420</Width>
+			<Height>160</Height>
+			<BackgroundColor>-1</BackgroundColor>
+			<BorderColor>-16777216</BorderColor>
+			<GridColor>-12566464</GridColor>
+		</ChartArea>
+		<Legend>
+			<Place>SOUTH</Place>
+			<TextColor>-16777216</TextColor>
+			<Size>60</Size>
+		</Legend>
+		<Labels>
+			<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+			<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+			<TextColor>-12566464</TextColor>
+		</Labels>
+		<ShowLegend>true</ShowLegend>
+		<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>
+		<TimeWindowUnits>HOUR</TimeWindowUnits>
+		<VerScaleFromExpression>0</VerScaleFromExpression>
+		<VerScaleToExpression>450</VerScaleToExpression>
+		<VerScaleType>FIXED</VerScaleType>
+		<DrawLine>true</DrawLine>
+		<Interpolation>LINEAR</Interpolation>
+		<DatasetExpression>
+			<Title>Iron Burner Output</Title>
+			<Id>1781513372656</Id>
+			<Expression>my_dataset9</Expression>
+			<Color>-14774017</Color>
+			<Expression2>getIronBurnerOutput_kW()</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<DatasetExpression>
+			<Title>Current Heat Demand</Title>
+			<Id>1781513372657</Id>
+			<Expression>my_dataset10</Expression>
+			<Color>-3137392</Color>
+			<Expression2>getCurrentHeatDemand_kW()</Expression2>
+			<Expression2Flag>true</Expression2Flag>
+			<PointStyle>NONE</PointStyle>
+			<LineWidth>1.0</LineWidth>
+		</DatasetExpression>
+		<SamplesToKeep>35000</SamplesToKeep>
+		<TimeWindowExpression>168</TimeWindowExpression>
+		<FillAreaUnderLine>false</FillAreaUnderLine>
+		<LabelFormat>w</LabelFormat>
 	</TimePlot>
 </Presentation>

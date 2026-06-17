@@ -553,3 +553,46 @@ if (capacity_kWh <= 0) {
 return heatStorage.getRemainingHeatStorageHeat_kWh() / capacity_kWh;
 /*ALCODEEND*/}
 
+double getIronBurnerOutput_kW()
+{/*ALCODESTART::1781511302536*/
+I_HeatingManagement management = f_getHeatingManagement();
+
+if (management == null) {
+    return 0;
+}
+
+if (management instanceof J_HeatingManagementDistrictHeatingIronBurner6Hour) {
+    return ((J_HeatingManagementDistrictHeatingIronBurner6Hour) management)
+        .getCurrentIronBurnerSetpoint_kW();
+}
+
+return 0;
+/*ALCODEEND*/}
+
+double getCurrentHeatDemand_kW()
+{/*ALCODESTART::1781512919237*/
+double currentDemand_kW = 0;
+
+    for (GridNode GN : p_parentNodeHeat.f_getConnectedGridNodes()) {
+        currentDemand_kW += max(0, GN.v_currentLoad_kW);
+    }
+
+return currentDemand_kW;
+/*ALCODEEND*/}
+
+double getCurrentronBurnerOutput_kW()
+{/*ALCODESTART::1781681975138*/
+I_HeatingManagement management = f_getHeatingManagement();
+
+if (management == null) {
+    return 0;
+}
+
+if (management instanceof J_HeatingManagementDistrictHeatingIronBurner6Hour) {
+    return -((J_HeatingManagementDistrictHeatingIronBurner6Hour) management)
+        .getCurrentBurnerHeatFlow_kW();
+}
+
+return 0;
+/*ALCODEEND*/}
+
