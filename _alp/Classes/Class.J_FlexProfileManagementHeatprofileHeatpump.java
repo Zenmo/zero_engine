@@ -75,10 +75,65 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
 		double[] newFlexProfileSetpointArray = new double[numberOfTimeSteps];
 		
 		
-		//HIER BEN JE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		
-		//Tester
-    	Arrays.fill(flexProfileSetpointArray_fr, 1.0);
+		// --- Peak shaving + self-consumption via water-filling, total heat is conserved ---
+		// One "water level" W on the total electricity curve does everything:
+		// total[i] = base[i] + flexElec[i] * f[i]
+		// Steps that can reach W settle at total[i] = W; steps that can't are pinned
+		// at their shift limit (f = L or f = U). Raising W pours the fixed heat budget
+		// into the lowest valleys first -> (a) minimises the peak and (b) fills the
+		// deepest (export) valleys first = maximises self-consumption.
+		// f stays in [L, U]; heat is conserved.
+
+		final double maxShift_fr = 0.3;// maximum shift per timestep.
+		final double L = 1.0 - maxShift_fr;
+		final double U = 1.0 + maxShift_fr;
+
+		final double[] base     = nettoBalanceForecastElectricity_kW;
+		final double[] flexElec = originalFlexprofileNettoElectricityBalance_kW;
+		final double[] heat     = originalFlexprofileNettoHeatBalance_kW;
+
+		// Heat to preserve over the horizon (== the sum at f == 1 everywhere).
+		double totalHeatTarget = 0.0;
+		for (int i = 0; i < numberOfTimeSteps; i++) totalHeatTarget += heat[i];
+
+		// Bracket the water level by the totals reachable within the shift band.
+		double wLow = Double.POSITIVE_INFINITY, wHigh = Double.NEGATIVE_INFINITY;
+		for (int i = 0; i < numberOfTimeSteps; i++) {
+		    if (flexElec[i] == 0.0) continue;       // no electricity coupling, no heat
+		    double tA = base[i] + flexElec[i] * L;
+		    double tB = base[i] + flexElec[i] * U;
+		    wLow  = min(wLow,  min(tA, tB));
+		    wHigh = max(wHigh, max(tA, tB));
+		}
+
+		double level = 1.0; // fallback only if there is no flex at all
+		if (wLow <= wHigh) {
+		    // sum_i heat[i]*f(W) is monotonically increasing in W (per-step slope is
+		    // heat[i]/flexElec[i] == COP[i] > 0), so binary-search the W that conserves heat.
+		    double lo = wLow, hi = wHigh;
+		    for (int iter = 0; iter < 200 && (hi - lo) > 1e-9; iter++) {
+		        double mid = 0.5 * (lo + hi);
+		        double heatSum = 0.0;
+		        for (int i = 0; i < numberOfTimeSteps; i++) {
+		            if (flexElec[i] == 0.0) continue;
+		            double f = (mid - base[i]) / flexElec[i];
+		            f = max(L, min(U, f));
+		            heatSum += heat[i] * f;
+		        }
+		        if (heatSum >= totalHeatTarget) hi = mid; else lo = mid;
+		    }
+		    level = 0.5 * (lo + hi);
+		}
+
+		// Materialise the power fractions at the solved level.
+		for (int i = 0; i < numberOfTimeSteps; i++) {
+		    if (flexElec[i] == 0.0) {               // nothing to shift here
+		        newFlexProfileSetpointArray[i] = 1.0;
+		        continue;
+		    }
+		    double f = (level - base[i]) / flexElec[i];
+		    newFlexProfileSetpointArray[i] = max(L, min(U, f));
+		}
     	
 		//Store new array
 		this.currentFlexProfileSetpointArrayIndex = 0;
