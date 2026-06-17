@@ -115,7 +115,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 			<Id>1705919330576</Id>
 			<Name><![CDATA[data_liveLoad_kW]]></Name>
 			<X>50</X>
-			<Y>850</Y>
+			<Y>880</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -144,7 +144,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 			<Id>1712668669449</Id>
 			<Name><![CDATA[data_liveCapacityDemand_kW]]></Name>
 			<X>50</X>
-			<Y>890</Y>
+			<Y>920</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -173,7 +173,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 			<Id>1712673776914</Id>
 			<Name><![CDATA[data_liveCapacitySupply_kW]]></Name>
 			<X>50</X>
-			<Y>870</Y>
+			<Y>900</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -202,7 +202,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 			<Id>1715167370828</Id>
 			<Name><![CDATA[data_totalLoad_kW]]></Name>
 			<X>50</X>
-			<Y>920</Y>
+			<Y>950</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -231,7 +231,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 			<Id>1715167392629</Id>
 			<Name><![CDATA[data_summerWeekLoad_kW]]></Name>
 			<X>50</X>
-			<Y>940</Y>
+			<Y>970</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
@@ -260,7 +260,7 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 			<Id>1715167408643</Id>
 			<Name><![CDATA[data_winterWeekLoad_kW]]></Name>
 			<X>50</X>
-			<Y>960</Y>
+			<Y>990</Y>
 			<Label>
 				<X>15</X>
 				<Y>0</Y>
