@@ -1,5 +1,12 @@
-import java.time.LocalDate;
 import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.Temporal;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -15,14 +22,76 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     creatorVisibility = Visibility.NONE
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
-
 /**
- * J_TimeParameters
- */	
+ * Static date and time information of the simulation.
+ */
 public final class J_TimeParameters {
-	////Time parameters:
+	/**
+	 * Simulation time resolution in hours.
+	 */
 	private final double timeStep_h;
+	
+	/** 
+	 * Simulation time resolution. Represents the same information as timeStep_h.
+	 * This data type is used by the time series library which we're developing.
+	 * 
+	 * This is expressed with the abstract TemporalAmount instead of the concrete 
+	 * java.time.Duration because we might want to switch to a less precise,
+	 * more optimized implementation.
+	 * 
+	 * Example usage to manipulate time:
+	 * 
+	 * {@snippet :
+	 *     Temporal nextTimeStep = this.start.plus(this.stepDuration);
+	 * }
+	 * 
+	 * Example usage to print:
+	 * 
+	 * {@snippet :
+	 *     String.format(
+	 *         "The time resolution is %d minutes",
+	 *         Duration.from(this.stepDuration).toMinutes()
+	 *     )
+	 * }
+	 */
+	private final TemporalAmount stepDuration;
+	
 	private final int startYear;
+	
+	/**
+	 * Start date and time of the simulated period. Represents the same 
+	 * information as runStartTime_h. This data type is used by the time 
+	 * series library which we're developing.
+	 * 
+	 * This is expressed with the abstract Temporal instead of the concrete 
+	 * java.time.Instant because we might want to switch to a less precise,
+	 * more optimized implementation.
+	 * 
+	 * Example usage to print the start time to the user using Dutch 
+	 * conventions:
+	 * 
+	 * {@snippet :
+	 *     var formatter = DateTimeFormatter.ofLocalizedDateTime(
+	 *                     FormatStyle.LONG, FormatStyle.MEDIUM
+	 *             )
+	 *             .withLocale(new Locale("nl", "NL"));
+	 *
+	 *     var zonedStart = Instant.from(this.start)
+     *             .atZone(ZoneId.of("Europe/Amsterdam"));
+     *         
+     *     return formatter.format(start);
+	 * }
+	 * 
+	 * Example output: "18 juni 2026, 11:45:00"
+	 */
+	private final Temporal start;
+	
+	/**
+	 * End date and time of the simulated period. Represents the same 
+	 * information as runEndTime_h.
+	 */
+	private final Temporal end;
+	
 	private final double[] monthStartHours;
 	private final int dayOfWeek1jan;
 	private final double runStartTime_h;
@@ -42,7 +111,10 @@ public final class J_TimeParameters {
 		int winterWeekNumber
 	) {
 		this.timeStep_h = timeStep_h;
+		this.stepDuration = hoursToDuration(timeStep_h);
 		this.startYear = startYear;
+		this.start = instantFromHourOffset(startYear, runStartTime_h);
+		this.end = instantFromHourOffset(startYear, runEndTime_h);
 		this.monthStartHours = monthStartHours;
 		this.runStartTime_h = runStartTime_h;
 		this.runEndTime_h = runEndTime_h;
@@ -57,7 +129,9 @@ public final class J_TimeParameters {
 	@JsonCreator
     public J_TimeParameters(
         @JsonProperty("timeStep_h") double timeStep_h,
+        @JsonProperty("stepDuration") Duration stepDuration,
         @JsonProperty("startYear") int startYear,
+        @JsonProperty("startYearObject") Year startYearObject,
         @JsonProperty("monthStartHours") double[] monthStartHours,
         @JsonProperty("dayOfWeek1jan") int dayOfWeek1jan,
         @JsonProperty("runStartTime_h") double runStartTime_h,
@@ -74,8 +148,17 @@ public final class J_TimeParameters {
 	public double getTimeStep_h() {
 	    return timeStep_h;
 	}
+	public TemporalAmount getStepDuration() {
+		return stepDuration;
+	}
 	public int getStartYear() {
 	    return startYear;
+	}
+	public Temporal getStart() {
+	    return start;
+	}
+	public Temporal getEnd() {
+	    return end;
 	}
 	public double[] getMonthStartHours() {
 	    return monthStartHours;
@@ -156,6 +239,24 @@ public final class J_TimeParameters {
 			    OL_Days.SATURDAY,
 			    OL_Days.SUNDAY
 			);
+    }
+
+	private static Duration hoursToDuration(double hours) {
+		double seconds = hours * 3600;
+		return Duration.ofSeconds((long) seconds);
+	}
+	
+	private static Instant instantFromHourOffset(int year, double hourOffset) {
+        var offset = hoursToDuration(hourOffset);
+        
+        return startOfYear(year).plus(offset);
+	}
+	
+	private static Instant startOfYear(int year) {
+		// LUX mostly starts at jan 1st at 00:00 Europe/Amsterdam time
+		var timeZone = ZoneId.of("Europe/Amsterdam");
+        
+		return Year.of(year).atMonth(1).atDay(1).atStartOfDay(timeZone).toInstant();
 	}
 	
 	@Override
