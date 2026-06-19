@@ -1244,7 +1244,7 @@ for(J_EAProfile electricityProfile : findAll(c_profileAssets, profile -> profile
 List<J_EAFlexProfile> defaultControlledHeatFlexProfiles = new ArrayList<>();
 if(f_getExternalAssetManagement(I_FlexProfileManagement.class) instanceof J_FlexProfileManagementDefault){
 	for(J_EAFlexProfile electricityFlexProfile : findAll(c_flexProfileAssets, flexProfile -> flexProfile.getEnergyCarrier() == OL_EnergyCarriers.ELECTRICITY)) {
-		nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, electricityFlexProfile.getDefaultForecast_kW(forecastStartTime_h, forecastEndTime_h));
+		nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, electricityFlexProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
 	}
 	defaultControlledHeatFlexProfiles = findAll(c_flexProfileAssets, flexProfile -> flexProfile.getEnergyCarrier() == OL_EnergyCarriers.HEAT && flexProfile.getEAType() != PHOTOTHERMAL);
 }
@@ -1262,7 +1262,7 @@ if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHea
 		heatPower_kW = LUXMath.addArrays(heatPower_kW, heatProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
 	}
 	for(J_EAFlexProfile defaultControlledHeatFlexProfile : defaultControlledHeatFlexProfiles){
-		heatPower_kW = LUXMath.addArrays(heatPower_kW, defaultControlledHeatFlexProfile.getDefaultForecast_kW(forecastStartTime_h, forecastEndTime_h));
+		heatPower_kW = LUXMath.addArrays(heatPower_kW, defaultControlledHeatFlexProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
 	}
 
 	//Calculate the actual power the heating asset would use (by calculating the efficiency) and add to nettoBalance_kW

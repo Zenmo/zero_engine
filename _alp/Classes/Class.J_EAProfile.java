@@ -2,7 +2,7 @@ import zeroPackage.ZeroMath;
 /**
  * J_EAProfile
  */
-public class J_EAProfile extends J_EAFixed{
+public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
 	protected J_ProfilePointer profilePointer;
 	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
 	protected OL_EnergyCarriers energyCarrier; // = OL_EnergyCarriers.ELECTRICITY;
@@ -88,6 +88,12 @@ public class J_EAProfile extends J_EAFixed{
 
     }    
     
+    //Setters
+    public void setProfileScaling_fr( double scaling_fr ) {
+    	this.profileScaling_fr = scaling_fr;
+    }    
+    
+    //Getters
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;
     }
@@ -99,11 +105,7 @@ public class J_EAProfile extends J_EAFixed{
     public double getProfileScaling_fr() {
     	return this.profileScaling_fr;
     }
-    
-    public void setProfileScaling_fr( double scaling_fr ) {
-    	this.profileScaling_fr = scaling_fr;
-    }
-    
+        
     public double getPeakConsumptionPower_kW() {
     	if (this.signScaler_r < 0) {
     		return 0.0;
@@ -152,8 +154,11 @@ public class J_EAProfile extends J_EAFixed{
     
 	@Override
 	public String toString() {
-		return
-			"owner = " + this.getOwner() +", Energy consumed = " + this.energyUsed_kWh +
-			"assetFlowCategory = " + this.assetFlowCategory + " ";
+		return	"J_EAProfile: " + 
+				"Owner: " + this.getOwner() + ", " + 
+				"EC: " + this.energyCarrier + ", " +
+				"AFC: " + this.assetFlowCategory + ", " +
+				"CurrentPower_kW: " + this.lastEnergyUse_kW + ", " +
+				"ProfScaling_fr: " + this.profileScaling_fr;
 	}
 }

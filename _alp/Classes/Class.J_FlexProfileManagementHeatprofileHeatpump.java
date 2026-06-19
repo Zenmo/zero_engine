@@ -52,7 +52,7 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
     		throw new RuntimeException("Flex profile management heatprofile heatpump active with multiple, or without a heat flex profile or (non ghost) heatpump being present!");
     	}
     	
-    	originalFlexprofileNettoHeatBalance_kW = LUXMath.addArrays(originalFlexprofileNettoHeatBalance_kW, flexibleHeatProfiles.get(0).getDefaultForecast_kW(timeVariables.getT_h(), timeVariables.getT_h() + forecastingDuration_h));
+    	originalFlexprofileNettoHeatBalance_kW = LUXMath.addArrays(originalFlexprofileNettoHeatBalance_kW, flexibleHeatProfiles.get(0).getForecast_kW(timeVariables.getT_h(), timeVariables.getT_h() + forecastingDuration_h));
     	
     	//Convert flexprofile to (forecasted) electricity profile
 		double[] originalFlexprofileNettoElectricityBalance_kW = new double[numberOfTimeSteps];

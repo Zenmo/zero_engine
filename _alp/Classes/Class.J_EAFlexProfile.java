@@ -4,7 +4,7 @@ import zeroPackage.ZeroMath;
  * Example: Original value 10 kW? -> With power fraction of 0.8 it will end up being 8 kW instead. Or with power fraction of 1.5, it will become 15 kW!
  * -> Not allowed to change the direction of the flow (i.e. negative power fraction is not allowed).
  */	
-public class J_EAFlexProfile extends J_EAFlex{
+public class J_EAFlexProfile extends J_EAFlex implements I_ProfileAsset{
 	protected J_ProfilePointer profilePointer;
 	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
 	protected OL_EnergyCarriers energyCarrier; //
@@ -63,11 +63,9 @@ public class J_EAFlexProfile extends J_EAFlex{
     	}
     	double profileValue = profilePointer.getCurrentValue();		
     	double currentPower_kW = profileValue * this.profileUnitScaler_r * this.profileScaling_fr * this.signScaler_r * powerFraction_fr;
-		
     	this.energyUse_kW = currentPower_kW;
     	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
-
-		flowsMap.put(this.energyCarrier, currentPower_kW);		
+    	flowsMap.put(this.energyCarrier, currentPower_kW);		
 		if (this.assetFlowCategory != null) {
 			assetFlowsMap.put(this.assetFlowCategory, Math.abs(currentPower_kW));
 		}
@@ -124,7 +122,7 @@ public class J_EAFlexProfile extends J_EAFlex{
     	return this.energyCarrier;
     }
     
-    public double[] getDefaultForecast_kW(double forecastStartTime_h, double forecastEndTime_h) {
+    public double[] getForecast_kW(double forecastStartTime_h, double forecastEndTime_h) {
     	double timeWindow_h = forecastEndTime_h-forecastStartTime_h;
     	int numberOfTimeSteps = roundToInt(timeWindow_h/timeParameters.getTimeStep_h());
     	double[] forecast_kW = new double[numberOfTimeSteps];
@@ -137,8 +135,11 @@ public class J_EAFlexProfile extends J_EAFlex{
     
 	@Override
 	public String toString() {
-		return
-			"owner = " + this.getOwner() +", Energy consumed = " + this.energyUsed_kWh +
-			"assetFlowCategory = " + this.assetFlowCategory + " ";
+		return	"J_EAFlexProfile: " + 
+				"Owner: " + this.getOwner() + ", " + 
+				"EC: " + this.energyCarrier + ", " +
+				"AFC: " + this.assetFlowCategory + ", " +
+				"CurrentPower_kW: " + this.lastEnergyUse_kW + ", " +
+				"ProfScaling_fr: " + this.profileScaling_fr;
 	}
 }

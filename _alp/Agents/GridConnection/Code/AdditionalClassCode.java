@@ -1,5 +1,12 @@
 public final String p_uid = UUID.randomUUID().toString();
 
+@Override
+public String toString(){
+	String shortToString = super.toString();
+	shortToString = shortToString.replace("root.main[0].energyModel.", "");
+	return shortToString;
+}
+
 public OL_ResultScope getScope(){return OL_ResultScope.GRIDCONNECTION;}
 public J_RapidRunData getRapidRunData(){return v_rapidRunData;}
 public J_LiveData getLiveData(){return v_liveData;}

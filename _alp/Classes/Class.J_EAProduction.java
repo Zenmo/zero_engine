@@ -138,12 +138,11 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
 	
 	@Override
 	public String toString() {
-		return
-			"type = " + this.getClass().toString() + " " +
-			"owner = " + this.getOwner() +" " +
-			"capacity_kW = " + profileUnitScaler_r +" "+
-			"energyCarrier = " + energyCarrier +" "+
-			"assetFlowCategory = " + this.assetFlowCategory + " " +
-			"energyProduced_kWh = " + (-this.energyUsed_kWh) +  " ";
+		return  "J_EAProduction: " +
+				"Owner: " + this.getOwner() + ", " +
+				"Capacity_kW: " + profileUnitScaler_r + ", " +
+				"EC: " + this.energyCarrier + ", " +
+				"AFC: " + this.assetFlowCategory + ", " +
+				"CurrentProd_kW: " + (-this.lastEnergyUse_kW);
 	}
 }

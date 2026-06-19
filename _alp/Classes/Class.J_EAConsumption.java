@@ -55,20 +55,10 @@ public class J_EAConsumption extends J_EAProfile{
 		registerEnergyAsset(timeParameters);
     }
     
-    //Setters
-    public void setConsumptionScaling_fr(double consumptionScaling_fr) {
-    	this.profileScaling_fr = consumptionScaling_fr;
-    }
-    
-    
     //Getters
     public String getAssetName() {
     	return this.energyAssetName;
     }
-    public double getConsumptionScaling_fr() {
-    	return this.profileScaling_fr;
-    }
-
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;
     }
@@ -76,13 +66,15 @@ public class J_EAConsumption extends J_EAProfile{
     public double getBaseConsumption_kWh() {
     	return yearlyDemand_kWh;
     }
-    
+
 	@Override
 	public String toString() {
-		return
-			"type = " + this.getClass().toString() + " " +
-			"owner = " + this.getOwner() +" " +
-			"energyCarrier = " + this.energyCarrier + " " + 
-			"yearlyDemand_kWh = " + this.yearlyDemand_kWh;
+		return	"J_EAConsumption: " + 
+				"Owner: " + this.getOwner() + ", " + 
+				"EC: " + this.energyCarrier + ", " +
+				"AFC: " + this.assetFlowCategory + ", " +
+				"YearlyDemand_kWh: " + this.yearlyDemand_kWh + ", " +
+				"CurrentPower_kW: " + this.lastEnergyUse_kW + ", " +
+				"ProfScaling_fr = " + this.profileScaling_fr;
 	}
 }
