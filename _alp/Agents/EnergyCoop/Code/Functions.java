@@ -1318,22 +1318,30 @@ for (int i=0; i < liveWeekSize; i++){
 	double batteryStoredEnergyLiveWeek_MWh = 0;
 	
 	for (GridConnection gc : gcList){
+		// Certain GridConnections do not have full or same sized live datasets
+		// due to pause functionality or GC creation during runtime -> offset is used to compensate
+		int offset = gc.v_liveData.data_totalDemand_kW.size() - liveWeekSize;
+		int gcLiveDatasetIndex = i + offset;
+		
+		if(gcLiveDatasetIndex < 0){ // If dataset index does not exist for this GridConnection -> skip this index
+			continue;
+		}
 		for (OL_EnergyCarriers EC_consumption : gc.v_liveData.activeConsumptionEnergyCarriers) {
-			fm_demand_kW.addFlow( EC_consumption, gc.v_liveData.dsm_liveDemand_kW.get(EC_consumption).getY(i));			
+			fm_demand_kW.addFlow( EC_consumption, gc.v_liveData.dsm_liveDemand_kW.get(EC_consumption).getY(gcLiveDatasetIndex));			
 		}
 		for (OL_EnergyCarriers EC_production : gc.v_liveData.activeProductionEnergyCarriers) {
-			fm_supply_kW.addFlow( EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(i));
+			fm_supply_kW.addFlow( EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(gcLiveDatasetIndex));
 		}
 		for (OL_AssetFlowCategories AC : gc.v_liveAssetsMetaData.activeAssetFlows) {
-			fm_currentAssetFlows_kW.addFlow(AC, gc.v_liveData.dsm_liveAssetFlows_kW.get(AC).getY(i));
+			fm_currentAssetFlows_kW.addFlow(AC, gc.v_liveData.dsm_liveAssetFlows_kW.get(AC).getY(gcLiveDatasetIndex));
 		}
 		
-		electricityDemandCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacityDemand_kW.getY(i);
-		electricitySupplyCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacitySupply_kW.getY(i);
-		netLoadLiveWeek_kW  += gc.v_liveData.data_liveElectricityBalance_kW.getY(i);
+		electricityDemandCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacityDemand_kW.getY(gcLiveDatasetIndex);
+		electricitySupplyCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacitySupply_kW.getY(gcLiveDatasetIndex);
+		netLoadLiveWeek_kW  += gc.v_liveData.data_liveElectricityBalance_kW.getY(gcLiveDatasetIndex);
 
 		//Other 
-		batteryStoredEnergyLiveWeek_MWh += 	gc.v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(i);
+		batteryStoredEnergyLiveWeek_MWh += 	gc.v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(gcLiveDatasetIndex);
 	}
 	
 	for (OL_EnergyCarriers EC_consumption : v_liveData.activeConsumptionEnergyCarriers) {
