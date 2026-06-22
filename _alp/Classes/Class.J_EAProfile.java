@@ -100,6 +100,13 @@ public class J_EAProfile extends zero_engine.J_EAFixed{
     	return this.profileScaling_fr;
     }
     
+    public void setProfilePointer(J_ProfilePointer profile) {
+    	if (profile == null) {
+            throw new RuntimeException("Cannot set J_EAProfile profilePointer to null!");
+        }
+    	this.profilePointer = profile;
+    }
+    
     public void setProfileScaling_fr( double scaling_fr ) {
     	this.profileScaling_fr = scaling_fr;
     }
