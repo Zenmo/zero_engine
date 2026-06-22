@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.7.202512010504"
+                   AnyLogicVersion="8.9.7.202512121156"
                    AlpVersion="8.9.7">
 	<Model>
 		<Id>1658477103134</Id>
@@ -2228,6 +2228,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1778239873010</Id>
 				<Name><![CDATA[J_BackupGeneratorManagementExternalSetpoint]]></Name>
 				<Folder>1776078970513</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1782137734965</Id>
+				<Name><![CDATA[DataSetConstructor]]></Name>
+				<Folder>1764938574089</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

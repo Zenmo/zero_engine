@@ -1295,81 +1295,68 @@ double f_collectGridConnectionLiveData()
 {/*ALCODESTART::1740502128180*/
 List<GridConnection> gcList = findAll(f_getAllChildMemberGridConnections(), gc -> gc.v_isActive);
 
-int liveWeekSize = gcList.get(0).v_liveData.data_gridCapacityDemand_kW.size();
-
-for (int i=0; i < liveWeekSize; i++){
-	
-	double timeAxisValue = gcList.get(0).v_liveData.data_gridCapacityDemand_kW.getX(i); // we get the X value from a random dataset 
-	
-	// Demand
-	J_FlowsMap fm_demand_kW = new J_FlowsMap();
-	J_ValueMap<OL_AssetFlowCategories> fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-	
-	double electricityDemandCapacityLiveWeek_kW = 0;
-	double electricitySupplyCapacityLiveWeek_kW = 0;
-	double netLoadLiveWeek_kW = 0;
-
-	double districtHeatingDemandLiveWeek_kW = 0;
-	
-	// Supply
-	J_FlowsMap fm_supply_kW = new J_FlowsMap();
-
-	//Other
-	double batteryStoredEnergyLiveWeek_MWh = 0;
-	
-	for (GridConnection gc : gcList){
-		// Certain GridConnections do not have full or same sized live datasets
-		// due to pause functionality or GC creation during runtime -> offset is used to compensate
-		int offset = gc.v_liveData.data_totalDemand_kW.size() - liveWeekSize;
-		int gcLiveDatasetIndex = i + offset;
-		
-		if(gcLiveDatasetIndex < 0){ // If dataset index does not exist for this GridConnection -> skip this index
-			continue;
-		}
-		for (OL_EnergyCarriers EC_consumption : gc.v_liveData.activeConsumptionEnergyCarriers) {
-			fm_demand_kW.addFlow( EC_consumption, gc.v_liveData.dsm_liveDemand_kW.get(EC_consumption).getY(gcLiveDatasetIndex));			
-		}
-		for (OL_EnergyCarriers EC_production : gc.v_liveData.activeProductionEnergyCarriers) {
-			fm_supply_kW.addFlow( EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(gcLiveDatasetIndex));
-		}
-		for (OL_AssetFlowCategories AC : gc.v_liveAssetsMetaData.activeAssetFlows) {
-			fm_currentAssetFlows_kW.addFlow(AC, gc.v_liveData.dsm_liveAssetFlows_kW.get(AC).getY(gcLiveDatasetIndex));
-		}
-		
-		electricityDemandCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacityDemand_kW.getY(gcLiveDatasetIndex);
-		electricitySupplyCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacitySupply_kW.getY(gcLiveDatasetIndex);
-		netLoadLiveWeek_kW  += gc.v_liveData.data_liveElectricityBalance_kW.getY(gcLiveDatasetIndex);
-
-		//Other 
-		batteryStoredEnergyLiveWeek_MWh += 	gc.v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(gcLiveDatasetIndex);
-	}
-	
-	for (OL_EnergyCarriers EC_consumption : v_liveData.activeConsumptionEnergyCarriers) {
-		v_liveData.dsm_liveDemand_kW.get(EC_consumption).add(timeAxisValue, roundToDecimal(fm_demand_kW.get(EC_consumption), 3));
-	}
-	for (OL_EnergyCarriers EC_production : v_liveData.activeProductionEnergyCarriers) {
-		v_liveData.dsm_liveSupply_kW.get(EC_production).add(timeAxisValue, roundToDecimal(fm_supply_kW.get(EC_production), 3));
-	}
-	
-	for (OL_AssetFlowCategories AC : fm_currentAssetFlows_kW.keySet()) {
-		v_liveData.dsm_liveAssetFlows_kW.get(AC).add(timeAxisValue, roundToDecimal(fm_currentAssetFlows_kW.get(AC), 3));
-	}
-	
-	v_liveData.data_gridCapacityDemand_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
-	v_liveData.data_gridCapacitySupply_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
-	v_liveData.data_liveElectricityBalance_kW.add(timeAxisValue, netLoadLiveWeek_kW);
-
-	//Stored
-	v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(timeAxisValue, batteryStoredEnergyLiveWeek_MWh);
+if (gcList.isEmpty()) {
+    f_getTotalInstalledCapacityOfAssets_live();
+    f_recalculateSOCDataSet_live();
+    return;
 }
 
+final int timeStepsInWeek = roundToInt(24*7 / energyModel.p_timeParameters.getTimeStep_h());
+final int liveWeekSize = min(energyModel.p_timeVariables.getTimeStepsElapsed(), timeStepsInWeek);
 
-//Calculate cumulative asset capacities
+final double startTime_h = energyModel.p_timeVariables.getAnyLogicTime_h() - liveWeekSize * energyModel.p_timeParameters.getTimeStep_h();
+
+for (int i = 0; i < liveWeekSize; i++) {
+    // Variables for each timestep
+    J_FlowsMap fm_demand_kW = new J_FlowsMap();
+    J_FlowsMap fm_supply_kW = new J_FlowsMap();
+    J_ValueMap<OL_AssetFlowCategories> fm_currentAssetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
+
+    double electricityDemandCapacityLiveWeek_kW = 0;
+    double electricitySupplyCapacityLiveWeek_kW = 0;
+    double netLoadLiveWeek_kW = 0;
+    double batteryStoredEnergyLiveWeek_MWh = 0;
+
+    // For each timestep sum across all active child GridConnections
+    for (GridConnection gc : gcList) {
+        for (OL_EnergyCarriers EC_consumption : gc.v_liveData.activeConsumptionEnergyCarriers) {
+            fm_demand_kW.addFlow(EC_consumption, gc.v_liveData.dsm_liveDemand_kW.get(EC_consumption).getY(i));
+        }
+        for (OL_EnergyCarriers EC_production : gc.v_liveData.activeProductionEnergyCarriers) {
+            fm_supply_kW.addFlow(EC_production, gc.v_liveData.dsm_liveSupply_kW.get(EC_production).getY(i));
+        }
+        for (OL_AssetFlowCategories AC : gc.v_liveAssetsMetaData.activeAssetFlows) {
+            fm_currentAssetFlows_kW.addFlow(AC, gc.v_liveData.dsm_liveAssetFlows_kW.get(AC).getY(i));
+        }
+
+        electricityDemandCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacityDemand_kW.getY(i);
+        electricitySupplyCapacityLiveWeek_kW += gc.v_liveData.data_gridCapacitySupply_kW.getY(i);
+        netLoadLiveWeek_kW                   += gc.v_liveData.data_liveElectricityBalance_kW.getY(i);
+        batteryStoredEnergyLiveWeek_MWh      += gc.v_liveData.data_batteryStoredEnergyLiveWeek_MWh.getY(i);
+    }
+
+    // Write aggregated timestep results into the EnergyCooperative's own live datasets
+    double timeAxisValue = startTime_h + i * energyModel.p_timeParameters.getTimeStep_h();
+    
+    for (OL_EnergyCarriers EC_consumption : v_liveData.activeConsumptionEnergyCarriers) {
+        v_liveData.dsm_liveDemand_kW.get(EC_consumption).add(timeAxisValue, roundToDecimal(fm_demand_kW.get(EC_consumption), 3));
+    }
+    for (OL_EnergyCarriers EC_production : v_liveData.activeProductionEnergyCarriers) {
+        v_liveData.dsm_liveSupply_kW.get(EC_production).add(timeAxisValue, roundToDecimal(fm_supply_kW.get(EC_production), 3));
+    }
+    for (OL_AssetFlowCategories AC : fm_currentAssetFlows_kW.keySet()) {
+        v_liveData.dsm_liveAssetFlows_kW.get(AC).add(timeAxisValue, roundToDecimal(fm_currentAssetFlows_kW.get(AC), 3));
+    }
+
+    v_liveData.data_gridCapacityDemand_kW.add(timeAxisValue, electricityDemandCapacityLiveWeek_kW);
+    v_liveData.data_gridCapacitySupply_kW.add(timeAxisValue, electricitySupplyCapacityLiveWeek_kW);
+    v_liveData.data_liveElectricityBalance_kW.add(timeAxisValue, netLoadLiveWeek_kW);
+    v_liveData.data_batteryStoredEnergyLiveWeek_MWh.add(timeAxisValue, batteryStoredEnergyLiveWeek_MWh);
+}
+
 f_getTotalInstalledCapacityOfAssets_live();
-
-//Recalculate SOC ts for energycoop
+// Depends on fully populated datasets above — must stay at the end
 f_recalculateSOCDataSet_live();
-
 /*ALCODEEND*/}
 
 double f_rapidRunDataLogging(J_TimeVariables timeVariables)

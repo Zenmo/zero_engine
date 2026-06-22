@@ -182,6 +182,10 @@
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
 		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
+		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
 	<Function AccessType="default" StaticFunction="false">
@@ -365,26 +369,6 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1730728785333</Id>
-		<Name><![CDATA[f_initializeDataSets]]></Name>
-		<X>950</X>
-		<Y>70</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
@@ -470,7 +454,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1754380684463</Id>
-		<Name><![CDATA[f_addConsumptionEnergyCarrier]]></Name>
+		<Name><![CDATA[f_addConsumptionEnergyCarrierAfterInitialization]]></Name>
 		<X>1325</X>
 		<Y>67</Y>
 		<Label>
@@ -498,7 +482,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1754380684465</Id>
-		<Name><![CDATA[f_addProductionEnergyCarrier]]></Name>
+		<Name><![CDATA[f_addProductionEnergyCarrierAfterInitialization]]></Name>
 		<X>1325</X>
 		<Y>87</Y>
 		<Label>
@@ -526,7 +510,7 @@
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>EnergyCoop</ReturnType>
 		<Id>1754380684467</Id>
-		<Name><![CDATA[f_addAssetFlow]]></Name>
+		<Name><![CDATA[f_addAssetFlowAfterInitialization]]></Name>
 		<X>1325</X>
 		<Y>107</Y>
 		<Label>

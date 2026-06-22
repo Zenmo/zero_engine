@@ -167,7 +167,7 @@ else{
 }
 /*ALCODEEND*/}
 
-double f_initialize(J_TimeParameters timeParameters)
+double f_initialize(J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1698854861644*/
 if (v_liveConnectionMetaData.getPhysicalCapacity_kW() < 0) {
 	throw new RuntimeException("Exception: GridConnection " + p_gridConnectionID + " has negative physical connection capacity!");
@@ -223,8 +223,7 @@ f_setOperatingSwitches();
 
 // Initializing Live Data Class
 v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
-
-f_initializeDataSets(timeParameters);
+v_liveData.createNewLiveDataSets(timeParameters, timeVariables);
 
 /*ALCODEEND*/}
 
@@ -491,17 +490,8 @@ else {
 	}
 		
 	//Initialize datasets for all EC and AssetFlowCategories and clear all.
-	f_initializeDataSets(energyModel.p_timeParameters);
-	v_liveData.clearLiveDatasets();
+	v_liveData.createNewLiveDataSets(energyModel.p_timeParameters, timeVariables);
 }
-/*ALCODEEND*/}
-
-double f_initializeDataSets(J_TimeParameters timeParameters)
-{/*ALCODESTART::1730728785333*/
-v_liveData.dsm_liveDemand_kW.createEmptyDataSets(v_liveData.activeConsumptionEnergyCarriers, (int)(168 / timeParameters.getTimeStep_h()));
-v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeProductionEnergyCarriers, (int)(168 / timeParameters.getTimeStep_h()));
-v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, (int)(168 / timeParameters.getTimeStep_h()));
-
 /*ALCODEEND*/}
 
 double f_startAfterDeserialisation(J_TimeParameters timeParameters,J_TimeVariables timeVariables)
@@ -585,73 +575,54 @@ f_setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
 
-EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
+EnergyCoop f_addConsumptionEnergyCarrierAfterInitialization(OL_EnergyCarriers EC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1754380684463*/
-v_liveData.activeEnergyCarriers.add(EC);
-v_liveData.activeConsumptionEnergyCarriers.add(EC);
-
-DataSet dsDemand = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-
-double endTime = timeVariables.getAnyLogicTime_h();
-double startTime = max(0, timeVariables.getAnyLogicTime_h() - 168);
-
-for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
-	dsDemand.add( t, 0);
+if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
+	v_liveData.activeEnergyCarriers.add(EC);
+	v_liveData.activeConsumptionEnergyCarriers.add(EC);
+	DataSet dsDemand = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+	v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
+	
+	//Add energy carrier also to coops/aggregators & energymodel
+	energyModel.f_addConsumptionEnergyCarrier(EC);
+	c_parentCoops.forEach(x -> x.f_addConsumptionEnergyCarrier(EC, timeParameters, timeVariables));
 }
-v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
-
 /*ALCODEEND*/}
 
-EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
+EnergyCoop f_addProductionEnergyCarrierAfterInitialization(OL_EnergyCarriers EC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1754380684465*/
-v_liveData.activeEnergyCarriers.add(EC);
-v_liveData.activeProductionEnergyCarriers.add(EC);
-
-DataSet dsSupply = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-
-double endTime = timeVariables.getAnyLogicTime_h();
-double startTime = max(0, timeVariables.getAnyLogicTime_h() - 168);
-
-for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
-	dsSupply.add( t, 0);
+if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
+	v_liveData.activeEnergyCarriers.add(EC);
+	v_liveData.activeProductionEnergyCarriers.add(EC);
+	DataSet dsSupply = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+	v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
+	
+	//Add energy carrier also to coops/aggregators & energymodel
+	energyModel.f_addProductionEnergyCarrier(EC);
+	c_parentCoops.forEach(x -> x.f_addProductionEnergyCarrier(EC, timeParameters, timeVariables));
 }
-v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
-
 /*ALCODEEND*/}
 
-EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
+EnergyCoop f_addAssetFlowAfterInitialization(OL_AssetFlowCategories AC,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1754380684467*/
 if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 	v_liveAssetsMetaData.activeAssetFlows.add(AC);
 	
-	DataSet dsAsset = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-	
-	double endTime = timeVariables.getAnyLogicTime_h();
-	double startTime = max(0, timeVariables.getAnyLogicTime_h() - 168);
-
-	for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
-		dsAsset.add( t, 0);
-	}
+	DataSet dsAsset = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
 	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
 	
 	if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
 		v_liveAssetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW);
-		dsAsset = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-		for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
-			dsAsset.add( t, 0);
-		}
+		dsAsset = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
 	}
 	if (AC == OL_AssetFlowCategories.V2GPower_kW && !v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
 		v_liveAssetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW);	
-		dsAsset = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-		for (double t = startTime; t <= endTime; t += timeParameters.getTimeStep_h()) {
-			dsAsset.add( t, 0);
-		}
+		dsAsset = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
 		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
 	}
 	
-	//Add asset flow also to aggregators
+	//Add asset flow also to coops/aggregators & energymodel
 	c_parentCoops.forEach(x -> x.f_addAssetFlow(AC, timeParameters, timeVariables));
 	energyModel.f_addAssetFlow(AC);
 }			
@@ -660,9 +631,10 @@ if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
 double f_activateV2GChargingMode(boolean enableV2G,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1754582754934*/
 if(energyModel.b_isInitialized){
+	// Why is the setter also inside the if statement? ~Luc 22/06/26
 	p_energyManagement.setV2GActive(enableV2G);
 	if (enableV2G){
-		f_addAssetFlow(OL_AssetFlowCategories.V2GPower_kW, timeParameters, timeVariables);
+		f_addAssetFlowAfterInitialization(OL_AssetFlowCategories.V2GPower_kW, timeParameters, timeVariables);
 	}
 }
 /*ALCODEEND*/}
@@ -722,26 +694,24 @@ double f_addEnergyCarriersAndAssetCategoriesFromEA(J_EA j_ea,J_TimeParameters ti
 {/*ALCODESTART::1756977865503*/
 for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
 	if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
-		v_liveData.activeConsumptionEnergyCarriers.add(EC);
-		v_liveData.activeEnergyCarriers.add(EC);
 		if (energyModel.b_isInitialized && v_isActive) {
-			f_addConsumptionEnergyCarrier(EC, timeParameters, timeVariables);	
-			//Add EC to energyModel
-			energyModel.f_addConsumptionEnergyCarrier(EC);
-			c_parentCoops.forEach(x -> x.f_addConsumptionEnergyCarrier(EC, timeParameters, timeVariables));
+			f_addConsumptionEnergyCarrierAfterInitialization(EC, timeParameters, timeVariables);
+		}
+		else {
+			v_liveData.activeConsumptionEnergyCarriers.add(EC);
+			v_liveData.activeEnergyCarriers.add(EC);
 		}
 	}
 }
 
 for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
 	if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
-		v_liveData.activeProductionEnergyCarriers.add(EC);
-		v_liveData.activeEnergyCarriers.add(EC);
 		if (energyModel.b_isInitialized && v_isActive) {		
-			f_addProductionEnergyCarrier(EC, timeParameters, timeVariables);
-			//Add EC to energyModel
-			energyModel.f_addProductionEnergyCarrier(EC);
-			c_parentCoops.forEach(x -> x.f_addProductionEnergyCarrier(EC, timeParameters, timeVariables));
+			f_addProductionEnergyCarrierAfterInitialization(EC, timeParameters, timeVariables);
+		}
+		else {
+			v_liveData.activeProductionEnergyCarriers.add(EC);
+			v_liveData.activeEnergyCarriers.add(EC);
 		}
 	}
 }
@@ -749,7 +719,7 @@ for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
 if(j_ea.assetFlowCategory != null &&!v_liveAssetsMetaData.activeAssetFlows.contains(j_ea.assetFlowCategory)) { // add live dataset
 	OL_AssetFlowCategories AC = j_ea.assetFlowCategory;
 	if (energyModel.b_isInitialized && v_isActive) {	
-		f_addAssetFlow(AC, timeParameters, timeVariables);	
+		f_addAssetFlowAfterInitialization(AC, timeParameters, timeVariables);	
 	}
 	else{
 		v_liveAssetsMetaData.activeAssetFlows.add(AC);

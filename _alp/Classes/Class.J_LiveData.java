@@ -33,7 +33,28 @@ public class J_LiveData {
 	
 	}
 
-    public void clearLiveDatasets() {
+	/*
+	 * Used at model initialization.
+	 */
+	public void createNewLiveDataSets(J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+		dsm_liveDemand_kW.createNewLiveDataSets(activeConsumptionEnergyCarriers, timeParameters, timeVariables);
+		dsm_liveSupply_kW.createNewLiveDataSets(activeProductionEnergyCarriers, timeParameters, timeVariables);
+		dsm_liveAssetFlows_kW.createNewLiveDataSets(assetsMetaData.activeAssetFlows, timeParameters, timeVariables);
+		
+		data_totalDemand_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_totalSupply_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_liveElectricityBalance_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_gridCapacityDemand_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_gridCapacitySupply_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+
+    	data_batteryStoredEnergyLiveWeek_MWh = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_batterySOC_fr = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+	}
+	
+	/*
+	 * Used by the 'looping' live simulation.
+	 */
+	public void resetLiveDatasets() {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
     		if (dsm_liveDemand_kW.get(EC) != null ) {
     			dsm_liveDemand_kW.get(EC).reset();
@@ -63,49 +84,6 @@ public class J_LiveData {
     	data_batterySOC_fr.reset();
     	
     }
-    
-    public void resetLiveDatasets(J_TimeParameters timeParameters) {
-    	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
-    		DataSet dsDemand = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
-    			dsDemand.add( t, 0);
-    		}
-    		dsm_liveDemand_kW.put( EC, dsDemand);
-    	}
-    	
-    	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
-    		DataSet dsSupply = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
-    			dsSupply.add( t, 0);
-    		}
-    		dsm_liveSupply_kW.put( EC, dsSupply);
-    	}
-    	
-    	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
-			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
-				DataSet dsAsset = new DataSet((int)(168 / timeParameters.getTimeStep_h()));
-				dsm_liveAssetFlows_kW.put(AC, dsAsset);
-			}
-    	}
-    	
-		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
-			
-			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
-				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
-			}
-
-	    	data_totalDemand_kW.add( t, 0); 
-	    	data_totalSupply_kW.add( t, 0);
-	    	data_liveElectricityBalance_kW.add( t, 0);
-	    	data_gridCapacityDemand_kW.add( t, 0); 
-	    	data_gridCapacitySupply_kW.add( t, 0);
-
-
-	    	data_batteryStoredEnergyLiveWeek_MWh.add( t, 0);
-	    	data_batterySOC_fr.add( t, 0);	
-		}
-    }
-    
     public void addTimeStep(double AnyLogicTime_h, J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap<OL_AssetFlowCategories> assetFlowsMap, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, double currentStoredEnergyBatteries_MWh) {
 
     	//Energy carrier flows

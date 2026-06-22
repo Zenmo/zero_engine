@@ -559,10 +559,10 @@ getEngine().setStartDate(startDate);
 
 // Initialize all agents in the correct order, creating all connections. What about setting initial values? And how about repeated simulations?
 f_buildGridNodeTree();
-c_gridConnections.forEach(GC -> GC.f_initialize(p_timeParameters));
+c_gridConnections.forEach(GC -> GC.f_initialize(p_timeParameters, p_timeVariables));
 
 // Only relevant for deserialisation:
-c_pausedGridConnections.forEach(GC -> GC.f_initialize(p_timeParameters));
+c_pausedGridConnections.forEach(GC -> GC.f_initialize(p_timeParameters, p_timeVariables));
 
 pop_connectionOwners.forEach(CO -> CO.f_initialize());
 pop_energyCoops.forEach(EC -> EC.f_initialize(p_timeParameters)); // Not yet robust when there is no supplier initialized!
@@ -1004,7 +1004,7 @@ v_liveData.activeConsumptionEnergyCarriers = EnumSet.of(OL_EnergyCarriers.ELECTR
 v_liveData.connectionMetaData = v_liveConnectionMetaData;
 v_liveData.assetsMetaData = v_liveAssetsMetaData;*/
 
-v_liveData.resetLiveDatasets(p_timeParameters);
+v_liveData.createNewLiveDataSets(p_timeParameters, p_timeVariables);
 
 fm_currentProductionFlows_kW = new J_FlowsMap();
 fm_currentConsumptionFlows_kW = new J_FlowsMap();
@@ -1179,15 +1179,17 @@ traceln("The simulation has been looped.");
 
 double f_clearAllLiveDatasets()
 {/*ALCODESTART::1758619851984*/
+// Note: We don't call createNewLiveDataSets on the LiveData, that creates new references which would require the results UI to reload.
+
 //Energy Model
-v_liveData.clearLiveDatasets();
+v_liveData.resetLiveDatasets();
 
 //Energy Coops
-pop_energyCoops.forEach(EC -> EC.v_liveData.clearLiveDatasets());
+pop_energyCoops.forEach(EC -> EC.v_liveData.resetLiveDatasets());
 
 //GridConnections
-c_gridConnections.forEach(GC -> GC.v_liveData.clearLiveDatasets());
-c_pausedGridConnections.forEach(GC -> GC.v_liveData.clearLiveDatasets());
+c_gridConnections.forEach(GC -> GC.v_liveData.resetLiveDatasets());
+c_pausedGridConnections.forEach(GC -> GC.v_liveData.resetLiveDatasets());
 /*ALCODEEND*/}
 
 double f_initializeEngineAfterLoad()
