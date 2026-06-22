@@ -219,11 +219,11 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
      * for each trip it lists the starttime, endtime (in hours) and the trip distance (in kms)
      * The starting and endtime are relative to the current time.
      */
-    public List<Triple<Double, Double, Double>> getTripsNext24Hours( J_TimeVariables timeVariables ) {
+    public List<Triple<Double, Double, Double>> getTripsNext24Hours( double timeAtStartForecast_h ) {
     	// TODO: Make this work for 48 hours, in which case the deadline can be in a new week of the starttimes list
     	List<Triple<Double, Double, Double>> trips = new ArrayList<>();
     	
-    	double currentTime_min = timeVariables.getT_h() * 60;
+    	double currentTime_min = timeAtStartForecast_h * 60;
     	double currentTimeSinceWeekStart_min = getTimeSinceWeekStart(currentTime_min);
     	double cutoffTime_min = currentTimeSinceWeekStart_min + 24*60;
     	

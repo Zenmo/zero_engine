@@ -182,7 +182,7 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     		throw new RuntimeException(this.getClass() + " requires at least one heating asset.");
     	}
     	if (gc.c_heatingAssets.size() > 1) {
-    		throw new RuntimeException(this.getClass() + " does not support more than one heating asset.");
+    		throw new RuntimeException(this.getClass() + " does not support more than one heating asset in GC: " + gc.p_gridConnectionID);
     	}
     	this.heatingAsset = gc.c_heatingAssets.get(0);
     	if (heatingAsset instanceof J_EAConversionGasBurner) {

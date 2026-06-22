@@ -173,7 +173,7 @@ public class J_ISIE_EMS implements I_EnergyManagement {
     	// Delete any old evs
     	this.virtual_evs.clear();
     	// We ask the triptracker what trips are start/ending in the next 24 hours and the distances of each trip.
-    	List<Triple<Double, Double, Double>> trips = this.tripTracker.getTripsNext24Hours( timeVariables );
+    	List<Triple<Double, Double, Double>> trips = this.tripTracker.getTripsNext24Hours( timeAtStartForecast_h );
     	// We create a virtual consumption asset for each trip, we can't allow the asset to delay the charging need of one trip until the next
     	// We translate the distance to an amount of energy and the start/end time become allowedOperatingTimes
     	

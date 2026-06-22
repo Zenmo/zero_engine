@@ -1295,6 +1295,10 @@ double f_collectGridConnectionLiveData()
 {/*ALCODESTART::1740502128180*/
 List<GridConnection> gcList = findAll(f_getAllChildMemberGridConnections(), gc -> gc.v_isActive);
 
+if (gcList.size() == 0) {
+	return;
+}
+
 int liveWeekSize = gcList.get(0).v_liveData.data_gridCapacityDemand_kW.size();
 
 for (int i=0; i < liveWeekSize; i++){
@@ -1536,9 +1540,9 @@ double f_createAndInitializeRapidRunDataClass(J_TimeParameters timeParameters)
 v_rapidRunData = new J_RapidRunData(timeParameters, true);
 v_rapidRunData.assetsMetaData = new J_AssetsMetaData(this);
 
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
-EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
-EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
 Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets_rapidRun = new HashMap<>();
 Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW_rapidRun = new HashMap<>();
@@ -1709,9 +1713,9 @@ double f_createAndInitializeOriginalRapidRunDataClass( J_TimeParameters timePara
 v_originalRapidRunData = new J_RapidRunData(timeParameters, true);
 v_originalRapidRunData.assetsMetaData = new J_AssetsMetaData(this);
    
-EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
-EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
-EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.noneOf(OL_EnergyCarriers.class);
+EnumSet<OL_EnergyCarriers> activeEnergyCarriers_rapidRun = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+EnumSet<OL_EnergyCarriers> activeConsumptionEnergyCarriers_rapidRun = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
+EnumSet<OL_EnergyCarriers> activeProductionEnergyCarriers_rapidRun = EnumSet.of(OL_EnergyCarriers.ELECTRICITY);
 EnumSet<OL_AssetFlowCategories> activeAssetFlows_rapidRun = EnumSet.noneOf(OL_AssetFlowCategories.class);
 Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets_rapidRun = new HashMap<>();
 Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW_rapidRun = new HashMap<>();
@@ -1807,5 +1811,25 @@ double f_removeExternalAggregatorAssetManagement(Class<? extends I_AggregatorAss
 if(this.p_aggregatorEnergyManagement != null){
 	this.p_aggregatorEnergyManagement.removeExternalAggregatorAssetManagement(aggregatorAssetManagementInterfaceType);
 }
+/*ALCODEEND*/}
+
+double f_fillLoadDebugPlot(double[] data,String name)
+{/*ALCODESTART::1781862075901*/
+DataSet ds = new DataSet(data.length);
+for (int i = 0; i < data.length; i++) {
+	double t = i * energyModel.p_timeParameters.getTimeStep_h();
+	ds.add(t, data[i]);
+}
+loadDebugPlot.addDataSet(ds, name);
+/*ALCODEEND*/}
+
+double f_fillPriceDebugPlot(double[] data,String name)
+{/*ALCODESTART::1781862697881*/
+DataSet ds = new DataSet(data.length);
+for (int i = 0; i < data.length; i++) {
+	double t = i * energyModel.p_timeParameters.getTimeStep_h();
+	ds.add(t, data[i]);
+}
+priceDebugPlot.addDataSet(ds, name);
 /*ALCODEEND*/}
 

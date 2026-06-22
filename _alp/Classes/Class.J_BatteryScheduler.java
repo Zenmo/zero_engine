@@ -179,7 +179,7 @@ public class J_BatteryScheduler {
                     if (b_hasSOCmax || b_hasSOCmin) {
                         skipSeperateChargeAndDischarge = true;
                     } else {
-                        System.out.printf("Aborting while loop after %s iterations, no charging or discharging opportunity found and battery not full or empty", i);
+                        //System.out.printf("Aborting while loop after %s iterations, no charging or discharging opportunity found and battery not full or empty", i);
                         // No charging or discharging opportunity found, break the loop
                         break;
                     }
@@ -200,7 +200,7 @@ public class J_BatteryScheduler {
                         skipSeperateChargeAndDischarge = true;
 
                     } else {
-                        System.out.printf("Aborting while loop after %s iterations, price spread too small and battery not full or empty", i);
+                        //System.out.printf("Aborting while loop after %s iterations, price spread too small and battery not full or empty", i);
                         // No charging or discharging opportunity found, break the loop
                         break;
                     }
@@ -290,11 +290,11 @@ public class J_BatteryScheduler {
             }
             i++;
         }
-        System.out.printf("Finished %s iterations: last price pread: %s eurpMWh, last charge price: %s eurpMWh, last discharge price: %s eurpMWh", 
-                        i, lastDischargePrice_eurpMWh - lastChargePrice_eurpMWh, lastChargePrice_eurpMWh, lastDischargePrice_eurpMWh);
+        //System.out.printf("Finished %s iterations: last price pread: %s eurpMWh, last charge price: %s eurpMWh, last discharge price: %s eurpMWh", 
+        //                i, lastDischargePrice_eurpMWh - lastChargePrice_eurpMWh, lastChargePrice_eurpMWh, lastDischargePrice_eurpMWh);
 
         //System.out.printf("Finished %s iterations %n", i);
-        System.out.flush();
+        //System.out.flush();
         return battery.profile_kW;
     }
 

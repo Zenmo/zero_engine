@@ -71,7 +71,6 @@ public class J_ProfilePointer{
     }
        
     public double[] getAllValues() {
-    	//return this.tableFunction.getValues();
     	return this.a_profile.clone();
     }
     

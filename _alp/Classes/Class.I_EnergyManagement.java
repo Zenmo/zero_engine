@@ -91,7 +91,7 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 				}
 				else if(asset instanceof I_HeatingAsset || asset instanceof J_EAStorageHeat || asset instanceof J_EAConversionAirConditioner){
 					if(!isAssetManagementActive(I_HeatingManagement.class)) {
-						throw new RuntimeException("A heating asset is found at GC that has an EMS that does not have active heating management.");
+						throw new RuntimeException("A heating asset of type " + asset.getClass() + " is found at GC " + ((GridConnection)asset.getOwner()).p_gridConnectionID + " that has an EMS that does not have active heating management.");
 					}
 					if(getExternalAssetManagement(I_HeatingManagement.class) != null) {
 						getExternalAssetManagement(I_HeatingManagement.class).initializeAssets();

@@ -393,12 +393,22 @@ v_weekendExcessExport_MWh = v_annualExcessExport_MWh - v_weekdayExcessExport_MWh
 
 ArrayList<GridNode> f_getConnectedGridNodes()
 {/*ALCODESTART::1718290223518*/
-return this.c_connectedGridNodes;
+if (energyModel.b_isInitialized) {
+	return this.c_connectedGridNodes;
+}
+else {
+	throw new RuntimeException("GridNode f_getConnectedGridNodes is not available before initialization.");
+}
 /*ALCODEEND*/}
 
 ArrayList<GridConnection> f_getConnectedGridConnections()
 {/*ALCODESTART::1718290606581*/
-return this.c_connectedGridConnections;
+if (energyModel.b_isInitialized) {
+	return this.c_connectedGridConnections;
+}
+else {
+	throw new RuntimeException("GridNode f_getConnectedGridConnections is not available before initialization.");
+}
 /*ALCODEEND*/}
 
 double f_propagateNodalPricing()
@@ -425,6 +435,8 @@ for (GridNode GN : c_connectedGridNodes) {
 	v_totalInstalledWindPower_kW += GN.v_totalInstalledWindPower_kW;
 	v_totalInstalledPVPower_kW += GN.v_totalInstalledPVPower_kW;
 }
+
+p_originalCapacity_kW = p_capacity_kW;
 
 /*
 if ( p_energyType == OL_EnergyCarriers.HEAT ) {
@@ -482,13 +494,18 @@ if (p_parentNodeID != null) {
 
 List<GridNode> f_getLowerLVLConnectedGridNodes()
 {/*ALCODESTART::1725964027407*/
-List<GridNode> allConnectedGridNodes = new ArrayList<GridNode>();
-
-for(GridNode GN : c_connectedGridNodes){
-	allConnectedGridNodes.addAll(GN.f_getAllConnectedGridNodes_recursion(new ArrayList<GridNode>()));
+if (energyModel.b_isInitialized) {
+	List<GridNode> allConnectedGridNodes = new ArrayList<GridNode>();
+	
+	for(GridNode GN : c_connectedGridNodes){
+		allConnectedGridNodes.addAll(GN.f_getAllConnectedGridNodes_recursion(new ArrayList<GridNode>()));
+	}
+	
+	return allConnectedGridNodes;
 }
-
-return allConnectedGridNodes;
+else {
+	throw new RuntimeException("GridNode f_getLowerLVLConnectedGridNodes is not available before initialization.");
+}
 /*ALCODEEND*/}
 
 List<GridNode> f_getAllConnectedGridNodes_recursion(List<GridNode> allConnectedGridNodes)
@@ -512,15 +529,20 @@ else{
 
 ArrayList<GridConnection> f_getAllLowerLVLConnectedGridConnections()
 {/*ALCODESTART::1734617656602*/
-ArrayList<GridConnection> AllLowerLVLConnectedGridConnections = new ArrayList<GridConnection>();
-
-for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
-	AllLowerLVLConnectedGridConnections.addAll(GN.f_getConnectedGridConnections());
+if (energyModel.b_isInitialized) {
+	ArrayList<GridConnection> AllLowerLVLConnectedGridConnections = new ArrayList<GridConnection>();
+	
+	for(GridNode GN : f_getLowerLVLConnectedGridNodes()){
+		AllLowerLVLConnectedGridConnections.addAll(GN.f_getConnectedGridConnections());
+	}
+	
+	AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
+	
+	return AllLowerLVLConnectedGridConnections;
 }
-
-AllLowerLVLConnectedGridConnections.addAll(this.c_connectedGridConnections);
-
-return AllLowerLVLConnectedGridConnections;
+else {
+	throw new RuntimeException("GridNode f_getAllLowerLVLConnectedGridConnections is not available before initialization.");
+}
 /*ALCODEEND*/}
 
 J_LoadDurationCurves f_getDuurkrommes(J_TimeParameters timeParameters)

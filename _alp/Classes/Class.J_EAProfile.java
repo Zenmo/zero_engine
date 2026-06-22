@@ -33,7 +33,7 @@ public class J_EAProfile extends zero_engine.J_EAFixed{
 			} else if (profilePointer.getProfileUnits() == OL_ProfileUnits.KW) {
 				profileUnitScaler_r = 1.0;				
 			} else {
-				throw new RuntimeException("Unsupported ProfileUnits of profilePointer for J_EAProfile!");
+				throw new RuntimeException("Unsupported ProfileUnit " + profilePointer.getProfileUnits() + " of profilePointer for J_EAProfile!");
 			}
 		}	
 	    this.assetFlowCategory = assetCategory;

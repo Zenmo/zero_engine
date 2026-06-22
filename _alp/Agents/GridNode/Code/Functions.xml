@@ -343,7 +343,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="private" StaticFunction="false">
 		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 		<ReturnType>List&lt;GridNode&gt;</ReturnType>
 		<Id>1725966618828</Id>
@@ -369,7 +369,7 @@
 		<ReturnType>ArrayList&lt;GridConnection&gt;</ReturnType>
 		<Id>1734617656602</Id>
 		<Name><![CDATA[f_getAllLowerLVLConnectedGridConnections]]></Name>
-		<Description><![CDATA[Function that gets all the directly connected grid connections]]></Description>
+		<Description><![CDATA[Function that gets all gridconnections from this node and all gridnodes below this gridnode.]]></Description>
 		<X>1110</X>
 		<Y>270</Y>
 		<Label>

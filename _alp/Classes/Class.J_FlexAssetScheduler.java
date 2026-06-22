@@ -62,7 +62,7 @@ public class J_FlexAssetScheduler {
 
         double workRemaining_kWh = work_kWh;
 
-        while (workRemaining_kWh > 0) {
+        while (DoubleCompare.greaterThanZero(workRemaining_kWh)) {
             double[] localMarginalPriceCurve_eurpMWh;
             if (separateMarketAndCongestion) {
                 localMarginalPriceCurve_eurpMWh = market.getMarginalPriceCurveUpwards(subtractArrays(newLoadProfile_kW, previousLoadProfile_kW), newLoadProfile_kW);
