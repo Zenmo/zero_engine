@@ -1231,11 +1231,11 @@
 		<PresentationFlag>true</PresentationFlag>
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
-			<Name><![CDATA[timeOfIntervalStart]]></Name>
+			<Name><![CDATA[forecastStartTime_h]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[timeOfIntervalEnd]]></Name>
+			<Name><![CDATA[forecastEndTime_h]]></Name>
 			<Type><![CDATA[double]]></Type>
 		</Parameter>
 		<Parameter>

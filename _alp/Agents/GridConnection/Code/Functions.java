@@ -1283,20 +1283,26 @@ if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHea
 return nettoBalance_kW;
 /*ALCODEEND*/}
 
-double[] f_getFixedAssetForecast_Heat(double timeOfIntervalStart,double timeOfIntervalEnd,J_TimeParameters timeParameters)
+double[] f_getFixedAssetForecast_Heat(double forecastStartTime_h,double forecastEndTime_h,J_TimeParameters timeParameters)
 {/*ALCODESTART::1781525346198*/
-double p_timeStep_h = energyModel.p_timeParameters.getTimeStep_h();
-double timeWindow_h = timeOfIntervalEnd-timeOfIntervalStart;
-
-double[] nettoBalance_kW = new double[roundToInt(timeWindow_h/p_timeStep_h)];
+double timeWindow_h = forecastEndTime_h-forecastStartTime_h;
+int numberOfTimeSteps = roundToInt(timeWindow_h/timeParameters.getTimeStep_h());
+double[] nettoBalance_kW = new double[numberOfTimeSteps];
 
 if(!v_isActive) {
 	return nettoBalance_kW;
 }
 
-//Add heat profiles
+//Default profiles
 for(J_EAProfile heatProfile : findAll(c_profileAssets, profile -> profile.getEnergyCarrier() == OL_EnergyCarriers.HEAT)){
-	//nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, heatProfile.getProfilePointer().get)
+	nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, heatProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
+}
+
+//Default controlled flexprofiles
+if(f_getExternalAssetManagement(I_FlexProfileManagement.class) instanceof J_FlexProfileManagementDefault){
+	for(J_EAFlexProfile heatFlexProfile : findAll(c_flexProfileAssets, flexProfile -> flexProfile.getEnergyCarrier() == OL_EnergyCarriers.HEAT)) {
+		nettoBalance_kW = LUXMath.addArrays(nettoBalance_kW, heatFlexProfile.getForecast_kW(forecastStartTime_h, forecastEndTime_h));
+	}
 }
 
 return nettoBalance_kW;
