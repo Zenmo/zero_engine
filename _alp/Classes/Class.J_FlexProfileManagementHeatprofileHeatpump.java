@@ -8,6 +8,8 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
 	private double[] flexProfileSetpointArray_fr;
 	private int currentFlexProfileSetpointArrayIndex;
 	private double forecastingDuration_h = 24;
+	private double maxFlexProfileShift_fr = 0.3;// maximum shift per timestep.
+	
     /**
      * Empty constructor for serialization
      */
@@ -83,10 +85,9 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
 		// into the lowest valleys first -> (a) minimises the peak and (b) fills the
 		// deepest (export) valleys first = maximises self-consumption.
 		// f stays in [L, U]; heat is conserved.
-
-		final double maxShift_fr = 0.3;// maximum shift per timestep.
-		final double L = 1.0 - maxShift_fr;
-		final double U = 1.0 + maxShift_fr;
+		
+		final double L = 1.0 - maxFlexProfileShift_fr;
+		final double U = 1.0 + maxFlexProfileShift_fr;
 
 		final double[] base     = nettoBalanceForecastElectricity_kW;
 		final double[] flexElec = originalFlexprofileNettoElectricityBalance_kW;
@@ -138,6 +139,14 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
 		//Store new array
 		this.currentFlexProfileSetpointArrayIndex = 0;
 		this.flexProfileSetpointArray_fr = newFlexProfileSetpointArray;
+    }
+    
+    //Setters
+    public void setMaxFlexProfileShift_fr(double maxFlexProfileShift_fr) {
+    	if(maxFlexProfileShift_fr<0) {
+    		throw new RuntimeException("Trying to set the max flex profile shift of J_EMS_NBH_LocalBalance_Internal to a negative value, not allowed!");
+    	}
+    	this.maxFlexProfileShift_fr = maxFlexProfileShift_fr;
     }
     
     ////Store and reset states
