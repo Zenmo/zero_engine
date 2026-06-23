@@ -170,7 +170,9 @@ else {
 }
 
 for(GCDistrictHeating GCDH : DistrictHeatingSystems){
-	GCDH.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);	
+	if(GCDH.f_isActive()){
+		GCDH.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
+	}	
 }
 
 //OLD LOCATION OF AGGREGATOR CALL, NECESSARY IF MANAGEMENT IS WITHOUT TIME STEP DELAY
