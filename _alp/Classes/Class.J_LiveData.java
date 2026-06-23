@@ -2,7 +2,6 @@ import java.util.EnumSet;
 /**
  * J_LiveData
  */	
-//import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 public class J_LiveData {
 	
@@ -79,7 +78,6 @@ public class J_LiveData {
     	data_gridCapacityDemand_kW.reset();
     	data_gridCapacitySupply_kW.reset();
 
-
     	data_batteryStoredEnergyLiveWeek_MWh.reset();
     	data_batterySOC_fr.reset();
     	
@@ -106,13 +104,7 @@ public class J_LiveData {
     	this.data_gridCapacitySupply_kW.add(AnyLogicTime_h, -connectionMetaData.getContractedFeedinCapacity_kW());
 
     	//// Gather specific electricity flows from corresponding energy assets
-		//for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
 		for (OL_AssetFlowCategories AC : dsm_liveAssetFlows_kW.keySet()) {	
-			//traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
-			/*if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
-				traceln("Trying to add assetflow: %s", AC);
-				traceln("Parent GC: %s", ((GridConnection)parentAgent).p_gridConnectionID);
-			}*/
 			dsm_liveAssetFlows_kW.get(AC).add(AnyLogicTime_h, roundToDecimal(assetFlowsMap.get(AC),3));
 		}
     	
@@ -124,8 +116,60 @@ public class J_LiveData {
     	else{
     		this.data_batterySOC_fr.add(AnyLogicTime_h, 0);	
     	}	
-	
-
+    }
+    
+    public void addEnergyCarriersAndAssetFlowCategoriesFromEA(J_EA j_ea, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+	    for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
+	    	this.addProductionEnergyCarrier(EC, isInitialized, timeParameters, timeVariables);
+	    }
+	    
+	    for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
+	    	this.addConsumptionEnergyCarrier(EC, isInitialized, timeParameters, timeVariables);
+	    }
+	    
+	    if (j_ea.getAssetFlowCategory() != null) {
+	    	this.addAssetFlowCaterogy(j_ea.getAssetFlowCategory(), isInitialized, timeParameters, timeVariables);
+	    }
+    }
+    
+    public void addProductionEnergyCarrier(OL_EnergyCarriers EC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	if (!this.activeProductionEnergyCarriers.contains(EC)) {
+    		this.activeEnergyCarriers.add(EC);
+    		this.activeProductionEnergyCarriers.add(EC);
+    		if (isInitialized) {
+    			this.dsm_liveSupply_kW.put( EC, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    	}
+    }
+    
+    public void addConsumptionEnergyCarrier(OL_EnergyCarriers EC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	if (!this.activeConsumptionEnergyCarriers.contains(EC)) {
+    		this.activeEnergyCarriers.add(EC);
+    		this.activeConsumptionEnergyCarriers.add(EC);
+    		if (isInitialized) {
+	    		this.dsm_liveDemand_kW.put( EC, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    	}
+    }
+    
+    public void addAssetFlowCaterogy(OL_AssetFlowCategories AFC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	if (!this.assetsMetaData.activeAssetFlows.contains(AFC)) {
+    		this.assetsMetaData.activeAssetFlows.add(AFC);
+    		if (isInitialized) {
+    			this.dsm_liveAssetFlows_kW.put( AFC, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    		
+    		// There are currently two exceptional cases in OL_AssetFlowCategories. 
+    		// Batteries have two AFC per J_EA, EVs can have a second AFC.
+    		if (AFC == OL_AssetFlowCategories.batteriesChargingPower_kW) {
+    			this.assetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+    			this.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    		if (AFC == OL_AssetFlowCategories.V2GPower_kW && !this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
+    			this.assetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW);	
+    			this.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    	}
     }
     
 	public String toString() {

@@ -637,27 +637,27 @@ double f_initializePause()
 {/*ALCODESTART::1722590514591*/
 for (GridConnection GC : UtilityConnections) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false, p_timeVariables);
+		GC.f_setActive(false, p_timeParameters, p_timeVariables);
 	}
 }
 for (GridConnection GC : EnergyProductionSites) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false, p_timeVariables);
+		GC.f_setActive(false,p_timeParameters, p_timeVariables);
 	}
 }
 for (GridConnection GC : EnergyConversionSites) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false, p_timeVariables);
+		GC.f_setActive(false, p_timeParameters, p_timeVariables);
 	}
 }
 for (GridConnection GC : GridBatteries) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false, p_timeVariables);
+		GC.f_setActive(false, p_timeParameters, p_timeVariables);
 	}
 }
 for (GridConnection GC : PublicChargers) {
 	if (!GC.v_isActive) {
-		GC.f_setActive(false, p_timeVariables);
+		GC.f_setActive(false, p_timeParameters, p_timeVariables);
 	}
 }
 /*ALCODEEND*/}
@@ -734,7 +734,7 @@ gcList.forEach(gc -> gc.c_parentCoops.add(energyCoop));
 return energyCoop;
 /*ALCODEEND*/}
 
-EnergyCoop f_removeEnergyCoop(EnergyCoop energyCoop,J_TimeVariables timeVariables)
+EnergyCoop f_removeEnergyCoop(EnergyCoop energyCoop,J_TimeParameters timeParameters,J_TimeVariables timeVariables)
 {/*ALCODESTART::1739972940581*/
 // Connect GCs, connectionOwners and energyCoop and gather data
 for(Agent CO : energyCoop.c_coopCustomers){
@@ -757,7 +757,7 @@ for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 	if(GC instanceof GCGridBattery && GC.f_getBatteryManagement() instanceof J_BatteryManagementPeakShaving && ((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).getTargetType() == OL_ResultScope.ENERGYCOOP){
 		((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).setTarget(null);
 		((J_BatteryManagementPeakShaving)GC.f_getBatteryManagement()).setTargetType( OL_ResultScope.ENERGYCOOP );
-		GC.f_setActive(false, timeVariables);
+		GC.f_setActive(false, timeParameters, timeVariables);
 	}
 }
 
@@ -765,24 +765,6 @@ for (GridConnection GC : energyCoop.f_getAllChildMemberGridConnections()) {
 remove_pop_energyCoops(energyCoop);
 
 
-/*ALCODEEND*/}
-
-EnergyCoop f_addConsumptionEnergyCarrier(OL_EnergyCarriers EC)
-{/*ALCODESTART::1740056275008*/
-if (!v_liveData.activeConsumptionEnergyCarriers.contains(EC)) {
-	v_liveData.activeEnergyCarriers.add(EC);
-	v_liveData.activeConsumptionEnergyCarriers.add(EC);
-	
-	DataSet dsDemand = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
-	
-	double endTime = p_timeVariables.getAnyLogicTime_h();
-	double startTime = max(0, p_timeVariables.getAnyLogicTime_h() - 168);
-
-	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
-		dsDemand.add( t, 0);
-	}
-	v_liveData.dsm_liveDemand_kW.put( EC, dsDemand);
-}
 /*ALCODEEND*/}
 
 double f_updateActiveAssetsMetaData()
@@ -801,24 +783,6 @@ for(GridConnection GC : f_getAllGridConnections()){
 	GC.v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(GC)));
 }
 
-/*ALCODEEND*/}
-
-EnergyCoop f_addProductionEnergyCarrier(OL_EnergyCarriers EC)
-{/*ALCODESTART::1746021439807*/
-if (!v_liveData.activeProductionEnergyCarriers.contains(EC)) {
-	v_liveData.activeEnergyCarriers.add(EC);
-	v_liveData.activeProductionEnergyCarriers.add(EC);
-	
-	DataSet dsSupply = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
-
-	double endTime = p_timeVariables.getAnyLogicTime_h();
-	double startTime = max(0, p_timeVariables.getAnyLogicTime_h() - 168);
-
-	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
-		dsSupply.add( t, 0);
-	}
-	v_liveData.dsm_liveSupply_kW.put( EC, dsSupply);
-}
 /*ALCODEEND*/}
 
 double f_updateAmbientDependentAssets()
@@ -1103,40 +1067,6 @@ for (OL_AssetFlowCategories AC : v_rapidRunData.am_assetFlowsAccumulators_kW.key
 
 return new Pair<>(peakImportWeekAssetFlows, peakExportWeekAssetFlows);
 
-/*ALCODEEND*/}
-
-EnergyCoop f_addAssetFlow(OL_AssetFlowCategories AC)
-{/*ALCODESTART::1754379679149*/
-if (!v_liveAssetsMetaData.activeAssetFlows.contains(AC)) {
-	v_liveAssetsMetaData.activeAssetFlows.add(AC);
-	
-	DataSet dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
-	
-	double endTime = p_timeVariables.getAnyLogicTime_h();
-	double startTime = max(0, p_timeVariables.getAnyLogicTime_h() - 168);
-
-	for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
-		dsAsset.add( t, 0);
-	}
-	v_liveData.dsm_liveAssetFlows_kW.put( AC, dsAsset);
-	
-	if (AC == OL_AssetFlowCategories.batteriesChargingPower_kW) { // also add batteriesDischarging!
-		dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
-		
-		for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
-			dsAsset.add( t, 0);
-		}
-		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, dsAsset);
-	}
-	if (AC == OL_AssetFlowCategories.V2GPower_kW && !v_liveAssetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
-		dsAsset = new DataSet( (int)(168 / p_timeParameters.getTimeStep_h()) );
-		
-		for (double t = startTime; t <= endTime; t += p_timeParameters.getTimeStep_h()) {
-			dsAsset.add( t, 0);
-		}
-		v_liveData.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, dsAsset);
-	}	
-}
 /*ALCODEEND*/}
 
 List<GridConnection> f_getGridConnectionsCollectionPointer()

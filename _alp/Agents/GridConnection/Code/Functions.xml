@@ -146,7 +146,7 @@
 		<Id>1692799608559</Id>
 		<Name><![CDATA[f_connectToJ_EA]]></Name>
 		<X>950</X>
-		<Y>95</Y>
+		<Y>75</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -364,6 +364,10 @@
 			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
 			<Name><![CDATA[timeVariables]]></Name>
 			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
@@ -452,90 +456,6 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>EnergyCoop</ReturnType>
-		<Id>1754380684463</Id>
-		<Name><![CDATA[f_addConsumptionEnergyCarrierAfterInitialization]]></Name>
-		<X>1325</X>
-		<Y>67</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[EC]]></Name>
-			<Type><![CDATA[OL_EnergyCarriers]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>EnergyCoop</ReturnType>
-		<Id>1754380684465</Id>
-		<Name><![CDATA[f_addProductionEnergyCarrierAfterInitialization]]></Name>
-		<X>1325</X>
-		<Y>87</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[EC]]></Name>
-			<Type><![CDATA[OL_EnergyCarriers]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>EnergyCoop</ReturnType>
-		<Id>1754380684467</Id>
-		<Name><![CDATA[f_addAssetFlowAfterInitialization]]></Name>
-		<X>1325</X>
-		<Y>107</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[AC]]></Name>
-			<Type><![CDATA[OL_AssetFlowCategories]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1754582754934</Id>
 		<Name><![CDATA[f_activateV2GChargingMode]]></Name>
@@ -588,8 +508,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1756977865503</Id>
 		<Name><![CDATA[f_addEnergyCarriersAndAssetCategoriesFromEA]]></Name>
-		<X>1310</X>
-		<Y>40</Y>
+		<X>970</X>
+		<Y>175</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -950,7 +870,7 @@
 		<Id>1772105340588</Id>
 		<Name><![CDATA[f_connectToJ_EAFlex]]></Name>
 		<X>970</X>
-		<Y>135</Y>
+		<Y>115</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -974,7 +894,7 @@
 		<Id>1772105953445</Id>
 		<Name><![CDATA[f_getNewTripTracker]]></Name>
 		<X>1020</X>
-		<Y>175</Y>
+		<Y>155</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1002,7 +922,7 @@
 		<Id>1772106633559</Id>
 		<Name><![CDATA[f_connectToJ_EAFixed]]></Name>
 		<X>970</X>
-		<Y>115</Y>
+		<Y>95</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1082,7 +1002,7 @@
 		<Id>1772119363003</Id>
 		<Name><![CDATA[f_connectTripTracker]]></Name>
 		<X>990</X>
-		<Y>155</Y>
+		<Y>135</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
