@@ -146,8 +146,8 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 
 			energyUsed_kWh += tripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 			energyUse_kW += tripDist_km * vehicleScaling * energyConsumption_kWhpkm / this.timeParameters.getTimeStep_h();
-			if (stateOfCharge_fr < 0) {
-				traceln("EV of type: " + this.energyAssetType + " arrived home with negative SOC: " + roundToDecimal(100 * stateOfCharge_fr,2) + "%");
+			if (DoubleCompare.lessThanZero(stateOfCharge_fr)) {
+				traceln("EV of type: " + this.energyAssetType + " arrived home with negative SOC: " + (100 * stateOfCharge_fr) + "%");
 			}
 			this.available = true;
 			return true;
@@ -254,7 +254,7 @@ public class J_EAEV extends J_EAFlex implements I_Vehicle, I_ChargingRequest {
 		return this.V2GActive;
 	}
 	
-	protected void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAEV during initialization itself. (No such thing as friend class in java, so only can put on protected).
+	public void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAEV during initialization itself. (No such thing as friend class in java).
 		this.V2GActive = activateV2G;
 		if(this.V2GCapable && activateV2G) {
 			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;

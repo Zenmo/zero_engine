@@ -239,6 +239,36 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker {
 	    return currentAnnualDistance_km;
    }
    
+   public List<TripRecord> getTripsActiveBetween_h(double t1_h, double t2_h) {
+	    List<TripRecord> matchingTrips = new ArrayList<>();
+	    if (tripRecords.isEmpty() || t2_h <= t1_h) {
+	        return matchingTrips;
+	    }
+
+	    // Start one week earlier so a trip that began before t1_h (and is still running) is
+	    // reachable by the unroll. A single trip is assumed shorter than a week.
+	    double weekStartOffset_h = t1_h - getTimeSinceWeekStart_h(t1_h);
+
+	    for (double weekOffset_h = weekStartOffset_h - 168.0; weekOffset_h < t2_h; weekOffset_h += 168.0) {
+	        for (TripRecord tripRecord : tripRecords) {
+	            double absoluteStartTime_h = tripRecord.startTime_h() + weekOffset_h;
+
+	            double duration_h = tripRecord.endTime_h() - tripRecord.startTime_h();
+	            if (duration_h < 0) duration_h += 168.0; // trip straddles the week wrap
+	            double absoluteEndTime_h = absoluteStartTime_h + duration_h;
+
+	            // Include if it starts inside the window, OR it is in progress at t1_h.
+	            boolean startsInWindow = absoluteStartTime_h >= t1_h && absoluteStartTime_h < t2_h;
+	            boolean inProgressAtT1 = absoluteStartTime_h < t1_h && absoluteEndTime_h > t1_h;
+
+	            if (startsInWindow || inProgressAtT1) {
+	                matchingTrips.add(tripRecord);
+	            }
+	        }
+	    }
+	    return matchingTrips;
+	}
+   
    public static record TripRecord(double startTime_h, double endTime_h, double distance_km) {
    }
    
