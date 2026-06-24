@@ -538,7 +538,7 @@ else {
 }
 /*ALCODEEND*/}
 
-double f_addHeatManagement(OL_GridConnectionHeatingType heatingType,boolean isGhost)
+double f_addHeatManagement(OL_GridConnectionHeatingType heatingType,boolean isGhost,J_HeatingPreferences heatingPreferences)
 {/*ALCODESTART::1754393382442*/
 if (heatingType == OL_GridConnectionHeatingType.NONE) {
 	return;
@@ -568,9 +568,9 @@ catch (Exception e) {
 	e.printStackTrace();
 }
 
-J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
+//J_HeatingPreferences existingHeatingPreferences = f_getHeatingManagement() != null ? f_getHeatingManagement().getHeatingPreferences() : null; //Store the existing heating preferences
 
-heatingManagement.setHeatingPreferences(existingHeatingPreferences); // Reasign the existing heating preferences
+heatingManagement.setHeatingPreferences(heatingPreferences); // Reasign the existing heating preferences
 f_setExternalAssetManagement(heatingManagement);
 
 /*ALCODEEND*/}
@@ -1109,5 +1109,13 @@ if(this.p_energyManagement != null){
 else{
 	return false;
 }
+/*ALCODEEND*/}
+
+J_HeatingPreferences f_getHeatingPreferences()
+{/*ALCODESTART::1781165937788*/
+if (f_getHeatingManagement() != null) {
+	return f_getHeatingManagement().getHeatingPreferences();
+}
+return null;
 /*ALCODEEND*/}
 

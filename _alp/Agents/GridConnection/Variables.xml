@@ -418,7 +418,7 @@
 		<Id>1765551371538</Id>
 		<Name><![CDATA[p_chargePoint]]></Name>
 		<X>666</X>
-		<Y>641</Y>
+		<Y>661</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -585,7 +585,7 @@
 		<Id>1668695364192</Id>
 		<Name><![CDATA[p_batteryAsset]]></Name>
 		<X>646</X>
-		<Y>791</Y>
+		<Y>811</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -610,7 +610,7 @@
 		<Id>1676449763319</Id>
 		<Name><![CDATA[p_heatBuffer]]></Name>
 		<X>646</X>
-		<Y>771</Y>
+		<Y>791</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -635,7 +635,7 @@
 		<Id>1684919785784</Id>
 		<Name><![CDATA[p_gasBuffer]]></Name>
 		<X>646</X>
-		<Y>851</Y>
+		<Y>871</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -660,7 +660,7 @@
 		<Id>1692878211840</Id>
 		<Name><![CDATA[p_cookingTracker]]></Name>
 		<X>646</X>
-		<Y>421</Y>
+		<Y>441</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1086,7 +1086,7 @@
 		<Id>1659962626907</Id>
 		<Name><![CDATA[c_storageAssets]]></Name>
 		<X>626</X>
-		<Y>751</Y>
+		<Y>771</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1140,7 +1140,7 @@
 		<Id>1659962626913</Id>
 		<Name><![CDATA[c_conversionAssets]]></Name>
 		<X>626</X>
-		<Y>401</Y>
+		<Y>421</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1158,7 +1158,7 @@
 		<Id>1667746389220</Id>
 		<Name><![CDATA[c_vehicleAssets]]></Name>
 		<X>626</X>
-		<Y>461</Y>
+		<Y>481</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1176,7 +1176,7 @@
 		<Id>1669115948280</Id>
 		<Name><![CDATA[c_petroleumFuelVehicles]]></Name>
 		<X>646</X>
-		<Y>711</Y>
+		<Y>731</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1194,7 +1194,7 @@
 		<Id>1692864624612</Id>
 		<Name><![CDATA[c_tripTrackers]]></Name>
 		<X>646</X>
-		<Y>481</Y>
+		<Y>501</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1248,7 +1248,7 @@
 		<Id>1711012701187</Id>
 		<Name><![CDATA[c_hydrogenVehicles]]></Name>
 		<X>646</X>
-		<Y>731</Y>
+		<Y>751</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1284,7 +1284,7 @@
 		<Id>1750258408126</Id>
 		<Name><![CDATA[c_chargingSessions]]></Name>
 		<X>626</X>
-		<Y>441</Y>
+		<Y>461</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1321,7 +1321,7 @@
 		<Id>1754581015887</Id>
 		<Name><![CDATA[c_electricVehicles]]></Name>
 		<X>646</X>
-		<Y>501</Y>
+		<Y>521</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
