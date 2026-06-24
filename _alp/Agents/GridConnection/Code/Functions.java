@@ -447,8 +447,8 @@ else {
 	
 	v_isActive = setActive; // v_isActive must be true before calling updateActiveAssetData!
 	v_liveAssetsMetaData.updateActiveAssetData(new ArrayList<>(List.of(this)));
-	v_liveAssetsMetaData.activeAssetFlows.forEach(AFC -> energyModel.getLiveData().addAssetFlowCaterogy(AFC, energyModel.b_isInitialized, timeParameters, timeVariables));
-	v_liveAssetsMetaData.activeAssetFlows.forEach(AFC -> c_parentCoops.forEach(coop -> coop.getLiveData().addAssetFlowCaterogy(AFC, energyModel.b_isInitialized, timeParameters, timeVariables)));
+	v_liveAssetsMetaData.activeAssetFlows.forEach(AFC -> energyModel.getLiveData().addAssetFlowCategory(AFC, energyModel.b_isInitialized, timeParameters, timeVariables));
+	v_liveAssetsMetaData.activeAssetFlows.forEach(AFC -> c_parentCoops.forEach(coop -> coop.getLiveData().addAssetFlowCategory(AFC, energyModel.b_isInitialized, timeParameters, timeVariables)));
 		
 	// update GN parents' wind / solar totals (will be wrong if you changed your totals while paused)
 	p_parentNodeElectric.f_updateTotalInstalledProductionAssets(OL_EnergyAssetType.PHOTOVOLTAIC, v_liveAssetsMetaData.totalInstalledPVPower_kW, true);
@@ -579,9 +579,9 @@ double f_activateV2GChargingMode(boolean enableV2G,J_TimeParameters timeParamete
 {/*ALCODESTART::1754582754934*/
 p_energyManagement.setV2GActive(enableV2G);
 if (enableV2G){
-	v_liveData.addAssetFlowCaterogy(OL_AssetFlowCategories.V2GPower_kW, energyModel.b_isInitialized, timeParameters, timeVariables);
-	energyModel.getLiveData().addAssetFlowCaterogy(OL_AssetFlowCategories.V2GPower_kW, energyModel.b_isInitialized, timeParameters, timeVariables);
-	c_parentCoops.forEach(coop -> coop.getLiveData().addAssetFlowCaterogy(OL_AssetFlowCategories.V2GPower_kW, energyModel.b_isInitialized, timeParameters, timeVariables));
+	v_liveData.addAssetFlowCategory(OL_AssetFlowCategories.V2GPower_kW, energyModel.b_isInitialized, timeParameters, timeVariables);
+	energyModel.getLiveData().addAssetFlowCategory(OL_AssetFlowCategories.V2GPower_kW, energyModel.b_isInitialized, timeParameters, timeVariables);
+	c_parentCoops.forEach(coop -> coop.getLiveData().addAssetFlowCategory(OL_AssetFlowCategories.V2GPower_kW, energyModel.b_isInitialized, timeParameters, timeVariables));
 }
 /*ALCODEEND*/}
 

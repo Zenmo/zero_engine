@@ -128,7 +128,7 @@ public class J_LiveData {
 	    }
 	    
 	    if (j_ea.getAssetFlowCategory() != null) {
-	    	this.addAssetFlowCaterogy(j_ea.getAssetFlowCategory(), isInitialized, timeParameters, timeVariables);
+	    	this.addAssetFlowCategory(j_ea.getAssetFlowCategory(), isInitialized, timeParameters, timeVariables);
 	    }
     }
     
@@ -152,7 +152,7 @@ public class J_LiveData {
     	}
     }
     
-    public void addAssetFlowCaterogy(OL_AssetFlowCategories AFC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    public void addAssetFlowCategory(OL_AssetFlowCategories AFC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
     	if (!this.assetsMetaData.activeAssetFlows.contains(AFC)) {
     		this.assetsMetaData.activeAssetFlows.add(AFC);
     		if (isInitialized) {
