@@ -1438,6 +1438,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[BackupGeneratorManagement]]></Name>
 				<ParentId>1772100318398</ParentId>
 			</Folder>
+			<Folder>
+				<Id>1781186973946</Id>
+				<Name><![CDATA[FlexProfileManagement]]></Name>
+				<ParentId>1772100318398</ParentId>
+			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
 		<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
@@ -2227,6 +2232,35 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1778239873010</Id>
 				<Name><![CDATA[J_BackupGeneratorManagementExternalSetpoint]]></Name>
 				<Folder>1776078970513</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1781184397108</Id>
+				<Name><![CDATA[J_EAFlexProfile]]></Name>
+				<Folder>1752677832758</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1781187002718</Id>
+				<Name><![CDATA[I_FlexProfileManagement]]></Name>
+				<Folder>1781186973946</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1781269241936</Id>
+				<Name><![CDATA[J_FlexProfileManagementHeatprofileHeatpump]]></Name>
+				<Folder>1781186973946</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1781523461253</Id>
+				<Name><![CDATA[LUXMath]]></Name>
+			</JavaClass>
+			<JavaClass>
+				<Id>1781622084102</Id>
+				<Name><![CDATA[J_FlexProfileManagementDefault]]></Name>
+				<Folder>1781186973946</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1781796838749</Id>
+				<Name><![CDATA[I_ProfileAsset]]></Name>
+				<Folder>1752677832758</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1781710977201</Id>

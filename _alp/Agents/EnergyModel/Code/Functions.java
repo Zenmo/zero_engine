@@ -682,7 +682,7 @@ return c_pausedGridConnections;
 
 J_ProfilePointer f_findProfile(String assetName)
 {/*ALCODESTART::1727193246625*/
-J_ProfilePointer profilePointer = findFirst(c_profiles, p -> p.name.equals(assetName));
+J_ProfilePointer profilePointer = findFirst(c_profiles, p -> p.getName().equals(assetName));
 //traceln("J_EAConsumption with name %s found profile asset: %s", assetName, profilePointer);
 if (profilePointer == null) {
 	traceln("No profilePointer with name %s found", assetName);

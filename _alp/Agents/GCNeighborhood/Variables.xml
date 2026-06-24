@@ -111,8 +111,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1734716021367</Id>
 		<Name><![CDATA[v_batteryMoneyMade_euro]]></Name>
-		<X>1330</X>
-		<Y>500</Y>
+		<X>2020</X>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -133,8 +133,8 @@
 	<Variable Class="PlainVariable">
 		<Id>1752589060012</Id>
 		<Name><![CDATA[v_currentLoadLowPassed_kW]]></Name>
-		<X>1330</X>
-		<Y>530</Y>
+		<X>2020</X>
+		<Y>310</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -330,8 +330,8 @@
 	<Variable Class="Parameter">
 		<Id>1736933490243</Id>
 		<Name><![CDATA[p_chpAsset]]></Name>
-		<X>600</X>
-		<Y>720</Y>
+		<X>650</X>
+		<Y>910</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>

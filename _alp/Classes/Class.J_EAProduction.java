@@ -19,7 +19,6 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
 	    this.energyAssetType = type;
 	    this.energyAssetName = name;
 	    this.energyCarrier = energyCarrier;
-	    //this.capacity_kW = capacity_kW;
 	    this.signScaler_r = -1.0;
 		if (profile.getProfileUnits() == OL_ProfileUnits.NORMALIZEDPOWER) {
 			this.profileUnitScaler_r = capacity_kW;
@@ -44,6 +43,8 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
 		registerEnergyAsset(timeParameters);
 	}
 	
+	
+	//Setters
 	public void setCapacityElectric_kW(double capacityElectric_kW, GridConnection gc) {
 		// Calculate the difference with the set and the previous capacity to update totals in GC, GN and EnergyModel
 		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
@@ -72,6 +73,9 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
 		}
 	}
 	
+	
+	
+	//Getters
 	public double getCapacityElectric_kW() {
 		if (energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 			return this.profileUnitScaler_r;
@@ -91,50 +95,15 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
 	public String getName() {
 		return this.energyAssetName;
 	}
-	
-	@Override
-    public void operate(J_TimeVariables timeVariables) {	
-		/*
-		ratioOfCapacity = profilePointer.getCurrentValue();
-		
-		//if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
-			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
-			
-	    	this.energyUse_kW = -currentProduction_kW;
-	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
-	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
-	    	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
-		//}
-	    throw new RuntimeException("J_EAProduction operate override is called!");
-	    */
-	}
-	
-	/*
-    @Override
-	public void f_updateAllFlows(double v_powerFraction_fr) {
-		throw new RuntimeException("J_EAProduction.f_updateAllFlows() should be called without arguments!");
-	}
-	
-	public void f_updateAllFlows() {
-		double ratioOfCapacity = profilePointer.getCurrentValue();
-		
-		if (ratioOfCapacity>0.0) { // Skip when there is no production -> saves time?
-			double currentProduction_kW = ratioOfCapacity * this.capacity_kW;
-			
-	    	this.energyUse_kW = -currentProduction_kW;
-	    	this.energyUsed_kWh += this.energyUse_kW * this.timestep_h; 	    	    	
-	       	this.flowsMap.put(this.energyCarrier, -currentProduction_kW);
-	       	this.assetFlowsMap.put(this.assetFlowCategory, currentProduction_kW);
-	       	if (parentAgent instanceof GridConnection) {    		
-	    		//((GridConnection)parentAgent).f_addFlows(arr, this);
-	    		((GridConnection)parentAgent).f_addFlows(flowsMap, this.energyUse_kW, assetFlowsMap, this);
-	    	}
-
-		}
-		this.lastFlowsMap.cloneMap(this.flowsMap);
-    	this.lastEnergyUse_kW = this.energyUse_kW;
-    	this.clear();
-    }*/
+    public double getEnergyCurtailed_kWh() {
+    	return this.totalEnergyCurtailed_kWh;
+    }
+    
+    public J_ProfilePointer getProfilePointer() {
+    	return this.profilePointer;
+    }
+    
+    
     
     public J_FlowPacket curtailEnergyCarrierProduction(OL_EnergyCarriers curtailedEnergyCarrier, double curtailmentAmount_kW) {  // The curtailment setpoint is the requested amount of curtailment; requested reduction of production. (which may or may not be provided, depending on what the current production is)
     	
@@ -155,18 +124,11 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
     	this.lastFlowsMap.addFlow(curtailedEnergyCarrier, curtailmentPower_kW); // production is a negative flow, so to remove production, a positive value must be added to lastFlows.
     	this.lastEnergyUse_kW += curtailmentPower_kW; // production is a negative flow, so to remove production, a positive value must be added to lastEnergyUse_kW.
     	
-		//gc.f_removeFlows(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW, this);
      	J_FlowPacket flowPacket = new J_FlowPacket(curtailmentFlow, curtailedEnergyUse_kW, assetFlows_kW);
      	return flowPacket;
     }
     
-    public double getEnergyCurtailed_kWh() {
-    	return this.totalEnergyCurtailed_kWh;
-    }
-    
-    public J_ProfilePointer getProfilePointer() {
-    	return this.profilePointer;
-    }
+
     
     @Override
     public void storeStatesAndReset() {
@@ -176,12 +138,11 @@ public class J_EAProduction extends zero_engine.J_EAProfile{
 	
 	@Override
 	public String toString() {
-		return
-			"type = " + this.getClass().toString() + " " +
-			"owner = " + this.getOwner() +" " +
-			"capacity_kW = " + profileUnitScaler_r +" "+
-			"energyCarrier = " + energyCarrier +" "+
-			"assetFlowCategory = " + this.assetFlowCategory + " " +
-			"energyProduced_kWh = " + (-this.energyUsed_kWh) +  " ";
+		return  "J_EAProduction: " +
+				"Owner: " + this.getOwner() + ", " +
+				"Capacity_kW: " + profileUnitScaler_r + ", " +
+				"EC: " + this.energyCarrier + ", " +
+				"AFC: " + this.assetFlowCategory + ", " +
+				"CurrentProd_kW: " + (-this.lastEnergyUse_kW);
 	}
 }
