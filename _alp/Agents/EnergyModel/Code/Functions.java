@@ -159,12 +159,20 @@ v_currentPrimaryEnergyProductionHeatpumps_kW = 0;
 v_batteryStoredEnergy_kWh = 0;
 
 if (b_parallelizeGridConnections) {
-	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun));
+	c_gridConnections.parallelStream().forEach(gc -> {if(!(gc instanceof GCDistrictHeating)){ gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);}});
 } 
 else {
 	for(GridConnection gc : c_gridConnections) {
-		gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
+		if(!(gc instanceof GCDistrictHeating)){
+			gc.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
+		}
 	}
+}
+
+for(GCDistrictHeating GCDH : DistrictHeatingSystems){
+	if(GCDH.f_isActive()){
+		GCDH.f_calculateEnergyBalance(p_timeVariables, v_isRapidRun);
+	}	
 }
 
 //OLD LOCATION OF AGGREGATOR CALL, NECESSARY IF MANAGEMENT IS WITHOUT TIME STEP DELAY
@@ -502,7 +510,7 @@ v_liveConnectionMetaData.setCapacitiesKnown(topLevelGridCapacitiesKnown, topLeve
 double f_gridNodeRecursiveAdd(GridNode GN)
 {/*ALCODESTART::1716886716306*/
 c_gridNodeExecutionList.add(GN);
-for (GridNode GNchild : GN.c_connectedGridNodes) {
+for (GridNode GNchild : GN.f_getConnectedGridNodes()) {
 	f_gridNodeRecursiveAdd(GNchild);
 }
 

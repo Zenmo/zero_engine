@@ -5,8 +5,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1658495336616</Id>
 		<Name><![CDATA[f_connectToParentNode]]></Name>
-		<X>780</X>
-		<Y>80</Y>
+		<X>810</X>
+		<Y>60</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -16,13 +16,13 @@
 		<ShowLabel>true</ShowLabel>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="default" StaticFunction="false">
+	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1658495630251</Id>
 		<Name><![CDATA[f_connectToChild]]></Name>
-		<X>780</X>
-		<Y>100</Y>
+		<X>810</X>
+		<Y>80</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -39,26 +39,10 @@
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
-		<Id>1660122738707</Id>
-		<Name><![CDATA[f_sumLoads]]></Name>
-		<X>780</X>
-		<Y>180</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
 		<Id>1660216693598</Id>
 		<Name><![CDATA[f_nodeMetering]]></Name>
-		<X>790</X>
-		<Y>240</Y>
+		<X>820</X>
+		<Y>270</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -85,8 +69,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1666556555538</Id>
 		<Name><![CDATA[f_setCongestionTariff]]></Name>
-		<X>780</X>
-		<Y>140</Y>
+		<X>810</X>
+		<Y>110</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -107,25 +91,8 @@
 		<Name><![CDATA[f_resetCongestionTariffs]]></Name>
 		<Description><![CDATA[Gridoperator roept deze functie alleen aan als deze node vorige tijdstap congested was maar nu niet meer.]]></Description>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>780</X>
-		<Y>160</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1676387466304</Id>
-		<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>780</X>
-		<Y>60</Y>
+		<X>810</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -140,8 +107,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1688370981599</Id>
 		<Name><![CDATA[f_calculateEnergyBalance]]></Name>
-		<X>780</X>
-		<Y>220</Y>
+		<X>810</X>
+		<Y>160</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -163,30 +130,13 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1688372319365</Id>
-		<Name><![CDATA[f_addGridBatteryLoad]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>780</X>
-		<Y>200</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
 	<Function AccessType="default" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1698919552330</Id>
 		<Name><![CDATA[f_resetStates]]></Name>
-		<X>780</X>
-		<Y>320</Y>
+		<X>810</X>
+		<Y>350</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -205,8 +155,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1713181018774</Id>
 		<Name><![CDATA[f_calculateKPIs]]></Name>
-		<X>780</X>
-		<Y>260</Y>
+		<X>810</X>
+		<Y>290</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -222,8 +172,8 @@
 		<Id>1718290223518</Id>
 		<Name><![CDATA[f_getConnectedGridNodes]]></Name>
 		<Description><![CDATA[Function that gets all the directly connected grid nodes]]></Description>
-		<X>1110</X>
-		<Y>190</Y>
+		<X>410</X>
+		<Y>130</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -239,8 +189,8 @@
 		<Id>1718290606581</Id>
 		<Name><![CDATA[f_getConnectedGridConnections]]></Name>
 		<Description><![CDATA[Function that gets all the directly connected grid connections]]></Description>
-		<X>1110</X>
-		<Y>210</Y>
+		<X>410</X>
+		<Y>150</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -255,8 +205,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1718896086734</Id>
 		<Name><![CDATA[f_propagateNodalPricing]]></Name>
-		<X>780</X>
-		<Y>400</Y>
+		<X>810</X>
+		<Y>430</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -271,8 +221,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1719300860382</Id>
 		<Name><![CDATA[f_initializeGridnode]]></Name>
-		<X>780</X>
-		<Y>350</Y>
+		<X>810</X>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -287,8 +237,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1719302290904</Id>
 		<Name><![CDATA[f_updateForecasts]]></Name>
-		<X>780</X>
-		<Y>370</Y>
+		<X>810</X>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -303,8 +253,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1722591244558</Id>
 		<Name><![CDATA[f_updateTotalInstalledProductionAssets]]></Name>
-		<X>1040</X>
-		<Y>310</Y>
+		<X>810</X>
+		<Y>560</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -332,8 +282,8 @@
 		<Id>1725964027407</Id>
 		<Name><![CDATA[f_getLowerLVLConnectedGridNodes]]></Name>
 		<Description><![CDATA[Function that gets all grid nodes and the children of those grid nodes, etc. All the way to the bottom node.]]></Description>
-		<X>1110</X>
-		<Y>230</Y>
+		<X>410</X>
+		<Y>170</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -349,8 +299,8 @@
 		<Id>1725966618828</Id>
 		<Name><![CDATA[f_getAllConnectedGridNodes_recursion]]></Name>
 		<Description><![CDATA[Recursion Function that gets all grid nodes and the children of those grid nodes, etc. All the way to the bottom node. For basic use should be called with an empty list!]]></Description>
-		<X>1150</X>
-		<Y>250</Y>
+		<X>450</X>
+		<Y>190</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -370,8 +320,8 @@
 		<Id>1734617656602</Id>
 		<Name><![CDATA[f_getAllLowerLVLConnectedGridConnections]]></Name>
 		<Description><![CDATA[Function that gets all the directly connected grid connections]]></Description>
-		<X>1110</X>
-		<Y>270</Y>
+		<X>410</X>
+		<Y>210</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -386,8 +336,8 @@
 		<ReturnType>J_LoadDurationCurves</ReturnType>
 		<Id>1753341238941</Id>
 		<Name><![CDATA[f_getDuurkrommes]]></Name>
-		<X>780</X>
-		<Y>290</Y>
+		<X>810</X>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -406,8 +356,8 @@
 		<ReturnType>DataSet</ReturnType>
 		<Id>1754461654982</Id>
 		<Name><![CDATA[f_getPeakImportWeekDataSet]]></Name>
-		<X>1060</X>
-		<Y>440</Y>
+		<X>810</X>
+		<Y>500</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -426,8 +376,8 @@
 		<ReturnType>DataSet</ReturnType>
 		<Id>1754462048041</Id>
 		<Name><![CDATA[f_getPeakExportWeekDataSet]]></Name>
-		<X>1060</X>
-		<Y>460</Y>
+		<X>810</X>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -446,8 +396,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1758209089894</Id>
 		<Name><![CDATA[f_getCurrentChargingInformation]]></Name>
-		<X>810</X>
-		<Y>600</Y>
+		<X>780</X>
+		<Y>760</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -466,8 +416,8 @@
 		<ReturnType>int</ReturnType>
 		<Id>1765548180792</Id>
 		<Name><![CDATA[f_getCurrentNumberOfChargeRequestsBalancingThisGN]]></Name>
-		<X>830</X>
-		<Y>690</Y>
+		<X>800</X>
+		<Y>850</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -482,8 +432,48 @@
 		<ReturnType>double</ReturnType>
 		<Id>1765548222744</Id>
 		<Name><![CDATA[f_getCurrentChargingPowerBalancingThisGN_kW]]></Name>
-		<X>830</X>
-		<Y>650</Y>
+		<X>800</X>
+		<Y>810</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781699944841</Id>
+		<Name><![CDATA[f_calculateHeatNodeTransportLoss_kW]]></Name>
+		<X>840</X>
+		<Y>200</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[latConnectedGN]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[lonConnectedGN]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1781700026205</Id>
+		<Name><![CDATA[f_sumLoads]]></Name>
+		<X>820</X>
+		<Y>180</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
