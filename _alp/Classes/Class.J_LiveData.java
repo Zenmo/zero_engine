@@ -2,7 +2,6 @@ import java.util.EnumSet;
 /**
  * J_LiveData
  */	
-//import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 public class J_LiveData {
 	
@@ -33,7 +32,28 @@ public class J_LiveData {
 	
 	}
 
-    public void clearLiveDatasets() {
+	/*
+	 * Used at model initialization.
+	 */
+	public void createNewLiveDataSets(J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+		dsm_liveDemand_kW.createNewLiveDataSets(activeConsumptionEnergyCarriers, timeParameters, timeVariables);
+		dsm_liveSupply_kW.createNewLiveDataSets(activeProductionEnergyCarriers, timeParameters, timeVariables);
+		dsm_liveAssetFlows_kW.createNewLiveDataSets(assetsMetaData.activeAssetFlows, timeParameters, timeVariables);
+		
+		data_totalDemand_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_totalSupply_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_liveElectricityBalance_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_gridCapacityDemand_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_gridCapacitySupply_kW = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+
+    	data_batteryStoredEnergyLiveWeek_MWh = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+    	data_batterySOC_fr = DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables);
+	}
+	
+	/*
+	 * Used by the 'looping' live simulation.
+	 */
+	public void resetLiveDatasets() {
     	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
     		if (dsm_liveDemand_kW.get(EC) != null ) {
     			dsm_liveDemand_kW.get(EC).reset();
@@ -58,54 +78,10 @@ public class J_LiveData {
     	data_gridCapacityDemand_kW.reset();
     	data_gridCapacitySupply_kW.reset();
 
-
     	data_batteryStoredEnergyLiveWeek_MWh.reset();
     	data_batterySOC_fr.reset();
     	
     }
-    
-    public void resetLiveDatasets(J_TimeParameters timeParameters) {
-    	for(OL_EnergyCarriers EC : activeConsumptionEnergyCarriers){
-    		DataSet dsDemand = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
-    			dsDemand.add( t, 0);
-    		}
-    		dsm_liveDemand_kW.put( EC, dsDemand);
-    	}
-    	
-    	for(OL_EnergyCarriers EC : activeProductionEnergyCarriers){
-    		DataSet dsSupply = new DataSet( (int)(168 / timeParameters.getTimeStep_h()) );
-    		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
-    			dsSupply.add( t, 0);
-    		}
-    		dsm_liveSupply_kW.put( EC, dsSupply);
-    	}
-    	
-    	for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) { // First add missing assetFlow datasets if there are any
-			if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
-				DataSet dsAsset = new DataSet((int)(168 / timeParameters.getTimeStep_h()));
-				dsm_liveAssetFlows_kW.put(AC, dsAsset);
-			}
-    	}
-    	
-		for (double t = timeParameters.getRunStartTime_h(); t < timeParameters.getRunEndTime_h(); t += timeParameters.getTimeStep_h()) {
-			
-			for (OL_AssetFlowCategories AC : assetsMetaData.activeAssetFlows) {
-				dsm_liveAssetFlows_kW.get(AC).add(t, 0);
-			}
-
-	    	data_totalDemand_kW.add( t, 0); 
-	    	data_totalSupply_kW.add( t, 0);
-	    	data_liveElectricityBalance_kW.add( t, 0);
-	    	data_gridCapacityDemand_kW.add( t, 0); 
-	    	data_gridCapacitySupply_kW.add( t, 0);
-
-
-	    	data_batteryStoredEnergyLiveWeek_MWh.add( t, 0);
-	    	data_batterySOC_fr.add( t, 0);	
-		}
-    }
-    
     public void addTimeStep(double AnyLogicTime_h, J_FlowsMap fm_currentBalanceFlows_kW, J_FlowsMap fm_currentConsumptionFlows_kW, J_FlowsMap fm_currentProductionFlows_kW, J_ValueMap<OL_AssetFlowCategories> assetFlowsMap, double v_currentPrimaryEnergyProduction_kW, double v_currentFinalEnergyConsumption_kW, double v_currentPrimaryEnergyProductionHeatpumps_kW, double v_currentEnergyCurtailed_kW, double currentStoredEnergyBatteries_MWh) {
 
     	//Energy carrier flows
@@ -128,13 +104,7 @@ public class J_LiveData {
     	this.data_gridCapacitySupply_kW.add(AnyLogicTime_h, -connectionMetaData.getContractedFeedinCapacity_kW());
 
     	//// Gather specific electricity flows from corresponding energy assets
-		//for (OL_AssetFlowCategories AC : assetFlowsMap.keySet()) {
 		for (OL_AssetFlowCategories AC : dsm_liveAssetFlows_kW.keySet()) {	
-			//traceln("Assetsflows in dsm_liveAssetflows_kW: %s", dsm_liveAssetFlows_kW.keySet());
-			/*if (!dsm_liveAssetFlows_kW.keySet().contains(AC)) {
-				traceln("Trying to add assetflow: %s", AC);
-				traceln("Parent GC: %s", ((GridConnection)parentAgent).p_gridConnectionID);
-			}*/
 			dsm_liveAssetFlows_kW.get(AC).add(AnyLogicTime_h, roundToDecimal(assetFlowsMap.get(AC),3));
 		}
     	
@@ -146,8 +116,60 @@ public class J_LiveData {
     	else{
     		this.data_batterySOC_fr.add(AnyLogicTime_h, 0);	
     	}	
-	
-
+    }
+    
+    public void addEnergyCarriersAndAssetFlowCategoriesFromEA(J_EA j_ea, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+	    for (OL_EnergyCarriers EC : j_ea.getActiveProductionEnergyCarriers()) {
+	    	this.addProductionEnergyCarrier(EC, isInitialized, timeParameters, timeVariables);
+	    }
+	    
+	    for (OL_EnergyCarriers EC : j_ea.getActiveConsumptionEnergyCarriers()) {
+	    	this.addConsumptionEnergyCarrier(EC, isInitialized, timeParameters, timeVariables);
+	    }
+	    
+	    if (j_ea.getAssetFlowCategory() != null) {
+	    	this.addAssetFlowCategory(j_ea.getAssetFlowCategory(), isInitialized, timeParameters, timeVariables);
+	    }
+    }
+    
+    public void addProductionEnergyCarrier(OL_EnergyCarriers EC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	if (!this.activeProductionEnergyCarriers.contains(EC)) {
+    		this.activeEnergyCarriers.add(EC);
+    		this.activeProductionEnergyCarriers.add(EC);
+    		if (isInitialized) {
+    			this.dsm_liveSupply_kW.put( EC, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    	}
+    }
+    
+    public void addConsumptionEnergyCarrier(OL_EnergyCarriers EC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	if (!this.activeConsumptionEnergyCarriers.contains(EC)) {
+    		this.activeEnergyCarriers.add(EC);
+    		this.activeConsumptionEnergyCarriers.add(EC);
+    		if (isInitialized) {
+	    		this.dsm_liveDemand_kW.put( EC, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    	}
+    }
+    
+    public void addAssetFlowCategory(OL_AssetFlowCategories AFC, boolean isInitialized, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	if (!this.assetsMetaData.activeAssetFlows.contains(AFC)) {
+    		this.assetsMetaData.activeAssetFlows.add(AFC);
+    		if (isInitialized) {
+    			this.dsm_liveAssetFlows_kW.put( AFC, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    		
+    		// There are currently two exceptional cases in OL_AssetFlowCategories. 
+    		// Batteries have two AFC per J_EA, EVs can have a second AFC.
+    		if (AFC == OL_AssetFlowCategories.batteriesChargingPower_kW) {
+    			this.assetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.batteriesDischargingPower_kW);
+    			this.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.batteriesDischargingPower_kW, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    		if (AFC == OL_AssetFlowCategories.V2GPower_kW && !this.assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.evChargingPower_kW)) { // also add evCharging!
+    			this.assetsMetaData.activeAssetFlows.add(OL_AssetFlowCategories.evChargingPower_kW);	
+    			this.dsm_liveAssetFlows_kW.put( OL_AssetFlowCategories.evChargingPower_kW, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables) );
+    		}
+    	}
     }
     
 	public String toString() {

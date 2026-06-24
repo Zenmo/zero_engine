@@ -26,7 +26,8 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
 													I_ChargingManagement.class, 
 													I_BatteryManagement.class,
 													I_BackupGeneratorManagement.class,
-													I_CurtailManagement.class
+													I_CurtailManagement.class,
+													J_FlexProfileManagementDefault.class
 												));
 	Map<Class<? extends I_AssetManagement>, I_AssetManagement> activeExternalAssetManagements = new HashMap();			
 	
@@ -52,27 +53,32 @@ public class J_EnergyManagementDefault implements I_EnergyManagement{
     		this.checkConfiguration(GC.c_flexAssets);
     	}
     	
-    	//1. Call Heating management
+    	//1. Flex profile management (only default)
+    	if(this.getExternalAssetManagement(I_FlexProfileManagement.class) != null) {
+    		this.getExternalAssetManagement(I_FlexProfileManagement.class).manageFlexProfiles(timeVariables);
+    	}
+    	
+    	//2. Call Heating management
     	if(this.getExternalAssetManagement(I_HeatingManagement.class) != null) {
     		this.getExternalAssetManagement(I_HeatingManagement.class).manageHeating(timeVariables);
     	}
     	
-    	//2. Call Charging management
+    	//3. Call Charging management
     	if(this.getExternalAssetManagement(I_ChargingManagement.class) != null) {
     		this.getExternalAssetManagement(I_ChargingManagement.class).manageCharging(GC.f_getChargePoint(), timeVariables);
     	}
     	
-    	//3. Call Battery management
+    	//4. Call Battery management
     	if(this.getExternalAssetManagement(I_BatteryManagement.class) != null) {
     		this.getExternalAssetManagement(I_BatteryManagement.class).manageBattery(timeVariables);
     	}
     	
-    	//4. Call BackupGenerator management
+    	//5. Call BackupGenerator management
     	if(this.getExternalAssetManagement(I_BackupGeneratorManagement.class) != null) {
     		this.getExternalAssetManagement(I_BackupGeneratorManagement.class).manageBackupGenerator(timeVariables);
     	}
     	
-    	//5. Call curtailment management
+    	//6. Call curtailment management
     	if(this.getExternalAssetManagement(I_CurtailManagement.class) != null) {
     		this.getExternalAssetManagement(I_CurtailManagement.class).manageCurtailment(timeVariables);
     	}

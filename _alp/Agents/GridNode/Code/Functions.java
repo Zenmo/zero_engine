@@ -56,28 +56,6 @@ if ( ConnectingChildNode instanceof EnergyCoop) {
 
 /*ALCODEEND*/}
 
-double f_sumLoads()
-{/*ALCODESTART::1660122738707*/
-v_currentLoad_kW = 0;
-
-// determine the net energy flows from all subconnections by nodetype
-
-for( GridNode GN : c_connectedGridNodes ) {
-	v_currentLoad_kW += GN.v_currentLoad_kW;
-}
-
-for( GridConnection GC : c_connectedGridConnections) {
-	v_currentLoad_kW += GC.fm_currentBalanceFlows_kW.get(p_energyCarrier);
-}
-
-
-/*if( p_energyType == OL_EnergyCarriers.ELECTRICITY ){
-	v_electricLoadRatioExclBattery = v_currentLoadElectricity_kW / p_capacity_kW;
-}*/
-
-
-/*ALCODEEND*/}
-
 double f_nodeMetering(J_TimeVariables timeVariables,J_TimeParameters timeParameters,boolean isRapidRun)
 {/*ALCODESTART::1660216693598*/
 //v_averageAbsoluteLoadElectricity_kW = ( v_electricityDrawn_kWh + v_electricityDelivered_kWh ) / energyModel.t_h;
@@ -179,62 +157,6 @@ for (EnergyCoop e: c_energyCoops){
 }
 /*ALCODEEND*/}
 
-double f_instantiateEnergyAssets()
-{/*ALCODESTART::1676387466304*/
-//traceln("asset " + p_energyAssetList);
-
-if( p_energyAssetList != null) {
-	for( JsonNode l : p_energyAssetList ) {
-		OL_EACategories assetCategory = OL_EACategories.valueOf(l.required( "category" ).textValue());
-		switch( assetCategory )  {		
-			case STORAGE:
-				//EnergyAsset storageAsset = main.add_pop_energyAssets();
-				//storageAsset.set_p_parentAgentID( this.p_gridNodeID );
-				OL_EnergyAssetType assetType = ( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue()));
-				//storageAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
-				if( assetType == OL_EnergyAssetType.STORAGE_HEAT){
-				    double capacityHeat_kW = l.path( "capacityHeat_kW").doubleValue();
-					double lossFactor_WpK = l.path( "lossFactor_WpK" ).doubleValue();
-					double heatCapacity_JpK = l.path( "heatCapacity_JpK" ).doubleValue();
-					double minTemperature_degC = l.path( "minTemp_degC" ).asDouble(40.0); // provide default values
-					double maxTemperature_degC = l.path( "maxTemp_degC" ).asDouble(90.0);
-					double setTemperature_degC = l.path( "setTemp_degC" ).asDouble(60.0);
-					double initialTemperature_degC = l.path( "initialTemperature_degC" ).doubleValue();
-					String ambientTempType2 = l.path( "ambientTempType" ).textValue();
-					
-					// minTemperature_degC = 35; // TO DELETE TEMP FIX
-					// setTemperature_degC = uniform_discr(38, 45); // TO DELETE TEMP FIX
-					// initialTemperature_degC = uniform_discr(70,80) * 1.0; // TO DELETE TEMP FIX
-					// heatCapacity_JpK = heatCapacity_JpK * uniform(0.7, 1.3); // TO DELETE TEMP FIX
-					traceln("heatstorage asset initialisation check! minTemp = "+minTemperature_degC+", maxTemperature_degC = "+maxTemperature_degC+", setTemp_degC = "+ setTemperature_degC+", initialTemperature_degC = "+initialTemperature_degC);
-					
-					//traceln("Heat Storage init: minTemperature = "+minTemperature_degC+", maxTemperature_degC = "+maxTemperature_degC+", setTemperature_degC = "+setTemperature_degC+", initialTemperature_degC = "+initialTemperature_degC);
-					
-					
-					p_transportBuffer = new J_EAStorageHeat((Agent)this, OL_EAStorageTypes.HEATBUFFER, capacityHeat_kW, lossFactor_WpK, energyModel.p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, ambientTempType2);	
-					//J_EAStorageHeat(Agent parentAgent, OL_EAStorageTypes heatStorageType, double capacityHeat_kW, double lossFactor_WpK, double timestep_h, double initialTemperature_degC, double minTemperature_degC, double maxTemperature_degC, double setTemperature_degC, double heatCapacity_JpK, String ambientTempType ) {
-					//p_transportBuffer = storageAsset.j_ea;
-					p_transportBuffer.updateAmbientTemperature( energyModel.p_undergroundTemperature_degC );
-					if(heatCapacity_JpK > 0 & capacityHeat_kW > 0) {
-						b_transportBufferValid = true;
-					}
-				}
-				else{
-					traceln("F_instantiateEnergyAssets: ERROR, storage asset type not available");
-				}
-				//storageAsset.f_connectToParentNode( this );
-				//main.c_storageAssets.add(storageAsset);
-
-			break;
-			default:
-				traceln("not a valid energy asset category." + assetCategory);
-			break;
-		}
-	}
-//traceln("GridConnection "+this.p_gridNodeID+" has finished initializing its energyAssets!");
-}
-/*ALCODEEND*/}
-
 double f_calculateEnergyBalance(J_TimeVariables timeVariables,J_TimeParameters timeParameters,boolean isRapidRun)
 {/*ALCODESTART::1688370981599*/
 f_sumLoads();
@@ -300,16 +222,6 @@ if (p_energyType.equals(OL_EnergyCarriers.HEAT) & b_transportBufferValid ) { // 
 f_nodeMetering(timeVariables, timeParameters, isRapidRun);
 
 f_getCurrentChargingInformation(timeParameters);
-/*ALCODEEND*/}
-
-double f_addGridBatteryLoad()
-{/*ALCODESTART::1688372319365*/
-for( Agent a : subConnections.getConnections() ) {
-	if ( a instanceof GCGridBattery){
-		v_currentLoadElectricity_kW += ((GCGridBattery)a).v_currentPowerElectricity_kW;
-	}	
-}
-
 /*ALCODEEND*/}
 
 double f_resetStates(J_TimeParameters timeParameters)
@@ -530,38 +442,54 @@ return new J_LoadDurationCurves(acc_annualElectricityBalance_kW.getTimeSeries_kW
 
 DataSet f_getPeakImportWeekDataSet(J_TimeParameters timeParameters)
 {/*ALCODESTART::1754461654982*/
-double[] elecBalance_kW = acc_annualElectricityBalance_kW.getTimeSeries_kW();
+ZeroAccumulator acc_annualBalance_kW;
+if(p_energyCarrier == OL_EnergyCarriers.ELECTRICITY){
+	acc_annualBalance_kW = acc_annualElectricityBalance_kW;
+}
+else{
+	acc_annualBalance_kW = acc_annualHeatBalance_kW;
+}
+
+double[] balance_kW = acc_annualBalance_kW.getTimeSeries_kW();
 
 Integer maxIndex = 0; // index with peak import
-for (int i = 1; i < elecBalance_kW.length; i++) {
-    if (elecBalance_kW[i] > elecBalance_kW[maxIndex]) {
+for (int i = 1; i < balance_kW.length; i++) {
+    if (balance_kW[i] > balance_kW[maxIndex]) {
         maxIndex = i;
     }
 }
 
 double peakTime_h = maxIndex*timeParameters.getTimeStep_h();
-double duration_h = acc_annualElectricityBalance_kW.getDuration();
+double duration_h = acc_annualBalance_kW.getDuration();
 double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
-DataSet ds = acc_annualElectricityBalance_kW.getDataSet(timeParameters.getRunStartTime_h(), accStartTime_h, accStartTime_h+24*7);
+DataSet ds = acc_annualBalance_kW.getDataSet(timeParameters.getRunStartTime_h(), accStartTime_h, accStartTime_h+24*7);
    
 return ds;
 /*ALCODEEND*/}
 
 DataSet f_getPeakExportWeekDataSet(J_TimeParameters timeParameters)
 {/*ALCODESTART::1754462048041*/
-double[] elecBalance_kW = acc_annualElectricityBalance_kW.getTimeSeries_kW();
+ZeroAccumulator acc_annualBalance_kW;
+if(p_energyCarrier == OL_EnergyCarriers.ELECTRICITY){
+	acc_annualBalance_kW = acc_annualElectricityBalance_kW;
+}
+else{
+	acc_annualBalance_kW = acc_annualHeatBalance_kW;
+}
+
+double[] balance_kW = acc_annualBalance_kW.getTimeSeries_kW();
 
 Integer minIndex = 0; // index with peak import
-for (int i = 1; i < elecBalance_kW.length; i++) {
-    if (elecBalance_kW[i] < elecBalance_kW[minIndex]) {
+for (int i = 1; i < balance_kW.length; i++) {
+    if (balance_kW[i] < balance_kW[minIndex]) {
         minIndex = i;
     }
 }
 
 double peakTime_h = minIndex*timeParameters.getTimeStep_h();
-double duration_h = acc_annualElectricityBalance_kW.getDuration();
+double duration_h = acc_annualBalance_kW.getDuration();
 double accStartTime_h = min(duration_h-7*24,max(0,peakTime_h - 3.5*24));
-DataSet ds = acc_annualElectricityBalance_kW.getDataSet(timeParameters.getRunStartTime_h(), accStartTime_h, accStartTime_h+24*7);
+DataSet ds = acc_annualBalance_kW.getDataSet(timeParameters.getRunStartTime_h(), accStartTime_h, accStartTime_h+24*7);
    
 return ds;
 /*ALCODEEND*/}
@@ -599,5 +527,40 @@ return v_currentNumberOfChargeRequestsBalancingThisGN;
 double f_getCurrentChargingPowerBalancingThisGN_kW()
 {/*ALCODESTART::1765548222744*/
 return v_currentChargingPowerBalancingThisGN_kW;
+/*ALCODEEND*/}
+
+double f_calculateHeatNodeTransportLoss_kW(double latConnectedGN,double lonConnectedGN)
+{/*ALCODESTART::1781699944841*/
+double totalDist_m = GISUtil.calculateManhattanDistance_m(p_latitude, p_longitude, latConnectedGN, lonConnectedGN);
+double heatLoss_kW = totalDist_m * p_heatLossFactorTransport_kWpm;
+
+return heatLoss_kW;
+/*ALCODEEND*/}
+
+double f_sumLoads()
+{/*ALCODESTART::1781700026205*/
+v_currentLoad_kW = 0;
+v_currentLoss_kW = 0;
+
+// determine the net energy flows from all subconnections by nodetype
+
+for( GridNode connectedGN : c_connectedGridNodes ) {
+	v_currentLoad_kW += connectedGN.v_currentLoad_kW;
+	if (p_energyCarrier == OL_EnergyCarriers.HEAT && p_parentNodeID != null) {
+		double heatLoss_kW = 0;
+		heatLoss_kW = f_calculateHeatNodeTransportLoss_kW(connectedGN.p_latitude, connectedGN.p_longitude);
+		v_currentLoad_kW += heatLoss_kW;
+		v_currentLoss_kW += heatLoss_kW;
+	}
+}
+
+for( GridConnection GC : c_connectedGridConnections) {
+	v_currentLoad_kW += GC.fm_currentBalanceFlows_kW.get(p_energyCarrier);
+	if (p_energyCarrier == OL_EnergyCarriers.HEAT && p_parentNodeID != null) {
+		double heatLoss_kW = p_heatLossFactorDistribution_kW;
+		v_currentLoad_kW += heatLoss_kW;
+		v_currentLoss_kW += heatLoss_kW;
+	}
+}
 /*ALCODEEND*/}
 

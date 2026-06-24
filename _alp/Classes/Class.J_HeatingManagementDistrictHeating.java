@@ -51,14 +51,30 @@ public class J_HeatingManagementDistrictHeating implements I_HeatingManagement {
     	if ( !isInitialized ) {
     		this.initializeAssets();
     	}
-    	// v_currentLoad_kW is the GN load of the previous timestep
-    	double heatTransferToNetwork_kW = max(0, gc.p_parentNodeHeat.v_currentLoad_kW + previousHeatFeedin_kW);
-    	if (heatTransferToNetwork_kW > heatingAsset.getOutputCapacity_kW()) {
+
+    	double currentHeatrequest_kW = calculateCurrentHeatBalanceOnHeatGrid_kW(timeVariables);
+    	if (currentHeatrequest_kW > heatingAsset.getOutputCapacity_kW()) {
     		throw new RuntimeException("Heating asset in " + this.getClass() + " does not have sufficient capacity.");
     	}
-    	gc.f_updateFlexAssetFlows(heatingAsset, heatTransferToNetwork_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
-
-    	previousHeatFeedin_kW = -gc.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
+    	gc.f_updateFlexAssetFlows(heatingAsset, currentHeatrequest_kW / heatingAsset.getOutputCapacity_kW(), timeVariables);
+    }
+    
+    private double calculateCurrentHeatBalanceOnHeatGrid_kW(J_TimeVariables timeVariables) {
+    	List<GridConnection> allLowerLVLConsumerGridConnections = findAll(gc.p_parentNodeHeat.f_getAllLowerLVLConnectedGridConnections(), lowerLVLGC -> !(lowerLVLGC instanceof GCDistrictHeating));
+    	//Heat consumption
+    	double currentHeatrequest_kW = sum(allLowerLVLConsumerGridConnections, lowerLVLGC -> lowerLVLGC.fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT));
+    	
+    	//Heat distribution to consumer losses
+    	currentHeatrequest_kW += sum(allLowerLVLConsumerGridConnections, lowerLVLGC -> lowerLVLGC.p_parentNodeHeat.p_heatLossFactorDistribution_kW);
+    	
+    	//Heat transport to heatnodes losses
+    	List<GridNode> transportNodes = findAll(gc.p_parentNodeHeat.f_getLowerLVLConnectedGridNodes(), lowerLVLGN -> lowerLVLGN.f_getConnectedGridNodes().size()>0);
+		for(GridNode transportNode : transportNodes) {
+			for(GridNode childHeatNode : transportNode.f_getConnectedGridNodes()) {
+				currentHeatrequest_kW += transportNode.f_calculateHeatNodeTransportLoss_kW(childHeatNode.p_latitude, childHeatNode.p_longitude);
+			}
+		}
+		return currentHeatrequest_kW;
     }
     
     public void initializeAssets() {

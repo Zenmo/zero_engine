@@ -3,10 +3,10 @@
  */	
 public class J_ProfileForecaster{
 	
-	public String name = "";
-	public J_ProfilePointer profilePointer;
-	public double forecastTime_h = 0;
-	public double timeStep_h = 0;
+	private String name = "";
+	private J_ProfilePointer profilePointer;
+	private double forecastTime_h = 0;
+	private double timeStep_h = 0;
 	private double currentForecast = 0;
 	
     /**
@@ -18,7 +18,7 @@ public class J_ProfileForecaster{
 	
     public J_ProfileForecaster(String forecastName, J_ProfilePointer pp, double forecastTime_h, double currentTime_h, double timeStep_h) {
     	if (forecastName == null) {
-    		this.name = pp.name + " " + forecastTime_h + " h";
+    		this.name = pp.getName() + " " + forecastTime_h + " h";
     	}
     	else {
     		this.name = forecastName;

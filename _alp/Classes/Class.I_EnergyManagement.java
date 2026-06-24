@@ -30,14 +30,16 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
     		throw new RuntimeException("Can't call setExternalAssetManagement() with input 'null'. -> If you are trying to remove something, use removeExternalAssetManagement() instead.");
     	}
     	
-    	//Get the assetmanagement (interface) type (I_ChargingManagement, I_HeatingManagement, etc.)
-    	Class<? extends I_AssetManagement> assetManagementType = assetManagementInstance.getAssetManagementInterfaceType();
-    	
+    	//Get the assetmanagement class
+    	Class<?> assetManagementClass = assetManagementInstance.getClass();
+
     	//Check if setAssetManagement is actually supported by this EnergyManagement class
-    	if (getSupportedExternalAssetManagements().stream().noneMatch(supported -> supported.isAssignableFrom(assetManagementType))) {
+    	if (getSupportedExternalAssetManagements().stream().noneMatch(supported -> supported.isAssignableFrom(assetManagementClass))) {
     	    throw new RuntimeException("Trying to set an unsupported sub asset management type for an EMS.");
     	}
-    	getActiveExternalAssetManagements().put(assetManagementType, assetManagementInstance);
+    	
+    	//Set assetManagementInstance as value of the assetManagementInterfaceType key.
+    	getActiveExternalAssetManagements().put(assetManagementInstance.getAssetManagementInterfaceType(), assetManagementInstance);
     	
     	//Recheck configuration
     	setChecked(false); 
@@ -118,6 +120,13 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
 						throw new RuntimeException("A backup generator is found at a GC that has an EMS that does not have active Backup Generator management.");
 					}
 					flexAssets.removeAll(findAll(flexAssets, generator -> generator.getEAType() == OL_EnergyAssetType.DIESEL_GENERATOR || generator.getEAType() == OL_EnergyAssetType.METHANE_GENERATOR || generator.getEAType() == OL_EnergyAssetType.FUEL_CELL));
+					break;
+				}
+				else if(asset instanceof J_EAFlexProfile) {
+					if(!isAssetManagementActive(I_FlexProfileManagement.class)) {
+						throw new RuntimeException("A J_EAFlexProfile is found at a GC that has an EMS that does not have an active FlexProfileManagement.");
+					}
+					flexAssets.removeAll(findAll(flexAssets, flexProfile -> flexProfile instanceof J_EAFlexProfile));
 					break;
 				}
 				else {
