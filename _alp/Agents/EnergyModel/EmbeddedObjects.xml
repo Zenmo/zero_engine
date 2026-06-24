@@ -90,6 +90,12 @@
 			<Parameter>
 				<Name><![CDATA[p_profileType]]></Name>
 			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorDistribution_kW]]></Name>
+			</Parameter>
+			<Parameter>
+				<Name><![CDATA[p_heatLossFactorTransport_kWpm]]></Name>
+			</Parameter>
 		</Parameters>
 		<ReplicationFlag>true</ReplicationFlag>
 		<Replication Class="CodeValue">

@@ -56,7 +56,7 @@
 	<Text>
 		<Id>1670316967152</Id>
 		<Name><![CDATA[text4]]></Name>
-		<X>820</X>
+		<X>850</X>
 		<Y>20</Y>
 		<Label>
 			<X>0</X>
@@ -81,7 +81,7 @@
 	<Line>
 		<Id>1670316967156</Id>
 		<Name><![CDATA[line4]]></Name>
-		<X>770</X>
+		<X>800</X>
 		<Y>40</Y>
 		<Label>
 			<X>10</X>
@@ -110,7 +110,7 @@
 		<Id>1670317019803</Id>
 		<Name><![CDATA[line7]]></Name>
 		<X>400</X>
-		<Y>470</Y>
+		<Y>520</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -138,7 +138,7 @@
 		<Id>1670317019806</Id>
 		<Name><![CDATA[text7]]></Name>
 		<X>450</X>
-		<Y>450</Y>
+		<Y>500</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
@@ -152,61 +152,6 @@
 		<Rotation>0.0</Rotation>
 		<Color>-16777216</Color>
 		<Text><![CDATA[Performance]]></Text>
-		<Font>
-			<Name><![CDATA[SansSerif]]></Name>
-			<Size>11</Size>
-			<Style>0</Style>
-		</Font>
-		<Alignment>LEFT</Alignment>
-	</Text>
-	<Line>
-		<Id>1670317049666</Id>
-		<Name><![CDATA[line1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>300</X>
-		<Y>40</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<ZHeight>10</ZHeight>
-		<LineWidth>1</LineWidth>
-		<LineColor>-16777216</LineColor>
-		<LineMaterial>null</LineMaterial>
-		<LineStyle>SOLID</LineStyle>
-		<BeginArrowSize>1</BeginArrowSize>
-		<BeginArrowStyle>0</BeginArrowStyle>
-		<EndArrowSize>1</EndArrowSize>
-		<EndArrowStyle>0</EndArrowStyle>
-		<Dx>140</Dx>
-		<Dy>0</Dy>
-		<Dz>0</Dz>
-	</Line>
-	<Text>
-		<Id>1670317049669</Id>
-		<Name><![CDATA[text1]]></Name>
-		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>350</X>
-		<Y>20</Y>
-		<Label>
-			<X>0</X>
-			<Y>-10</Y>
-		</Label>
-		<PublicFlag>true</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>false</ShowLabel>
-		<DrawMode>SHAPE_DRAW_2D</DrawMode>
-		<EmbeddedIcon>false</EmbeddedIcon>
-		<Z>0</Z>
-		<Rotation>0.0</Rotation>
-		<Color>-16777216</Color>
-		<Text><![CDATA[Assets]]></Text>
 		<Font>
 			<Name><![CDATA[SansSerif]]></Name>
 			<Size>11</Size>
@@ -271,8 +216,8 @@
 		<Id>1670317113685</Id>
 		<Name><![CDATA[plot]]></Name>
 		<ExcludeFromBuild>true</ExcludeFromBuild>
-		<X>270</X>
-		<Y>180</Y>
+		<X>1380</X>
+		<Y>420</Y>
 		<Label>
 			<X>0</X>
 			<Y>-10</Y>
