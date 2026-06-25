@@ -22,6 +22,9 @@ public class J_AssetsMetaData {
 	public OL_PVOrientation PVOrientation; //Default orientation of PV system
 	public Double windPotential_kW;
 	
+	public OL_GridConnectionHeatingType heatingType;
+	//public String heatnode_id;
+	
 	public Map<OL_EnergyAssetType, Double> map_numberOfActiveAssets;
 	public Map<OL_EnergyAssetType, Double> map_activeAssetsCapacity_kW;
 	

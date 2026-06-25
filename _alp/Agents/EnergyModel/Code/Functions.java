@@ -668,6 +668,12 @@ for (GridConnection GC : PublicChargers) {
 		GC.f_setActive(false, p_timeParameters, p_timeVariables);
 	}
 }
+
+for (GridConnection GC : DistrictHeatingSystems) {
+	if (!GC.v_isActive) {
+		GC.f_setActive(false, p_timeParameters, p_timeVariables);
+	}
+}
 /*ALCODEEND*/}
 
 double f_addProfile(J_ProfilePointer profile)
