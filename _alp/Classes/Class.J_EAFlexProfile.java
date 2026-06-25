@@ -1,4 +1,3 @@
-import zeroPackage.ZeroMath;
 /**
  * J_EAFlexProfile: Profile asset where the profile can be manipulated by setting the power fraction: 
  * Example: Original value 10 kW? -> With power fraction of 0.8 it will end up being 8 kW instead. Or with power fraction of 1.5, it will become 15 kW!
@@ -109,7 +108,7 @@ public class J_EAFlexProfile extends J_EAFlex implements I_ProfileAsset{
 	    } else {
 	    	double[] values = profilePointer.getAllValues();
 	    	double dataTimeStep_h = profilePointer.getDataTimeStep_h(); 
-	    	double baseConsumption_kWh = ZeroMath.arraySumPos(values) * dataTimeStep_h * this.profileUnitScaler_r;
+	    	double baseConsumption_kWh = LUXMath.sumArrayPos(values) * dataTimeStep_h * this.profileUnitScaler_r;
 	    	return baseConsumption_kWh;
 	    }
     }

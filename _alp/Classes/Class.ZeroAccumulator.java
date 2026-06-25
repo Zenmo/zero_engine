@@ -1,8 +1,6 @@
 /**
  * ZeroAccumulator
  */	
-
-import zeroPackage.ZeroMath;
 import java.lang.Math;
 import java.util.Arrays;
 import java.lang.RuntimeException;
@@ -118,7 +116,7 @@ public class ZeroAccumulator {
         		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
         	}
         	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
-        	return ZeroMath.arraySum(interval) * this.signalResolution_h;
+        	return LUXMath.sumArray(interval) * this.signalResolution_h;
         } else if (startTime_h == 0 && endTime_h == duration_h) {
         	return this.totalEnergy_kWh;
         } else {
@@ -135,7 +133,7 @@ public class ZeroAccumulator {
         		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
         	}
         	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
-        	return ZeroMath.arraySumPos(interval) * this.signalResolution_h;
+        	return LUXMath.sumArrayPos(interval) * this.signalResolution_h;
         } else if (startTime_h == 0 && endTime_h == duration_h) {
         	return this.totalPositiveEnergy_kWh;
         } else {
@@ -152,7 +150,7 @@ public class ZeroAccumulator {
         		throw new IllegalArgumentException("Impossible to get integral of this interval, start or endtime out of range");
         	}
         	double[] interval = Arrays.copyOfRange(this.timeSeries, roundToInt(startTime_h/signalResolution_h), roundToInt(endTime_h/signalResolution_h));
-        	return ZeroMath.arraySumNeg(interval) * this.signalResolution_h;
+        	return LUXMath.sumArrayNeg(interval) * this.signalResolution_h;
         } else if (startTime_h == 0 && endTime_h == duration_h) {
         	return this.totalNegativeEnergy_kWh;
         } else {

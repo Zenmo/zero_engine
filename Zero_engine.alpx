@@ -2281,7 +2281,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 		<ClassPathEntry>
 			<ResourceReference>
 				<PackageName>zero_engine</PackageName>
-				<ClassName>ZeroMath.jar</ClassName>
+				<ClassName>ZeroPackage.jar</ClassName>
 			</ResourceReference>
 			<Imported>true</Imported>
 			<Folder>false</Folder>

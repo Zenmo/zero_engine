@@ -1,7 +1,6 @@
 /**
  * J_ValueMap
  */	
-import zeroPackage.ZeroMath;
 import java.util.EnumSet;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
@@ -85,7 +84,7 @@ public class J_ValueMap <E extends Enum<E>> implements Serializable {
     }
     
     public double totalSum() {
-    	return ZeroMath.arraySum(valuesArray);
+    	return LUXMath.sumArray(valuesArray);
     }
     
     public final EnumSet<E> keySet(){
