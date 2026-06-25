@@ -4,9 +4,7 @@
 	<Name><![CDATA[GridNode]]></Name>
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
-import java.lang.reflect.Field;
-import zeroPackage.ZeroMath;
-//import zeroPackage.ZeroAccumulator;]]></Import>
+import java.lang.reflect.Field;]]></Import>
 	<StartupCode><![CDATA[/*
 if (p_energyType.equals(OL_EnergyCarriers.HEAT)) {
 	double capacityHeat_kW = 1000;

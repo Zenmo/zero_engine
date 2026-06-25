@@ -1,7 +1,6 @@
 /**
  * J_FlowsMap
  */	
-import zeroPackage.ZeroMath;
 import java.util.EnumSet;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 @JsonIgnoreType
@@ -88,7 +87,7 @@ public class J_FlowsMap implements Serializable {
     }
     
     public double totalSum() {
-    	return ZeroMath.arraySum(valuesArray);
+    	return LUXMath.sumArray(valuesArray);
     }
     
     public final EnumSet<OL_EnergyCarriers> keySet(){
