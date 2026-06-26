@@ -30,7 +30,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 	private int POWERSTEPS_NR = 20;
 	
 	private double SELFCONSUMPTIONSAVING_EURPMWH = 0.0;
-	private double CONGESTIONFACTOR_EURPMWHPKW = 1000.0;
+	private double CONGESTIONFACTOR_EURPMWHPKW = 0; //1000.0;
 	private double CONGESTIONDEADZONE_FR = 0.9;
 	private double congestionDeadzone_kW;
 	
