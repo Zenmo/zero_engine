@@ -1242,3 +1242,14 @@ if(heatProfiles.size() > 0 && (f_getCurrentHeatingType() == OL_GridConnectionHea
 return nettoBalance_kW;
 /*ALCODEEND*/}
 
+Map<Class< ? extends I_AssetManagement>, J_AssetTypeForecast> f_getForecast(double timeOfIntervalStart_h,double timeOfIntervalEnd_h,J_TimeParameters timeParameters)
+{/*ALCODESTART::1782459765981*/
+if (p_energyManagement != null) {
+	return p_energyManagement.getFlexAssetForecast(timeOfIntervalStart_h, timeOfIntervalEnd_h);
+}
+
+else {
+	return new HashMap<Class<? extends I_AssetManagement>, J_AssetTypeForecast>();
+}
+/*ALCODEEND*/}
+

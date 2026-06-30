@@ -22,6 +22,26 @@ public class J_FlexProfileManagementDefault implements I_FlexProfileManagement{
     	gc.c_flexProfileAssets.forEach(flexProfile -> gc.f_updateFlexAssetFlows(flexProfile, 1.0, timeVariables));
     }
     
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		int timeStepsInForecast = roundToInt((timeOfIntervalEnd_h - timeOfIntervalStart_h) / this.timeParameters.getTimeStep_h());
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		for (J_EAFlexProfile flexProfile : gc.c_flexProfileAssets) {
+			OL_EnergyCarriers EC = flexProfile.getEnergyCarrier();
+			if (loadMap.get(EC) == null) {
+				Double[] loadProfile_kW = new Double[timeStepsInForecast];
+				Arrays.fill(loadProfile_kW, 0.0);
+				loadMap.put(EC, loadProfile_kW);
+			}
+			J_ProfilePointer pp = flexProfile.getProfilePointer();
+			for (int i = 0; i < timeStepsInForecast; i++) {
+				double t = timeOfIntervalStart_h + i * this.timeParameters.getTimeStep_h();
+				loadMap.get(EC)[i] += pp.getValue(t);
+			}
+		}
+		OL_ForecastStatus status = OL_ForecastStatus.PERFECT_FORECAST;
+		return new J_AssetTypeForecast(I_FlexProfileManagement.class, loadMap, status, null);
+	}
+	
     ////Store and reset states
 	public void storeStatesAndReset() {
 		//Nothing to store and reset

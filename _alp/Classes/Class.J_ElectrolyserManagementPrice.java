@@ -141,6 +141,13 @@ public class J_ElectrolyserManagementPrice implements I_ElectrolyserManagement {
 	    }
     }
     
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_ElectrolyserManagement.class, loadMap, status, reason);
+	}
+    
     public void setElectricityPriceMaxForProfit_eurpkWh(double electricityPriceMaxForProfit_eurpkWh) {
     	this.electricityPriceMaxForProfit_eurpkWh = electricityPriceMaxForProfit_eurpkWh;
     }

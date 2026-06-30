@@ -89,6 +89,13 @@ public class J_ChargingManagementOffPeak implements I_ChargingManagement {
     	}
     }
 
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_ChargingManagement.class, loadMap, status, reason);
+	}
+	
     public void setStartTimeOfReducedChargingInterval_hr(double startTimeOfReducedChargingInterval_hr) {
     	this.startTimeOfReducedChargingInterval_hr = startTimeOfReducedChargingInterval_hr;
     }

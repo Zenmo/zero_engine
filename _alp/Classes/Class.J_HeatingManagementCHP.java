@@ -95,7 +95,12 @@ public class J_HeatingManagementCHP implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
-    
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_HeatingManagement.class, loadMap, status, reason);
+	}
     
     //Get parentagent
     public Agent getParentAgent() {
