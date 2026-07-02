@@ -31,7 +31,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
   
 	private J_HeatingPreferences heatingPreferences = null; // Not needed for neighbourhoods
 	
-    private HashMap<String, J_EAConsumption> heatDemandProfiles = new HashMap<String, J_EAConsumption>();
+    private HashMap<String, I_ProfileAsset> heatDemandProfiles = new HashMap<>();
 
     private double thresholdCOP_hybridHeatpump = 3.5;
 
@@ -306,7 +306,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
     }
     
-    public void addHeatDemandProfile(String name, J_EAConsumption profile) {
+    public void addHeatDemandProfile(String name, I_ProfileAsset profile) {
     	heatDemandProfiles.put(name, profile);
     }
     
@@ -318,6 +318,9 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	return this.heatingPreferences;
     }
     
+    public I_ProfileAsset getHeatDemandProfile(String name) {
+    	return heatDemandProfiles.get(name);
+    }
     
     
     //Get parentagent

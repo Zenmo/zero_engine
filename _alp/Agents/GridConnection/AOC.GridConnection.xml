@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import java.io.*;
 import java.lang.reflect.Field;
 import org.apache.commons.lang3.tuple.Triple;
-import zeroPackage.ZeroMath;
 import javax.management.RuntimeErrorException;
 
 //@JsonIgnoreProperties({"va_gridConnection","_origin_VA","_pl_powerFlows_autoUpdateEvent_xjal","_SOC_plot_autoUpdateEvent_xjal"})
@@ -33,7 +32,12 @@ import javax.management.RuntimeErrorException;
 	<MakeDefaultViewArea>true</MakeDefaultViewArea>
 	<SceneGridColor/>
 	<SceneBackgroundColor>-4144960</SceneBackgroundColor>
-	<SceneSkybox>null</SceneSkybox>
+	<EnvironmentResourceRef/>
+	<EnvironmentType>NONE</EnvironmentType>
+	<EnvironmentRotationX>0</EnvironmentRotationX>
+	<EnvironmentRotationY>0</EnvironmentRotationY>
+	<EnvironmentRotationZ>0</EnvironmentRotationZ>
+	<EnvironmentIntensity>1</EnvironmentIntensity>
 	<AgentProperties>
 		<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 		<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>

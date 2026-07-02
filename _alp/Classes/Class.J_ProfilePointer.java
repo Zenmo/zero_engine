@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@id")
 
 public class J_ProfilePointer{
-	public String name = "";
+	private String name = "";
 	private double currentValue = 0;
 	private OL_ProfileUnits profileUnits;
 	
@@ -53,13 +53,11 @@ public class J_ProfilePointer{
     }
     
     public double getValue(double time_h) {
-    	//return this.tableFunction.get(t_h);
     	int index_n = (int)((time_h-dataStartTime_h)/dataTimeStep_h);
     	if (enableProfileLooping && index_n >= a_profile.length) {
     		index_n = index_n % a_profile.length;
     	} else if ( index_n >= a_profile.length ) {
     		traceln("Time out of upper bound for evaluating J_EAProfile power in profile %s!", this.name);
-//    		time_h = a_energyProfile_kWh.length * profileTimestep_h - 1;
     		throw new RuntimeException(String.format("Time out of upper bound for evaluating J_EAProfile power! Time is: %s", time_h));
     	}
     	if ( index_n < 0 ) {
@@ -71,7 +69,6 @@ public class J_ProfilePointer{
     }
        
     public double[] getAllValues() {
-    	//return this.tableFunction.getValues();
     	return this.a_profile.clone();
     }
     
@@ -98,6 +95,10 @@ public class J_ProfilePointer{
     
     public OL_ProfileUnits getProfileUnits() {
     	return profileUnits;
+    }
+    
+    public String getName() {
+    	return this.name;
     }
     
 	@Override

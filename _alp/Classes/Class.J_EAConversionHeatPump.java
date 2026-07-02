@@ -144,13 +144,12 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	@Override
 	public String toString() {
 		return
-			"J_EAConversionHeatPump: \n" +
-			"capacityElectricity_kW = " + inputCapacity_kW + "\n"+
-			"capacityHeat_kW = " + outputCapacity_kW +"\n"+
-			"baseTemperature_degC = " + baseTemperature_degC + "\n"+
-			"ambientTempType = " + ambientTempType + "\n"+
-			"sourceAssetHeatPower_kW = " + sourceAssetHeatPower_kW + "\n"+
-			"outputTemperature_degC = " + outputTemperature_degC +" \n"+
-			"energyUsed_kWh = " + energyUsed_kWh;
+			"J_EAConversionHeatPump: " +
+			"capElec_kW = " + inputCapacity_kW + "," +
+			"capHeat_kW = " + outputCapacity_kW + "," +
+			"baseT_degC = " + baseTemperature_degC + "," +
+			"ambTempType = " + ambientTempType + "," +
+			"sourceAssetHeatPower_kW = " + sourceAssetHeatPower_kW + "," +
+			"outT_degC = " + outputTemperature_degC;
 	}	
 }

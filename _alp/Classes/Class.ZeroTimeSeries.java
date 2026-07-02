@@ -1,8 +1,6 @@
 /**
  * ZeroTimeSeries
  */	
-
-import zeroPackage.ZeroMath;
 import java.lang.Math;
 import java.util.Arrays;
 import java.lang.RuntimeException;
@@ -86,17 +84,17 @@ public class ZeroTimeSeries implements Serializable {
 	    }
 
 	    public double getSum() {
-            return ZeroMath.arraySum(timeSeries);
+            return LUXMath.sumArray(timeSeries);
 	        //return sum;
 	    }
 
 	    public double getSumPos() {
-            return ZeroMath.arraySumPos(timeSeries);
+            return LUXMath.sumArrayPos(timeSeries);
 	        //return posSum;
 	    }
 	    
 	    public double getSumNeg() {
-            return ZeroMath.arraySumNeg(timeSeries);
+            return LUXMath.sumArrayNeg(timeSeries);
 	        //return negSum;
 	    }
 

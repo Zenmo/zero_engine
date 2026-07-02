@@ -1,25 +1,26 @@
 /**
- * J_EAProfile
- */
-public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
+ * J_EAFlexProfile: Profile asset where the profile can be manipulated by setting the power fraction: 
+ * Example: Original value 10 kW? -> With power fraction of 0.8 it will end up being 8 kW instead. Or with power fraction of 1.5, it will become 15 kW!
+ * -> Not allowed to change the direction of the flow (i.e. negative power fraction is not allowed).
+ */	
+public class J_EAFlexProfile extends J_EAFlex implements I_ProfileAsset{
 	protected J_ProfilePointer profilePointer;
 	protected double profileUnitScaler_r = 4.0; // This factor translates tablefunction data in kWh/qh, normalized power or consumption-fraction into power [kW]. To go from kWh/qh to kW, that is a factor 4.
-	protected OL_EnergyCarriers energyCarrier; // = OL_EnergyCarriers.ELECTRICITY;
+	protected OL_EnergyCarriers energyCarrier; //
 	protected double lostLoad_kWh = 0;
 	protected double profileScaling_fr = 1.0; // This factor can be used to change the magnitude of the profile in this asset, for example when an energy-saving slider is operated.
 	protected double signScaler_r = 1.0;
 
     /**
-     * Default constructor
+     * Empty constructor for serialization
      */
-    public J_EAProfile() {
+    public J_EAFlexProfile() {
     }
 
     /**
      * Constructor initializing the fields
      */
-
-    public J_EAProfile(I_AssetOwner owner, OL_EnergyCarriers energyCarrier, J_ProfilePointer profile, OL_AssetFlowCategories assetCategory, J_TimeParameters timeParameters) {
+    public J_EAFlexProfile(I_AssetOwner owner, OL_EnergyCarriers energyCarrier, J_ProfilePointer profile, OL_AssetFlowCategories assetCategory, J_TimeParameters timeParameters) {
 	    this.setOwner(owner);
 	    this.timeParameters = timeParameters;
 	    this.energyCarrier = energyCarrier;
@@ -41,58 +42,34 @@ public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
 	    
 		registerEnergyAsset(timeParameters);
 	}
-       
-    public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
-    	double profileValue = profilePointer.getCurrentValue();		
-    	double currentPower_kW = profileValue * this.profileUnitScaler_r * this.profileScaling_fr * this.signScaler_r;
-		
-    	this.energyUse_kW = currentPower_kW;
-    	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
-
-		flowsMap.put(this.energyCarrier, currentPower_kW);		
-		if (this.assetFlowCategory != null) {
-			assetFlowsMap.put(this.assetFlowCategory, Math.abs(currentPower_kW));
-		}
-     	J_FlowsMap flowsMapCopy = new J_FlowsMap();    	
+    
+    @Override
+    public J_FlowPacket f_updateAllFlows(double powerFraction_fr, J_TimeVariables timeVariables) {
+     	operate(powerFraction_fr, timeVariables); // Don't cap the power fraction limit!
+     	J_FlowsMap flowsMapCopy = new J_FlowsMap();
      	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
      	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
-		this.lastFlowsMap.cloneMap(this.flowsMap);
+    	this.lastFlowsMap.cloneMap(this.flowsMap);
     	this.lastEnergyUse_kW = this.energyUse_kW;
     	this.clear();
     	return flowPacket;
     }
     
 	@Override
-	public void operate(J_TimeVariables timeVariables) {
-		throw new RuntimeException("J_EAProfile method operate() is not used!");
+	public void operate(double powerFraction_fr, J_TimeVariables timeVariables) {
+    	if(DoubleCompare.lessThanZero(powerFraction_fr)) {
+			throw new RuntimeException("Impossible to operate J_EAFlexProfile asset with negative powerfraction.");    		
+    	}
+    	double profileValue = profilePointer.getCurrentValue();		
+    	double currentPower_kW = profileValue * this.profileUnitScaler_r * this.profileScaling_fr * this.signScaler_r * powerFraction_fr;
+    	this.energyUse_kW = currentPower_kW;
+    	this.energyUsed_kWh += this.energyUse_kW * this.timeParameters.getTimeStep_h();
+    	flowsMap.put(this.energyCarrier, currentPower_kW);		
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, Math.abs(currentPower_kW));
+		}
    	}
     
-
-    public J_FlowPacket curtailElectricityConsumption(double curtailmentSetpoint_kW) {
-    	double currentElectricityConsumption_kW = max(0,this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY));
-    	double curtailmentPower_kW = max(0,min(currentElectricityConsumption_kW, curtailmentSetpoint_kW));
-    	energyUsed_kWh -= curtailmentPower_kW * this.timeParameters.getTimeStep_h();
-    	lostLoad_kWh += curtailmentPower_kW * this.timeParameters.getTimeStep_h();
-    	J_FlowsMap flowsMap = new J_FlowsMap();
-    	flowsMap.put(OL_EnergyCarriers.ELECTRICITY, curtailmentPower_kW);    	
-    	J_ValueMap<OL_AssetFlowCategories> assetFlows_kW = new J_ValueMap(OL_AssetFlowCategories.class);
-    	assetFlows_kW.put(this.assetFlowCategory, curtailmentPower_kW);
-    	
-    	this.lastFlowsMap.put(OL_EnergyCarriers.ELECTRICITY, this.lastFlowsMap.get(OL_EnergyCarriers.ELECTRICITY) - curtailmentPower_kW);
-    	this.lastEnergyUse_kW -= curtailmentPower_kW;
-
-    	//gc.f_removeFlows(flowsMap, this.energyUse_kW, assetFlows_kW, this);    	    
-    	J_FlowPacket flowPacket = new J_FlowPacket(flowsMap, curtailmentPower_kW, assetFlows_kW);
-     	return flowPacket;
-
-    }    
-    
-    //Setters
-    public void setProfileScaling_fr( double scaling_fr ) {
-    	this.profileScaling_fr = scaling_fr;
-    }    
-    
-    //Getters
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;
     }
@@ -103,13 +80,6 @@ public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
     
     public double getProfileScaling_fr() {
     	return this.profileScaling_fr;
-    }
-    
-    public void setProfilePointer(J_ProfilePointer profile) {
-    	if (profile == null) {
-            throw new RuntimeException("Cannot set J_EAProfile profilePointer to null!");
-        }
-    	this.profilePointer = profile;
     }
     
     public void setProfileScaling_fr( double scaling_fr ) {
@@ -164,7 +134,7 @@ public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
     
 	@Override
 	public String toString() {
-		return	"J_EAProfile: " + 
+		return	"J_EAFlexProfile: " + 
 				"Owner: " + this.getOwner() + ", " + 
 				"EC: " + this.energyCarrier + ", " +
 				"AFC: " + this.assetFlowCategory + ", " +

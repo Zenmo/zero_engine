@@ -27,6 +27,12 @@ public class J_DataSetMap <E extends Enum<E>> implements Serializable {
     	}
     }
     
+    public void createNewLiveDataSets(EnumSet<E> selectedFlows, J_TimeParameters timeParameters, J_TimeVariables timeVariables) {
+    	for (E key : selectedFlows) {
+    		this.put(key, DataSetConstructor.getNewLiveWeekDataSet(timeParameters, timeVariables));
+    	}
+    }
+    
     public DataSet get(E key) {
     	var dataset = datasetArray[key.ordinal()];
     	if (dataset == null) {

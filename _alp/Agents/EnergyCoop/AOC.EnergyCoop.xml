@@ -5,10 +5,6 @@
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677829820</Folder>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
-
-import zeroPackage.ZeroMath;
-//import zeroPackage.ZeroAccumulator;
-
 import java.util.EnumSet;
 
 /*
@@ -54,7 +50,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	<MakeDefaultViewArea>true</MakeDefaultViewArea>
 	<SceneGridColor/>
 	<SceneBackgroundColor>-4144960</SceneBackgroundColor>
-	<SceneSkybox>null</SceneSkybox>
+	<EnvironmentResourceRef/>
+	<EnvironmentType>NONE</EnvironmentType>
+	<EnvironmentRotationX>0</EnvironmentRotationX>
+	<EnvironmentRotationY>0</EnvironmentRotationY>
+	<EnvironmentRotationZ>0</EnvironmentRotationZ>
+	<EnvironmentIntensity>1</EnvironmentIntensity>
 	<AgentProperties>
 		<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
 		<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>

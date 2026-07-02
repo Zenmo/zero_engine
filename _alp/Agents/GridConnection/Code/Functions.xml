@@ -146,7 +146,7 @@
 		<Id>1692799608559</Id>
 		<Name><![CDATA[f_connectToJ_EA]]></Name>
 		<X>950</X>
-		<Y>95</Y>
+		<Y>75</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -181,6 +181,10 @@
 		<Parameter>
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -360,28 +364,12 @@
 			<Type><![CDATA[boolean]]></Type>
 		</Parameter>
 		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="default" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>double</ReturnType>
-		<Id>1730728785333</Id>
-		<Name><![CDATA[f_initializeDataSets]]></Name>
-		<X>950</X>
-		<Y>70</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
 			<Name><![CDATA[timeParameters]]></Name>
 			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeVariables]]></Name>
+			<Type><![CDATA[J_TimeVariables]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
@@ -415,7 +403,7 @@
 		<Id>1753969724598</Id>
 		<Name><![CDATA[f_removeAllHeatingAssets]]></Name>
 		<X>645</X>
-		<Y>360</Y>
+		<Y>380</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -431,7 +419,7 @@
 		<Id>1754051705071</Id>
 		<Name><![CDATA[f_getCurrentHeatingType]]></Name>
 		<X>645</X>
-		<Y>320</Y>
+		<Y>340</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -448,7 +436,7 @@
 		<Name><![CDATA[f_addHeatManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>645</X>
-		<Y>280</Y>
+		<Y>300</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -468,95 +456,11 @@
 	</Function>
 	<Function AccessType="public" StaticFunction="false">
 		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>EnergyCoop</ReturnType>
-		<Id>1754380684463</Id>
-		<Name><![CDATA[f_addConsumptionEnergyCarrier]]></Name>
-		<X>1325</X>
-		<Y>67</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[EC]]></Name>
-			<Type><![CDATA[OL_EnergyCarriers]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>EnergyCoop</ReturnType>
-		<Id>1754380684465</Id>
-		<Name><![CDATA[f_addProductionEnergyCarrier]]></Name>
-		<X>1325</X>
-		<Y>87</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[EC]]></Name>
-			<Type><![CDATA[OL_EnergyCarriers]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
-		<ReturnType>EnergyCoop</ReturnType>
-		<Id>1754380684467</Id>
-		<Name><![CDATA[f_addAssetFlow]]></Name>
-		<X>1325</X>
-		<Y>107</Y>
-		<Label>
-			<X>10</X>
-			<Y>0</Y>
-		</Label>
-		<PublicFlag>false</PublicFlag>
-		<PresentationFlag>true</PresentationFlag>
-		<ShowLabel>true</ShowLabel>
-		<Parameter>
-			<Name><![CDATA[AC]]></Name>
-			<Type><![CDATA[OL_AssetFlowCategories]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeParameters]]></Name>
-			<Type><![CDATA[J_TimeParameters]]></Type>
-		</Parameter>
-		<Parameter>
-			<Name><![CDATA[timeVariables]]></Name>
-			<Type><![CDATA[J_TimeVariables]]></Type>
-		</Parameter>
-		<Body xmlns:al="http://anylogic.com"/>
-	</Function>
-	<Function AccessType="public" StaticFunction="false">
-		<ReturnModificator>VOID</ReturnModificator>
 		<ReturnType>double</ReturnType>
 		<Id>1754582754934</Id>
 		<Name><![CDATA[f_activateV2GChargingMode]]></Name>
 		<X>675</X>
-		<Y>580</Y>
+		<Y>600</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -585,7 +489,7 @@
 		<Name><![CDATA[f_addChargingManagement]]></Name>
 		<Description><![CDATA[This function takes heatingType as an argument and adds the default heating management class to the GridConnection]]></Description>
 		<X>666</X>
-		<Y>541</Y>
+		<Y>561</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -604,8 +508,8 @@
 		<ReturnType>double</ReturnType>
 		<Id>1756977865503</Id>
 		<Name><![CDATA[f_addEnergyCarriersAndAssetCategoriesFromEA]]></Name>
-		<X>1310</X>
-		<Y>40</Y>
+		<X>970</X>
+		<Y>175</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -633,7 +537,7 @@
 		<Id>1762851936576</Id>
 		<Name><![CDATA[f_setChargingManagement]]></Name>
 		<X>666</X>
-		<Y>521</Y>
+		<Y>541</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -653,7 +557,7 @@
 		<Id>1762852865038</Id>
 		<Name><![CDATA[f_getHeatingTypeIsGhost]]></Name>
 		<X>645</X>
-		<Y>340</Y>
+		<Y>360</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -669,7 +573,7 @@
 		<Id>1762853013265</Id>
 		<Name><![CDATA[f_setHeatingPreferences]]></Name>
 		<X>655</X>
-		<Y>300</Y>
+		<Y>320</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -689,7 +593,7 @@
 		<Id>1762853347370</Id>
 		<Name><![CDATA[f_getCurrentChargingType]]></Name>
 		<X>676</X>
-		<Y>561</Y>
+		<Y>581</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -705,7 +609,7 @@
 		<Id>1762853561122</Id>
 		<Name><![CDATA[f_getV2GActive]]></Name>
 		<X>676</X>
-		<Y>601</Y>
+		<Y>621</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -721,7 +625,7 @@
 		<Id>1762853894937</Id>
 		<Name><![CDATA[f_getBatteryManagement]]></Name>
 		<X>676</X>
-		<Y>831</Y>
+		<Y>851</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -737,7 +641,7 @@
 		<Id>1762855655470</Id>
 		<Name><![CDATA[f_setHeatingManagement]]></Name>
 		<X>645</X>
-		<Y>260</Y>
+		<Y>280</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -757,7 +661,7 @@
 		<Id>1762855733010</Id>
 		<Name><![CDATA[f_setBatteryManagement]]></Name>
 		<X>676</X>
-		<Y>811</Y>
+		<Y>831</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -777,7 +681,7 @@
 		<Id>1762940915048</Id>
 		<Name><![CDATA[f_getChargingManagement]]></Name>
 		<X>676</X>
-		<Y>621</Y>
+		<Y>641</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -793,7 +697,7 @@
 		<Id>1762940962079</Id>
 		<Name><![CDATA[f_getHeatingManagement]]></Name>
 		<X>645</X>
-		<Y>380</Y>
+		<Y>400</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -809,7 +713,7 @@
 		<Id>1765551413839</Id>
 		<Name><![CDATA[f_getChargePoint]]></Name>
 		<X>686</X>
-		<Y>681</Y>
+		<Y>701</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -825,7 +729,7 @@
 		<Id>1765551488579</Id>
 		<Name><![CDATA[f_setChargePoint]]></Name>
 		<X>686</X>
-		<Y>661</Y>
+		<Y>681</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -966,7 +870,7 @@
 		<Id>1772105340588</Id>
 		<Name><![CDATA[f_connectToJ_EAFlex]]></Name>
 		<X>970</X>
-		<Y>135</Y>
+		<Y>115</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -990,7 +894,7 @@
 		<Id>1772105953445</Id>
 		<Name><![CDATA[f_getNewTripTracker]]></Name>
 		<X>1020</X>
-		<Y>175</Y>
+		<Y>155</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1018,7 +922,7 @@
 		<Id>1772106633559</Id>
 		<Name><![CDATA[f_connectToJ_EAFixed]]></Name>
 		<X>970</X>
-		<Y>115</Y>
+		<Y>95</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1098,7 +1002,7 @@
 		<Id>1772119363003</Id>
 		<Name><![CDATA[f_connectTripTracker]]></Name>
 		<X>990</X>
-		<Y>155</Y>
+		<Y>135</Y>
 		<Label>
 			<X>10</X>
 			<Y>0</Y>
@@ -1153,6 +1057,156 @@
 		<Parameter>
 			<Name><![CDATA[assetManagementInterfaceType]]></Name>
 			<Type><![CDATA[Class<? extends I_AssetManagement> ]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double[]</ReturnType>
+		<Id>1781519426247</Id>
+		<Name><![CDATA[f_getFixedAssetForecast]]></Name>
+		<X>1470</X>
+		<Y>580</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[timeOfIntervalStart]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeOfIntervalEnd]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[energyCarrier]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="private" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double[]</ReturnType>
+		<Id>1781525344609</Id>
+		<Name><![CDATA[f_getFixedAssetForecast_Electricity]]></Name>
+		<X>1490</X>
+		<Y>600</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[forecastStartTime_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[forecastEndTime_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="private" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>double[]</ReturnType>
+		<Id>1781525346198</Id>
+		<Name><![CDATA[f_getFixedAssetForecast_Heat]]></Name>
+		<X>1490</X>
+		<Y>620</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[forecastStartTime_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[forecastEndTime_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1782313157323</Id>
+		<Name><![CDATA[f_getFlexAssetForecast]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1470</X>
+		<Y>680</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[timeOfIntervalStart]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeOfIntervalEnd]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[energyCarrier]]></Name>
+			<Type><![CDATA[OL_EnergyCarriers]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
+	<Function AccessType="default" StaticFunction="false">
+		<ReturnModificator>VOID</ReturnModificator>
+		<ReturnType>double</ReturnType>
+		<Id>1782313190503</Id>
+		<Name><![CDATA[f_getFlexAssetForecast_Electricity]]></Name>
+		<ExcludeFromBuild>true</ExcludeFromBuild>
+		<X>1490</X>
+		<Y>700</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[forecastStartTime_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[forecastEndTime_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>

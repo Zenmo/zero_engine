@@ -7,8 +7,8 @@
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
 	<Resource>
-		<Id>1658477089998</Id>
-		<Path>ZeroMath.jar</Path>
+		<Id>1782374527807</Id>
+		<Path>ZeroPackage.jar</Path>
 		<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		<Location>FILE_SYSTEM</Location>
 	</Resource>
