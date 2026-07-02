@@ -194,7 +194,7 @@ public class J_EAChargingSession extends zero_engine.J_EAFlex implements I_Charg
 		setV2GActive(getV2GActive());
 	}
 	
-	protected void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAChargingSession during initialization itself. (No such thing as friend class in java, so only can put on protected).
+	public void setV2GActive(boolean activateV2G) { // Should only be called by the chargingManagement class or J_EAChargingSession during initialization itself. (No such thing as friend class in java).
 		this.V2GActive = activateV2G;
 		if((!this.overrideV2GCapability || (this.overrideV2GCapability && this.V2GCapabilityProbablityOverride > 0)) && activateV2G) {
 			this.assetFlowCategory = OL_AssetFlowCategories.V2GPower_kW;
