@@ -104,7 +104,18 @@ public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
     public double getProfileScaling_fr() {
     	return this.profileScaling_fr;
     }
-        
+    
+    public void setProfilePointer(J_ProfilePointer profile) {
+    	if (profile == null) {
+            throw new RuntimeException("Cannot set J_EAProfile profilePointer to null!");
+        }
+    	this.profilePointer = profile;
+    }
+    
+    public void setProfileScaling_fr( double scaling_fr ) {
+    	this.profileScaling_fr = scaling_fr;
+    }
+    
     public double getPeakConsumptionPower_kW() {
     	if (this.signScaler_r < 0) {
     		return 0.0;
