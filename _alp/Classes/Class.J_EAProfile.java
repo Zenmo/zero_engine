@@ -1,4 +1,3 @@
-import zeroPackage.ZeroMath;
 /**
  * J_EAProfile
  */
@@ -128,7 +127,7 @@ public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
 	    } else {
 	    	double[] values = profilePointer.getAllValues();
 	    	double dataTimeStep_h = profilePointer.getDataTimeStep_h(); 
-	    	double baseConsumption_kWh = ZeroMath.arraySumPos(values) * dataTimeStep_h * this.profileUnitScaler_r;
+	    	double baseConsumption_kWh = LUXMath.sumArrayPos(values) * dataTimeStep_h * this.profileUnitScaler_r;
 	    	return baseConsumption_kWh;
 	    }
     }

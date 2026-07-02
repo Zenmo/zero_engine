@@ -5,10 +5,6 @@
 	<AdditionalClassCode xmlns:al="http://anylogic.com"/>
 	<Folder>1752677829820</Folder>
 	<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;
-
-import zeroPackage.ZeroMath;
-//import zeroPackage.ZeroAccumulator;
-
 import java.util.EnumSet;
 
 /*

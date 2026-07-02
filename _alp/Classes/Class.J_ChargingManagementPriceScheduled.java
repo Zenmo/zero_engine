@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import zeroPackage.Market;
 import zeroPackage.FlexConsumptionAsset;
 import zeroPackage.FlexAssetScheduler;
-import zeroPackage.ZeroMath;
 
 
 @JsonAutoDetect(
@@ -160,11 +159,6 @@ public class J_ChargingManagementPriceScheduled implements I_ChargingManagement 
     
 	public void setV2GActive(boolean activateV2G) {
 		throw new RuntimeException("ChargingManagementPriceScheduled does not support V2G charging!");
-		/*
-		this.V2GActive = activateV2G;
-		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory
-		this.gc.c_chargingSessions.forEach(cs -> cs.setV2GActive(activateV2G)); // NEEDED TO HAVE CS ASSET IN CORRECT assetFlowCatagory
-		*/
 	}
 	
 	public boolean getV2GActive() {

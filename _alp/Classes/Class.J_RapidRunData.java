@@ -1,5 +1,4 @@
 import java.util.EnumSet;
-import zeroPackage.ZeroMath;
 /**
  * J_RapidRunData
  */	
@@ -747,7 +746,7 @@ public class J_RapidRunData {
     		} else {
 	    		//traceln("possibleGrowth: %s ", possibleGrowthFactor_fr);
 	    		double[] dayProfile_kW = Arrays.copyOfRange(am_totalBalanceAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getTimeSeries_kW(),roundToInt(24.0/this.timeParameters.getTimeStep_h() * maxDay), roundToInt(24.0/this.timeParameters.getTimeStep_h() * (maxDay+1)));
-	    		double[] dayProfileScaled_kW = ZeroMath.arrayMultiply(dayProfile_kW, possibleGrowthFactor_fr);
+	    		double[] dayProfileScaled_kW = LUXMath.multiplyArray(dayProfile_kW, possibleGrowthFactor_fr);
 	    		double[] SoC_kWh = new double[roundToInt(24/this.timeParameters.getTimeStep_h())+1];
 	    		double minSoC_kWh = 0.0;
 	    		double maxSoC_kWh = 0.0;
