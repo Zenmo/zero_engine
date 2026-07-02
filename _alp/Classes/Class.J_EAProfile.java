@@ -92,6 +92,13 @@ public class J_EAProfile extends J_EAFixed implements I_ProfileAsset{
     	this.profileScaling_fr = scaling_fr;
     }    
     
+    public void setProfilePointer(J_ProfilePointer profile) {
+    	if (profile == null) {
+            throw new RuntimeException("Cannot set J_EAProfile profilePointer to null!");
+        }
+    	this.profilePointer = profile;
+    }
+    
     //Getters
     public J_ProfilePointer getProfilePointer() {
     	return this.profilePointer;
