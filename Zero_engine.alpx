@@ -2271,6 +2271,10 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[DataSetConstructor]]></Name>
 				<Folder>1764938574089</Folder>
 			</JavaClass>
+			<JavaClass>
+				<Id>1783014017243</Id>
+				<Name><![CDATA[UIUtil]]></Name>
+			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
 			<LibraryName>com.anylogic.libraries.modules.markup_descriptors</LibraryName>
