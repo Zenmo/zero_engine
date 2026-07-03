@@ -1,8 +1,6 @@
 /**
  * UIUtil
  *
- * Static helpers for fitting a ShapeText inside a ShapeRectangle.
- *
  * Notes/assumptions:
  * - Shapes are assumed to be unrotated and in the same coordinate space
  *   (i.e. same parent group / level).
