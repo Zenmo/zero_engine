@@ -1267,3 +1267,40 @@ for (var gridNode: this.pop_gridNodes) {
 return Collections.unmodifiableList(topGridNodes);
 /*ALCODEEND*/}
 
+GridConnection f_createGridConnectionDuringRuntime(Class<? extends GridConnection> gcClassType,String id,String ownerID,String parentNodeElectricID,String parentNodeHeatID)
+{/*ALCODESTART::1783323038353*/
+GridConnection gc;
+if(gcClassType == GCDistrictHeating.class){
+	gc = add_DistrictHeatingSystems();
+} else if (gcClassType == GCEnergyConversion.class){
+	gc = add_EnergyConversionSites();
+} else if (gcClassType == GCEnergyProduction.class){
+	gc = add_EnergyProductionSites();
+} else if (gcClassType == GCGridBattery.class){
+	gc = add_GridBatteries();
+} else if (gcClassType == GCHouse.class){
+	gc = add_Houses();
+} else if (gcClassType == GCNeighborhood.class){
+	gc = add_Neighborhoods();
+} else if (gcClassType == GCPublicCharger.class){
+	gc = add_PublicChargers();
+} else if (gcClassType == GCUtility.class){
+	gc = add_UtilityConnections();
+} else {
+	throw new RuntimeException("gcClassType needs to be a child of the abstract GridConnection");
+}
+
+gc.p_gridConnectionID = id;
+gc.p_ownerID = ownerID;
+
+gc.p_parentNodeElectricID = parentNodeElectricID;
+gc.p_parentNodeHeatID = parentNodeHeatID;
+
+gc.v_liveConnectionMetaData.setCapacities_kW(0, 0, 0);
+gc.v_liveConnectionMetaData.setCapacitiesKnown(false, false, false);
+
+gc.f_initialize(p_timeParameters, p_timeVariables);
+
+return gc;
+/*ALCODEEND*/}
+
