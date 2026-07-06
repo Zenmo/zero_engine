@@ -62,6 +62,13 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     public double amountOfElectricHeatpumps_agriculture_fr = 0;
     public double amountOfDistrictHeating_agriculture_fr = 0;
     
+    //Specific Rapid run KPI's
+    double totalHouseholdElectricityForHeatingConsumption_kWh = 0;
+    double totalHouseholdMethaneForHeatingConsumption_kWh = 0;
+    double totalHouseholdDistrictHeatingImport_kWh = 0;
+    double totalAgricultreEnergyForHeating_kWh = 0;
+    double totalIndustryEnergyForHeating_kWh = 0;
+    double totalServicesEnergyForHeating_kWh = 0;
     /**
      * Default constructor
      */
@@ -112,7 +119,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	}
     }
     
-    public double[] dividePowerDemandHeatingAssets() {
+    private double[] dividePowerDemandHeatingAssets() {
     	//Initialize power demand division array
     	double powerDemandDivision_kW[] = {0, 0, 0, 0, 0}; // {Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand}
 
@@ -130,41 +137,74 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	double powerDemand_agriculture_kW = max(0,heatDemandProfiles.get("AGRICULTURE").getLastFlows().get(OL_EnergyCarriers.HEAT));
     	double powerDemand_industry_kW = max(0,heatDemandProfiles.get("INDUSTRY").getLastFlows().get(OL_EnergyCarriers.HEAT));
     	double powerDemand_services_kW = max(0,heatDemandProfiles.get("SERVICES").getLastFlows().get(OL_EnergyCarriers.HEAT));
+    	
+    	
+    	//Gasburners
+    	double gasBurnerPowerDemand_houses_kW = powerDemand_households_kW*amountOfGasBurners_houses_fr;
+    	double gasBurnerPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfGasBurners_agriculture_fr;
+		double gasBurnerPowerDemand_industry_kW = powerDemand_industry_kW*amountOfGasBurners_industry_fr;
+    	double gasBurnerPowerDemand_services_kW = powerDemand_services_kW*amountOfGasBurners_services_fr;
+    	    	    	    	    	    	    	    	
+    	double gasBurnerPowerDemand_kW 		= gasBurnerPowerDemand_houses_kW + 
+											  gasBurnerPowerDemand_agriculture_kW +
+											  gasBurnerPowerDemand_industry_kW + 
+											  gasBurnerPowerDemand_services_kW;
+    	
+    	//Electric heat pumps
+    	double electricHPPowerDemand_houses_kW      = powerDemand_households_kW*amountOfElectricHeatpumps_houses_fr;
+    	double electricHPPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfElectricHeatpumps_agriculture_fr;
+    	double electricHPPowerDemand_industry_kW    = powerDemand_industry_kW*amountOfElectricHeatpumps_industry_fr;
+    	double electricHPPowerDemand_services_kW    = powerDemand_services_kW*amountOfElectricHeatpumps_services_fr;
 
-    	//Divide the powerdemand per heating type
-    	double gasBurnerPowerDemand_kW 		= powerDemand_households_kW*amountOfGasBurners_houses_fr + 
-    										  powerDemand_agriculture_kW*amountOfGasBurners_agriculture_fr +
-    										  powerDemand_industry_kW*amountOfGasBurners_industry_fr + 
-    										  powerDemand_services_kW*amountOfGasBurners_services_fr;
-    										  
-    	double electricHPPowerDemand_kW 		= powerDemand_households_kW*amountOfElectricHeatpumps_houses_fr + 
-    										  powerDemand_agriculture_kW*amountOfElectricHeatpumps_agriculture_fr + 
-    										  powerDemand_industry_kW*amountOfElectricHeatpumps_industry_fr + 
-    										  powerDemand_services_kW*amountOfElectricHeatpumps_services_fr;
-    										  
-    	double hybridHPPowerDemand_kW 	   		= powerDemand_households_kW*amountOfHybridHeatpump_houses_fr +
-    										  powerDemand_agriculture_kW*amountOfHybridHeatpump_agriculture_fr +
-    										  powerDemand_industry_kW*amountOfHybridHeatpump_industry_fr + 
-    										  powerDemand_services_kW*amountOfHybridHeatpump_services_fr;
-    										  
-    	double districtHeatingPowerDemand_kW   = powerDemand_households_kW*amountOfDistrictHeating_houses_fr +
-    										  powerDemand_agriculture_kW*amountOfDistrictHeating_agriculture_fr + 
-    										  powerDemand_industry_kW*amountOfDistrictHeating_industry_fr + 
-    										  powerDemand_services_kW*amountOfDistrictHeating_services_fr;
-    															  
+    	double electricHPPowerDemand_kW      = electricHPPowerDemand_houses_kW +
+    										   electricHPPowerDemand_agriculture_kW +
+    										   electricHPPowerDemand_industry_kW +
+    										   electricHPPowerDemand_services_kW;
+
+
+    	//Hybrid heat pumps
+    	double hybridHPPowerDemand_houses_kW      = powerDemand_households_kW*amountOfHybridHeatpump_houses_fr;
+    	double hybridHPPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfHybridHeatpump_agriculture_fr;
+    	double hybridHPPowerDemand_industry_kW    = powerDemand_industry_kW*amountOfHybridHeatpump_industry_fr;
+    	double hybridHPPowerDemand_services_kW    = powerDemand_services_kW*amountOfHybridHeatpump_services_fr;
+
+    	double hybridHPPowerDemand_kW      = hybridHPPowerDemand_houses_kW +
+    										 hybridHPPowerDemand_agriculture_kW +
+    										 hybridHPPowerDemand_industry_kW +
+    										 hybridHPPowerDemand_services_kW;
+
+
+    	//District heating
+    	double districtHeatingPowerDemand_houses_kW      = powerDemand_households_kW*amountOfDistrictHeating_houses_fr;
+    	double districtHeatingPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfDistrictHeating_agriculture_fr;
+    	double districtHeatingPowerDemand_industry_kW    = powerDemand_industry_kW*amountOfDistrictHeating_industry_fr;
+    	double districtHeatingPowerDemand_services_kW    = powerDemand_services_kW*amountOfDistrictHeating_services_fr;
+
+    	double districtHeatingPowerDemand_kW      = districtHeatingPowerDemand_houses_kW +
+    										        districtHeatingPowerDemand_agriculture_kW +
+    										        districtHeatingPowerDemand_industry_kW +
+    										        districtHeatingPowerDemand_services_kW;
+    	
+    	//Hydrogen burner												  
     	double hydrogenBurnerPowerDemand_kW	= powerDemand_industry_kW*amountOfHydrogenUseForHeating_industry_fr;
+    	
+    	//Low temp heat grid
+    	double lowTempHeatgridPowerDemand_houses_kW   = powerDemand_households_kW*amountOfLowTempHeatgrid_houses_fr;
+    	double lowTempHeatgridPowerDemand_services_kW = powerDemand_services_kW*amountOfLowTempHeatgrid_services_fr;
 
-    	double lowTempHeatgridPowerDemand_kW 	= powerDemand_households_kW*amountOfLowTempHeatgrid_houses_fr + 
-    										  powerDemand_services_kW*amountOfLowTempHeatgrid_services_fr;
-    	//double lowTempHeatgridPowerDemand_kW = (powerDemand_households_kW + powerDemand_agriculture_kW + powerDemand_industry_kW + powerDemand_services_kW) - hybridHPPowerDemand - electricHPPowerDemand - gasBurnerPowerDemand - districtHeatingPowerDemand - hydrogenBurnerPowerDemand; // To make sure all power demand is met
-    										  
+    	double lowTempHeatgridPowerDemand_kW      = lowTempHeatgridPowerDemand_houses_kW +
+    										        lowTempHeatgridPowerDemand_services_kW;
+
+    	
+    	
+    	////Create asset power demand division array based on COP
     	//Get the current Heatpump COP
-    	double HP_COP = ((J_EAConversionHeatPump)heatPump).getCOP();
+    	double HP_COP = heatPump.getCOP();
 
     	if ( HP_COP < thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
     		powerDemandDivision_kW[0] = max(0, gasBurnerPowerDemand_kW + hybridHPPowerDemand_kW);
     		powerDemandDivision_kW[1] = max(0, electricHPPowerDemand_kW);
-    	}
+       	}
     	else{
     		powerDemandDivision_kW[0] = max(0, gasBurnerPowerDemand_kW);
     		powerDemandDivision_kW[1] = max(0, electricHPPowerDemand_kW + hybridHPPowerDemand_kW);
@@ -172,7 +212,46 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	powerDemandDivision_kW[2] = max(0, districtHeatingPowerDemand_kW);
     	powerDemandDivision_kW[3] = max(0, hydrogenBurnerPowerDemand_kW);
     	powerDemandDivision_kW[4] = max(0, lowTempHeatgridPowerDemand_kW);
+    	
+    	
+    	
+    	//Rapid run KPI storing
+    	if(gc.energyModel.v_isRapidRun) {
+    		
+    		//Gas burner and heatpump energy consumption
+        	if ( HP_COP < thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
+        	    totalHouseholdElectricityForHeatingConsumption_kWh += (electricHPPowerDemand_houses_kW/HP_COP) * timeParameters.getTimeStep_h();
+        	    totalHouseholdMethaneForHeatingConsumption_kWh += ((gasBurnerPowerDemand_houses_kW + hybridHPPowerDemand_houses_kW) / gasBurner.getEta_r()) * timeParameters.getTimeStep_h();
 
+        	    totalAgricultreEnergyForHeating_kWh += ((electricHPPowerDemand_agriculture_kW/HP_COP) + ((gasBurnerPowerDemand_agriculture_kW + hybridHPPowerDemand_agriculture_kW) / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
+                totalIndustryEnergyForHeating_kWh += ((electricHPPowerDemand_industry_kW/HP_COP) + ((gasBurnerPowerDemand_industry_kW + hybridHPPowerDemand_industry_kW) / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
+                totalServicesEnergyForHeating_kWh += ((electricHPPowerDemand_services_kW/HP_COP) + ((gasBurnerPowerDemand_services_kW + hybridHPPowerDemand_services_kW) / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
+        	}
+        	else{
+        	    totalHouseholdElectricityForHeatingConsumption_kWh += ((electricHPPowerDemand_houses_kW + hybridHPPowerDemand_houses_kW)/HP_COP) * timeParameters.getTimeStep_h();
+        	    totalHouseholdMethaneForHeatingConsumption_kWh += (gasBurnerPowerDemand_houses_kW / gasBurner.getEta_r()) * timeParameters.getTimeStep_h();
+        	
+        	    totalAgricultreEnergyForHeating_kWh += (((electricHPPowerDemand_agriculture_kW + hybridHPPowerDemand_agriculture_kW)/HP_COP) + (gasBurnerPowerDemand_agriculture_kW / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
+	    		totalIndustryEnergyForHeating_kWh += (((electricHPPowerDemand_industry_kW + hybridHPPowerDemand_industry_kW)/HP_COP) + (gasBurnerPowerDemand_industry_kW / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
+	    		totalServicesEnergyForHeating_kWh += (((electricHPPowerDemand_services_kW + hybridHPPowerDemand_services_kW)/HP_COP) + (gasBurnerPowerDemand_services_kW / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
+        	}
+    		
+        	//District heating
+        	totalHouseholdDistrictHeatingImport_kWh += (districtHeatingPowerDemand_houses_kW/heatDeliverySet.getEta_r()) * timeParameters.getTimeStep_h();
+        	totalAgricultreEnergyForHeating_kWh += (districtHeatingPowerDemand_agriculture_kW/heatDeliverySet.getEta_r()) * timeParameters.getTimeStep_h();
+			totalIndustryEnergyForHeating_kWh += (districtHeatingPowerDemand_industry_kW/heatDeliverySet.getEta_r()) * timeParameters.getTimeStep_h();
+			totalServicesEnergyForHeating_kWh += (districtHeatingPowerDemand_services_kW/heatDeliverySet.getEta_r()) * timeParameters.getTimeStep_h();
+    		
+			//Hydrogen
+			totalIndustryEnergyForHeating_kWh += (hydrogenBurnerPowerDemand_kW/hydrogenBurner.getEta_r()) * timeParameters.getTimeStep_h();
+			
+			//Low temp heatgrid
+			double householdLTHeatpumpElectricityPower_kW = lowTempHeatgridPowerDemand_houses_kW/lowTempHeatGridHeatPump.getCOP();
+			totalHouseholdElectricityForHeatingConsumption_kWh += householdLTHeatpumpElectricityPower_kW * timeParameters.getTimeStep_h();
+            totalServicesEnergyForHeating_kWh += (lowTempHeatgridPowerDemand_services_kW/lowTempHeatGridHeatPump.getCOP()) * timeParameters.getTimeStep_h();
+            totalHouseholdDistrictHeatingImport_kWh += (lowTempHeatgridPowerDemand_houses_kW - householdLTHeatpumpElectricityPower_kW) * timeParameters.getTimeStep_h();
+    	}
+    	
     	return powerDemandDivision_kW; //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand};
     }
     
@@ -328,13 +407,38 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	return this.gc;
     }
     
+    //Specific KPI getters
+    public double getTotalHouseholdElectricityForHeatingConsumption_kWh() {
+        return totalHouseholdElectricityForHeatingConsumption_kWh;
+    }
+    public double getTotalHouseholdMethaneForHeatingConsumption_kWh() {
+        return totalHouseholdMethaneForHeatingConsumption_kWh;
+    }
+    public double getTotalHouseholdDistrictHeatingImport_kWh() {
+        return totalHouseholdDistrictHeatingImport_kWh;
+    }
+    public double getTotalAgricultreEnergyForHeating_kWh() {
+        return totalAgricultreEnergyForHeating_kWh;
+    }
+    public double getTotalIndustryEnergyForHeating_kWh() {
+        return totalIndustryEnergyForHeating_kWh;
+    }
+    public double getTotalServicesEnergyForHeating_kWh() {
+        return totalServicesEnergyForHeating_kWh;
+    }
+    
     
     //Store and reset states
 	public void storeStatesAndReset() {
-		//Nothing to store/reset
+	    totalHouseholdElectricityForHeatingConsumption_kWh = 0;
+	    totalHouseholdMethaneForHeatingConsumption_kWh = 0;
+	    totalHouseholdDistrictHeatingImport_kWh = 0;
+	    totalAgricultreEnergyForHeating_kWh = 0;
+	    totalIndustryEnergyForHeating_kWh = 0;
+	    totalServicesEnergyForHeating_kWh = 0;
 	}
 	public void restoreStates() {
-		//Nothing to store/reset
+		//Nothing to restore
 	}
 	
 	@Override
