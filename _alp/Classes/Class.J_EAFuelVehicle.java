@@ -25,10 +25,10 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
     public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
     	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, available, null );
     }
-    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, OL_AssetFlowCategories assetFlowCatagory ) {
-    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, true, assetFlowCatagory);
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, OL_AssetFlowCategories assetFlowCategory ) {
+    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, true, assetFlowCategory);
     }
-    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available, OL_AssetFlowCategories assetFlowCatagory ) {
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available, OL_AssetFlowCategories assetFlowCategory ) {
     	if (energyCarrier == OL_EnergyCarriers.HEAT || energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 	    	throw new RuntimeException("Invalid choice of energy carrier for J_EAFuelVehicle");
 	    }
@@ -157,8 +157,10 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 	@Override
 	public String toString() {
 		return
-			"energy carrier = " + energyCarrierConsumed + " " +		
-			"energyConsumption_kWhpkm =" + energyConsumption_kWhpkm + " " +
+			"J_EAFuelVehicle: " +		
+			"EC: " + energyCarrierConsumed + "," +	
+			"AFC: " + this.assetFlowCategory + ","	+
+			"energyConsumption_kWhpkm: " + energyConsumption_kWhpkm + "," +
 			"vehicleScaling = " + vehicleScaling;
 	}
 	
