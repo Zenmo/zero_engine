@@ -1316,6 +1316,31 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 					<Name><![CDATA[GROUND_WATER]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1783587794737</Id>
+				<Name><![CDATA[OL_Sectors]]></Name>
+				<Description><![CDATA[Energy demand sectors of a neighborhood, following the sector breakdown used in the CBS energy balance and Klimaatmonitor: woningen (households), diensten (services/utiliteit), industrie, landbouw, and verkeer & vervoer (transport). ]]></Description>
+				<Option>
+					<Id>1783587796154</Id>
+					<Name><![CDATA[HOUSEHOLDS]]></Name>
+				</Option>
+				<Option>
+					<Id>1783587804005</Id>
+					<Name><![CDATA[SERVICES]]></Name>
+				</Option>
+				<Option>
+					<Id>1783587808780</Id>
+					<Name><![CDATA[INDUSTRY]]></Name>
+				</Option>
+				<Option>
+					<Id>1783587812102</Id>
+					<Name><![CDATA[AGRICULTURE]]></Name>
+				</Option>
+				<Option>
+					<Id>1783587815195</Id>
+					<Name><![CDATA[TRANSPORT]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
