@@ -31,37 +31,48 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
   
 	private J_HeatingPreferences heatingPreferences = null; // Not needed for neighbourhoods
 	
-    private HashMap<String, I_ProfileAsset> heatDemandProfiles = new HashMap<>();
-
+	private Map<OL_Sectors, Map<OL_GridConnectionHeatingType, I_ProfileAsset>> heatDemandProfiles = Map.of(
+																									OL_Sectors.HOUSEHOLDS, new HashMap<>(),
+																									OL_Sectors.SERVICES, new HashMap<>(),
+																									OL_Sectors.INDUSTRY, new HashMap<>(),
+																									OL_Sectors.AGRICULTURE, new HashMap<>()
+																									);
     private double thresholdCOP_hybridHeatpump = 3.5;
 
-    // Services
-    public double amountOfGasBurners_services_fr = 1;
-    public double amountOfHybridHeatpump_services_fr = 0;
-    public double amountOfElectricHeatpumps_services_fr = 0;
-    public double amountOfDistrictHeating_services_fr = 0;
-    public double amountOfLowTempHeatgrid_services_fr = 0;
-     
-    // Houses
-    public double amountOfGasBurners_houses_fr = 1;
-    public double amountOfHybridHeatpump_houses_fr = 0;
-    public double amountOfElectricHeatpumps_houses_fr = 0;
-    public double amountOfDistrictHeating_houses_fr = 0;
-    public double amountOfLowTempHeatgrid_houses_fr = 0;
-     
-    // Industry
-    public double amountOfGasBurners_industry_fr = 1;
-    public double amountOfHybridHeatpump_industry_fr = 0;
-    public double amountOfElectricHeatpumps_industry_fr = 0;
-    public double amountOfDistrictHeating_industry_fr = 0;
-    public double amountOfHydrogenUseForHeating_industry_fr = 0;
-     
-    // Agriculture
-    public double amountOfGasBurners_agriculture_fr = 1;
-    public double amountOfHybridHeatpump_agriculture_fr = 0;
-    public double amountOfElectricHeatpumps_agriculture_fr = 0;
-    public double amountOfDistrictHeating_agriculture_fr = 0;
+    private Map<OL_Sectors, Double> heatSavings_fr = new HashMap<>(Map.of(
+											    		OL_Sectors.HOUSEHOLDS,  0.0,
+											    		OL_Sectors.SERVICES,    0.0,
+											    		OL_Sectors.INDUSTRY,    0.0,
+											    		OL_Sectors.AGRICULTURE, 0.0
+    ));
     
+    private static final Map<OL_Sectors, List<OL_GridConnectionHeatingType>> SPACE_HEATING_TYPES = Map.of(
+    		OL_Sectors.HOUSEHOLDS, List.of(
+                    OL_GridConnectionHeatingType.GAS_BURNER,
+                    OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP,
+                    OL_GridConnectionHeatingType.HYBRID_HEATPUMP,
+                    OL_GridConnectionHeatingType.DISTRICTHEAT,
+                    OL_GridConnectionHeatingType.LT_DISTRICTHEAT),
+    		OL_Sectors.SERVICES, List.of(
+                    OL_GridConnectionHeatingType.GAS_BURNER,
+                    OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP,
+                    OL_GridConnectionHeatingType.HYBRID_HEATPUMP,
+                    OL_GridConnectionHeatingType.DISTRICTHEAT,
+                    OL_GridConnectionHeatingType.LT_DISTRICTHEAT),
+    		OL_Sectors.INDUSTRY, List.of(
+                    OL_GridConnectionHeatingType.GAS_BURNER,
+                    OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP,
+                    OL_GridConnectionHeatingType.HYBRID_HEATPUMP,
+                    OL_GridConnectionHeatingType.DISTRICTHEAT),
+    		OL_Sectors.AGRICULTURE, List.of(
+                    OL_GridConnectionHeatingType.GAS_BURNER,
+                    OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP,
+                    OL_GridConnectionHeatingType.HYBRID_HEATPUMP,
+                    OL_GridConnectionHeatingType.DISTRICTHEAT)
+    );
+    
+    public double amountOfHydrogenUseForHeating_industry_fr = 0;
+
     //Specific Rapid run KPI's
     double totalHouseholdElectricityForHeatingConsumption_kWh = 0;
     double totalHouseholdMethaneForHeatingConsumption_kWh = 0;
@@ -69,6 +80,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     double totalAgricultreEnergyForHeating_kWh = 0;
     double totalIndustryEnergyForHeating_kWh = 0;
     double totalServicesEnergyForHeating_kWh = 0;
+
     /**
      * Default constructor
      */
@@ -118,111 +130,90 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
         	gc.f_updateFlexAssetFlows(lowTempHeatGridHeatPump, powerFraction_LOWTEMPHEATGRID, timeVariables);
     	}
     }
-    
+ 
     private double[] dividePowerDemandHeatingAssets() {
-    	//Initialize power demand division array
-    	double powerDemandDivision_kW[] = {0, 0, 0, 0, 0}; // {Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand}
-
-    	//Calculate fraction of total heat demand delivered by the CHP
-    	/*
-    	double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-    	double fractionOfTotalHeatDemandDeliveredyByCHP = max(0,p_chpAsset.getLastFlows().get(OL_EnergyCarriers.HEAT))/powerDemand_kW;
-    	double remainingFraction = fractionOfTotalHeatDemandDeliveredyByCHP;
-    	*/
-    	//Demanded total heating power at the current time step
-    	//double powerDemand_kW = fm_currentBalanceFlows_kW.get(OL_EnergyCarriers.HEAT);
-
-    	//Demanded heating power for companies and household seperatly the current time step
-    	double powerDemand_households_kW = max(0,heatDemandProfiles.get("HOUSEHOLDS").getLastFlows().get(OL_EnergyCarriers.HEAT));
-    	double powerDemand_agriculture_kW = max(0,heatDemandProfiles.get("AGRICULTURE").getLastFlows().get(OL_EnergyCarriers.HEAT));
-    	double powerDemand_industry_kW = max(0,heatDemandProfiles.get("INDUSTRY").getLastFlows().get(OL_EnergyCarriers.HEAT));
-    	double powerDemand_services_kW = max(0,heatDemandProfiles.get("SERVICES").getLastFlows().get(OL_EnergyCarriers.HEAT));
-    	
     	
     	//Gasburners
-    	double gasBurnerPowerDemand_houses_kW = powerDemand_households_kW*amountOfGasBurners_houses_fr;
-    	double gasBurnerPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfGasBurners_agriculture_fr;
-		double gasBurnerPowerDemand_industry_kW = powerDemand_industry_kW*amountOfGasBurners_industry_fr;
-    	double gasBurnerPowerDemand_services_kW = powerDemand_services_kW*amountOfGasBurners_services_fr;
-    	    	    	    	    	    	    	    	
+    	double gasBurnerPowerDemand_houses_kW      = getCurrentHeatDemand_kW(OL_Sectors.HOUSEHOLDS,  OL_GridConnectionHeatingType.GAS_BURNER);
+    	double gasBurnerPowerDemand_agriculture_kW = getCurrentHeatDemand_kW(OL_Sectors.AGRICULTURE, OL_GridConnectionHeatingType.GAS_BURNER);
+    	double gasBurnerPowerDemand_industry_kW    = getCurrentHeatDemand_kW(OL_Sectors.INDUSTRY,    OL_GridConnectionHeatingType.GAS_BURNER);
+    	double gasBurnerPowerDemand_services_kW    = getCurrentHeatDemand_kW(OL_Sectors.SERVICES,    OL_GridConnectionHeatingType.GAS_BURNER);
+ 
     	double gasBurnerPowerDemand_kW 		= gasBurnerPowerDemand_houses_kW + 
 											  gasBurnerPowerDemand_agriculture_kW +
 											  gasBurnerPowerDemand_industry_kW + 
 											  gasBurnerPowerDemand_services_kW;
     	
     	//Electric heat pumps
-    	double electricHPPowerDemand_houses_kW      = powerDemand_households_kW*amountOfElectricHeatpumps_houses_fr;
-    	double electricHPPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfElectricHeatpumps_agriculture_fr;
-    	double electricHPPowerDemand_industry_kW    = powerDemand_industry_kW*amountOfElectricHeatpumps_industry_fr;
-    	double electricHPPowerDemand_services_kW    = powerDemand_services_kW*amountOfElectricHeatpumps_services_fr;
-
+    	double electricHPPowerDemand_houses_kW      = getCurrentHeatDemand_kW(OL_Sectors.HOUSEHOLDS,  OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+    	double electricHPPowerDemand_agriculture_kW = getCurrentHeatDemand_kW(OL_Sectors.AGRICULTURE, OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+    	double electricHPPowerDemand_industry_kW    = getCurrentHeatDemand_kW(OL_Sectors.INDUSTRY,    OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+    	double electricHPPowerDemand_services_kW    = getCurrentHeatDemand_kW(OL_Sectors.SERVICES,    OL_GridConnectionHeatingType.ELECTRIC_HEATPUMP);
+ 
     	double electricHPPowerDemand_kW      = electricHPPowerDemand_houses_kW +
     										   electricHPPowerDemand_agriculture_kW +
     										   electricHPPowerDemand_industry_kW +
     										   electricHPPowerDemand_services_kW;
-
-
+ 
     	//Hybrid heat pumps
-    	double hybridHPPowerDemand_houses_kW      = powerDemand_households_kW*amountOfHybridHeatpump_houses_fr;
-    	double hybridHPPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfHybridHeatpump_agriculture_fr;
-    	double hybridHPPowerDemand_industry_kW    = powerDemand_industry_kW*amountOfHybridHeatpump_industry_fr;
-    	double hybridHPPowerDemand_services_kW    = powerDemand_services_kW*amountOfHybridHeatpump_services_fr;
-
+    	double hybridHPPowerDemand_houses_kW      = getCurrentHeatDemand_kW(OL_Sectors.HOUSEHOLDS,  OL_GridConnectionHeatingType.HYBRID_HEATPUMP);
+    	double hybridHPPowerDemand_agriculture_kW = getCurrentHeatDemand_kW(OL_Sectors.AGRICULTURE, OL_GridConnectionHeatingType.HYBRID_HEATPUMP);
+    	double hybridHPPowerDemand_industry_kW    = getCurrentHeatDemand_kW(OL_Sectors.INDUSTRY,    OL_GridConnectionHeatingType.HYBRID_HEATPUMP);
+    	double hybridHPPowerDemand_services_kW    = getCurrentHeatDemand_kW(OL_Sectors.SERVICES,    OL_GridConnectionHeatingType.HYBRID_HEATPUMP);
+ 
     	double hybridHPPowerDemand_kW      = hybridHPPowerDemand_houses_kW +
     										 hybridHPPowerDemand_agriculture_kW +
     										 hybridHPPowerDemand_industry_kW +
     										 hybridHPPowerDemand_services_kW;
-
-
+ 
+ 
     	//District heating
-    	double districtHeatingPowerDemand_houses_kW      = powerDemand_households_kW*amountOfDistrictHeating_houses_fr;
-    	double districtHeatingPowerDemand_agriculture_kW = powerDemand_agriculture_kW*amountOfDistrictHeating_agriculture_fr;
-    	double districtHeatingPowerDemand_industry_kW    = powerDemand_industry_kW*amountOfDistrictHeating_industry_fr;
-    	double districtHeatingPowerDemand_services_kW    = powerDemand_services_kW*amountOfDistrictHeating_services_fr;
-
+    	double districtHeatingPowerDemand_houses_kW      = getCurrentHeatDemand_kW(OL_Sectors.HOUSEHOLDS,  OL_GridConnectionHeatingType.DISTRICTHEAT);
+    	double districtHeatingPowerDemand_agriculture_kW = getCurrentHeatDemand_kW(OL_Sectors.AGRICULTURE, OL_GridConnectionHeatingType.DISTRICTHEAT);
+    	double districtHeatingPowerDemand_industry_kW    = getCurrentHeatDemand_kW(OL_Sectors.INDUSTRY,    OL_GridConnectionHeatingType.DISTRICTHEAT);
+    	double districtHeatingPowerDemand_services_kW    = getCurrentHeatDemand_kW(OL_Sectors.SERVICES,    OL_GridConnectionHeatingType.DISTRICTHEAT);
+ 
     	double districtHeatingPowerDemand_kW      = districtHeatingPowerDemand_houses_kW +
     										        districtHeatingPowerDemand_agriculture_kW +
     										        districtHeatingPowerDemand_industry_kW +
     										        districtHeatingPowerDemand_services_kW;
     	
     	//Hydrogen burner												  
-    	double hydrogenBurnerPowerDemand_kW	= powerDemand_industry_kW*amountOfHydrogenUseForHeating_industry_fr;
+    	double hydrogenBurnerPowerDemand_kW	= getCurrentHeatDemand_kW(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER);
     	
     	//Low temp heat grid
-    	double lowTempHeatgridPowerDemand_houses_kW   = powerDemand_households_kW*amountOfLowTempHeatgrid_houses_fr;
-    	double lowTempHeatgridPowerDemand_services_kW = powerDemand_services_kW*amountOfLowTempHeatgrid_services_fr;
-
+    	double lowTempHeatgridPowerDemand_houses_kW   = getCurrentHeatDemand_kW(OL_Sectors.HOUSEHOLDS, OL_GridConnectionHeatingType.LT_DISTRICTHEAT);
+    	double lowTempHeatgridPowerDemand_services_kW = getCurrentHeatDemand_kW(OL_Sectors.SERVICES,   OL_GridConnectionHeatingType.LT_DISTRICTHEAT);
+ 
     	double lowTempHeatgridPowerDemand_kW      = lowTempHeatgridPowerDemand_houses_kW +
     										        lowTempHeatgridPowerDemand_services_kW;
-
+ 
     	
     	
     	////Create asset power demand division array based on COP
+    	//Initialize power demand division array
+    	double powerDemandDivision_kW[] = {0, 0, 0, 0, 0}; // {Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand}
+ 
     	//Get the current Heatpump COP
     	double HP_COP = heatPump.getCOP();
-
-    	if ( HP_COP < thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
-    		powerDemandDivision_kW[0] = max(0, gasBurnerPowerDemand_kW + hybridHPPowerDemand_kW);
-    		powerDemandDivision_kW[1] = max(0, electricHPPowerDemand_kW);
-       	}
-    	else{
-    		powerDemandDivision_kW[0] = max(0, gasBurnerPowerDemand_kW);
-    		powerDemandDivision_kW[1] = max(0, electricHPPowerDemand_kW + hybridHPPowerDemand_kW);
-    	}
-    	powerDemandDivision_kW[2] = max(0, districtHeatingPowerDemand_kW);
-    	powerDemandDivision_kW[3] = max(0, hydrogenBurnerPowerDemand_kW);
-    	powerDemandDivision_kW[4] = max(0, lowTempHeatgridPowerDemand_kW);
+    	boolean hybridHeatpumpInGasBurnerMode = HP_COP < thresholdCOP_hybridHeatpump;
+    	
+    	//Assign power demand division to right indexes
+      	powerDemandDivision_kW[0] = gasBurnerPowerDemand_kW  + (hybridHeatpumpInGasBurnerMode ? hybridHPPowerDemand_kW : 0); //Gasburner
+    	powerDemandDivision_kW[1] = electricHPPowerDemand_kW + (hybridHeatpumpInGasBurnerMode ? 0 : hybridHPPowerDemand_kW); //Heatpump
+    	powerDemandDivision_kW[2] = districtHeatingPowerDemand_kW; //Districtheating
+    	powerDemandDivision_kW[3] = hydrogenBurnerPowerDemand_kW;  //Hydrogenburner
+    	powerDemandDivision_kW[4] = lowTempHeatgridPowerDemand_kW; //lowTempHeatgrid
     	
     	
-    	
-    	//Rapid run KPI storing
+    	////Rapid run KPI storing
     	if(gc.energyModel.v_isRapidRun) {
     		
     		//Gas burner and heatpump energy consumption
-        	if ( HP_COP < thresholdCOP_hybridHeatpump ) { // switch to gasburner when HP COP is below treshold
+        	if ( hybridHeatpumpInGasBurnerMode ) { // switch to gasburner when HP COP is below treshold
         	    totalHouseholdElectricityForHeatingConsumption_kWh += (electricHPPowerDemand_houses_kW/HP_COP) * timeParameters.getTimeStep_h();
         	    totalHouseholdMethaneForHeatingConsumption_kWh += ((gasBurnerPowerDemand_houses_kW + hybridHPPowerDemand_houses_kW) / gasBurner.getEta_r()) * timeParameters.getTimeStep_h();
-
+ 
         	    totalAgricultreEnergyForHeating_kWh += ((electricHPPowerDemand_agriculture_kW/HP_COP) + ((gasBurnerPowerDemand_agriculture_kW + hybridHPPowerDemand_agriculture_kW) / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
                 totalIndustryEnergyForHeating_kWh += ((electricHPPowerDemand_industry_kW/HP_COP) + ((gasBurnerPowerDemand_industry_kW + hybridHPPowerDemand_industry_kW) / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
                 totalServicesEnergyForHeating_kWh += ((electricHPPowerDemand_services_kW/HP_COP) + ((gasBurnerPowerDemand_services_kW + hybridHPPowerDemand_services_kW) / gasBurner.getEta_r())) * timeParameters.getTimeStep_h();
@@ -248,12 +239,16 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
 			//Low temp heatgrid
 			double householdLTHeatpumpElectricityPower_kW = lowTempHeatgridPowerDemand_houses_kW/lowTempHeatGridHeatPump.getCOP();
 			totalHouseholdElectricityForHeatingConsumption_kWh += householdLTHeatpumpElectricityPower_kW * timeParameters.getTimeStep_h();
-            totalServicesEnergyForHeating_kWh += (lowTempHeatgridPowerDemand_services_kW/lowTempHeatGridHeatPump.getCOP()) * timeParameters.getTimeStep_h();
+            totalServicesEnergyForHeating_kWh += lowTempHeatgridPowerDemand_services_kW * timeParameters.getTimeStep_h();
             totalHouseholdDistrictHeatingImport_kWh += (lowTempHeatgridPowerDemand_houses_kW - householdLTHeatpumpElectricityPower_kW) * timeParameters.getTimeStep_h();
     	}
     	
     	return powerDemandDivision_kW; //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request, lowTempHeatgridPowerDemand};
     }
+    
+	    private double getCurrentHeatDemand_kW(OL_Sectors sector, OL_GridConnectionHeatingType type) {
+	        return max(0, heatDemandProfiles.get(sector).get(type).getLastFlows().get(OL_EnergyCarriers.HEAT));
+	    }
     
     public void initializeAssets() {
     	if (!validHeatingTypes.contains(this.currentHeatingType)) {
@@ -333,72 +328,159 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     	return this.currentHeatingType;
     }
     
-    public void setHeatingMethodPct_services( double[] pctArray ) {
-    	amountOfGasBurners_services_fr = pctArray[0]/100;
-    	amountOfElectricHeatpumps_services_fr = pctArray[1]/100;
-    	amountOfHybridHeatpump_services_fr = pctArray[2]/100;
-    	amountOfDistrictHeating_services_fr = pctArray[3]/100;
-    	amountOfLowTempHeatgrid_services_fr = pctArray[4]/100;
+    public List<OL_GridConnectionHeatingType> getHeatAssetTypes(OL_Sectors sector) {
+        List<OL_GridConnectionHeatingType> types = new ArrayList<>(SPACE_HEATING_TYPES.get(sector));
+        if (sector == OL_Sectors.INDUSTRY) {
+            types.add(OL_GridConnectionHeatingType.HYDROGENBURNER);
+        }
+        return types;
     }
     
-    public void setHeatingMethodPct_houses( double[] pctArray ) {
-    	amountOfGasBurners_houses_fr = pctArray[0]/100;
-    	amountOfElectricHeatpumps_houses_fr = pctArray[1]/100;
-    	amountOfHybridHeatpump_houses_fr = pctArray[2]/100;
-    	amountOfDistrictHeating_houses_fr = pctArray[3]/100;
-    	amountOfLowTempHeatgrid_houses_fr = pctArray[4]/100;
+    public void setHybridHeatpumpCOPThreshold(double COPThreshold) {
+    	this.thresholdCOP_hybridHeatpump = COPThreshold;
     }
     
-    public void setHeatingMethodPct_industry( double[] pctArray ) {
-    	//Calculate actual space heating 
-    	double actualHeatingDemandSpaceHeating_fr =  (1 - amountOfHydrogenUseForHeating_industry_fr);
-    	amountOfGasBurners_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[0]/100;
-    	amountOfElectricHeatpumps_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[1]/100;
-    	amountOfHybridHeatpump_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[2]/100;
-    	amountOfDistrictHeating_industry_fr = actualHeatingDemandSpaceHeating_fr * pctArray[3]/100;
+	// =========================================================
+	// Helpers — raw values as stored in heatDemandProfiles
+	// =========================================================
+    private double getProfileScaling_fr(OL_Sectors sector, OL_GridConnectionHeatingType type) {
+        Map<OL_GridConnectionHeatingType, I_ProfileAsset> sectorMap = heatDemandProfiles.get(sector);
+        if (sectorMap == null) {
+            throw new IllegalStateException("No heat demand profiles found for sector: " + sector);
+        }
+        I_ProfileAsset asset = sectorMap.get(type);
+        if (asset == null) {
+            throw new IllegalStateException("No heat demand profile found for sector " + sector + ", type " + type);
+        }
+        return asset.getProfileScaling_fr();
+    }
+     
+    private void setProfileScaling_fr(OL_Sectors sector, OL_GridConnectionHeatingType type, double value) {
+        Map<OL_GridConnectionHeatingType, I_ProfileAsset> sectorMap = heatDemandProfiles.get(sector);
+        if (sectorMap == null) {
+            throw new IllegalStateException("No heat demand profiles found for sector: " + sector);
+        }
+        I_ProfileAsset asset = sectorMap.get(type);
+        if (asset == null) {
+            throw new IllegalStateException("No heat demand profile found for sector " + sector + ", type " + type);
+        }
+        asset.setProfileScaling_fr(value);
+    }
+     
+    private List<OL_GridConnectionHeatingType> getSpaceHeatingTypes(OL_Sectors sector) {
+        List<OL_GridConnectionHeatingType> types = SPACE_HEATING_TYPES.get(sector);
+        if (types == null) {
+            throw new IllegalStateException("Unknown sector: " + sector);
+        }
+        return types;
+    }
+     
+    //The demand pool over which the space-heating technologies are split.
+    //Industry reserves its hydrogen off total demand first, the other sectors reserve nothing.
+    private double getSpaceHeatingPool(OL_Sectors sector) {
+        double demand = 1 - getHeatSavings_fr(sector);
+        return sector == OL_Sectors.INDUSTRY
+                ? demand - getProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER)
+                : demand;
+    }
+     
+    //Current space-heating shares of a sector, expressed as percentages of its pool.
+    private Map<OL_GridConnectionHeatingType, Double> captureHeatingMethodPct(OL_Sectors sector) {
+        Map<OL_GridConnectionHeatingType, Double> pctMap = new HashMap<>();
+        for (OL_GridConnectionHeatingType type : getSpaceHeatingTypes(sector)) {
+            pctMap.put(type, getHeatingMethodShare_fr(sector, type) * 100);
+        }
+        return pctMap;
+    }
+     
+     
+    // ---------------------------------------------------------
+    // Generic sector accessors
+    // ---------------------------------------------------------
+    public double getHeatSavings_fr(OL_Sectors sector) {
+        Double savings = heatSavings_fr.get(sector);
+        if (savings == null) {
+            throw new IllegalStateException("Unknown sector: " + sector);
+        }
+        return savings;
+    }
+     
+    /** Share of the sector's space-heating pool — independent of savings, and of industry's hydrogen share. */
+    public double getHeatingMethodShare_fr(OL_Sectors sector, OL_GridConnectionHeatingType type) {
+        double spaceHeatingPool = getSpaceHeatingPool(sector);
+        return spaceHeatingPool > 0 ? getProfileScaling_fr(sector, type) / spaceHeatingPool : 0;
+    }
+     
+    public void setHeatingMethodPct(OL_Sectors sector, Map<OL_GridConnectionHeatingType, Double> pctMap) {
+        double spaceHeatingPool = getSpaceHeatingPool(sector);
+        for (OL_GridConnectionHeatingType type : getSpaceHeatingTypes(sector)) {
+            Double pct = pctMap.get(type);
+            if (pct == null) {
+                throw new IllegalArgumentException("Missing percentage for sector " + sector + ", type " + type);
+            }
+            setProfileScaling_fr(sector, type, spaceHeatingPool * pct / 100);
+        }
+    }
+     
+    public void setHeatSavings_fr(OL_Sectors sector, double newSavings_fr) {
+        if (newSavings_fr >= 1) {
+            throw new RuntimeException("Can not save (over) 100%!!");
+        }
+        
+        // Capture the shares of the OLD pool before anything moves
+        Map<OL_GridConnectionHeatingType, Double> pctMap = captureHeatingMethodPct(sector);
+     
+        // Industry only: keep hydrogen at the same fraction of total demand.
+        if (sector == OL_Sectors.INDUSTRY) {
+            double h2FractionOfDemand = getAmountOfHydrogenUseForHeating_industry_fr();
+            setProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER,
+                    h2FractionOfDemand * (1 - newSavings_fr));
+        }
+     
+        heatSavings_fr.put(sector, newSavings_fr);
+     
+        setHeatingMethodPct(sector, pctMap);
+    }
+     
+     
+    // ---------------------------------------------------------
+    // Industry hydrogen — share of TOTAL demand, not of the space-heating pool
+    // ---------------------------------------------------------
+    public double getAmountOfHydrogenUseForHeating_industry_fr() {
+        double demand = 1 - getHeatSavings_fr(OL_Sectors.INDUSTRY);
+        return demand > 0
+                ? getProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER) / demand
+                : 0;
+    }
+     
+    public void setH2HeatingFr_industry(double fractionOfDemand) {
+        if (fractionOfDemand >= 1) {
+            throw new RuntimeException("Can not replace all gas in industry with hydrogen! The model does not support this.");
+        }
+        Map<OL_GridConnectionHeatingType, Double> pctMap = captureHeatingMethodPct(OL_Sectors.INDUSTRY);
+     
+        setProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER,
+                (1 - getHeatSavings_fr(OL_Sectors.INDUSTRY)) * fractionOfDemand);
+     
+        setHeatingMethodPct(OL_Sectors.INDUSTRY, pctMap);
     }
     
-    public void setH2HeatingFr_industry( double amountOfHydrogenUseForHeating_fr ) {
-    	//Get current values
-    	if(amountOfHydrogenUseForHeating_fr >= 1){
-    		//throw new RuntimeException("Can not replace all gas in industry with hydrogen! The model does not support this.");
-    		amountOfHydrogenUseForHeating_fr = 0.999;
-    	}
-    	double actualHeatingDemandSpaceHeating_fr =  (1 - amountOfHydrogenUseForHeating_industry_fr);
-    	double[] currentPctArray = {amountOfGasBurners_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
-    								amountOfHybridHeatpump_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
-    								amountOfElectricHeatpumps_industry_fr*100/actualHeatingDemandSpaceHeating_fr, 
-    								amountOfDistrictHeating_industry_fr*100/actualHeatingDemandSpaceHeating_fr};
-
-    	//Set new hydrogen use for heating fr
-    	amountOfHydrogenUseForHeating_industry_fr = min(1, amountOfHydrogenUseForHeating_fr);
-
-
-    	//Set new values
-    	this.setHeatingMethodPct_industry(currentPctArray);
-    }
-    
-    public void setHeatingMethodPct_agriculture( double[] pctArray ) {
-    	amountOfGasBurners_agriculture_fr = pctArray[0]/100;
-    	amountOfElectricHeatpumps_agriculture_fr = pctArray[1]/100;
-    	amountOfHybridHeatpump_agriculture_fr = pctArray[2]/100;
-    	amountOfDistrictHeating_agriculture_fr = pctArray[3]/100;
-    }
-    
-    public void addHeatDemandProfile(String name, I_ProfileAsset profile) {
-    	heatDemandProfiles.put(name, profile);
+    //Get/add profiles
+    public void addHeatDemandProfile(OL_Sectors sector, OL_GridConnectionHeatingType heatingType, I_ProfileAsset profile) {
+    	heatDemandProfiles.get(sector).put(heatingType, profile);
     }
     
     public void setHeatingPreferences(J_HeatingPreferences heatingPreferences) {
     	this.heatingPreferences = heatingPreferences;
     }
     
+    //Heating preferences
     public J_HeatingPreferences getHeatingPreferences() {
     	return this.heatingPreferences;
     }
     
-    public I_ProfileAsset getHeatDemandProfile(String name) {
-    	return heatDemandProfiles.get(name);
+    public I_ProfileAsset getHeatDemandProfile(OL_Sectors sector, OL_GridConnectionHeatingType heatingType) {
+    	return heatDemandProfiles.get(sector).get(heatingType);
     }
     
     
