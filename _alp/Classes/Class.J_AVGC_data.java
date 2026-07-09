@@ -72,6 +72,12 @@ public class J_AVGC_data {
 	public double p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
 	
 	public double p_avgRatioBatteryCapacity_v_Power;
+	public double p_maxGridBatteryStorageCapacityLVCableResidential_kW;
+	public double p_minGridBatteryStorageCapacityMVLVResidential_kW;
+	public double p_maxGridBatteryStorageCapacityMVLVResidential_kW;
+	public double p_maxGridBatteryStorageCapacityMVCableResidential_kW;
+	public double p_maxGridBatteryStorageCapacityMVCableBusinesspark_MW;
+	public double p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW;
 	
 	//Thermal model parametes
 	public double p_PBL_HeatingLossFactor_fr;
