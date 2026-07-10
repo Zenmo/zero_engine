@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AnyLogicWorkspace splitVersion="1"
                    WorkspaceVersion="1.9"
-                   AnyLogicVersion="8.9.9.202606170507"
+                   AnyLogicVersion="8.9.9.202606170505"
                    AlpVersion="8.9.9">
 	<Model>
 		<Id>1658477103134</Id>
@@ -32,6 +32,10 @@
 				<Option>
 					<Id>1658478100574</Id>
 					<Name><![CDATA[HVMV]]></Name>
+				</Option>
+				<Option>
+					<Id>1783688442328</Id>
+					<Name><![CDATA[HVHV]]></Name>
 				</Option>
 				<Option>
 					<Id>1659705289295</Id>
