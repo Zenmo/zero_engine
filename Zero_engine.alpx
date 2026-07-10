@@ -1363,11 +1363,6 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Name><![CDATA[SerialisationMixins]]></Name>
 			</Folder>
 			<Folder>
-				<Id>1764938574089</Id>
-				<Name><![CDATA[Globals]]></Name>
-				<ParentId>1752680962144</ParentId>
-			</Folder>
-			<Folder>
 				<Id>1772100250031</Id>
 				<Name><![CDATA[ManagementClasses]]></Name>
 			</Folder>
@@ -1450,6 +1445,10 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1781186973946</Id>
 				<Name><![CDATA[FlexProfileManagement]]></Name>
 				<ParentId>1772100318398</ParentId>
+			</Folder>
+			<Folder>
+				<Id>1783069714235</Id>
+				<Name><![CDATA[Utils]]></Name>
 			</Folder>
 		</Folders>
 		<ActiveObjectClasses/>
@@ -2105,7 +2104,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<JavaClass>
 				<Id>1770210283060</Id>
 				<Name><![CDATA[DoubleCompare]]></Name>
-				<Folder>1764938574089</Folder>
+				<Folder>1783069714235</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1770648718773</Id>
@@ -2259,6 +2258,7 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<JavaClass>
 				<Id>1781523461253</Id>
 				<Name><![CDATA[LUXMath]]></Name>
+				<Folder>1783069714235</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1781622084102</Id>
@@ -2273,11 +2273,17 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 			<JavaClass>
 				<Id>1781710977201</Id>
 				<Name><![CDATA[GISUtil]]></Name>
+				<Folder>1783069714235</Folder>
 			</JavaClass>
 			<JavaClass>
 				<Id>1782137734965</Id>
 				<Name><![CDATA[DataSetConstructor]]></Name>
-				<Folder>1764938574089</Folder>
+				<Folder>1783069714235</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1783014017243</Id>
+				<Name><![CDATA[UIUtil]]></Name>
+				<Folder>1783069714235</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>
