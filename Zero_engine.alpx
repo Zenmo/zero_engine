@@ -1089,6 +1089,14 @@
 					<Id>1775831709298</Id>
 					<Name><![CDATA[hydrogenFuelCellProductionElectric_kW]]></Name>
 				</Option>
+				<Option>
+					<Id>1783332299084</Id>
+					<Name><![CDATA[hydrogenForTransport_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1783332319707</Id>
+					<Name><![CDATA[petroleumFuelForTransport_kW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1762354709855</Id>

@@ -20,10 +20,16 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
      * Constructor initializing the fields
      */
     public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier ) {
-    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, true );
+    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, true, null);
     }
     public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available ) {
-	    if (energyCarrier == OL_EnergyCarriers.HEAT || energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
+    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, available, null );
+    }
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, OL_AssetFlowCategories assetFlowCategory ) {
+    	this(owner, energyConsumption_kWhpkm, timeParameters, vehicleScaling, vehicleType, tripTracker, energyCarrier, true, assetFlowCategory);
+    }
+    public J_EAFuelVehicle(I_AssetOwner owner, double energyConsumption_kWhpkm, J_TimeParameters timeParameters, double vehicleScaling, OL_VehicleType vehicleType, J_ActivityTrackerTrips tripTracker, OL_EnergyCarriers energyCarrier, boolean available, OL_AssetFlowCategories assetFlowCategory ) {
+    	if (energyCarrier == OL_EnergyCarriers.HEAT || energyCarrier == OL_EnergyCarriers.ELECTRICITY) {
 	    	throw new RuntimeException("Invalid choice of energy carrier for J_EAFuelVehicle");
 	    }
 		this.setOwner(owner);
@@ -38,6 +44,7 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 	    	tripTracker.setVehicle(this);
 	    }
 	    
+	    this.assetFlowCategory = assetFlowCategory;
 	    this.energyCarrierConsumed = energyCarrier;
 		this.activeConsumptionEnergyCarriers.add(this.energyCarrierConsumed);
 		registerEnergyAsset(timeParameters);
@@ -46,6 +53,9 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
     @Override
     public J_FlowPacket f_updateAllFlows(J_TimeVariables timeVariables) {
     	flowsMap.put(this.energyCarrierConsumed, this.energyUse_kW);
+		if (this.assetFlowCategory != null) {
+			assetFlowsMap.put(this.assetFlowCategory, this.energyUse_kW);
+		}
     	J_FlowsMap flowsMapCopy = new J_FlowsMap();
      	J_ValueMap assetFlowsMapCopy = new J_ValueMap(OL_AssetFlowCategories.class);
      	J_FlowPacket flowPacket = new J_FlowPacket(flowsMapCopy.cloneMap(this.flowsMap), this.energyUse_kW, assetFlowsMapCopy.cloneMap(this.assetFlowsMap));
@@ -91,10 +101,8 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 			return false;
 		}
 		else {
-			//mileage_km += marginalTripDist_km;
 	    	double energyUsedThisTimestep_kWh = marginalTripDist_km * vehicleScaling * energyConsumption_kWhpkm;
 	    	energyUsed_kWh += energyUsedThisTimestep_kWh;
-	    	//petroleumFuelConsumption_kW = energyUsedThisTimestep_kWh / timestep_h;
 	    	energyUse_kW += energyUsedThisTimestep_kWh / timeParameters.getTimeStep_h();
 			return true;
 		}
@@ -149,8 +157,10 @@ public class J_EAFuelVehicle extends J_EAFixed implements I_Vehicle{
 	@Override
 	public String toString() {
 		return
-			"energy carrier = " + energyCarrierConsumed + " " +		
-			"energyConsumption_kWhpkm =" + energyConsumption_kWhpkm + " " +
+			"J_EAFuelVehicle: " +		
+			"EC: " + energyCarrierConsumed + "," +	
+			"AFC: " + this.assetFlowCategory + ","	+
+			"energyConsumption_kWhpkm: " + energyConsumption_kWhpkm + "," +
 			"vehicleScaling = " + vehicleScaling;
 	}
 	
