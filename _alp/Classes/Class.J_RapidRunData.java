@@ -767,10 +767,34 @@ public class J_RapidRunData {
     	return new Pair(possibleGrowthFactor_fr, requiredBatteryCapacity_kWh);
     }
     
-    public double getTotalElectricityConsumed_MWh() { 
+    public double getTotalConsumption_kWh(OL_EnergyCarriers EC){
+    	if (this.activeConsumptionEnergyCarriers.contains(EC)) {
+            return am_dailyAverageConsumptionAccumulators_kW.get(EC).getIntegral_kWh(); 
+    	}
+    	else {
+    		return 0;
+    	}
+    }
+    public double getTotalProduction_kWh(OL_EnergyCarriers EC){
+    	if (this.activeConsumptionEnergyCarriers.contains(EC)) {
+            return am_dailyAverageProductionAccumulators_kW.get(EC).getIntegral_kWh(); 
+    	}
+    	else {
+    		return 0;
+    	}
+    }
+    public double getTotalConsumption_MWh(OL_EnergyCarriers EC){
+    	return getTotalConsumption_kWh(EC)/1000.0;
+    }
+    public double getTotalProduction_MWh(OL_EnergyCarriers EC){
+    	return getTotalProduction_kWh(EC)/1000.0;    	
+    }
+    
+    
+    public double getTotalElectricityConsumed_MWh() {//Replace with 'getTotalConsumption_MWh(OL_EnergyCarriers.ELECTRICITY);
         return am_dailyAverageConsumptionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh(); 
     }
-    public double getTotalElectricityProduced_MWh() { 
+    public double getTotalElectricityProduced_MWh() { //Replace with 'getTotalProduction_MWh(OL_EnergyCarriers.ELECTRICITY);
         return am_dailyAverageProductionAccumulators_kW.get(OL_EnergyCarriers.ELECTRICITY).getIntegral_MWh(); 
     }
     public double getTotalElectricitySelfConsumed_MWh() { 
@@ -792,17 +816,27 @@ public class J_RapidRunData {
         return -this.am_totalBalanceAccumulators_kW.totalIntegralNeg_MWh();
     }
     
-    public double getTotalExport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.activeEnergyCarriers.contains(EC)) {
-    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    public double getTotalExport_kWh( OL_EnergyCarriers EC ) {
+    	if (this.activeEnergyCarriers.contains(EC)) {
+        	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_kWh();
     	}
-    	return -this.am_totalBalanceAccumulators_kW.get(EC).getIntegralNeg_MWh();
+    	else {
+    		return 0;
+    	}
     }
-    public double getTotalImport_MWh( OL_EnergyCarriers EC ) {
-    	if (!this.activeEnergyCarriers.contains(EC)) {
-    		throw new RuntimeException("RapidRunData class does not contain energycarrier: " + EC);
+    public double getTotalImport_kWh( OL_EnergyCarriers EC ) {
+    	if (this.activeEnergyCarriers.contains(EC)) {
+    		return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_kWh();
     	}
-    	return this.am_totalBalanceAccumulators_kW.get(EC).getIntegralPos_MWh();
+    	else {
+    		return 0;
+    	}
+    }
+    public double getTotalExport_MWh(OL_EnergyCarriers EC){
+    	return getTotalExport_kWh(EC)/1000.0;
+    }
+    public double getTotalImport_MWh(OL_EnergyCarriers EC){
+    	return getTotalImport_kWh(EC)/1000.0;    	
     }
     
     public double getTotalEnergySelfConsumed_MWh() { 
@@ -811,12 +845,25 @@ public class J_RapidRunData {
     public double getTotalPrimaryEnergyProductionHeatpumps_MWh() { 
         return acc_totalPrimaryEnergyProductionHeatpumps_kW.getIntegral_MWh(); 
     }
-    public double getTotalDistrictHeatingConsumption_MWh() {
+    
+    
+    public double getTotalDistrictHeatingConsumption_MWh() {//Replace with 'getAccumulatedAssetFlow_MWh(OL_AssetFlowCategories.districtHeatDelivery_kW);
     	if (assetsMetaData.activeAssetFlows.contains(OL_AssetFlowCategories.districtHeatDelivery_kW)) {
     		return am_assetFlowsAccumulators_kW.get(OL_AssetFlowCategories.districtHeatDelivery_kW).getIntegral_MWh();
     	} else {
-    		return 0.0;
+    		return 0;
     	}
+    }
+
+    public double getAccumulatedAssetFlow_kWh(OL_AssetFlowCategories AFC) {
+    	if (assetsMetaData.activeAssetFlows.contains(AFC)) {
+    		return am_assetFlowsAccumulators_kW.get(AFC).getIntegral_kWh();
+    	} else {
+    		return 0;
+    	}
+    }
+    public double getAccumulatedAssetFlow_MWh(OL_AssetFlowCategories AFC) {
+    	return getAccumulatedAssetFlow_kWh(AFC)/1000.0;
     }
     
     public double getTotalBatteryCycles() { 
