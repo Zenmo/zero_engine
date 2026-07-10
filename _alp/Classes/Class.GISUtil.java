@@ -61,11 +61,10 @@ public class GISUtil {
 		return polyCoords;
 	}
 	
-	public static double[] calculateCustomPolygonCoordinates(List<Point> coordinateList) {
+	public static double[] convertCoordinatePointsToLatLonArray(List<Point> coordinateList) {
 		/**
 		 * Computes a list of double[] coordinates from a list of coordinate Points.
 		 */
-		
 		int size = coordinateList.size();
 		double[] polyCoords = new double[size * 2];
 		for (int i = 0; i < size; i++) {

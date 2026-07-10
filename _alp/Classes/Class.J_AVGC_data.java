@@ -32,6 +32,12 @@ public class J_AVGC_data {
 	public double p_avgCompanyGasConsumption_m3pm2;
 	public double p_avgCompanyHeatConsumption_kWhpm2;
 
+	//Gridnodes/cables
+	public double p_maxNominalPowerLVCable_kW;
+	public double p_maxNominalPowerMVCable_kW;
+	public double p_minCapacityMVLVStation_kW;
+	public double p_maxCapacityMVLVStation_kW;
+	public double p_maxCapacityMVMVStation_kW;
 	
 	//Energy assets
 	public double p_avgCOPHeatpump;
@@ -59,6 +65,9 @@ public class J_AVGC_data {
 	public double p_avgSolarFieldPower_kWppha;
 	public OL_PVOrientation p_defaultPVOrientation;
 	
+	public double p_largestWindTurbine_land_MW;
+	public double p_largestWindTurbine_sea_MW;
+
 	public double p_avgEfficiencyCHP_thermal_fr;
 	public double p_avgEfficiencyCHP_electric_fr;
 	public double p_avgOutputTemperatureCHP_degC;
@@ -72,12 +81,6 @@ public class J_AVGC_data {
 	public double p_avgHeatBufferWaterVolumePerHPPower_m3pkW;
 	
 	public double p_avgRatioBatteryCapacity_v_Power;
-	public double p_maxGridBatteryStorageCapacityLVCableResidential_kW;
-	public double p_minGridBatteryStorageCapacityMVLVResidential_kW;
-	public double p_maxGridBatteryStorageCapacityMVLVResidential_kW;
-	public double p_maxGridBatteryStorageCapacityMVCableResidential_kW;
-	public double p_maxGridBatteryStorageCapacityMVCableBusinesspark_MW;
-	public double p_maxGridBatteryStorageCapacityMVMVBusinesspark_MW;
 	
 	//Thermal model parametes
 	public double p_PBL_HeatingLossFactor_fr;
