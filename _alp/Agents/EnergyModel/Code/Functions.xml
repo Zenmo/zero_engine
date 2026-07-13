@@ -433,7 +433,7 @@
 		<ShowLabel>true</ShowLabel>
 		<Parameter>
 			<Name><![CDATA[gcList]]></Name>
-			<Type><![CDATA[ArrayList<GridConnection>]]></Type>
+			<Type><![CDATA[List<GridConnection>]]></Type>
 		</Parameter>
 		<Parameter>
 			<Name><![CDATA[timeParameters]]></Name>

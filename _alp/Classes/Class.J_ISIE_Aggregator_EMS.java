@@ -30,7 +30,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 	private int POWERSTEPS_NR = 20;
 	
 	private double SELFCONSUMPTIONSAVING_EURPMWH = 0.0;
-	private double CONGESTIONFACTOR_EURPMWHPKW = 0; //1000.0;
+	private double CONGESTIONFACTOR_EURPMWHPKW = 1000.0;
 	private double CONGESTIONDEADZONE_FR = 0.9;
 	private double congestionDeadzone_kW;
 	
@@ -77,13 +77,14 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
     		this.evProfilesMap.clear();
     		this.createFlexAssetSchedules( timeAtStartForecast_h );
     	}
-    	else if ( timeVariables.getTimeOfDay_h() == 24.0 - this.timeParameters.getTimeStep_h() ) {
+    	
+    	else if ( DoubleCompare.equals(timeVariables.getTimeOfDay_h(), 24.0 - this.timeParameters.getTimeStep_h()) ) {
     		timeAtStartForecast_h = timeVariables.getT_h() + this.timeParameters.getTimeStep_h();
     		this.evProfilesMap.clear();
     		this.createFlexAssetSchedules( timeAtStartForecast_h );
     	}
     	
-		int timeStepOfToday = (roundToInt(timeVariables.getTimeOfDay_h() / this.timeParameters.getTimeStep_h()) + 1) % this.TIMESTEPS_IN_FORECAST;
+		int timeStepOfToday = (roundToInt(timeVariables.getTimeOfDay_h() / this.timeParameters.getTimeStep_h()) + 1 ) % this.TIMESTEPS_IN_FORECAST;
     	for (GridConnection gc : this.energyCoop.f_getAllChildMemberGridConnections()) {
     		// EVs
     		if (gc.c_electricVehicles.size() > 0) {
@@ -489,7 +490,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 		
 		return loadProfile_kW;
     }
-    
+    /*
     private double[] getBuildingHeatDemandProfile( double timeAtStartForecast_h, GridConnection gc, J_ProfilePointer ambientTemperatures) {
 		double[] buildingHeatDemandProfile_kW = new double[this.TIMESTEPS_IN_FORECAST];
 		if (gc.p_BuildingThermalAsset != null) {
@@ -507,7 +508,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 	    	double setpointIndoorTemperatureNightTime_DegC = heatingPreferences.getNightTimeSetPoint_degC();
 	    	
 	        double morningHeatDemand_kW = calculateAverageDemandForSpaceHeating_kW( building, building.getCurrentTemperature(), setpointIndoorTemperatureNightTime_DegC, averageMorningTemperature_degC, dayStartTime_h );
-	        double afternoonHeatDemand_kW = calculateAverageDemandForSpaceHeating_kW( building, setpointIndoorTemperatureNightTime_DegC, setpointIndoorTemperatureDayTime_DegC, averageAfternoonTemperature_degC, nightStartTime_h - dayStartTime_h );
+	        double afternoonHeatDemand_kW = calculateAverageDemandForSpaceHeating_kW( building, setpointIndoorTemperatureNightTime_DegC, setpointIndoorTemperatureDayTime_DegC, averageAfternoonTemperature_degC, min(24, nightStartTime_h) - max(0, dayStartTime_h) );
 	        double eveningHeatDemand_kW = calculateAverageDemandForSpaceHeating_kW( building, setpointIndoorTemperatureDayTime_DegC, setpointIndoorTemperatureNightTime_DegC, averageEveningTemperature_degC, 24.0 - nightStartTime_h );
 	        
 	        for (int i = 0; i < this.TIMESTEPS_IN_FORECAST; i++) {
@@ -524,6 +525,66 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 		}
 		return buildingHeatDemandProfile_kW;
     }
+    */
+    private double[] getBuildingHeatDemandProfile(double timeAtStartForecast_h, GridConnection gc, J_ProfilePointer ambientTemperatures) {
+        double[] buildingHeatDemandProfile_kW = new double[this.TIMESTEPS_IN_FORECAST];
+        if (gc.p_BuildingThermalAsset == null) return buildingHeatDemandProfile_kW;
+
+        J_EABuilding building = gc.p_BuildingThermalAsset;
+        J_HeatingPreferences heatingPreferences = gc.f_getHeatingPreferences();
+        J_HeatingManagementPIcontrol mgmt = (J_HeatingManagementPIcontrol)gc.f_getHeatingManagement();
+
+        double dayStartTime_h = heatingPreferences.getStartOfDayTime_h();
+        double nightStartTime_h = heatingPreferences.getStartOfNightTime_h();
+        double daySetpoint_degC = heatingPreferences.getDayTimeSetPoint_degC();
+        double nightSetpoint_degC = heatingPreferences.getNightTimeSetPoint_degC();
+        double avgTemp24h_degC = gc.energyModel.pf_ambientTemperature_degC.getForecast();
+
+        // Seed from the ACTUAL controller state at the moment the forecast is made,
+        // not from equilibrium - the integrator and filtered setpoint carry real memory.
+        double simBuildingTemp_degC     = building.getCurrentTemperature();
+        double simFilteredSetpoint_degC = mgmt.getFilteredCurrentSetpoint_degC();
+        double simIState_hDegC          = mgmt.getIState_hDegC();
+
+        double pGain_kWpDegC   = mgmt.getPGain_kWpDegC();
+        double iGain_kWphDegC  = mgmt.getIGain_kWphDegC();
+        double filterTimeScale_h = mgmt.getSetpointFilterTimeScale_h();
+        double timeStep_h = this.timeParameters.getTimeStep_h();
+
+        double lossFactor_WpK = building.getLossFactor_WpK();
+        double lossScalingFactor_fr = building.getLossScalingFactor_fr();
+        double heatCapacity_kWhpK = building.getHeatCapacity_JpK() / 3.6e6;
+
+        for (int i = 0; i < this.TIMESTEPS_IN_FORECAST; i++) {
+            double t = timeAtStartForecast_h + i * timeStep_h;
+            double timeOfDay_h = t % 24.0;
+            double ambientTemp_degC = ambientTemperatures.getValue(t);
+
+            // Same setpoint-selection logic as manageHeating, incl. the heating-season hysteresis
+            double currentSetpoint_degC = daySetpoint_degC;
+            if (avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
+                currentSetpoint_degC = nightSetpoint_degC;
+            } else if (timeOfDay_h < dayStartTime_h || timeOfDay_h >= nightStartTime_h) {
+                currentSetpoint_degC = nightSetpoint_degC;
+            }
+
+            // Same order of operations as manageHeating: filter first, then deltaT vs *previous* building temp
+            simFilteredSetpoint_degC += (timeStep_h / filterTimeScale_h) * (currentSetpoint_degC - simFilteredSetpoint_degC);
+            double deltaT_degC = simFilteredSetpoint_degC - simBuildingTemp_degC;
+            simIState_hDegC = max(0, simIState_hDegC + deltaT_degC * timeStep_h);
+            double heatingDemand_kW = max(0, deltaT_degC * pGain_kWpDegC + simIState_hDegC * iGain_kWphDegC);
+
+            buildingHeatDemandProfile_kW[i] = heatingDemand_kW;
+
+            // Advance building temperature under this heat input for the next step
+            double heatLoss_kW = (lossFactor_WpK * (simBuildingTemp_degC - ambientTemp_degC) / 1000) * lossScalingFactor_fr;
+            double netHeat_kW = heatingDemand_kW - heatLoss_kW;
+            simBuildingTemp_degC += (netHeat_kW / heatCapacity_kWhpK) * timeStep_h;
+        }
+
+        return buildingHeatDemandProfile_kW;
+    }
+    
     private double calculateAverageAmbientTemperature_degC(double startTime_h, double endTime_h, double timeAtStartForecast_h, J_ProfilePointer ambientTemperatures) {
     	
     	double averageTemperature_degC = 0;

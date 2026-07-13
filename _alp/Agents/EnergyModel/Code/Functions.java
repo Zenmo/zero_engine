@@ -709,7 +709,7 @@ v_liveData.dsm_liveSupply_kW.createEmptyDataSets(v_liveData.activeEnergyCarriers
 v_liveData.dsm_liveAssetFlows_kW.createEmptyDataSets(v_liveData.assetsMetaData.activeAssetFlows, roundToInt(168/p_timeParameters.getTimeStep_h()));
 /*ALCODEEND*/}
 
-EnergyCoop f_addEnergyCoop(ArrayList<GridConnection> gcList,J_TimeParameters timeParameters)
+EnergyCoop f_addEnergyCoop(List<GridConnection> gcList,J_TimeParameters timeParameters)
 {/*ALCODESTART::1739958854535*/
 // Add energyCoop
 EnergyCoop energyCoop = add_pop_energyCoops();

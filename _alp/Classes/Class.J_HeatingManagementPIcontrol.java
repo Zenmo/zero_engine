@@ -242,6 +242,22 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	return this.gc;
     }
     
+    public double getFilteredCurrentSetpoint_degC() {
+    	return this.filteredCurrentSetpoint_degC;
+    }
+    public double getIState_hDegC() {
+    	return this.I_state_hDegC;
+    }
+    public double getPGain_kWpDegC() {
+    	return this.P_gain_kWpDegC;
+    }
+    public double getIGain_kWphDegC() {
+    	return this.I_gain_kWphDegC;
+    }
+    public double getSetpointFilterTimeScale_h() {
+    	return this.setpointFilterTimeScale_h;
+    }
+    
     //Store and reset states
 	public void storeStatesAndReset() {
 	    this.storedI_state_hDegC = this.I_state_hDegC;
