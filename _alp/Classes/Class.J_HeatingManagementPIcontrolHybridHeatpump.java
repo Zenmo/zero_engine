@@ -212,13 +212,6 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 		this.filteredCurrentSetpoint_degC = heatingPreferences.getMinComfortTemperature_degC();
     	this.isInitialized = true;
     }
-    
-	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
-		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
-		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
-		String reason = "Not yet implemented.";
-		return new J_AssetTypeForecast(I_HeatingManagement.class, loadMap, status, reason);
-	}
 	
     public void notInitialized() {
     	this.isInitialized = false;
@@ -238,6 +231,92 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
     
     public J_HeatingPreferences getHeatingPreferences() {
     	return this.heatingPreferences;
+    }
+    
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		int timeStepsInForecast = roundToInt((timeOfIntervalEnd_h - timeOfIntervalStart_h) / this.timeParameters.getTimeStep_h());
+		Double[] electricityLoadProfile_kW = new Double[timeStepsInForecast];
+		Double[] gasLoadProfile_kW = new Double[timeStepsInForecast];
+		J_ProfilePointer ambientTemperatureProfile = this.gc.energyModel.pp_ambientTemperature_degC;
+		J_ProfileForecaster ambientTempeartureForecast = this.gc.energyModel.pf_ambientTemperature_degC;
+		double[] buildingHeatDemand_kW = this.getBuildingHeatDemandProfile(timeOfIntervalStart_h, timeStepsInForecast, ambientTemperatureProfile, ambientTempeartureForecast);
+		double[] otherFixedHeatDemand_kW = this.gc.f_getFixedAssetForecast(timeOfIntervalStart_h, timeOfIntervalEnd_h, OL_EnergyCarriers.HEAT, this.timeParameters);
+		
+		double gasBurnerEfficiency_fr = this.gasBurnerAsset.getEta_r();
+		double gasBurnerMaxOutput_kW = this.gasBurnerAsset.getOutputCapacity_kW();
+		double heatpumpInputCapacity_kW = this.heatPumpAsset.getInputCapacity_kW();
+		
+		for (int i = 0; i < timeStepsInForecast; i++) {
+			double t = timeOfIntervalStart_h + i * timeParameters.getTimeStep_h();
+			double totalHeatDemand_kW = buildingHeatDemand_kW[i] + otherFixedHeatDemand_kW[i];
+			double COP_fr = this.heatPumpAsset.calculateCOP(this.heatPumpAsset.getOutputTemperature_degC(), ambientTemperatureProfile.getValue(t));
+			if (COP_fr < 3.0) {
+				gasLoadProfile_kW[i] = min(gasBurnerMaxOutput_kW, totalHeatDemand_kW / gasBurnerEfficiency_fr);
+				electricityLoadProfile_kW[i] = max(0, (totalHeatDemand_kW - gasBurnerMaxOutput_kW * gasBurnerEfficiency_fr) / COP_fr);
+			}
+			else {
+				electricityLoadProfile_kW[i] = min(heatpumpInputCapacity_kW, totalHeatDemand_kW / COP_fr);
+				gasLoadProfile_kW[i] = max(0, (totalHeatDemand_kW - heatpumpInputCapacity_kW * COP_fr) / gasBurnerEfficiency_fr);
+			}
+		}
+		loadMap.put(OL_EnergyCarriers.ELECTRICITY, electricityLoadProfile_kW);
+		loadMap.put(OL_EnergyCarriers.METHANE, gasLoadProfile_kW);
+		OL_ForecastStatus status = OL_ForecastStatus.ESTIMATED_FORECAST;
+		String reason = "PI & Building states based on current timestep. Building forecast simplified by omitting solar radiation & ventilation.";
+		return new J_AssetTypeForecast(I_HeatingManagement.class, loadMap, status, reason);
+	}
+	
+	private double[] getBuildingHeatDemandProfile(double timeAtStartForecast_h, int timeStepsInForecast, J_ProfilePointer ambientTemperatureProfile, J_ProfileForecaster ambientTempeartureForecast) {
+        double[] buildingHeatDemandProfile_kW = new double[timeStepsInForecast];
+
+        double dayStartTime_h = this.heatingPreferences.getStartOfDayTime_h();
+        double nightStartTime_h = this.heatingPreferences.getStartOfNightTime_h();
+        double daySetpoint_degC = this.heatingPreferences.getDayTimeSetPoint_degC();
+        double nightSetpoint_degC = this.heatingPreferences.getNightTimeSetPoint_degC();
+        double avgTemp24h_degC = ambientTempeartureForecast.getForecast();  // Assumes timeAtStartForecast_h is current model time and forecasting horizon is 24h.
+
+        double simBuildingTemp_degC = this.building.getCurrentTemperature();
+        double simFilteredSetpoint_degC = this.filteredCurrentSetpoint_degC;
+        double simIState_hDegC = this.I_state_hDegC;
+
+        double pGain_kWpDegC = this.P_gain_kWpDegC;
+        double iGain_kWphDegC = this.I_gain_kWphDegC;
+        double filterTimeScale_h = this.setpointFilterTimeScale_h;
+        double timeStep_h = this.timeParameters.getTimeStep_h();
+
+        double lossFactor_WpK = this.building.getLossFactor_WpK();
+        double lossScalingFactor_fr = this.building.getLossScalingFactor_fr();
+        double heatCapacity_kWhpK = this.building.getHeatCapacity_JpK() / 3.6e6;
+
+        for (int i = 0; i < timeStepsInForecast; i++) {
+            double t = timeAtStartForecast_h + i * timeStep_h;
+            double timeOfDay_h = t % 24.0;
+            double ambientTemp_degC = ambientTemperatureProfile.getValue(t);
+
+            // Same setpoint-selection logic as manageHeating, incl. the heating-season hysteresis
+            double currentSetpoint_degC = daySetpoint_degC;
+            if (avgTemp24h_degC > J_HeatingFunctionLibrary.heatingDaysAvgTempTreshold_degC) {
+                currentSetpoint_degC = nightSetpoint_degC;
+            } else if (timeOfDay_h < dayStartTime_h || timeOfDay_h >= nightStartTime_h) {
+                currentSetpoint_degC = nightSetpoint_degC;
+            }
+
+            // Same order of operations as manageHeating: filter first, then deltaT vs *previous* building temp
+            simFilteredSetpoint_degC += (timeStep_h / filterTimeScale_h) * (currentSetpoint_degC - simFilteredSetpoint_degC);
+            double deltaT_degC = simFilteredSetpoint_degC - simBuildingTemp_degC;
+            simIState_hDegC = max(0, simIState_hDegC + deltaT_degC * timeStep_h);
+            double heatingDemand_kW = max(0, deltaT_degC * pGain_kWpDegC + simIState_hDegC * iGain_kWphDegC);
+
+            buildingHeatDemandProfile_kW[i] = heatingDemand_kW;
+
+            // Advance building temperature under this heat input for the next step
+            double heatLoss_kW = (lossFactor_WpK * (simBuildingTemp_degC - ambientTemp_degC) / 1000) * lossScalingFactor_fr;
+            double netHeat_kW = heatingDemand_kW - heatLoss_kW;
+            simBuildingTemp_degC += (netHeat_kW / heatCapacity_kWhpK) * timeStep_h;
+        }
+
+        return buildingHeatDemandProfile_kW;
     }
     
 	//Get parentagent

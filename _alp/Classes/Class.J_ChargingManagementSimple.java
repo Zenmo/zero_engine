@@ -64,24 +64,24 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 	    	double[] EVLoad_kW = new double[timeStepsInForecast];
 			J_ActivityTrackerTrips tripTracker = ev.getTripTracker();
 			List<TripRecord> trips = tripTracker.getTripsInRange(timeOfIntervalStart_h, timeOfIntervalEnd_h);
-	    	
+
 			double maximalStorageCapacity_kWh = ev.getStorageCapacity_kWh();
 			double currentSOC_kWh = ev.getCurrentSOC_kWh(); // Assumes the SOC of the EV at start of forecast is current SOC
 		    double work_kWh = maximalStorageCapacity_kWh - currentSOC_kWh;
-	    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : tripTracker.getCurrentTripEndTime_h()%24; // Assumes the current trip ends today, i.e. no trips > 24 hours exist)
+	    	double endTimeLastTrip_h = ev.getAvailability() ? timeOfIntervalStart_h : tripTracker.getCurrentTripEndTime_h()%24; // Assumes the current trip ends today, i.e. no trips > 24 hours exist)
     		double firstAvailableChargingTime_h = this.timeParameters.getTimeStep_h() * Math.ceil(endTimeLastTrip_h / this.timeParameters.getTimeStep_h());
     		double startTimeNextTrip_h = trips.size() > 0 ? trips.get(0).startTime_h() : timeOfIntervalEnd_h;
     		double lastAvailableChargingTime_h = this.timeParameters.getTimeStep_h() * Math.floor(startTimeNextTrip_h / this.timeParameters.getTimeStep_h());
     		double maxPower_kW = ev.getVehicleChargingCapacity_kW();
-    		double maxWork_kWh = (lastAvailableChargingTime_h - firstAvailableChargingTime_h) * maxPower_kW;
+    		double maxWork_kWh = (lastAvailableChargingTime_h - firstAvailableChargingTime_h + this.timeParameters.getTimeStep_h()) * maxPower_kW;
     		double initialWork_kWh = max(0, min(work_kWh, maxWork_kWh));
     		double remainingWork_kWh = initialWork_kWh;
     		for (int i = 0; i < timeStepsInForecast; i++) {
-    			double t = i*this.timeParameters.getTimeStep_h();
-    			if (t >= firstAvailableChargingTime_h && t <= lastAvailableChargingTime_h) {  // >= or > ?
+    			double t = timeOfIntervalStart_h + i*this.timeParameters.getTimeStep_h();
+    			if (t >= firstAvailableChargingTime_h && t <= lastAvailableChargingTime_h) {
     				EVLoad_kW[i] = max(0, min(maxPower_kW, remainingWork_kWh / this.timeParameters.getTimeStep_h()));
     				remainingWork_kWh -= EVLoad_kW[i] * this.timeParameters.getTimeStep_h();
-    				if (remainingWork_kWh == 0 || DoubleCompare.lessThanZero(remainingWork_kWh)) {
+    				if (DoubleCompare.equalsZero(remainingWork_kWh) || DoubleCompare.lessThanZero(remainingWork_kWh)) {
     					break;
     				}
     			}
@@ -92,20 +92,21 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 	    		TripRecord trip = trips.get(tripIndex);
 	    		double distance_km = trip.distance_km();
 	    		currentSOC_kWh -= distance_km * ev.getEnergyConsumption_kWhpkm();
-	    		work_kWh = maximalStorageCapacity_kWh - currentSOC_kWh;    		
+				work_kWh = maximalStorageCapacity_kWh - currentSOC_kWh;    		
 	    		endTimeLastTrip_h = trip.endTime_h();
 	    		firstAvailableChargingTime_h = this.timeParameters.getTimeStep_h() * Math.ceil(endTimeLastTrip_h / this.timeParameters.getTimeStep_h());
 	    		startTimeNextTrip_h = (tripIndex == trips.size() - 1) ? timeOfIntervalEnd_h : trips.get(tripIndex+1).startTime_h();
 	    		lastAvailableChargingTime_h = this.timeParameters.getTimeStep_h() * Math.floor(startTimeNextTrip_h / this.timeParameters.getTimeStep_h());
-	    		maxWork_kWh = (lastAvailableChargingTime_h - firstAvailableChargingTime_h) * maxPower_kW;
+	    		maxWork_kWh = (lastAvailableChargingTime_h - firstAvailableChargingTime_h + this.timeParameters.getTimeStep_h()) * maxPower_kW;
 	    		initialWork_kWh = max(0, min(work_kWh, maxWork_kWh));
 	    		remainingWork_kWh = initialWork_kWh;
 	    		for (int i = 0; i < timeStepsInForecast; i++) {
-	    			double t = i*this.timeParameters.getTimeStep_h();
-	    			if (t >= firstAvailableChargingTime_h && t <= lastAvailableChargingTime_h) {  // >= or > ?
+	    			double t = timeOfIntervalStart_h + i*this.timeParameters.getTimeStep_h();
+	    			if (t >= firstAvailableChargingTime_h && t <= lastAvailableChargingTime_h) {
 	    				EVLoad_kW[i] = max(0, min(maxPower_kW, remainingWork_kWh / this.timeParameters.getTimeStep_h()));
+	    				double x = max(0, min(maxPower_kW, remainingWork_kWh / this.timeParameters.getTimeStep_h()));
 	    				remainingWork_kWh -= EVLoad_kW[i] * this.timeParameters.getTimeStep_h();
-	    				if (remainingWork_kWh == 0 || DoubleCompare.lessThanZero(remainingWork_kWh)) {
+	    				if (DoubleCompare.equalsZero(remainingWork_kWh) || DoubleCompare.lessThanZero(remainingWork_kWh)) {
 	    					break;
 	    				}
 	    			}
@@ -134,7 +135,6 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 		return this.V2GActive;
 	}
 	
-	
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
@@ -148,10 +148,8 @@ public class J_ChargingManagementSimple implements I_ChargingManagement {
 		
 	}
 	
-	
     @Override
 	public String toString() {
 		return "Active charging type: " + this.activeChargingType;
-
 	}
 }
