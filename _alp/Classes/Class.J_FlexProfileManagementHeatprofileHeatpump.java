@@ -141,6 +141,13 @@ public class J_FlexProfileManagementHeatprofileHeatpump implements I_FlexProfile
 		this.flexProfileSetpointArray_fr = newFlexProfileSetpointArray;
     }
     
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_FlexProfileManagement.class, loadMap, status, reason);
+	}
+	
     //Setters
     public void setMaxFlexProfileShift_fr(double maxFlexProfileShift_fr) {
     	if(maxFlexProfileShift_fr<0) {

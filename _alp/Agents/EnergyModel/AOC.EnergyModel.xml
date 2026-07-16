@@ -50,7 +50,9 @@ import com.querydsl.core.types.dsl.TimeExpression;
 //import zero_engine.J_EAStorageElectric;
 //import zero_engine.J_EAConsumption;
 
-import com.anylogic.cloud.util.DateUtils;]]></Import>
+import com.anylogic.cloud.util.DateUtils;
+
+import zero_engine.J_ActivityTrackerTrips.TripRecord;]]></Import>
 	<Implements>I_EnergyData</Implements>
 	<Generic>false</Generic>
 	<GenericParameter>

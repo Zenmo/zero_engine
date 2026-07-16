@@ -36,9 +36,15 @@ public class J_BatteryManagementOff implements I_BatteryManagement {
     	}
     }
     
-
-	
-	
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		int timeStepsInForecast = roundToInt((timeOfIntervalEnd_h - timeOfIntervalStart_h) / this.timeParameters.getTimeStep_h());
+		Double[] electricityLoad_kW = new Double[timeStepsInForecast];
+		Arrays.fill(electricityLoad_kW, 0.0);
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		loadMap.put(OL_EnergyCarriers.ELECTRICITY, electricityLoad_kW);
+		OL_ForecastStatus status = OL_ForecastStatus.PERFECT_FORECAST;
+		return new J_AssetTypeForecast(I_BatteryManagement.class, loadMap, status, null);
+	}
 	
     //Get parentagent
     public Agent getParentAgent() {

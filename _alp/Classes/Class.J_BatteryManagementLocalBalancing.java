@@ -70,6 +70,13 @@ public class J_BatteryManagementLocalBalancing implements I_BatteryManagement {
 	    	gc.f_updateFlexAssetFlows(gc.p_batteryAsset, chargeSetpoint_kW / gc.p_batteryAsset.getCapacityElectric_kW(), timeVariables);
 	    }
     }
+    
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_BatteryManagement.class, loadMap, status, reason);
+	}
   
     private double getDeliveryCapacity_kW() {
     	return gc.v_liveConnectionMetaData.getContractedDeliveryCapacity_kW();

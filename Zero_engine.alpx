@@ -1328,6 +1328,26 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 					<Name><![CDATA[GROUND_WATER]]></Name>
 				</Option>
 			</OptionList>
+			<OptionList>
+				<Id>1782815749074</Id>
+				<Name><![CDATA[OL_ForecastStatus]]></Name>
+				<Option>
+					<Id>1782815757572</Id>
+					<Name><![CDATA[PERFECT_FORECAST]]></Name>
+				</Option>
+				<Option>
+					<Id>1782815764204</Id>
+					<Name><![CDATA[ESTIMATED_FORECAST]]></Name>
+				</Option>
+				<Option>
+					<Id>1782815769499</Id>
+					<Name><![CDATA[NOT_FORECASTABLE]]></Name>
+				</Option>
+				<Option>
+					<Id>1782815773730</Id>
+					<Name><![CDATA[NO_ASSETS]]></Name>
+				</Option>
+			</OptionList>
 		</OptionLists>
 		<Folders>
 			<Folder>
@@ -2288,6 +2308,11 @@ LARGE_CONNECTION (grootverbruik, > 3x80)
 				<Id>1783014017243</Id>
 				<Name><![CDATA[UIUtil]]></Name>
 				<Folder>1783069714235</Folder>
+			</JavaClass>
+			<JavaClass>
+				<Id>1782811550548</Id>
+				<Name><![CDATA[J_AssetTypeForecast]]></Name>
+				<Folder>1752680962144</Folder>
 			</JavaClass>
 		</JavaClasses>
 		<RequiredLibraryReference>

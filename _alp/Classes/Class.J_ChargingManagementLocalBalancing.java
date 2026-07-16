@@ -73,6 +73,13 @@ public class J_ChargingManagementLocalBalancing implements I_ChargingManagement 
     	}
     }
 
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_ChargingManagement.class, loadMap, status, reason);
+	}
+	
 	public void setV2GActive(boolean activateV2G) {
 		this.V2GActive = activateV2G;
 		this.gc.c_electricVehicles.forEach(ev -> ev.setV2GActive(activateV2G)); // NEEDED TO HAVE EV ASSET IN CORRECT assetFlowCatagory

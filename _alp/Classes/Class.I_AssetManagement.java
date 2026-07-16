@@ -16,5 +16,5 @@ public interface I_AssetManagement extends I_StoreStatesAndReset
 {	
 	//Get the AssetManagementInterface type (I_ChargingManagement.class, I_Heatingmanagement.class, etc.)
 	Class<? extends I_AssetManagement> getAssetManagementInterfaceType();
-	
+	J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h);
 }
