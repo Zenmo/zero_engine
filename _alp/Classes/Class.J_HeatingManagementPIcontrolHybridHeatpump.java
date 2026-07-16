@@ -253,7 +253,7 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 			double COP_fr = this.heatPumpAsset.calculateCOP(this.heatPumpAsset.getOutputTemperature_degC(), ambientTemperatureProfile.getValue(t));
 			if (COP_fr < 3.0) {
 				gasLoadProfile_kW[i] = min(gasBurnerMaxOutput_kW, totalHeatDemand_kW / gasBurnerEfficiency_fr);
-				electricityLoadProfile_kW[i] = max(0, (totalHeatDemand_kW - gasBurnerMaxOutput_kW * gasBurnerEfficiency_fr) / COP_fr);
+				electricityLoadProfile_kW[i] = max(0, (totalHeatDemand_kW - gasBurnerMaxOutput_kW) / COP_fr);
 			}
 			else {
 				electricityLoadProfile_kW[i] = min(heatpumpInputCapacity_kW, totalHeatDemand_kW / COP_fr);
@@ -262,6 +262,9 @@ public class J_HeatingManagementPIcontrolHybridHeatpump implements I_HeatingMana
 		}
 		loadMap.put(OL_EnergyCarriers.ELECTRICITY, electricityLoadProfile_kW);
 		loadMap.put(OL_EnergyCarriers.METHANE, gasLoadProfile_kW);
+		// Building is a flex asset so included in system bounds of heating management, but fixed profiles are not.
+		Double[] heatLoad = Arrays.stream(otherFixedHeatDemand_kW).map(d -> -d).boxed().toArray(Double[]::new);
+		loadMap.put(OL_EnergyCarriers.HEAT, heatLoad);
 		OL_ForecastStatus status = OL_ForecastStatus.ESTIMATED_FORECAST;
 		String reason = "PI & Building states based on current timestep. Building forecast simplified by omitting solar radiation & ventilation.";
 		return new J_AssetTypeForecast(I_HeatingManagement.class, loadMap, status, reason);

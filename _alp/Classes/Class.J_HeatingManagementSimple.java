@@ -239,7 +239,16 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 			EC = OL_EnergyCarriers.ELECTRICITY;
 			break;
 		case DISTRICTHEAT:			
-			return new J_AssetTypeForecast(J_HeatingManagementPIcontrol.class, loadMap, OL_ForecastStatus.PERFECT_FORECAST, "GC connected to districtheating, so load is zero.");
+			Double[] heatLoad = Arrays.stream(buildingHeatDemand_kW).boxed().toArray(Double[]::new);
+			loadMap.put(OL_EnergyCarriers.HEAT, heatLoad);
+			if (this.building == null) {
+				String reason = "GC connected to districtheating, so all heat demand is import.";
+				return new J_AssetTypeForecast(J_HeatingManagementPIcontrol.class, loadMap, OL_ForecastStatus.PERFECT_FORECAST, reason);
+			}
+			else {
+				String reason = "GC connected to districtheating, so all heat demand is import. Building forecast simplified by omitting solar radiation & ventilation.";
+				return new J_AssetTypeForecast(J_HeatingManagementPIcontrol.class, loadMap, OL_ForecastStatus.ESTIMATED_FORECAST, reason);
+			}
 		default:
 			throw new RuntimeException(String.format("Tried to forecast J_HeatingManagementPIControl, but encountered an unexepected heating type %s in GC %s", this.gc.f_getCurrentHeatingType(), this.gc.p_gridConnectionID));
 		}
@@ -264,9 +273,9 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 			hp = ((J_EAConversionHeatPump)this.heatingAsset);
 			for (int i = 0; i < timeStepsInForecast; i++) {
 				double t = timeOfIntervalStart_h + i * timeParameters.getTimeStep_h();
-				double totalHeatDemand_kW = buildingHeatDemand_kW[i] + otherFixedHeatDemand_kW[i];
+				double heatDemand_kW = buildingHeatDemand_kW[i] + otherFixedHeatDemand_kW[i];
 				double efficiency_fr = hp.calculateCOP(hp.getOutputTemperature_degC(), ambientTemperatureProfile.getValue(t));
-				double load_kW = totalHeatDemand_kW / efficiency_fr;
+				double load_kW = heatDemand_kW / efficiency_fr;
 				loadProfile_kW[i] = load_kW;
 			}
 			break;
@@ -275,12 +284,15 @@ public class J_HeatingManagementSimple implements I_HeatingManagement {
 		if (fixedEfficiency) {
 			for (int i = 0; i < timeStepsInForecast; i++) {
 				double t = timeOfIntervalStart_h + i * timeParameters.getTimeStep_h();
-				double totalHeatDemand_kW = buildingHeatDemand_kW[i] + otherFixedHeatDemand_kW[i];
-				double load_kW = totalHeatDemand_kW / fixedEfficiency_fr;
+				double heatDemand_kW = buildingHeatDemand_kW[i] + otherFixedHeatDemand_kW[i];
+				double load_kW = heatDemand_kW / fixedEfficiency_fr;
 				loadProfile_kW[i] = load_kW;
 			}
 		}
 		loadMap.put(EC, loadProfile_kW);
+		// Building is a flex asset so included in system bounds of heating management, but fixed profiles are not.
+		Double[] heatLoad = Arrays.stream(otherFixedHeatDemand_kW).map(d -> -d).boxed().toArray(Double[]::new);
+		loadMap.put(OL_EnergyCarriers.HEAT, heatLoad);
 		if (this.building == null) {
 			OL_ForecastStatus status = OL_ForecastStatus.PERFECT_FORECAST;
 			String reason = "Forecast is perfect for GridConnections without ThermalBuilding.";
