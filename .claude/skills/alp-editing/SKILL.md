@@ -11,7 +11,9 @@ AnyLogic model source is XML with embedded Java. Wrong edits corrupt models sile
 
 **Tier 1 — plain Java, edit freely (as normal code):**
 - `_alp/Classes/Class.<Name>.java` — ordinary classes (`I_*`, `J_*`, mixins)
-- `_alp/Agents/<Name>/Code/*.java` (e.g. `AdditionalClassCode.java`) — members injected into the generated agent class; they may reference `p_*` parameters / `v_*` variables defined in the agent's XML — grep the agent folder to confirm a referenced field exists before using it
+- `_alp/Agents/<Name>/Code/AdditionalClassCode.java` — free-form members injected into the generated agent class
+- `_alp/Agents/<Name>/Code/Functions.java` and `Events.java` — function/event **bodies**, each delimited by `/*ALCODESTART::<Id>*/` ... `/*ALCODEEND*/`. Edit ONLY between the markers; never touch the markers or their Ids (they pair with declarations in `Functions.xml`/`Events.xml`). Bodies may reference `p_*`/`v_*` fields defined in the agent's XML — grep the agent folder to confirm a referenced field exists before using it
+- Adding a NEW function, or changing a signature/arguments, is NOT a body edit: declarations live in `Functions.xml` with Ids → Tier 3 (IDE)
 
 **Tier 2 — code inside XML CDATA, edit the code only:**
 - Function bodies, imports, parameter default expressions, generic parameters inside `AOC.<Name>.xml` / `.alpx` / monolithic `.alp`
@@ -24,6 +26,7 @@ AnyLogic model source is XML with embedded Java. Wrong edits corrupt models sile
 ## Never
 
 - Change any existing `<Id>` value (AnyLogic's internal cross-references)
+- Edit, remove, or duplicate `/*ALCODESTART::<Id>*/` / `/*ALCODEEND*/` markers
 - Edit `database/` (HSQLDB), `cache/`, `*.bak`, `*.class`, jars
 - Touch `<Presentation>`/coordinates/`Levels/` except for deliberate UI work
 - Add a file/jar resource without declaring it in `_alp/ModelResources.xml`
@@ -37,6 +40,6 @@ One giant XML document. Locate the target element by searching for the agent/fun
 
 1. XML still well-formed — run a parser over every touched XML file, e.g.: `python -c "import xml.dom.minidom,sys; xml.dom.minidom.parse(sys.argv[1])" <file>`
 2. `git diff` review: no `<Id>` lines changed, no unintended files (database/, .bak), diff minimal
-3. CDATA sections intact (count `<![CDATA[` vs `]]>` per file)
+3. CDATA sections intact (count `<![CDATA[` vs `]]>` per file); ALCODE marker pairs intact in touched `Code/*.java` (count `ALCODESTART` vs `ALCODEEND`)
 4. References used in edited Java exist (grep for `p_*`/`v_*`/class names)
 5. Tell the user the final gate: **reload the project in AnyLogic** — external edits are only proven when AnyLogic regenerates, compiles, and the model runs. Never claim a model-level change "works" before that
