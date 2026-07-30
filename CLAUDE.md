@@ -36,6 +36,7 @@ No headless build exists for the models: AnyLogic compiles on project reload, so
 
 ## Session habits
 
+- **Check the Ignore flag before trusting model code.** AnyLogic elements carry `<ExcludeFromBuild>true</ExcludeFromBuild>` when ignored — functions, variables, even whole agent types. Ignored elements don't compile, aren't part of the architecture, and must not be used to infer behavior or be documented in the vault. Superseded logic is routinely left in place this way rather than deleted, so a plausible-looking function may be dead.
 - Before committing non-trivial changes: run the `lux-reviewer` agent on the diff.
 - Consequential design decision made? Record it: `/adr`.
 - End of a session that produced durable insight (surprise, contradiction, gotcha, failed approach): offer `/learn` — it PRs the insight into the vault. This loop is how the whole setup improves; don't skip it.

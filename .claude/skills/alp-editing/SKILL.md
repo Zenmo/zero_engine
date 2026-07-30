@@ -5,7 +5,7 @@ description: Safe editing of AnyLogic model files in the LUX/Zero repos. Use whe
 
 # Editing AnyLogic model files (LUX)
 
-AnyLogic model source is XML with embedded Java. Wrong edits corrupt models silently — follow the tiers and always run the checklist. Anatomy details: `../lux-vault/lux-vault/10-architecture/alpx-file-format.md`.
+AnyLogic model source is XML with embedded Java. Wrong edits corrupt models silently — follow the tiers and always run the checklist. Anatomy details: `../lux-vault/lux-vault/10-architecture/alpx-file-format.md`. Format by repo: core repos, the project template, and new projects use the split `.alpx` + `_alp/` format; only legacy projects (created before the template's conversion, e.g. the demos) are monolithic `.alp`.
 
 ## Editability tiers
 
@@ -23,6 +23,21 @@ AnyLogic model source is XML with embedded Java. Wrong edits corrupt models sile
 - New agents, parameters, variables, functions, events, presentation elements, option lists → create them **in the AnyLogic IDE**, then fill in bodies via Tier 1/2. Hand-built structural XML (with invented `<Id>` values) is the classic way to corrupt a model
 - Exception: none by default. If the user explicitly wants a structural edit anyway, copy an existing sibling element exactly, generate a unique 13-digit Id, and say clearly this is unsupported territory
 
+## Check the Ignore flag before reading or editing
+
+An element whose XML declaration contains `<ExcludeFromBuild>true</ExcludeFromBuild>` is **ignored** in AnyLogic: greyed out, not compiled, not part of the model. This applies to functions, events, variables, parameters, embedded objects, and entire agent types (the flag then sits at the top of `AOC.<Name>.xml`).
+
+The team uses Ignore as its retirement mechanism instead of deleting, so dead code stays in the tree and reads as live. Before you rely on a function or field you found in the source:
+
+```bash
+grep -A2 -B8 'ExcludeFromBuild' _alp/Agents/<Agent>/Code/Functions.xml   # see which declarations carry it
+```
+
+- Never infer behavior from an ignored element, and never cite one as evidence for how the model works.
+- Its `Code/*.java` body still exists — presence of a body proves nothing.
+- Editing an ignored element's body is almost always pointless; say so rather than doing it silently.
+- Un-ignoring something is a structural change (Tier 3, IDE) and usually needs its call sites uncommented too.
+
 ## Never
 
 - Change any existing `<Id>` value (AnyLogic's internal cross-references)
@@ -32,9 +47,9 @@ AnyLogic model source is XML with embedded Java. Wrong edits corrupt models sile
 - Add a file/jar resource without declaring it in `_alp/ModelResources.xml`
 - Reformat/re-indent XML wholesale — diffs must stay minimal and reviewable
 
-## Monolithic `.alp` (project repos)
+## Monolithic `.alp` (legacy project repos only)
 
-One giant XML document. Locate the target element by searching for the agent/function name; make surgical CDATA/code edits only; anything structural → IDE. Keep a copy of the original section in the conversation before editing so you can restore precisely.
+One giant XML document — pre-conversion projects like the demos. Locate the target element by searching for the agent/function name; make surgical CDATA/code edits only; anything structural → IDE. Keep a copy of the original section in the conversation before editing so you can restore precisely. Suggest converting the project to `.alpx` before substantial new work.
 
 ## Post-edit checklist (always, in order)
 
