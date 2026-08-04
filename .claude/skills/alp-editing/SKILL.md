@@ -5,7 +5,7 @@ description: Safe editing of AnyLogic model files in the LUX/Zero repos. Use whe
 
 # Editing AnyLogic model files (LUX)
 
-AnyLogic model source is XML with embedded Java. Wrong edits corrupt models silently — follow the tiers and always run the checklist. Anatomy details: `../lux-vault/lux-vault/10-architecture/alpx-file-format.md`. Format by repo: core repos, the project template, and new projects use the split `.alpx` + `_alp/` format; only legacy projects (created before the template's conversion, e.g. the demos) are monolithic `.alp`.
+AnyLogic model source is XML with embedded Java. Wrong edits corrupt models silently — follow the tiers and always run the checklist. Anatomy details: `../lux-vault/lux-vault/10-architecture/alpx-file-format.md`. Format by repo: core repos, the project template, and new projects use the split `.alpx` + `_alp/` format; only older projects, created before the template's conversion, are monolithic `.alp`.
 
 ## Editability tiers
 
@@ -30,10 +30,17 @@ An element whose XML declaration contains `<ExcludeFromBuild>true</ExcludeFromBu
 The team uses Ignore as its retirement mechanism instead of deleting, so dead code stays in the tree and reads as live. Before you rely on a function or field you found in the source:
 
 ```bash
-grep -A2 -B8 'ExcludeFromBuild' _alp/Agents/<Agent>/Code/Functions.xml   # see which declarations carry it
+# agent members (functions, events, variables, parameters, whole agent types)
+grep -A2 -B8 'ExcludeFromBuild' _alp/Agents/<Agent>/Code/Functions.xml
+
+# Java classes and option lists - declared in the .alpx ROOT file, NOT under _alp/
+grep -B8 'ExcludeFromBuild' *.alpx
 ```
 
+⚠ **Check both locations.** `_alp/` holds agent members; the `.alpx` root holds `JavaClass` and `OptionList` declarations. A scan of `_alp/` alone will report retired `J_*` classes, mixins and option lists as live — including whole strategy classes. AnyLogic also groups retired code in folders named `Deprecated` / `Unused*`, which is a useful corroborating signal.
+
 - Never infer behavior from an ignored element, and never cite one as evidence for how the model works.
+- **But don't propose deleting one either.** Ignored can mean retired *or* planned groundwork — the source doesn't distinguish. Ask.
 - Its `Code/*.java` body still exists — presence of a body proves nothing.
 - Editing an ignored element's body is almost always pointless; say so rather than doing it silently.
 - Un-ignoring something is a structural change (Tier 3, IDE) and usually needs its call sites uncommented too.
@@ -43,13 +50,21 @@ grep -A2 -B8 'ExcludeFromBuild' _alp/Agents/<Agent>/Code/Functions.xml   # see w
 - Change any existing `<Id>` value (AnyLogic's internal cross-references)
 - Edit, remove, or duplicate `/*ALCODESTART::<Id>*/` / `/*ALCODEEND*/` markers
 - Edit `database/` (HSQLDB), `cache/`, `*.bak`, `*.class`, jars
-- Touch `<Presentation>`/coordinates/`Levels/` except for deliberate UI work
+- Touch `<Presentation>`/coordinates/`Levels/` except for deliberate UI work — see below
 - Add a file/jar resource without declaring it in `_alp/ModelResources.xml`
 - Reformat/re-indent XML wholesale — diffs must stay minimal and reviewable
 
+## Editing presentation (`Levels/`)
+
+Permitted, but only against a clear brief. The rules:
+
+- **Element order is draw order.** Whether a text appears in front of or behind a rectangle depends on its position in the file, so reordering elements changes what the user sees. Never reorder for tidiness.
+- Edit `Levels/` when the modeller has **clearly described the visual result they want**. If the intent is ambiguous — which element should be on top, what should move, how it should look — **ask before editing**. Guessing at someone's visual intent is not a diff they can review meaningfully.
+- Correspondingly, describe presentation changes in terms of the visible outcome ("the label now draws over the panel"), not just the XML delta.
+
 ## Monolithic `.alp` (legacy project repos only)
 
-One giant XML document — pre-conversion projects like the demos. Locate the target element by searching for the agent/function name; make surgical CDATA/code edits only; anything structural → IDE. Keep a copy of the original section in the conversation before editing so you can restore precisely. Suggest converting the project to `.alpx` before substantial new work.
+One giant XML document — projects created before the template's conversion. Locate the target element by searching for the agent/function name; make surgical CDATA/code edits only; anything structural → IDE. Keep a copy of the original section in the conversation before editing so you can restore precisely. Suggest converting the project to `.alpx` before substantial new work.
 
 ## Post-edit checklist (always, in order)
 

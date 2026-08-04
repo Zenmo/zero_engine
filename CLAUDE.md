@@ -2,7 +2,7 @@
 
 # LUX shared context (all Zero/LUX repos)
 
-LUX Energy Twin: an open-source, agent-based AnyLogic model of energy systems, focused on electricity and grid congestion. Power (kW) balance only — no current/voltage; congestion only at grid nodes, never cables; 15-min timesteps; ≤ 1 year simulated; AnyLogic 8.9.9 / Java 17. Public docs: https://docs.lux.energy/
+LUX Energy Twin: an open-source, agent-based AnyLogic model of energy systems, focused on electricity and grid congestion. Power (kW) balance only — no current/voltage; congestion only at grid nodes, never cables; 15-min timesteps; ≤ 1 year simulated. Currently AnyLogic 8.9.9 / Java 17, but the models track each new AnyLogic release (Java follows AnyLogic) — read the `.alpx` header rather than trusting a version quoted anywhere, including docs.lux.energy, which lags. Public docs: https://docs.lux.energy/
 
 ## The four packages
 
@@ -15,11 +15,13 @@ LUX Energy Twin: an open-source, agent-based AnyLogic model of energy systems, f
 
 ## The golden rule (layering)
 
-The three core repos are **generic public libraries** — no project names, no project data, no single-project functions, ever. Project-specific work belongs in the project repo via the child loader/interface. Order of preference for any change: **project repo → loader override surface → engine/resultsUI**. Core changes require the impact check in `../lux-vault/lux-vault/10-architecture/layering-and-override-rules.md`. Loader function signatures are load-bearing: breaking one breaks every customer project.
+The three core repos are **generic public libraries** — no project names, no project data, no single-project functions, ever. Project-specific work belongs in the project repo via the child loader/interface. Order of preference for any change: **project repo → loader override surface → engine/resultsUI**. Core changes require the impact check in `../lux-vault/lux-vault/10-architecture/layering-and-override-rules.md`, and land via PR: reviewers check semantics/implementation *and* run the branch against existing custom models. Loader function signatures are load-bearing: breaking one breaks every customer project.
+
+**Known exception — charts.** ResultsUI charts have no project-level override. Adding or changing a chart is always a `zero_results_UI` branch + PR, even when a single project drove the request; only chart *selection* is project configuration.
 
 ## AnyLogic files — safety essentials
 
-Model source is XML with embedded Java (split `.alpx` + `_alp/` in core repos; monolithic `.alp` in projects). Before editing any of it, use the `alp-editing` skill. Non-negotiables: never change `<Id>` values; never hand-edit `database/`, `cache/`, `*.bak`, jars; keep XML well-formed and CDATA intact; new files/jars must be declared in `_alp/ModelResources.xml`; structural additions (new agents/parameters/functions) happen in the AnyLogic IDE, not by hand-writing XML. Plain Java in `_alp/Classes/Class.*.java` and `Code/*.java` is safe to edit as normal code.
+Model source is XML with embedded Java (split `.alpx` + `_alp/` in core repos and new projects; monolithic `.alp` in older ones). Before editing any of it, use the `alp-editing` skill. Behavior lives in plain functions — AnyLogic events are avoided and statecharts unused, so don't reach for them when adding logic. Non-negotiables: never change `<Id>` values; never hand-edit `database/`, `cache/`, `*.bak`, jars; keep XML well-formed and CDATA intact; new files/jars must be declared in `_alp/ModelResources.xml`; structural additions (new agents/parameters/functions) happen in the AnyLogic IDE, not by hand-writing XML. Plain Java in `_alp/Classes/Class.*.java` and `Code/*.java` is safe to edit as normal code.
 
 ## Knowledge vault (../lux-vault)
 
@@ -37,6 +39,7 @@ No headless build exists for the models: AnyLogic compiles on project reload, so
 ## Session habits
 
 - **Check the Ignore flag before trusting model code.** AnyLogic elements carry `<ExcludeFromBuild>true</ExcludeFromBuild>` when ignored — functions, variables, even whole agent types. Ignored elements don't compile, aren't part of the architecture, and must not be used to infer behavior or be documented in the vault. Superseded logic is routinely left in place this way rather than deleted, so a plausible-looking function may be dead.
+- **Match surrounding code; don't normalize.** No formatter config, no agreed brace/indent style, no nullability policy; `p_*`/`v_*` prefixes are habits, not rules. Reformatting, adding `Optional`, or renaming members to fit a convention creates unreviewable diffs against a codebase with no standard to converge on.
 - Before committing non-trivial changes: run the `lux-reviewer` agent on the diff.
 - Consequential design decision made? Record it: `/adr`.
 - End of a session that produced durable insight (surprise, contradiction, gotcha, failed approach): offer `/learn` — it PRs the insight into the vault. This loop is how the whole setup improves; don't skip it.
