@@ -131,7 +131,7 @@ public class J_EAConversionHeatPump extends zero_engine.J_EAConversion implement
 	
 	public double calculateCOP(double outputTemperature_degC, double baseTemperature_degC) {
 		//double COP_r = this.eta_r * ( 273.15 + this.outputTemperature_degC ) / ( this.outputTemperature_degC - this.baseTemperature_degC );
-		double deltaT = max(1,this.outputTemperature_degC - this.baseTemperature_degC); // Limit deltaT to at least 1 degree.
+		double deltaT = max(1, outputTemperature_degC - baseTemperature_degC); // Limit deltaT to at least 1 degree.
 	    double COP_r = 8.74 - 0.190 * deltaT + 0.00126 * deltaT*deltaT;
 	    return COP_r;
 	}

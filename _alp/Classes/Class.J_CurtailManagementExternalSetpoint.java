@@ -53,6 +53,13 @@ public class J_CurtailManagementExternalSetpoint implements I_CurtailManagement 
 		curtailmentSetpoint_kW = 0;
 	}
 	
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "External Setpoint Management can not be forecasted.";
+		return new J_AssetTypeForecast(I_CurtailManagement.class, loadMap, status, reason);
+	}
+
 	public void setCurtailmentSetpoint(double curtailmentSetpoint_kW) {
 		this.curtailmentSetpoint_kW = curtailmentSetpoint_kW;
 	}

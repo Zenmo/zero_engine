@@ -108,19 +108,19 @@ public final class J_TimeParameters {
 	//Static methods
 	public static OL_Days getDayFromDayIndex(int dayIndex){
 		switch(dayIndex) {
-		    case 0:
-		        return OL_Days.MONDAY;
 		    case 1:
-		        return OL_Days.TUESDAY;
+		        return OL_Days.MONDAY;
 		    case 2:
-		        return OL_Days.WEDNESDAY;
+		        return OL_Days.TUESDAY;
 		    case 3:
-		        return OL_Days.THURSDAY;
+		        return OL_Days.WEDNESDAY;
 		    case 4:
-		        return OL_Days.FRIDAY;
+		        return OL_Days.THURSDAY;
 		    case 5:
-		        return OL_Days.SATURDAY;
+		        return OL_Days.FRIDAY;
 		    case 6:
+		        return OL_Days.SATURDAY;
+		    case 7:
 		        return OL_Days.SUNDAY;
 		    default:
 		    	throw new RuntimeException("Day found that should not exist.");
@@ -129,19 +129,19 @@ public final class J_TimeParameters {
 	public static int getDayIndexFromDay(OL_Days day){
 		switch(day) {
 		    case MONDAY:
-		        return 0;
-		    case TUESDAY:
 		        return 1;
-		    case WEDNESDAY:
+		    case TUESDAY:
 		        return 2;
-		    case THURSDAY:
+		    case WEDNESDAY:
 		        return 3;
-		    case FRIDAY:
+		    case THURSDAY:
 		        return 4;
-		    case SATURDAY:
+		    case FRIDAY:
 		        return 5;
-		    case SUNDAY:
+		    case SATURDAY:
 		        return 6;
+		    case SUNDAY:
+		        return 7;
 		    default:
 		    	throw new RuntimeException("Day found that should not exist.");
 		}
@@ -156,6 +156,19 @@ public final class J_TimeParameters {
 			    OL_Days.SATURDAY,
 			    OL_Days.SUNDAY
 			);
+	}
+	
+	public int getWeekIndex(double time_h) {
+		double offset = (this.getDayOfWeek1jan() - 1) * 24.0;
+		return (int) Math.floor((time_h + offset) / (7 * 24));
+	}
+	
+	/*
+	 * Note: This method can return a negative time for the first week if 
+	 */
+	public double getWeekStart_h(int weekIndex) {
+		double offset = (this.getDayOfWeek1jan() - 1) * 24.0;
+		return weekIndex * (7 * 24) - offset;
 	}
 	
 	@Override

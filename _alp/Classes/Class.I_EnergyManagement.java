@@ -73,8 +73,28 @@ public interface I_EnergyManagement extends I_StoreStatesAndReset
     	return getInternalAssetManagements().contains(assetManagementType) || getSupportedExternalAssetManagements().contains(assetManagementType);
     }
     
+
+    default public Map<Class<? extends I_AssetManagement>, J_AssetTypeForecast> getFlexAssetForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+    	Map<Class<? extends I_AssetManagement>, J_AssetTypeForecast> forecasts = new HashMap<Class<? extends I_AssetManagement>, J_AssetTypeForecast>();
+    	Map<Class<? extends I_AssetManagement>, I_AssetManagement> activeExternalManagements = this.getActiveExternalAssetManagements();
+    	for (Class externalManagementClass : this.getSupportedExternalAssetManagements()) {
+    		I_AssetManagement externalManagement = activeExternalManagements.get(externalManagementClass);
+    		if (externalManagement != null) {
+    			J_AssetTypeForecast forecast = externalManagement.getForecast(timeOfIntervalStart_h, timeOfIntervalEnd_h);
+    			forecasts.put(externalManagementClass, forecast);
+    		}
+    	}
+    	for (Class internalManagementClass : this.getInternalAssetManagements()) {
+			J_AssetTypeForecast forecast = forecastInternalAssetType(internalManagementClass, timeOfIntervalStart_h, timeOfIntervalEnd_h);
+			forecasts.put(internalManagementClass, forecast);
+    	}
+    	return forecasts;
+    }
     
-    
+	default J_AssetTypeForecast forecastInternalAssetType(Class<? extends I_AssetManagement> type, double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		throw new RuntimeException("EMS declares " + type.getSimpleName() + " as an internal asset management but does not override forecastInternalAssetType() to handle it.");
+	}
+	
     ////Checks
     //Check configuration: Should be called whenever a management or asset has been removed/added/changed.
     default public void checkConfiguration(List<J_EAFlex> flexAssetsGCList) {

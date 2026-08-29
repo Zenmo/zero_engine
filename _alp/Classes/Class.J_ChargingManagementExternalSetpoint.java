@@ -56,6 +56,13 @@ public class J_ChargingManagementExternalSetpoint implements I_ChargingManagemen
     	map_chargingSetpoints_kW = new HashMap<>();
     }
     
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "External Setpoint Management can not be forecasted.";
+		return new J_AssetTypeForecast(I_ChargingManagement.class, loadMap, status, reason);
+	}
+	
 	public void setChargingSetpoints(Map<I_ChargingRequest, Double> map_chargingSetpoints_kW) {
 		this.map_chargingSetpoints_kW = map_chargingSetpoints_kW;
 	}

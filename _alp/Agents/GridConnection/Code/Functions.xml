@@ -1210,4 +1210,32 @@
 		</Parameter>
 		<Body xmlns:al="http://anylogic.com"/>
 	</Function>
+	<Function AccessType="public" StaticFunction="false">
+		<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+		<ReturnType>Map&lt;Class&lt; ? extends I_AssetManagement&gt;, J_AssetTypeForecast&gt;</ReturnType>
+		<Id>1782459765981</Id>
+		<Name><![CDATA[f_getForecast]]></Name>
+		<X>1490</X>
+		<Y>480</Y>
+		<Label>
+			<X>10</X>
+			<Y>0</Y>
+		</Label>
+		<PublicFlag>false</PublicFlag>
+		<PresentationFlag>true</PresentationFlag>
+		<ShowLabel>true</ShowLabel>
+		<Parameter>
+			<Name><![CDATA[timeOfIntervalStart_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeOfIntervalEnd_h]]></Name>
+			<Type><![CDATA[double]]></Type>
+		</Parameter>
+		<Parameter>
+			<Name><![CDATA[timeParameters]]></Name>
+			<Type><![CDATA[J_TimeParameters]]></Type>
+		</Parameter>
+		<Body xmlns:al="http://anylogic.com"/>
+	</Function>
 </Functions>

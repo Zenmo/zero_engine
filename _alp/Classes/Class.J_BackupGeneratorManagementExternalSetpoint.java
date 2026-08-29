@@ -41,6 +41,13 @@ public class J_BackupGeneratorManagementExternalSetpoint implements I_BackupGene
     	this.backupGeneratorPowerSetpoint_kW = backupGeneratorPowerSetpoint_kW;
     }
     
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "External Setpoint Management can not be forecasted.";
+		return new J_AssetTypeForecast(I_BackupGeneratorManagement.class, loadMap, status, reason);
+	}
+	
     ////Store and reset states
 	public void storeStatesAndReset() {
 		//Nothing to store and reset

@@ -134,15 +134,45 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
     	return this.heatingPreferences;
     }
     
-    
-    
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		int timeStepsInForecast = roundToInt((timeOfIntervalEnd_h - timeOfIntervalStart_h) / this.timeParameters.getTimeStep_h());
+		Double[] electricityLoadProfile_kW = new Double[timeStepsInForecast];
+		Double[] gasLoadProfile_kW = new Double[timeStepsInForecast];
+		J_ProfilePointer ambientTemperatureProfile = this.gc.energyModel.pp_ambientTemperature_degC;
+		double[] fixedHeatDemand_kW = this.gc.f_getFixedAssetForecast(timeOfIntervalStart_h, timeOfIntervalEnd_h, OL_EnergyCarriers.HEAT, this.timeParameters);
+		
+		double gasBurnerEfficiency_fr = this.gasBurnerAsset.getEta_r();
+		double gasBurnerMaxOutput_kW = this.gasBurnerAsset.getOutputCapacity_kW();
+		double heatpumpInputCapacity_kW = this.heatPumpAsset.getInputCapacity_kW();
+		
+		for (int i = 0; i < timeStepsInForecast; i++) {
+			double t = timeOfIntervalStart_h + i * timeParameters.getTimeStep_h();
+			double totalHeatDemand_kW = fixedHeatDemand_kW[i];
+			double COP_fr = this.heatPumpAsset.calculateCOP(this.heatPumpAsset.getOutputTemperature_degC(), ambientTemperatureProfile.getValue(t));
+			if (COP_fr < 3.0) {
+				gasLoadProfile_kW[i] = min(gasBurnerMaxOutput_kW, totalHeatDemand_kW / gasBurnerEfficiency_fr);
+				electricityLoadProfile_kW[i] = max(0, (totalHeatDemand_kW - gasBurnerMaxOutput_kW) / COP_fr);
+			}
+			else {
+				electricityLoadProfile_kW[i] = min(heatpumpInputCapacity_kW, totalHeatDemand_kW / COP_fr);
+				gasLoadProfile_kW[i] = max(0, (totalHeatDemand_kW - heatpumpInputCapacity_kW * COP_fr) / gasBurnerEfficiency_fr);
+			}
+		}
+		loadMap.put(OL_EnergyCarriers.ELECTRICITY, electricityLoadProfile_kW);
+		loadMap.put(OL_EnergyCarriers.METHANE, gasLoadProfile_kW);
+		Double[] heatLoad = Arrays.stream(fixedHeatDemand_kW).map(d -> -d).boxed().toArray(Double[]::new);
+		loadMap.put(OL_EnergyCarriers.HEAT, heatLoad);
+
+		OL_ForecastStatus status = OL_ForecastStatus.PERFECT_FORECAST;
+		String reason = "Forecaster has perfect foresight into heat demand profiles and ambient temperatures.";
+		return new J_AssetTypeForecast(I_HeatingManagement.class, loadMap, status, reason);
+	}
     
     //Get parentagent
     public Agent getParentAgent() {
     	return this.gc;
     }
-    
-    
     
 	public void storeStatesAndReset() {
 		//Nothing to store/reset
@@ -150,7 +180,6 @@ public class J_HeatingManagementProfileHybridHeatPump implements I_HeatingManage
 	public void restoreStates() {
 		//Nothing to store/reset
 	}
-	
 	
 	@Override
 	public String toString() {

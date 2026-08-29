@@ -45,6 +45,13 @@ public class J_CurtailManagementContractCapacity implements I_CurtailManagement 
 		}
 	}
 	
+	public J_AssetTypeForecast getForecast(double timeOfIntervalStart_h, double timeOfIntervalEnd_h) {
+		Map<OL_EnergyCarriers, Double[]> loadMap = new HashMap<>();
+		OL_ForecastStatus status = OL_ForecastStatus.NOT_FORECASTABLE;
+		String reason = "Not yet implemented.";
+		return new J_AssetTypeForecast(I_CurtailManagement.class, loadMap, status, reason);
+	}
+	
     ////Store and reset states
 	public void storeStatesAndReset() {
 		//Nothing to store and reset
