@@ -171,7 +171,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 		// Are these values like current SOC off by one timestep? The schedule is made at 23:45, not 00:00?
     	double currentSOC_kWh = ev.getCurrentSOC_kWh();
     	double maximalStorageCapacity_kWh = ev.getStorageCapacity_kWh();
-    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : (tripTracker.endtimes_min.get(tripTracker.eventIndex)%24) / 60.0; // assumes the current trip ends today (no trips > 24 hours exist)
+    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : tripTracker.getEndTimeOfCurrentTripHourOfDay_h();
 	    double maxPower_kW = ev.capacityElectric_kW;
 	    
 	    if (trips.size() > 0) {
@@ -532,7 +532,6 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 
         J_EABuilding building = gc.p_BuildingThermalAsset;
         J_HeatingPreferences heatingPreferences = gc.f_getHeatingPreferences();
-        J_HeatingManagementPIcontrol mgmt = (J_HeatingManagementPIcontrol)gc.f_getHeatingManagement();
 
         double dayStartTime_h = heatingPreferences.getStartOfDayTime_h();
         double nightStartTime_h = heatingPreferences.getStartOfNightTime_h();
@@ -542,13 +541,35 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 
         // Seed from the ACTUAL controller state at the moment the forecast is made,
         // not from equilibrium - the integrator and filtered setpoint carry real memory.
-        double simBuildingTemp_degC     = building.getCurrentTemperature();
-        double simFilteredSetpoint_degC = mgmt.getFilteredCurrentSetpoint_degC();
-        double simIState_hDegC          = mgmt.getIState_hDegC();
+        double simBuildingTemp_degC = building.getCurrentTemperature();
 
-        double pGain_kWpDegC   = mgmt.getPGain_kWpDegC();
-        double iGain_kWphDegC  = mgmt.getIGain_kWphDegC();
-        double filterTimeScale_h = mgmt.getSetpointFilterTimeScale_h();
+        // Both PI controllers run the same loop but neither extends the other, so the state
+        // has to be read per type. A house on any other kind of heating management has no PI
+        // state to forecast from.
+        I_HeatingManagement heatingManagement = gc.f_getHeatingManagement();
+        double simFilteredSetpoint_degC;
+        double simIState_hDegC;
+        double pGain_kWpDegC;
+        double iGain_kWphDegC;
+        double filterTimeScale_h;
+        if (heatingManagement instanceof J_HeatingManagementPIcontrol piControl) {
+            simFilteredSetpoint_degC = piControl.getFilteredCurrentSetpoint_degC();
+            simIState_hDegC          = piControl.getIState_hDegC();
+            pGain_kWpDegC            = piControl.getPGain_kWpDegC();
+            iGain_kWphDegC           = piControl.getIGain_kWphDegC();
+            filterTimeScale_h        = piControl.getSetpointFilterTimeScale_h();
+        } else if (heatingManagement instanceof J_HeatingManagementPIcontrolHybridHeatpump hybridPIcontrol) {
+            simFilteredSetpoint_degC = hybridPIcontrol.getFilteredCurrentSetpoint_degC();
+            simIState_hDegC          = hybridPIcontrol.getIState_hDegC();
+            pGain_kWpDegC            = hybridPIcontrol.getPGain_kWpDegC();
+            iGain_kWphDegC           = hybridPIcontrol.getIGain_kWphDegC();
+            filterTimeScale_h        = hybridPIcontrol.getSetpointFilterTimeScale_h();
+        } else {
+            traceln("Aggregator EMS cannot forecast building heat demand of grid connection %s: heating management %s has no PI control state.",
+                    gc.p_gridConnectionID,
+                    heatingManagement == null ? "none" : heatingManagement.getClass().getSimpleName());
+            return buildingHeatDemandProfile_kW;
+        }
         double timeStep_h = this.timeParameters.getTimeStep_h();
 
         double lossFactor_WpK = building.getLossFactor_WpK();
@@ -632,7 +653,7 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
     	
 		double currentSOC_kWh = ev.getCurrentSOC_kWh();
     	double maximalStorageCapacity_kWh = ev.getStorageCapacity_kWh();
-    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : (tripTracker.endtimes_min.get(tripTracker.eventIndex)%24) / 60.0; // assumes the current trip ends today (no trips > 24 hours exist)
+    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : tripTracker.getEndTimeOfCurrentTripHourOfDay_h();
 	    double maxPower_kW = ev.capacityElectric_kW;
 	    
 		if (trips.size() > 0) {

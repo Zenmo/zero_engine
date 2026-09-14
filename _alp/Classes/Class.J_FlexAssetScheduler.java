@@ -47,6 +47,12 @@ public class J_FlexAssetScheduler {
      * 
      * This method wraps 'scheduleIteration', small blocks of energy are scheduled in each iteration until the amount of work is achieved.
      */
+    /**
+     * A timeslot counts as full while it is still this far short of the maximum power, so that
+     * much power per slot is never handed out.
+     */
+    private static final double slotConsideredFullMargin_kW = 0.001;
+
     public static double[] scheduleWrapper(
             double[] previousLoadProfile_kW,
             J_VirtualFlexAsset asset,
@@ -88,10 +94,19 @@ public class J_FlexAssetScheduler {
         int[] cheapestTimeIdxsSorted = argsort(localMarginalPriceCurve_eurpMWh);
         int i = 0;
 
-        while (asset.profile_kW[cheapestTimeIdxsSorted[i]] >= asset.maxPower_kW - 0.001 || !asset.allowedOperatingTimes[cheapestTimeIdxsSorted[i]]) {
+        while (asset.profile_kW[cheapestTimeIdxsSorted[i]] >= asset.maxPower_kW - slotConsideredFullMargin_kW || !asset.allowedOperatingTimes[cheapestTimeIdxsSorted[i]]) {
             i++;
-            if (i == loadProfile_kW.length - 1) {
-                throw new RuntimeException("Warning: No more scheduling opportunities available! Work remaining: " + workRemaining_kWh);
+            // Bound on the number of slots, not on the last index: stopping a slot early made
+            // the most expensive usable slot unreachable, losing up to one timestep of charging.
+            if (i == cheapestTimeIdxsSorted.length) {
+                // Every slot this asset may use is full. Leaving a rounding remainder is normal,
+                // because of the margin by which a slot already counts as full. Work beyond that
+                // really does not fit and is worth failing over.
+                double roundingRemainder_kWh = slotConsideredFullMargin_kW * timeStep_h * loadProfile_kW.length;
+                if (workRemaining_kWh > roundingRemainder_kWh) {
+                    throw new RuntimeException("Warning: No more scheduling opportunities available! Work remaining: " + workRemaining_kWh);
+                }
+                return 0;
             }
         }
 

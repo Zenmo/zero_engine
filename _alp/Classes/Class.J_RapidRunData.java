@@ -149,12 +149,12 @@ public class J_RapidRunData {
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
     	this.assetsMetaData.activeAssetFlows = EnumSet.copyOf(activeAssetFlows);
 	    //========== TOTAL ACCUMULATORS ==========//
-		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 24.0, simDuration_h );
+		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 0.25, simDuration_h );
 	    am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
 	    am_totalHeatFromEnergyCarrier_kW.createEmptyAccumulators( this.activeEnergyCarriers, false, timeStep_h, simDuration_h);
 	    am_totalConsumptionForHeating_kW.createEmptyAccumulators( this.activeEnergyCarriers, false, timeStep_h, simDuration_h);
 	    
-	    am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
+	    am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, 0.25, simDuration_h);
 	    am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, 24.0, simDuration_h);
 	
 	    acc_dailyAverageEnergyProduction_kW = new ZeroAccumulator(true, 24.0, simDuration_h);
@@ -267,9 +267,9 @@ public class J_RapidRunData {
     	this.activeConsumptionEnergyCarriers = EnumSet.copyOf(v_activeConsumptionEnergyCarriers);
     	this.activeProductionEnergyCarriers = EnumSet.copyOf(v_activeProductionEnergyCarriers);
     	//Total simulation
-		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 24.0, simDuration_h );
+		am_totalBalanceAccumulators_kW.createEmptyAccumulators( this.activeEnergyCarriers, true, 0.25, simDuration_h );
     	am_totalBalanceAccumulators_kW.put( OL_EnergyCarriers.ELECTRICITY, new ZeroAccumulator(true, timeStep_h, simDuration_h) );
-    	am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, 24.0, simDuration_h);
+    	am_dailyAverageConsumptionAccumulators_kW.createEmptyAccumulators(this.activeConsumptionEnergyCarriers, true, 0.25, simDuration_h);
     	am_dailyAverageProductionAccumulators_kW.createEmptyAccumulators(this.activeProductionEnergyCarriers, true, 24.0, simDuration_h);
 
 		am_totalHeatFromEnergyCarrier_kW.createEmptyAccumulators( this.activeEnergyCarriers, false, timeStep_h, simDuration_h);

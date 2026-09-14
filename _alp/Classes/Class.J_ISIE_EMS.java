@@ -180,7 +180,7 @@ public class J_ISIE_EMS implements I_EnergyManagement {
     	double currentStorageCapacity_kWh = ((J_EAEV)this.ev).getCurrentSOC_kWh();
     	double maximalStorageCapacity_kWh = ((J_EAEV)this.ev).getStorageCapacity_kWh();
     	
-    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : (this.tripTracker.endtimes_min.get(tripTracker.eventIndex)%24) / 60.0; // assumes the current trip ends today (no trips > 24 hours exist)
+    	double endTimeLastTrip_h = ev.getAvailability() ? 0.0 : tripTracker.getEndTimeOfCurrentTripHourOfDay_h();
     	for (Triple<Double, Double, Double> trip : trips) {
     		double startTime_h = trip.getLeft();
     		double endTime_h = trip.getMiddle();
