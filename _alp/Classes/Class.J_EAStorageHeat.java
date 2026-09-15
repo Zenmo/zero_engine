@@ -215,5 +215,9 @@ public class J_EAStorageHeat extends zero_engine.J_EAStorage {
 		this.updateAmbientTemperatureHasBeenCalled = true;
 		ambientTemperature_degC = currentAmbientTemperature_degC;
 	}
+	
+	public double getCurrentStateOfCharge_kWh() {
+	    return this.stateOfCharge_fr * this.storageCapacity_kWh;
+	}
 }
 

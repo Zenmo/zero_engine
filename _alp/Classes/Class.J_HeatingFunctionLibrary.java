@@ -33,7 +33,7 @@ public abstract class J_HeatingFunctionLibrary {
     		}
     		double powerFraction_fr = chargeSetpoint_kW / hotWaterBuffer.getCapacityHeat_kW();
         	gc.f_updateFlexAssetFlows(hotWaterBuffer, powerFraction_fr, timeVariables);
-
+        	
     		
 			double heatBufferCharge_kW = hotWaterBuffer.getLastFlows().get(OL_EnergyCarriers.HEAT);
 			
@@ -65,7 +65,7 @@ public abstract class J_HeatingFunctionLibrary {
 		}
 		
 		//Heating asset should always try to fill the heat buffer as fast as possible.
-		double hotWaterDemandFromHeatingAsset_kW = min(availableHeatingPower_kWth, hotWaterDemand_kW + (hotWaterBuffer.getStorageCapacity_kWh() - hotWaterBuffer.getCurrentStateOfCharge_kWh()));
+		double hotWaterDemandFromHeatingAsset_kW = min(availableHeatingPower_kWth, hotWaterDemand_kW + (hotWaterBuffer.getStorageCapacity_kWh() - hotWaterBuffer.getCurrentStateOfCharge_kWh())/timeStep_h);
 		double heatIntoBuffer_kW =  hotWaterDemandFromHeatingAsset_kW - hotWaterDemand_kW;
 				
 
