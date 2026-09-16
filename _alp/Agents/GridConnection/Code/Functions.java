@@ -1232,6 +1232,14 @@ if (c_heatingAssets.size() > 0) {
 	HPPower_kW.add(max(0, power));
 	double temperature = roundToDecimal(p_BuildingThermalAsset.getCurrentTemperature(), 2);
 	houseTemperature_degC.add(max(0, temperature));
+	if (p_DHWAsset != null) {
+		double hwd_kW = p_DHWAsset.getLastFlows().get(OL_EnergyCarriers.HEAT);
+		hotWaterDemand_kW.add(hwd_kW);
+	}
+	if (p_heatBuffer != null) {
+		double heatSOC = p_heatBuffer.getCurrentStateOfCharge_fr();
+		heatBufferSOC_fr.add(heatSOC);
+	}
 }
 /*ALCODEEND*/}
 
