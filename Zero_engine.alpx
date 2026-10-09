@@ -1101,6 +1101,26 @@
 					<Id>1783332319707</Id>
 					<Name><![CDATA[petroleumFuelForTransport_kW]]></Name>
 				</Option>
+				<Option>
+					<Id>1791386448799</Id>
+					<Name><![CDATA[baseloadHouseholds_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1791386440237</Id>
+					<Name><![CDATA[baseloadIndustry_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1791386475277</Id>
+					<Name><![CDATA[baseloadAgriculture_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1791386481949</Id>
+					<Name><![CDATA[baseloadUtility_kW]]></Name>
+				</Option>
+				<Option>
+					<Id>1791465656793</Id>
+					<Name><![CDATA[baseloadICT_kW]]></Name>
+				</Option>
 			</OptionList>
 			<OptionList>
 				<Id>1762354709855</Id>

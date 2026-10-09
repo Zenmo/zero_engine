@@ -133,7 +133,8 @@ public class J_AVGC_data {
 	public J_AVGC_Economic_data economicAVGC;
 	
 	////Constants
-	public double p_gas_kWhpm3;
+	public double p_gas_UHV_kWhpm3; //Upper heating value
+	public double p_gas_LHV_kWhpm3; //Lower heating value
 	public double p_diesel_kWhpl;
 	public double p_gasoline_kWhpl;
 	public double p_waterHeatCapacity_JpkgK;

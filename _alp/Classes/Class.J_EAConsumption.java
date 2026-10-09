@@ -55,6 +55,33 @@ public class J_EAConsumption extends J_EAProfile{
 		registerEnergyAsset(timeParameters);
     }
     
+    //2nd constructor with OL_AssetFlowCategory specified
+    public J_EAConsumption(I_AssetOwner owner, OL_EnergyAssetType type, String name, double yearlyDemand_kWh, OL_EnergyCarriers energyCarrier, J_TimeParameters timeParameters, J_ProfilePointer profile, OL_AssetFlowCategories assetFlowCategory) {
+		/*if (yearlyDemand_kWh == 0.0) {
+			throw new RuntimeException("Unable to construct J_EAConsumption: " + name + " because consumption is zero." );
+		}*/
+    	this.setOwner(owner);
+	    this.timeParameters = timeParameters;	    
+		
+    	this.energyAssetName = name;
+		this.energyAssetType = type;
+    	
+		this.yearlyDemand_kWh = yearlyDemand_kWh;
+		if (profile.getProfileUnits() == OL_ProfileUnits.YEARLYTOTALFRACTION) {
+			this.profileUnitScaler_r = yearlyDemand_kWh;
+			this.profilePointer = profile;
+		} else {
+			throw new RuntimeException("Invalid OL_ProfileUnits type for J_EAConsumption!");
+		}
+		this.energyCarrier =  energyCarrier;
+		
+		
+		this.activeConsumptionEnergyCarriers.add(this.energyCarrier);
+		this.assetFlowCategory =  assetFlowCategory;
+		
+		registerEnergyAsset(timeParameters);
+    }
+    
     //Getters
     public String getAssetName() {
     	return this.energyAssetName;
