@@ -89,7 +89,6 @@ public class J_HeatingManagementPIcontrol implements I_HeatingManagement {
     	else {
     		currentHeatDemand_kW += hotWaterDemand_kW;
     	}
-    	
 
     	double buildingTemp_degC = building.getCurrentTemperature();
     	double timeOfDay_h = timeVariables.getTimeOfDay_h();

@@ -1244,7 +1244,7 @@ for(Agent a :  c_coopMembers ) { // Take 'behind the meter' production and consu
 
 ArrayList<GridConnection> f_getAllChildMemberGridConnections()
 {/*ALCODESTART::1740492770316*/
-return new ArrayList(f_getAllChildMemberGridConnections_recursion(new HashSet<GridConnection>()));
+return new ArrayList(f_getAllChildMemberGridConnections_recursion(new LinkedHashSet<GridConnection>()));
 /*ALCODEEND*/}
 
 HashSet<GridConnection> f_getAllChildMemberGridConnections_recursion(HashSet<GridConnection> allMemberGridConnections)

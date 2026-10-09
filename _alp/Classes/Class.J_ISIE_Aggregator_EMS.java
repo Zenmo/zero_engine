@@ -42,6 +42,9 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 	// Maps GridConnection IDs to (24 hour) profiles for batteries. Current implementation only support 1 Battery per GC.	
 	private Map<String, double[]> batteryProfilesMap = new HashMap<String, double[]>();
 	
+	private static final long SCHEDULE_SEED = 20260916L;
+	private final Random scheduleRandom = new Random(SCHEDULE_SEED);
+	
     /**
      * Default constructor
      */
@@ -123,8 +126,9 @@ public class J_ISIE_Aggregator_EMS implements I_AggregatorEnergyManagement {
 		double[] totalLoad_kW = this.estimateTotalLoadOtherGridConnectionsAndAssets( timeAtStartForecast_h );
 		
     	// Make a copy of the list of GCs and shuffle it, that way it is randomized which GCs have 'the most' flexibility.
-    	List<GridConnection> gcList = new ArrayList<GridConnection>(this.energyCoop.f_getAllChildMemberGridConnections());
-    	Collections.shuffle(gcList);
+    	List<GridConnection> gcList = new ArrayList<>(this.energyCoop.f_getAllChildMemberGridConnections());
+    	gcList.sort(Comparator.comparing(gc -> gc.p_gridConnectionID));
+    	Collections.shuffle(gcList, this.scheduleRandom);
     	
 		EnergyPosition energyPosition = new EnergyPosition(totalLoad_kW, dailyPriceCurve_eurpMWh);
 		
