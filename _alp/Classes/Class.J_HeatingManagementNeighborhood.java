@@ -38,13 +38,28 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
 																									OL_Sectors.AGRICULTURE, new HashMap<>()
 																									);
     private double thresholdCOP_hybridHeatpump = 3.5;
-
+    
     private Map<OL_Sectors, Double> heatSavings_fr = new HashMap<>(Map.of(
-											    		OL_Sectors.HOUSEHOLDS,  0.0,
-											    		OL_Sectors.SERVICES,    0.0,
-											    		OL_Sectors.INDUSTRY,    0.0,
-											    		OL_Sectors.AGRICULTURE, 0.0
+    		OL_Sectors.HOUSEHOLDS,  0.0,
+    		OL_Sectors.SERVICES,    0.0,
+    		OL_Sectors.INDUSTRY,    0.0,
+    		OL_Sectors.AGRICULTURE, 0.0
     ));
+    
+    private Map<OL_Sectors, Double> heatDemandGrowth_fr = new HashMap<>(Map.of(
+    		OL_Sectors.HOUSEHOLDS,  1.0,
+            OL_Sectors.SERVICES,    1.0,
+            OL_Sectors.INDUSTRY,    1.0,
+            OL_Sectors.AGRICULTURE, 1.0
+    ));
+    
+    // Guard rail: warmtevraag boven de capaciteit van een warmte-asset wordt door J_EAFlex
+    // stil afgekapt (powerFraction <= 1). Hier wordt dat geteld en gemeld.
+    private static final double UNMET_HEAT_TOLERANCE_KW = 0.01;
+    private double unmetHeat_kWh = 0;
+    private double maxUnmetHeat_kW = 0;
+    private int unmetHeatTimesteps = 0;
+    private boolean unmetHeatWarningGiven = false;
     
     private static final Map<OL_Sectors, List<OL_GridConnectionHeatingType>> SPACE_HEATING_TYPES = Map.of(
     		OL_Sectors.HOUSEHOLDS, List.of(
@@ -101,6 +116,13 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
 
     	//Division of the power demand //{Gasburner power request, HP power request, DH power request, Hydrogenburner power request}
     	double powerDemandDivision_kW[] = this.dividePowerDemandHeatingAssets(); 
+
+    	//Guard rail: vraag boven capaciteit wordt niet geleverd en nergens geteld -> melden
+    	checkHeatCapacity(gasBurner,               powerDemandDivision_kW[0], "gas burner (incl. hybrid in gas mode)", timeVariables);
+    	checkHeatCapacity(heatPump,                powerDemandDivision_kW[1], "air heat pump (incl. hybrid in HP mode)", timeVariables);
+    	checkHeatCapacity(heatDeliverySet,         powerDemandDivision_kW[2], "district heat delivery set", timeVariables);
+    	checkHeatCapacity(hydrogenBurner,          powerDemandDivision_kW[3], "hydrogen burner", timeVariables);
+    	checkHeatCapacity(lowTempHeatGridHeatPump, powerDemandDivision_kW[4], "LT heat grid heat pump", timeVariables);
 
     	//Split the power fractions (powerDemandDivision[] = {Gasburner power request, HP power request, DH power request}
     	if(gasBurner.getOutputCapacity_kW() != 0){
@@ -378,7 +400,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     //The demand pool over which the space-heating technologies are split.
     //Industry reserves its hydrogen off total demand first, the other sectors reserve nothing.
     private double getSpaceHeatingPool(OL_Sectors sector) {
-        double demand = 1 - getHeatSavings_fr(sector);
+        double demand = getDemandFactor(sector);
         return sector == OL_Sectors.INDUSTRY
                 ? demand - getProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER)
                 : demand;
@@ -403,6 +425,18 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
             throw new IllegalStateException("Unknown sector: " + sector);
         }
         return savings;
+    }
+    
+    private double getDemandFactor(OL_Sectors sector) {
+        return getHeatDemandGrowth_fr(sector) * (1 - getHeatSavings_fr(sector));
+    }
+    
+    public double getHeatDemandGrowth_fr(OL_Sectors sector) {
+        Double growth = heatDemandGrowth_fr.get(sector);
+        if (growth == null) {
+            throw new IllegalStateException("Unknown sector: " + sector);
+        }
+        return growth;
     }
      
     /** Share of the sector's space-heating pool — independent of savings, and of industry's hydrogen share. */
@@ -434,20 +468,66 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
         if (sector == OL_Sectors.INDUSTRY) {
             double h2FractionOfDemand = getAmountOfHydrogenUseForHeating_industry_fr();
             setProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER,
-                    h2FractionOfDemand * (1 - newSavings_fr));
+            		h2FractionOfDemand * getHeatDemandGrowth_fr(OL_Sectors.INDUSTRY) * (1 - newSavings_fr));
         }
      
         heatSavings_fr.put(sector, newSavings_fr);
      
         setHeatingMethodPct(sector, pctMap);
     }
-     
+    
+    /** Vermenigvuldiger op de basis-warmtevraag (1.0 = huidig; 1.2 = 20% meer, bv. door nieuwbouw). */
+    public void setHeatDemandGrowth_fr(OL_Sectors sector, double newGrowth_fr) {
+        if (newGrowth_fr < 0) {
+            throw new RuntimeException("Heat demand growth factor can not be negative: " + newGrowth_fr);
+        }
+        // Zelfde patroon als setHeatSavings_fr: verdeling over technieken vastleggen vóór de pool verandert
+        Map<OL_GridConnectionHeatingType, Double> pctMap = captureHeatingMethodPct(sector);
+        if (sector == OL_Sectors.INDUSTRY) {
+            double h2FractionOfDemand = getAmountOfHydrogenUseForHeating_industry_fr();
+            setProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER,
+                    h2FractionOfDemand * newGrowth_fr * (1 - getHeatSavings_fr(OL_Sectors.INDUSTRY)));
+        }
+        heatDemandGrowth_fr.put(sector, newGrowth_fr);
+        setHeatingMethodPct(sector, pctMap);
+    } 
+    
+    private void checkHeatCapacity(J_EAConversion asset, double demand_kW, String assetLabel, J_TimeVariables timeVariables) {
+        if (asset == null) return;
+        double capacity_kW = asset.getOutputCapacity_kW();
+        double shortfall_kW = demand_kW - capacity_kW;
+        if (shortfall_kW <= UNMET_HEAT_TOLERANCE_KW) return;
+        unmetHeat_kWh += shortfall_kW * timeParameters.getTimeStep_h();
+        maxUnmetHeat_kW = max(maxUnmetHeat_kW, shortfall_kW);
+        unmetHeatTimesteps++;
+        if (!unmetHeatWarningGiven) {
+            unmetHeatWarningGiven = true;
+            String msg = String.format(
+                "!!!!! WARNING: UNMET HEAT DEMAND !!!!! %s, %s: demand %.1f kW > capacity %.1f kW at t = %.2f h. "
+                + "The shortfall is NOT delivered and NOT counted in any energy flow (electricity/gas for heat is underestimated). "
+                + "Further shortfalls in this neighborhood are summed silently; see getUnmetHeat_kWh().",
+                gc.p_gridConnectionID, assetLabel, demand_kW, capacity_kW, timeVariables.getT_h());
+            traceln(msg);
+            System.err.println(msg);
+        }
+    }
+
+    public double getUnmetHeat_kWh()     { return unmetHeat_kWh; }
+    public double getMaxUnmetHeat_kW()   { return maxUnmetHeat_kW; }
+    public int getUnmetHeatTimesteps()   { return unmetHeatTimesteps; }
+    /** Aanroepen vóór elke jaarrun. */
+    public void resetUnmetHeat() {
+        unmetHeat_kWh = 0;
+        maxUnmetHeat_kW = 0;
+        unmetHeatTimesteps = 0;
+        unmetHeatWarningGiven = false;
+    }
      
     // ---------------------------------------------------------
     // Industry hydrogen — share of TOTAL demand, not of the space-heating pool
     // ---------------------------------------------------------
     public double getAmountOfHydrogenUseForHeating_industry_fr() {
-        double demand = 1 - getHeatSavings_fr(OL_Sectors.INDUSTRY);
+        double demand = getDemandFactor(OL_Sectors.INDUSTRY);
         return demand > 0
                 ? getProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER) / demand
                 : 0;
@@ -460,7 +540,7 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
         Map<OL_GridConnectionHeatingType, Double> pctMap = captureHeatingMethodPct(OL_Sectors.INDUSTRY);
      
         setProfileScaling_fr(OL_Sectors.INDUSTRY, OL_GridConnectionHeatingType.HYDROGENBURNER,
-                (1 - getHeatSavings_fr(OL_Sectors.INDUSTRY)) * fractionOfDemand);
+        		getDemandFactor(OL_Sectors.INDUSTRY) * fractionOfDemand);
      
         setHeatingMethodPct(OL_Sectors.INDUSTRY, pctMap);
     }
@@ -508,10 +588,14 @@ public class J_HeatingManagementNeighborhood implements I_HeatingManagement {
     public double getTotalServicesEnergyForHeating_kWh() {
         return totalServicesEnergyForHeating_kWh;
     }
+    public double getHybridHeatpumpCOPThreshold() {
+    	return this.thresholdCOP_hybridHeatpump;
+    }
     
     
     //Store and reset states
 	public void storeStatesAndReset() {
+	    resetUnmetHeat();
 	    totalHouseholdElectricityForHeatingConsumption_kWh = 0;
 	    totalHouseholdMethaneForHeatingConsumption_kWh = 0;
 	    totalHouseholdDistrictHeatingImport_kWh = 0;

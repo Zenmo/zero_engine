@@ -359,6 +359,26 @@ f_calculateKPIs();
 //Perform energy balance check
 f_performEnergyBalanceCheck();
 
+//Guard rail onvervulde warmte (J_HeatingManagementNeighborhood), voor elk pad dat een jaarrun start
+double unmetHeat_MWh = 0;
+int unmetHeatGCs = 0;
+for (GridConnection GC : c_gridConnections) {
+	if (GC.f_getHeatingManagement() instanceof J_HeatingManagementNeighborhood) {
+		double u = ((J_HeatingManagementNeighborhood) GC.f_getHeatingManagement()).getUnmetHeat_kWh();
+		if (u > 0) { unmetHeat_MWh += u / 1000; unmetHeatGCs++; }
+	}
+}
+if (unmetHeatGCs > 0) {
+	String msg = String.format("!!!!! WARNING: UNMET HEAT DEMAND in %d grid connections, total %.1f MWh -- "
+			+ "heat-pump electricity, gas use and peaks are UNDERESTIMATED !!!!!", unmetHeatGCs, unmetHeat_MWh);
+	traceln(msg);
+	System.err.println(msg);
+} else {
+	traceln("Unmet heat check: OK");
+}
+
+
+
 v_kpiCalcsRuntime_ms = (System.currentTimeMillis()-startTime);
 
 
